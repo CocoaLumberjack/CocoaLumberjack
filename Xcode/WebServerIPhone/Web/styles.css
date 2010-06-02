@@ -1,0 +1,40 @@
+table {
+	margin-left: 10px;
+}
+
+td {
+	background-color: pink;
+	padding: 5px;
+}
+
+body {
+	margin: 0px;
+}
+
+#status {
+	height: 20px;
+	width: 100%;
+	color: #fff;
+	background-color: orange;
+	font-weight: bold;
+	padding: 5px;
+	text-align: center;
+}
+
+#container {
+	padding: 20px;
+}
+
+ul {
+    margin-top: 25px;
+}
+
+h1 {
+    font-size: 2em;
+	font-family: helvetica;
+	margin: 10px;
+}
+
+ul a:link, ul a:visited {
+	font-size: 1.5em;
+}
