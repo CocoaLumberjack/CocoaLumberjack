@@ -1,0 +1,146 @@
+<html>
+<head>
+<title>SimpleWebSocketServer</title>
+<style type="text/css">@import url('styles.css');</style>
+<script src="jquery-1.4.2.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(main);
+
+// Run when document.ready fires
+function main() {
+
+	// Reference to the websocket object
+	var ws;
+	
+	// Make sure sockets are supported
+	testSocket();
+
+	// Event handlers for buttons
+	$('#btnStart').click(function() {
+		startSocket();
+	});
+
+	$('#btnStop').click(function() {
+		stopSocket();
+	});
+	
+	$('#btnClear').click(function() {
+		$('#results').html('');
+	});	
+	
+}
+
+// Make sure the browser supports sockets
+function testSocket()
+{
+	if ("WebSocket" in window) 
+	{
+		$('#status').hide();
+		$('#btnStart').removeAttr("disabled");
+		//$('#status').css({'background-color': 'green'}).html('Websockets are supported');
+	}
+	else
+	{
+		$('#status').show();
+		$('#status').css({'background-color': 'red'}).html('Websockets NOT supported');		
+		$('#btnStart').attr("disabled","disabled");
+	}
+}
+
+// Close the websocket
+function stopSocket() 
+{
+	ws.close();
+}
+
+// Create the websocket
+function startSocket() 
+{
+	if ("WebSocket" in window)
+	{
+		ws = new WebSocket("%%WEBSOCKET_URL%%");
+		
+		// Called when the websocket is opened
+		ws.onopen = function()
+		{
+			// Web Socket is connected
+			$('#status').css({'background-color': 'green'}).html('Websocket opened');	
+			
+			// Clear the results window
+			$('#results').html('');
+		
+			// Disable Start Button
+			$('#btnStart').attr("disabled","disabled");
+			
+			// Enable Stop Button
+			$('#btnStop').removeAttr("disabled");
+
+			// You can send data now
+			//ws.send("Hey man, you got the time?");
+		};
+
+		// Called when the websocket receives data
+		ws.onmessage = function(evt) 
+		{ 
+		    $('#results').append(evt.data + '<br/>');  
+		};
+	
+		// Called when the websocket is closed
+		ws.onclose = function() { 
+			$('#status').css({'background-color': 'orange'}).html('Websocket closed');			
+			$('#btnStart').removeAttr("disabled");
+			$('#btnStop').attr("disabled", "disabled");
+		};
+	}
+	else
+	{
+		alert("Browser doesn't support WebSockets!");
+	}
+}
+
+</script>
+
+<style type="text/css">
+
+body {
+	margin: 0px;
+}
+
+#status {
+	height: 20px;
+	width: 100%;
+	color: #fff;
+	background-color: orange;
+	font-weight: bold;
+	padding: 5px;
+	text-align: center;
+}
+
+#container {
+	padding: 20px;
+}
+
+</style>
+
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<div id="status">Testing Websocket</div>
+
+<h1>Live Logging</h1>
+
+<div id="container">
+
+<input type="button" id="btnStart" value="Start Listening" disabled="disabled">
+<input type="button" id="btnStop" value="Stop Listening" disabled="disabled">
+<input type="button" id="btnClear" value="Clear Results">
+
+<p><strong>Received Messages:</strong></p>
+<div id="results"></div>
+
+</div>
+
+</body>
+</html>
