@@ -79,26 +79,33 @@
 	{
 		NSLogInfo(@"DDFileLogManagerDefault: Responding to configuration change: maximumNumberOfLogFiles");
 		
-	#if GCD_AVAILABLE
-		
-		dispatch_block_t block = ^{
-			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		if (IS_GCD_AVAILABLE)
+		{
+		#if GCD_MAYBE_AVAILABLE
 			
-			[self deleteOldLogFiles];
+			dispatch_block_t block = ^{
+				NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+				
+				[self deleteOldLogFiles];
+				
+				[pool release];
+			};
 			
-			[pool release];
-		};
-		
-		dispatch_async([DDLog loggingQueue], block);
-		
-	#else
-		
-		[self performSelector:@selector(deleteOldLogFiles)
-		             onThread:[DDLog loggingThread]
-		           withObject:nil
-		        waitUntilDone:NO];
-		
-	#endif
+			dispatch_async([DDLog loggingQueue], block);
+			
+		#endif
+		}
+		else
+		{
+		#if GCD_MAYBE_UNAVAILABLE
+			
+			[self performSelector:@selector(deleteOldLogFiles)
+			             onThread:[DDLog loggingThread]
+			           withObject:nil
+			        waitUntilDone:NO];
+			
+		#endif
+		}
 	}
 }
 
@@ -497,50 +504,65 @@
 	{
 		NSLogInfo(@"DDFileLogger: Responding to configuration change: maximumFileSize");
 		
-	#if GCD_AVAILABLE
-	
-		dispatch_block_t block = ^{
-			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		if (IS_GCD_AVAILABLE)
+		{
+		#if GCD_MAYBE_AVAILABLE
 			
-			[self maybeRollLogFileDueToSize];
+			dispatch_block_t block = ^{
+				NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+				
+				[self maybeRollLogFileDueToSize];
+				
+				[pool release];
+			};
 			
-			[pool release];
-		};
-		
-		dispatch_async([DDLog loggingQueue], block);
-	#else
-		
-		[self performSelector:@selector(maybeRollLogFileDueToSize)
-		             onThread:[DDLog loggingThread]
-		           withObject:nil
-		        waitUntilDone:NO];
-		
-	#endif
+			dispatch_async([DDLog loggingQueue], block);
+			
+		#endif
+		}
+		else
+		{
+		#if GCD_MAYBE_UNAVAILABLE
+			
+			[self performSelector:@selector(maybeRollLogFileDueToSize)
+			             onThread:[DDLog loggingThread]
+			           withObject:nil
+			        waitUntilDone:NO];
+			
+		#endif
+		}
 	}
 	else if([keyPath isEqualToString:@"rollingFrequency"])
 	{
 		NSLogInfo(@"DDFileLogger: Responding to configuration change: rollingFrequency");
 		
-	#if GCD_AVAILABLE
-		
-		dispatch_block_t block = ^{
-			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		if (IS_GCD_AVAILABLE)
+		{
+		#if GCD_MAYBE_AVAILABLE
 			
-			[self maybeRollLogFileDueToAge:nil];
+			dispatch_block_t block = ^{
+				NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+				
+				[self maybeRollLogFileDueToAge:nil];
+				
+				[pool release];
+			};
 			
-			[pool release];
-		};
-		
-		dispatch_async([DDLog loggingQueue], block);
-		
-	#else
-		
-		[self performSelector:@selector(maybeRollLogFileDueToAge:)
-		             onThread:[DDLog loggingThread]
-		           withObject:nil
-		        waitUntilDone:NO];
-		
-	#endif
+			dispatch_async([DDLog loggingQueue], block);
+			
+		#endif
+		}
+		else
+		{
+		#if GCD_MAYBE_UNAVAILABLE
+			
+			[self performSelector:@selector(maybeRollLogFileDueToAge:)
+			             onThread:[DDLog loggingThread]
+			           withObject:nil
+			        waitUntilDone:NO];
+			
+		#endif
+		}
 	}
 }
 

@@ -28,7 +28,7 @@
 
 #define LOG_MAX_QUEUE_SIZE 1000 // Should not exceed INT32_MAX
 
-#if GCD_AVAILABLE
+#if GCD_MAYBE_AVAILABLE
 struct LoggerNode {
 	id <DDLogger> logger;
 	dispatch_queue_t loggerQueue;
@@ -54,7 +54,8 @@ typedef struct LoggerNode LoggerNode;
 
 @implementation DDLog
 
-#if GCD_AVAILABLE
+#if GCD_MAYBE_AVAILABLE
+
   // All logging statements are added to the same queue to ensure FIFO operation.
   static dispatch_queue_t loggingQueue;
 
@@ -69,7 +70,11 @@ typedef struct LoggerNode LoggerNode;
   // In order to prevent to queue from growing infinitely large,
   // a maximum size is enforced (LOG_MAX_QUEUE_SIZE).
   static dispatch_semaphore_t queueSemaphore;
-#else
+
+#endif
+
+#if GCD_MAYBE_UNAVAILABLE
+
   // All logging statements are queued onto the same thread to ensure FIFO operation.
   static NSThread *loggingThread;
 
@@ -82,6 +87,7 @@ typedef struct LoggerNode LoggerNode;
   static int32_t queueSize;               // Incremented and decremented locklessly using OSAtomic operations
   static NSCondition *condition;          // Not used unless the queueSize exceeds its max
   static NSMutableArray *blockedThreads;  // Not used unless the queueSize exceeds its max
+
 #endif
 
 /**
@@ -99,32 +105,39 @@ typedef struct LoggerNode LoggerNode;
 	{
 		initialized = YES;
 		
-	#if GCD_AVAILABLE
-		
-		NSLogDebug(@"DDLog: Using grand central dispatch");
-		
-		loggingQueue = dispatch_queue_create("cocoa.lumberjack", NULL);
-		loggingGroup = dispatch_group_create();
-		
-		loggerNodes = NULL;
-		
-		queueSemaphore = dispatch_semaphore_create(LOG_MAX_QUEUE_SIZE);
-		
-	#else
-		
-		NSLogDebug(@"DDLog: GCD not available");
-		
-		loggingThread = [[NSThread alloc] initWithTarget:self selector:@selector(lt_main:) object:nil];
-		[loggingThread start];
-		
-		loggers = [[NSMutableArray alloc] initWithCapacity:4];
-		
-		queueSize = 0;
-		
-		condition = [[NSCondition alloc] init];
-		blockedThreads = [[NSMutableArray alloc] init];
-		
-	#endif
+		if (IS_GCD_AVAILABLE)
+		{
+		#if GCD_MAYBE_AVAILABLE
+			
+			NSLogDebug(@"DDLog: Using grand central dispatch");
+			
+			loggingQueue = dispatch_queue_create("cocoa.lumberjack", NULL);
+			loggingGroup = dispatch_group_create();
+			
+			loggerNodes = NULL;
+			
+			queueSemaphore = dispatch_semaphore_create(LOG_MAX_QUEUE_SIZE);
+			
+		#endif
+		}
+		else
+		{
+		#if GCD_MAYBE_UNAVAILABLE
+			
+			NSLogDebug(@"DDLog: GCD not available");
+			
+			loggingThread = [[NSThread alloc] initWithTarget:self selector:@selector(lt_main:) object:nil];
+			[loggingThread start];
+			
+			loggers = [[NSMutableArray alloc] initWithCapacity:4];
+			
+			queueSize = 0;
+			
+			condition = [[NSCondition alloc] init];
+			blockedThreads = [[NSMutableArray alloc] init];
+			
+		#endif
+		}
 		
 	#if TARGET_OS_IPHONE
 		NSString *notificationName = UIApplicationWillTerminateNotification;
@@ -139,7 +152,7 @@ typedef struct LoggerNode LoggerNode;
 	}
 }
 
-#if GCD_AVAILABLE
+#if GCD_MAYBE_AVAILABLE
 
 /**
  * Provides access to the logging queue.
@@ -149,7 +162,9 @@ typedef struct LoggerNode LoggerNode;
 	return loggingQueue;
 }
 
-#else
+#endif
+
+#if GCD_MAYBE_UNAVAILABLE
 
 /**
  * Provides access to the logging thread.
@@ -178,67 +193,88 @@ typedef struct LoggerNode LoggerNode;
 {
 	if (logger == nil) return;
 	
-#if GCD_AVAILABLE
-	
-	dispatch_block_t addLoggerBlock = ^{
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	if (IS_GCD_AVAILABLE)
+	{
+	#if GCD_MAYBE_AVAILABLE
 		
-		[self lt_addLogger:logger];
+		dispatch_block_t addLoggerBlock = ^{
+			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+			
+			[self lt_addLogger:logger];
+			
+			[pool release];
+		};
 		
-		[pool release];
-	};
-	
-	dispatch_async(loggingQueue, addLoggerBlock);
-	
-#else
-	
-	[self performSelector:@selector(lt_addLogger:) onThread:loggingThread withObject:logger waitUntilDone:NO];
-	
-#endif
+		dispatch_async(loggingQueue, addLoggerBlock);
+		
+	#endif
+	}
+	else
+	{
+	#if GCD_MAYBE_UNAVAILABLE
+		
+		[self performSelector:@selector(lt_addLogger:) onThread:loggingThread withObject:logger waitUntilDone:NO];
+		
+	#endif
+	}
 }
 
 + (void)removeLogger:(id <DDLogger>)logger
 {
 	if (logger == nil) return;
 	
-#if GCD_AVAILABLE
-	
-	dispatch_block_t removeLoggerBlock = ^{
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	if (IS_GCD_AVAILABLE)
+	{
+	#if GCD_MAYBE_AVAILABLE
 		
-		[self lt_removeLogger:logger];
+		dispatch_block_t removeLoggerBlock = ^{
+			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+			
+			[self lt_removeLogger:logger];
+			
+			[pool release];
+		};
 		
-		[pool release];
-	};
-	
-	dispatch_async(loggingQueue, removeLoggerBlock);
-	
-#else
-	
-	[self performSelector:@selector(lt_removeLogger:) onThread:loggingThread withObject:logger waitUntilDone:NO];
-	
-#endif
+		dispatch_async(loggingQueue, removeLoggerBlock);
+		
+	#endif
+	}
+	else
+	{
+	#if GCD_MAYBE_UNAVAILABLE
+		
+		[self performSelector:@selector(lt_removeLogger:) onThread:loggingThread withObject:logger waitUntilDone:NO];
+		
+	#endif
+	}
 }
 
 + (void)removeAllLoggers
 {
-#if GCD_AVAILABLE
-	
-	dispatch_block_t removeAllLoggersBlock = ^{
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	if (IS_GCD_AVAILABLE)
+	{
+	#if GCD_MAYBE_AVAILABLE
 		
-		[self lt_removeAllLoggers];
+		dispatch_block_t removeAllLoggersBlock = ^{
+			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+			
+			[self lt_removeAllLoggers];
+			
+			[pool release];
+		};
 		
-		[pool release];
-	};
-	
-	dispatch_async(loggingQueue, removeAllLoggersBlock);
-	
-#else
-	
-	[self performSelector:@selector(lt_removeAllLoggers) onThread:loggingThread withObject:nil waitUntilDone:NO];
-	
-#endif
+		dispatch_async(loggingQueue, removeAllLoggersBlock);
+		
+	#endif
+	}
+	else
+	{
+	#if GCD_MAYBE_UNAVAILABLE
+		
+		[self performSelector:@selector(lt_removeAllLoggers) onThread:loggingThread withObject:nil waitUntilDone:NO];
+		
+	#endif
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -274,117 +310,131 @@ typedef struct LoggerNode LoggerNode;
 	// Now assume we have another separate thread that attempts to issue log message G.
 	// It should block until log messages A and B have been unqueued.
 	
-#if GCD_AVAILABLE
-	
-	// We are using a counting semaphore provided by GCD.
-	// The semaphore is initialized with our LOG_MAX_QUEUE_SIZE value.
-	// Everytime we want to queue a log message we decrement this value.
-	// If the resulting value is less than zero,
-	// the semaphore function waits in FIFO order for a signal to occur before returning.
-	// 
-	// A dispatch semaphore is an efficient implementation of a traditional counting semaphore.
-	// Dispatch semaphores call down to the kernel only when the calling thread needs to be blocked.
-	// If the calling semaphore does not need to block, no kernel call is made.
-	
-	dispatch_semaphore_wait(queueSemaphore, DISPATCH_TIME_FOREVER);
-	
-#else
-	
-	// We're going increment our queue size (in an atomic fashion).
-	// If the queue size would exceed our LOG_MAX_QUEUE_SIZE value,
-	// then we're going to take a lock, and add ourself to the blocked threads array.
-	// Then we wait for the logging thread to signal us.
-	// When it does, we automatically reaquire the lock,
-	// and check to see if we have been removed from the blocked threads array.
-	// When this occurs we are unblocked, and we can go ahead and queue our log message.
-	
-	int32_t newQueueSize = OSAtomicIncrement32(&queueSize);
-	if (newQueueSize > LOG_MAX_QUEUE_SIZE)
+	if (IS_GCD_AVAILABLE)
 	{
-		NSLogDebug(@"DDLog: Blocking thread %@ (newQueueSize=%i)", [logMessage threadID], newQueueSize);
+	#if GCD_MAYBE_AVAILABLE
 		
-		[condition lock];
+		// We are using a counting semaphore provided by GCD.
+		// The semaphore is initialized with our LOG_MAX_QUEUE_SIZE value.
+		// Everytime we want to queue a log message we decrement this value.
+		// If the resulting value is less than zero,
+		// the semaphore function waits in FIFO order for a signal to occur before returning.
+		// 
+		// A dispatch semaphore is an efficient implementation of a traditional counting semaphore.
+		// Dispatch semaphores call down to the kernel only when the calling thread needs to be blocked.
+		// If the calling semaphore does not need to block, no kernel call is made.
 		
-		NSString *currentThreadID = [logMessage threadID];
-		[blockedThreads addObject:currentThreadID];
+		dispatch_semaphore_wait(queueSemaphore, DISPATCH_TIME_FOREVER);
 		
-		NSUInteger lastKnownIndex = [blockedThreads count] - 1;
+	#endif
+	}
+	else
+	{
+	#if GCD_MAYBE_UNAVAILABLE
 		
-		if (lastKnownIndex == 0)
+		// We're going increment our queue size (in an atomic fashion).
+		// If the queue size would exceed our LOG_MAX_QUEUE_SIZE value,
+		// then we're going to take a lock, and add ourself to the blocked threads array.
+		// Then we wait for the logging thread to signal us.
+		// When it does, we automatically reaquire the lock,
+		// and check to see if we have been removed from the blocked threads array.
+		// When this occurs we are unblocked, and we can go ahead and queue our log message.
+		
+		int32_t newQueueSize = OSAtomicIncrement32(&queueSize);
+		if (newQueueSize > LOG_MAX_QUEUE_SIZE)
 		{
-			NSLogDebug(@"DDLog: Potential edge case: First blocked thread -> Signaling condition...");
+			NSLogDebug(@"DDLog: Blocking thread %@ (newQueueSize=%i)", [logMessage threadID], newQueueSize);
 			
-			// Edge case:
-			// The loggingThread/loggingQueue acquired the lock before we did,
-			// but it immediately discovered the blockedThreads array was empty.
+			[condition lock];
 			
-			[condition signal];
-		}
-		
-		BOOL done = NO;
-		while (!done)
-		{
-			BOOL found = NO;
-			NSUInteger i;
-			NSUInteger count = [blockedThreads count];
+			NSString *currentThreadID = [logMessage threadID];
+			[blockedThreads addObject:currentThreadID];
 			
-			for (i = 0; i <= lastKnownIndex && i < count && !found; i++)
+			NSUInteger lastKnownIndex = [blockedThreads count] - 1;
+			
+			if (lastKnownIndex == 0)
 			{
-				NSString *blockedThreadID = [blockedThreads objectAtIndex:i];
+				NSLogDebug(@"DDLog: Potential edge case: First blocked thread -> Signaling condition...");
 				
-				// Instead of doing a string comparison,
-				// we can save CPU cycles by doing an pointer comparison,
-				// since we still have access to the string that we added the array.
+				// Edge case:
+				// The loggingThread/loggingQueue acquired the lock before we did,
+				// but it immediately discovered the blockedThreads array was empty.
 				
-				if (blockedThreadID == currentThreadID)
+				[condition signal];
+			}
+			
+			BOOL done = NO;
+			while (!done)
+			{
+				BOOL found = NO;
+				NSUInteger i;
+				NSUInteger count = [blockedThreads count];
+				
+				for (i = 0; i <= lastKnownIndex && i < count && !found; i++)
 				{
-					found = YES;
-					lastKnownIndex = i;
+					NSString *blockedThreadID = [blockedThreads objectAtIndex:i];
+					
+					// Instead of doing a string comparison,
+					// we can save CPU cycles by doing an pointer comparison,
+					// since we still have access to the string that we added the array.
+					
+					if (blockedThreadID == currentThreadID)
+					{
+						found = YES;
+						lastKnownIndex = i;
+					}
+				}
+				
+				// If our currentThreadID is still in the blockedThreads array,
+				// then we are still blocked, and we're not done.
+				
+				done = !found;
+				
+				if (!done)
+				{
+					[condition wait];
 				}
 			}
 			
-			// If our currentThreadID is still in the blockedThreads array,
-			// then we are still blocked, and we're not done.
 			
-			done = !found;
+			[condition unlock];
 			
-			if (!done)
-			{
-				[condition wait];
-			}
+			NSLogDebug(@"DDLog: Unblocking thread %@", [logMessage threadID]);
 		}
 		
-		
-		[condition unlock];
-		
-		NSLogDebug(@"DDLog: Unblocking thread %@", [logMessage threadID]);
+	#endif
 	}
-	
-#endif
 	
 	// We've now sure we won't overflow the queue.
 	// It is time to queue our log message.
 	
-#if GCD_AVAILABLE
-	
-	dispatch_block_t logBlock = ^{
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	if (IS_GCD_AVAILABLE)
+	{
+	#if GCD_MAYBE_AVAILABLE
 		
-		[self lt_log:logMessage];
+		dispatch_block_t logBlock = ^{
+			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+			
+			[self lt_log:logMessage];
+			
+			[pool release];
+		};
 		
-		[pool release];
-	};
-	
-	if (flag)
-		dispatch_sync(loggingQueue, logBlock);
+		if (flag)
+			dispatch_sync(loggingQueue, logBlock);
+		else
+			dispatch_async(loggingQueue, logBlock);
+		
+	#endif
+	}
 	else
-		dispatch_async(loggingQueue, logBlock);
-	
-#else
-	
-	[self performSelector:@selector(lt_log:) onThread:loggingThread withObject:logMessage waitUntilDone:flag];
-	
-#endif
+	{
+	#if GCD_MAYBE_UNAVAILABLE
+		
+		[self performSelector:@selector(lt_log:) onThread:loggingThread withObject:logMessage waitUntilDone:flag];
+		
+	#endif
+	}
 }
 
 + (void)log:(BOOL)synchronous
@@ -419,23 +469,30 @@ typedef struct LoggerNode LoggerNode;
 
 + (void)flushLog
 {
-#if GCD_AVAILABLE
-	
-	dispatch_block_t flushBlock = ^{
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	if (IS_GCD_AVAILABLE)
+	{
+	#if GCD_MAYBE_AVAILABLE
 		
-		[self lt_flush];
+		dispatch_block_t flushBlock = ^{
+			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+			
+			[self lt_flush];
+			
+			[pool release];
+		};
 		
-		[pool release];
-	};
-	
-	dispatch_sync(loggingQueue, flushBlock);
-	
-#else
-	
-	[self performSelector:@selector(lt_flush) onThread:loggingThread withObject:nil waitUntilDone:YES];
-	
-#endif
+		dispatch_sync(loggingQueue, flushBlock);
+		
+	#endif
+	}
+	else
+	{
+	#if GCD_MAYBE_UNAVAILABLE
+		
+		[self performSelector:@selector(lt_flush) onThread:loggingThread withObject:nil waitUntilDone:YES];
+		
+	#endif
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -559,7 +616,7 @@ typedef struct LoggerNode LoggerNode;
 #pragma mark Logging Thread
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#if !GCD_AVAILABLE
+#if GCD_MAYBE_UNAVAILABLE
 
 /**
  * Entry point for logging thread.
@@ -584,32 +641,39 @@ typedef struct LoggerNode LoggerNode;
 **/
 + (void)lt_addLogger:(id <DDLogger>)logger
 {
-#if GCD_AVAILABLE
-	
-	// Add to linked list of LoggerNode elements.
-	// Need to create loggerQueue if loggerNode doesn't provide one.
-	
-	LoggerNode *loggerNode = malloc(sizeof(LoggerNode));
-	loggerNode->logger = [logger retain];
-	
-	const char *loggerQueueName = NULL;
-	if ([logger respondsToSelector:@selector(loggerName)])
+	if (IS_GCD_AVAILABLE)
 	{
-		loggerQueueName = [[logger loggerName] UTF8String];
+	#if GCD_MAYBE_AVAILABLE
+		
+		// Add to linked list of LoggerNode elements.
+		// Need to create loggerQueue if loggerNode doesn't provide one.
+		
+		LoggerNode *loggerNode = malloc(sizeof(LoggerNode));
+		loggerNode->logger = [logger retain];
+		
+		const char *loggerQueueName = NULL;
+		if ([logger respondsToSelector:@selector(loggerName)])
+		{
+			loggerQueueName = [[logger loggerName] UTF8String];
+		}
+		
+		loggerNode->loggerQueue = dispatch_queue_create(loggerQueueName, NULL);
+		
+		loggerNode->next = loggerNodes;
+		loggerNodes = loggerNode;
+		
+	#endif
 	}
-	
-	loggerNode->loggerQueue = dispatch_queue_create(loggerQueueName, NULL);
-	
-	loggerNode->next = loggerNodes;
-	loggerNodes = loggerNode;
-	
-#else
-	
-	// Add to loggers array
-	
-	[loggers addObject:logger];
-	
-#endif
+	else
+	{
+	#if GCD_MAYBE_UNAVAILABLE
+		
+		// Add to loggers array
+		
+		[loggers addObject:logger];
+		
+	#endif
+	}
 	
 	if ([logger respondsToSelector:@selector(didAddLogger)])
 	{
@@ -627,32 +691,94 @@ typedef struct LoggerNode LoggerNode;
 		[logger willRemoveLogger];
 	}
 	
-#if GCD_AVAILABLE
-	
-	// Remove from linked list of LoggerNode elements.
-	// 
-	// Need to release:
-	// - logger
-	// - loggerQueue
-	// - loggerNode
-	
-	LoggerNode *prevNode = NULL;
-	LoggerNode *currentNode = loggerNodes;
-	
-	while (currentNode)
+	if (IS_GCD_AVAILABLE)
 	{
-		if (currentNode->logger == logger)
+	#if GCD_MAYBE_AVAILABLE
+		
+		// Remove from linked list of LoggerNode elements.
+		// 
+		// Need to release:
+		// - logger
+		// - loggerQueue
+		// - loggerNode
+		
+		LoggerNode *prevNode = NULL;
+		LoggerNode *currentNode = loggerNodes;
+		
+		while (currentNode)
 		{
-			if (prevNode)
+			if (currentNode->logger == logger)
 			{
-				// LoggerNode had previous node pointing to it.
-				prevNode->next = currentNode->next;
+				if (prevNode)
+				{
+					// LoggerNode had previous node pointing to it.
+					prevNode->next = currentNode->next;
+				}
+				else
+				{
+					// LoggerNode was first in list. Update loggerNodes pointer.
+					loggerNodes = currentNode->next;
+				}
+				
+				[currentNode->logger release];
+				currentNode->logger = nil;
+				
+				dispatch_release(currentNode->loggerQueue);
+				currentNode->loggerQueue = NULL;
+				
+				currentNode->next = NULL;
+				
+				free(currentNode);
+				
+				break;
 			}
-			else
+			
+			prevNode = currentNode;
+			currentNode = currentNode->next;
+		}
+		
+	#endif
+	}
+	else
+	{
+	#if GCD_MAYBE_UNAVAILABLE
+	
+		// Remove from loggers array
+		
+		[loggers removeObject:logger];
+		
+	#endif
+	}
+}
+
+/**
+ * This method should only be run on the logging thread/queue.
+**/
++ (void)lt_removeAllLoggers
+{
+	if (IS_GCD_AVAILABLE)
+	{
+	#if GCD_MAYBE_AVAILABLE
+		
+		// Iterate through linked list of LoggerNode elements.
+		// For each one, notify the logger, and deallocate all associated resources.
+		// 
+		// Need to release:
+		// - logger
+		// - loggerQueue
+		// - loggerNode
+		
+		LoggerNode *nextNode;
+		LoggerNode *currentNode = loggerNodes;
+		
+		while (currentNode)
+		{
+			if ([currentNode->logger respondsToSelector:@selector(willRemoveLogger)])
 			{
-				// LoggerNode was first in list. Update loggerNodes pointer.
-				loggerNodes = currentNode->next;
+				[currentNode->logger willRemoveLogger];
 			}
+			
+			nextNode = currentNode->next;
 			
 			[currentNode->logger release];
 			currentNode->logger = nil;
@@ -664,80 +790,32 @@ typedef struct LoggerNode LoggerNode;
 			
 			free(currentNode);
 			
-			break;
+			currentNode = nextNode;
 		}
 		
-		prevNode = currentNode;
-		currentNode = currentNode->next;
+		loggerNodes = NULL;
+		
+	#endif
 	}
-	
-#else
-	
-	// Remove from loggers array
-	
-	[loggers removeObject:logger];
-	
-#endif
-}
-
-/**
- * This method should only be run on the logging thread/queue.
-**/
-+ (void)lt_removeAllLoggers
-{
-#if GCD_AVAILABLE
-	
-	// Iterate through linked list of LoggerNode elements.
-	// For each one, notify the logger, and deallocate all associated resources.
-	// 
-	// Need to release:
-	// - logger
-	// - loggerQueue
-	// - loggerNode
-	
-	LoggerNode *nextNode;
-	LoggerNode *currentNode = loggerNodes;
-	
-	while (currentNode)
+	else
 	{
-		if ([currentNode->logger respondsToSelector:@selector(willRemoveLogger)])
+	#if GCD_MAYBE_UNAVAILABLE
+		
+		// Notify all loggers.
+		// And then remove them all from loggers array.
+		
+		for (id <DDLogger> logger in loggers)
 		{
-			[currentNode->logger willRemoveLogger];
+			if ([logger respondsToSelector:@selector(willRemoveLogger)])
+			{
+				[logger willRemoveLogger];
+			}
 		}
 		
-		nextNode = currentNode->next;
+		[loggers removeAllObjects];
 		
-		[currentNode->logger release];
-		currentNode->logger = nil;
-		
-		dispatch_release(currentNode->loggerQueue);
-		currentNode->loggerQueue = NULL;
-		
-		currentNode->next = NULL;
-		
-		free(currentNode);
-		
-		currentNode = nextNode;
+	#endif
 	}
-	
-	loggerNodes = NULL;
-	
-#else
-	
-	// Notify all loggers.
-	// And then remove them all from loggers array.
-	
-	for (id <DDLogger> logger in loggers)
-	{
-		if ([logger respondsToSelector:@selector(willRemoveLogger)])
-		{
-			[logger willRemoveLogger];
-		}
-	}
-	
-	[loggers removeAllObjects];
-	
-#endif
 }
 
 /**
@@ -747,99 +825,113 @@ typedef struct LoggerNode LoggerNode;
 {
 	// Execute the given log message on each of our loggers.
 	
-#if GCD_AVAILABLE
-	
-	// Execute each logger concurrently, each within its own queue.
-	// All blocks are added to same group.
-	// After each block has been queued, wait on group.
-	// 
-	// The waiting ensures that a slow logger doesn't end up with a large queue of pending log messages.
-	// This would defeat the purpose of the efforts we made earlier to restrict the max queue size.
-	
-	LoggerNode *currentNode = loggerNodes;
-	
-	while (currentNode)
+	if (IS_GCD_AVAILABLE)
 	{
-		dispatch_block_t loggerBlock = ^{
-			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-			
-			[currentNode->logger logMessage:logMessage];
-			
-			[pool release];
-		};
+	#if GCD_MAYBE_AVAILABLE
 		
-		dispatch_group_async(loggingGroup, currentNode->loggerQueue, loggerBlock);
+		// Execute each logger concurrently, each within its own queue.
+		// All blocks are added to same group.
+		// After each block has been queued, wait on group.
+		// 
+		// The waiting ensures that a slow logger doesn't end up with a large queue of pending log messages.
+		// This would defeat the purpose of the efforts we made earlier to restrict the max queue size.
 		
-		currentNode = currentNode->next;
+		LoggerNode *currentNode = loggerNodes;
+		
+		while (currentNode)
+		{
+			dispatch_block_t loggerBlock = ^{
+				NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+				
+				[currentNode->logger logMessage:logMessage];
+				
+				[pool release];
+			};
+			
+			dispatch_group_async(loggingGroup, currentNode->loggerQueue, loggerBlock);
+			
+			currentNode = currentNode->next;
+		}
+		
+		dispatch_group_wait(loggingGroup, DISPATCH_TIME_FOREVER);
+		
+	#endif
 	}
-	
-	dispatch_group_wait(loggingGroup, DISPATCH_TIME_FOREVER);
-	
-#else
-	
-	for (id <DDLogger> logger in loggers)
+	else
 	{
-		[logger logMessage:logMessage];
+	#if GCD_MAYBE_UNAVAILABLE
+		
+		for (id <DDLogger> logger in loggers)
+		{
+			[logger logMessage:logMessage];
+		}
+		
+	#endif
 	}
-	
-#endif
 	
 	// If our queue got too big, there may be blocked threads waiting to add log messages to the queue.
 	// Since we've now dequeued an item from the log, we may need to unblock the next thread.
 	
-#if GCD_AVAILABLE
-	
-	// We are using a counting semaphore provided by GCD.
-	// The semaphore is initialized with our LOG_MAX_QUEUE_SIZE value.
-	// When a log message is queued this value is decremented.
-	// When a log message is dequeued this value is incremented.
-	// If the value ever drops below zero,
-	// the queueing thread blocks and waits in FIFO order for us to signal it.
-	// 
-	// A dispatch semaphore is an efficient implementation of a traditional counting semaphore.
-	// Dispatch semaphores call down to the kernel only when the calling thread needs to be blocked.
-	// If the calling semaphore does not need to block, no kernel call is made.
-	
-	dispatch_semaphore_signal(queueSemaphore);
-	
-#else
-	
-	int32_t newQueueSize = OSAtomicDecrement32(&queueSize);
-	if (newQueueSize >= LOG_MAX_QUEUE_SIZE)
+	if (IS_GCD_AVAILABLE)
 	{
-		// There is an existing blocked thread waiting for us.
-		// When the thread went to queue a log message, it first incremented the queueSize.
-		// At this point it realized that was going to exceed the maxQueueSize.
-		// It then added itself to the blockedThreads list, and is now waiting for us to signal it.
+	#if GCD_MAYBE_AVAILABLE
 		
-		[condition lock];
+		// We are using a counting semaphore provided by GCD.
+		// The semaphore is initialized with our LOG_MAX_QUEUE_SIZE value.
+		// When a log message is queued this value is decremented.
+		// When a log message is dequeued this value is incremented.
+		// If the value ever drops below zero,
+		// the queueing thread blocks and waits in FIFO order for us to signal it.
+		// 
+		// A dispatch semaphore is an efficient implementation of a traditional counting semaphore.
+		// Dispatch semaphores call down to the kernel only when the calling thread needs to be blocked.
+		// If the calling semaphore does not need to block, no kernel call is made.
 		
-		while ([blockedThreads count] == 0)
+		dispatch_semaphore_signal(queueSemaphore);
+		
+	#endif
+	}
+	else
+	{
+	#if GCD_MAYBE_UNAVAILABLE
+		
+		int32_t newQueueSize = OSAtomicDecrement32(&queueSize);
+		if (newQueueSize >= LOG_MAX_QUEUE_SIZE)
 		{
-			NSLogDebug(@"DDLog: Edge case: Empty blocked threads array -> Waiting for condition...");
+			// There is an existing blocked thread waiting for us.
+			// When the thread went to queue a log message, it first incremented the queueSize.
+			// At this point it realized that was going to exceed the maxQueueSize.
+			// It then added itself to the blockedThreads list, and is now waiting for us to signal it.
 			
-			// Edge case.
-			// We acquired the lock before the blockedThread did.
-			// That is why the array is empty.
-			// Allow it to acquire the lock and signal us.
+			[condition lock];
 			
-			[condition wait];
+			while ([blockedThreads count] == 0)
+			{
+				NSLogDebug(@"DDLog: Edge case: Empty blocked threads array -> Waiting for condition...");
+				
+				// Edge case.
+				// We acquired the lock before the blockedThread did.
+				// That is why the array is empty.
+				// Allow it to acquire the lock and signal us.
+				
+				[condition wait];
+			}
+			
+			// The blockedThreads variable is acting as a queue. (FIFO)
+			// Whatever was the first thread to block can now be unblocked.
+			// This means that thread will block only until the count of
+			// prevoiusly queued plus previously reserved log messages before it have dropped below the maxQueueSize.
+			
+			NSLogDebug(@"DDLog: Signaling thread %@ (newQueueSize=%i)", [blockedThreads objectAtIndex:0], newQueueSize);
+			
+			[blockedThreads removeObjectAtIndex:0];
+			[condition broadcast];
+			
+			[condition unlock];
 		}
 		
-		// The blockedThreads variable is acting as a queue. (FIFO)
-		// Whatever was the first thread to block can now be unblocked.
-		// This means that thread will block only until the count of
-		// prevoiusly queued plus previously reserved log messages before it have dropped below the maxQueueSize.
-		
-		NSLogDebug(@"DDLog: Signaling thread %@ (newQueueSize=%i)", [blockedThreads objectAtIndex:0], newQueueSize);
-		
-		[blockedThreads removeObjectAtIndex:0];
-		[condition broadcast];
-		
-		[condition unlock];
+	#endif
 	}
-	
-#endif
 }
 
 /**
