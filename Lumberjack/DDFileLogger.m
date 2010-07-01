@@ -1,5 +1,6 @@
 #import "DDFileLogger.h"
 
+#import <unistd.h>
 #import <sys/attr.h>
 #import <sys/xattr.h>
 
