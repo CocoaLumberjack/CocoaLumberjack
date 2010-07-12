@@ -46,6 +46,11 @@ static DDConsoleLogger *sharedInstance;
 		
 		client = asl_open(NULL, "com.apple.console", 0);
 		
+		// Initialize default output configuration
+		
+		outputToASL = YES;
+		outputToStdErr = YES;
+		
 		// If we are running the application via Xcode,
 		// we want our log messages to have the same look and feel and normal NSLog statements.
 		
@@ -80,6 +85,89 @@ static DDConsoleLogger *sharedInstance;
 	}
 	return self;
 }
+
+- (void)outputToASL:(BOOL)flag
+{
+	// Access and manipulation of the outputToASL variable must be thread-safe.
+	// We could use an atomic property to accomplish this, but that causes two issues.
+	// 
+	// 1. This would force us to use the atomic accessors on every log message.
+	// 2. Configuration changes should be serial in relation to log messages.
+	// 
+	// For example, if a developer writes this:
+	// 
+	// [[DDConsoleLogger sharedInstance] outputToASL:NO]
+	// DDLogVerbose(@"Not in ASL");
+	// [[DDConsoleLogger sharedInstance] outputToASL:YES];
+	// 
+	// Then one would not expect to see the log statement show up in ASL.
+	// We need to ensure this works as expected by executing the configuration change on the proper thread/queue.
+	
+	if (IS_GCD_AVAILABLE)
+	{
+	#if GCD_MAYBE_AVAILABLE
+	
+		dispatch_block_t block = ^{
+			outputToASL = flag;
+		};
+		dispatch_async([DDLog loggingQueue], block);
+		
+	#endif
+	}
+	else
+	{
+	#if GCD_MAYBE_UNAVAILABLE
+		
+		[self performSelector:@selector(lt_outputToASL:)
+		             onThread:[DDLog loggingThread]
+		           withObject:[NSNumber numberWithBool:flag]
+		        waitUntilDone:NO];
+		
+	#endif
+	}
+}
+
+- (void)outputToStdErr:(BOOL)flag
+{
+	// Queue configuration change on proper thread/dispatch_queue.
+	
+	if (IS_GCD_AVAILABLE)
+	{
+	#if GCD_MAYBE_AVAILABLE
+	
+		dispatch_block_t block = ^{
+			outputToStdErr = flag;
+		};
+		dispatch_async([DDLog loggingQueue], block);
+		
+	#endif
+	}
+	else
+	{
+	#if GCD_MAYBE_UNAVAILABLE
+		
+		[self performSelector:@selector(lt_outputToStdErr:)
+		             onThread:[DDLog loggingThread]
+		           withObject:[NSNumber numberWithBool:flag]
+		        waitUntilDone:NO];
+		
+	#endif
+	}
+}
+
+#if GCD_MAYBE_UNAVAILABLE
+
+- (void)lt_outputToASL:(NSNumber *)flagNum
+{
+	outputToASL = [flagNum boolValue];
+}
+
+- (void)lt_outputToStdErr:(NSNumber *)flagNum
+{
+	outputToStdErr = [flagNum boolValue];
+}
+
+#endif
 
 - (void)logMessage:(DDLogMessage *)logMessage
 {
@@ -124,27 +212,30 @@ static DDConsoleLogger *sharedInstance;
 		// So we duplicate NSLog in the same manner that CFShow works (and NSLog by extension).
 		
 		
-		// Log the message to the Console.app
+		// Log the message to the apple system log (ASL) so it will show up in Console.app
 		
 		const char *msg = [logMsg UTF8String];
 		
-		int aslLogLevel;
-		switch (logMessage->logLevel)
+		if (outputToASL)
 		{
-			// Note: By default ASL will filter anything above level 5 (Notice).
-			// So our mappings shouldn't go above that level.
+			int aslLogLevel;
+			switch (logMessage->logLevel)
+			{
+				// Note: By default ASL will filter anything above level 5 (Notice).
+				// So our mappings shouldn't go above that level.
+				
+				case 1  : aslLogLevel = ASL_LEVEL_CRIT;    break;
+				case 2  : aslLogLevel = ASL_LEVEL_ERR;     break;
+				case 3  : aslLogLevel = ASL_LEVEL_WARNING; break;
+				default : aslLogLevel = ASL_LEVEL_NOTICE;  break;
+			}
 			
-			case 1  : aslLogLevel = ASL_LEVEL_CRIT;    break;
-			case 2  : aslLogLevel = ASL_LEVEL_ERR;     break;
-			case 3  : aslLogLevel = ASL_LEVEL_WARNING; break;
-			default : aslLogLevel = ASL_LEVEL_NOTICE;  break;
+			asl_log(client, NULL, aslLogLevel, "%s", msg);
 		}
 		
-		asl_log(client, NULL, aslLogLevel, "%s", msg);
+		// Log the message to the Xcode console (if running via Xcode and configured to do so)
 		
-		// Log the message to the Xcode console (if running via Xcode)
-		
-		if (isRunningInXcode)
+		if (isRunningInXcode && outputToStdErr)
 		{
 			// The following is a highly optimized verion of file output to std err.
 			
