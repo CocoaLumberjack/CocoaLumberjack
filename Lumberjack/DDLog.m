@@ -501,24 +501,15 @@ typedef struct LoggerNode LoggerNode;
 
 + (BOOL)isRegisteredClass:(Class)class
 {
-	Protocol *NSObjectProtocol = @protocol(NSObject);
+	SEL getterSel = @selector(ddLogLevel);
+	SEL setterSel = @selector(ddSetLogLevel:);
 	
-	// Not all classes are guaranteed to inherit from NSObject.
-	// If they do not, then we cannot invoke the respondsToSelector method.
+	Method getter = class_getClassMethod(class, getterSel);
+	Method setter = class_getClassMethod(class, setterSel);
 	
-	if (class_conformsToProtocol(class, NSObjectProtocol))
+	if ((getter != NULL) && (setter != NULL))
 	{
-		// It sure would be nice if we could use class_respondsToSelector().
-		// However, this tests if instances of the class respond to the selector.
-		// The methods we're testing for are class methods.
-		
-		SEL selector1 = @selector(ddLogLevel);
-		SEL selector2 = @selector(ddSetLogLevel:);
-		
-		if ([class respondsToSelector:selector1] && [class respondsToSelector:selector2])
-		{
-			return YES;
-		}
+		return YES;
 	}
 	
 	return NO;
