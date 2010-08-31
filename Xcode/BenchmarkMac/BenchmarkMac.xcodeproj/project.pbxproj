@@ -14,8 +14,6 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		DC624CE1120112520011E58C /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC624CE0120112520011E58C /* DDASLLogger.m */; };
 		DC624D011201399A0011E58C /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC624D001201399A0011E58C /* DDTTYLogger.m */; };
-		DC7477401202A41700A55869 /* DDConsole2Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC74773D1202A41700A55869 /* DDConsole2Logger.m */; };
-		DC7477411202A41700A55869 /* DDConsoleLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC74773F1202A41700A55869 /* DDConsoleLogger.m */; };
 		DC987C24119292940020FF52 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987C1E119292940020FF52 /* DDFileLogger.m */; };
 		DC987C25119292940020FF52 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987C20119292940020FF52 /* DDLog.m */; };
 		DC987C30119292B20020FF52 /* BaseNSLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987C29119292B20020FF52 /* BaseNSLogging.m */; };
@@ -41,10 +39,6 @@
 		DC624CE0120112520011E58C /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDASLLogger.m; path = ../../Lumberjack/DDASLLogger.m; sourceTree = "<group>"; };
 		DC624CFF1201399A0011E58C /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDTTYLogger.h; path = ../../Lumberjack/DDTTYLogger.h; sourceTree = "<group>"; };
 		DC624D001201399A0011E58C /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDTTYLogger.m; path = ../../Lumberjack/DDTTYLogger.m; sourceTree = "<group>"; };
-		DC74773C1202A41700A55869 /* DDConsole2Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDConsole2Logger.h; path = ../../Lumberjack/DDConsole2Logger.h; sourceTree = SOURCE_ROOT; };
-		DC74773D1202A41700A55869 /* DDConsole2Logger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDConsole2Logger.m; path = ../../Lumberjack/DDConsole2Logger.m; sourceTree = SOURCE_ROOT; };
-		DC74773E1202A41700A55869 /* DDConsoleLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDConsoleLogger.h; path = ../../Lumberjack/DDConsoleLogger.h; sourceTree = SOURCE_ROOT; };
-		DC74773F1202A41700A55869 /* DDConsoleLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDConsoleLogger.m; path = ../../Lumberjack/DDConsoleLogger.m; sourceTree = SOURCE_ROOT; };
 		DC987C1D119292940020FF52 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDFileLogger.h; path = ../../Lumberjack/DDFileLogger.h; sourceTree = SOURCE_ROOT; };
 		DC987C1E119292940020FF52 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDFileLogger.m; path = ../../Lumberjack/DDFileLogger.m; sourceTree = SOURCE_ROOT; };
 		DC987C1F119292940020FF52 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDLog.h; path = ../../Lumberjack/DDLog.h; sourceTree = SOURCE_ROOT; };
@@ -153,10 +147,6 @@
 			children = (
 				DC987C1F119292940020FF52 /* DDLog.h */,
 				DC987C20119292940020FF52 /* DDLog.m */,
-				DC74773E1202A41700A55869 /* DDConsoleLogger.h */,
-				DC74773F1202A41700A55869 /* DDConsoleLogger.m */,
-				DC74773C1202A41700A55869 /* DDConsole2Logger.h */,
-				DC74773D1202A41700A55869 /* DDConsole2Logger.m */,
 				DC624CDF120112520011E58C /* DDASLLogger.h */,
 				DC624CE0120112520011E58C /* DDASLLogger.m */,
 				DC624CFF1201399A0011E58C /* DDTTYLogger.h */,
@@ -247,8 +237,6 @@
 				DC987C33119292B20020FF52 /* StaticLogging.m in Sources */,
 				DC624CE1120112520011E58C /* DDASLLogger.m in Sources */,
 				DC624D011201399A0011E58C /* DDTTYLogger.m in Sources */,
-				DC7477401202A41700A55869 /* DDConsole2Logger.m in Sources */,
-				DC7477411202A41700A55869 /* DDConsoleLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
