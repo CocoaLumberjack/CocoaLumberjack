@@ -1,7 +1,9 @@
 #import "PerformanceTesting.h"
 #import "DDLog.h"
-#import "DDConsoleLogger.h"
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
 #import "DDFileLogger.h"
+
 
 #import "BaseNSLogging.h"
 #import "StaticLogging.h"
@@ -39,6 +41,12 @@ static NSTimeInterval fmwk[3][2][5][3]; // [suite][file][test][min,avg,max]
 
 static DDFileLogger *fileLogger = nil;
 
++ (void)initialize
+{
+	bzero(&base, sizeof(base));
+	bzero(&fmwk, sizeof(fmwk));
+}
+
 + (DDFileLogger *)fileLogger
 {
 	if (fileLogger == nil)
@@ -61,9 +69,8 @@ static DDFileLogger *fileLogger = nil;
 {
 	[DDLog removeAllLoggers];
 	
-	[DDLog addLogger:[DDConsoleLogger sharedInstance]];
-	
-	[DDLog flushLog];
+	[DDLog addLogger:[DDASLLogger sharedInstance]];
+	[DDLog addLogger:[DDTTYLogger sharedInstance]];
 }
 
 /**
@@ -78,8 +85,6 @@ static DDFileLogger *fileLogger = nil;
 	[DDLog removeAllLoggers];
 	
 	[DDLog addLogger:[self fileLogger]];
-	
-	[DDLog flushLog];
 }
 
 /**
@@ -89,10 +94,9 @@ static DDFileLogger *fileLogger = nil;
 {
 	[DDLog removeAllLoggers];
 	
-	[DDLog addLogger:[DDConsoleLogger sharedInstance]];
+	[DDLog addLogger:[DDASLLogger sharedInstance]];
+	[DDLog addLogger:[DDTTYLogger sharedInstance]];
 	[DDLog addLogger:[self fileLogger]];
-	
-	[DDLog flushLog];
 }
 
 + (void)executeTestsWithBase:(BOOL)exeBase framework:(BOOL)exeFramework frameworkSuite:(int)suiteNum
@@ -315,11 +319,12 @@ static DDFileLogger *fileLogger = nil;
 
 + (void)startPerformanceTests
 {
+	BOOL runBase   = NO;
 	BOOL runSuite1 = YES;
-	BOOL runSuite2 = YES;
+	BOOL runSuite2 = NO;
 	BOOL runSuite3 = YES;
 	
-	if (!runSuite1 && !runSuite2 && !runSuite3)
+	if (!runBase && !runSuite1 && !runSuite2 && !runSuite3)
 	{
 		// Nothing to do, all suites disabled
 		return;
@@ -330,7 +335,10 @@ static DDFileLogger *fileLogger = nil;
 	
 	[NSThread sleepForTimeInterval:3.0];
 	
-	[self executeTestsWithBase:YES framework:NO frameworkSuite:0];
+	if (runBase)
+	{
+		[self executeTestsWithBase:YES framework:NO frameworkSuite:0];
+	}
 	
 	NSString *printableResults1 = nil;
 	NSString *printableResults2 = nil;
@@ -389,26 +397,23 @@ static DDFileLogger *fileLogger = nil;
 		NSLog(@"======================================================================");
 	}
 	
-	if (runSuite1 && runSuite2 && runSuite3)
+#if TARGET_OS_IPHONE
+	NSString *csvResultsPath = [@"~/Documents/LumberjackBenchmark.csv" stringByExpandingTildeInPath];
+#else
+	NSString *csvResultsPath = [@"~/Desktop/LumberjackBenchmark.csv" stringByExpandingTildeInPath];
+#endif
+	
+	if (![[NSFileManager defaultManager] fileExistsAtPath:csvResultsPath])
 	{
-	#if TARGET_OS_IPHONE
-		NSString *csvResultsPath = [@"~/Documents/LumberjackBenchmark.csv" stringByExpandingTildeInPath];
-	#else
-		NSString *csvResultsPath = [@"~/Desktop/LumberjackBenchmark.csv" stringByExpandingTildeInPath];
-	#endif
-		
-		if (![[NSFileManager defaultManager] fileExistsAtPath:csvResultsPath])
-		{
-			[[NSFileManager defaultManager] createFileAtPath:csvResultsPath contents:nil attributes:nil];
-		}
-		
-		NSFileHandle *csvResultsFile = [NSFileHandle fileHandleForWritingAtPath:csvResultsPath];
-		
-		NSString *csvRsults = [self csvResults];
-		[csvResultsFile writeData:[csvRsults dataUsingEncoding:NSUTF8StringEncoding]];
-		
-		NSLog(@"CSV results file written to:\n%@", csvResultsPath);
+		[[NSFileManager defaultManager] createFileAtPath:csvResultsPath contents:nil attributes:nil];
 	}
+	
+	NSFileHandle *csvResultsFile = [NSFileHandle fileHandleForWritingAtPath:csvResultsPath];
+	
+	NSString *csvRsults = [self csvResults];
+	[csvResultsFile writeData:[csvRsults dataUsingEncoding:NSUTF8StringEncoding]];
+	
+	NSLog(@"CSV results file written to:\n%@", csvResultsPath);
 }
 
 @end

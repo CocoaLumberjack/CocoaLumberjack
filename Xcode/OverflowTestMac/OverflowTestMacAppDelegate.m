@@ -1,7 +1,8 @@
 #import "OverflowTestMacAppDelegate.h"
 
 #import "DDLog.h"
-#import "DDConsoleLogger.h"
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
 #import "SlowLogger.h"
 
 // Debug levels: off, error, warn, info, verbose
@@ -21,7 +22,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	SlowLogger *slowLogger = [[[SlowLogger alloc] init] autorelease];
 	[DDLog addLogger:slowLogger];
 	
-	[DDLog addLogger:[DDConsoleLogger sharedInstance]];
+	[DDLog addLogger:[DDASLLogger sharedInstance]];
+	[DDLog addLogger:[DDTTYLogger sharedInstance]];
 	
 	[NSThread detachNewThreadSelector:@selector(bgThread1) toTarget:self withObject:nil];
 	[NSThread detachNewThreadSelector:@selector(bgThread2) toTarget:self withObject:nil];

@@ -1,7 +1,8 @@
 #import "LogFileCompressorAppDelegate.h"
 
 #import "DDLog.h"
-#import "DDConsoleLogger.h"
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
 #import "DDFileLogger.h"
 #import "CompressingLogFileManager.h"
 
@@ -28,7 +29,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	
 	fileLogger.logFileManager.maximumNumberOfLogFiles = 4;
 	
-	[DDLog addLogger:[DDConsoleLogger sharedInstance]];
+	[DDLog addLogger:[DDASLLogger sharedInstance]];
+	[DDLog addLogger:[DDTTYLogger sharedInstance]];
 	[DDLog addLogger:fileLogger];
 	
 	[NSTimer scheduledTimerWithTimeInterval:1.0
