@@ -15,7 +15,8 @@
 		2899E5220DE3E06400AC0155 /* BenchmarkIPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* BenchmarkIPhoneViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* BenchmarkIPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* BenchmarkIPhoneViewController.m */; };
-		DC987BCC11928FA50020FF52 /* DDConsoleLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987BC511928FA50020FF52 /* DDConsoleLogger.m */; };
+		DC74770A12029D4300A55869 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC74770712029D4300A55869 /* DDASLLogger.m */; };
+		DC74770B12029D4300A55869 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC74770912029D4300A55869 /* DDTTYLogger.m */; };
 		DC987BCD11928FA50020FF52 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987BC711928FA50020FF52 /* DDFileLogger.m */; };
 		DC987BCE11928FA50020FF52 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987BC911928FA50020FF52 /* DDLog.m */; };
 		DC987BDF11928FD60020FF52 /* BaseNSLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987BD811928FD60020FF52 /* BaseNSLogging.m */; };
@@ -38,8 +39,10 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* BenchmarkIPhone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BenchmarkIPhone_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* BenchmarkIPhone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BenchmarkIPhone-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		DC987BC411928FA50020FF52 /* DDConsoleLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDConsoleLogger.h; path = ../../Lumberjack/DDConsoleLogger.h; sourceTree = SOURCE_ROOT; };
-		DC987BC511928FA50020FF52 /* DDConsoleLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDConsoleLogger.m; path = ../../Lumberjack/DDConsoleLogger.m; sourceTree = SOURCE_ROOT; };
+		DC74770612029D4300A55869 /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDASLLogger.h; path = ../../Lumberjack/DDASLLogger.h; sourceTree = SOURCE_ROOT; };
+		DC74770712029D4300A55869 /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDASLLogger.m; path = ../../Lumberjack/DDASLLogger.m; sourceTree = SOURCE_ROOT; };
+		DC74770812029D4300A55869 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDTTYLogger.h; path = ../../Lumberjack/DDTTYLogger.h; sourceTree = SOURCE_ROOT; };
+		DC74770912029D4300A55869 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDTTYLogger.m; path = ../../Lumberjack/DDTTYLogger.m; sourceTree = SOURCE_ROOT; };
 		DC987BC611928FA50020FF52 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDFileLogger.h; path = ../../Lumberjack/DDFileLogger.h; sourceTree = SOURCE_ROOT; };
 		DC987BC711928FA50020FF52 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDFileLogger.m; path = ../../Lumberjack/DDFileLogger.m; sourceTree = SOURCE_ROOT; };
 		DC987BC811928FA50020FF52 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDLog.h; path = ../../Lumberjack/DDLog.h; sourceTree = SOURCE_ROOT; };
@@ -135,8 +138,10 @@
 			children = (
 				DC987BC811928FA50020FF52 /* DDLog.h */,
 				DC987BC911928FA50020FF52 /* DDLog.m */,
-				DC987BC411928FA50020FF52 /* DDConsoleLogger.h */,
-				DC987BC511928FA50020FF52 /* DDConsoleLogger.m */,
+				DC74770612029D4300A55869 /* DDASLLogger.h */,
+				DC74770712029D4300A55869 /* DDASLLogger.m */,
+				DC74770812029D4300A55869 /* DDTTYLogger.h */,
+				DC74770912029D4300A55869 /* DDTTYLogger.m */,
 				DC987BC611928FA50020FF52 /* DDFileLogger.h */,
 				DC987BC711928FA50020FF52 /* DDFileLogger.m */,
 			);
@@ -215,13 +220,14 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* BenchmarkIPhoneAppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* BenchmarkIPhoneViewController.m in Sources */,
-				DC987BCC11928FA50020FF52 /* DDConsoleLogger.m in Sources */,
 				DC987BCD11928FA50020FF52 /* DDFileLogger.m in Sources */,
 				DC987BCE11928FA50020FF52 /* DDLog.m in Sources */,
 				DC987BDF11928FD60020FF52 /* BaseNSLogging.m in Sources */,
 				DC987BE011928FD60020FF52 /* DynamicLogging.m in Sources */,
 				DC987BE111928FD60020FF52 /* PerformanceTesting.m in Sources */,
 				DC987BE211928FD60020FF52 /* StaticLogging.m in Sources */,
+				DC74770A12029D4300A55869 /* DDASLLogger.m in Sources */,
+				DC74770B12029D4300A55869 /* DDTTYLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,7 +269,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos3.1.3;
+				SDKROOT = iphoneos4.0;
 			};
 			name = Debug;
 		};
@@ -276,7 +282,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos3.1.3;
+				SDKROOT = iphoneos4.0;
 			};
 			name = Release;
 		};

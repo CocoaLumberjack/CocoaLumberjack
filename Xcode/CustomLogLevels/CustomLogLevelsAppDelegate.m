@@ -1,7 +1,8 @@
 #import "CustomLogLevelsAppDelegate.h"
 
 #import "MYLog.h"
-#import "DDConsoleLogger.h"
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
 
 // Debug levels: off, fatal, error, warn, notice, info, debug
 static const int ddLogLevel = LOG_LEVEL_DEBUG;
@@ -13,7 +14,8 @@ static const int ddLogLevel = LOG_LEVEL_DEBUG;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	[DDLog addLogger:[DDConsoleLogger sharedInstance]];
+	[DDLog addLogger:[DDASLLogger sharedInstance]];
+	[DDLog addLogger:[DDTTYLogger sharedInstance]];
 	
 	DDLogFatal(@"Fatal");
 	DDLogError(@"Error");

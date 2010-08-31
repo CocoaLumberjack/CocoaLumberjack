@@ -139,9 +139,9 @@
 {
 	NSLogVerbose(@"CompressingLogFileManager: didArchiveLogFile: %@", [logFilePath lastPathComponent]);
 	
-	// If all other log files have been uploaded,
+	// If all other log files have been compressed,
 	// then we can get started right away.
-	// Otherwise we should just wait for the current upload process to finish.
+	// Otherwise we should just wait for the current compression process to finish.
 	
 	if (upToDate)
 	{
@@ -153,9 +153,9 @@
 {
 	NSLogVerbose(@"CompressingLogFileManager: didRollAndArchiveLogFile: %@", [logFilePath lastPathComponent]);
 	
-	// If all other log files have been uploaded,
+	// If all other log files have been compressed,
 	// then we can get started right away.
-	// Otherwise we should just wait for the current upload process to finish.
+	// Otherwise we should just wait for the current compression process to finish.
 	
 	if (upToDate)
 	{
@@ -393,19 +393,30 @@
 		
 		// Report failure to class via logging thread/queue
 		
-		#if GCD_AVAILABLE
+		if (IS_GCD_AVAILABLE)
+		{
+		#if GCD_MAYBE_AVAILABLE
+			
 			dispatch_block_t block = ^{
 				NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 				[self compressionDidFail:logFile];
 				[pool release];
 			};
 			dispatch_async([DDLog loggingQueue], block);
-		#else
+			
+		#endif
+		}
+		else
+		{
+		#if GCD_MAYBE_UNAVAILABLE
+			
 			[self performSelector:@selector(compressionDidFail:)
 			             onThread:[DDLog loggingThread]
 			           withObject:logFile
 			        waitUntilDone:NO];
+			
 		#endif
+		}
 	}
 	else
 	{
@@ -431,19 +442,30 @@
 		
 		// Report success to class via logging thread/queue
 		
-		#if GCD_AVAILABLE
+		if (IS_GCD_AVAILABLE)
+		{
+		#if GCD_MAYBE_AVAILABLE
+			
 			dispatch_block_t block = ^{
 				NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 				[self compressionDidSucceed:compressedLogFile];
 				[pool release];
 			};
 			dispatch_async([DDLog loggingQueue], block);
-		#else
+			
+		#endif
+		}
+		else
+		{
+		#if GCD_MAYBE_UNAVAILABLE
+			
 			[self performSelector:@selector(compressionDidSucceed:)
 			             onThread:[DDLog loggingThread]
 			           withObject:compressedLogFile
 			        waitUntilDone:NO];
+			
 		#endif
+		}
 	}
 	
 	

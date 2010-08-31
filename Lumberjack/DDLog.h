@@ -116,6 +116,15 @@
 
 #endif
 
+//#undef IS_GCD_AVAILABLE
+//#undef GCD_MAYBE_AVAILABLE
+//#undef GCD_MAYBE_UNAVAILABLE
+
+//#define IS_GCD_AVAILABLE      NO
+//#define GCD_MAYBE_AVAILABLE   0
+//#define GCD_MAYBE_UNAVAILABLE 1
+
+
 @class DDLogMessage;
 
 @protocol DDLogger;
@@ -332,11 +341,17 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 /**
  * When Grand Central Dispatch is available
  * each logger is executed concurrently with respect to the other loggers.
- * Thus, a dedicated dispatch queue is created for each logger.
- * The dedicated dispatch queue will receive its name from this method.
+ * Thus, a dedicated dispatch queue is used for each logger.
+ * Logger implementations may optionally choose to provide their own dispatch queue.
+**/
+- (dispatch_queue_t)loggerQueue;
+
+/**
+ * If the logger implementation does not choose to provide its own queue,
+ * one will automatically be created for it.
+ * The created queue will receive its name from this method.
  * This may be helpful for debugging or profiling reasons.
 **/
-
 - (NSString *)loggerName;
 
 #endif
@@ -355,7 +370,11 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * This allows for increased flexibility in the logging environment.
  * For example, log messages for log files may be formatted differently than log messages for the console.
  * 
- * The formatter may also optionally filter the log message by returning nil.
+ * For more information about formatters, see the "Custom Formatters" page:
+ * http://code.google.com/p/cocoalumberjack/wiki/CustomFormatters
+ * 
+ * The formatter may also optionally filter the log message by returning nil,
+ * in which case the logger will not log the message.
 **/
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage;
@@ -452,7 +471,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 
 /**
  * Convenience method to get just the file name, as the file variable is generally the full file path.
- * This method does not include the file extension, which is generally not needed for logging purposes.
+ * This method does not include the file extension, which is generally unwanted for logging purposes.
 **/
 - (NSString *)fileName;
 
@@ -460,5 +479,38 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * Returns the function variable in NSString form.
 **/
 - (NSString *)methodName;
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * The DDLogger protocol specifies that an optional formatter can be added to a logger.
+ * Most (but not all) loggers will want to support formatters.
+ * 
+ * However, writting getters and setters in a thread safe manner,
+ * while still maintaining maximum speed for the logging process, is a difficult task.
+ * 
+ * To do it right, the implementation of the getter/setter has strict requiremenets:
+ * - Must NOT require the logMessage method to acquire a lock.
+ * - Must NOT require the logMessage method to access an atomic property (also a lock of sorts).
+ * 
+ * To simplify things, an abstract logger is provided that implements the getter and setter.
+ * 
+ * Logger implementations may simply extend this class,
+ * and they can ACCESS THE FORMATTER VARIABLE DIRECTLY from within their logMessage method!
+**/
+
+@interface DDAbstractLogger : NSObject <DDLogger>
+{
+	id <DDLogFormatter> formatter;
+	
+	dispatch_queue_t loggerQueue;
+}
+
+- (id <DDLogFormatter>)logFormatter;
+- (void)setLogFormatter:(id <DDLogFormatter>)formatter;
 
 @end

@@ -10,7 +10,8 @@
 #import "UniversalAppViewController.h"
 
 #import "DDLog.h"
-#import "DDConsoleLogger.h"
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
 
 @implementation UniversalAppAppDelegate
 
@@ -23,7 +24,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [DDLog addLogger:[DDConsoleLogger sharedInstance]];
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+	[DDLog addLogger:[DDTTYLogger sharedInstance]];
 	
 	if (IS_GCD_AVAILABLE)
 		NSLog(@"GCD is available! :)");

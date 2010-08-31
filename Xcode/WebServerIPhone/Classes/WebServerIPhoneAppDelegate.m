@@ -2,8 +2,9 @@
 #import "WebServerIPhoneViewController.h"
 
 #import "DDLog.h"
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
 #import "DDFileLogger.h"
-#import "DDConsoleLogger.h"
 
 #import "MyHTTPServer.h"
 
@@ -62,7 +63,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	// 
 	// This is something we may not want to do in a shipping version of the application.
 	
-	[DDLog addLogger:[DDConsoleLogger sharedInstance]];
+	[DDLog addLogger:[DDASLLogger sharedInstance]];
+	[DDLog addLogger:[DDTTYLogger sharedInstance]];
 	
 	// We also want to direct our log messages to a file.
 	// So we're going to setup file logging.

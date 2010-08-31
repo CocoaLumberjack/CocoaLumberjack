@@ -121,9 +121,8 @@
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface DDFileLogger : NSObject <DDLogger>
+@interface DDFileLogger : DDAbstractLogger <DDLogger>
 {
-	id <DDLogFormatter> formatter;
 	id <DDLogFileManager> logFileManager;
 	
 	DDLogFileInfo *currentLogFileInfo;
@@ -168,6 +167,16 @@
 @property (readwrite, assign) NSTimeInterval rollingFrequency;
 
 @property (nonatomic, readonly) id <DDLogFileManager> logFileManager;
+
+
+// You can optionally force the current log file to be rolled with this method.
+
+- (void)rollLogFile;
+
+// Inherited from DDAbstractLogger
+
+// - (id <DDLogFormatter>)logFormatter;
+// - (void)setLogFormatter:(id <DDLogFormatter>)formatter;
 
 @end
 

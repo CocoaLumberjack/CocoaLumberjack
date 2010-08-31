@@ -1,7 +1,8 @@
 #import "FineGrainedLoggingAppDelegate.h"
 
 #import "MYLog.h"
-#import "DDConsoleLogger.h"
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
 
 #import "TimerOne.h"
 #import "TimerTwo.h"
@@ -16,7 +17,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	[DDLog addLogger:[DDConsoleLogger sharedInstance]];
+	[DDLog addLogger:[DDASLLogger sharedInstance]];
+	[DDLog addLogger:[DDTTYLogger sharedInstance]];
 	
 	timerOne = [[TimerOne alloc] init];
 	timerTwo = [[TimerTwo alloc] init];
