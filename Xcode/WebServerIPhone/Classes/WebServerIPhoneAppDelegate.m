@@ -6,7 +6,8 @@
 #import "DDTTYLogger.h"
 #import "DDFileLogger.h"
 
-#import "MyHTTPServer.h"
+#import "HTTPServer.h"
+#import "MyHTTPConnection.h"
 
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
@@ -22,24 +23,20 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)setupWebServer
 {
 	// Create server using our custom MyHTTPServer class
-	httpServer = [[MyHTTPServer alloc] init];
+	httpServer = [[HTTPServer alloc] init];
+	
+	// Configure it to use our connection class
+	[httpServer setConnectionClass:[MyHTTPConnection class]];
 	
 	// Set the bonjour type of the http server.
 	// This allows the server to broadcast itself via bonjour.
 	// You can automatically discover the service in Safari's bonjour bookmarks section.
-	// 
-	// Note: At the time of this writing, the current release version of Safari does not support WebSockets.
-	// However, WebSockets are supported in various development builds of Safari though,
-	// so it is expected that support for WebSockets will be available soon in a released version of Safari.
-	// 
-	// At the time of this writing, the current release version of Google Chrome has full WebSocket support.
-	
-//	[httpServer setType:@"_http._tcp."];
+	[httpServer setType:@"_http._tcp."];
 	
 	// Normally there is no need to run our server on any specific port.
 	// Technologies like Bonjour allow clients to dynamically discover the server's port at runtime.
-	// However, for testing purposes, it is much easier if the port doesn't change on every build-and-go.
-	[httpServer setPort:12345];
+	// However, for testing purposes, it may be much easier if the port doesn't change on every build-and-go.
+	//[httpServer setPort:12345];
 	
 	// Serve files from our embedded Web folder
 	NSString *webPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Web"];

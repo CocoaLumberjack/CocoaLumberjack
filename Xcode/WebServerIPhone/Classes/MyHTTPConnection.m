@@ -1,19 +1,14 @@
 #import "MyHTTPConnection.h"
-#import "MyHTTPServer.h"
 #import "WebServerIPhoneAppDelegate.h"
 #import "HTTPResponse.h"
 #import "HTTPDynamicFileResponse.h"
+#import "AsyncSocket.h"
 #import "DDLog.h"
 #import "DDFileLogger.h"
 #import "WebSocketLogger.h"
 
 
 @implementation MyHTTPConnection
-
-- (MyHTTPServer *)myHttpServer
-{
-	return (MyHTTPServer *)server;
-}
 
 - (id <DDLogFileManager>)logFileManager
 {
@@ -98,7 +93,7 @@
 
 - (NSString *)wsLocation
 {
-	NSString *port = [NSString stringWithFormat:@"%hu", [server port]];
+	NSString *port = [NSString stringWithFormat:@"%hu", [asyncSocket localPort]];
 	
 	NSString *wsLocation;
 	NSString *wsHost = NSMakeCollectable(CFHTTPMessageCopyHeaderFieldValue(request, CFSTR("Host")));
@@ -114,21 +109,6 @@
 	
 	[wsHost release];
 	return wsLocation;
-}
-
-- (NSString *)wsOrigin
-{
-	NSString *port = [NSString stringWithFormat:@"%hu", [server port]];
-	
-	NSString *wsOrigin = NSMakeCollectable(CFHTTPMessageCopyHeaderFieldValue(request, CFSTR("Origin")));
-	
-	if (wsOrigin == nil)
-	{
-		return [NSString stringWithFormat:@"http://localhost:%@", port];
-	}
-	else {
-		return [wsOrigin autorelease];
-	}
 }
 
 - (NSObject<HTTPResponse> *)httpResponseForMethod:(NSString *)method URI:(NSString *)path
@@ -158,99 +138,20 @@
 														separator:@"%%"
 											replacementDictionary:replacementDict] autorelease];
 	}
-	else if ([path isEqualToString:@"/livelog"])
-	{
-		// Request:
-		// 
-		// GET /service HTTP/1.1
-		// Upgrade: WebSocket
-		// Connection: Upgrade
-		// Host: localhost:12345
-		// Origin: http://localhost:12345
-		
-		isWebSocketRequest = YES;
-		
-		// Return an empty response.
-		// This will let the HTTPConnection handle most of the normal HTTP response stuff.
-		return [[[HTTPDataResponse alloc] initWithData:nil] autorelease];
-	}
 	else
 	{
 		return [super httpResponseForMethod:method URI:path];
 	}
 }
 
-- (NSData *)preprocessResponse:(CFHTTPMessageRef)response
+- (WebSocket *)webSocketForURI:(NSString *)path
 {
-	if(isWebSocketRequest)
+	if ([path isEqualToString:@"/livelog"])
 	{
-		// Response:
-		// 
-		// HTTP/1.1 101 Web Socket Protocol Handshake
-		// Upgrade: WebSocket
-		// Connection: Upgrade
-		// WebSocket-Origin: http://localhost:12345
-		// WebSocket-Location: ws://localhost:12345/livelog
-		
-		CFHTTPMessageRef wsResponse = CFHTTPMessageCreateResponse(kCFAllocatorDefault,
-		                                                          101, CFSTR("Web Socket Protocol Handshake"),
-		                                                          kCFHTTPVersion1_1);
-		
-		CFHTTPMessageSetHeaderFieldValue(wsResponse, CFSTR("Upgrade"), CFSTR("WebSocket"));
-		CFHTTPMessageSetHeaderFieldValue(wsResponse, CFSTR("Connection"), CFSTR("Upgrade"));
-		
-		// Note: It appears that WebSocket-Origin and WebSocket-Location
-		// are required for Google's Chrome implementation to work properly.
-		// 
-		// If we don't send either header, Chrome will never report the WebSocket as open.
-		// If we only send one of the two, Chrome will immediately close the WebSocket.
-		// 
-		// In addition to this it appears that Chrome's implementation is very picky of the values of the headers.
-		// They have to match exactly with what Chrome sent us or it will close the WebSocket.
-
-		NSString *wsLocation = [self wsLocation];
-		NSString *wsOrigin = [self wsOrigin];
-		
-		CFHTTPMessageSetHeaderFieldValue(wsResponse, CFSTR("WebSocket-Origin"), (CFStringRef)wsOrigin);
-		CFHTTPMessageSetHeaderFieldValue(wsResponse, CFSTR("WebSocket-Location"), (CFStringRef)wsLocation);
-						  
-		// Do not invoke super.
-		// The above headers are all that is required for a WebSocket.
-		
-		NSData *result = NSMakeCollectable(CFHTTPMessageCopySerializedMessage(wsResponse));
-		
-		NSString *tempStr = [[[NSString alloc] initWithData:result encoding:NSUTF8StringEncoding] autorelease];
-		NSLog(@"WebSocket Response:\n%@", tempStr);
-		
-		return [result autorelease];
+		return [[[WebSocketLogger alloc] initWithRequest:request socket:asyncSocket] autorelease];
 	}
-	else
-	{
-		return [super preprocessResponse:response];
-	}
-}
-
-- (BOOL)shouldDie
-{
-	if (isWebSocketRequest)
-	{
-		// Create our web socket
-		WebSocketLogger *ws = [[[WebSocketLogger alloc] initWithSocket:asyncSocket] autorelease];
-		
-		// Add the web socket to the server's list (so that it's retained somewhere)
-		[[self myHttpServer] addWebSocket:ws];
-		
-		// The WebSocket now has ownership of the underlying socket.
-		// So remove the HTTPConnection's reference to it.
-		[asyncSocket release];
-		asyncSocket = nil;
-		
-		return YES;
-	}
-	else
-	{
-		return [super shouldDie];
-	}
+	
+	return [super webSocketForURI:path];
 }
 
 @end

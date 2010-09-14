@@ -1,23 +1,14 @@
 #import <Foundation/Foundation.h>
 #import "DDLog.h"
+#import "WebSocket.h"
 
-@class AsyncSocket;
 
-
-#define WebSocketLoggerDidDieNotification  @"WebSocketLoggerDidDie"
-
-@interface WebSocketLogger : NSObject <DDLogger>
+@interface WebSocketLogger : WebSocket <DDLogger>
 {
 	id <DDLogFormatter> formatter;
 	
-	AsyncSocket *asyncSocket;
-	NSThread *connectionThread;
-	
-	NSData *term;
-	
 	BOOL isWebSocketOpen;
+	NSThread *connectionThread;
 }
-
-- (id)initWithSocket:(AsyncSocket *)socket;
 
 @end

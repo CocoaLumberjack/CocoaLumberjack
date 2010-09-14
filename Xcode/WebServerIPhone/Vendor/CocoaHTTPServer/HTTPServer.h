@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 
 @class AsyncSocket;
+@class WebSocket;
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1060 // Mac OS X 10.6
   #define IMPLEMENTED_PROTOCOLS <NSNetServiceDelegate>
@@ -32,6 +33,7 @@
 	NSDictionary *txtRecordDictionary;
 	
 	NSMutableArray *connections;
+	NSMutableArray *webSockets;
 }
 
 - (id)delegate;
@@ -62,6 +64,9 @@
 - (BOOL)start:(NSError **)errPtr;
 - (BOOL)stop;
 
+- (void)addWebSocket:(WebSocket *)ws;
+
 - (NSUInteger)numberOfHTTPConnections;
+- (NSUInteger)numberOfWebSocketConnections;
 
 @end
