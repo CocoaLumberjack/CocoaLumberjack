@@ -116,14 +116,16 @@
 
 #endif
 
-//#undef IS_GCD_AVAILABLE
-//#undef GCD_MAYBE_AVAILABLE
-//#undef GCD_MAYBE_UNAVAILABLE
+/*
+// Uncomment for quick temporary test to see if it builds for older OS targets
+#undef IS_GCD_AVAILABLE
+#undef GCD_MAYBE_AVAILABLE
+#undef GCD_MAYBE_UNAVAILABLE
 
-//#define IS_GCD_AVAILABLE      NO
-//#define GCD_MAYBE_AVAILABLE   0
-//#define GCD_MAYBE_UNAVAILABLE 1
-
+#define IS_GCD_AVAILABLE      NO
+#define GCD_MAYBE_AVAILABLE   0
+#define GCD_MAYBE_UNAVAILABLE 1
+*/
 
 @class DDLogMessage;
 
@@ -507,7 +509,9 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 {
 	id <DDLogFormatter> formatter;
 	
+#if GCD_MAYBE_AVAILABLE
 	dispatch_queue_t loggerQueue;
+#endif
 }
 
 - (id <DDLogFormatter>)logFormatter;

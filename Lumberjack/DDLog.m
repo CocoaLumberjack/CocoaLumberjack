@@ -1163,20 +1163,33 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 {
 	if ((self = [super init]))
 	{
-		const char *loggerQueueName = NULL;
-		if ([self respondsToSelector:@selector(loggerName)])
+		if (IS_GCD_AVAILABLE)
 		{
-			loggerQueueName = [[self loggerName] UTF8String];
+		#if GCD_MAYBE_AVAILABLE
+			
+			const char *loggerQueueName = NULL;
+			if ([self respondsToSelector:@selector(loggerName)])
+			{
+				loggerQueueName = [[self loggerName] UTF8String];
+			}
+			
+			loggerQueue = dispatch_queue_create(loggerQueueName, NULL);
+			
+		#endif
 		}
-		
-		loggerQueue = dispatch_queue_create(loggerQueueName, NULL);
 	}
 	return self;
 }
 
 - (void)dealloc
 {
-	dispatch_release(loggerQueue);
+	if (IS_GCD_AVAILABLE)
+	{
+	#if GCD_MAYBE_AVAILABLE
+		dispatch_release(loggerQueue);
+	#endif
+	}
+	
 	[super dealloc];
 }
 
@@ -1408,9 +1421,13 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 	}
 }
 
+#if GCD_MAYBE_AVAILABLE
+
 - (dispatch_queue_t)loggerQueue
 {
 	return loggerQueue;
 }
+
+#endif
 
 @end
