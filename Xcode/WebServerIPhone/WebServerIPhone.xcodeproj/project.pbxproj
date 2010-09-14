@@ -15,6 +15,7 @@
 		2899E5220DE3E06400AC0155 /* WebServerIPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* WebServerIPhoneViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* WebServerIPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* WebServerIPhoneViewController.m */; };
+		DC09927212401A84006B14C0 /* WebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DC09927112401A84006B14C0 /* WebSocket.m */; };
 		DC51A0AD11935C2D00CFF783 /* HTTPDynamicFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DC51A0AC11935C2D00CFF783 /* HTTPDynamicFileResponse.m */; };
 		DC7FBDFE122CE0450003FA9B /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7FBDFB122CE0450003FA9B /* DDASLLogger.m */; };
 		DC7FBDFF122CE0450003FA9B /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7FBDFD122CE0450003FA9B /* DDTTYLogger.m */; };
@@ -30,7 +31,6 @@
 		DC987C831192948F0020FF52 /* HTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987C791192948F0020FF52 /* HTTPResponse.m */; };
 		DC987C841192948F0020FF52 /* HTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987C7B1192948F0020FF52 /* HTTPServer.m */; };
 		DC987C90119294FD0020FF52 /* MyHTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987C8B119294FD0020FF52 /* MyHTTPConnection.m */; };
-		DC987C91119294FD0020FF52 /* MyHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987C8D119294FD0020FF52 /* MyHTTPServer.m */; };
 		DC987C92119294FD0020FF52 /* WebSocketLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987C8F119294FD0020FF52 /* WebSocketLogger.m */; };
 		DC987C96119295650020FF52 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC987C95119295650020FF52 /* CFNetwork.framework */; };
 		DC987CC4119296760020FF52 /* Web in Resources */ = {isa = PBXBuildFile; fileRef = DC987CBE119296760020FF52 /* Web */; };
@@ -50,6 +50,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* WebServerIPhone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebServerIPhone_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* WebServerIPhone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WebServerIPhone-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		DC09927012401A84006B14C0 /* WebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebSocket.h; path = Vendor/CocoaHTTPServer/WebSocket.h; sourceTree = "<group>"; };
+		DC09927112401A84006B14C0 /* WebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebSocket.m; path = Vendor/CocoaHTTPServer/WebSocket.m; sourceTree = "<group>"; };
 		DC51A0AB11935C2D00CFF783 /* HTTPDynamicFileResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTTPDynamicFileResponse.h; path = Vendor/CocoaHTTPServer/HTTPDynamicFileResponse.h; sourceTree = "<group>"; };
 		DC51A0AC11935C2D00CFF783 /* HTTPDynamicFileResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTTPDynamicFileResponse.m; path = Vendor/CocoaHTTPServer/HTTPDynamicFileResponse.m; sourceTree = "<group>"; };
 		DC7FBDFA122CE0450003FA9B /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDASLLogger.h; path = ../../Lumberjack/DDASLLogger.h; sourceTree = SOURCE_ROOT; };
@@ -80,8 +82,6 @@
 		DC987C7B1192948F0020FF52 /* HTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTTPServer.m; path = Vendor/CocoaHTTPServer/HTTPServer.m; sourceTree = "<group>"; };
 		DC987C8A119294FD0020FF52 /* MyHTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyHTTPConnection.h; path = Classes/MyHTTPConnection.h; sourceTree = "<group>"; };
 		DC987C8B119294FD0020FF52 /* MyHTTPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyHTTPConnection.m; path = Classes/MyHTTPConnection.m; sourceTree = "<group>"; };
-		DC987C8C119294FD0020FF52 /* MyHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyHTTPServer.h; path = Classes/MyHTTPServer.h; sourceTree = "<group>"; };
-		DC987C8D119294FD0020FF52 /* MyHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyHTTPServer.m; path = Classes/MyHTTPServer.m; sourceTree = "<group>"; };
 		DC987C8E119294FD0020FF52 /* WebSocketLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebSocketLogger.h; path = Classes/WebSocketLogger.h; sourceTree = "<group>"; };
 		DC987C8F119294FD0020FF52 /* WebSocketLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebSocketLogger.m; path = Classes/WebSocketLogger.m; sourceTree = "<group>"; };
 		DC987C95119295650020FF52 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -227,6 +227,8 @@
 				DC987C771192948F0020FF52 /* HTTPConnection.m */,
 				DC987C781192948F0020FF52 /* HTTPResponse.h */,
 				DC987C791192948F0020FF52 /* HTTPResponse.m */,
+				DC09927012401A84006B14C0 /* WebSocket.h */,
+				DC09927112401A84006B14C0 /* WebSocket.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -245,8 +247,6 @@
 		DC987C89119294E10020FF52 /* MyHTTP */ = {
 			isa = PBXGroup;
 			children = (
-				DC987C8C119294FD0020FF52 /* MyHTTPServer.h */,
-				DC987C8D119294FD0020FF52 /* MyHTTPServer.m */,
 				DC987C8A119294FD0020FF52 /* MyHTTPConnection.h */,
 				DC987C8B119294FD0020FF52 /* MyHTTPConnection.m */,
 				DC987C8E119294FD0020FF52 /* WebSocketLogger.h */,
@@ -282,7 +282,14 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WebServerIPhone" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -325,11 +332,11 @@
 				DC987C831192948F0020FF52 /* HTTPResponse.m in Sources */,
 				DC987C841192948F0020FF52 /* HTTPServer.m in Sources */,
 				DC987C90119294FD0020FF52 /* MyHTTPConnection.m in Sources */,
-				DC987C91119294FD0020FF52 /* MyHTTPServer.m in Sources */,
 				DC987C92119294FD0020FF52 /* WebSocketLogger.m in Sources */,
 				DC51A0AD11935C2D00CFF783 /* HTTPDynamicFileResponse.m in Sources */,
 				DC7FBDFE122CE0450003FA9B /* DDASLLogger.m in Sources */,
 				DC7FBDFF122CE0450003FA9B /* DDTTYLogger.m in Sources */,
+				DC09927212401A84006B14C0 /* WebSocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,7 +378,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos4.1;
 			};
 			name = Debug;
 		};
@@ -384,7 +391,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos4.1;
 			};
 			name = Release;
 		};

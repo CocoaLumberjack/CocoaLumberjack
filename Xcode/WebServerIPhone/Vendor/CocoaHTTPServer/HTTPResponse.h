@@ -39,6 +39,10 @@
 // Important: You should read the discussion at the bottom of this header.
 - (BOOL)isChunked;
 
+// Status code for response.
+// Allows for responses such as redirect (301), etc.
+- (NSInteger)status;
+
 #endif
 
 @end
@@ -71,6 +75,19 @@
 }
 
 - (id)initWithData:(NSData *)data;
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@interface HTTPRedirectResponse : NSObject <HTTPResponse>
+{
+	NSString *redirectPath;
+}
+
+- (id)initWithPath:(NSString *)redirectPath;
 
 @end
 

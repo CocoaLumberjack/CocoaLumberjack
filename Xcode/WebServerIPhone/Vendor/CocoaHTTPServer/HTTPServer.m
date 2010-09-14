@@ -1,6 +1,7 @@
 #import "AsyncSocket.h"
 #import "HTTPServer.h"
 #import "HTTPConnection.h"
+#import "WebSocket.h"
 
 
 @implementation HTTPServer
@@ -34,14 +35,21 @@
 		// by automatically appending a digit to the end of the name.
 		name = @"";
 		
-		// Initialize an array to hold all the HTTP connections
+		// Initialize arrays to hold all the HTTP and webSocket connections
 		connections = [[NSMutableArray alloc] init];
+		webSockets  = [[NSMutableArray alloc] init];
 		
-		// And register for notifications of closed connections
+		// Register for notifications of closed connections
 		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(connectionDidDie:)
-													 name:HTTPConnectionDidDieNotification
-												   object:nil];
+		                                         selector:@selector(connectionDidDie:)
+		                                             name:HTTPConnectionDidDieNotification
+		                                           object:nil];
+		
+		// Register for notifications of closed websocket connections
+		[[NSNotificationCenter defaultCenter] addObserver:self
+		                                         selector:@selector(webSocketDidDie:)
+		                                             name:WebSocketDidDieNotification
+		                                           object:nil];
 	}
 	return self;
 }
@@ -67,12 +75,13 @@
 	[txtRecordDictionary release];
 	[asyncSocket release];
 	[connections release];
+	[webSockets release];
 	
 	[super dealloc];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Server Configuration:
+#pragma mark Server Configuration
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -208,7 +217,7 @@
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Server Control:
+#pragma mark Server Control
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (BOOL)start:(NSError **)errPtr
@@ -270,15 +279,29 @@
 		[connections removeAllObjects];
 	}
 	
+	// Now stop all WebSocket connections the server owns
+	@synchronized(webSockets)
+	{
+		[webSockets removeAllObjects];
+	}
+	
 	return YES;
 }
 
+- (void)addWebSocket:(WebSocket *)ws
+{
+	@synchronized(webSockets)
+	{
+		[webSockets addObject:ws];
+	}
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Server Status:
+#pragma mark Server Status
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Returns the number of clients that are currently connected to the server.
+ * Returns the number of http client connections that are currently connected to the server.
 **/
 - (NSUInteger)numberOfHTTPConnections
 {
@@ -291,8 +314,22 @@
 	return result;
 }
 
+/**
+ * Returns the number of websocket client connections that are currently connected to the server.
+**/
+- (NSUInteger)numberOfWebSocketConnections
+{
+	NSUInteger result = 0;
+	
+	@synchronized(webSockets)
+	{
+		result = [webSockets count];
+	}
+	return result;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark AsyncSocket Delegate Methods:
+#pragma mark AsyncSocket Delegate Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 -(void)onSocket:(AsyncSocket *)sock didAcceptNewSocket:(AsyncSocket *)newSocket
@@ -306,22 +343,8 @@
 	[newConnection release];
 }
 
-/**
- * This method is automatically called when a notification of type HTTPConnectionDidDieNotification is posted.
- * It allows us to remove the connection from our array.
-**/
-- (void)connectionDidDie:(NSNotification *)notification
-{
-	// Note: This method is called on the thread/runloop that posted the notification
-	
-	@synchronized(connections)
-	{
-		[connections removeObject:[notification object]];
-	}
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Bonjour Delegate Methods:
+#pragma mark Bonjour Delegate Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -345,6 +368,38 @@
 	
 	NSLog(@"Failed to Publish Service: domain(%@) type(%@) name(%@)", [ns domain], [ns type], [ns name]);
 	NSLog(@"Error Dict: %@", errorDict);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark Notifications
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * This method is automatically called when a notification of type HTTPConnectionDidDieNotification is posted.
+ * It allows us to remove the connection from our array.
+**/
+- (void)connectionDidDie:(NSNotification *)notification
+{
+	// Note: This method is called on the thread/runloop that posted the notification
+	
+	@synchronized(connections)
+	{
+		[connections removeObject:[notification object]];
+	}
+}
+
+/**
+ * This method is automatically called when a notification of type WebSocketDidDieNotification is posted.
+ * It allows us to remove the websocket from our array.
+**/
+- (void)webSocketDidDie:(NSNotification *)notification
+{
+	// Note: This method is called on the thread/runloop that posted the notification
+	
+	@synchronized(webSockets)
+	{
+		[webSockets removeObject:[notification object]];
+	}
 }
 
 @end

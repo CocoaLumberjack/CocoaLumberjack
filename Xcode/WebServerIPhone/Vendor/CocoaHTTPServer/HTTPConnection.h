@@ -7,6 +7,7 @@
 
 @class AsyncSocket;
 @class HTTPServer;
+@class WebSocket;
 @protocol HTTPResponse;
 
 
@@ -39,7 +40,7 @@
 - (id)initWithAsyncSocket:(AsyncSocket *)newSocket forServer:(HTTPServer *)myServer;
 
 - (BOOL)supportsMethod:(NSString *)method atPath:(NSString *)path;
-- (BOOL)expectsRequestBodyFromMethod:(NSString *)method atPath:(NSString *)relativePath;
+- (BOOL)expectsRequestBodyFromMethod:(NSString *)method atPath:(NSString *)path;
 
 - (BOOL)isSecureServer;
 - (NSArray *)sslIdentityAndCertificates;
@@ -49,11 +50,15 @@
 - (NSString *)realm;
 - (NSString *)passwordForUser:(NSString *)username;
 
+- (NSDictionary *)parseParams:(NSString *)query;
+- (NSDictionary *)parseGetParams;
+
 - (NSString *)requestURI;
 
+- (NSArray *)directoryIndexFileNames;
 - (NSString *)filePathForURI:(NSString *)path;
-
 - (NSObject<HTTPResponse> *)httpResponseForMethod:(NSString *)method URI:(NSString *)path;
+- (WebSocket *)webSocketForURI:(NSString *)path;
 
 - (void)prepareForBodyWithSize:(UInt64)contentLength;
 - (void)processDataChunk:(NSData *)postDataChunk;

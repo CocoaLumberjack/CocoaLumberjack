@@ -7,6 +7,7 @@
 #import "DDRange.h"
 #import "DDData.h"
 #import "HTTPAsyncFileResponse.h"
+#import "WebSocket.h"
 
 
 // Define chunk size used to read in data for responses
@@ -184,13 +185,14 @@ static NSMutableArray *recentNonces;
  * Returns whether or not the server will accept messages of a given method
  * at a particular URI.
 **/
-- (BOOL)supportsMethod:(NSString *)method atPath:(NSString *)relativePath
+- (BOOL)supportsMethod:(NSString *)method atPath:(NSString *)path
 {
 	// Override me to support methods such as POST.
 	// 
 	// Things you may want to consider:
 	// - Does the given path represent a resource that is designed to accept this method?
 	// - If accepting an upload, is the size of the data being uploaded too big?
+	//   To do this you can check the requestContentLength variable.
 	// 
 	// For more information, you can always access the CFHTTPMessageRef request variable.
 	
@@ -209,7 +211,7 @@ static NSMutableArray *recentNonces;
  * This would be true in the case of a POST, where the client is sending data,
  * or for something like PUT where the client is supposed to be uploading a file.
 **/
-- (BOOL)expectsRequestBodyFromMethod:(NSString *)method atPath:(NSString *)relativePath
+- (BOOL)expectsRequestBodyFromMethod:(NSString *)method atPath:(NSString *)path
 {
 	// Override me to add support for other methods that expect the client
 	// to send a body along with the request header.
@@ -512,26 +514,29 @@ static NSMutableArray *recentNonces;
 #pragma mark Core
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/** 
- * Parses the query variables in the request URI. 
+/**
+ * Starts reading an HTTP request.
+**/
+- (void)startReadingRequest
+{
+	[asyncSocket readDataToData:[AsyncSocket CRLFData]
+	                withTimeout:READ_TIMEOUT
+	                  maxLength:LIMIT_MAX_HEADER_LINE_LENGTH
+	                        tag:HTTP_REQUEST_HEADER];
+}
+
+/**
+ * Parses the given query string.
  * 
- * For example, if the request URI was "search?q=John%20Mayer%20Trio&num=50" 
- * then this method would return the following dictionary: 
+ * For example, if the query is "q=John%20Mayer%20Trio&num=50"
+ * then this method would return the following dictionary:
  * { 
  *   q = "John Mayer Trio" 
  *   num = "50" 
- * } 
-**/ 
-- (NSDictionary *)parseRequestQuery 
+ * }
+**/
+- (NSDictionary *)parseParams:(NSString *)query
 {
-	if(request == NULL) return nil;
-	if(!CFHTTPMessageIsHeaderComplete(request)) return nil;
-	
-	CFURLRef url = CFHTTPMessageCopyRequestURL(request);
-	if(url == NULL) return nil;
-	
-	NSString *query = [NSMakeCollectable(CFURLCopyQueryString(url, NULL)) autorelease];
-	
 	NSArray *components = [query componentsSeparatedByString:@"&"];
 	NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:[components count]];
 	
@@ -571,7 +576,40 @@ static NSMutableArray *recentNonces;
 		}
 	}
 	
-	CFRelease(url); 
+	return result;
+}
+
+/** 
+ * Parses the query variables in the request URI. 
+ * 
+ * For example, if the request URI was "/search.html?q=John%20Mayer%20Trio&num=50" 
+ * then this method would return the following dictionary: 
+ * { 
+ *   q = "John Mayer Trio" 
+ *   num = "50" 
+ * } 
+**/ 
+- (NSDictionary *)parseGetParams 
+{
+	if(request == NULL) return nil;
+	if(!CFHTTPMessageIsHeaderComplete(request)) return nil;
+	
+	NSDictionary *result = nil;
+	
+	CFURLRef url = CFHTTPMessageCopyRequestURL(request);
+	if(url)
+	{
+		CFStringRef query = CFURLCopyQueryString(url, NULL);
+		if (query)
+		{
+			result = [self parseParams:(NSString *)query];
+			
+			CFRelease(query);
+		}
+		
+		CFRelease(url);
+	}
+	
 	return result; 
 }
 
@@ -756,13 +794,35 @@ static NSMutableArray *recentNonces;
 		return;
 	}
 	
+	// Extract requested URI
+	NSString *uri = [self requestURI];
+	
+	// Check for WebSocket request
+	if ([WebSocket isWebSocketRequest:request])
+	{
+		WebSocket *ws = [self webSocketForURI:uri];
+		
+		if (ws == nil)
+		{
+			[self handleResourceNotFound];
+		}
+		else
+		{
+			[server addWebSocket:ws];
+			
+			[asyncSocket release];
+			asyncSocket = nil;
+			
+			[self die];
+		}
+		
+		return;
+	}
+	
 	// Extract the method
 	NSString *method = [NSMakeCollectable(CFHTTPMessageCopyRequestMethod(request)) autorelease];
 	
 	// Note: We already checked to ensure the method was supported in onSocket:didReadData:withTag:
-	
-	// Extract requested URI
-	NSString *uri = [self requestURI];
 	
 	// Check Authentication (if needed)
 	// If not properly authenticated for resource, issue Unauthorized response
@@ -819,8 +879,15 @@ static NSMutableArray *recentNonces;
 	
 	if(!isRangeRequest)
 	{
-		// Status Code 200 - OK
-		response = CFHTTPMessageCreateResponse(kCFAllocatorDefault, 200, NULL, kCFHTTPVersion1_1);
+		// Create response
+		// Default status code: 200 - OK
+		NSInteger status = 200;
+		
+		if ([httpResponse respondsToSelector:@selector(status)])
+		{
+			status = [httpResponse status];
+		}
+		response = CFHTTPMessageCreateResponse(kCFAllocatorDefault, status, NULL, kCFHTTPVersion1_1);
 		
 		if(isChunked)
 		{
@@ -1286,6 +1353,17 @@ static NSMutableArray *recentNonces;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+ * Returns an array of possible index pages.
+ * For example: {"index.html", "index.htm"}
+**/
+- (NSArray *)directoryIndexFileNames
+{
+	// Override me to support other index pages.
+	
+	return [NSArray arrayWithObjects:@"index.html", @"index.htm", nil];
+}
+
+/**
  * Converts relative URI path into full file-system path.
 **/
 - (NSString *)filePathForURI:(NSString *)path
@@ -1293,41 +1371,73 @@ static NSMutableArray *recentNonces;
 	// Override me to perform custom path mapping.
 	// For example you may want to use a default file other than index.html, or perhaps support multiple types.
 	
-	// If there is no configured documentRoot, then it makes no sense to try to return anything
-	if(![server documentRoot]) return nil;
+	NSURL *documentRoot = [server documentRoot];
 	
-	// Convert path to a relative path.
-	// This essentially means trimming beginning '/' characters.
-	// Beware of a bug in the Cocoa framework:
-	// 
-	// [NSURL URLWithString:@"/foo" relativeToURL:baseURL]       == @"/baseURL/foo"
-	// [NSURL URLWithString:@"/foo%20bar" relativeToURL:baseURL] == @"/foo bar"
-	// [NSURL URLWithString:@"/foo" relativeToURL:baseURL]       == @"/foo"
-	
-	NSString *relativePath = path;
-	
-	while([relativePath hasPrefix:@"/"] && [relativePath length] > 1)
+	// If there is no configured documentRoot,
+	// then it makes no sense to try to return anything.
+	if (![server documentRoot])
 	{
-		relativePath = [relativePath substringFromIndex:1];
+		return nil;
 	}
 	
-	NSURL *url;
+	// Part 1: Strip parameters from the url
+	// 
+	// E.g.: /page.html?q=22&var=abc -> /page.html
 	
-	if([relativePath hasSuffix:@"/"])
+	NSString *relativePath = [[NSURL URLWithString:path relativeToURL:documentRoot] relativePath];
+	
+	// Part 2: Append relative path to document root (base path)
+	// 
+	// E.g.: relativePath="/images/icon.png"
+	//       documentRoot="/Users/robbie/Sites"
+	//           fullPath="/Users/robbie/Sites/images/icon.png"
+	// 
+	// We also standardize the path.
+	// 
+	// E.g.: "Users/robbie/Sites/images/../index.html" -> "/Users/robbie/Sites/index.html"
+	
+	NSString *basePath = [documentRoot path];
+	
+	NSString *fullPath = [[basePath stringByAppendingPathComponent:relativePath] stringByStandardizingPath];
+	
+	// Part 3: Prevent serving files outside the document root.
+	// 
+	// Sneaky requests may include ".." in the path.
+	// 
+	// E.g.: relativePath="../Documents/TopSecret.doc"
+	//       documentRoot="/Users/robbie/Sites"
+	//           fullPath="/Users/robbie/Documents/TopSecret.doc"
+	
+	if (![fullPath hasPrefix:basePath])
 	{
-		NSString *completedRelativePath = [relativePath stringByAppendingString:@"index.html"];
-		url = [NSURL URLWithString:completedRelativePath relativeToURL:[server documentRoot]];
+		return nil;
+	}
+	
+	// Part 4: Search for index page if path is pointing to a directory
+	
+	BOOL isDir = NO;
+	
+	if ([[NSFileManager defaultManager] fileExistsAtPath:fullPath isDirectory:&isDir] && isDir)
+	{
+		NSArray *indexFileNames = [self directoryIndexFileNames];
+		
+		for (NSString *indexFileName in indexFileNames)
+		{
+			NSString *indexFilePath = [fullPath stringByAppendingPathComponent:indexFileName];
+			
+			if ([[NSFileManager defaultManager] fileExistsAtPath:indexFilePath isDirectory:&isDir] && !isDir)
+			{
+				return indexFilePath;
+			}
+		}
+		
+		// No matching index files found in directory
+		return nil;
 	}
 	else
 	{
-		url = [NSURL URLWithString:relativePath relativeToURL:[server documentRoot]];
+		return fullPath;
 	}
-	
-	// Watch out for sneaky requests with ".." in the path
-	// For example, the following request: "../Documents/TopSecret.doc"
-	if(![[url path] hasPrefix:[[server documentRoot] path]]) return nil;
-	
-	return [[url path] stringByStandardizingPath];
 }
 
 /**
@@ -1343,7 +1453,9 @@ static NSMutableArray *recentNonces;
 	
 	NSString *filePath = [self filePathForURI:path];
 	
-	if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+	BOOL isDir = NO;
+	
+	if (filePath && [[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDir] && !isDir)
 	{
 		return [[[HTTPFileResponse alloc] initWithFilePath:filePath] autorelease];
 	
@@ -1353,6 +1465,24 @@ static NSMutableArray *recentNonces;
 	//											  forConnection:self
 	//											   runLoopModes:[asyncSocket runLoopModes]] autorelease];
 	}
+	
+	return nil;
+}
+
+- (WebSocket *)webSocketForURI:(NSString *)path
+{
+	// Override me to provide custom WebSocket responses.
+	// To do so, simply override the base WebSocket implementation, and add your custom functionality.
+	// Then return an instance of your custom WebSocket here.
+	// 
+	// For example:
+	// 
+	// if ([path isEqualToString:@"/myAwesomeWebSocketStream"])
+	// {
+	//     return [[[MyWebSocket alloc] initWithRequest:request socket:asyncSocket] autorelease];
+	// }
+	// 
+	// return [super webSocketForURI:path];
 	
 	return nil;
 }
@@ -1673,10 +1803,7 @@ static NSMutableArray *recentNonces;
 {
 	// The socket is up and ready, and this method is called on the socket's corresponding thread.
 	// We can now start reading the HTTP requests...
-	[asyncSocket readDataToData:[AsyncSocket CRLFData]
-					withTimeout:READ_TIMEOUT
-					  maxLength:LIMIT_MAX_HEADER_LINE_LENGTH
-							tag:HTTP_REQUEST_HEADER];
+	[self startReadingRequest];
 }
 
 /**
@@ -1919,7 +2046,7 @@ static NSMutableArray *recentNonces;
 			ranges_headers = nil;
 			ranges_boundry = nil;
 			
-			if([self shouldDie])
+			if ([self shouldDie])
 			{
 				[self die];
 			}
@@ -1932,10 +2059,7 @@ static NSMutableArray *recentNonces;
 				numHeaderLines = 0;
 				
 				// And start listening for more requests
-				[asyncSocket readDataToData:[AsyncSocket CRLFData]
-								withTimeout:READ_TIMEOUT
-								  maxLength:LIMIT_MAX_HEADER_LINE_LENGTH
-										tag:HTTP_REQUEST_HEADER];
+				[self startReadingRequest];
 			}
 		}
 	}
@@ -1989,9 +2113,15 @@ static NSMutableArray *recentNonces;
 #pragma mark Closing
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * This method is called after each response has been fully sent.
+ * Since a single connection may handle multiple request/responses, this method may be called multiple times.
+ * That is, it will be called after completion of each response.
+**/
 - (BOOL)shouldDie
 {
-	// Override me if you want to force close the connection after the response has been fully sent.
+	// Override me if you want to perform any custom actions after a response has been fully sent.
+	// You may also force close the connection by returning YES.
 	
 	return NO;
 }
