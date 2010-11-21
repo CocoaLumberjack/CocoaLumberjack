@@ -35,7 +35,7 @@
 
 // Can we use Grand Central Dispatch?
 // 
-// This question actually is actually composed of two parts:
+// This question is actually composed of two parts:
 // 1. Is it available to the compiler?
 // 2. Is it available to the runtime?
 // 
