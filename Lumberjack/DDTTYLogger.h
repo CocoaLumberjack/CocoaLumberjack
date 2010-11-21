@@ -35,8 +35,8 @@
 	char *app; // Not null terminated
 	char *pid; // Not null terminated
 	
-	int appLen;
-	int pidLen;
+	size_t appLen;
+	size_t pidLen;
 }
 
 + (DDTTYLogger *)sharedInstance;
