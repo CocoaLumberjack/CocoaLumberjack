@@ -2,7 +2,8 @@
 #import "DDLog.h"
 
 
-@interface SlowLogger : DDAbstractLogger <DDLogger>
-
+@interface MyContextFilter : NSObject <DDLogFormatter>
+{
+}
 
 @end
