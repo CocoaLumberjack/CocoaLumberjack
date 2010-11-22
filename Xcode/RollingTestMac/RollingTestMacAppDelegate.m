@@ -15,8 +15,9 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 {
 	fileLogger = [[DDFileLogger alloc] init];
 	
-	fileLogger.maximumFileSize = 1024 * 1; // 1 KB
-	fileLogger.rollingFrequency = 60;      // 60 Seconds
+	fileLogger.maximumFileSize = 1024 * 1;  //  1 KB
+	fileLogger.rollingFrequency = 60;       // 60 Seconds
+	
 	fileLogger.logFileManager.maximumNumberOfLogFiles = 4;
 	
 	[DDLog addLogger:fileLogger];

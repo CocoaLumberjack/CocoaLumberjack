@@ -473,6 +473,7 @@ typedef struct LoggerNode LoggerNode;
 + (void)log:(BOOL)synchronous
       level:(int)level
        flag:(int)flag
+    context:(int)context
        file:(const char *)file
    function:(const char *)function
        line:(int)line
@@ -487,6 +488,7 @@ typedef struct LoggerNode LoggerNode;
 		DDLogMessage *logMessage = [[DDLogMessage alloc] initWithLogMsg:logMsg
 		                                                          level:level
 		                                                           flag:flag
+		                                                        context:context
 		                                                           file:file
 		                                                       function:function
 		                                                           line:line];
@@ -1090,17 +1092,19 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 - (id)initWithLogMsg:(NSString *)msg
                level:(int)level
                 flag:(int)flag
+             context:(int)context
                 file:(const char *)aFile
             function:(const char *)aFunction
                 line:(int)line
 {
 	if((self = [super init]))
 	{
-		logMsg = [msg retain];
-		logLevel = level;
-		logFlag = flag;
-		file = aFile;
-		function = aFunction;
+		logMsg     = [msg retain];
+		logLevel   = level;
+		logFlag    = flag;
+		logContext = context;
+		file       = aFile;
+		function   = aFunction;
 		lineNumber = line;
 		
 		timestamp = [[NSDate alloc] init];

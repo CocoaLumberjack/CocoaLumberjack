@@ -20,7 +20,7 @@
  * Step 2:
  * Define your logging level in your implementation file:
  * 
- * // Debug levels: off, error, warn, info, verbose
+ * // Log levels: off, error, warn, info, verbose
  * static const int ddLogLevel = LOG_LEVEL_VERBOSE;
  * 
  * Step 3:
@@ -136,29 +136,45 @@
  * Define our big multiline macros so all the other macros will be easy to read.
 **/
 
-#define LOG_MACRO(isSynchronous, lvl, flg, fnct, frmt, ...) \
-  [DDLog log:isSynchronous                                  \
-       level:lvl                                            \
-        flag:flg                                            \
-        file:__FILE__                                       \
-    function:fnct                                           \
-        line:__LINE__                                       \
+#define LOG_MACRO(isSynchronous, lvl, flg, ctx, fnct, frmt, ...) \
+  [DDLog log:isSynchronous                                       \
+       level:lvl                                                 \
+        flag:flg                                                 \
+     context:ctx                                                 \
+        file:__FILE__                                            \
+    function:fnct                                                \
+        line:__LINE__                                            \
       format:(frmt), ##__VA_ARGS__]
 
-#define  SYNC_LOG_OBJC_MACRO(lvl, flg, frmt, ...) LOG_MACRO(YES, lvl, flg, sel_getName(_cmd), frmt, ##__VA_ARGS__)
-#define ASYNC_LOG_OBJC_MACRO(lvl, flg, frmt, ...) LOG_MACRO( NO, lvl, flg, sel_getName(_cmd), frmt, ##__VA_ARGS__)
 
-#define  SYNC_LOG_C_MACRO(lvl, flg, frmt, ...)    LOG_MACRO(YES, lvl, flg, __FUNCTION__, frmt, ##__VA_ARGS__)
-#define ASYNC_LOG_C_MACRO(lvl, flg, frmt, ...)    LOG_MACRO( NO, lvl, flg, __FUNCTION__, frmt, ##__VA_ARGS__)
+#define  SYNC_LOG_OBJC_MACRO(lvl, flg, ctx, frmt, ...) \
+                   LOG_MACRO(YES, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+
+#define ASYNC_LOG_OBJC_MACRO(lvl, flg, ctx, frmt, ...) \
+                   LOG_MACRO( NO, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+
+
+#define  SYNC_LOG_C_MACRO(lvl, flg, ctx, frmt, ...) \
+                LOG_MACRO(YES, lvl, flg, ctx, __FUNCTION__, frmt, ##__VA_ARGS__)
+
+#define ASYNC_LOG_C_MACRO(lvl, flg, ctx, frmt, ...) \
+                LOG_MACRO( NO, lvl, flg, ctx, __FUNCTION__, frmt, ##__VA_ARGS__)
+
 
 #define LOG_MAYBE(isSynchronous, lvl, flg, fnct, frmt, ...) \
   do { if(lvl & flg) LOG_MACRO(isSynchronous, lvl, flg, fnct, frmt, ##__VA_ARGS__); } while(0)
 
-#define  SYNC_LOG_OBJC_MAYBE(lvl, flg, frmt, ...) LOG_MAYBE(YES, lvl, flg, sel_getName(_cmd), frmt, ##__VA_ARGS__)
-#define ASYNC_LOG_OBJC_MAYBE(lvl, flg, frmt, ...) LOG_MAYBE( NO, lvl, flg, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+#define  SYNC_LOG_OBJC_MAYBE(lvl, flg, ctx, frmt, ...) \
+                   LOG_MAYBE(YES, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
 
-#define  SYNC_LOG_C_MAYBE(lvl, flg, frmt, ...)    LOG_MAYBE(YES, lvl, flg, __FUNCTION__, frmt, ##__VA_ARGS__)
-#define ASYNC_LOG_C_MAYBE(lvl, flg, frmt, ...)    LOG_MAYBE( NO, lvl, flg, __FUNCTION__, frmt, ##__VA_ARGS__)
+#define ASYNC_LOG_OBJC_MAYBE(lvl, flg, ctx, frmt, ...) \
+                   LOG_MAYBE( NO, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+
+#define  SYNC_LOG_C_MAYBE(lvl, flg, ctx, frmt, ...) \
+                LOG_MAYBE(YES, lvl, flg, ctx, __FUNCTION__, frmt, ##__VA_ARGS__)
+
+#define ASYNC_LOG_C_MAYBE(lvl, flg, ctx, frmt, ...) \
+                LOG_MAYBE( NO, lvl, flg, ctx, __FUNCTION__, frmt, ##__VA_ARGS__)
 
 /**
  * Define our standard log levels.
@@ -191,15 +207,15 @@
 #define LOG_INFO    (ddLogLevel & LOG_FLAG_INFO)
 #define LOG_VERBOSE (ddLogLevel & LOG_FLAG_VERBOSE)
 
-#define DDLogError(frmt, ...)     SYNC_LOG_OBJC_MAYBE(ddLogLevel, LOG_FLAG_ERROR,   frmt, ##__VA_ARGS__)
-#define DDLogWarn(frmt, ...)     ASYNC_LOG_OBJC_MAYBE(ddLogLevel, LOG_FLAG_WARN,    frmt, ##__VA_ARGS__)
-#define DDLogInfo(frmt, ...)     ASYNC_LOG_OBJC_MAYBE(ddLogLevel, LOG_FLAG_INFO,    frmt, ##__VA_ARGS__)
-#define DDLogVerbose(frmt, ...)  ASYNC_LOG_OBJC_MAYBE(ddLogLevel, LOG_FLAG_VERBOSE, frmt, ##__VA_ARGS__)
+#define DDLogError(frmt, ...)     SYNC_LOG_OBJC_MAYBE(ddLogLevel, LOG_FLAG_ERROR,   0, frmt, ##__VA_ARGS__)
+#define DDLogWarn(frmt, ...)     ASYNC_LOG_OBJC_MAYBE(ddLogLevel, LOG_FLAG_WARN,    0, frmt, ##__VA_ARGS__)
+#define DDLogInfo(frmt, ...)     ASYNC_LOG_OBJC_MAYBE(ddLogLevel, LOG_FLAG_INFO,    0, frmt, ##__VA_ARGS__)
+#define DDLogVerbose(frmt, ...)  ASYNC_LOG_OBJC_MAYBE(ddLogLevel, LOG_FLAG_VERBOSE, 0, frmt, ##__VA_ARGS__)
 
-#define DDLogCError(frmt, ...)    SYNC_LOG_C_MAYBE(ddLogLevel, LOG_FLAG_ERROR,   frmt, ##__VA_ARGS__)
-#define DDLogCWarn(frmt, ...)    ASYNC_LOG_C_MAYBE(ddLogLevel, LOG_FLAG_WARN,    frmt, ##__VA_ARGS__)
-#define DDLogCInfo(frmt, ...)    ASYNC_LOG_C_MAYBE(ddLogLevel, LOG_FLAG_INFO,    frmt, ##__VA_ARGS__)
-#define DDLogCVerbose(frmt, ...) ASYNC_LOG_C_MAYBE(ddLogLevel, LOG_FLAG_VERBOSE, frmt, ##__VA_ARGS__)
+#define DDLogCError(frmt, ...)    SYNC_LOG_C_MAYBE(ddLogLevel, LOG_FLAG_ERROR,   0, frmt, ##__VA_ARGS__)
+#define DDLogCWarn(frmt, ...)    ASYNC_LOG_C_MAYBE(ddLogLevel, LOG_FLAG_WARN,    0, frmt, ##__VA_ARGS__)
+#define DDLogCInfo(frmt, ...)    ASYNC_LOG_C_MAYBE(ddLogLevel, LOG_FLAG_INFO,    0, frmt, ##__VA_ARGS__)
+#define DDLogCVerbose(frmt, ...) ASYNC_LOG_C_MAYBE(ddLogLevel, LOG_FLAG_VERBOSE, 0, frmt, ##__VA_ARGS__)
 
 /**
  * The THIS_FILE macro gives you an NSString of the file name.
@@ -262,6 +278,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 + (void)log:(BOOL)synchronous
       level:(int)level
        flag:(int)flag
+    context:(int)context
        file:(const char *)file
    function:(const char *)function
        line:(int)line
@@ -434,6 +451,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 @public
 	int logLevel;
 	int logFlag;
+	int logContext;
 	NSString *logMsg;
 	NSDate *timestamp;
 	const char *file;
@@ -461,6 +479,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 - (id)initWithLogMsg:(NSString *)logMsg
                level:(int)logLevel
                 flag:(int)logFlag
+             context:(int)logContext
                 file:(const char *)file
             function:(const char *)function
                 line:(int)line;

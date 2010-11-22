@@ -9,8 +9,8 @@
 #define LOG_FOOD_TIMER  (ddLogLevel & LOG_FLAG_FOOD_TIMER)
 #define LOG_SLEEP_TIMER (ddLogLevel & LOG_FLAG_SLEEP_TIMER)
 
-#define DDLogFoodTimer(frmt, ...)   ASYNC_LOG_OBJC_MAYBE(ddLogLevel, LOG_FLAG_FOOD_TIMER,  frmt, ##__VA_ARGS__)
-#define DDLogSleepTimer(frmt, ...)  ASYNC_LOG_OBJC_MAYBE(ddLogLevel, LOG_FLAG_SLEEP_TIMER, frmt, ##__VA_ARGS__)
+#define DDLogFoodTimer(frmt, ...)   ASYNC_LOG_OBJC_MAYBE(ddLogLevel, LOG_FLAG_FOOD_TIMER,  0, frmt, ##__VA_ARGS__)
+#define DDLogSleepTimer(frmt, ...)  ASYNC_LOG_OBJC_MAYBE(ddLogLevel, LOG_FLAG_SLEEP_TIMER, 0, frmt, ##__VA_ARGS__)
 
 // Now we decide which flags we want to enable in our application
 
