@@ -1150,6 +1150,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 	[timestamp release];
 	
 	[threadID release];
+	[fileName release];
 	[methodName release];
 	
 	[super dealloc];
