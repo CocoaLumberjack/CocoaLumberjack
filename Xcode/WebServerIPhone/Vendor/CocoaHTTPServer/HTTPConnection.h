@@ -1,11 +1,7 @@
 #import <Foundation/Foundation.h>
 
-#if TARGET_OS_IPHONE
-// Note: You may need to add the CFNetwork Framework to your project
-#import <CFNetwork/CFNetwork.h>
-#endif
-
-@class AsyncSocket;
+@class GCDAsyncSocket;
+@class HTTPMessage;
 @class HTTPServer;
 @class WebSocket;
 @protocol HTTPResponse;
@@ -13,13 +9,40 @@
 
 #define HTTPConnectionDidDieNotification  @"HTTPConnectionDidDie"
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@interface HTTPConfig : NSObject
+{
+	HTTPServer *server;
+	NSString *documentRoot;
+	dispatch_queue_t queue;
+}
+
+- (id)initWithServer:(HTTPServer *)server documentRoot:(NSString *)documentRoot;
+- (id)initWithServer:(HTTPServer *)server documentRoot:(NSString *)documentRoot queue:(dispatch_queue_t)q;
+
+@property (nonatomic, readonly) HTTPServer *server;
+@property (nonatomic, readonly) NSString *documentRoot;
+@property (nonatomic, readonly) dispatch_queue_t queue;
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 @interface HTTPConnection : NSObject
 {
-	AsyncSocket *asyncSocket;
-	HTTPServer *server;
+	dispatch_queue_t connectionQueue;
+	GCDAsyncSocket *asyncSocket;
+	HTTPConfig *config;
 	
-	CFHTTPMessageRef request;
-	int numHeaderLines;
+	BOOL started;
+	
+	HTTPMessage *request;
+	unsigned int numHeaderLines;
 	
 	NSString *nonce;
 	long lastNC;
@@ -37,7 +60,12 @@
 	NSMutableArray *responseDataSizes;
 }
 
-- (id)initWithAsyncSocket:(AsyncSocket *)newSocket forServer:(HTTPServer *)myServer;
+- (id)initWithAsyncSocket:(GCDAsyncSocket *)newSocket configuration:(HTTPConfig *)aConfig;
+
+- (void)start;
+- (void)stop;
+
+- (void)startConnection;
 
 - (BOOL)supportsMethod:(NSString *)method atPath:(NSString *)path;
 - (BOOL)expectsRequestBodyFromMethod:(NSString *)method atPath:(NSString *)path;
@@ -69,8 +97,8 @@
 - (void)handleInvalidRequest:(NSData *)data;
 - (void)handleUnknownMethod:(NSString *)method;
 
-- (NSData *)preprocessResponse:(CFHTTPMessageRef)response;
-- (NSData *)preprocessErrorResponse:(CFHTTPMessageRef)response;
+- (NSData *)preprocessResponse:(HTTPMessage *)response;
+- (NSData *)preprocessErrorResponse:(HTTPMessage *)response;
 
 - (BOOL)shouldDie;
 - (void)die;
@@ -78,5 +106,6 @@
 @end
 
 @interface HTTPConnection (AsynchronousHTTPResponse)
-- (void)responseHasAvailableData;
+- (void)responseHasAvailableData:(NSObject<HTTPResponse> *)sender;
+- (void)responseDidAbort:(NSObject<HTTPResponse> *)sender;
 @end

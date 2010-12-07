@@ -1,55 +1,55 @@
 #import "WebSocketLogger.h"
-#import "AsyncSocket.h"
-
-#define NO_TIMEOUT -1
-
-#define TAG_PREFIX          100
-#define TAG_MSG_PLUS_SUFFIX 101
+#import "HTTPLogging.h"
 
 
 @implementation WebSocketLogger
 
+- (id)initWithWebSocket:(WebSocket *)ws
+{
+	if ((self = [super init]))
+	{
+		websocket = [ws retain];
+		websocket.delegate = self;
+		
+		formatter = [[WebSocketFormatter alloc] init];
+		
+		// Add our logger
+		// 
+		// We do this here (as opposed to in webSocketDidOpen:) so the logging framework will retain us.
+		// This is important as nothing else is retaining us.
+		// It may be a bit hackish, but it's also the simplest solution.
+		[DDLog addLogger:self];
+	}
+	return self;
+}
+
 - (void)dealloc
 {
-	[connectionThread release];
+	[websocket setDelegate:nil];
+	[websocket release];
+	
 	[super dealloc];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Stuff
+#pragma mark WebSocket delegate
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)didOpen
+- (void)webSocketDidOpen:(WebSocket *)ws
 {
+	// This method is invoked on the websocketQueue
+	
 	isWebSocketOpen = YES;
-	connectionThread = [[NSThread currentThread] retain];
-	
-	// Add our logger
-	[DDLog addLogger:self];
-	
-	[super didOpen];
 }
 
-- (void)didReceiveMessage:(NSString *)msg
+- (void)webSocketDidClose:(WebSocket *)ws
 {
-	NSLog(@"WebSocketLogger:%p didReceiveMessage:%@", self, msg);
-}
-
-- (void)sendMessage:(NSString *)msg
-{
-	if (!isWebSocketOpen) return;
+	// This method is invoked on the websocketQueue
 	
-	[super sendMessage:msg];
-}
-
-- (void)didClose
-{
 	isWebSocketOpen = NO;
 	
 	// Remove our logger
 	[DDLog removeLogger:self];
-	
-	[super didClose];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,6 +58,14 @@
 
 - (void)logMessage:(DDLogMessage *)logMessage
 {
+	if (logMessage->logContext == HTTP_LOG_CONTEXT)
+	{
+		// Don't relay HTTP log messages.
+		// Doing so could essentially cause an endless loop of log messages.
+		
+		return;
+	}
+	
 	NSString *logMsg = logMessage->logMsg;
 	
 	if (formatter)
@@ -67,19 +75,56 @@
     
 	if (logMsg)
 	{
-		[self performSelector:@selector(sendMessage:) onThread:connectionThread withObject:logMsg waitUntilDone:NO];
+		dispatch_async(websocket.websocketQueue, ^{
+			
+			if (isWebSocketOpen)
+			{
+				NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+				
+				[websocket sendMessage:logMsg];
+				
+				[pool release];
+			}
+		});
 	}
 }
 
-- (id <DDLogFormatter>)logFormatter
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@implementation WebSocketFormatter
+
+- (id)init
 {
-    return formatter;
+	if((self = [super init]))
+	{
+		dateFormatter = [[NSDateFormatter alloc] init];
+		[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+		[dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss:SSS"];
+	}
+	return self;
 }
 
-- (void)setLogFormatter:(id <DDLogFormatter>)logFormatter
+- (NSString *)formatLogMessage:(DDLogMessage *)logMessage
 {
-    [formatter release];
-    formatter = [logFormatter retain];
+	NSString *dateAndTime = [dateFormatter stringFromDate:(logMessage->timestamp)];
+	
+	NSMutableString *webMsg = [[logMessage->logMsg mutableCopy] autorelease];
+	
+	[webMsg replaceOccurrencesOfString:@"<"  withString:@"&lt;"  options:0 range:NSMakeRange(0, [webMsg length])];
+	[webMsg replaceOccurrencesOfString:@">"  withString:@"&gt;"  options:0 range:NSMakeRange(0, [webMsg length])];
+	[webMsg replaceOccurrencesOfString:@"\n" withString:@"<br/>" options:0 range:NSMakeRange(0, [webMsg length])];
+	
+	return [NSString stringWithFormat:@"%@ &nbsp;%@", dateAndTime, webMsg];
+}
+
+- (void)dealloc
+{
+	[dateFormatter release];
+	[super dealloc];
 }
 
 @end

@@ -1,10 +1,13 @@
 #import "MyHTTPConnection.h"
 #import "WebServerIPhoneAppDelegate.h"
-#import "HTTPResponse.h"
+#import "HTTPLogging.h"
+#import "HTTPMessage.h"
+#import "HTTPDataResponse.h"
 #import "HTTPDynamicFileResponse.h"
-#import "AsyncSocket.h"
+#import "GCDAsyncSocket.h"
 #import "DDLog.h"
 #import "DDFileLogger.h"
+#import "WebSocket.h"
 #import "WebSocketLogger.h"
 
 
@@ -96,7 +99,7 @@
 	NSString *port = [NSString stringWithFormat:@"%hu", [asyncSocket localPort]];
 	
 	NSString *wsLocation;
-	NSString *wsHost = NSMakeCollectable(CFHTTPMessageCopyHeaderFieldValue(request, CFSTR("Host")));
+	NSString *wsHost = [request headerField:@"Host"];
 	
 	if (wsHost == nil)
 	{
@@ -107,7 +110,6 @@
 		wsLocation = [NSString stringWithFormat:@"ws://%@/livelog", wsHost];
 	}
 	
-	[wsHost release];
 	return wsLocation;
 }
 
@@ -133,10 +135,9 @@
 		NSDictionary *replacementDict = [NSDictionary dictionaryWithObject:loc forKey:@"WEBSOCKET_URL"];
 		
 		return [[[HTTPDynamicFileResponse alloc] initWithFilePath:[self filePathForURI:path]
-													forConnection:self
-													 runLoopModes:[asyncSocket runLoopModes]
-														separator:@"%%"
-											replacementDictionary:replacementDict] autorelease];
+		                                            forConnection:self
+		                                                separator:@"%%"
+		                                    replacementDictionary:replacementDict] autorelease];
 	}
 	else
 	{
@@ -148,7 +149,19 @@
 {
 	if ([path isEqualToString:@"/livelog"])
 	{
-		return [[[WebSocketLogger alloc] initWithRequest:request socket:asyncSocket] autorelease];
+		// Create the WebSocket
+		WebSocket *ws = [[WebSocket alloc] initWithRequest:request socket:asyncSocket];
+		
+		// Create the WebSocketLogger
+		WebSocketLogger *wsLogger = [[WebSocketLogger alloc] initWithWebSocket:ws];
+		
+		// Memory management:
+		// The WebSocket will be retained by the HTTPServer and the WebSocketLogger.
+		// The WebSocketLogger will be retained by the logging framework,
+		// as it adds itself to the list of active loggers from within its init method.
+		
+		[wsLogger release];
+		return [ws autorelease];
 	}
 	
 	return [super webSocketForURI:path];

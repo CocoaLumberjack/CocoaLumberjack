@@ -3,12 +3,19 @@
 #import "WebSocket.h"
 
 
-@interface WebSocketLogger : WebSocket <DDLogger>
+@interface WebSocketLogger : DDAbstractLogger <DDLogger>
 {
-	id <DDLogFormatter> formatter;
-	
+	WebSocket *websocket;
 	BOOL isWebSocketOpen;
-	NSThread *connectionThread;
+}
+
+- (id)initWithWebSocket:(WebSocket *)ws;
+
+@end
+
+@interface WebSocketFormatter : NSObject <DDLogFormatter>
+{
+	NSDateFormatter *dateFormatter;
 }
 
 @end

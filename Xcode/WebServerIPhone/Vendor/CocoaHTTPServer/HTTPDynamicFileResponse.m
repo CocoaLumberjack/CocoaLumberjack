@@ -1,80 +1,24 @@
 #import "HTTPDynamicFileResponse.h"
 #import "HTTPConnection.h"
+#import "HTTPLogging.h"
+
+// Log levels : off, error, warn, info, verbose
+// Other flags: trace
+static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
+
+#define NULL_FD  -1
 
 
 @implementation HTTPDynamicFileResponse
 
-static NSOperationQueue *operationQueue;
-
-/**
- * The runtime sends initialize to each class in a program exactly one time just before the class,
- * or any class that inherits from it, is sent its first message from within the program. (Thus the
- * method may never be invoked if the class is not used.) The runtime sends the initialize message to
- * classes in a thread-safe manner. Superclasses receive this message before their subclasses.
- *
- * This method may also be called directly (assumably by accident), hence the safety mechanism.
-**/
-+ (void)initialize
-{
-	static BOOL initialized = NO;
-	if(!initialized)
-	{
-		initialized = YES;
-		
-		operationQueue = [[NSOperationQueue alloc] init];
-	}
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark -
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// A quick overview of how this class works:
-// 
-// The HTTPConnection will request data from us via the readDataOfLength method.
-// The first time this method is called, we won't have any data available.
-// So we'll start a background operation to read data from the file, and then return nil.
-// The HTTPConnection, upon receiving a nil response, will then wait for us to inform it of available data.
-// 
-// Once the background read operation completes, the fileHandleDidReadData method will be called.
-// We then copy this data into our mutable buffer, and perform our search and replace algorithm.
-// After that we inform the HTTPConnection that we have data by
-// calling HTTPConnection's responseHasAvailableData.
-// The HTTPConnection will then request our data via the readDataOfLength method.
-
 - (id)initWithFilePath:(NSString *)fpath
          forConnection:(HTTPConnection *)parent
-          runLoopModes:(NSArray *)modes
              separator:(NSString *)separatorStr
  replacementDictionary:(NSDictionary *)dict
 {
-	if((self = [super init]))
+	if ((self = [super initWithFilePath:fpath forConnection:parent]))
 	{
-		connection = parent; // Parents retain children, children do NOT retain parents
-		
-		connectionThread = [[NSThread currentThread] retain];
-		connectionRunLoopModes = [modes copy];
-		
-		filePath = [fpath copy];
-		fileHandle = [[NSFileHandle fileHandleForReadingAtPath:filePath] retain];
-		
-		if(fileHandle == nil)
-		{
-			[self release];
-			return nil;
-		}
-		
-		NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
-		NSNumber *fileSize = [fileAttributes objectForKey:NSFileSize];
-		fileLength = (UInt64)[fileSize unsignedLongLongValue];
-		
-		fileReadOffset = 0;
-		connectionReadOffset = 0;
-		
-		bufferedData  = [[NSMutableData alloc] initWithLength:0];
-		available = 0;
-		
-		asyncReadInProgress = NO;
+		HTTPLogTrace();
 		
 		separator = [[separatorStr dataUsingEncoding:NSUTF8StringEncoding] retain];
 		replacementDict = [dict retain];
@@ -82,132 +26,54 @@ static NSOperationQueue *operationQueue;
 	return self;
 }
 
-- (void)dealloc
+- (BOOL)isChunked
 {
-	[connectionThread release];
-	[connectionRunLoopModes release];
+	HTTPLogTrace();
 	
-	[filePath release];
-	[fileHandle closeFile];
-	[fileHandle release];
-	
-	[bufferedData release];
-	
-	[separator release];
-	[replacementDict release];
-	
-	[super dealloc];
+	return YES;
 }
-
-- (NSString *)filePath
-{
-	return filePath;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark HTTPResponse Methods
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (UInt64)contentLength
 {
-	// Ignore - we're using a chunked response
+	// This method shouldn't be called since we're using a chunked response.
+	// We override it just to be safe.
+	
+	HTTPLogTrace();
+	
 	return 0;
-}
-
-- (UInt64)offset
-{
-	return connectionReadOffset;
 }
 
 - (void)setOffset:(UInt64)offset
 {
-	// Ignore - we're using a chunked response
-}
-
-- (NSData *)readDataOfLength:(NSUInteger)length
-{
-	if(available == 0)
-	{
-		if (!asyncReadInProgress)
-		{
-			asyncReadInProgress = YES;
-			
-			NSInvocationOperation *operation;
-			operation = [[NSInvocationOperation alloc] initWithTarget:self
-			                                                 selector:@selector(readDataInBackground:)
-			                                                   object:[NSNumber numberWithUnsignedInteger:length]];
-			
-			[operationQueue addOperation:operation];
-			[operation release];
-		}
-		
-		return nil;
-	}
+	// This method shouldn't be called since we're using a chunked response.
+	// We override it just to be safe.
 	
-	NSUInteger actualLength = MIN(length, available);
-	
-	connectionReadOffset += actualLength;
-	available -= actualLength;
-	
-	NSRange range = NSMakeRange(0, actualLength);
-	NSData *result = [bufferedData subdataWithRange:range];
-	
-	[bufferedData replaceBytesInRange:range withBytes:NULL length:0];
-	
-	return result;
+	HTTPLogTrace();
 }
 
 - (BOOL)isDone
 {
-	return (fileReadOffset == fileLength) && ([bufferedData length] == 0);
+	BOOL result = (readOffset == fileLength) && (readBufferOffset == 0);
+	
+	HTTPLogTrace2(@"%@[%p]: isDone - %@", THIS_FILE, self, (result ? @"YES" : @"NO"));
+	
+	return result;
 }
 
-- (BOOL)isChunked
+- (void)processReadBuffer
 {
-	return YES;
-}
-
-- (void)connectionDidClose
-{
-	// Prevent any further calls to the connection
-	connection = nil;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Logic
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-- (void)readDataInBackground:(NSNumber *)lengthNumber
-{
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	HTTPLogTrace();
 	
-	NSUInteger length = [lengthNumber unsignedIntegerValue];
+	// At this point, the readBuffer has readBufferOffset bytes available.
+	// This method is in charge of updating the readBufferOffset.
 	
-	NSData *readData = [fileHandle readDataOfLength:length];
-	
-	[self performSelector:@selector(fileHandleDidReadData:)
-	             onThread:connectionThread
-	           withObject:readData
-	        waitUntilDone:NO
-	                modes:connectionRunLoopModes];
-	
-	[pool release];
-}
-
-- (void)fileHandleDidReadData:(NSData *)readData
-{
-	[bufferedData appendData:readData];
-	
-	fileReadOffset += [readData length];
-	asyncReadInProgress = NO;
-	
-	NSUInteger bufLen = [bufferedData length];
+	NSUInteger bufLen = readBufferOffset;
 	NSUInteger sepLen = [separator length];
 	
-	// We're going to start looking for the separator where we left off last time,
+	// We're going to start looking for the separator at the beginning of the buffer,
 	// and stop when we get to the point where the separator would no longer fit in the buffer.
 	
-	NSUInteger i = available;
+	NSUInteger offset = 0;
 	NSUInteger stopOffset = (bufLen > sepLen) ? bufLen - sepLen + 1 : 0;
 	
 	// In order to do the replacement, we need to find the starting and ending separator.
@@ -223,27 +89,33 @@ static NSOperationQueue *operationQueue;
 	NSUInteger s1 = 0;
 	NSUInteger s2 = 0;
 	
-	while (i < stopOffset)
+	const void *sep = [separator bytes];
+	
+	while (offset < stopOffset)
 	{
-		const void *subBuffer = [bufferedData mutableBytes] + i;
+		const void *subBuffer = readBuffer + offset;
 		
-		if (memcmp(subBuffer, [separator bytes], sepLen) == 0)
+		if (memcmp(subBuffer, sep, sepLen) == 0)
 		{
 			if (!found1)
 			{
 				// Found the first separator
 				
 				found1 = YES;
-				s1 = i;
-				i += sepLen;
+				s1 = offset;
+				offset += sepLen;
+				
+				HTTPLogVerbose(@"%@[%p]: Found s1 at %lu", THIS_FILE, self, (unsigned long)s1);
 			}
 			else
 			{
 				// Found the second separator
 				
 				found2 = YES;
-				s2 = i;
-				i += sepLen;
+				s2 = offset;
+				offset += sepLen;
+				
+				HTTPLogVerbose(@"%@[%p]: Found s2 at %lu", THIS_FILE, self, (unsigned long)s2);
 			}
 			
 			if (found1 && found2)
@@ -258,7 +130,7 @@ static NSOperationQueue *operationQueue;
 				// But that method copies the bytes...
 				// So for performance reasons, we need to use the methods that don't copy the bytes.
 				
-				void *strBuffer = [bufferedData mutableBytes] + strRange.location;
+				void *strBuffer = readBuffer + strRange.location;
 				NSData *strData = [NSData dataWithBytesNoCopy:strBuffer length:strRange.length freeWhenDone:NO];
 				
 				NSString *key = [[NSString alloc] initWithData:strData encoding:NSUTF8StringEncoding];
@@ -272,15 +144,72 @@ static NSOperationQueue *operationQueue;
 						// Found the replacement value.
 						// Now perform the replacement in the buffer.
 						
+						HTTPLogVerbose(@"%@[%p]: key(%@) -> value(%@)", THIS_FILE, self, key, value);
+						
 						NSData *v = [value dataUsingEncoding:NSUTF8StringEncoding];
+						NSUInteger vLength = [v length];
 						
-						[bufferedData replaceBytesInRange:fullRange withBytes:[v bytes] length:[v length]];
-						
-						// The replacement was probably not the same size as what it replaced.
-						// So we need to adjust our index accordingly.
-						
-						NSInteger diff = (NSInteger)[v length] - (NSInteger)fullRange.length;
-						i += diff;
+						if (fullRange.length == vLength)
+						{
+							// Replacement is exactly the same size as what it is replacing
+							
+							// memcpy(void *restrict dst, const void *restrict src, size_t n);
+							
+							memcpy(readBuffer + fullRange.location, [v bytes], vLength);
+						}
+						else // (fullRange.length != vLength)
+						{
+							NSInteger diff = (NSInteger)vLength - (NSInteger)fullRange.length;
+							
+							if (diff > 0)
+							{
+								// Replacement is bigger than what it is replacing.
+								// Make sure there is room in the buffer for the replacement.
+								
+								if (diff > (readBufferSize - bufLen))
+								{
+									NSUInteger inc = MIN(diff, 256);
+									
+									readBufferSize += inc;
+									readBuffer = realloc(readBuffer, readBufferSize);
+								}
+							}
+							
+							// Move the data that comes after the replacement.
+							// 
+							// If replacement is smaller than what it is replacing,
+							// then we are shifting the data toward the beginning of the buffer.
+							// 
+							// If replacement is bigger than what it is replacing,
+							// then we are shifting the data toward the end of the buffer.
+							// 
+							// memmove(void *dst, const void *src, size_t n);
+							// 
+							// The memmove() function copies n bytes from src to dst.
+							// The two areas may overlap; the copy is always done in a non-destructive manner.
+							
+							void *src = readBuffer + fullRange.location + fullRange.length;
+							void *dst = readBuffer + fullRange.location + vLength;
+							
+							NSUInteger remaining = bufLen - (fullRange.location + fullRange.length);
+							
+							memmove(dst, src, remaining);
+							
+							// Now copy the replacement into its location.
+							// 
+							// memcpy(void *restrict dst, const void *restrict src, size_t n)
+							// 
+							// The memcpy() function copies n bytes from src to dst.
+							// If the two areas overlap, behavior is undefined.
+							
+							memcpy(readBuffer + fullRange.location, [v bytes], vLength);
+							
+							// And don't forget to update our indices.
+							
+							bufLen     += diff;
+							offset     += diff;
+							stopOffset += diff;
+						}
 					}
 					
 					[key release];
@@ -291,19 +220,20 @@ static NSOperationQueue *operationQueue;
 		}
 		else
 		{
-			i++;
+			offset++;
 		}
 	}
 	
 	// We've gone through our buffer now, and performed all the replacements that we could.
 	// It's now time to update the amount of available data we have.
 	
-	if (fileReadOffset == fileLength)
+	if (readOffset == fileLength)
 	{
 		// We've read in the entire file.
 		// So there can be no more replacements.
 		
-		available = [bufferedData length];
+		data = [[NSData alloc] initWithBytes:readBuffer length:bufLen];
+		readBufferOffset = 0;
 	}
 	else
 	{
@@ -319,24 +249,44 @@ static NSOperationQueue *operationQueue;
 		// 
 		// Situation 2:
 		// The first chunk of data we read was "My name is %".
-		// So we didn't find any separators, but part of a separator is included in our buffer.
+		// So we didn't find any separators, but part of a separator may be included in our buffer.
 		
+		NSUInteger available;
 		if (found1)
 		{
+			// Situation 1
 			available = s1;
 		}
 		else
 		{
+			// Situation 2
 			available = stopOffset;
 		}
+		
+		// Copy available data
+		
+		data = [[NSData alloc] initWithBytes:readBuffer length:available];
+		
+		// Remove the copied data from the buffer.
+		// We do this by shifting the remaining data toward the beginning of the buffer.
+		
+		NSUInteger remaining = bufLen - available;
+		
+		memmove(readBuffer, readBuffer + available, remaining);
+		readBufferOffset = remaining;
 	}
 	
-	// Inform the connection that we have available data.
-	// Even if we don't (available == 0) we still do this.
-	// Because this will tell the connection to invoke our readDataOfLength method,
-	// which will in turn spurn another round of reading from the file.
+	[connection responseHasAvailableData:self];
+}
+
+- (void)dealloc
+{
+	HTTPLogTrace();
 	
-	[connection responseHasAvailableData];
+	[separator release];
+	[replacementDict release];
+	
+	[super dealloc];
 }
 
 @end

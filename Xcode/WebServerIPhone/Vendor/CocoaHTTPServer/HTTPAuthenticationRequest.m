@@ -1,4 +1,5 @@
 #import "HTTPAuthenticationRequest.h"
+#import "HTTPMessage.h"
 
 @interface HTTPAuthenticationRequest (PrivateAPI)
 - (NSString *)quotedSubHeaderFieldValue:(NSString *)param fromHeaderFieldValue:(NSString *)header;
@@ -8,25 +9,25 @@
 
 @implementation HTTPAuthenticationRequest
 
-- (id)initWithRequest:(CFHTTPMessageRef)request
+- (id)initWithRequest:(HTTPMessage *)request
 {
-	if((self = [super init]))
+	if ((self = [super init]))
 	{
-		NSString *authInfo = (NSString *)CFHTTPMessageCopyHeaderFieldValue(request, CFSTR("Authorization"));
+		NSString *authInfo = [request headerField:@"Authorization"];
 		
 		isBasic = NO;
-		if([authInfo length] >= 6)
+		if ([authInfo length] >= 6)
 		{
 			isBasic = [[authInfo substringToIndex:6] caseInsensitiveCompare:@"Basic "] == NSOrderedSame;
 		}
 		
 		isDigest = NO;
-		if([authInfo length] >= 7)
+		if ([authInfo length] >= 7)
 		{
 			isDigest = [[authInfo substringToIndex:7] caseInsensitiveCompare:@"Digest "] == NSOrderedSame;
 		}
 		
-		if(isBasic)
+		if (isBasic)
 		{
 			NSMutableString *temp = [[[authInfo substringFromIndex:6] mutableCopy] autorelease];
 			CFStringTrimWhitespace((CFMutableStringRef)temp);
@@ -34,7 +35,7 @@
 			base64Credentials = [temp copy];
 		}
 		
-		if(isDigest)
+		if (isDigest)
 		{
 			username = [[self quotedSubHeaderFieldValue:@"username" fromHeaderFieldValue:authInfo] retain];
 			realm    = [[self quotedSubHeaderFieldValue:@"realm" fromHeaderFieldValue:authInfo] retain];
@@ -55,10 +56,6 @@
 			cnonce   = [[self quotedSubHeaderFieldValue:@"cnonce" fromHeaderFieldValue:authInfo] retain];
 			response = [[self quotedSubHeaderFieldValue:@"response" fromHeaderFieldValue:authInfo] retain];
 		}
-		
-		// Remember, if using garbage collection:
-		// Core foundation objects must be released using CFRelease, as [id release] is a no-op.
-		if(authInfo) CFRelease((CFStringRef)authInfo);
 	}
 	return self;
 }

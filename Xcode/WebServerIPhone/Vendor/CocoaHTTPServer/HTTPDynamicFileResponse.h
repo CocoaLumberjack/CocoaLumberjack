@@ -1,7 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "HTTPResponse.h"
-
-@class HTTPConnection;
+#import "HTTPAsyncFileResponse.h"
 
 /**
  * This class is designed to assist with dynamic content.
@@ -32,38 +31,18 @@
  * - replacementDictionary = { "ComputerName"="Black MacBook", "SysTime"="2010-04-30 03:18:24" }
  * 
  * This class will then perform the replacements for you, on the fly, as it reads the file data.
- * This class is also asynchronous, so it will perform the file IO on a background thread via an NSOperationQueue.
+ * This class is also asynchronous, so it will perform the file IO using its own GCD queue.
 **/
 
-@interface HTTPDynamicFileResponse : NSObject <HTTPResponse>
+@interface HTTPDynamicFileResponse : HTTPAsyncFileResponse
 {
-	HTTPConnection *connection;
-	NSThread *connectionThread;
-	NSArray *connectionRunLoopModes;
-	
-	NSString *filePath;
-	NSFileHandle *fileHandle;
-	
-	UInt64 fileLength;
-	
-	UInt64 fileReadOffset;
-	UInt64 connectionReadOffset;
-	
-	NSMutableData *bufferedData;
-	NSUInteger available;
-	
-	BOOL asyncReadInProgress;
-	
 	NSData *separator;
 	NSDictionary *replacementDict;
 }
 
 - (id)initWithFilePath:(NSString *)filePath
          forConnection:(HTTPConnection *)connection
-          runLoopModes:(NSArray *)modes
              separator:(NSString *)separatorStr
  replacementDictionary:(NSDictionary *)dictionary;
-
-- (NSString *)filePath;
 
 @end

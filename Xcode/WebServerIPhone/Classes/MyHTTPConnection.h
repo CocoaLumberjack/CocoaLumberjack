@@ -3,8 +3,6 @@
 
 
 @interface MyHTTPConnection : HTTPConnection
-{
-	BOOL isWebSocketRequest;
-}
+
 
 @end
