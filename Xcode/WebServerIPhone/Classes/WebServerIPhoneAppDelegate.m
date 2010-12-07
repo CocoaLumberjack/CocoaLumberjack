@@ -9,6 +9,7 @@
 #import "HTTPServer.h"
 #import "MyHTTPConnection.h"
 
+// Log levels: off, error, warn, info, verbose
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 
@@ -36,20 +37,18 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	// Normally there is no need to run our server on any specific port.
 	// Technologies like Bonjour allow clients to dynamically discover the server's port at runtime.
 	// However, for testing purposes, it may be much easier if the port doesn't change on every build-and-go.
-	//[httpServer setPort:12345];
+	[httpServer setPort:12345];
 	
 	// Serve files from our embedded Web folder
 	NSString *webPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Web"];
-	[httpServer setDocumentRoot:[NSURL fileURLWithPath:webPath]];
+	[httpServer setDocumentRoot:webPath];
 	
 	// Start the server (and check for problems)
 	
-	NSError *error;
-	BOOL success = [httpServer start:&error];
-	
-	if(!success)
+	NSError *error = nil;
+	if (![httpServer start:&error])
 	{
-		NSLog(@"Error starting HTTP Server: %@", error);
+		DDLogError(@"Error starting HTTP Server: %@", error);
 	}
 }
 
@@ -60,7 +59,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	// 
 	// This is something we may not want to do in a shipping version of the application.
 	
-	[DDLog addLogger:[DDASLLogger sharedInstance]];
+//	[DDLog addLogger:[DDASLLogger sharedInstance]];
 	[DDLog addLogger:[DDTTYLogger sharedInstance]];
 	
 	// We also want to direct our log messages to a file.

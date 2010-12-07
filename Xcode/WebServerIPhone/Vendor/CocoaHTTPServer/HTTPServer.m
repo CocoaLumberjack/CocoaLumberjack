@@ -1,8 +1,26 @@
-#import "AsyncSocket.h"
 #import "HTTPServer.h"
+#import "GCDAsyncSocket.h"
 #import "HTTPConnection.h"
 #import "WebSocket.h"
+#import "HTTPLogging.h"
 
+// Log levels: off, error, warn, info, verbose
+// Other flags: trace
+static const int httpLogLevel = LOG_LEVEL_INFO; // | LOG_FLAG_TRACE;
+
+@interface HTTPServer (PrivateAPI)
+
+- (void)unpublishBonjour;
+- (void)publishBonjour;
+
++ (void)startBonjourThreadIfNeeded;
++ (void)performBonjourBlock:(dispatch_block_t)block waitUntilDone:(BOOL)waitUntilDone;
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation HTTPServer
 
@@ -12,12 +30,16 @@
 **/
 - (id)init
 {
-	if((self = [super init]))
+	if ((self = [super init]))
 	{
-		// Initialize underlying asynchronous tcp/ip socket
-		asyncSocket = [[AsyncSocket alloc] initWithDelegate:self];
+		HTTPLogTrace();
+		
+		// Initialize underlying dispatch queue and GCD based tcp socket
+		serverQueue = dispatch_queue_create("HTTPServer", NULL);
+		asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:serverQueue];
 		
 		// Use default connection class of HTTPConnection
+		connectionQueue = dispatch_queue_create("HTTPConnection", NULL);
 		connectionClass = [HTTPConnection self];
 		
 		// Configure default values for bonjour service
@@ -39,6 +61,9 @@
 		connections = [[NSMutableArray alloc] init];
 		webSockets  = [[NSMutableArray alloc] init];
 		
+		connectionsLock = [[NSLock alloc] init];
+		webSocketsLock  = [[NSLock alloc] init];
+		
 		// Register for notifications of closed connections
 		[[NSNotificationCenter defaultCenter] addObserver:self
 		                                         selector:@selector(connectionDidDie:)
@@ -50,6 +75,8 @@
 		                                         selector:@selector(webSocketDidDie:)
 		                                             name:WebSocketDidDieNotification
 		                                           object:nil];
+		
+		isRunning = NO;
 	}
 	return self;
 }
@@ -60,6 +87,8 @@
 **/
 - (void)dealloc
 {
+	HTTPLogTrace();
+	
 	// Remove notification observer
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
@@ -67,15 +96,25 @@
 	[self stop];
 	
 	// Release all instance variables
+	
+	dispatch_release(serverQueue);
+	dispatch_release(connectionQueue);
+	
+	[asyncSocket setDelegate:nil delegateQueue:NULL];
+	[asyncSocket release];
+	
 	[documentRoot release];
+	
 	[netService release];
 	[domain release];
 	[name release];
 	[type release];
 	[txtRecordDictionary release];
-	[asyncSocket release];
+	
 	[connections release];
 	[webSockets release];
+	[connectionsLock release];
+	[webSocketsLock release];
 	
 	[super dealloc];
 }
@@ -85,36 +124,43 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Returns the delegate connected with this instance.
-**/
-- (id)delegate
-{
-	return delegate;
-}
-
-/**
- * Sets the delegate connected with this instance.
-**/
-- (void)setDelegate:(id)newDelegate
-{
-	delegate = newDelegate;
-}
-
-/**
  * The document root is filesystem root for the webserver.
  * Thus requests for /index.html will be referencing the index.html file within the document root directory.
  * All file requests are relative to this document root.
 **/
-- (NSURL *)documentRoot {
-    return documentRoot;
-}
-- (void)setDocumentRoot:(NSURL *)value
+- (NSString *)documentRoot
 {
-    if(![documentRoot isEqual:value])
+	__block NSString *result;
+	
+	dispatch_sync(serverQueue, ^{
+		result = [documentRoot retain];
+	});
+	
+	return [result autorelease];
+}
+
+- (void)setDocumentRoot:(NSString *)value
+{
+	HTTPLogTrace();
+	
+	// Document root used to be of type NSURL.
+	// Add type checking for early warning to developers upgrading from older versions.
+	
+	if (value && ![value isKindOfClass:[NSString class]])
 	{
-        [documentRoot release];
-        documentRoot = [value copy];
-    }
+		HTTPLogWarn(@"%@: %@ - Expecting NSString parameter, received %@ parameter",
+					THIS_FILE, THIS_METHOD, NSStringFromClass([value class]));
+		return;
+	}
+	
+	NSString *valueCopy = [value copy];
+	
+	dispatch_async(serverQueue, ^{
+		[documentRoot release];
+		documentRoot = [valueCopy retain];
+	});
+	
+	[valueCopy release];
 }
 
 /**
@@ -123,64 +169,24 @@
  * The default connection class is HTTPConnection.
  * If you use a different connection class, it is assumed that the class extends HTTPConnection
 **/
-- (Class)connectionClass {
-    return connectionClass;
+- (Class)connectionClass
+{
+	__block Class result;
+	
+	dispatch_sync(serverQueue, ^{
+		result = connectionClass;
+	});
+	
+	return result;
 }
+
 - (void)setConnectionClass:(Class)value
 {
-    connectionClass = value;
-}
-
-/**
- * Domain on which to broadcast this service via Bonjour.
- * The default domain is @"local".
-**/
-- (NSString *)domain {
-    return domain;
-}
-- (void)setDomain:(NSString *)value
-{
-	if(![domain isEqualToString:value])
-	{
-		[domain release];
-        domain = [value copy];
-    }
-}
-
-/**
- * The type of service to publish via Bonjour.
- * No type is set by default, and one must be set in order for the service to be published.
-**/
-- (NSString *)type {
-    return type;
-}
-- (void)setType:(NSString *)value
-{
-	if(![type isEqualToString:value])
-	{
-		[type release];
-		type = [value copy];
-    }
-}
-
-/**
- * The name to use for this service via Bonjour.
- * The default name is an empty string,
- * which should result in the published name being the host name of the computer.
-**/
-- (NSString *)name {
-    return name;
-}
-- (NSString *)publishedName {
-	return [netService name];
-}
-- (void)setName:(NSString *)value
-{
-	if(![name isEqualToString:value])
-	{
-        [name release];
-        name = [value copy];
-    }
+	HTTPLogTrace();
+	
+	dispatch_async(serverQueue, ^{
+		connectionClass = value;
+	});
 }
 
 /**
@@ -188,32 +194,189 @@
  * By default this port is initially set to zero, which allows the kernel to pick an available port for us.
  * After the HTTP server has started, the port being used may be obtained by this method.
 **/
-- (UInt16)port {
-    return port;
+- (UInt16)port
+{
+	__block UInt16 result;
+	
+	dispatch_sync(serverQueue, ^{
+		result = port;
+	});
+	
+    return result;
 }
-- (void)setPort:(UInt16)value {
-    port = value;
+
+- (UInt16)listeningPort
+{
+	__block UInt16 result;
+	
+	dispatch_sync(serverQueue, ^{
+		if (isRunning)
+			result = [asyncSocket localPort];
+		else
+			result = 0;
+	});
+	
+	return result;
+}
+
+- (void)setPort:(UInt16)value
+{
+	HTTPLogTrace();
+	
+	dispatch_async(serverQueue, ^{
+		port = value;
+	});
+}
+
+/**
+ * Domain on which to broadcast this service via Bonjour.
+ * The default domain is @"local".
+**/
+- (NSString *)domain
+{
+	__block NSString *result;
+	
+	dispatch_sync(serverQueue, ^{
+		result = [domain retain];
+	});
+	
+    return [domain autorelease];
+}
+
+- (void)setDomain:(NSString *)value
+{
+	HTTPLogTrace();
+	
+	NSString *valueCopy = [value copy];
+	
+	dispatch_async(serverQueue, ^{
+		[domain release];
+		domain = [valueCopy retain];
+	});
+	
+	[valueCopy release];
+}
+
+/**
+ * The name to use for this service via Bonjour.
+ * The default name is an empty string,
+ * which should result in the published name being the host name of the computer.
+**/
+- (NSString *)name
+{
+	__block NSString *result;
+	
+	dispatch_sync(serverQueue, ^{
+		result = [name retain];
+	});
+	
+	return [name autorelease];
+}
+
+- (NSString *)publishedName
+{
+	__block NSString *result;
+	
+	dispatch_sync(serverQueue, ^{
+		
+		if (netService == nil)
+		{
+			result = nil;
+		}
+		else
+		{
+			
+			dispatch_block_t bonjourBlock = ^{
+				result = [[netService name] copy];
+			};
+			
+			[[self class] performBonjourBlock:bonjourBlock waitUntilDone:YES];
+		}
+	});
+	
+	return [result autorelease];
+}
+
+- (void)setName:(NSString *)value
+{
+	NSString *valueCopy = [value copy];
+	
+	dispatch_async(serverQueue, ^{
+		[name release];
+		name = [valueCopy retain];
+	});
+	
+	[valueCopy release];
+}
+
+/**
+ * The type of service to publish via Bonjour.
+ * No type is set by default, and one must be set in order for the service to be published.
+**/
+- (NSString *)type
+{
+	__block NSString *result;
+	
+	dispatch_sync(serverQueue, ^{
+		result = [type retain];
+	});
+	
+	return [result autorelease];
+}
+
+- (void)setType:(NSString *)value
+{
+	NSString *valueCopy = [value copy];
+	
+	dispatch_async(serverQueue, ^{
+		[type release];
+		type = [valueCopy retain];
+	});
+	
+	[valueCopy release];
 }
 
 /**
  * The extra data to use for this service via Bonjour.
 **/
-- (NSDictionary *)TXTRecordDictionary {
-	return txtRecordDictionary;
+- (NSDictionary *)TXTRecordDictionary
+{
+	__block NSDictionary *result;
+	
+	dispatch_sync(serverQueue, ^{
+		result = [txtRecordDictionary retain];
+	});
+	
+	return [result autorelease];
 }
 - (void)setTXTRecordDictionary:(NSDictionary *)value
 {
-	if(![txtRecordDictionary isEqualToDictionary:value])
-	{
+	HTTPLogTrace();
+	
+	NSDictionary *valueCopy = [value copy];
+	
+	dispatch_async(serverQueue, ^{
+	
 		[txtRecordDictionary release];
-		txtRecordDictionary = [value copy];
+		txtRecordDictionary = [valueCopy retain];
 		
-		// And update the txtRecord of the netService if it has already been published
-		if(netService)
+		// Update the txtRecord of the netService if it has already been published
+		if (netService)
 		{
-			[netService setTXTRecordData:[NSNetService dataFromTXTRecordDictionary:txtRecordDictionary]];
+			NSNetService *theNetService = netService;
+			NSData *txtRecordData = nil;
+			if (txtRecordDictionary)
+				txtRecordData = [NSNetService dataFromTXTRecordDictionary:txtRecordDictionary];
+			
+			dispatch_block_t bonjourBlock = ^{
+				[theNetService setTXTRecordData:txtRecordData];
+			};
+			
+			[[self class] performBonjourBlock:bonjourBlock waitUntilDone:NO];
 		}
-	}
+	});
+	
+	[valueCopy release];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -222,78 +385,96 @@
 
 - (BOOL)start:(NSError **)errPtr
 {
-	BOOL success = [asyncSocket acceptOnPort:port error:errPtr];
+	HTTPLogTrace();
 	
-	if(success)
-	{
-		// Update our port number
-		[self setPort:[asyncSocket localPort]];
+	__block BOOL success = YES;
+	__block NSError *err = nil;
+	
+	dispatch_sync(serverQueue, ^{
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
-		// Output console message for debugging purposes
-		NSLog(@"Started HTTP server on port %hu", port);
-		
-		// We can only publish our bonjour service if a type has been set
-		if(type != nil)
+		success = [asyncSocket acceptOnPort:port error:&err];
+		if (success)
 		{
-			// Create the NSNetService with our basic parameters
-			netService = [[NSNetService alloc] initWithDomain:domain type:type name:name port:port];
+			HTTPLogInfo(@"%@: Started HTTP server on port %hu", THIS_FILE, [asyncSocket localPort]);
 			
-			[netService setDelegate:self];
-			[netService publish];
-			
-			// Do not set the txtRecordDictionary prior to publishing!!!
-			// This will cause the OS to crash!!!
-			
-			// Set the txtRecordDictionary if we have one
-			if(txtRecordDictionary != nil)
-			{
-				[netService setTXTRecordData:[NSNetService dataFromTXTRecordDictionary:txtRecordDictionary]];
-			}
+			isRunning = YES;
+			[self publishBonjour];
 		}
-	}
+		else
+		{
+			HTTPLogError(@"%@: Failed to start HTTP Server: %@", err);
+			[err retain];
+		}
+		
+		[pool release];
+	});
+	
+	if (errPtr)
+		*errPtr = [err autorelease];
 	else
-	{
-		if(errPtr) NSLog(@"Failed to start HTTP Server: %@", *errPtr);
-	}
+		[err release];
 	
 	return success;
 }
 
 - (BOOL)stop
 {
-	// First stop publishing the service via bonjour
-	if(netService)
-	{
-		[netService stop];
-		[netService release];
-		netService = nil;
-	}
+	HTTPLogTrace();
 	
-	// Now stop the asynchronouse tcp server
-	// This will prevent it from accepting any more connections
-	[asyncSocket disconnect];
-	
-	// Now stop all HTTP connections the server owns
-	@synchronized(connections)
-	{
+	dispatch_sync(serverQueue, ^{
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		
+		// First stop publishing the service via bonjour
+		[self unpublishBonjour];
+		
+		// Stop listening / accepting incoming connections
+		[asyncSocket disconnect];
+		isRunning = NO;
+		
+		// Now stop all HTTP connections the server owns
+		[connectionsLock lock];
+		for (HTTPConnection *connection in connections)
+		{
+			[connection stop];
+		}
 		[connections removeAllObjects];
-	}
-	
-	// Now stop all WebSocket connections the server owns
-	@synchronized(webSockets)
-	{
+		[connectionsLock unlock];
+		
+		// Now stop all WebSocket connections the server owns
+		[webSocketsLock lock];
+		for (WebSocket *webSocket in webSockets)
+		{
+			[webSocket stop];
+		}
 		[webSockets removeAllObjects];
-	}
+		[webSocketsLock unlock];
+		
+		[pool release];
+	});
 	
 	return YES;
 }
 
+- (BOOL)isRunning
+{
+	__block BOOL result;
+	
+	dispatch_sync(serverQueue, ^{
+		result = isRunning;
+	});
+	
+	return result;
+}
+
 - (void)addWebSocket:(WebSocket *)ws
 {
-	@synchronized(webSockets)
-	{
-		[webSockets addObject:ws];
-	}
+	[webSocketsLock lock];
+	
+	HTTPLogTrace();
+	[webSockets addObject:ws];
+	
+	[webSocketsLock unlock];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -307,10 +488,10 @@
 {
 	NSUInteger result = 0;
 	
-	@synchronized(connections)
-	{
-		result = [connections count];
-	}
+	[connectionsLock lock];
+	result = [connections count];
+	[connectionsLock unlock];
+	
 	return result;
 }
 
@@ -321,31 +502,120 @@
 {
 	NSUInteger result = 0;
 	
-	@synchronized(webSockets)
-	{
-		result = [webSockets count];
-	}
+	[webSocketsLock lock];
+	result = [webSockets count];
+	[webSocketsLock unlock];
+	
 	return result;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark AsyncSocket Delegate Methods
+#pragma mark Incoming Connections
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
--(void)onSocket:(AsyncSocket *)sock didAcceptNewSocket:(AsyncSocket *)newSocket
+- (HTTPConfig *)config
 {
-	id newConnection = [[connectionClass alloc] initWithAsyncSocket:newSocket forServer:self];
+	// Override me if you want to provide a custom config to the new connection.
+	// 
+	// Generally this involves overriding the HTTPConfig class to include any custom settings,
+	// and then having this method return an instance of 'MyHTTPConfig'.
 	
-	@synchronized(connections)
-	{
-		[connections addObject:newConnection];
-	}
+	// Note: Think you can make the server faster by putting each connection on its own queue?
+	// Then benchmark it before and after and discover for yourself the shocking truth!
+	// 
+	// Try the apache benchmark tool (already installed on your Mac):
+	// $  ab -n 1000 -c 1 http://localhost:<port>/some_path.html
+	
+	return [[[HTTPConfig alloc] initWithServer:self documentRoot:documentRoot queue:connectionQueue] autorelease];
+}
+
+- (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket
+{
+	HTTPConnection *newConnection = (HTTPConnection *)[[connectionClass alloc] initWithAsyncSocket:newSocket
+	                                                                                 configuration:[self config]];
+	[connectionsLock lock];
+	[connections addObject:newConnection];
+	[connectionsLock unlock];
+	
+	[newConnection start];
 	[newConnection release];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Bonjour Delegate Methods
+#pragma mark Bonjour
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (void)publishBonjour
+{
+	HTTPLogTrace();
+	
+	NSAssert(dispatch_get_current_queue() == serverQueue, @"Invalid queue");
+	
+	if (type)
+	{
+		netService = [[NSNetService alloc] initWithDomain:domain type:type name:name port:[asyncSocket localPort]];
+		[netService setDelegate:self];
+		
+		NSNetService *theNetService = netService;
+		NSData *txtRecordData = nil;
+		if (txtRecordDictionary)
+			txtRecordData = [NSNetService dataFromTXTRecordDictionary:txtRecordDictionary];
+		
+		dispatch_block_t bonjourBlock = ^{
+			
+			[theNetService removeFromRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+			[theNetService scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+			[theNetService publish];
+			
+			// Do not set the txtRecordDictionary prior to publishing!!!
+			// This will cause the OS to crash!!!
+			if (txtRecordData)
+			{
+				[theNetService setTXTRecordData:txtRecordData];
+			}
+		};
+		
+		[[self class] startBonjourThreadIfNeeded];
+		[[self class] performBonjourBlock:bonjourBlock waitUntilDone:NO];
+	}
+}
+
+- (void)unpublishBonjour
+{
+	HTTPLogTrace();
+	
+	NSAssert(dispatch_get_current_queue() == serverQueue, @"Invalid queue");
+	
+	if (netService)
+	{
+		NSNetService *theNetService = netService;
+		
+		dispatch_block_t bonjourBlock = ^{
+			
+			[theNetService stop];
+			[theNetService release];
+		};
+		
+		[[self class] performBonjourBlock:bonjourBlock waitUntilDone:NO];
+		
+		netService = nil;
+	}
+}
+
+/**
+ * Republishes the service via bonjour if the server is running.
+ * If the service was not previously published, this method will publish it (if the server is running).
+**/
+- (void)republishBonjour
+{
+	HTTPLogTrace();
+	
+	dispatch_async(serverQueue, ^{
+		
+		[self unpublishBonjour];
+		[self publishBonjour];
+	});
+}
 
 /**
  * Called when our bonjour service has been successfully published.
@@ -354,8 +624,10 @@
 - (void)netServiceDidPublish:(NSNetService *)ns
 {
 	// Override me to do something here...
+	// 
+	// Note: This method is invoked on our bonjour thread.
 	
-	NSLog(@"Bonjour Service Published: domain(%@) type(%@) name(%@)", [ns domain], [ns type], [ns name]);
+	HTTPLogInfo(@"Bonjour Service Published: domain(%@) type(%@) name(%@)", [ns domain], [ns type], [ns name]);
 }
 
 /**
@@ -365,9 +637,11 @@
 - (void)netService:(NSNetService *)ns didNotPublish:(NSDictionary *)errorDict
 {
 	// Override me to do something here...
+	// 
+	// Note: This method in invoked on our bonjour thread.
 	
-	NSLog(@"Failed to Publish Service: domain(%@) type(%@) name(%@)", [ns domain], [ns type], [ns name]);
-	NSLog(@"Error Dict: %@", errorDict);
+	HTTPLogWarn(@"Failed to Publish Service: domain(%@) type(%@) name(%@) - %@",
+	                                         [ns domain], [ns type], [ns name], errorDict);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -380,12 +654,14 @@
 **/
 - (void)connectionDidDie:(NSNotification *)notification
 {
-	// Note: This method is called on the thread/runloop that posted the notification
+	// Note: This method is called on the connection queue that posted the notification
 	
-	@synchronized(connections)
-	{
-		[connections removeObject:[notification object]];
-	}
+	[connectionsLock lock];
+	
+	HTTPLogTrace();
+	[connections removeObject:[notification object]];
+	
+	[connectionsLock unlock];
 }
 
 /**
@@ -394,12 +670,88 @@
 **/
 - (void)webSocketDidDie:(NSNotification *)notification
 {
-	// Note: This method is called on the thread/runloop that posted the notification
+	// Note: This method is called on the connection queue that posted the notification
 	
-	@synchronized(webSockets)
-	{
-		[webSockets removeObject:[notification object]];
-	}
+	[webSocketsLock lock];
+	
+	HTTPLogTrace();
+	[webSockets removeObject:[notification object]];
+	
+	[webSocketsLock unlock];
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark Bonjour Thread
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * NSNetService is runloop based, so it requires a thread with a runloop.
+ * This gives us two options:
+ * 
+ * - Use the main thread
+ * - Setup our own dedicated thread
+ * 
+ * Since we have various blocks of code that need to synchronously access the netservice objects,
+ * using the main thread becomes troublesome and a potential for deadlock.
+**/
+
+static NSThread *bonjourThread;
+
++ (void)startBonjourThreadIfNeeded
+{
+	HTTPLogTrace();
+	
+	static dispatch_once_t predicate;
+	dispatch_once(&predicate, ^{
+		
+		HTTPLogVerbose(@"%@: Starting bonjour thread...", THIS_FILE);
+		
+		bonjourThread = [[NSThread alloc] initWithTarget:self
+		                                        selector:@selector(bonjourThread)
+		                                          object:nil];
+		[bonjourThread start];
+	});
+}
+
++ (void)bonjourThread
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	HTTPLogVerbose(@"%@: BonjourThread: Started", THIS_FILE);
+	
+	// We can't run the run loop unless it has an associated input source or a timer.
+	// So we'll just create a timer that will never fire - unless the server runs for 10,000 years.
+	
+	[NSTimer scheduledTimerWithTimeInterval:DBL_MAX target:self selector:@selector(ignore:) userInfo:nil repeats:YES];
+	
+	[[NSRunLoop currentRunLoop] run];
+	
+	HTTPLogVerbose(@"%@: BonjourThread: Aborted", THIS_FILE);
+	
+	[pool release];
+}
+
++ (void)performBonjourBlock:(dispatch_block_t)block
+{
+	HTTPLogTrace();
+	
+	NSAssert([NSThread currentThread] == bonjourThread, @"Executed on incorrect thread");
+	
+	block();
+}
+
++ (void)performBonjourBlock:(dispatch_block_t)block waitUntilDone:(BOOL)waitUntilDone
+{
+	HTTPLogTrace();
+	
+	dispatch_block_t bonjourBlock = Block_copy(block);
+	
+	[self performSelector:@selector(performBonjourBlock:)
+	             onThread:bonjourThread
+	           withObject:bonjourBlock
+	        waitUntilDone:waitUntilDone];
+	
+	Block_release(bonjourBlock);
 }
 
 @end

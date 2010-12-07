@@ -1,57 +1,33 @@
 #import "DDData.h"
-
-#if TARGET_OS_IPHONE
 #import <CommonCrypto/CommonDigest.h>
-#else
-#import "SSCrypto.h"
-#endif
+
 
 @implementation NSData (DDData)
 
-#if TARGET_OS_IPHONE
 static char encodingTable[64] = {
 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P',
 'Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f',
 'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
 'w','x','y','z','0','1','2','3','4','5','6','7','8','9','+','/' };
-#endif
 
 - (NSData *)md5Digest
 {
-#if TARGET_OS_IPHONE
-	
 	unsigned char result[CC_MD5_DIGEST_LENGTH];
     
-    CC_MD5([self bytes], [self length], result);
+    CC_MD5([self bytes], (CC_LONG)[self length], result);
     return [NSData dataWithBytes:result length:CC_MD5_DIGEST_LENGTH];
-	
-#else
-	
-	return [SSCrypto getMD5ForData:self];
-	
-#endif
 }
 
 - (NSData *)sha1Digest
 {
-#if TARGET_OS_IPHONE
-	
 	unsigned char result[CC_SHA1_DIGEST_LENGTH];
     
-	CC_SHA1([self bytes], [self length], result);
+	CC_SHA1([self bytes], (CC_LONG)[self length], result);
     return [NSData dataWithBytes:result length:CC_SHA1_DIGEST_LENGTH];
-	
-#else
-	
-	return [SSCrypto getSHA1ForData:self];
-	
-#endif
 }
 
 - (NSString *)hexStringValue
 {
-#if TARGET_OS_IPHONE
-	
 	NSMutableString *stringBuffer = [NSMutableString stringWithCapacity:([self length] * 2)];
 	
     const unsigned char *dataBuffer = [self bytes];
@@ -63,18 +39,10 @@ static char encodingTable[64] = {
 	}
     
     return [[stringBuffer copy] autorelease];
-	
-#else
-	
-	return [self hexval];
-	
-#endif
 }
 
 - (NSString *)base64Encoded
 {
-#if TARGET_OS_IPHONE
-	
 	const unsigned char	*bytes = [self bytes];
 	NSMutableString *result = [NSMutableString stringWithCapacity:[self length]];
 	unsigned long ixtext = 0;
@@ -123,18 +91,10 @@ static char encodingTable[64] = {
 	}
 	
 	return [NSString stringWithString:result];
-	
-#else
-	
-	return [self encodeBase64WithNewlines:NO];
-	
-#endif
 }
 
 - (NSData *)base64Decoded
 {
-#if TARGET_OS_IPHONE
-	
 	const unsigned char	*bytes = [self bytes];
 	NSMutableData *result = [NSMutableData dataWithCapacity:[self length]];
 	
@@ -192,12 +152,6 @@ static char encodingTable[64] = {
 	}
 	
 	return [NSData dataWithData:result];
-	
-#else
-	
-	return [self decodeBase64WithNewLines:NO];
-	
-#endif
 }
 
 @end

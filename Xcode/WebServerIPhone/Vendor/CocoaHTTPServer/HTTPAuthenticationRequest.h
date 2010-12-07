@@ -1,9 +1,11 @@
 #import <Foundation/Foundation.h>
 
 #if TARGET_OS_IPHONE
-// Note: You may need to add the CFNetwork Framework to your project
-#import <CFNetwork/CFNetwork.h>
+  // Note: You may need to add the CFNetwork Framework to your project
+  #import <CFNetwork/CFNetwork.h>
 #endif
+
+@class HTTPMessage;
 
 
 @interface HTTPAuthenticationRequest : NSObject
@@ -22,7 +24,7 @@
 	NSString *cnonce;
 	NSString *response;
 }
-- (id)initWithRequest:(CFHTTPMessageRef)request;
+- (id)initWithRequest:(HTTPMessage *)request;
 
 - (BOOL)isBasic;
 - (BOOL)isDigest;

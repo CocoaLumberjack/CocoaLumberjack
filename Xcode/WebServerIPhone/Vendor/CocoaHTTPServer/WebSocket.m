@@ -1,7 +1,13 @@
 #import "WebSocket.h"
-#import "AsyncSocket.h"
+#import "HTTPMessage.h"
+#import "GCDAsyncSocket.h"
 #import "DDNumber.h"
 #import "DDData.h"
+#import "HTTPLogging.h"
+
+// Log levels: off, error, warn, info, verbose
+// Other flags : trace
+static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
 
 #define TIMEOUT_NONE          -1
 #define TIMEOUT_REQUEST_BODY  10
@@ -13,7 +19,6 @@
 #define TAG_PREFIX                 300
 #define TAG_MSG_PLUS_SUFFIX        301
 
-#define DEBUG  0
 
 @interface WebSocket (PrivateAPI)
 
@@ -29,7 +34,7 @@
 
 @implementation WebSocket
 
-+ (BOOL)isWebSocketRequest:(CFHTTPMessageRef)request
++ (BOOL)isWebSocketRequest:(HTTPMessage *)request
 {
 	// Request (Draft 75):
 	// 
@@ -58,11 +63,8 @@
 	// If we find them, and they have the proper value,
 	// we can safely assume this is a websocket request.
 	
-	CFStringRef uhv = CFHTTPMessageCopyHeaderFieldValue(request, CFSTR("Upgrade"));
-	CFStringRef chv = CFHTTPMessageCopyHeaderFieldValue(request, CFSTR("Connection"));
-	
-	NSString *upgradeHeaderValue = NSMakeCollectable(uhv);
-	NSString *connectionHeaderValue = NSMakeCollectable(chv);
+	NSString *upgradeHeaderValue = [request headerField:@"Upgrade"];
+	NSString *connectionHeaderValue = [request headerField:@"Connection"];
 	
 	BOOL isWebSocket = YES;
 	
@@ -76,19 +78,15 @@
 		isWebSocket = NO;
 	}
 	
-	[upgradeHeaderValue release];
-	[connectionHeaderValue release];
+	HTTPLogTrace2(@"%@: %@ - %@", THIS_FILE, THIS_METHOD, (isWebSocket ? @"YES" : @"NO"));
 	
 	return isWebSocket;
 }
 
-+ (BOOL)isVersion76Request:(CFHTTPMessageRef)request
++ (BOOL)isVersion76Request:(HTTPMessage *)request
 {
-	CFStringRef k1 = CFHTTPMessageCopyHeaderFieldValue(request, CFSTR("Sec-WebSocket-Key1"));
-	CFStringRef k2 = CFHTTPMessageCopyHeaderFieldValue(request, CFSTR("Sec-WebSocket-Key2"));
-	
-	NSString *key1 = NSMakeCollectable(k1);
-	NSString *key2 = NSMakeCollectable(k2);
+	NSString *key1 = [request headerField:@"Sec-WebSocket-Key1"];
+	NSString *key2 = [request headerField:@"Sec-WebSocket-Key2"];
 	
 	BOOL isVersion76;
 	
@@ -99,8 +97,7 @@
 		isVersion76 = YES;
 	}
 	
-	[key1 release];
-	[key2 release];
+	HTTPLogTrace2(@"%@: %@ - %@", THIS_FILE, THIS_METHOD, (isVersion76 ? @"YES" : @"NO"));
 	
 	return isVersion76;
 }
@@ -109,26 +106,95 @@
 #pragma mark Setup and Teardown
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (id)initWithRequest:(CFHTTPMessageRef)aRequest socket:(AsyncSocket *)socket
+@synthesize delegate;
+@synthesize websocketQueue;
+
+- (id)initWithRequest:(HTTPMessage *)aRequest socket:(GCDAsyncSocket *)socket
 {
-	if (aRequest == NULL)
+	HTTPLogTrace();
+	
+	if (aRequest == nil)
 	{
 		[self release];
 		return nil;
 	}
 	
-	if((self = [super init]))
+	if ((self = [super init]))
 	{
-		request = aRequest;
-		CFRetain(request);
+		if (HTTP_LOG_VERBOSE)
+		{
+			NSData *requestHeaders = [aRequest messageData];
+			
+			NSString *temp = [[NSString alloc] initWithData:requestHeaders encoding:NSUTF8StringEncoding];
+			HTTPLogVerbose(@"%@[%p] Request Headers:\n%@", THIS_FILE, self, temp);
+			[temp release];
+		}
+		
+		websocketQueue = dispatch_queue_create("WebSocket", NULL);
+		request = [aRequest retain];
 		
 		asyncSocket = [socket retain];
-		[asyncSocket setDelegate:self];
+		[asyncSocket setDelegate:self delegateQueue:websocketQueue];
 		
 		isOpen = NO;
 		isVersion76 = [[self class] isVersion76Request:request];
 		
 		term = [[NSData alloc] initWithBytes:"\xFF" length:1];
+	}
+	return self;
+}
+
+- (void)dealloc
+{
+	HTTPLogTrace();
+	
+	dispatch_release(websocketQueue);
+	
+	[request release];
+	
+	[asyncSocket setDelegate:nil delegateQueue:NULL];
+	[asyncSocket disconnect];
+	[asyncSocket release];
+	
+	[super dealloc];
+}
+
+- (id)delegate
+{
+	__block id result = nil;
+	
+	dispatch_sync(websocketQueue, ^{
+		result = delegate;
+	});
+	
+	return result;
+}
+
+- (void)setDelegate:(id)newDelegate
+{
+	dispatch_async(websocketQueue, ^{
+		delegate = newDelegate;
+	});
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark Start and Stop
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Starting point for the WebSocket after it has been fully initialized (including subclasses).
+ * This method is called by the HTTPConnection it is spawned from.
+**/
+- (void)start
+{
+	// This method is not exactly designed to be overriden.
+	// Subclasses are encouraged to override the didOpen method instead.
+	
+	dispatch_async(websocketQueue, ^{
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		
+		if (isStarted) return;
+		isStarted = YES;
 		
 		if (isVersion76)
 		{
@@ -139,18 +205,27 @@
 			[self sendResponseHeaders];
 			[self didOpen];
 		}
-	}
-	return self;
+		
+		[pool release];
+	});
 }
 
-- (void)dealloc
+/**
+ * This method is called by the HTTPServer if it is asked to stop.
+ * The server, in turn, invokes stop on each WebSocket instance.
+**/
+- (void)stop
 {
-	CFRelease(request);
+	// This method is not exactly designed to be overriden.
+	// Subclasses are encouraged to override the didClose method instead.
 	
-	[asyncSocket setDelegate:nil];
-	[asyncSocket release];
-	
-	[super dealloc];
+	dispatch_async(websocketQueue, ^{
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		
+		[asyncSocket disconnect];
+		
+		[pool release];
+	});
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,6 +234,8 @@
 
 - (void)readRequestBody
 {
+	HTTPLogTrace();
+	
 	NSAssert(isVersion76, @"WebSocket version 75 doesn't contain a request body");
 	
 	[asyncSocket readDataToLength:8 withTimeout:TIMEOUT_NONE tag:TAG_HTTP_REQUEST_BODY];
@@ -166,7 +243,9 @@
 
 - (NSString *)originResponseHeaderValue
 {
-	NSString *origin = NSMakeCollectable(CFHTTPMessageCopyHeaderFieldValue(request, CFSTR("Origin")));
+	HTTPLogTrace();
+	
+	NSString *origin = [request headerField:@"Origin"];
 	
 	if (origin == nil)
 	{
@@ -176,17 +255,18 @@
 	}
 	else
 	{
-		return [origin autorelease];
+		return origin;
 	}
 }
 
 - (NSString *)locationResponseHeaderValue
 {
-	NSString *location;
-	NSString *host = NSMakeCollectable(CFHTTPMessageCopyHeaderFieldValue(request, CFSTR("Host")));
+	HTTPLogTrace();
 	
-	NSURL *uri = NSMakeCollectable(CFHTTPMessageCopyRequestURL(request));
-	NSString *requestUri = [uri relativeString];
+	NSString *location;
+	NSString *host = [request headerField:@"Host"];
+	
+	NSString *requestUri = [[request url] relativeString];
 	
 	if (host == nil)
 	{
@@ -199,14 +279,13 @@
 		location = [NSString stringWithFormat:@"ws://%@%@", host, requestUri];
 	}
 	
-	[uri release];
-	[host release];
-	
 	return location;
 }
 
 - (void)sendResponseHeaders
 {
+	HTTPLogTrace();
+	
 	// Request (Draft 75):
 	// 
 	// GET /demo HTTP/1.1
@@ -253,12 +332,12 @@
 	// 8jKS'y:G*Co,Wxa-
 
 	
-	CFHTTPMessageRef wsResponse = CFHTTPMessageCreateResponse(kCFAllocatorDefault,
-															  101, CFSTR("Web Socket Protocol Handshake"),
-															  kCFHTTPVersion1_1);
+	HTTPMessage *wsResponse = [[HTTPMessage alloc] initResponseWithStatusCode:101
+	                                                              description:@"Web Socket Protocol Handshake"
+	                                                                  version:HTTPVersion1_1];
 	
-	CFHTTPMessageSetHeaderFieldValue(wsResponse, CFSTR("Upgrade"), CFSTR("WebSocket"));
-	CFHTTPMessageSetHeaderFieldValue(wsResponse, CFSTR("Connection"), CFSTR("Upgrade"));
+	[wsResponse setHeaderField:@"Upgrade" value:@"WebSocket"];
+	[wsResponse setHeaderField:@"Connection" value:@"Upgrade"];
 	
 	// Note: It appears that WebSocket-Origin and WebSocket-Location
 	// are required for Google's Chrome implementation to work properly.
@@ -275,29 +354,25 @@
 	NSString *originField = isVersion76 ? @"Sec-WebSocket-Origin" : @"WebSocket-Origin";
 	NSString *locationField = isVersion76 ? @"Sec-WebSocket-Location" : @"WebSocket-Location";
 	
-	CFHTTPMessageSetHeaderFieldValue(wsResponse, (CFStringRef)originField, (CFStringRef)originValue);
-	CFHTTPMessageSetHeaderFieldValue(wsResponse, (CFStringRef)locationField, (CFStringRef)locationValue);
+	[wsResponse setHeaderField:originField value:originValue];
+	[wsResponse setHeaderField:locationField value:locationValue];
 	
-	// Do not invoke super.
-	// These are the only headers required for a WebSocket.
+	NSData *responseHeaders = [wsResponse messageData];
 	
-	NSData *responseHeaders = NSMakeCollectable(CFHTTPMessageCopySerializedMessage(wsResponse));
-	
-#if DEBUG
-	
-	NSString *temp = [[NSString alloc] initWithData:responseHeaders encoding:NSUTF8StringEncoding];
-	NSLog(@"WebSocket Response Headers:\n%@", temp);
-	[temp release];
-	
-#endif
+	if (HTTP_LOG_VERBOSE)
+	{
+		NSString *temp = [[NSString alloc] initWithData:responseHeaders encoding:NSUTF8StringEncoding];
+		HTTPLogVerbose(@"%@[%p] Response Headers:\n%@", THIS_FILE, self, temp);
+		[temp release];
+	}
 	
 	[asyncSocket writeData:responseHeaders withTimeout:TIMEOUT_NONE tag:TAG_HTTP_RESPONSE_HEADERS];
-	
-	[responseHeaders release];
 }
 
 - (NSData *)processKey:(NSString *)key
 {
+	HTTPLogTrace();
+	
 	unichar c;
 	NSUInteger i;
 	NSUInteger length = [key length];
@@ -306,7 +381,7 @@
 	// and count the number of spaces.
 	
 	NSMutableString *numStr = [NSMutableString stringWithCapacity:10];
-	long numSpaces = 0;
+	long long numSpaces = 0;
 	
 	for (i = 0; i < length; i++)
 	{
@@ -322,43 +397,34 @@
 		}
 	}
 	
-	long num = strtol([numStr UTF8String], NULL, 10);
+	long long num = strtoll([numStr UTF8String], NULL, 10);
 	
-	long resultHostNum;
+	long long resultHostNum;
 	
 	if (numSpaces == 0)
 		resultHostNum = 0;
 	else
 		resultHostNum = num / numSpaces;
 	
-#if DEBUG
+	HTTPLogVerbose(@"key(%@) -> %qi / %qi = %qi", key, num, numSpaces, resultHostNum);
 	
-	NSLog(@"key(%@) -> %ld / %ld = %ld", key, num, numSpaces, resultHostNum);
-	
-#endif
-	
-	// Convert result to big-endian (network byte order)
-	
-	long resultNetworkNum = htonl(resultHostNum);
-	
-	// Convert result to 4 byte integer,
+	// Convert result to 4 byte big-endian (network byte order)
 	// and then convert to raw data.
 	
-	SInt32 result = (SInt32)resultNetworkNum;
+	UInt32 result = OSSwapHostToBigInt32((uint32_t)resultHostNum);
 	
 	return [NSData dataWithBytes:&result length:4];
 }
 
 - (void)sendResponseBody:(NSData *)d3
 {
+	HTTPLogTrace();
+	
 	NSAssert(isVersion76, @"WebSocket version 75 doesn't contain a response body");
 	NSAssert([d3 length] == 8, @"Invalid requestBody length");
 	
-	CFStringRef k1 = CFHTTPMessageCopyHeaderFieldValue(request, CFSTR("Sec-WebSocket-Key1"));
-	CFStringRef k2 = CFHTTPMessageCopyHeaderFieldValue(request, CFSTR("Sec-WebSocket-Key2"));
-	
-	NSString *key1 = NSMakeCollectable(k1);
-	NSString *key2 = NSMakeCollectable(k2);
+	NSString *key1 = [request headerField:@"Sec-WebSocket-Key1"];
+	NSString *key2 = [request headerField:@"Sec-WebSocket-Key2"];
 	
 	NSData *d1 = [self processKey:key1];
 	NSData *d2 = [self processKey:key2];
@@ -376,34 +442,28 @@
 	
 	[asyncSocket writeData:responseBody withTimeout:TIMEOUT_NONE tag:TAG_HTTP_RESPONSE_BODY];
 	
-#if DEBUG
-	
-	NSString *s1 = [[NSString alloc] initWithData:d1 encoding:NSASCIIStringEncoding];
-	NSString *s2 = [[NSString alloc] initWithData:d2 encoding:NSASCIIStringEncoding];
-	NSString *s3 = [[NSString alloc] initWithData:d3 encoding:NSASCIIStringEncoding];
-	
-	NSString *s0 = [[NSString alloc] initWithData:d0 encoding:NSASCIIStringEncoding];
-	
-	NSString *sH = [[NSString alloc] initWithData:responseBody encoding:NSASCIIStringEncoding];
-	
-	NSLog(@"key1 result : %@", s1);
-	NSLog(@"key2 result : %@", s2);
-	NSLog(@"key3 passed : %@", s3);
-	
-	NSLog(@"keys concat : %@", s0);
-	
-	NSLog(@"responseBody: %@", sH);
-	
-	[s1 release];
-	[s2 release];
-	[s3 release];
-	[s0 release];
-	[sH release];
-	
-#endif
-	
-	[key1 release];
-	[key2 release];
+	if (HTTP_LOG_VERBOSE)
+	{
+		NSString *s1 = [[NSString alloc] initWithData:d1 encoding:NSASCIIStringEncoding];
+		NSString *s2 = [[NSString alloc] initWithData:d2 encoding:NSASCIIStringEncoding];
+		NSString *s3 = [[NSString alloc] initWithData:d3 encoding:NSASCIIStringEncoding];
+		
+		NSString *s0 = [[NSString alloc] initWithData:d0 encoding:NSASCIIStringEncoding];
+		
+		NSString *sH = [[NSString alloc] initWithData:responseBody encoding:NSASCIIStringEncoding];
+		
+		HTTPLogVerbose(@"key1 result : raw(%@) str(%@)", d1, s1);
+		HTTPLogVerbose(@"key2 result : raw(%@) str(%@)", d2, s2);
+		HTTPLogVerbose(@"key3 passed : raw(%@) str(%@)", d3, s3);
+		HTTPLogVerbose(@"key0 concat : raw(%@) str(%@)", d0, s0);
+		HTTPLogVerbose(@"responseBody: raw(%@) str(%@)", responseBody, sH);
+		
+		[s1 release];
+		[s2 release];
+		[s3 release];
+		[s0 release];
+		[sH release];
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -412,16 +472,27 @@
 
 - (void)didOpen
 {
-	// Override me to perform any custom actions once the WebSocket has been opened
+	HTTPLogTrace();
+	
+	// Override me to perform any custom actions once the WebSocket has been opened.
+	// This method is invoked on the websocketQueue.
 	// 
-	// Don't forget to invoke [super didOpen] at the end of your method.
+	// Don't forget to invoke [super didOpen] in your method.
 	
 	// Start reading for messages
 	[asyncSocket readDataToLength:1 withTimeout:TIMEOUT_NONE tag:TAG_PREFIX];
+	
+	// Notify delegate
+	if ([delegate respondsToSelector:@selector(webSocketDidOpen:)])
+	{
+		[delegate webSocketDidOpen:self];
+	}
 }
 
 - (void)sendMessage:(NSString *)msg
 {
+	HTTPLogTrace();
+	
 	NSData *msgData = [msg dataUsingEncoding:NSUTF8StringEncoding];
 	
 	NSMutableData *data = [NSMutableData dataWithCapacity:([msgData length] + 2)];
@@ -430,20 +501,43 @@
 	[data appendData:msgData];
 	[data appendBytes:"\xFF" length:1];
 	
+	// Remember: GCDAsyncSocket is thread-safe
+	
 	[asyncSocket writeData:data withTimeout:TIMEOUT_NONE tag:0];
 }
 
 - (void)didReceiveMessage:(NSString *)msg
 {
-	// Override me to process incoming messages
+	HTTPLogTrace();
+	
+	// Override me to process incoming messages.
+	// This method is invoked on the websocketQueue.
+	// 
+	// For completeness, you should invoke [super didReceiveMessage:msg] in your method.
+	
+	// Notify delegate
+	if ([delegate respondsToSelector:@selector(webSocket:didReceiveMessage:)])
+	{
+		[delegate webSocket:self didReceiveMessage:msg];
+	}
 }
 
 - (void)didClose
 {
+	HTTPLogTrace();
+	
 	// Override me to perform any cleanup when the socket is closed
+	// This method is invoked on the websocketQueue.
 	// 
 	// Don't forget to invoke [super didClose] at the end of your method.
 	
+	// Notify delegate
+	if ([delegate respondsToSelector:@selector(webSocketDidClose:)])
+	{
+		[delegate webSocketDidClose:self];
+	}
+	
+	// Notify HTTPServer
 	[[NSNotificationCenter defaultCenter] postNotificationName:WebSocketDidDieNotification object:self];
 }
 
@@ -451,8 +545,10 @@
 #pragma mark AsyncSocket Delegate
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
+- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
+	HTTPLogTrace();
+	
 	if (tag == TAG_HTTP_REQUEST_BODY)
 	{
 		[self sendResponseHeaders];
@@ -489,8 +585,10 @@
 	}
 }
 
-- (void)onSocketDidDisconnect:(AsyncSocket *)sock
+- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error
 {
+	HTTPLogTrace2(@"%@[%p]: socketDidDisconnect:withError: %@", THIS_FILE, self, error);
+	
 	[self didClose];
 }
 
