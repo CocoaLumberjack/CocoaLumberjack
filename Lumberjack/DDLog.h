@@ -147,34 +147,45 @@
       format:(frmt), ##__VA_ARGS__]
 
 
+#define LOG_OBJC_MACRO(sync, lvl, flg, ctx, frmt, ...) \
+             LOG_MACRO(sync, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+
+#define LOG_C_MACRO(sync, lvl, flag, ctx, frmt, ...) \
+          LOG_MACRO(sync, lvl, flg, ctx, __FUNCTION__, frmt, ##__VA_ARGS__)
+
 #define  SYNC_LOG_OBJC_MACRO(lvl, flg, ctx, frmt, ...) \
-                   LOG_MACRO(YES, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+              LOG_OBJC_MACRO(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
 #define ASYNC_LOG_OBJC_MACRO(lvl, flg, ctx, frmt, ...) \
-                   LOG_MACRO( NO, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
-
+              LOG_OBJC_MACRO( NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
 #define  SYNC_LOG_C_MACRO(lvl, flg, ctx, frmt, ...) \
-                LOG_MACRO(YES, lvl, flg, ctx, __FUNCTION__, frmt, ##__VA_ARGS__)
+              LOG_C_MACRO(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
 #define ASYNC_LOG_C_MACRO(lvl, flg, ctx, frmt, ...) \
-                LOG_MACRO( NO, lvl, flg, ctx, __FUNCTION__, frmt, ##__VA_ARGS__)
+              LOG_C_MACRO( NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
 
-#define LOG_MAYBE(isSynchronous, lvl, flg, fnct, frmt, ...) \
-  do { if(lvl & flg) LOG_MACRO(isSynchronous, lvl, flg, fnct, frmt, ##__VA_ARGS__); } while(0)
+#define LOG_MAYBE(sync, lvl, flg, ctx, fnct, frmt, ...) \
+  do { if(lvl & flg) LOG_MACRO(sync, lvl, flg, ctx, fnct, frmt, ##__VA_ARGS__); } while(0)
+
+#define LOG_OBJC_MAYBE(sync, lvl, flg, ctx, frmt, ...) \
+             LOG_MAYBE(sync, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+
+#define LOG_C_MAYBE(sync, lvl, flg, ctx, frmt, ...) \
+          LOG_MAYBE(sync, lvl, flg, ctx, __FUNCTION__, frmt, ##__VA_ARGS__)
 
 #define  SYNC_LOG_OBJC_MAYBE(lvl, flg, ctx, frmt, ...) \
-                   LOG_MAYBE(YES, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+              LOG_OBJC_MAYBE(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
 #define ASYNC_LOG_OBJC_MAYBE(lvl, flg, ctx, frmt, ...) \
-                   LOG_MAYBE( NO, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+              LOG_OBJC_MAYBE( NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
 #define  SYNC_LOG_C_MAYBE(lvl, flg, ctx, frmt, ...) \
-                LOG_MAYBE(YES, lvl, flg, ctx, __FUNCTION__, frmt, ##__VA_ARGS__)
+              LOG_C_MAYBE(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
 #define ASYNC_LOG_C_MAYBE(lvl, flg, ctx, frmt, ...) \
-                LOG_MAYBE( NO, lvl, flg, ctx, __FUNCTION__, frmt, ##__VA_ARGS__)
+              LOG_C_MAYBE( NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
 /**
  * Define our standard log levels.
