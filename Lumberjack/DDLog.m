@@ -679,9 +679,13 @@ typedef struct LoggerNode LoggerNode;
 		
 		if ([logger respondsToSelector:@selector(loggerQueue)])
 		{
-			// Logger is providing its own queue
+			// Logger may be providing its own queue
 			
 			loggerNode->loggerQueue = [logger loggerQueue];
+		}
+		
+		if (loggerNode->loggerQueue)
+		{
 			dispatch_retain(loggerNode->loggerQueue);
 		}
 		else
