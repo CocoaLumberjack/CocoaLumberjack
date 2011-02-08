@@ -235,7 +235,7 @@ typedef struct LoggerNode LoggerNode;
 			
 			[self lt_addLogger:logger];
 			
-			[pool release];
+			[pool drain];
 		};
 		
 		dispatch_async(loggingQueue, addLoggerBlock);
@@ -265,7 +265,7 @@ typedef struct LoggerNode LoggerNode;
 			
 			[self lt_removeLogger:logger];
 			
-			[pool release];
+			[pool drain];
 		};
 		
 		dispatch_async(loggingQueue, removeLoggerBlock);
@@ -293,7 +293,7 @@ typedef struct LoggerNode LoggerNode;
 			
 			[self lt_removeAllLoggers];
 			
-			[pool release];
+			[pool drain];
 		};
 		
 		dispatch_async(loggingQueue, removeAllLoggersBlock);
@@ -450,7 +450,7 @@ typedef struct LoggerNode LoggerNode;
 			
 			[self lt_log:logMessage];
 			
-			[pool release];
+			[pool drain];
 		};
 		
 		if (flag)
@@ -513,7 +513,7 @@ typedef struct LoggerNode LoggerNode;
 			
 			[self lt_flush];
 			
-			[pool release];
+			[pool drain];
 		};
 		
 		dispatch_sync(loggingQueue, flushBlock);
@@ -657,7 +657,7 @@ typedef struct LoggerNode LoggerNode;
 	
 	[[NSRunLoop currentRunLoop] run];
 	
-	[pool release];
+	[pool drain];
 }
 
 #endif
@@ -890,7 +890,7 @@ typedef struct LoggerNode LoggerNode;
 					
 					[currentNode->logger logMessage:logMessage];
 					
-					[pool release];
+					[pool drain];
 				};
 				
 				dispatch_group_async(loggingGroup, currentNode->loggerQueue, loggerBlock);
@@ -913,7 +913,7 @@ typedef struct LoggerNode LoggerNode;
 					
 					[currentNode->logger logMessage:logMessage];
 					
-					[pool release];
+					[pool drain];
 				};
 				
 				dispatch_sync(currentNode->loggerQueue, loggerBlock);
