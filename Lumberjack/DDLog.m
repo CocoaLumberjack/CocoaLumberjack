@@ -1006,7 +1006,52 @@ typedef struct LoggerNode LoggerNode;
 **/
 + (void)lt_flush
 {
-	// All log statements issued before the flush method was invoked have now been flushed
+	// All log statements issued before the flush method was invoked have now been executed.
+	// 
+	// Now we need to propogate the flush request to any loggers that implement the flush method.
+	// This is designed for loggers that buffer IO.
+	
+	if (IS_GCD_AVAILABLE)
+	{
+	#if GCD_MAYBE_AVAILABLE
+		
+		LoggerNode *currentNode = loggerNodes;
+		
+		while (currentNode)
+		{
+			if ([currentNode->logger respondsToSelector:@selector(flush)])
+			{
+				dispatch_block_t loggerBlock = ^{
+					NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+					
+					[currentNode->logger flush];
+					
+					[pool drain];
+				};
+				
+				dispatch_group_async(loggingGroup, currentNode->loggerQueue, loggerBlock);
+			}
+			currentNode = currentNode->next;
+		}
+		
+		dispatch_group_wait(loggingGroup, DISPATCH_TIME_FOREVER);
+		
+	#endif
+	}
+	else
+	{
+	#if GCD_MAYBE_UNAVAILABLE
+		
+		for (id <DDLogger> logger in loggers)
+		{
+			if ([logger respondsToSelector:@selector(flush)])
+			{
+				[logger flush];
+			}
+		}
+		
+	#endif
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
