@@ -1304,7 +1304,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 		
 		// loggerQueue  : Our own private internal queue that the logMessage method runs on.
 		//                Operations are added to this queue from the global loggingQueue.
-		//
+		// 
 		// loggingQueue : The queue that all log messages go through before they arrive in our loggerQueue.
 		// 
 		// It is important to note that, while the loggerQueue is used to create thread-safety for our formatter,
@@ -1341,10 +1341,9 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 		
 		__block id <DDLogFormatter> result;
 		
-		dispatch_block_t block = ^{
+		dispatch_sync([DDLog loggingQueue], ^{
 			result = [formatter retain];
-		};
-		dispatch_sync([DDLog loggingQueue], block);
+		});
 		
 		return [result autorelease];
 		
@@ -1480,6 +1479,11 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 - (dispatch_queue_t)loggerQueue
 {
 	return loggerQueue;
+}
+
+- (NSString *)loggerName
+{
+	return NSStringFromClass([self class]);
 }
 
 #endif
