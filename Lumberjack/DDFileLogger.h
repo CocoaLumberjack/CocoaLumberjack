@@ -49,7 +49,7 @@
 // Public properties
 
 @property (readwrite, assign) NSUInteger maximumNumberOfLogFiles;
-@property (readwrite, assign) NSString *logsDirectory;
+@property (readwrite, copy) NSString *logsDirectory;
 
 // Public methods
 

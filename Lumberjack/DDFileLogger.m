@@ -69,6 +69,7 @@
 
 - (void)dealloc
 {
+	[logsDirectory release];
 	[super dealloc];
 }
 
