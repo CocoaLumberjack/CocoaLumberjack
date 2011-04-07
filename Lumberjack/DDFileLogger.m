@@ -49,7 +49,7 @@
 @implementation DDLogFileManagerDefault
 
 @synthesize maximumNumberOfLogFiles;
-
+@synthesize logsDirectory;
 
 - (id)init
 {
@@ -205,6 +205,9 @@
 #endif
 	
 	NSString *logsDir = [baseDir stringByAppendingPathComponent:@"Logs"];
+	
+	if(logsDirectory && ![logsDirectory isEqualToString:@""])
+		logsDir = logsDirectory;
 	
 	if(![[NSFileManager defaultManager] fileExistsAtPath:logsDir])
 	{

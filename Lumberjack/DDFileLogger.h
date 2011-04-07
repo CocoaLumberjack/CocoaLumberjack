@@ -49,6 +49,7 @@
 // Public properties
 
 @property (readwrite, assign) NSUInteger maximumNumberOfLogFiles;
+@property (readwrite, assign) NSString *logsDirectory;
 
 // Public methods
 
@@ -81,7 +82,7 @@
 
 // Default log file manager.
 // 
-// All log files are placed inside the logsDirectory.
+// All log files are placed inside the logsDirectory unless a custom path is specified.
 // On Mac, this is in ~/Library/Application Support/<Application Name>/Logs.
 // On iPhone, this is in ~/Documents/Logs.
 // 
@@ -93,6 +94,7 @@
 @interface DDLogFileManagerDefault : NSObject <DDLogFileManager>
 {
 	NSUInteger maximumNumberOfLogFiles;
+	NSString *logsDirectory;
 }
 
 @end
