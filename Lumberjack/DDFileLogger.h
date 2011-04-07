@@ -49,6 +49,7 @@
 // Public properties
 
 @property (readwrite, assign) NSUInteger maximumNumberOfLogFiles;
+@property (readwrite, assign) NSString *logsDirectory;
 
 // Public methods
 
@@ -93,6 +94,7 @@
 @interface DDLogFileManagerDefault : NSObject <DDLogFileManager>
 {
 	NSUInteger maximumNumberOfLogFiles;
+	NSString *logsDirectory;
 }
 
 @end
