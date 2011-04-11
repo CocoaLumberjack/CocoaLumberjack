@@ -1149,6 +1149,20 @@
 	return [[self creationDate] timeIntervalSinceNow] * -1.0;
 }
 
+- (NSString *)description
+{
+	return [[NSDictionary dictionaryWithObjectsAndKeys:
+		self.filePath, @"filePath",
+		self.fileName, @"fileName",
+		self.fileAttributes, @"fileAttributes",
+		self.creationDate, @"creationDate",
+		self.modificationDate, @"modificationDate",
+		[NSNumber numberWithUnsignedLongLong:self.fileSize], @"fileSize",
+		[NSNumber numberWithInteger:self.age], @"age",
+		[NSNumber numberWithBool:self.isArchived], @"isArchived",
+	nil] description];
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Archiving
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
