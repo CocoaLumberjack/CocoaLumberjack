@@ -82,6 +82,7 @@
 // Default log file manager.
 // 
 // All log files are placed inside the logsDirectory.
+// If a specific logsDirectory isn't specified, the default directory is used.
 // On Mac, this is in ~/Library/Application Support/<Application Name>/Logs.
 // On iPhone, this is in ~/Documents/Logs.
 // 
@@ -93,7 +94,11 @@
 @interface DDLogFileManagerDefault : NSObject <DDLogFileManager>
 {
 	NSUInteger maximumNumberOfLogFiles;
+	NSString *_logsDirectory;
 }
+
+- (id)init;
+- (id)initWithLogsDirectory:(NSString *)logsDirectory;
 
 @end
 
