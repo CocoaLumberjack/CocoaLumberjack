@@ -150,7 +150,7 @@
 #define LOG_OBJC_MACRO(sync, lvl, flg, ctx, frmt, ...) \
              LOG_MACRO(sync, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
 
-#define LOG_C_MACRO(sync, lvl, flag, ctx, frmt, ...) \
+#define LOG_C_MACRO(sync, lvl, flg, ctx, frmt, ...) \
           LOG_MACRO(sync, lvl, flg, ctx, __FUNCTION__, frmt, ##__VA_ARGS__)
 
 #define  SYNC_LOG_OBJC_MACRO(lvl, flg, ctx, frmt, ...) \
