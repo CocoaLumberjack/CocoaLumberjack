@@ -1158,7 +1158,7 @@
 		self.creationDate, @"creationDate",
 		self.modificationDate, @"modificationDate",
 		[NSNumber numberWithUnsignedLongLong:self.fileSize], @"fileSize",
-		[NSNumber numberWithInteger:self.age], @"age",
+		[NSNumber numberWithDouble:self.age], @"age",
 		[NSNumber numberWithBool:self.isArchived], @"isArchived",
 	nil] description];
 }
