@@ -3,6 +3,19 @@
 
 @class DDLogFileInfo;
 
+/**
+ * Welcome to Cocoa Lumberjack!
+ * 
+ * The Google Code page has a wealth of documentation if you have any questions.
+ * http://code.google.com/p/cocoalumberjack/
+ * 
+ * If you're new to the project you may wish to read the "Getting Started" page.
+ * http://code.google.com/p/cocoalumberjack/wiki/GettingStarted
+ * 
+ * 
+ * This class provides a logger to write log statements to a file.
+**/
+
 
 // Default configuration and safety/sanity values.
 // 
