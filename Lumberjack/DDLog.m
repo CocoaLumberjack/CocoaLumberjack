@@ -314,7 +314,7 @@ typedef struct LoggerNode LoggerNode;
 #pragma mark Master Logging
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-+ (void)queueLogMessage:(DDLogMessage *)logMessage synchronously:(BOOL)flag
++ (void)queueLogMessage:(DDLogMessage *)logMessage asynchronously:(BOOL)asyncFlag
 {
 	// We have a tricky situation here...
 	// 
@@ -453,10 +453,10 @@ typedef struct LoggerNode LoggerNode;
 			[pool drain];
 		};
 		
-		if (flag)
-			dispatch_sync(loggingQueue, logBlock);
-		else
+		if (asyncFlag)
 			dispatch_async(loggingQueue, logBlock);
+		else
+			dispatch_sync(loggingQueue, logBlock);
 		
 	#endif
 	}
@@ -464,13 +464,13 @@ typedef struct LoggerNode LoggerNode;
 	{
 	#if GCD_MAYBE_UNAVAILABLE
 		
-		[self performSelector:@selector(lt_log:) onThread:loggingThread withObject:logMessage waitUntilDone:flag];
+		[self performSelector:@selector(lt_log:) onThread:loggingThread withObject:logMessage waitUntilDone:!asyncFlag];
 		
 	#endif
 	}
 }
 
-+ (void)log:(BOOL)synchronous
++ (void)log:(BOOL)asynchronous
       level:(int)level
        flag:(int)flag
     context:(int)context
@@ -493,7 +493,7 @@ typedef struct LoggerNode LoggerNode;
 		                                                       function:function
 		                                                           line:line];
 		
-		[self queueLogMessage:logMessage synchronously:synchronous];
+		[self queueLogMessage:logMessage asynchronously:asynchronous];
 		
 		[logMessage release];
 		[logMsg release];
