@@ -1,0 +1,29 @@
+// LogLevelsConfig File Format:
+// 
+// Comment lines begin with "//" and are ignored by the parser.
+// Define lines begin with "DEFINE" and assign readable names to level values.
+// 
+// Normal lines are expected to have two components: filename & level.
+// The filename is specified without an extenstion.
+// The level is specified with either an integer, or a previously defined name.
+
+
+// From DDLog.h
+// 
+// LOG_LEVEL_NONE    = 0   (0...000000)
+// LOG_LEVEL_ERROR   = 1   (0...000001)
+// LOG_LEVEL_WARN    = 3   (0...000011)
+// LOG_LEVEL_INFO    = 7   (0...000111)
+// LOG_LEVEL_VERBOSE = 15  (0...001111)
+
+DEFINE NONE      0
+DEFINE ERROR     1
+DEFINE WARN      3
+DEFINE INFO      7
+DEFINE VERBOSE  15
+
+
+LogLevelsConfigFileAppDelegate  VERBOSE  // Anything after the first 2 components are ignored, so you can put comments
+Lions                            7       // You don't have to use the defined names. They are optional.
+Tigers                          WARN
+Bears                           ERROR

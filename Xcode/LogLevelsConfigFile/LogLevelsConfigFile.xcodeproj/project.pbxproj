@@ -1,0 +1,386 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DC80C9D313BFD8BD00D29D06 /* Lions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC80C9D213BFD8BD00D29D06 /* Lions.m */; };
+		DC80C9D713BFD8CB00D29D06 /* Tigers.m in Sources */ = {isa = PBXBuildFile; fileRef = DC80C9D613BFD8CB00D29D06 /* Tigers.m */; };
+		DC80C9DA13BFD8D600D29D06 /* Bears.m in Sources */ = {isa = PBXBuildFile; fileRef = DC80C9D913BFD8D600D29D06 /* Bears.m */; };
+		DC80C9DD13BFDB0B00D29D06 /* DebugLogging.txt in Resources */ = {isa = PBXBuildFile; fileRef = DC80C9DB13BFDB0B00D29D06 /* DebugLogging.txt */; };
+		DC80C9DE13BFDB0B00D29D06 /* ReleaseLogging.txt in Resources */ = {isa = PBXBuildFile; fileRef = DC80C9DC13BFDB0B00D29D06 /* ReleaseLogging.txt */; };
+		DC94706B13AD8610009CE6E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC94706A13AD8610009CE6E2 /* Cocoa.framework */; };
+		DC94707513AD8610009CE6E2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DC94707313AD8610009CE6E2 /* InfoPlist.strings */; };
+		DC94707813AD8611009CE6E2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC94707713AD8611009CE6E2 /* main.m */; };
+		DC94707B13AD8611009CE6E2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DC94707913AD8611009CE6E2 /* Credits.rtf */; };
+		DC94707E13AD8611009CE6E2 /* LogLevelsConfigFileAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC94707D13AD8611009CE6E2 /* LogLevelsConfigFileAppDelegate.m */; };
+		DC94708113AD8611009CE6E2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC94707F13AD8611009CE6E2 /* MainMenu.xib */; };
+		DC94708913AD86E9009CE6E2 /* DDLogLevelsConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DC94708813AD86E9009CE6E2 /* DDLogLevelsConfig.m */; };
+		DC94709513AD8702009CE6E2 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC94708C13AD8702009CE6E2 /* DDAbstractDatabaseLogger.m */; };
+		DC94709613AD8702009CE6E2 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC94708E13AD8702009CE6E2 /* DDASLLogger.m */; };
+		DC94709713AD8702009CE6E2 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC94709013AD8702009CE6E2 /* DDFileLogger.m */; };
+		DC94709813AD8702009CE6E2 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DC94709213AD8702009CE6E2 /* DDLog.m */; };
+		DC94709913AD8702009CE6E2 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC94709413AD8702009CE6E2 /* DDTTYLogger.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		DC80C9D113BFD8BD00D29D06 /* Lions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lions.h; sourceTree = "<group>"; };
+		DC80C9D213BFD8BD00D29D06 /* Lions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lions.m; sourceTree = "<group>"; };
+		DC80C9D513BFD8CB00D29D06 /* Tigers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tigers.h; sourceTree = "<group>"; };
+		DC80C9D613BFD8CB00D29D06 /* Tigers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tigers.m; sourceTree = "<group>"; };
+		DC80C9D813BFD8D600D29D06 /* Bears.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bears.h; sourceTree = "<group>"; };
+		DC80C9D913BFD8D600D29D06 /* Bears.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bears.m; sourceTree = "<group>"; };
+		DC80C9DB13BFDB0B00D29D06 /* DebugLogging.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DebugLogging.txt; sourceTree = "<group>"; };
+		DC80C9DC13BFDB0B00D29D06 /* ReleaseLogging.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReleaseLogging.txt; sourceTree = "<group>"; };
+		DC88954113C43DFD00AD2AC1 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		DC88954313C43DFD00AD2AC1 /* Shell_Script.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Shell_Script.1; sourceTree = "<group>"; };
+		DC94706613AD8610009CE6E2 /* LogLevelsConfigFile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LogLevelsConfigFile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC94706A13AD8610009CE6E2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		DC94706D13AD8610009CE6E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		DC94706E13AD8610009CE6E2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		DC94706F13AD8610009CE6E2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DC94707213AD8610009CE6E2 /* LogLevelsConfigFile-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LogLevelsConfigFile-Info.plist"; sourceTree = "<group>"; };
+		DC94707413AD8610009CE6E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DC94707613AD8611009CE6E2 /* LogLevelsConfigFile-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LogLevelsConfigFile-Prefix.pch"; sourceTree = "<group>"; };
+		DC94707713AD8611009CE6E2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DC94707A13AD8611009CE6E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		DC94707C13AD8611009CE6E2 /* LogLevelsConfigFileAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogLevelsConfigFileAppDelegate.h; sourceTree = "<group>"; };
+		DC94707D13AD8611009CE6E2 /* LogLevelsConfigFileAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogLevelsConfigFileAppDelegate.m; sourceTree = "<group>"; };
+		DC94708013AD8611009CE6E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		DC94708713AD86E9009CE6E2 /* DDLogLevelsConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDLogLevelsConfig.h; path = LogLevelsConfigFile/DDLogLevelsConfig.h; sourceTree = "<group>"; };
+		DC94708813AD86E9009CE6E2 /* DDLogLevelsConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDLogLevelsConfig.m; path = LogLevelsConfigFile/DDLogLevelsConfig.m; sourceTree = "<group>"; };
+		DC94708B13AD8702009CE6E2 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
+		DC94708C13AD8702009CE6E2 /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
+		DC94708D13AD8702009CE6E2 /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
+		DC94708E13AD8702009CE6E2 /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDASLLogger.m; sourceTree = "<group>"; };
+		DC94708F13AD8702009CE6E2 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
+		DC94709013AD8702009CE6E2 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLogger.m; sourceTree = "<group>"; };
+		DC94709113AD8702009CE6E2 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
+		DC94709213AD8702009CE6E2 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
+		DC94709313AD8702009CE6E2 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
+		DC94709413AD8702009CE6E2 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DC94706313AD8610009CE6E2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC94706B13AD8610009CE6E2 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DC80C9DF13BFDB1700D29D06 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DC94707913AD8611009CE6E2 /* Credits.rtf */,
+				DC80C9DB13BFDB0B00D29D06 /* DebugLogging.txt */,
+				DC80C9DC13BFDB0B00D29D06 /* ReleaseLogging.txt */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		DC88954013C43DFD00AD2AC1 /* Shell Script */ = {
+			isa = PBXGroup;
+			children = (
+				DC88954113C43DFD00AD2AC1 /* main.c */,
+				DC88954313C43DFD00AD2AC1 /* Shell_Script.1 */,
+			);
+			path = "Shell Script";
+			sourceTree = "<group>";
+		};
+		DC94705B13AD8610009CE6E2 = {
+			isa = PBXGroup;
+			children = (
+				DC94708A13AD8702009CE6E2 /* Lumberjack */,
+				DC94708713AD86E9009CE6E2 /* DDLogLevelsConfig.h */,
+				DC94708813AD86E9009CE6E2 /* DDLogLevelsConfig.m */,
+				DC94707013AD8610009CE6E2 /* LogLevelsConfigFile */,
+				DC88954013C43DFD00AD2AC1 /* Shell Script */,
+				DC94706913AD8610009CE6E2 /* Frameworks */,
+				DC94706713AD8610009CE6E2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DC94706713AD8610009CE6E2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DC94706613AD8610009CE6E2 /* LogLevelsConfigFile.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DC94706913AD8610009CE6E2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DC94706A13AD8610009CE6E2 /* Cocoa.framework */,
+				DC94706C13AD8610009CE6E2 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DC94706C13AD8610009CE6E2 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DC94706D13AD8610009CE6E2 /* AppKit.framework */,
+				DC94706E13AD8610009CE6E2 /* CoreData.framework */,
+				DC94706F13AD8610009CE6E2 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		DC94707013AD8610009CE6E2 /* LogLevelsConfigFile */ = {
+			isa = PBXGroup;
+			children = (
+				DC94707C13AD8611009CE6E2 /* LogLevelsConfigFileAppDelegate.h */,
+				DC94707D13AD8611009CE6E2 /* LogLevelsConfigFileAppDelegate.m */,
+				DC80C9D113BFD8BD00D29D06 /* Lions.h */,
+				DC80C9D213BFD8BD00D29D06 /* Lions.m */,
+				DC80C9D513BFD8CB00D29D06 /* Tigers.h */,
+				DC80C9D613BFD8CB00D29D06 /* Tigers.m */,
+				DC80C9D813BFD8D600D29D06 /* Bears.h */,
+				DC80C9D913BFD8D600D29D06 /* Bears.m */,
+				DC94707F13AD8611009CE6E2 /* MainMenu.xib */,
+				DC94707113AD8610009CE6E2 /* Supporting Files */,
+				DC80C9DF13BFDB1700D29D06 /* Resources */,
+			);
+			path = LogLevelsConfigFile;
+			sourceTree = "<group>";
+		};
+		DC94707113AD8610009CE6E2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DC94707213AD8610009CE6E2 /* LogLevelsConfigFile-Info.plist */,
+				DC94707313AD8610009CE6E2 /* InfoPlist.strings */,
+				DC94707613AD8611009CE6E2 /* LogLevelsConfigFile-Prefix.pch */,
+				DC94707713AD8611009CE6E2 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DC94708A13AD8702009CE6E2 /* Lumberjack */ = {
+			isa = PBXGroup;
+			children = (
+				DC94708B13AD8702009CE6E2 /* DDAbstractDatabaseLogger.h */,
+				DC94708C13AD8702009CE6E2 /* DDAbstractDatabaseLogger.m */,
+				DC94708D13AD8702009CE6E2 /* DDASLLogger.h */,
+				DC94708E13AD8702009CE6E2 /* DDASLLogger.m */,
+				DC94708F13AD8702009CE6E2 /* DDFileLogger.h */,
+				DC94709013AD8702009CE6E2 /* DDFileLogger.m */,
+				DC94709113AD8702009CE6E2 /* DDLog.h */,
+				DC94709213AD8702009CE6E2 /* DDLog.m */,
+				DC94709313AD8702009CE6E2 /* DDTTYLogger.h */,
+				DC94709413AD8702009CE6E2 /* DDTTYLogger.m */,
+			);
+			name = Lumberjack;
+			path = ../../Lumberjack;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DC94706513AD8610009CE6E2 /* LogLevelsConfigFile */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC94708413AD8611009CE6E2 /* Build configuration list for PBXNativeTarget "LogLevelsConfigFile" */;
+			buildPhases = (
+				DC94706213AD8610009CE6E2 /* Sources */,
+				DC94706313AD8610009CE6E2 /* Frameworks */,
+				DC94706413AD8610009CE6E2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LogLevelsConfigFile;
+			productName = LogLevelsConfigFile;
+			productReference = DC94706613AD8610009CE6E2 /* LogLevelsConfigFile.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DC94705D13AD8610009CE6E2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Deusty LLC";
+			};
+			buildConfigurationList = DC94706013AD8610009CE6E2 /* Build configuration list for PBXProject "LogLevelsConfigFile" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DC94705B13AD8610009CE6E2;
+			productRefGroup = DC94706713AD8610009CE6E2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DC94706513AD8610009CE6E2 /* LogLevelsConfigFile */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DC94706413AD8610009CE6E2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC94707513AD8610009CE6E2 /* InfoPlist.strings in Resources */,
+				DC94707B13AD8611009CE6E2 /* Credits.rtf in Resources */,
+				DC94708113AD8611009CE6E2 /* MainMenu.xib in Resources */,
+				DC80C9DD13BFDB0B00D29D06 /* DebugLogging.txt in Resources */,
+				DC80C9DE13BFDB0B00D29D06 /* ReleaseLogging.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DC94706213AD8610009CE6E2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC94707813AD8611009CE6E2 /* main.m in Sources */,
+				DC94707E13AD8611009CE6E2 /* LogLevelsConfigFileAppDelegate.m in Sources */,
+				DC94708913AD86E9009CE6E2 /* DDLogLevelsConfig.m in Sources */,
+				DC94709513AD8702009CE6E2 /* DDAbstractDatabaseLogger.m in Sources */,
+				DC94709613AD8702009CE6E2 /* DDASLLogger.m in Sources */,
+				DC94709713AD8702009CE6E2 /* DDFileLogger.m in Sources */,
+				DC94709813AD8702009CE6E2 /* DDLog.m in Sources */,
+				DC94709913AD8702009CE6E2 /* DDTTYLogger.m in Sources */,
+				DC80C9D313BFD8BD00D29D06 /* Lions.m in Sources */,
+				DC80C9D713BFD8CB00D29D06 /* Tigers.m in Sources */,
+				DC80C9DA13BFD8D600D29D06 /* Bears.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DC94707313AD8610009CE6E2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC94707413AD8610009CE6E2 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DC94707913AD8611009CE6E2 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC94707A13AD8611009CE6E2 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		DC94707F13AD8611009CE6E2 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC94708013AD8611009CE6E2 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DC94708213AD8611009CE6E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DC94708313AD8611009CE6E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DC94708513AD8611009CE6E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LogLevelsConfigFile/LogLevelsConfigFile-Prefix.pch";
+				INFOPLIST_FILE = "LogLevelsConfigFile/LogLevelsConfigFile-Info.plist";
+				INFOPLIST_PREFIX_HEADER = $PROJECT_TEMP_DIR/revision.prefix;
+				INFOPLIST_PREPROCESS = YES;
+				OTHER_CFLAGS = "-dM";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		DC94708613AD8611009CE6E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LogLevelsConfigFile/LogLevelsConfigFile-Prefix.pch";
+				INFOPLIST_FILE = "LogLevelsConfigFile/LogLevelsConfigFile-Info.plist";
+				INFOPLIST_PREFIX_HEADER = $PROJECT_TEMP_DIR/revision.prefix;
+				INFOPLIST_PREPROCESS = YES;
+				OTHER_CFLAGS = "-dM";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DC94706013AD8610009CE6E2 /* Build configuration list for PBXProject "LogLevelsConfigFile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC94708213AD8611009CE6E2 /* Debug */,
+				DC94708313AD8611009CE6E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC94708413AD8611009CE6E2 /* Build configuration list for PBXNativeTarget "LogLevelsConfigFile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC94708513AD8611009CE6E2 /* Debug */,
+				DC94708613AD8611009CE6E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DC94705D13AD8610009CE6E2 /* Project object */;
+}
