@@ -1,0 +1,339 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DC7DC5301415523E00601B40 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7DC52F1415523E00601B40 /* UIKit.framework */; };
+		DC7DC5321415523E00601B40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7DC5311415523E00601B40 /* Foundation.framework */; };
+		DC7DC5341415523E00601B40 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7DC5331415523E00601B40 /* CoreGraphics.framework */; };
+		DC7DC53A1415523E00601B40 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DC7DC5381415523E00601B40 /* InfoPlist.strings */; };
+		DC7DC53C1415523E00601B40 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC53B1415523E00601B40 /* main.m */; };
+		DC7DC5401415523F00601B40 /* RegisteredLoggingTestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC53F1415523F00601B40 /* RegisteredLoggingTestAppDelegate.m */; };
+		DC7DC5431415523F00601B40 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC7DC5411415523F00601B40 /* MainWindow.xib */; };
+		DC7DC5461415523F00601B40 /* RegisteredLoggingTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC5451415523F00601B40 /* RegisteredLoggingTestViewController.m */; };
+		DC7DC5491415523F00601B40 /* RegisteredLoggingTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC7DC5471415523F00601B40 /* RegisteredLoggingTestViewController.xib */; };
+		DC7DC55E1415536500601B40 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC5551415536500601B40 /* DDAbstractDatabaseLogger.m */; };
+		DC7DC55F1415536500601B40 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC5571415536500601B40 /* DDASLLogger.m */; };
+		DC7DC5601415536500601B40 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC5591415536500601B40 /* DDFileLogger.m */; };
+		DC7DC5611415536500601B40 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC55B1415536500601B40 /* DDLog.m */; };
+		DC7DC5621415536500601B40 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC55D1415536500601B40 /* DDTTYLogger.m */; };
+		DC7DC5671415538700601B40 /* Lions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC5641415538700601B40 /* Lions.m */; };
+		DC7DC5681415538700601B40 /* Tigers.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC5661415538700601B40 /* Tigers.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		DC7DC52B1415523E00601B40 /* RegisteredLoggingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RegisteredLoggingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC7DC52F1415523E00601B40 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		DC7DC5311415523E00601B40 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DC7DC5331415523E00601B40 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		DC7DC5371415523E00601B40 /* RegisteredLoggingTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RegisteredLoggingTest-Info.plist"; sourceTree = "<group>"; };
+		DC7DC5391415523E00601B40 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DC7DC53B1415523E00601B40 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DC7DC53D1415523E00601B40 /* RegisteredLoggingTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RegisteredLoggingTest-Prefix.pch"; sourceTree = "<group>"; };
+		DC7DC53E1415523F00601B40 /* RegisteredLoggingTestAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegisteredLoggingTestAppDelegate.h; sourceTree = "<group>"; };
+		DC7DC53F1415523F00601B40 /* RegisteredLoggingTestAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisteredLoggingTestAppDelegate.m; sourceTree = "<group>"; };
+		DC7DC5421415523F00601B40 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		DC7DC5441415523F00601B40 /* RegisteredLoggingTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegisteredLoggingTestViewController.h; sourceTree = "<group>"; };
+		DC7DC5451415523F00601B40 /* RegisteredLoggingTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisteredLoggingTestViewController.m; sourceTree = "<group>"; };
+		DC7DC5481415523F00601B40 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RegisteredLoggingTestViewController.xib; sourceTree = "<group>"; };
+		DC7DC5541415536500601B40 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
+		DC7DC5551415536500601B40 /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
+		DC7DC5561415536500601B40 /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
+		DC7DC5571415536500601B40 /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDASLLogger.m; sourceTree = "<group>"; };
+		DC7DC5581415536500601B40 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
+		DC7DC5591415536500601B40 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLogger.m; sourceTree = "<group>"; };
+		DC7DC55A1415536500601B40 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
+		DC7DC55B1415536500601B40 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
+		DC7DC55C1415536500601B40 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
+		DC7DC55D1415536500601B40 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
+		DC7DC5631415538700601B40 /* Lions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lions.h; sourceTree = "<group>"; };
+		DC7DC5641415538700601B40 /* Lions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lions.m; sourceTree = "<group>"; };
+		DC7DC5651415538700601B40 /* Tigers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tigers.h; sourceTree = "<group>"; };
+		DC7DC5661415538700601B40 /* Tigers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tigers.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DC7DC5281415523E00601B40 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC7DC5301415523E00601B40 /* UIKit.framework in Frameworks */,
+				DC7DC5321415523E00601B40 /* Foundation.framework in Frameworks */,
+				DC7DC5341415523E00601B40 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DC7DC5201415523E00601B40 = {
+			isa = PBXGroup;
+			children = (
+				DC7DC5531415536500601B40 /* Lumberjack */,
+				DC7DC5351415523E00601B40 /* RegisteredLoggingTest */,
+				DC7DC52E1415523E00601B40 /* Frameworks */,
+				DC7DC52C1415523E00601B40 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DC7DC52C1415523E00601B40 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DC7DC52B1415523E00601B40 /* RegisteredLoggingTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DC7DC52E1415523E00601B40 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DC7DC52F1415523E00601B40 /* UIKit.framework */,
+				DC7DC5311415523E00601B40 /* Foundation.framework */,
+				DC7DC5331415523E00601B40 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DC7DC5351415523E00601B40 /* RegisteredLoggingTest */ = {
+			isa = PBXGroup;
+			children = (
+				DC7DC5631415538700601B40 /* Lions.h */,
+				DC7DC5641415538700601B40 /* Lions.m */,
+				DC7DC5651415538700601B40 /* Tigers.h */,
+				DC7DC5661415538700601B40 /* Tigers.m */,
+				DC7DC53E1415523F00601B40 /* RegisteredLoggingTestAppDelegate.h */,
+				DC7DC53F1415523F00601B40 /* RegisteredLoggingTestAppDelegate.m */,
+				DC7DC5411415523F00601B40 /* MainWindow.xib */,
+				DC7DC5441415523F00601B40 /* RegisteredLoggingTestViewController.h */,
+				DC7DC5451415523F00601B40 /* RegisteredLoggingTestViewController.m */,
+				DC7DC5471415523F00601B40 /* RegisteredLoggingTestViewController.xib */,
+				DC7DC5361415523E00601B40 /* Supporting Files */,
+			);
+			path = RegisteredLoggingTest;
+			sourceTree = "<group>";
+		};
+		DC7DC5361415523E00601B40 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DC7DC5371415523E00601B40 /* RegisteredLoggingTest-Info.plist */,
+				DC7DC5381415523E00601B40 /* InfoPlist.strings */,
+				DC7DC53B1415523E00601B40 /* main.m */,
+				DC7DC53D1415523E00601B40 /* RegisteredLoggingTest-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DC7DC5531415536500601B40 /* Lumberjack */ = {
+			isa = PBXGroup;
+			children = (
+				DC7DC5541415536500601B40 /* DDAbstractDatabaseLogger.h */,
+				DC7DC5551415536500601B40 /* DDAbstractDatabaseLogger.m */,
+				DC7DC5561415536500601B40 /* DDASLLogger.h */,
+				DC7DC5571415536500601B40 /* DDASLLogger.m */,
+				DC7DC5581415536500601B40 /* DDFileLogger.h */,
+				DC7DC5591415536500601B40 /* DDFileLogger.m */,
+				DC7DC55A1415536500601B40 /* DDLog.h */,
+				DC7DC55B1415536500601B40 /* DDLog.m */,
+				DC7DC55C1415536500601B40 /* DDTTYLogger.h */,
+				DC7DC55D1415536500601B40 /* DDTTYLogger.m */,
+			);
+			name = Lumberjack;
+			path = ../../../../../Lumberjack;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DC7DC52A1415523E00601B40 /* RegisteredLoggingTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC7DC54C1415523F00601B40 /* Build configuration list for PBXNativeTarget "RegisteredLoggingTest" */;
+			buildPhases = (
+				DC7DC5271415523E00601B40 /* Sources */,
+				DC7DC5281415523E00601B40 /* Frameworks */,
+				DC7DC5291415523E00601B40 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RegisteredLoggingTest;
+			productName = RegisteredLoggingTest;
+			productReference = DC7DC52B1415523E00601B40 /* RegisteredLoggingTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DC7DC5221415523E00601B40 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = DC7DC5251415523E00601B40 /* Build configuration list for PBXProject "RegisteredLoggingTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DC7DC5201415523E00601B40;
+			productRefGroup = DC7DC52C1415523E00601B40 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DC7DC52A1415523E00601B40 /* RegisteredLoggingTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DC7DC5291415523E00601B40 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC7DC53A1415523E00601B40 /* InfoPlist.strings in Resources */,
+				DC7DC5431415523F00601B40 /* MainWindow.xib in Resources */,
+				DC7DC5491415523F00601B40 /* RegisteredLoggingTestViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DC7DC5271415523E00601B40 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC7DC53C1415523E00601B40 /* main.m in Sources */,
+				DC7DC5401415523F00601B40 /* RegisteredLoggingTestAppDelegate.m in Sources */,
+				DC7DC5461415523F00601B40 /* RegisteredLoggingTestViewController.m in Sources */,
+				DC7DC55E1415536500601B40 /* DDAbstractDatabaseLogger.m in Sources */,
+				DC7DC55F1415536500601B40 /* DDASLLogger.m in Sources */,
+				DC7DC5601415536500601B40 /* DDFileLogger.m in Sources */,
+				DC7DC5611415536500601B40 /* DDLog.m in Sources */,
+				DC7DC5621415536500601B40 /* DDTTYLogger.m in Sources */,
+				DC7DC5671415538700601B40 /* Lions.m in Sources */,
+				DC7DC5681415538700601B40 /* Tigers.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DC7DC5381415523E00601B40 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC7DC5391415523E00601B40 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DC7DC5411415523F00601B40 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC7DC5421415523F00601B40 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		DC7DC5471415523F00601B40 /* RegisteredLoggingTestViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC7DC5481415523F00601B40 /* en */,
+			);
+			name = RegisteredLoggingTestViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DC7DC54A1415523F00601B40 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		DC7DC54B1415523F00601B40 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DC7DC54D1415523F00601B40 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RegisteredLoggingTest/RegisteredLoggingTest-Prefix.pch";
+				INFOPLIST_FILE = "RegisteredLoggingTest/RegisteredLoggingTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		DC7DC54E1415523F00601B40 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RegisteredLoggingTest/RegisteredLoggingTest-Prefix.pch";
+				INFOPLIST_FILE = "RegisteredLoggingTest/RegisteredLoggingTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DC7DC5251415523E00601B40 /* Build configuration list for PBXProject "RegisteredLoggingTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC7DC54A1415523F00601B40 /* Debug */,
+				DC7DC54B1415523F00601B40 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC7DC54C1415523F00601B40 /* Build configuration list for PBXNativeTarget "RegisteredLoggingTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC7DC54D1415523F00601B40 /* Debug */,
+				DC7DC54E1415523F00601B40 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DC7DC5221415523E00601B40 /* Project object */;
+}
