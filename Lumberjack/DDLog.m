@@ -720,7 +720,7 @@ typedef struct LoggerNode LoggerNode;
 		// Add to linked list of LoggerNode elements.
 		// Need to create loggerQueue if loggerNode doesn't provide one.
 		
-		LoggerNode *loggerNode = malloc(sizeof(LoggerNode));
+		LoggerNode *loggerNode = calloc(1, sizeof(LoggerNode));
 		loggerNode->logger = [logger retain];
 		
 		if ([logger respondsToSelector:@selector(loggerQueue)])
