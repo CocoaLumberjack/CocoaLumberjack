@@ -539,6 +539,50 @@ typedef struct LoggerNode LoggerNode;
 	SEL getterSel = @selector(ddLogLevel);
 	SEL setterSel = @selector(ddSetLogLevel:);
 	
+#if TARGET_OS_IPHONE
+	
+	// Issue #6 - Crashes on iOS 4.2.1 and iPhone 4
+	// 
+	// Crash caused by class_getClassMethod(2).
+	// 
+	//     "It's a bug with UIAccessibilitySafeCategory__NSObject so it didn't pop up until
+	//      users had VoiceOver enabled [...]. I was able to work around it by searching the
+	//      result of class_copyMethodList() instead of calling class_getClassMethod()"
+	
+	unsigned int methodCount, i;
+	Method *methodList = class_copyMethodList(object_getClass(class), &methodCount);
+	
+	if (methodList != NULL)
+	{
+		BOOL getterFound = NO;
+		BOOL setterFound = NO;
+		
+		for (i = 0; i < methodCount; ++i)
+		{
+			SEL currentSel = method_getName(methodList[i]);
+			
+			if (currentSel == getterSel)
+			{
+				getterFound = YES;
+			}
+			else if (currentSel == setterSel)
+			{
+				setterFound = YES;
+			}
+			
+			if (getterFound && setterFound)
+			{
+				return YES;
+			}
+		}
+		
+		free(methodList);
+	}
+	
+	return NO;
+	
+#else
+	
 	Method getter = class_getClassMethod(class, getterSel);
 	Method setter = class_getClassMethod(class, setterSel);
 	
@@ -548,6 +592,8 @@ typedef struct LoggerNode LoggerNode;
 	}
 	
 	return NO;
+	
+#endif
 }
 
 + (NSArray *)registeredClasses
