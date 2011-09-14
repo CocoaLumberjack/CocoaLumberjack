@@ -196,7 +196,7 @@ static DDFileLogger *fileLogger = nil;
 	
 	[str appendString:@"Test 1:\n"];
 	[str appendFormat:@"Execute %i log statements.\n", SPEED_TEST_1_COUNT];
-	[str appendString:@"The log statement is at or below the log level threshold.\n"];
+	[str appendString:@"The log statement is at or below the log level threshold, and will execute.\n"];
 	[str appendString:@"The logging framework will execute the statements Asynchronously.\n"];
 	[str appendString:@"\n"];
 	[str appendFormat:@"BaseNSLogging :[%.4f][%.4f][%.4f]\n", base[1][0], base[1][1], base[1][2]];
@@ -206,7 +206,7 @@ static DDFileLogger *fileLogger = nil;
 	
 	[str appendString:@"Test 2:\n"];
 	[str appendFormat:@"Execute %i log statements.\n", SPEED_TEST_2_COUNT];
-	[str appendString:@"The log statement is at or below the log level threshold.\n"];
+	[str appendString:@"The log statement is at or below the log level threshold, and will execute.\n"];
 	[str appendString:@"The logging framework will execute the statements Synchronously.\n"];
 	[str appendString:@"\n"];
 	[str appendFormat:@"BaseNSLogging :[%.4f][%.4f][%.4f]\n", base[2][0], base[2][1], base[2][2]];
@@ -217,7 +217,7 @@ static DDFileLogger *fileLogger = nil;
 	[str appendString:@"Test 3:"];
 	[str appendFormat:@"Execute %i log statements per level.\n", SPEED_TEST_3_COUNT];
 	[str appendString:@"This is designed to mimic what might happen in a regular application.\n"];
-	[str appendString:@"25% will be above log level and will be filtered out.\n"];
+	[str appendString:@"25% will be above log level threshold and will be filtered out.\n"];
 	[str appendString:@"50% will execute Asynchronously.\n"];
 	[str appendString:@"25% will execute Synchronously.\n"];
 	[str appendString:@"\n"];
@@ -240,7 +240,7 @@ static DDFileLogger *fileLogger = nil;
 	[str appendString:@"Test 4:\n"];
 	[str appendString:@"Similar to test 3, designed to mimic a real application\n"];
 	[str appendFormat:@"Execute %i log statements in total.\n", (int)total];
-	[str appendFormat:@"%04.1f%% will be above log level and will be filtered out.\n", verbose];
+	[str appendFormat:@"%04.1f%% will be above log level threshold and will be filtered out.\n", verbose];
 	[str appendFormat:@"%04.1f%% will execute Asynchronously.\n", (info + warn)];
 	[str appendFormat:@"%04.1f%% will execute Synchronously.\n", error];
 	[str appendString:@"\n"];
@@ -319,9 +319,9 @@ static DDFileLogger *fileLogger = nil;
 
 + (void)startPerformanceTests
 {
-	BOOL runBase   = NO;
+	BOOL runBase   = YES;
 	BOOL runSuite1 = YES;
-	BOOL runSuite2 = NO;
+	BOOL runSuite2 = YES;
 	BOOL runSuite3 = YES;
 	
 	if (!runBase && !runSuite1 && !runSuite2 && !runSuite3)
