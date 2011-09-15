@@ -534,6 +534,9 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 	const char *function;
 	int lineNumber;
 	mach_port_t machThreadID;
+#if GCD_MAYBE_AVAILABLE
+    char *queueLabel;
+#endif
 
 // The private variables below are only calculated if needed.
 // You should use the public methods to access this information.
