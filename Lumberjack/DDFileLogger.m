@@ -204,7 +204,7 @@
 #if TARGET_OS_IPHONE
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *baseDir = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-	NSString *logsDirectory = [basePath stringByAppendingPathComponent:@"Logs"];
+	NSString *logsDirectory = [baseDir stringByAppendingPathComponent:@"Logs"];
     
 #else
 	NSString *appName = [[NSProcessInfo processInfo] processName];
