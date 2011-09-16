@@ -1210,6 +1210,19 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 		timestamp = [[NSDate alloc] init];
 		
 		machThreadID = pthread_mach_thread_np(pthread_self());
+        
+        if (IS_GCD_AVAILABLE)
+        {
+#if GCD_MAYBE_AVAILABLE
+            const char *label = dispatch_queue_get_label(dispatch_get_current_queue());
+            if (label) {
+                size_t labelLength = strlen(label);
+                queueLabel = malloc(labelLength+1);
+                strncpy(queueLabel, label, labelLength);
+                queueLabel[labelLength] = 0;
+            }
+#endif
+        }
 	}
 	return self;
 }
@@ -1252,6 +1265,14 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 	[threadID release];
 	[fileName release];
 	[methodName release];
+    
+    if (IS_GCD_AVAILABLE) {
+#if GCD_MAYBE_AVAILABLE
+        if (queueLabel != NULL) {
+            free(queueLabel);
+        }
+#endif
+    }
 	
 	[super dealloc];
 }
