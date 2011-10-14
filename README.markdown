@@ -27,7 +27,8 @@ This framework is for you if:
 -   You're looking for an enterprise level logging solution for your application (Mac or iPhone).
 
 <br/>
-**[Get started using the Cocoa Lumberjack Framework](https://github.com/robbiehanson/CocoaLumberjack/wiki/GettingStarted)**
+**[Get started using Lumberjack](https://github.com/robbiehanson/CocoaLumberjack/wiki/GettingStarted)**<br/>
+**[Learn more about Lumberjack](https://github.com/robbiehanson/CocoaLumberjack/wiki)**<br/>
 
 <br/>
 <br/>
