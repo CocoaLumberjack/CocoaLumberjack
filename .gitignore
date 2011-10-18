@@ -1,4 +1,7 @@
+.svn
+
 # Xcode
+build
 build/*
 *.pbxuser
 !default.pbxuser
@@ -13,7 +16,7 @@ build/*
 xcuserdata
 profile
 *.moved-aside
-.DS_Store?
+.DS_Store
 Icon?
 
 # Thumbnails
