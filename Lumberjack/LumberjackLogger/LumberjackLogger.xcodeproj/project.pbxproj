@@ -18,6 +18,7 @@
 		530AD61D1446D9A700500989 /* DDTTYLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 530AD6131446D9A700500989 /* DDTTYLogger.h */; };
 		530AD61E1446D9A700500989 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 530AD6141446D9A700500989 /* DDTTYLogger.m */; };
 		53E7CC9D144D6C96002A014D /* CocoaLumberjack.h in Headers */ = {isa = PBXBuildFile; fileRef = 53E7CC9C144D6C96002A014D /* CocoaLumberjack.h */; };
+		53F0E0BA144DC87E000C49E2 /* DDLogLevelPlaceholder.h in Headers */ = {isa = PBXBuildFile; fileRef = 53F0E0B9144DC87E000C49E2 /* DDLogLevelPlaceholder.h */; };
 		AA747D9F0F9514B9006C5449 /* LumberjackLogger_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* LumberjackLogger_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
@@ -34,6 +35,7 @@
 		530AD6131446D9A700500989 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDTTYLogger.h; path = ../DDTTYLogger.h; sourceTree = SOURCE_ROOT; };
 		530AD6141446D9A700500989 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDTTYLogger.m; path = ../DDTTYLogger.m; sourceTree = SOURCE_ROOT; };
 		53E7CC9C144D6C96002A014D /* CocoaLumberjack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CocoaLumberjack.h; path = ../CocoaLumberjack.h; sourceTree = SOURCE_ROOT; };
+		53F0E0B9144DC87E000C49E2 /* DDLogLevelPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDLogLevelPlaceholder.h; path = ../DDLogLevelPlaceholder.h; sourceTree = "<group>"; };
 		AA747D9E0F9514B9006C5449 /* LumberjackLogger_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LumberjackLogger_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libLumberjackLogger.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLumberjackLogger.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +94,7 @@
 				530AD6121446D9A700500989 /* DDLog.m */,
 				530AD6131446D9A700500989 /* DDTTYLogger.h */,
 				530AD6141446D9A700500989 /* DDTTYLogger.m */,
+				53F0E0B9144DC87E000C49E2 /* DDLogLevelPlaceholder.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -118,6 +121,7 @@
 				530AD61B1446D9A700500989 /* DDLog.h in Headers */,
 				530AD61D1446D9A700500989 /* DDTTYLogger.h in Headers */,
 				53E7CC9D144D6C96002A014D /* CocoaLumberjack.h in Headers */,
+				53F0E0BA144DC87E000C49E2 /* DDLogLevelPlaceholder.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
