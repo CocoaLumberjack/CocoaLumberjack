@@ -5,11 +5,11 @@
 /**
  * Welcome to Cocoa Lumberjack!
  * 
- * The Google Code page has a wealth of documentation if you have any questions.
- * http://code.google.com/p/cocoalumberjack/
+ * The project page has a wealth of documentation if you have any questions.
+ * https://github.com/robbiehanson/CocoaLumberjack
  * 
- * If you're new to the project you may wish to read the "Getting Started" page.
- * http://code.google.com/p/cocoalumberjack/wiki/GettingStarted
+ * If you're new to the project you may wish to read the "Getting Started" wiki.
+ * https://github.com/robbiehanson/CocoaLumberjack/wiki/GettingStarted
  * 
  * 
  * This class provides an abstract implementation of a database logger.

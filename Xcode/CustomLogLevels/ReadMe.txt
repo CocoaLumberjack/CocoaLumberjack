@@ -8,4 +8,4 @@ Info
 Debug
 
 For more information, see the Wiki article:
-http://code.google.com/p/cocoalumberjack/wiki/CustomLogLevels
+https://github.com/robbiehanson/CocoaLumberjack/wiki/CustomLogLevels

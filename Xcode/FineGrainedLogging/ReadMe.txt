@@ -15,4 +15,4 @@ As you can see, the framework is very flexible. Each project may have different 
 This particular project demonstrates adding two new log statements based on functionality. They represent hypothetical timers which are critical to the application. The implementation of these timers also spans across multiple files, so there is a need to have central control over the log statements.
 
 For more information, see the Wiki article:
-http://code.google.com/p/cocoalumberjack/wiki/FineGrainedLogging
+https://github.com/robbiehanson/CocoaLumberjack/wiki/FineGrainedLogging
