@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'NonArcTest' target in the 'NonArcTest' project
+//
+
+#ifdef __OBJC__
+	#import <Cocoa/Cocoa.h>
+#endif

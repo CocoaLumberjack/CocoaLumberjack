@@ -5,6 +5,20 @@
 #import <sys/xattr.h>
 #import <libkern/OSAtomic.h>
 
+/**
+ * Welcome to Cocoa Lumberjack!
+ * 
+ * The project page has a wealth of documentation if you have any questions.
+ * https://github.com/robbiehanson/CocoaLumberjack
+ * 
+ * If you're new to the project you may wish to read the "Getting Started" wiki.
+ * https://github.com/robbiehanson/CocoaLumberjack/wiki/GettingStarted
+**/
+
+#if ! __has_feature(objc_arc)
+#warning This file must be compiled with ARC. Either turn on ARC for the project or use -fobjc-arc flag.
+#endif
+
 // We probably shouldn't be using DDLog() statements within the DDLog implementation.
 // But we still want to leave our log statements for any future debugging,
 // and to allow other developers to trace the implementation (which is a great learning tool).

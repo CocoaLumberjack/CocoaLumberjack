@@ -18,6 +18,10 @@
  * 
 **/
 
+#if ! __has_feature(objc_arc)
+#warning This file must be compiled with ARC. Either turn on ARC for the project or use -fobjc-arc flag.
+#endif
+
 // We probably shouldn't be using DDLog() statements within the DDLog implementation.
 // But we still want to leave our log statements for any future debugging,
 // and to allow other developers to trace the implementation (which is a great learning tool).
