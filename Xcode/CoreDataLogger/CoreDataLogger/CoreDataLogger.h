@@ -26,8 +26,8 @@
  * The managedObjectContext in use by this instance is only to be used on it's private dispatch_queue.
  * You must create your own managedObjectContext for your own use.
 **/
-@property (readonly) NSManagedObjectModel *managedObjectModel;
-@property (readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (strong, readonly) NSManagedObjectModel *managedObjectModel;
+@property (strong, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 /**
  * Clears the log by removing the persistentStore from the persistentStoreCoordinator,

@@ -22,7 +22,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	{
 		// Log statements *AFTER* DispatchQueueLogFormatter
 		
-		DispatchQueueLogFormatter *formatter = [[[DispatchQueueLogFormatter alloc] init] autorelease];
+		DispatchQueueLogFormatter *formatter = [[DispatchQueueLogFormatter alloc] init];
 		formatter.queueLength = 17;
 		formatter.rightAlign = NO;
 		

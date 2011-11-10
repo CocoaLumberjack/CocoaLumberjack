@@ -30,7 +30,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	NSLog(@"1. Set the DEBUG definition to YES in DDLog.m");
 	NSLog(@"2. Set the LOG_MAX_QUEUE_SIZE definition to 5 in DDLog.m\n\n");
 	
-	SlowLogger *slowLogger = [[[SlowLogger alloc] init] autorelease];
+	SlowLogger *slowLogger = [[SlowLogger alloc] init];
 	[DDLog addLogger:slowLogger];
 	
 	[DDLog addLogger:[DDASLLogger sharedInstance]];
@@ -51,30 +51,30 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)bgThread1
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 	
-	NSLog(@"bgThread1");
+		NSLog(@"bgThread1");
+		
+		for (int i = 0; i < 10; i++)
+		{
+			DDLogVerbose(@"bgThread1 : %i", i);
+		}
 	
-	for (int i = 0; i < 10; i++)
-	{
-		DDLogVerbose(@"bgThread1 : %i", i);
 	}
-	
-	[pool release];
 }
 
 - (void)bgThread2
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 	
-	NSLog(@"bgThread2");
+		NSLog(@"bgThread2");
+		
+		for (int i = 0; i < 10; i++)
+		{
+			DDLogVerbose(@"bgThread2 : %i", i);
+		}
 	
-	for (int i = 0; i < 10; i++)
-	{
-		DDLogVerbose(@"bgThread2 : %i", i);
 	}
-	
-	[pool release];
 }
 
 @end

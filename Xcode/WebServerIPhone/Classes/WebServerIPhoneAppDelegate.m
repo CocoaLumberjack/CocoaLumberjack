@@ -107,12 +107,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [window makeKeyAndVisible];
 }
 
-- (void)dealloc
-{
-	[viewController release];
-	[window release];
-	[super dealloc];
-}
 
 - (void)writeLogMessages:(NSTimer *)aTimer
 {

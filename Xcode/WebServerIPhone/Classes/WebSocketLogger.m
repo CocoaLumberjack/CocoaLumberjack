@@ -8,7 +8,7 @@
 {
 	if ((self = [super init]))
 	{
-		websocket = [ws retain];
+		websocket = ws;
 		websocket.delegate = self;
 		
 		formatter = [[WebSocketFormatter alloc] init];
@@ -26,9 +26,7 @@
 - (void)dealloc
 {
 	[websocket setDelegate:nil];
-	[websocket release];
 	
-	[super dealloc];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,11 +77,11 @@
 			
 			if (isWebSocketOpen)
 			{
-				NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+				@autoreleasepool {
 				
-				[websocket sendMessage:logMsg];
+					[websocket sendMessage:logMsg];
 				
-				[pool release];
+				}
 			}
 		});
 	}
@@ -112,7 +110,7 @@
 {
 	NSString *dateAndTime = [dateFormatter stringFromDate:(logMessage->timestamp)];
 	
-	NSMutableString *webMsg = [[logMessage->logMsg mutableCopy] autorelease];
+	NSMutableString *webMsg = [logMessage->logMsg mutableCopy];
 	
 	[webMsg replaceOccurrencesOfString:@"<"  withString:@"&lt;"  options:0 range:NSMakeRange(0, [webMsg length])];
 	[webMsg replaceOccurrencesOfString:@">"  withString:@"&gt;"  options:0 range:NSMakeRange(0, [webMsg length])];
@@ -121,10 +119,5 @@
 	return [NSString stringWithFormat:@"%@ &nbsp;%@", dateAndTime, webMsg];
 }
 
-- (void)dealloc
-{
-	[dateFormatter release];
-	[super dealloc];
-}
 
 @end

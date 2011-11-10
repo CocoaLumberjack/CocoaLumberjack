@@ -32,6 +32,10 @@
  * 
  * This class will then perform the replacements for you, on the fly, as it reads the file data.
  * This class is also asynchronous, so it will perform the file IO using its own GCD queue.
+ * 
+ * All keys for the replacementDictionary must be NSString's.
+ * Values for the replacementDictionary may be NSString's, or any object that
+ * returns what you want when its description method is invoked.
 **/
 
 @interface HTTPDynamicFileResponse : HTTPAsyncFileResponse

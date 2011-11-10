@@ -311,6 +311,7 @@
 		DC25B785146A0295000F32F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DispatchQueueLogger/DispatchQueueLogger-Prefix.pch";
 				INFOPLIST_FILE = "DispatchQueueLogger/DispatchQueueLogger-Info.plist";
@@ -322,6 +323,7 @@
 		DC25B786146A0295000F32F4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DispatchQueueLogger/DispatchQueueLogger-Prefix.pch";
 				INFOPLIST_FILE = "DispatchQueueLogger/DispatchQueueLogger-Info.plist";
@@ -349,6 +351,7 @@
 				DC25B786146A0295000F32F4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

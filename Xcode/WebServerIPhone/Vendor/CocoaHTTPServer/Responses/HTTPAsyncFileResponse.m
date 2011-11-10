@@ -7,7 +7,7 @@
 
 // Log levels : off, error, warn, info, verbose
 // Other flags: trace
-static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
+static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 
 #define NULL_FD  -1
 
@@ -38,6 +38,7 @@ static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
 		
 		connection = parent; // Parents retain children, children do NOT retain parents
 		
+		fileFD = NULL_FD;
 		filePath = [fpath copy];
 		if (filePath == nil)
 		{
@@ -63,7 +64,6 @@ static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
 		
 		// We don't bother opening the file here.
 		// If this is a HEAD request we only need to know the fileLength.
-		fileFD = NULL_FD;
 	}
 	return self;
 }
@@ -388,7 +388,7 @@ static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
 {
 	HTTPLogTrace();
 	
-	if (fileFD != NULL_FD)
+	if (readQueue)
 		dispatch_release(readQueue);
 	
 	if (readBuffer)

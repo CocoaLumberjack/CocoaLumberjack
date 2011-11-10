@@ -228,13 +228,11 @@
 	{
 	#if GCD_MAYBE_AVAILABLE
 		
-		dispatch_block_t addLoggerBlock = ^{
-			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		dispatch_block_t addLoggerBlock = ^{ @autoreleasepool {
 			
 			[self lt_addLogger:logger];
 			
-			[pool drain];
-		};
+		}};
 		
 		dispatch_async(loggingQueue, addLoggerBlock);
 		
@@ -258,13 +256,10 @@
 	{
 	#if GCD_MAYBE_AVAILABLE
 		
-		dispatch_block_t removeLoggerBlock = ^{
-			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		dispatch_block_t removeLoggerBlock = ^{ @autoreleasepool {
 			
 			[self lt_removeLogger:logger];
-			
-			[pool drain];
-		};
+		}};
 		
 		dispatch_async(loggingQueue, removeLoggerBlock);
 		
@@ -286,13 +281,10 @@
 	{
 	#if GCD_MAYBE_AVAILABLE
 		
-		dispatch_block_t removeAllLoggersBlock = ^{
-			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		dispatch_block_t removeAllLoggersBlock = ^{ @autoreleasepool {
 			
 			[self lt_removeAllLoggers];
-			
-			[pool drain];
-		};
+		}};
 		
 		dispatch_async(loggingQueue, removeAllLoggersBlock);
 		
@@ -443,13 +435,10 @@
 	{
 	#if GCD_MAYBE_AVAILABLE
 		
-		dispatch_block_t logBlock = ^{
-			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		dispatch_block_t logBlock = ^{ @autoreleasepool {
 			
 			[self lt_log:logMessage];
-			
-			[pool drain];
-		};
+		}};
 		
 		if (asyncFlag)
 			dispatch_async(loggingQueue, logBlock);
@@ -493,8 +482,6 @@
 		
 		[self queueLogMessage:logMessage asynchronously:asynchronous];
 		
-		[logMessage release];
-		[logMsg release];
 		
 		va_end(args);
 	}
@@ -506,13 +493,10 @@
 	{
 	#if GCD_MAYBE_AVAILABLE
 		
-		dispatch_block_t flushBlock = ^{
-			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		dispatch_block_t flushBlock = ^{ @autoreleasepool {
 			
 			[self lt_flush];
-			
-			[pool drain];
-		};
+		}};
 		
 		dispatch_sync(loggingQueue, flushBlock);
 		
@@ -614,7 +598,7 @@
 	// The numClasses method now tells us how many classes we have.
 	// So we can allocate our buffer, and get pointers to all the class definitions.
 	
-	Class *classes = malloc(sizeof(Class) * numClasses);
+	Class *classes = (Class *)malloc(sizeof(Class) * numClasses);
 	
 	numClasses = objc_getClassList(classes, numClasses);
 	
@@ -693,15 +677,14 @@
 **/
 + (void)lt_main:(id)ignore
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
-	// We can't run the run loop unless it has an associated input source or a timer.
-	// So we'll just create a timer that will never fire - unless the server runs for 10,000 years.
-	[NSTimer scheduledTimerWithTimeInterval:DBL_MAX target:self selector:@selector(ignore:) userInfo:nil repeats:NO];
-	
-	[[NSRunLoop currentRunLoop] run];
-	
-	[pool drain];
+	@autoreleasepool {
+		
+		// We can't run the run loop unless it has an associated input source or a timer.
+		// So we'll just create a timer that will never fire - unless the server runs for 10,000 years.
+		[NSTimer scheduledTimerWithTimeInterval:DBL_MAX target:self selector:@selector(ignore:) userInfo:nil repeats:NO];
+		
+		[[NSRunLoop currentRunLoop] run];
+	}
 }
 
 #endif
@@ -746,13 +729,10 @@
 		
 		if ([logger respondsToSelector:@selector(didAddLogger)])
 		{
-			dispatch_async(loggerNode->loggerQueue, ^{
-				NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+			dispatch_async(loggerNode->loggerQueue, ^{ @autoreleasepool {
 				
 				[logger didAddLogger];
-				
-				[pool drain];
-			});
+			}});
 		}
 		
 	#endif
@@ -806,13 +786,10 @@
 		
 		if ([logger respondsToSelector:@selector(willRemoveLogger)])
 		{
-			dispatch_async(loggerNode->loggerQueue, ^{
-				NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+			dispatch_async(loggerNode->loggerQueue, ^{ @autoreleasepool {
 				
 				[logger willRemoveLogger];
-				
-				[pool drain];
-			});
+			}});
 		}
 		
 		// Remove from loggers array
@@ -855,13 +832,10 @@
 		{
 			if ([loggerNode->logger respondsToSelector:@selector(willRemoveLogger)])
 			{
-				dispatch_async(loggerNode->loggerQueue, ^{
-					NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+				dispatch_async(loggerNode->loggerQueue, ^{ @autoreleasepool {
 					
 					[loggerNode->logger willRemoveLogger];
-					
-					[pool drain];
-				});
+				}});
 			}
 		}
 		
@@ -909,14 +883,11 @@
 			
 			for (DDLoggerNode *loggerNode in loggers)
 			{
-				dispatch_group_async(loggingGroup, loggerNode->loggerQueue, ^{
-					
-					NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+				dispatch_group_async(loggingGroup, loggerNode->loggerQueue, ^{ @autoreleasepool {
 					
 					[loggerNode->logger logMessage:logMessage];
-					
-					[pool drain];
-				});
+				
+				}});
 			}
 			
 			dispatch_group_wait(loggingGroup, DISPATCH_TIME_FOREVER);
@@ -927,13 +898,11 @@
 			
 			for (DDLoggerNode *loggerNode in loggers)
 			{
-				dispatch_sync(loggerNode->loggerQueue, ^{
-					NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+				dispatch_sync(loggerNode->loggerQueue, ^{ @autoreleasepool {
 					
 					[loggerNode->logger logMessage:logMessage];
 					
-					[pool drain];
-				});
+				}});
 			}
 		}
 		
@@ -1034,14 +1003,11 @@
 		{
 			if ([loggerNode->logger respondsToSelector:@selector(flush)])
 			{
-				dispatch_group_async(loggingGroup, loggerNode->loggerQueue, ^{
-				
-					NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+				dispatch_group_async(loggingGroup, loggerNode->loggerQueue, ^{ @autoreleasepool {
 					
 					[loggerNode->logger flush];
 					
-					[pool drain];
-				});
+				}});
 			}
 		}
 		
@@ -1124,9 +1090,9 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 	
 	if (copy)
 	{
-		return [[[NSString alloc] initWithBytes:subStr
-		                                 length:subLen
-		                               encoding:NSUTF8StringEncoding] autorelease];
+		return [[NSString alloc] initWithBytes:subStr
+		                                length:subLen
+		                              encoding:NSUTF8StringEncoding];
 	}
 	else
 	{
@@ -1134,10 +1100,10 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 		// Specifically, we don't need to waste time copying the string.
 		// We can just tell NSString to point to a range within the string literal.
 		
-		return [[[NSString alloc] initWithBytesNoCopy:subStr
-		                                       length:subLen
-		                                     encoding:NSUTF8StringEncoding
-		                                 freeWhenDone:NO] autorelease];
+		return [[NSString alloc] initWithBytesNoCopy:subStr
+		                                      length:subLen
+		                                    encoding:NSUTF8StringEncoding
+		                                freeWhenDone:NO];
 	}
 }
 
@@ -1155,7 +1121,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 {
 	if ((self = [super init]))
 	{
-		logger = [aLogger retain];
+		logger = aLogger;
 		
 		if (aLoggerQueue) {
 			loggerQueue = aLoggerQueue;
@@ -1167,16 +1133,14 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 
 + (DDLoggerNode *)nodeWithLogger:(id <DDLogger>)logger loggerQueue:(dispatch_queue_t)loggerQueue
 {
-	return [[[DDLoggerNode alloc] initWithLogger:logger loggerQueue:loggerQueue] autorelease];
+	return [[DDLoggerNode alloc] initWithLogger:logger loggerQueue:loggerQueue];
 }
 
 - (void)dealloc
 {
-	[logger release];
 	if (loggerQueue) {
 		dispatch_release(loggerQueue);
 	}
-	[super dealloc];
 }
 
 @end
@@ -1199,7 +1163,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 {
 	if((self = [super init]))
 	{
-		logMsg     = [msg retain];
+		logMsg     = msg;
 		logLevel   = level;
 		logFlag    = flag;
 		logContext = context;
@@ -1241,7 +1205,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 {
 	if (fileName == nil)
 	{
-		fileName = [ExtractFileNameWithoutExtension(file, NO) retain];
+		fileName = ExtractFileNameWithoutExtension(file, NO);
 	}
 	
 	return fileName;
@@ -1259,12 +1223,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 
 - (void)dealloc
 {
-	[logMsg release];
-	[timestamp release];
 	
-	[threadID release];
-	[fileName release];
-	[methodName release];
     
     if (IS_GCD_AVAILABLE) {
 #if GCD_MAYBE_AVAILABLE
@@ -1274,7 +1233,6 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 #endif
     }
 	
-	[super dealloc];
 }
 
 @end
@@ -1316,7 +1274,6 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 	#endif
 	}
 	
-	[super dealloc];
 }
 
 - (void)logMessage:(DDLogMessage *)logMessage
@@ -1340,8 +1297,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 	
 	if (formatter != logFormatter)
 	{
-		[formatter release];
-		formatter = [logFormatter retain];
+		formatter = logFormatter;
 	}
 }
 
@@ -1414,10 +1370,10 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 		__block id <DDLogFormatter> result;
 		
 		dispatch_sync([DDLog loggingQueue], ^{
-			result = [formatter retain];
+			result = formatter;
 		});
 		
-		return [result autorelease];
+		return result;
 		
 	#endif
 	}
@@ -1441,10 +1397,9 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 		
 		OSMemoryBarrier();
 		
-		id <DDLogFormatter> result = [[resultHolder objectAtIndex:0] retain];
-		[resultHolder release];
+		id <DDLogFormatter> result = [resultHolder objectAtIndex:0];
 		
-		return [result autorelease];
+		return result;
 		
 	#endif
 	}
@@ -1512,8 +1467,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 		dispatch_block_t block = ^{
 			if (formatter != logFormatter)
 			{
-				[formatter release];
-				formatter = [logFormatter retain];
+				formatter = logFormatter;
 			}
 		};
 		

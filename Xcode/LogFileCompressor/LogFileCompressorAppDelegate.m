@@ -20,7 +20,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	CompressingLogFileManager *logFileManager = [[[CompressingLogFileManager alloc] init] autorelease];
+	CompressingLogFileManager *logFileManager = [[CompressingLogFileManager alloc] init];
 	
 	fileLogger = [[DDFileLogger alloc] initWithLogFileManager:logFileManager];
 	

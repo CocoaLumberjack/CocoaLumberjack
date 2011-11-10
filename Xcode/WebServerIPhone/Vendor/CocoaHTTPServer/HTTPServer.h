@@ -28,6 +28,7 @@
 	// HTTP server configuration
 	NSString *documentRoot;
 	Class connectionClass;
+	NSString *interface;
 	UInt16 port;
 	
 	// NSNetService and related variables
@@ -72,6 +73,17 @@
 **/
 - (Class)connectionClass;
 - (void)setConnectionClass:(Class)value;
+
+/**
+ * Set what interface you'd like the server to listen on.
+ * By default this is nil, which causes the server to listen on all available interfaces like en1, wifi etc.
+ * 
+ * The interface may be specified by name (e.g. "en1" or "lo0") or by IP address (e.g. "192.168.4.34").
+ * You may also use the special strings "localhost" or "loopback" to specify that
+ * the socket only accept connections from the local machine.
+**/
+- (NSString *)interface;
+- (void)setInterface:(NSString *)value;
 
 /**
  * The port number to run the HTTP server on.
@@ -150,8 +162,35 @@
 - (NSDictionary *)TXTRecordDictionary;
 - (void)setTXTRecordDictionary:(NSDictionary *)dict;
 
+/**
+ * Attempts to starts the server on the configured port, interface, etc.
+ * 
+ * If an error occurs, this method returns NO and sets the errPtr (if given).
+ * Otherwise returns YES on success.
+ * 
+ * Some examples of errors that might occur:
+ * - You specified the server listen on a port which is already in use by another application.
+ * - You specified the server listen on a port number below 1024, which requires root priviledges.
+ * 
+ * Code Example:
+ * 
+ * NSError *err = nil;
+ * if (![httpServer start:&err])
+ * {
+ *     NSLog(@"Error starting http server: %@", err);
+ * }
+**/
 - (BOOL)start:(NSError **)errPtr;
-- (BOOL)stop;
+
+/**
+ * Stops the server, preventing it from accepting any new connections.
+ * You may specify whether or not you want to close the existing client connections.
+ * 
+ * The default stop method (with no arguments) will close any existing connections. (It invokes [self stop:NO])
+**/
+- (void)stop;
+- (void)stop:(BOOL)keepExistingConnections;
+
 - (BOOL)isRunning;
 
 - (void)addWebSocket:(WebSocket *)ws;

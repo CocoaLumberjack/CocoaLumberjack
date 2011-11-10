@@ -36,7 +36,6 @@ static DDTTYLogger *sharedInstance;
 {
 	if (sharedInstance != nil)
 	{
-		[self release];
 		return nil;
 	}
 	

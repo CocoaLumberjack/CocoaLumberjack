@@ -6,7 +6,7 @@
 
 // Log levels: off, error, warn, info, verbose
 // Other flags: trace
-static const int httpLogLevel = LOG_LEVEL_INFO; // | LOG_FLAG_TRACE;
+static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 
 @interface HTTPServer (PrivateAPI)
 
@@ -14,7 +14,7 @@ static const int httpLogLevel = LOG_LEVEL_INFO; // | LOG_FLAG_TRACE;
 - (void)publishBonjour;
 
 + (void)startBonjourThreadIfNeeded;
-+ (void)performBonjourBlock:(dispatch_block_t)block waitUntilDone:(BOOL)waitUntilDone;
++ (void)performBonjourBlock:(dispatch_block_t)block;
 
 @end
 
@@ -42,11 +42,14 @@ static const int httpLogLevel = LOG_LEVEL_INFO; // | LOG_FLAG_TRACE;
 		connectionQueue = dispatch_queue_create("HTTPConnection", NULL);
 		connectionClass = [HTTPConnection self];
 		
-		// Configure default values for bonjour service
+		// By default bind on all available interfaces, en1, wifi etc
+		interface = nil;
 		
 		// Use a default port of 0
 		// This will allow the kernel to automatically pick an open port for us
 		port = 0;
+		
+		// Configure default values for bonjour service
 		
 		// Bonjour domain. Use the local domain by default
 		domain = @"local.";
@@ -104,6 +107,7 @@ static const int httpLogLevel = LOG_LEVEL_INFO; // | LOG_FLAG_TRACE;
 	[asyncSocket release];
 	
 	[documentRoot release];
+	[interface release];
 	
 	[netService release];
 	[domain release];
@@ -187,6 +191,32 @@ static const int httpLogLevel = LOG_LEVEL_INFO; // | LOG_FLAG_TRACE;
 	dispatch_async(serverQueue, ^{
 		connectionClass = value;
 	});
+}
+
+/**
+ * What interface to bind the listening socket to.
+**/
+- (NSString *)interface
+{
+	__block NSString *result;
+	
+	dispatch_sync(serverQueue, ^{
+		result = [interface retain];
+	});
+	
+	return [result autorelease];
+}
+
+- (void)setInterface:(NSString *)value
+{
+	NSString *valueCopy = [value copy];
+	
+	dispatch_async(serverQueue, ^{
+		[interface release];
+		interface = [valueCopy retain];
+	});
+	
+	[valueCopy release];
 }
 
 /**
@@ -290,7 +320,7 @@ static const int httpLogLevel = LOG_LEVEL_INFO; // | LOG_FLAG_TRACE;
 				result = [[netService name] copy];
 			};
 			
-			[[self class] performBonjourBlock:bonjourBlock waitUntilDone:YES];
+			[[self class] performBonjourBlock:bonjourBlock];
 		}
 	});
 	
@@ -372,7 +402,7 @@ static const int httpLogLevel = LOG_LEVEL_INFO; // | LOG_FLAG_TRACE;
 				[theNetService setTXTRecordData:txtRecordData];
 			};
 			
-			[[self class] performBonjourBlock:bonjourBlock waitUntilDone:NO];
+			[[self class] performBonjourBlock:bonjourBlock];
 		}
 	});
 	
@@ -393,7 +423,7 @@ static const int httpLogLevel = LOG_LEVEL_INFO; // | LOG_FLAG_TRACE;
 	dispatch_sync(serverQueue, ^{
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
-		success = [asyncSocket acceptOnPort:port error:&err];
+		success = [asyncSocket acceptOnInterface:interface port:port error:&err];
 		if (success)
 		{
 			HTTPLogInfo(@"%@: Started HTTP server on port %hu", THIS_FILE, [asyncSocket localPort]);
@@ -403,11 +433,11 @@ static const int httpLogLevel = LOG_LEVEL_INFO; // | LOG_FLAG_TRACE;
 		}
 		else
 		{
-			HTTPLogError(@"%@: Failed to start HTTP Server: %@", err);
+			HTTPLogError(@"%@: Failed to start HTTP Server: %@", THIS_FILE, err);
 			[err retain];
 		}
 		
-		[pool release];
+		[pool drain];
 	});
 	
 	if (errPtr)
@@ -418,7 +448,12 @@ static const int httpLogLevel = LOG_LEVEL_INFO; // | LOG_FLAG_TRACE;
 	return success;
 }
 
-- (BOOL)stop
+- (void)stop
+{
+	[self stop:NO];
+}
+
+- (void)stop:(BOOL)keepExistingConnections
 {
 	HTTPLogTrace();
 	
@@ -432,28 +467,29 @@ static const int httpLogLevel = LOG_LEVEL_INFO; // | LOG_FLAG_TRACE;
 		[asyncSocket disconnect];
 		isRunning = NO;
 		
-		// Now stop all HTTP connections the server owns
-		[connectionsLock lock];
-		for (HTTPConnection *connection in connections)
+		if (!keepExistingConnections)
 		{
-			[connection stop];
+			// Stop all HTTP connections the server owns
+			[connectionsLock lock];
+			for (HTTPConnection *connection in connections)
+			{
+				[connection stop];
+			}
+			[connections removeAllObjects];
+			[connectionsLock unlock];
+			
+			// Stop all WebSocket connections the server owns
+			[webSocketsLock lock];
+			for (WebSocket *webSocket in webSockets)
+			{
+				[webSocket stop];
+			}
+			[webSockets removeAllObjects];
+			[webSocketsLock unlock];
 		}
-		[connections removeAllObjects];
-		[connectionsLock unlock];
 		
-		// Now stop all WebSocket connections the server owns
-		[webSocketsLock lock];
-		for (WebSocket *webSocket in webSockets)
-		{
-			[webSocket stop];
-		}
-		[webSockets removeAllObjects];
-		[webSocketsLock unlock];
-		
-		[pool release];
+		[pool drain];
 	});
-	
-	return YES;
 }
 
 - (BOOL)isRunning
@@ -576,7 +612,7 @@ static const int httpLogLevel = LOG_LEVEL_INFO; // | LOG_FLAG_TRACE;
 		};
 		
 		[[self class] startBonjourThreadIfNeeded];
-		[[self class] performBonjourBlock:bonjourBlock waitUntilDone:NO];
+		[[self class] performBonjourBlock:bonjourBlock];
 	}
 }
 
@@ -596,7 +632,7 @@ static const int httpLogLevel = LOG_LEVEL_INFO; // | LOG_FLAG_TRACE;
 			[theNetService release];
 		};
 		
-		[[self class] performBonjourBlock:bonjourBlock waitUntilDone:NO];
+		[[self class] performBonjourBlock:bonjourBlock];
 		
 		netService = nil;
 	}
@@ -728,10 +764,10 @@ static NSThread *bonjourThread;
 	
 	HTTPLogVerbose(@"%@: BonjourThread: Aborted", THIS_FILE);
 	
-	[pool release];
+	[pool drain];
 }
 
-+ (void)performBonjourBlock:(dispatch_block_t)block
++ (void)executeBonjourBlock:(dispatch_block_t)block
 {
 	HTTPLogTrace();
 	
@@ -740,18 +776,14 @@ static NSThread *bonjourThread;
 	block();
 }
 
-+ (void)performBonjourBlock:(dispatch_block_t)block waitUntilDone:(BOOL)waitUntilDone
++ (void)performBonjourBlock:(dispatch_block_t)block
 {
 	HTTPLogTrace();
 	
-	dispatch_block_t bonjourBlock = Block_copy(block);
-	
-	[self performSelector:@selector(performBonjourBlock:)
+	[self performSelector:@selector(executeBonjourBlock:)
 	             onThread:bonjourThread
-	           withObject:bonjourBlock
-	        waitUntilDone:waitUntilDone];
-	
-	Block_release(bonjourBlock);
+	           withObject:block
+	        waitUntilDone:YES];
 }
 
 @end

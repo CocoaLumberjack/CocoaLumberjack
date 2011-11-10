@@ -31,11 +31,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[contextSet release];
-	[super dealloc];
-}
 
 - (void)addToWhitelist:(int)loggingContext
 {
@@ -85,11 +80,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[contextSet release];
-	[super dealloc];
-}
 
 - (void)addToBlacklist:(int)loggingContext
 {
@@ -140,11 +130,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[set release];
-	[super dealloc];
-}
 
 - (void)addToSet:(int)loggingContext
 {

@@ -29,15 +29,15 @@
 #undef LOG_INFO
 #undef LOG_VERBOSE
 
-#undef DDLogError(frmt, ...)
-#undef DDLogWarn(frmt, ...)
-#undef DDLogInfo(frmt, ...)
-#undef DDLogVerbose(frmt, ...)
+#undef DDLogError
+#undef DDLogWarn
+#undef DDLogInfo
+#undef DDLogVerbose
 
-#undef DDLogCError(frmt, ...)
-#undef DDLogCWarn(frmt, ...)
-#undef DDLogCInfo(frmt, ...)
-#undef DDLogCVerbose(frmt, ...)
+#undef DDLogCError
+#undef DDLogCWarn
+#undef DDLogCInfo
+#undef DDLogCVerbose
 
 // Now define everything how we want it
 

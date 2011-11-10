@@ -17,7 +17,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 {
 	// Setup logging (with our custom formatter)
 	
-	TestFormatter *formatter = [[[TestFormatter alloc] init] autorelease];
+	TestFormatter *formatter = [[TestFormatter alloc] init];
 	
 	[[DDASLLogger sharedInstance] setLogFormatter:formatter];
 	[[DDTTYLogger sharedInstance] setLogFormatter:formatter];

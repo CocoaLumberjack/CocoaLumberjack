@@ -24,17 +24,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[logDirectory release];
-	
-	[logEntryEntity release];
-	[managedObjectContext release];
-	[persistentStoreCoordinator release];
-	[managedObjectModel release];
-	
-    [super dealloc];
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Private API
@@ -51,7 +40,6 @@
 		{
 			NSLog(@"%@: %@ - logDirectory(%@) is a file!", [self class], THIS_METHOD, logDirectory);
 			
-			[logDirectory release];
 			logDirectory = nil;
 		}
 	}
@@ -68,7 +56,6 @@
 			NSLog(@"%@: %@ - Unable to create logDirectory(%@) due to error: %@",
 				  [self class], THIS_METHOD, logDirectory, error);
 			
-			[logDirectory release];
 			logDirectory = nil;
 		}
 	}
@@ -145,7 +132,6 @@
 	{
 		NSLog(@"%@: %@ - Error creating persistent store: %@", [self class], THIS_FILE, error);
 		
-		[persistentStoreCoordinator release];
 		persistentStoreCoordinator = nil;
 	}
 	
@@ -166,8 +152,8 @@
 		
 		if (logEntryEntity == nil)
 		{
-			logEntryEntity = [[NSEntityDescription entityForName:@"LogEntry"
-			                              inManagedObjectContext:managedObjectContext] retain];
+			logEntryEntity = [NSEntityDescription entityForName:@"LogEntry"
+			                              inManagedObjectContext:managedObjectContext];
 		}
 	}
 }
@@ -185,38 +171,38 @@
 			return;
 		}
 		
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		@autoreleasepool {
 		
-		NSError *error = nil;
-		
-		[managedObjectContext reset];
-		[persistentStoreCoordinator lock];
-		
-		NSPersistentStore *store = [[persistentStoreCoordinator persistentStores] lastObject];
-		
-		if (![persistentStoreCoordinator removePersistentStore:store error:&error])
-		{
-			NSLog(@"%@: %@ - Error removing persistent store: %@", [self class], THIS_METHOD, error);
-		} 
-		
-		NSString *logFilePath = [self logFilePath];
-		
-		if ([[NSFileManager defaultManager] fileExistsAtPath:logFilePath])
-		{
-			if (![[NSFileManager defaultManager] removeItemAtPath:logFilePath error:&error])
+			NSError *error = nil;
+			
+			[managedObjectContext reset];
+			[persistentStoreCoordinator lock];
+			
+			NSPersistentStore *store = [[persistentStoreCoordinator persistentStores] lastObject];
+			
+			if (![persistentStoreCoordinator removePersistentStore:store error:&error])
 			{
-				NSLog(@"%@: %@ - Error deleting log file: %@", [self class], THIS_METHOD, error);
+				NSLog(@"%@: %@ - Error removing persistent store: %@", [self class], THIS_METHOD, error);
+			} 
+			
+			NSString *logFilePath = [self logFilePath];
+			
+			if ([[NSFileManager defaultManager] fileExistsAtPath:logFilePath])
+			{
+				if (![[NSFileManager defaultManager] removeItemAtPath:logFilePath error:&error])
+				{
+					NSLog(@"%@: %@ - Error deleting log file: %@", [self class], THIS_METHOD, error);
+				}
 			}
+			
+			if (![self addPersistentStore:&error])
+			{
+				NSLog(@"%@: %@ - Error creating persistent store: %@", [self class], THIS_FILE, error);
+			}
+			
+			[persistentStoreCoordinator unlock];
+		
 		}
-		
-		if (![self addPersistentStore:&error])
-		{
-			NSLog(@"%@: %@ - Error creating persistent store: %@", [self class], THIS_FILE, error);
-		}
-		
-		[persistentStoreCoordinator unlock];
-		
-		[pool drain];
 	};
 	
 	if (dispatch_get_current_queue() == loggerQueue)
@@ -236,15 +222,14 @@
 		return NO;
 	}
 	
-	LogEntry *logEntry = [[NSManagedObject alloc] initWithEntity:logEntryEntity
-	                              insertIntoManagedObjectContext:managedObjectContext];
+	LogEntry *logEntry = (LogEntry *)[[NSManagedObject alloc] initWithEntity:logEntryEntity
+	                                          insertIntoManagedObjectContext:managedObjectContext];
 	
 	logEntry.context   = [NSNumber numberWithInt:logMessage->logContext];
 	logEntry.level     = [NSNumber numberWithInt:logMessage->logFlag];
 	logEntry.message   = logMessage->logMsg;
 	logEntry.timestamp = logMessage->timestamp;
 	
-	[logEntry release];
 	
 	return YES;
 }
@@ -285,7 +270,7 @@
 	NSUInteger batchSize = (saveThreshold > 0) ? saveThreshold : 500;
 	NSUInteger count = 0;
 	
-	NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 	[fetchRequest setEntity:entity];
 	[fetchRequest setFetchBatchSize:batchSize];
 	[fetchRequest setPredicate:predicate];

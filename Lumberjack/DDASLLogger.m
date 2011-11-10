@@ -35,7 +35,6 @@ static DDASLLogger *sharedInstance;
 {
 	if (sharedInstance != nil)
 	{
-		[self release];
 		return nil;
 	}
 	

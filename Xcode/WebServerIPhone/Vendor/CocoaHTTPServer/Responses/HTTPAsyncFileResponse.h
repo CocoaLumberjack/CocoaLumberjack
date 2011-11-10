@@ -26,8 +26,8 @@
 	
 	int fileFD;
 	void *readBuffer;
-	NSUInteger readBufferSize;
-	NSUInteger readBufferOffset;
+	NSUInteger readBufferSize;     // Malloced size of readBuffer
+	NSUInteger readBufferOffset;   // Offset within readBuffer where the end of existing data is
 	NSUInteger readRequestLength;
 	dispatch_queue_t readQueue;
 	dispatch_source_t readSource;

@@ -40,12 +40,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[dateFormatter release];
-	[_replacements release];
-	[super dealloc];
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Configuration
@@ -109,11 +103,11 @@
 	
 	OSSpinLockLock(&lock);
 	{
-		result = [[_replacements objectForKey:longLabel] retain];
+		result = [_replacements objectForKey:longLabel];
 	}
 	OSSpinLockUnlock(&lock);
 	
-	return [result autorelease];
+	return result;
 }
 
 - (void)setReplacementString:(NSString *)shortLabel forQueueLabel:(NSString *)longLabel
@@ -153,12 +147,12 @@
 			queueLength = _queueLength;
 			rightAlign = _rightAlign;
 			
-			shortLabel = [[_replacements objectForKey:longLabel] retain];
+			shortLabel = [_replacements objectForKey:longLabel];
 		}
 		OSSpinLockUnlock(&lock);
 		
 		if (shortLabel)
-			label = [shortLabel autorelease];
+			label = shortLabel;
 		else
 			label = longLabel;
 	}

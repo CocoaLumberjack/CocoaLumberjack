@@ -122,16 +122,6 @@ static DDFileLogger *fileLogger = nil;
 		
 		for (j = 0; j < 5; j++)
 		{
-			SEL selector;
-			switch (j)
-			{
-				case 0  : selector = @selector(speedTest0); break;
-				case 1  : selector = @selector(speedTest1); break;
-				case 2  : selector = @selector(speedTest2); break;
-				case 3  : selector = @selector(speedTest3); break;
-				default : selector = @selector(speedTest4); break;
-			}
-			
 			NSTimeInterval min = DBL_MAX;
 			NSTimeInterval max = DBL_MIN;
 			
@@ -139,20 +129,27 @@ static DDFileLogger *fileLogger = nil;
 			
 			for (k = 0; k < NUMBER_OF_RUNS; k++)
 			{
-				NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+				@autoreleasepool {
 				
-				NSDate *start = [NSDate date];
+					NSDate *start = [NSDate date];
+					
+					switch (j)
+					{
+						case 0  : [class performSelector:@selector(speedTest0)]; break;
+						case 1  : [class performSelector:@selector(speedTest1)]; break;
+						case 2  : [class performSelector:@selector(speedTest2)]; break;
+						case 3  : [class performSelector:@selector(speedTest3)]; break;
+						default : [class performSelector:@selector(speedTest4)]; break;
+					}
+					
+					NSTimeInterval result = [start timeIntervalSinceNow] * -1.0;
+					
+					min = MIN(min, result);
+					max = MAX(max, result);
+					
+					total += result;
 				
-				[class performSelector:selector];
-				
-				NSTimeInterval result = [start timeIntervalSinceNow] * -1.0;
-				
-				min = MIN(min, result);
-				max = MAX(max, result);
-				
-				total += result;
-				
-				[pool release];
+				}
 				[DDLog flushLog];
 			}
 			
@@ -319,7 +316,7 @@ static DDFileLogger *fileLogger = nil;
 
 + (void)startPerformanceTests
 {
-	BOOL runBase   = YES;
+	BOOL runBase   = NO;
 	BOOL runSuite1 = YES;
 	BOOL runSuite2 = YES;
 	BOOL runSuite3 = YES;

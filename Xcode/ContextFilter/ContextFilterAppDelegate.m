@@ -44,7 +44,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	
 	// If we want to filter log messages from the third party framework, we can do this:
 	
-	MyContextFilter *filter = [[[MyContextFilter alloc] init] autorelease];
+	MyContextFilter *filter = [[MyContextFilter alloc] init];
 	
 	[[DDTTYLogger sharedInstance] setLogFormatter:filter];
 	

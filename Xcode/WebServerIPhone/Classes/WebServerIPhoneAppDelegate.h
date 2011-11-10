@@ -2,14 +2,13 @@
 
 @class WebServerIPhoneViewController;
 @class DDFileLogger;
-@class MyHTTPServer;
-
+@class HTTPServer;
 
 @interface WebServerIPhoneAppDelegate : NSObject <UIApplicationDelegate>
 {
 	DDFileLogger *fileLogger;
 	
-	MyHTTPServer *httpServer;
+	HTTPServer *httpServer;
 	
 	UIWindow *window;
 	WebServerIPhoneViewController *viewController;
@@ -17,8 +16,8 @@
 
 @property (nonatomic, readonly) DDFileLogger *fileLogger;
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet WebServerIPhoneViewController *viewController;
+@property (nonatomic, strong) IBOutlet UIWindow *window;
+@property (nonatomic, strong) IBOutlet WebServerIPhoneViewController *viewController;
 
 @end
 

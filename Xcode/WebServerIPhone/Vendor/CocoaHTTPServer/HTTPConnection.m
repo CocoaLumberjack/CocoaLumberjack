@@ -14,7 +14,7 @@
 
 // Log levels: off, error, warn, info, verbose
 // Other flags: trace
-static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
+static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 
 // Define chunk size used to read in data for responses
 // This is how much data will be read from disk into RAM at a time
@@ -41,14 +41,20 @@ static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
 #define TIMEOUT_NONCE                       300
 
 // Define the various limits
-// LIMIT_MAX_HEADER_LINE_LENGTH: Max length (in bytes) of any single line in a header (including \r\n)
-// LIMIT_MAX_HEADER_LINES      : Max number of lines in a single header (including first GET line)
-#define LIMIT_MAX_HEADER_LINE_LENGTH  8190
-#define LIMIT_MAX_HEADER_LINES         100
+// MAX_HEADER_LINE_LENGTH: Max length (in bytes) of any single line in a header (including \r\n)
+// MAX_HEADER_LINES      : Max number of lines in a single header (including first GET line)
+#define MAX_HEADER_LINE_LENGTH  8190
+#define MAX_HEADER_LINES         100
+// MAX_CHUNK_LINE_LENGTH : For accepting chunked transfer uploads, max length of chunk size line (including \r\n)
+#define MAX_CHUNK_LINE_LENGTH    200
 
 // Define the various tags we'll use to differentiate what it is we're currently doing
 #define HTTP_REQUEST_HEADER                10
 #define HTTP_REQUEST_BODY                  11
+#define HTTP_REQUEST_CHUNK_SIZE            12
+#define HTTP_REQUEST_CHUNK_DATA            13
+#define HTTP_REQUEST_CHUNK_TRAILER         14
+#define HTTP_REQUEST_CHUNK_FOOTER          15
 #define HTTP_PARTIAL_RESPONSE              20
 #define HTTP_PARTIAL_RESPONSE_HEADER       21
 #define HTTP_PARTIAL_RESPONSE_BODY         22
@@ -74,10 +80,7 @@ static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
 
 @interface HTTPConnection (PrivateAPI)
 - (void)startReadingRequest;
-- (HTTPMessage *)newUniRangeResponse:(UInt64)contentLength;
-- (HTTPMessage *)newMultiRangeResponse:(UInt64)contentLength;
-- (NSData *)chunkedTransferSizeLineForLength:(NSUInteger)length;
-- (NSData *)chunkedTransferFooter;
+- (void)sendResponseHeadersAndBody;
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -564,14 +567,15 @@ static NSMutableArray *recentNonces;
 - (void)start
 {
 	dispatch_async(connectionQueue, ^{
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
 		if (started) return;
 		started = YES;
 		
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		
 		[self startConnection];
 		
-		[pool release];
+		[pool drain];
 	});
 }
 
@@ -584,9 +588,11 @@ static NSMutableArray *recentNonces;
 	dispatch_async(connectionQueue, ^{
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
-		[self die];
+		// Disconnect the socket.
+		// The socketDidDisconnect delegate method will handle everything else.
+		[asyncSocket disconnect];
 		
-		[pool release];
+		[pool drain];
 	});
 }
 
@@ -640,7 +646,7 @@ static NSMutableArray *recentNonces;
 	
 	[asyncSocket readDataToData:[GCDAsyncSocket CRLFData]
 	                withTimeout:TIMEOUT_READ_FIRST_HEADER_LINE
-	                  maxLength:LIMIT_MAX_HEADER_LINE_LENGTH
+	                  maxLength:MAX_HEADER_LINE_LENGTH
 	                        tag:HTTP_REQUEST_HEADER];
 }
 
@@ -897,11 +903,11 @@ static NSMutableArray *recentNonces;
 	if (HTTP_LOG_VERBOSE)
 	{
 		NSData *tempData = [request messageData];
-		NSString *tempStr = [[[NSString alloc] initWithData:tempData encoding:NSUTF8StringEncoding] autorelease];
 		
+		NSString *tempStr = [[NSString alloc] initWithData:tempData encoding:NSUTF8StringEncoding];
 		HTTPLogVerbose(@"%@[%p]: Received HTTP request:\n%@", THIS_FILE, self, tempStr);
+		[tempStr release];
 	}
-	
 	
 	// Check the HTTP version
 	// We only support version 1.0 and 1.1
@@ -933,19 +939,50 @@ static NSMutableArray *recentNonces;
 			
 			[[config server] addWebSocket:ws];
 			
-			[asyncSocket release];
-			asyncSocket = nil;
-			
-			[self die];
+			// The WebSocket should now be the delegate of the underlying socket.
+			// But gracefully handle the situation if it forgot.
+			if ([asyncSocket delegate] == self)
+			{
+				HTTPLogWarn(@"%@[%p]: WebSocket forgot to set itself as socket delegate", THIS_FILE, self);
+				
+				// Disconnect the socket.
+				// The socketDidDisconnect delegate method will handle everything else.
+				[asyncSocket disconnect];
+			}
+			else
+			{
+				// The WebSocket is using the socket,
+				// so make sure we don't disconnect it in the dealloc method.
+				[asyncSocket release];
+				asyncSocket = nil;
+				
+				[self die];
+				
+				// Note: There is a timing issue here that should be pointed out.
+				// 
+				// A bug that existed in previous versions happend like so:
+				// - We invoked [self die]
+				// - This caused us to get released, and our dealloc method to start executing
+				// - Meanwhile, AsyncSocket noticed a disconnect, and began to dispatch a socketDidDisconnect at us
+				// - The dealloc method finishes execution, and our instance gets freed
+				// - The socketDidDisconnect gets run, and a crash occurs
+				// 
+				// So the issue we want to avoid is releasing ourself when there is a possibility
+				// that AsyncSocket might be gearing up to queue a socketDidDisconnect for us.
+				// 
+				// In this particular situation notice that we invoke [asyncSocket delegate].
+				// This method is synchronous concerning AsyncSocket's internal socketQueue.
+				// Which means we can be sure, when it returns, that AsyncSocket has already
+				// queued any delegate methods for us if it was going to.
+				// And if the delegate methods are queued, then we've been properly retained.
+				// Meaning we won't get released / dealloc'd until the delegate method has finished executing.
+				// 
+				// In this rare situation, the die method will get invoked twice.
+			}
 		}
 		
 		return;
 	}
-	
-	// Extract the method
-	NSString *method = [request method];
-	
-	// Note: We already checked to ensure the method was supported in onSocket:didReadData:withTag:
 	
 	// Check Authentication (if needed)
 	// If not properly authenticated for resource, issue Unauthorized response
@@ -954,6 +991,11 @@ static NSMutableArray *recentNonces;
 		[self handleAuthenticationFailed];
 		return;
 	}
+	
+	// Extract the method
+	NSString *method = [request method];
+	
+	// Note: We already checked to ensure the method was supported in onSocket:didReadData:withTag:
 	
 	// Respond properly to HTTP 'GET' and 'HEAD' commands
 	httpResponse = [[self httpResponseForMethod:method URI:uri] retain];
@@ -964,179 +1006,7 @@ static NSMutableArray *recentNonces;
 		return;
 	}
 	
-	BOOL isChunked = NO;
-	
-	if ([httpResponse respondsToSelector:@selector(isChunked)])
-	{
-		isChunked = [httpResponse isChunked];
-	}
-	
-	// If a response is "chunked", this simply means the HTTPResponse object
-	// doesn't know the content-length in advance.
-	
-	UInt64 contentLength = 0;
-	
-	if (!isChunked)
-	{
-		contentLength = [httpResponse contentLength];
-	}
-	
-	// Check for specific range request
-	NSString *rangeHeader = [request headerField:@"Range"];
-	
-	BOOL isRangeRequest = NO;
-	
-	// If the response is "chunked" then we don't know the exact content-length.
-	// This means we'll be unable to process any range requests.
-	// This is because range requests might include a range like "give me the last 100 bytes"
-	
-	if (!isChunked && rangeHeader)
-	{
-		if ([self parseRangeRequest:rangeHeader withContentLength:contentLength])
-		{
-			isRangeRequest = YES;
-		}
-	}
-	
-	HTTPMessage *response;
-	
-	if (!isRangeRequest)
-	{
-		// Create response
-		// Default status code: 200 - OK
-		NSInteger status = 200;
-		
-		if ([httpResponse respondsToSelector:@selector(status)])
-		{
-			status = [httpResponse status];
-		}
-		response = [[HTTPMessage alloc] initResponseWithStatusCode:status description:nil version:HTTPVersion1_1];
-		
-		if (isChunked)
-		{
-			[response setHeaderField:@"Transfer-Encoding" value:@"chunked"];
-		}
-		else
-		{
-			NSString *contentLengthStr = [NSString stringWithFormat:@"%qu", contentLength];
-			[response setHeaderField:@"Content-Length" value:contentLengthStr];
-		}
-	}
-	else
-	{
-		if ([ranges count] == 1)
-		{
-			response = [self newUniRangeResponse:contentLength];
-		}
-		else
-		{
-			response = [self newMultiRangeResponse:contentLength];
-		}
-	}
-	
-	BOOL isZeroLengthResponse = !isChunked && (contentLength == 0);
-    
-	// If they issue a 'HEAD' command, we don't have to include the file
-	// If they issue a 'GET' command, we need to include the file
-	
-	if ([method isEqual:@"HEAD"] || isZeroLengthResponse)
-	{
-		NSData *responseData = [self preprocessResponse:response];
-		[asyncSocket writeData:responseData withTimeout:TIMEOUT_WRITE_HEAD tag:HTTP_RESPONSE];
-	}
-	else
-	{
-		// Write the header response
-		NSData *responseData = [self preprocessResponse:response];
-		[asyncSocket writeData:responseData withTimeout:TIMEOUT_WRITE_HEAD tag:HTTP_PARTIAL_RESPONSE_HEADER];
-		
-		// Now we need to send the body of the response
-		if (!isRangeRequest)
-		{
-			// Regular request
-			NSData *data = [httpResponse readDataOfLength:READ_CHUNKSIZE];
-			
-			if ([data length] > 0)
-			{
-				[responseDataSizes addObject:[NSNumber numberWithUnsignedInteger:[data length]]];
-				
-				if (isChunked)
-				{
-					NSData *chunkSize = [self chunkedTransferSizeLineForLength:[data length]];
-					[asyncSocket writeData:chunkSize withTimeout:TIMEOUT_WRITE_HEAD tag:HTTP_CHUNKED_RESPONSE_HEADER];
-					
-					[asyncSocket writeData:data withTimeout:TIMEOUT_WRITE_BODY tag:HTTP_CHUNKED_RESPONSE_BODY];
-					
-					if ([httpResponse isDone])
-					{
-						NSData *footer = [self chunkedTransferFooter];
-						[asyncSocket writeData:footer withTimeout:TIMEOUT_WRITE_HEAD tag:HTTP_RESPONSE];
-					}
-					else
-					{
-						NSData *footer = [GCDAsyncSocket CRLFData];
-						[asyncSocket writeData:footer withTimeout:TIMEOUT_WRITE_HEAD tag:HTTP_CHUNKED_RESPONSE_FOOTER];
-					}
-				}
-				else
-				{
-					long tag = [httpResponse isDone] ? HTTP_RESPONSE : HTTP_PARTIAL_RESPONSE_BODY;
-					[asyncSocket writeData:data withTimeout:TIMEOUT_WRITE_BODY tag:tag];
-				}
-			}
-		}
-		else
-		{
-			// Client specified a byte range in request
-			
-			if ([ranges count] == 1)
-			{
-				// Client is requesting a single range
-				DDRange range = [[ranges objectAtIndex:0] ddrangeValue];
-				
-				[httpResponse setOffset:range.location];
-				
-				NSUInteger bytesToRead = range.length < READ_CHUNKSIZE ? (NSUInteger)range.length : READ_CHUNKSIZE;
-				
-				NSData *data = [httpResponse readDataOfLength:bytesToRead];
-				
-				if ([data length] > 0)
-				{
-					[responseDataSizes addObject:[NSNumber numberWithUnsignedInteger:[data length]]];
-					
-					long tag = [data length] == range.length ? HTTP_RESPONSE : HTTP_PARTIAL_RANGE_RESPONSE_BODY;
-					[asyncSocket writeData:data withTimeout:TIMEOUT_WRITE_BODY tag:tag];
-				}
-			}
-			else
-			{
-				// Client is requesting multiple ranges
-				// We have to send each range using multipart/byteranges
-				
-				// Write range header
-				NSData *rangeHeaderData = [ranges_headers objectAtIndex:0];
-				[asyncSocket writeData:rangeHeaderData withTimeout:TIMEOUT_WRITE_HEAD tag:HTTP_PARTIAL_RESPONSE_HEADER];
-				
-				// Start writing range body
-				DDRange range = [[ranges objectAtIndex:0] ddrangeValue];
-				
-				[httpResponse setOffset:range.location];
-				
-				NSUInteger bytesToRead = range.length < READ_CHUNKSIZE ? (NSUInteger)range.length : READ_CHUNKSIZE;
-				
-				NSData *data = [httpResponse readDataOfLength:bytesToRead];
-				
-				if ([data length] > 0)
-				{
-					[responseDataSizes addObject:[NSNumber numberWithUnsignedInteger:[data length]]];
-					
-					[asyncSocket writeData:data withTimeout:TIMEOUT_WRITE_BODY tag:HTTP_PARTIAL_RANGES_RESPONSE_BODY];
-				}
-			}
-		}
-	}
-	
-	[response release];
+	[self sendResponseHeadersAndBody];
 }
 
 /**
@@ -1257,6 +1127,195 @@ static NSMutableArray *recentNonces;
 	// and followed by a CRLF on a line by itself.
 	
 	return [@"\r\n0\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (void)sendResponseHeadersAndBody
+{
+	if ([httpResponse respondsToSelector:@selector(delayResponeHeaders)])
+	{
+		if ([httpResponse delayResponeHeaders])
+		{
+			return;
+		}
+	}
+	
+	BOOL isChunked = NO;
+	
+	if ([httpResponse respondsToSelector:@selector(isChunked)])
+	{
+		isChunked = [httpResponse isChunked];
+	}
+	
+	// If a response is "chunked", this simply means the HTTPResponse object
+	// doesn't know the content-length in advance.
+	
+	UInt64 contentLength = 0;
+	
+	if (!isChunked)
+	{
+		contentLength = [httpResponse contentLength];
+	}
+	
+	// Check for specific range request
+	NSString *rangeHeader = [request headerField:@"Range"];
+	
+	BOOL isRangeRequest = NO;
+	
+	// If the response is "chunked" then we don't know the exact content-length.
+	// This means we'll be unable to process any range requests.
+	// This is because range requests might include a range like "give me the last 100 bytes"
+	
+	if (!isChunked && rangeHeader)
+	{
+		if ([self parseRangeRequest:rangeHeader withContentLength:contentLength])
+		{
+			isRangeRequest = YES;
+		}
+	}
+	
+	HTTPMessage *response;
+	
+	if (!isRangeRequest)
+	{
+		// Create response
+		// Default status code: 200 - OK
+		NSInteger status = 200;
+		
+		if ([httpResponse respondsToSelector:@selector(status)])
+		{
+			status = [httpResponse status];
+		}
+		response = [[HTTPMessage alloc] initResponseWithStatusCode:status description:nil version:HTTPVersion1_1];
+		
+		if (isChunked)
+		{
+			[response setHeaderField:@"Transfer-Encoding" value:@"chunked"];
+		}
+		else
+		{
+			NSString *contentLengthStr = [NSString stringWithFormat:@"%qu", contentLength];
+			[response setHeaderField:@"Content-Length" value:contentLengthStr];
+		}
+	}
+	else
+	{
+		if ([ranges count] == 1)
+		{
+			response = [self newUniRangeResponse:contentLength];
+		}
+		else
+		{
+			response = [self newMultiRangeResponse:contentLength];
+		}
+	}
+	
+	BOOL isZeroLengthResponse = !isChunked && (contentLength == 0);
+    
+	// If they issue a 'HEAD' command, we don't have to include the file
+	// If they issue a 'GET' command, we need to include the file
+	
+	if ([[request method] isEqualToString:@"HEAD"] || isZeroLengthResponse)
+	{
+		NSData *responseData = [self preprocessResponse:response];
+		[asyncSocket writeData:responseData withTimeout:TIMEOUT_WRITE_HEAD tag:HTTP_RESPONSE];
+		
+		sentResponseHeaders = YES;
+	}
+	else
+	{
+		// Write the header response
+		NSData *responseData = [self preprocessResponse:response];
+		[asyncSocket writeData:responseData withTimeout:TIMEOUT_WRITE_HEAD tag:HTTP_PARTIAL_RESPONSE_HEADER];
+		
+		sentResponseHeaders = YES;
+		
+		// Now we need to send the body of the response
+		if (!isRangeRequest)
+		{
+			// Regular request
+			NSData *data = [httpResponse readDataOfLength:READ_CHUNKSIZE];
+			
+			if ([data length] > 0)
+			{
+				[responseDataSizes addObject:[NSNumber numberWithUnsignedInteger:[data length]]];
+				
+				if (isChunked)
+				{
+					NSData *chunkSize = [self chunkedTransferSizeLineForLength:[data length]];
+					[asyncSocket writeData:chunkSize withTimeout:TIMEOUT_WRITE_HEAD tag:HTTP_CHUNKED_RESPONSE_HEADER];
+					
+					[asyncSocket writeData:data withTimeout:TIMEOUT_WRITE_BODY tag:HTTP_CHUNKED_RESPONSE_BODY];
+					
+					if ([httpResponse isDone])
+					{
+						NSData *footer = [self chunkedTransferFooter];
+						[asyncSocket writeData:footer withTimeout:TIMEOUT_WRITE_HEAD tag:HTTP_RESPONSE];
+					}
+					else
+					{
+						NSData *footer = [GCDAsyncSocket CRLFData];
+						[asyncSocket writeData:footer withTimeout:TIMEOUT_WRITE_HEAD tag:HTTP_CHUNKED_RESPONSE_FOOTER];
+					}
+				}
+				else
+				{
+					long tag = [httpResponse isDone] ? HTTP_RESPONSE : HTTP_PARTIAL_RESPONSE_BODY;
+					[asyncSocket writeData:data withTimeout:TIMEOUT_WRITE_BODY tag:tag];
+				}
+			}
+		}
+		else
+		{
+			// Client specified a byte range in request
+			
+			if ([ranges count] == 1)
+			{
+				// Client is requesting a single range
+				DDRange range = [[ranges objectAtIndex:0] ddrangeValue];
+				
+				[httpResponse setOffset:range.location];
+				
+				NSUInteger bytesToRead = range.length < READ_CHUNKSIZE ? (NSUInteger)range.length : READ_CHUNKSIZE;
+				
+				NSData *data = [httpResponse readDataOfLength:bytesToRead];
+				
+				if ([data length] > 0)
+				{
+					[responseDataSizes addObject:[NSNumber numberWithUnsignedInteger:[data length]]];
+					
+					long tag = [data length] == range.length ? HTTP_RESPONSE : HTTP_PARTIAL_RANGE_RESPONSE_BODY;
+					[asyncSocket writeData:data withTimeout:TIMEOUT_WRITE_BODY tag:tag];
+				}
+			}
+			else
+			{
+				// Client is requesting multiple ranges
+				// We have to send each range using multipart/byteranges
+				
+				// Write range header
+				NSData *rangeHeaderData = [ranges_headers objectAtIndex:0];
+				[asyncSocket writeData:rangeHeaderData withTimeout:TIMEOUT_WRITE_HEAD tag:HTTP_PARTIAL_RESPONSE_HEADER];
+				
+				// Start writing range body
+				DDRange range = [[ranges objectAtIndex:0] ddrangeValue];
+				
+				[httpResponse setOffset:range.location];
+				
+				NSUInteger bytesToRead = range.length < READ_CHUNKSIZE ? (NSUInteger)range.length : READ_CHUNKSIZE;
+				
+				NSData *data = [httpResponse readDataOfLength:bytesToRead];
+				
+				if ([data length] > 0)
+				{
+					[responseDataSizes addObject:[NSNumber numberWithUnsignedInteger:[data length]]];
+					
+					[asyncSocket writeData:data withTimeout:TIMEOUT_WRITE_BODY tag:HTTP_PARTIAL_RANGES_RESPONSE_BODY];
+				}
+			}
+		}
+	}
+	
+	[response release];
 }
 
 /**
@@ -1498,10 +1557,15 @@ static NSMutableArray *recentNonces;
 	return [NSArray arrayWithObjects:@"index.html", @"index.htm", nil];
 }
 
+- (NSString *)filePathForURI:(NSString *)path
+{
+	return [self filePathForURI:path allowDirectory:NO];
+}
+
 /**
  * Converts relative URI path into full file-system path.
 **/
-- (NSString *)filePathForURI:(NSString *)path
+- (NSString *)filePathForURI:(NSString *)path allowDirectory:(BOOL)allowDirectory
 {
 	HTTPLogTrace();
 	
@@ -1575,30 +1639,29 @@ static NSMutableArray *recentNonces;
 	}
 	
 	// Part 4: Search for index page if path is pointing to a directory
-	
-	BOOL isDir = NO;
-	
-	if ([[NSFileManager defaultManager] fileExistsAtPath:fullPath isDirectory:&isDir] && isDir)
+	if (!allowDirectory)
 	{
-		NSArray *indexFileNames = [self directoryIndexFileNames];
-		
-		for (NSString *indexFileName in indexFileNames)
+		BOOL isDir = NO;
+		if ([[NSFileManager defaultManager] fileExistsAtPath:fullPath isDirectory:&isDir] && isDir)
 		{
-			NSString *indexFilePath = [fullPath stringByAppendingPathComponent:indexFileName];
-			
-			if ([[NSFileManager defaultManager] fileExistsAtPath:indexFilePath isDirectory:&isDir] && !isDir)
+			NSArray *indexFileNames = [self directoryIndexFileNames];
+
+			for (NSString *indexFileName in indexFileNames)
 			{
-				return indexFilePath;
+				NSString *indexFilePath = [fullPath stringByAppendingPathComponent:indexFileName];
+
+				if ([[NSFileManager defaultManager] fileExistsAtPath:indexFilePath isDirectory:&isDir] && !isDir)
+				{
+					return indexFilePath;
+				}
 			}
+
+			// No matching index files found in directory
+			return nil;
 		}
-		
-		// No matching index files found in directory
-		return nil;
 	}
-	else
-	{
-		return fullPath;
-	}
+
+	return fullPath;
 }
 
 /**
@@ -1614,7 +1677,7 @@ static NSMutableArray *recentNonces;
 	
 	// Override me to provide custom responses.
 	
-	NSString *filePath = [self filePathForURI:path];
+	NSString *filePath = [self filePathForURI:path allowDirectory:NO];
 	
 	BOOL isDir = NO;
 	
@@ -1667,7 +1730,7 @@ static NSMutableArray *recentNonces;
  * This method is called to handle data read from a POST / PUT.
  * The given data is part of the request body.
 **/
-- (void)processDataChunk:(NSData *)postDataChunk
+- (void)processBodyData:(NSData *)postDataChunk
 {
 	// Override me to do something useful with a POST / PUT.
 	// If the post is small, such as a simple form, you may want to simply append the data to the request.
@@ -1677,6 +1740,16 @@ static NSMutableArray *recentNonces;
 	// This prevents a 50 MB upload from being stored in RAM.
 	// The size of the chunks are limited by the POST_CHUNKSIZE definition.
 	// Therefore, this method may be called multiple times for the same POST request.
+}
+
+/**
+ * This method is called after the request body has been fully read but before the HTTP request is processed.
+**/
+- (void)finishBody
+{
+	// Override me to perform any final operations on an upload.
+	// For example, if you were saving the upload to disk this would be
+	// the hook to flush any pending data to disk and maybe close the file.
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1820,14 +1893,35 @@ static NSMutableArray *recentNonces;
 **/
 - (NSString *)dateAsString:(NSDate *)date
 {
-	// Example: Sun, 06 Nov 1994 08:49:37 GMT
+	// From Apple's Documentation (Data Formatting Guide -> Date Formatters -> Cache Formatters for Efficiency):
+	// 
+	// "Creating a date formatter is not a cheap operation. If you are likely to use a formatter frequently,
+	// it is typically more efficient to cache a single instance than to create and dispose of multiple instances.
+	// One approach is to use a static variable."
+	// 
+	// This was discovered to be true in massive form via issue #46:
+	// 
+	// "Was doing some performance benchmarking using instruments and httperf. Using this single optimization
+	// I got a 26% speed improvement - from 1000req/sec to 3800req/sec. Not insignificant.
+	// The culprit? Why, NSDateFormatter, of course!"
+	// 
+	// Thus, we are using a static NSDateFormatter here.
 	
-	NSDateFormatter *df = [[[NSDateFormatter alloc] init] autorelease];
-	[df setFormatterBehavior:NSDateFormatterBehavior10_4];
-	[df setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
-	[df setDateFormat:@"EEE, dd MMM y HH:mm:ss 'GMT'"];
+	static NSDateFormatter *df;
 	
-	// For some reason, using zzz in the format string produces GMT+00:00
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		
+		// Example: Sun, 06 Nov 1994 08:49:37 GMT
+		
+		df = [[NSDateFormatter alloc] init];
+		[df setFormatterBehavior:NSDateFormatterBehavior10_4];
+		[df setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
+		[df setDateFormat:@"EEE, dd MMM y HH:mm:ss 'GMT'"];
+		[df setLocale:[[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] autorelease]];
+		
+		// For some reason, using zzz in the format string produces GMT+00:00
+	});
 	
 	return [df stringFromDate:date];
 }
@@ -1946,7 +2040,7 @@ static NSMutableArray *recentNonces;
 		{
 			// We don't have a complete header yet
 			// That is, we haven't yet received a CRLF on a line by itself, indicating the end of the header
-			if (++numHeaderLines > LIMIT_MAX_HEADER_LINES)
+			if (++numHeaderLines > MAX_HEADER_LINES)
 			{
 				// Reached the maximum amount of header lines in a single HTTP request
 				// This could be an attempted DOS attack
@@ -1959,7 +2053,7 @@ static NSMutableArray *recentNonces;
 			{
 				[asyncSocket readDataToData:[GCDAsyncSocket CRLFData]
 				                withTimeout:TIMEOUT_READ_SUBSEQUENT_HEADER_LINE
-				                  maxLength:LIMIT_MAX_HEADER_LINE_LENGTH
+				                  maxLength:MAX_HEADER_LINE_LENGTH
 				                        tag:HTTP_REQUEST_HEADER];
 			}
 		}
@@ -1973,6 +2067,9 @@ static NSMutableArray *recentNonces;
 			// Extract the uri (such as "/index.html")
 			NSString *uri = [self requestURI];
 			
+			// Check for a Transfer-Encoding field
+			NSString *transferEncoding = [request headerField:@"Transfer-Encoding"];
+      
 			// Check for a Content-Length field
 			NSString *contentLength = [request headerField:@"Content-Length"];
 			
@@ -1982,22 +2079,29 @@ static NSMutableArray *recentNonces;
 			
 			if (expectsUpload)
 			{
-				if (contentLength == nil)
+				if (transferEncoding && ![transferEncoding caseInsensitiveCompare:@"Chunked"])
 				{
-					HTTPLogWarn(@"%@[%p]: Method expects request body, but had no specified Content-Length",
-					              THIS_FILE, self);
-					
-					[self handleInvalidRequest:nil];
-					return;
+					requestContentLength = -1;
 				}
-				
-				if (![NSNumber parseString:(NSString *)contentLength intoUInt64:&requestContentLength])
+				else
 				{
-					HTTPLogWarn(@"%@[%p]: Unable to parse Content-Length header into a valid number",
-								THIS_FILE, self);
+					if (contentLength == nil)
+					{
+						HTTPLogWarn(@"%@[%p]: Method expects request body, but had no specified Content-Length",
+									THIS_FILE, self);
+						
+						[self handleInvalidRequest:nil];
+						return;
+					}
 					
-					[self handleInvalidRequest:nil];
-					return;
+					if (![NSNumber parseString:(NSString *)contentLength intoUInt64:&requestContentLength])
+					{
+						HTTPLogWarn(@"%@[%p]: Unable to parse Content-Length header into a valid number",
+									THIS_FILE, self);
+						
+						[self handleInvalidRequest:nil];
+						return;
+					}
 				}
 			}
 			else
@@ -2050,19 +2154,32 @@ static NSMutableArray *recentNonces;
 				if (requestContentLength > 0)
 				{
 					// Start reading the request body
-					NSUInteger bytesToRead;
-					if(requestContentLength < POST_CHUNKSIZE)
-						bytesToRead = (NSUInteger)requestContentLength;
+					if (requestContentLength == -1)
+					{
+						// Chunked transfer
+						
+						[asyncSocket readDataToData:[GCDAsyncSocket CRLFData]
+						                withTimeout:TIMEOUT_READ_BODY
+						                  maxLength:MAX_CHUNK_LINE_LENGTH
+						                        tag:HTTP_REQUEST_CHUNK_SIZE];
+					}
 					else
-						bytesToRead = POST_CHUNKSIZE;
-					
-					[asyncSocket readDataToLength:bytesToRead
-					                  withTimeout:TIMEOUT_READ_BODY
-					                          tag:HTTP_REQUEST_BODY];
+					{
+						NSUInteger bytesToRead;
+						if (requestContentLength < POST_CHUNKSIZE)
+							bytesToRead = (NSUInteger)requestContentLength;
+						else
+							bytesToRead = POST_CHUNKSIZE;
+						
+						[asyncSocket readDataToLength:bytesToRead
+						                  withTimeout:TIMEOUT_READ_BODY
+						                          tag:HTTP_REQUEST_BODY];
+					}
 				}
 				else
 				{
 					// Empty upload
+					[self finishBody];
 					[self replyToHTTPRequest];
 				}
 			}
@@ -2075,25 +2192,176 @@ static NSMutableArray *recentNonces;
 	}
 	else
 	{
-		// Handle a chunk of data from the POST body
+		BOOL doneReadingRequest = NO;
 		
-		requestContentLengthReceived += [data length];
-		[self processDataChunk:data];
+		// A chunked message body contains a series of chunks,
+		// followed by a line with "0" (zero),
+		// followed by optional footers (just like headers),
+		// and a blank line.
+		// 
+		// Each chunk consists of two parts:
+		// 
+		// 1. A line with the size of the chunk data, in hex,
+		//    possibly followed by a semicolon and extra parameters you can ignore (none are currently standard),
+		//    and ending with CRLF.
+		// 2. The data itself, followed by CRLF.
+		// 
+		// Part 1 is represented by HTTP_REQUEST_CHUNK_SIZE
+		// Part 2 is represented by HTTP_REQUEST_CHUNK_DATA and HTTP_REQUEST_CHUNK_TRAILER
+		// where the trailer is the CRLF that follows the data.
+		// 
+		// The optional footers and blank line are represented by HTTP_REQUEST_CHUNK_FOOTER.
 		
-		if (requestContentLengthReceived < requestContentLength)
+		if (tag == HTTP_REQUEST_CHUNK_SIZE)
 		{
-			// We're not done reading the post body yet...
-			UInt64 bytesLeft = requestContentLength - requestContentLengthReceived;
+			// We have just read in a line with the size of the chunk data, in hex, 
+			// possibly followed by a semicolon and extra parameters that can be ignored,
+			// and ending with CRLF.
 			
-			NSUInteger bytesToRead = bytesLeft < POST_CHUNKSIZE ? (NSUInteger)bytesLeft : POST_CHUNKSIZE;
+			NSString *sizeLine = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
 			
-			[asyncSocket readDataToLength:bytesToRead
-			                  withTimeout:TIMEOUT_READ_BODY
-			                          tag:HTTP_REQUEST_BODY];
+			requestChunkSize = (UInt64)strtoull([sizeLine UTF8String], NULL, 16);
+			requestChunkSizeReceived = 0;
+			
+			if (errno != 0)
+			{
+				HTTPLogWarn(@"%@[%p]: Method expects chunk size, but received something else", THIS_FILE, self);
+				
+				[self handleInvalidRequest:nil];
+				return;
+			}
+			
+			if (requestChunkSize > 0)
+			{
+				NSUInteger bytesToRead;
+				bytesToRead = (requestChunkSize < POST_CHUNKSIZE) ? (NSUInteger)requestChunkSize : POST_CHUNKSIZE;
+				
+				[asyncSocket readDataToLength:bytesToRead
+				                  withTimeout:TIMEOUT_READ_BODY
+				                          tag:HTTP_REQUEST_CHUNK_DATA];
+			}
+			else
+			{
+				// This is the "0" (zero) line,
+				// which is to be followed by optional footers (just like headers) and finally a blank line.
+				
+				[asyncSocket readDataToData:[GCDAsyncSocket CRLFData]
+				                withTimeout:TIMEOUT_READ_BODY
+				                  maxLength:MAX_HEADER_LINE_LENGTH
+				                        tag:HTTP_REQUEST_CHUNK_FOOTER];
+			}
+			
+			return;
 		}
-		else
+		else if (tag == HTTP_REQUEST_CHUNK_DATA)
 		{
-			// Now we need to reply to the request
+			// We just read part of the actual data.
+			
+			requestContentLengthReceived += [data length];
+			requestChunkSizeReceived += [data length];
+			
+			[self processBodyData:data];
+			
+			UInt64 bytesLeft = requestChunkSize - requestChunkSizeReceived;
+			if (bytesLeft > 0)
+			{
+				NSUInteger bytesToRead = (bytesLeft < POST_CHUNKSIZE) ? (NSUInteger)bytesLeft : POST_CHUNKSIZE;
+				
+				[asyncSocket readDataToLength:bytesToRead
+				                  withTimeout:TIMEOUT_READ_BODY
+				                          tag:HTTP_REQUEST_CHUNK_DATA];
+			}
+			else
+			{
+				// We've read in all the data for this chunk.
+				// The data is followed by a CRLF, which we need to read (and basically ignore)
+				
+				[asyncSocket readDataToLength:2
+				                  withTimeout:TIMEOUT_READ_BODY
+				                          tag:HTTP_REQUEST_CHUNK_TRAILER];
+			}
+			
+			return;
+		}
+		else if (tag == HTTP_REQUEST_CHUNK_TRAILER)
+		{
+			// This should be the CRLF following the data.
+			// Just ensure it's a CRLF.
+			
+			if (![data isEqualToData:[GCDAsyncSocket CRLFData]])
+			{
+				HTTPLogWarn(@"%@[%p]: Method expects chunk trailer, but is missing", THIS_FILE, self);
+				
+				[self handleInvalidRequest:nil];
+				return;
+			}
+			
+			// Now continue with the next chunk
+			
+			[asyncSocket readDataToData:[GCDAsyncSocket CRLFData]
+			                withTimeout:TIMEOUT_READ_BODY
+			                  maxLength:MAX_CHUNK_LINE_LENGTH
+			                        tag:HTTP_REQUEST_CHUNK_SIZE];
+			
+		}
+		else if (tag == HTTP_REQUEST_CHUNK_FOOTER)
+		{
+			if (++numHeaderLines > MAX_HEADER_LINES)
+			{
+				// Reached the maximum amount of header lines in a single HTTP request
+				// This could be an attempted DOS attack
+				[asyncSocket disconnect];
+				
+				// Explictly return to ensure we don't do anything after the socket disconnect
+				return;
+			}
+			
+			if ([data length] > 2)
+			{
+				// We read in a footer.
+				// In the future we may want to append these to the request.
+				// For now we ignore, and continue reading the footers, waiting for the final blank line.
+				
+				[asyncSocket readDataToData:[GCDAsyncSocket CRLFData]
+				                withTimeout:TIMEOUT_READ_BODY
+				                  maxLength:MAX_HEADER_LINE_LENGTH
+				                        tag:HTTP_REQUEST_CHUNK_FOOTER];
+			}
+			else
+			{
+				doneReadingRequest = YES;
+			}
+		}
+		else  // HTTP_REQUEST_BODY
+		{
+			// Handle a chunk of data from the POST body
+			
+			requestContentLengthReceived += [data length];
+			[self processBodyData:data];
+			
+			if (requestContentLengthReceived < requestContentLength)
+			{
+				// We're not done reading the post body yet...
+				
+				UInt64 bytesLeft = requestContentLength - requestContentLengthReceived;
+				
+				NSUInteger bytesToRead = bytesLeft < POST_CHUNKSIZE ? (NSUInteger)bytesLeft : POST_CHUNKSIZE;
+				
+				[asyncSocket readDataToLength:bytesToRead
+				                  withTimeout:TIMEOUT_READ_BODY
+				                          tag:HTTP_REQUEST_BODY];
+			}
+			else
+			{
+				doneReadingRequest = YES;
+			}
+		}
+		
+		// Now that the entire body has been received, we need to reply to the request
+		
+		if (doneReadingRequest)
+		{
+			[self finishBody];
 			[self replyToHTTPRequest];
 		}
 	}
@@ -2157,47 +2425,52 @@ static NSMutableArray *recentNonces;
 	
 	if (doneSendingResponse)
 	{
+		// Inform the http response that we're done
+		if ([httpResponse respondsToSelector:@selector(connectionDidClose)])
+		{
+			[httpResponse connectionDidClose];
+		}
+		
+		
 		if (tag == HTTP_FINAL_RESPONSE)
 		{
+			// Cleanup after the last request
+			[self finishResponse];
+			
 			// Terminate the connection
 			[asyncSocket disconnect];
 			
-			// Explictly return to ensure we don't do anything after the socket disconnect
+			// Explictly return to ensure we don't do anything after the socket disconnects
 			return;
 		}
 		else
 		{
-			// Cleanup after the last request
-			// And start listening for the next request
-			
-			// Inform the http response that we're done
-			if ([httpResponse respondsToSelector:@selector(connectionDidClose)])
-			{
-				[httpResponse connectionDidClose];
-			}
-			
-			// Release any resources we no longer need
-			[httpResponse release];
-			httpResponse = nil;
-			
-			[ranges release];
-			[ranges_headers release];
-			[ranges_boundry release];
-			ranges = nil;
-			ranges_headers = nil;
-			ranges_boundry = nil;
-			
 			if ([self shouldDie])
 			{
-				[self die];
+				// Cleanup after the last request
+				// Note: Don't do this before calling shouldDie, as it needs the request object still.
+				[self finishResponse];
+				
+				// The only time we should invoke [self die] is from socketDidDisconnect,
+				// or if the socket gets taken over by someone else like a WebSocket.
+				
+				[asyncSocket disconnect];
 			}
 			else
 			{
-				// Release the old request, and create a new one
-				[request release];
+				// Cleanup after the last request
+				[self finishResponse];
+				
+				// Prepare for the next request
+				
+				// If this assertion fails, it likely means you overrode the
+				// finishBody method and forgot to call [super finishBody].
+				NSAssert(request == nil, @"Request not properly released in finishBody");
+				
 				request = [[HTTPMessage alloc] initEmptyRequest];
 				
 				numHeaderLines = 0;
+				sentResponseHeaders = NO;
 				
 				// And start listening for more requests
 				[self startReadingRequest];
@@ -2212,6 +2485,9 @@ static NSMutableArray *recentNonces;
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err;
 {
 	HTTPLogTrace();
+	
+	[asyncSocket release];
+	asyncSocket = nil;
 	
 	[self die];
 }
@@ -2246,19 +2522,26 @@ static NSMutableArray *recentNonces;
 		
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
-		if (ranges == nil)
+		if (!sentResponseHeaders)
 		{
-			[self continueSendingStandardResponseBody];
+			[self sendResponseHeadersAndBody];
 		}
 		else
 		{
-			if ([ranges count] == 1)
-				[self continueSendingSingleRangeResponseBody];
+			if (ranges == nil)
+			{
+				[self continueSendingStandardResponseBody];
+			}
 			else
-				[self continueSendingMultiRangeResponseBody];
+			{
+				if ([ranges count] == 1)
+					[self continueSendingSingleRangeResponseBody];
+				else
+					[self continueSendingMultiRangeResponseBody];
+			}
 		}
 		
-		[pool release];
+		[pool drain];
 	});
 }
 
@@ -2288,12 +2571,12 @@ static NSMutableArray *recentNonces;
 		
 		[asyncSocket disconnectAfterWriting];
 		
-		[pool release];
+		[pool drain];
 	});
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Closing
+#pragma mark Post Request
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -2301,12 +2584,39 @@ static NSMutableArray *recentNonces;
  * Since a single connection may handle multiple request/responses, this method may be called multiple times.
  * That is, it will be called after completion of each response.
 **/
-- (BOOL)shouldDie
+- (void)finishResponse
 {
 	HTTPLogTrace();
 	
 	// Override me if you want to perform any custom actions after a response has been fully sent.
-	// You may also force close the connection by returning YES.
+	// This is the place to release memory or resources associated with the last request.
+	// 
+	// If you override this method, you should take care to invoke [super finishResponse] at some point.
+	
+	[request release];
+	request = nil;
+	
+	[httpResponse release];
+	httpResponse = nil;
+	
+	[ranges release];
+	[ranges_headers release];
+	[ranges_boundry release];
+	ranges = nil;
+	ranges_headers = nil;
+	ranges_boundry = nil;
+}
+
+/**
+ * This method is called after each successful response has been fully sent.
+ * It determines whether the connection should stay open and handle another request.
+**/
+- (BOOL)shouldDie
+{
+	HTTPLogTrace();
+	
+	// Override me if you have any need to force close the connection.
+	// You may do so by simply returning YES.
 	// 
 	// If you override this method, you should take care to fall through with [super shouldDie]
 	// instead of returning NO.
@@ -2346,6 +2656,11 @@ static NSMutableArray *recentNonces;
 	
 	// Override me if you want to perform any custom actions when a connection is closed.
 	// Then call [super die] when you're done.
+	// 
+	// See also the finishResponse method.
+	// 
+	// Important: There is a rare timing condition where this method might get invoked twice.
+	// If you override this method, you should be prepared for this situation.
 	
 	// Inform the http response that we're done
 	if ([httpResponse respondsToSelector:@selector(connectionDidClose)])

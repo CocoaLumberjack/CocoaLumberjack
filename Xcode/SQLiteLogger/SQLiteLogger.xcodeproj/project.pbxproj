@@ -18,9 +18,9 @@
 		DCFF744E1342802100F53777 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFF74491342802100F53777 /* DDLog.m */; };
 		DCFF744F1342802100F53777 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFF744B1342802100F53777 /* DDTTYLogger.m */; };
 		DCFF7454134280C500F53777 /* FMDBLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFF7453134280C500F53777 /* FMDBLogger.m */; };
-		DCFF745B134280CF00F53777 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFF7456134280CF00F53777 /* FMDatabase.m */; };
-		DCFF745C134280CF00F53777 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFF7458134280CF00F53777 /* FMDatabaseAdditions.m */; };
-		DCFF745D134280CF00F53777 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFF745A134280CF00F53777 /* FMResultSet.m */; };
+		DCFF745B134280CF00F53777 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFF7456134280CF00F53777 /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DCFF745C134280CF00F53777 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFF7458134280CF00F53777 /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DCFF745D134280CF00F53777 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFF745A134280CF00F53777 /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -191,6 +191,7 @@
 		DCFF741913427FF600F53777 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = Voalte;
 			};
 			buildConfigurationList = DCFF741C13427FF600F53777 /* Build configuration list for PBXProject "SQLiteLogger" */;
@@ -306,6 +307,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -321,6 +323,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;

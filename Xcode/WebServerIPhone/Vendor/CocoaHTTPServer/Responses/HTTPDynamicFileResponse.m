@@ -4,7 +4,7 @@
 
 // Log levels : off, error, warn, info, verbose
 // Other flags: trace
-static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
+static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 
 #define NULL_FD  -1
 
@@ -130,15 +130,15 @@ static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
 				// But that method copies the bytes...
 				// So for performance reasons, we need to use the methods that don't copy the bytes.
 				
-				void *strBuffer = readBuffer + strRange.location;
-				NSData *strData = [NSData dataWithBytesNoCopy:strBuffer length:strRange.length freeWhenDone:NO];
+				void *strBuf = readBuffer + strRange.location;
+				NSUInteger strLen = strRange.length;
 				
-				NSString *key = [[NSString alloc] initWithData:strData encoding:NSUTF8StringEncoding];
+				NSString *key = [[NSString alloc] initWithBytes:strBuf length:strLen encoding:NSUTF8StringEncoding];
 				if (key)
 				{
 					// Is there a given replacement for this key?
 					
-					NSString *value = [replacementDict objectForKey:key];
+					id value = [replacementDict objectForKey:key];
 					if (value)
 					{
 						// Found the replacement value.
@@ -146,7 +146,7 @@ static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
 						
 						HTTPLogVerbose(@"%@[%p]: key(%@) -> value(%@)", THIS_FILE, self, key, value);
 						
-						NSData *v = [value dataUsingEncoding:NSUTF8StringEncoding];
+						NSData *v = [[value description] dataUsingEncoding:NSUTF8StringEncoding];
 						NSUInteger vLength = [v length];
 						
 						if (fullRange.length == vLength)
@@ -168,10 +168,10 @@ static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
 								
 								if (diff > (readBufferSize - bufLen))
 								{
-									NSUInteger inc = MIN(diff, 256);
+									NSUInteger inc = MAX(diff, 256);
 									
 									readBufferSize += inc;
-									readBuffer = realloc(readBuffer, readBufferSize);
+									readBuffer = reallocf(readBuffer, readBufferSize);
 								}
 							}
 							

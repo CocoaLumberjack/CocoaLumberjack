@@ -7,9 +7,9 @@
 {
 	DDFileLogger *fileLogger;
 	
-	NSWindow *window;
+	NSWindow *__unsafe_unretained window;
 }
 
-@property (assign) IBOutlet NSWindow *window;
+@property (unsafe_unretained) IBOutlet NSWindow *window;
 
 @end

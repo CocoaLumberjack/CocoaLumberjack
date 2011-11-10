@@ -56,8 +56,6 @@
 - (void)dealloc
 {
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(compressNextLogFile) object:nil];
-	
-	[super dealloc];
 }
 
 - (void)compressLogFile:(DDLogFileInfo *)logFile
@@ -89,10 +87,10 @@
 		return;
 	}
 	
-	NSUInteger i = count - 1;
-	while (i >= 0)
+	NSUInteger i = count;
+	while (i > 0)
 	{
-		DDLogFileInfo *logFileInfo = [sortedLogFileInfos objectAtIndex:i];
+		DDLogFileInfo *logFileInfo = [sortedLogFileInfos objectAtIndex:(i - 1)];
 		
 		if (logFileInfo.isArchived && !logFileInfo.isCompressed)
 		{
@@ -101,10 +99,7 @@
 			break;
 		}
 		
-		if (i == 0)
-			break; // 0 - 1 = 4294967295 (unsigned remember)
-		else
-			i--;
+		i--;
 	}
 	
 	upToDate = YES;
@@ -165,7 +160,7 @@
 
 - (void)backgroundThread_CompressLogFile:(DDLogFileInfo *)logFile
 {
-	NSAutoreleasePool *outerPool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 	
 	NSLogInfo(@"CompressingLogFileManager: Compressing log file: %@", logFile.fileName);
 	
@@ -251,7 +246,7 @@
 	BOOL error = NO;
 	do
 	{
-		NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
+		@autoreleasepool {
 		
 		// STEP 5
 		// Read data from the input stream into our input buffer.
@@ -309,8 +304,8 @@
 		NSInteger inputProcessed = strm.total_in - prevTotalIn;
 		NSInteger outputProcessed = strm.total_out - prevTotalOut;
 		
-		NSLogVerbose(@"CompressingLogFileManager: Total bytes uncompressed: %d", strm.total_in);
-		NSLogVerbose(@"CompressingLogFileManager: Total bytes compressed: %d", strm.total_out);
+		NSLogVerbose(@"CompressingLogFileManager: Total bytes uncompressed: %lu", (unsigned long)strm.total_in);
+		NSLogVerbose(@"CompressingLogFileManager: Total bytes compressed: %lu", (unsigned long)strm.total_out);
 		NSLogVerbose(@"CompressingLogFileManager: Compression ratio: %.1f%%",
 		             (1.0F - (float)(strm.total_out) / (float)(strm.total_in)) * 100);
 		
@@ -365,10 +360,10 @@
 		
 		done = ((flush == Z_FINISH) && (inputDataSize == 0));
 		
-		[innerPool release];
-		
 		// STEP 8
 		// Loop repeats until end of data (or unlikely error)
+		
+		} // end @autoreleasepool
 		
 	} while (!done && !error);
 	
@@ -397,12 +392,10 @@
 		{
 		#if GCD_MAYBE_AVAILABLE
 			
-			dispatch_block_t block = ^{
-				NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+			dispatch_async([DDLog loggingQueue], ^{ @autoreleasepool {
+				
 				[self compressionDidFail:logFile];
-				[pool release];
-			};
-			dispatch_async([DDLog loggingQueue], block);
+			}});
 			
 		#endif
 		}
@@ -446,12 +439,10 @@
 		{
 		#if GCD_MAYBE_AVAILABLE
 			
-			dispatch_block_t block = ^{
-				NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+			dispatch_async([DDLog loggingQueue], ^{ @autoreleasepool {
+				
 				[self compressionDidSucceed:compressedLogFile];
-				[pool release];
-			};
-			dispatch_async([DDLog loggingQueue], block);
+			}});
 			
 		#endif
 		}
@@ -468,8 +459,7 @@
 		}
 	}
 	
-	
-	[outerPool release];
+	} // end @autoreleasepool
 }
 				 
 @end

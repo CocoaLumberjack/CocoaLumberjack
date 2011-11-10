@@ -77,12 +77,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[_logsDirectory release];
-	[super dealloc];
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Configuration
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -109,13 +103,11 @@
 		{
 		#if GCD_MAYBE_AVAILABLE
 			
-			dispatch_async([DDLog loggingQueue], ^{
-				NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+			dispatch_async([DDLog loggingQueue], ^{ @autoreleasepool {
 				
 				[self deleteOldLogFiles];
 				
-				[pool drain];
-			});
+			}});
 			
 		#endif
 		}
@@ -322,7 +314,6 @@
 		DDLogFileInfo *logFileInfo = [[DDLogFileInfo alloc] initWithFilePath:filePath];
 		
 		[unsortedLogFileInfos addObject:logFileInfo];
-		[logFileInfo release];
 	}
 	
 	return unsortedLogFileInfos;
@@ -394,7 +385,7 @@
 	CFRelease(fullStr);
 	CFRelease(uuid);
 	
-	return [NSMakeCollectable(shortStr) autorelease];
+	return (__bridge_transfer NSString *)shortStr;
 }
 
 /**
@@ -452,12 +443,6 @@
 	return [NSString stringWithFormat:@"%@  %@", dateAndTime, logMessage->logMsg];
 }
 
-- (void)dealloc
-{
-	[dateFormatter release];
-	[super dealloc];
-}
-
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -472,7 +457,7 @@
 
 - (id)init
 {
-	DDLogFileManagerDefault *defaultLogFileManager = [[[DDLogFileManagerDefault alloc] init] autorelease];
+	DDLogFileManagerDefault *defaultLogFileManager = [[DDLogFileManagerDefault alloc] init];
 	
 	return [self initWithLogFileManager:defaultLogFileManager];
 }
@@ -484,7 +469,7 @@
 		maximumFileSize = DEFAULT_LOG_MAX_FILE_SIZE;
 		rollingFrequency = DEFAULT_LOG_ROLLING_FREQUENCY;
 		
-		logFileManager = [aLogFileManager retain];
+		logFileManager = aLogFileManager;
 		
 		formatter = [[DDLogFileFormatterDefault alloc] init];
 	}
@@ -493,19 +478,10 @@
 
 - (void)dealloc
 {
-	[formatter release];
-	[logFileManager release];
-	
-	[currentLogFileInfo release];
-	
 	[currentLogFileHandle synchronizeFile];
 	[currentLogFileHandle closeFile];
-	[currentLogFileHandle release];
 	
 	[rollingTimer invalidate];
-	[rollingTimer release];
-	
-	[super dealloc];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -562,7 +538,6 @@
 		OSMemoryBarrier();
 		
 		result = [[resultHolder objectAtIndex:0] unsignedLongLongValue];
-		[resultHolder release];
 		
 		return result;
 		
@@ -579,14 +554,12 @@
 	{
 	#if GCD_MAYBE_AVAILABLE
 		
-		dispatch_block_t block = ^{
-			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		dispatch_block_t block = ^{ @autoreleasepool {
 			
 			maximumFileSize = newMaximumFileSize;
 			[self maybeRollLogFileDueToSize];
 			
-			[pool drain];
-		};
+		}};
 		
 		if (dispatch_get_current_queue() == loggerQueue)
 			block();
@@ -668,7 +641,6 @@
 		OSMemoryBarrier();
 		
 		result = [[resultHolder objectAtIndex:0] doubleValue];
-		[resultHolder release];
 		
 		return result;
 		
@@ -685,14 +657,12 @@
 	{
 	#if GCD_MAYBE_AVAILABLE
 		
-		dispatch_block_t block = ^{
-			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		dispatch_block_t block = ^{ @autoreleasepool {
 			
 			rollingFrequency = newRollingFrequency;
 			[self maybeRollLogFileDueToAge:nil];
 			
-			[pool drain];
-		};
+		}};
 		
 		if (dispatch_get_current_queue() == loggerQueue)
 			block();
@@ -771,7 +741,6 @@
 	if (rollingTimer)
 	{
 		[rollingTimer invalidate];
-		[rollingTimer release];
 		rollingTimer = nil;
 	}
 	
@@ -792,11 +761,11 @@
 	NSLogVerbose(@"DDFileLogger: logFileCreationDate: %@", logFileCreationDate);
 	NSLogVerbose(@"DDFileLogger: logFileRollingDate : %@", logFileRollingDate);
 	
-	rollingTimer = [[NSTimer scheduledTimerWithTimeInterval:[logFileRollingDate timeIntervalSinceNow]
-	                                                 target:self
-	                                               selector:@selector(maybeRollLogFileDueToAge:)
-	                                               userInfo:nil
-	                                                repeats:NO] retain];
+	rollingTimer = [NSTimer scheduledTimerWithTimeInterval:[logFileRollingDate timeIntervalSinceNow]
+	                                                target:self
+	                                              selector:@selector(maybeRollLogFileDueToAge:)
+	                                              userInfo:nil
+	                                               repeats:NO];
 }
 
 - (void)rollLogFile
@@ -808,12 +777,10 @@
 	{
 	#if GCD_MAYBE_AVAILABLE
 		
-		dispatch_block_t block = ^{
-			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		dispatch_async([DDLog loggingQueue], ^{ @autoreleasepool {
+			
 			[self rollLogFileNow];
-			[pool drain];
-		};
-		dispatch_async([DDLog loggingQueue], block);
+		}});
 		
 	#endif
 	}
@@ -836,7 +803,6 @@
 	
 	[currentLogFileHandle synchronizeFile];
 	[currentLogFileHandle closeFile];
-	[currentLogFileHandle release];
 	currentLogFileHandle = nil;
 	
 	currentLogFileInfo.isArchived = YES;
@@ -846,7 +812,6 @@
 		[logFileManager didRollAndArchiveLogFile:(currentLogFileInfo.filePath)];
 	}
 	
-	[currentLogFileInfo release];
 	currentLogFileInfo = nil;
 }
 
@@ -926,7 +891,7 @@
 			{
 				NSLogVerbose(@"DDFileLogger: Resuming logging with file %@", mostRecentLogFileInfo.fileName);
 				
-				currentLogFileInfo = [mostRecentLogFileInfo retain];
+				currentLogFileInfo = mostRecentLogFileInfo;
 			}
 			else
 			{
@@ -959,7 +924,7 @@
 	{
 		NSString *logFilePath = [[self currentLogFileInfo] filePath];
 		
-		currentLogFileHandle = [[NSFileHandle fileHandleForWritingAtPath:logFilePath] retain];
+		currentLogFileHandle = [NSFileHandle fileHandleForWritingAtPath:logFilePath];
 		[currentLogFileHandle seekToEndOfFile];
 		
 		if (currentLogFileHandle)
@@ -1034,7 +999,7 @@
 
 + (id)logFileWithPath:(NSString *)aFilePath
 {
-	return [[[DDLogFileInfo alloc] initWithFilePath:aFilePath] autorelease];
+	return [[DDLogFileInfo alloc] initWithFilePath:aFilePath];
 }
 
 - (id)initWithFilePath:(NSString *)aFilePath
@@ -1046,19 +1011,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[filePath release];
-	[fileName release];
-	
-	[fileAttributes release];
-	
-	[creationDate release];
-	[modificationDate release];
-	
-	[super dealloc];
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Standard Info
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1067,7 +1019,7 @@
 {
 	if (fileAttributes == nil)
 	{
-		fileAttributes = [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil] retain];
+		fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
 	}
 	return fileAttributes;
 }
@@ -1076,7 +1028,7 @@
 {
 	if (fileName == nil)
 	{
-		fileName = [[filePath lastPathComponent] retain];
+		fileName = [filePath lastPathComponent];
 	}
 	return fileName;
 }
@@ -1085,7 +1037,7 @@
 {
 	if (modificationDate == nil)
 	{
-		modificationDate = [[[self fileAttributes] objectForKey:NSFileModificationDate] retain];
+		modificationDate = [[self fileAttributes] objectForKey:NSFileModificationDate];
 	}
 	
 	return modificationDate;
@@ -1118,7 +1070,7 @@
 			
 			NSTimeInterval ti = seconds + (nanos / 1000000000.0);
 			
-			creationDate = [[NSDate dateWithTimeIntervalSince1970:ti] retain];
+			creationDate = [NSDate dateWithTimeIntervalSince1970:ti];
 		}
 		else
 		{
@@ -1127,7 +1079,7 @@
 		
 	#else
 		
-		creationDate = [[[self fileAttributes] objectForKey:NSFileCreationDate] retain];
+		creationDate = [[self fileAttributes] objectForKey:NSFileCreationDate];
 		
 	#endif
 		
@@ -1216,16 +1168,9 @@
 
 - (void)reset
 {
-	[fileName release];
 	fileName = nil;
-	
-	[fileAttributes release];
 	fileAttributes = nil;
-	
-	[creationDate release];
 	creationDate = nil;
-	
-	[modificationDate release];
 	modificationDate = nil;
 }
 
@@ -1248,9 +1193,7 @@
 			NSLogError(@"DDLogFileInfo: Error renaming file (%@): %@", self.fileName, error);
 		}
 		
-		[filePath release];
-		filePath = [newFilePath retain];
-		
+		filePath = newFilePath;
 		[self reset];
 	}
 }

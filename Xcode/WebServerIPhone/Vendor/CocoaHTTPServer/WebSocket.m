@@ -7,7 +7,7 @@
 
 // Log levels: off, error, warn, info, verbose
 // Other flags : trace
-static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
+static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 
 #define TIMEOUT_NONE          -1
 #define TIMEOUT_REQUEST_BODY  10
@@ -106,7 +106,6 @@ static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
 #pragma mark Setup and Teardown
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@synthesize delegate;
 @synthesize websocketQueue;
 
 - (id)initWithRequest:(HTTPMessage *)aRequest socket:(GCDAsyncSocket *)socket
@@ -206,7 +205,7 @@ static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
 			[self didOpen];
 		}
 		
-		[pool release];
+		[pool drain];
 	});
 }
 
@@ -224,7 +223,7 @@ static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
 		
 		[asyncSocket disconnect];
 		
-		[pool release];
+		[pool drain];
 	});
 }
 
@@ -264,6 +263,8 @@ static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
 	HTTPLogTrace();
 	
 	NSString *location;
+	
+	NSString *scheme = [asyncSocket isSecure] ? @"wss" : @"ws";
 	NSString *host = [request headerField:@"Host"];
 	
 	NSString *requestUri = [[request url] relativeString];
@@ -272,11 +273,11 @@ static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
 	{
 		NSString *port = [NSString stringWithFormat:@"%hu", [asyncSocket localPort]];
 		
-		location = [NSString stringWithFormat:@"ws://localhost:%@%@", port, requestUri];
+		location = [NSString stringWithFormat:@"%@://localhost:%@%@", scheme, port, requestUri];
 	}
 	else
 	{
-		location = [NSString stringWithFormat:@"ws://%@%@", host, requestUri];
+		location = [NSString stringWithFormat:@"%@://%@%@", scheme, host, requestUri];
 	}
 	
 	return location;
@@ -358,6 +359,8 @@ static const int httpLogLevel = LOG_LEVEL_WARN; // | LOG_FLAG_TRACE;
 	[wsResponse setHeaderField:locationField value:locationValue];
 	
 	NSData *responseHeaders = [wsResponse messageData];
+	
+	[wsResponse release];
 	
 	if (HTTP_LOG_VERBOSE)
 	{

@@ -35,20 +35,12 @@
 	{
 		context   = [[NSNumber alloc] initWithInt:logMessage->logContext];
 		level     = [[NSNumber alloc] initWithInt:logMessage->logFlag];
-		message   = [logMessage->logMsg retain];
-		timestamp = [logMessage->timestamp retain];
+		message   = logMessage->logMsg;
+		timestamp = logMessage->timestamp;
 	}
 	return self;
 }
 
-- (void)dealloc
-{
-	[context release];
-	[level release];
-	[message release];
-	[timestamp release];
-	[super dealloc];
-}
 
 @end
 
@@ -73,12 +65,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-	[logDirectory release];
-	[pendingLogEntries release];
-    [super dealloc];
-}
 
 - (void)validateLogDirectory
 {
@@ -91,7 +77,6 @@
 		{
 			NSLog(@"%@: %@ - logDirectory(%@) is a file!", [self class], THIS_METHOD, logDirectory);
 			
-			[logDirectory release];
 			logDirectory = nil;
 		}
 	}
@@ -108,7 +93,6 @@
 			NSLog(@"%@: %@ - Unable to create logDirectory(%@) due to error: %@",
 				  [self class], THIS_METHOD, logDirectory, error);
 			
-			[logDirectory release];
 			logDirectory = nil;
 		}
 	}
@@ -129,7 +113,6 @@
 	{
 		NSLog(@"%@: Failed opening database!", [self class]);
 		
-		[database release];
 		database = nil;
 		
 		return;
@@ -145,7 +128,6 @@
 		NSLog(@"%@: Error creating table: code(%d): %@",
 			  [self class], [database lastErrorCode], [database lastErrorMessage]);
 		
-		[database release];
 		database = nil;
 	}
 	
@@ -157,7 +139,6 @@
 		NSLog(@"%@: Error creating index: code(%d): %@",
 			  [self class], [database lastErrorCode], [database lastErrorMessage]);
 		
-		[database release];
 		database = nil;
 	}
 	
@@ -192,7 +173,6 @@
 	FMDBLogEntry *logEntry = [[FMDBLogEntry alloc] initWithLogMessage:logMessage];
 	
 	[pendingLogEntries addObject:logEntry];
-	[logEntry release];
 	
 	// Return YES if an item was added to the buffer.
 	// Return NO if the logMessage was ignored.
