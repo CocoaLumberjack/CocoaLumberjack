@@ -394,12 +394,12 @@
 	CFUUIDRef uuid = CFUUIDCreate(NULL);
 	
 	CFStringRef fullStr = CFUUIDCreateString(NULL, uuid);
-	CFStringRef shortStr = CFStringCreateWithSubstring(NULL, fullStr, CFRangeMake(0, 6));
+	NSString *result = (__bridge_transfer NSString *)CFStringCreateWithSubstring(NULL, fullStr, CFRangeMake(0, 6));
 	
 	CFRelease(fullStr);
 	CFRelease(uuid);
 	
-	return (__bridge_transfer NSString *)shortStr;
+	return result;
 }
 
 /**
