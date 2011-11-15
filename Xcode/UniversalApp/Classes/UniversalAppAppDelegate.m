@@ -24,21 +24,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [DDLog addLogger:[DDASLLogger sharedInstance]];
+	[DDLog addLogger:[DDASLLogger sharedInstance]];
 	[DDLog addLogger:[DDTTYLogger sharedInstance]];
-	
-	if (IS_GCD_AVAILABLE)
-		NSLog(@"GCD is available! :)");
-	else
-		NSLog(@"GCD NOT available :(");
     
-    // Override point for customization after application launch.
-
-    // Add the view controller's view to the window and display.
-    [window addSubview:viewController.view];
-    [window makeKeyAndVisible];
-
-    return YES;
+	// Override point for customization after application launch.
+	
+	// Add the view controller's view to the window and display.
+	[window addSubview:viewController.view];
+	[window makeKeyAndVisible];
+	
+	return YES;
 }
 
 

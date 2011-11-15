@@ -388,28 +388,10 @@
 		
 		// Report failure to class via logging thread/queue
 		
-		if (IS_GCD_AVAILABLE)
-		{
-		#if GCD_MAYBE_AVAILABLE
+		dispatch_async([DDLog loggingQueue], ^{ @autoreleasepool {
 			
-			dispatch_async([DDLog loggingQueue], ^{ @autoreleasepool {
-				
-				[self compressionDidFail:logFile];
-			}});
-			
-		#endif
-		}
-		else
-		{
-		#if GCD_MAYBE_UNAVAILABLE
-			
-			[self performSelector:@selector(compressionDidFail:)
-			             onThread:[DDLog loggingThread]
-			           withObject:logFile
-			        waitUntilDone:NO];
-			
-		#endif
-		}
+			[self compressionDidFail:logFile];
+		}});
 	}
 	else
 	{
@@ -435,28 +417,10 @@
 		
 		// Report success to class via logging thread/queue
 		
-		if (IS_GCD_AVAILABLE)
-		{
-		#if GCD_MAYBE_AVAILABLE
+		dispatch_async([DDLog loggingQueue], ^{ @autoreleasepool {
 			
-			dispatch_async([DDLog loggingQueue], ^{ @autoreleasepool {
-				
-				[self compressionDidSucceed:compressedLogFile];
-			}});
-			
-		#endif
-		}
-		else
-		{
-		#if GCD_MAYBE_UNAVAILABLE
-			
-			[self performSelector:@selector(compressionDidSucceed:)
-			             onThread:[DDLog loggingThread]
-			           withObject:compressedLogFile
-			        waitUntilDone:NO];
-			
-		#endif
-		}
+			[self compressionDidSucceed:compressedLogFile];
+		}});
 	}
 	
 	} // end @autoreleasepool
