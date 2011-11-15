@@ -316,19 +316,7 @@ static DDFileLogger *fileLogger = nil;
 
 + (void)startPerformanceTests
 {
-#if GCD_MAYBE_AVAILABLE
-	NSLog(@"GCD_MAYBE_AVAILABLE");
-#endif
-#if GCD_MAYBE_UNAVAILABLE
-	NSLog(@"GCD_MAYBE_UNAVAILABLE");
-#endif
-	
-	if (IS_GCD_AVAILABLE)
-		NSLog(@"GCD Available");
-	else
-		NSLog(@"GCD Not Available");
-	
-	BOOL runBase   = NO;
+	BOOL runBase   = YES;
 	BOOL runSuite1 = YES;
 	BOOL runSuite2 = YES;
 	BOOL runSuite3 = YES;

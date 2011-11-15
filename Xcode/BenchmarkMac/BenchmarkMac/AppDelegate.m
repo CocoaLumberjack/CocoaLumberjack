@@ -1,10 +1,10 @@
-#import "BenchmarkMacAppDelegate.h"
+#import "AppDelegate.h"
 #import "PerformanceTesting.h"
 
 
-@implementation BenchmarkMacAppDelegate
+@implementation AppDelegate
 
-@synthesize window;
+@synthesize window = _window;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
