@@ -15,18 +15,14 @@
 #warning This file must be compiled with ARC. Either turn on ARC for the project or use -fobjc-arc flag.
 #endif
 
-#define DEFAULT_QUEUE_LENGTH  6
-#define     MIN_QUEUE_LENGTH  4
-#define     MAX_QUEUE_LENGTH 35
-
 
 @implementation DispatchQueueLogFormatter
 {
 	OSSpinLock lock;
 	NSDateFormatter *dateFormatter;
 	
-	int _queueLength;                     // _prefix == Only access from within spinlock
-	BOOL _rightAlign;                     // _prefix == Only access from within spinlock
+	NSUInteger _minQueueLength;           // _prefix == Only access via atomic property
+	NSUInteger _maxQueueLength;           // _prefix == Only access via atomic property
 	NSMutableDictionary *_replacements;   // _prefix == Only access from within spinlock
 }
 
@@ -38,8 +34,8 @@
 		[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
 		[dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss:SSS"];
 		
-		_queueLength = DEFAULT_QUEUE_LENGTH;
-		_rightAlign = NO;
+		_minQueueLength = 0;
+		_maxQueueLength = 0;
 		_replacements = [[NSMutableDictionary alloc] init];
 		
 		// Set default replacements:
@@ -54,57 +50,8 @@
 #pragma mark Configuration
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (int)queueLength
-{
-	int result = 0;
-	
-	OSSpinLockLock(&lock);
-	{
-		result = _queueLength;
-	}
-	OSSpinLockUnlock(&lock);
-	
-	return result;
-}
-
-- (void)setQueueLength:(int)newQueueLength
-{
-	OSSpinLockLock(&lock);
-	{
-		if (newQueueLength > MAX_QUEUE_LENGTH) {
-			_queueLength = MAX_QUEUE_LENGTH;
-		}
-		else if (newQueueLength < MIN_QUEUE_LENGTH) {
-			_queueLength = MIN_QUEUE_LENGTH;
-		}
-		else {
-			_queueLength = newQueueLength;
-		}
-	}
-	OSSpinLockUnlock(&lock);
-}
-
-- (BOOL)rightAlign
-{
-	BOOL result = NO;
-	
-	OSSpinLockLock(&lock);
-	{
-		result = _rightAlign;
-	}
-	OSSpinLockUnlock(&lock);
-	
-	return result;
-}
-
-- (void)setRightAlign:(BOOL)newRightAlign
-{
-	OSSpinLockLock(&lock);
-	{
-		_rightAlign = newRightAlign;
-	}
-	OSSpinLockUnlock(&lock);
-}
+@synthesize minQueueLength = _minQueueLength;
+@synthesize maxQueueLength = _maxQueueLength;
 
 - (NSString *)replacementStringForQueueLabel:(NSString *)longLabel
 {
@@ -139,73 +86,103 @@
 {
 	// As per the DDLogFormatter contract, this method is always invoked on the same thread/dispatch_queue
 	
-	int queueLength = 0;
-	BOOL rightAlign = NO;
-	
 	NSString *timestamp = [dateFormatter stringFromDate:(logMessage->timestamp)];
-	NSString *label;
+	
+	NSUInteger minQueueLength = self.minQueueLength;
+	NSUInteger maxQueueLength = self.maxQueueLength;
+	
+	// Get the name of the queue, thread, or machID (whichever we are to use).
+	
+	NSString *threadLabel = nil;
+	
+	BOOL useQueueLabel = YES;
+	BOOL useThreadName = NO;
 	
 	if (logMessage->queueLabel)
 	{
-		NSString *longLabel = [NSString stringWithUTF8String:logMessage->queueLabel];
+		// If you manually create a thread, it's dispatch_queue will have one of the thread names below.
+		// Since all such threads have the same name, we'd prefer to use the threadName or the machThreadID.
 		
-		NSString *shortLabel = nil;
+		char *names[] = { "com.apple.root.low-overcommit-priority",
+		                  "com.apple.root.default-overcommit-priority",
+		                  "com.apple.root.high-overcommit-priority"     };
 		
-		OSSpinLockLock(&lock);
+		int i;
+		for (i = 0; i < sizeof(names); i++)
 		{
-			queueLength = _queueLength;
-			rightAlign = _rightAlign;
-			
-			shortLabel = [_replacements objectForKey:longLabel];
+			if (strcmp(logMessage->queueLabel, names[1]) == 0)
+			{
+				useQueueLabel = NO;
+				useThreadName = [logMessage->threadName length] > 0;
+				break;
+			}
 		}
-		OSSpinLockUnlock(&lock);
-		
-		if (shortLabel)
-			label = shortLabel;
-		else
-			label = longLabel;
 	}
 	else
 	{
-		label = [NSString stringWithFormat:@"%x", logMessage->machThreadID];
+		useQueueLabel = NO;
+		useThreadName = [logMessage->threadName length] > 0;
+	}
+	
+	if (useQueueLabel || useThreadName)
+	{
+		NSString *fullLabel;
+		NSString *abrvLabel;
+		
+		if (useQueueLabel)
+			fullLabel = [NSString stringWithUTF8String:logMessage->queueLabel];
+		else
+			fullLabel = logMessage->threadName;
 		
 		OSSpinLockLock(&lock);
 		{
-			queueLength = _queueLength;
-			rightAlign = _rightAlign;
+			abrvLabel = [_replacements objectForKey:fullLabel];
 		}
 		OSSpinLockUnlock(&lock);
-	}
-	
-	
-	int labelLength = (int)[label length];
-	
-	if (labelLength == queueLength)
-	{
-		return [NSString stringWithFormat:@"%@ [%@] %@", timestamp, label, logMessage->logMsg];
-	}
-	else if (labelLength > queueLength)
-	{
-		NSString *subLabel;
-		if (rightAlign)
-			subLabel = [label substringFromIndex:(labelLength - queueLength)];
+		
+		if (abrvLabel)
+			threadLabel = abrvLabel;
 		else
-			subLabel = [label substringToIndex:queueLength];
+			threadLabel = fullLabel;
+	}
+	else
+	{
+		threadLabel = [NSString stringWithFormat:@"%x", logMessage->machThreadID];
+	}
+	
+	// Now use the thread label in the output
+	
+	NSUInteger labelLength = [threadLabel length];
+	
+	// labelLength > maxQueueLength : truncate
+	// labelLength < minQueueLength : padding
+	//                              : exact
+	
+	if ((maxQueueLength > 0) && (labelLength > maxQueueLength))
+	{
+		// Truncate
+		
+		NSString *subLabel = [threadLabel substringToIndex:maxQueueLength];
 		
 		return [NSString stringWithFormat:@"%@ [%@] %@", timestamp, subLabel, logMessage->logMsg];
 	}
-	else
+	else if (labelLength < minQueueLength)
 	{
-		int numSpaces = queueLength - labelLength;
+		// Padding
+		
+		NSUInteger numSpaces = maxQueueLength - labelLength;
 		
 		char spaces[numSpaces + 1];
 		memset(spaces, ' ', numSpaces);
 		spaces[numSpaces] = '\0';
 		
-		if (rightAlign)
-			return [NSString stringWithFormat:@"%@ [%s%@] %@", timestamp, spaces, label, logMessage->logMsg];
-		else
-			return [NSString stringWithFormat:@"%@ [%@%s] %@", timestamp, label, spaces, logMessage->logMsg];
+		return [NSString stringWithFormat:@"%@ [%@%s] %@", timestamp, threadLabel, spaces, logMessage->logMsg];
+	}
+	else
+	{
+		// Exact
+		
+		return [NSString stringWithFormat:@"%@ [%@] %@", timestamp, threadLabel, logMessage->logMsg];
 	}
 }
 

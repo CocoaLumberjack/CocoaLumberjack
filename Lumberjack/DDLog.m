@@ -786,6 +786,8 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 			strncpy(queueLabel, label, labelLength);
 			queueLabel[labelLength] = 0;
 		}
+		
+		threadName = [[NSThread currentThread] name];
 	}
 	return self;
 }
@@ -802,7 +804,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 
 - (NSString *)fileName
 {
-	if (fileName == nil)
+	if (fileName == nil && file != NULL)
 	{
 		fileName = ExtractFileNameWithoutExtension(file, NO);
 	}

@@ -23,8 +23,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 		// Log statements *AFTER* DispatchQueueLogFormatter
 		
 		DispatchQueueLogFormatter *formatter = [[DispatchQueueLogFormatter alloc] init];
-		formatter.queueLength = 17;
-		formatter.rightAlign = NO;
+		formatter.minQueueLength = 4;
+		formatter.maxQueueLength = 0;
 		
 		[formatter setReplacementString:@"main"              forQueueLabel:@"com.apple.main-thread"];
 		[formatter setReplacementString:@"global-background" forQueueLabel:@"com.apple.root.background-priority"];
@@ -85,6 +85,22 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 		dispatch_async(lgq, blockD);
 		dispatch_async(dgq, blockD);
 		dispatch_async(hgq, blockD);
+	}
+	
+	[NSThread detachNewThreadSelector:@selector(backgroundThread:) toTarget:self withObject:nil];
+}
+
+- (void)backgroundThread:(id)ignore
+{
+	@autoreleasepool {
+		
+		[[NSThread currentThread] setName:@"MyBgThread"];
+		
+		int i;
+		for (i = 0; i < 5; i++)
+		{
+			DDLogVerbose(@"Some log statement");
+		}
 	}
 }
 

@@ -35,62 +35,60 @@
  * 2011-10-17 20:32:31.112 AppName[19954:5207] Message from my_serial_dispatch_queue
  * 2011-10-17 20:32:31.113 AppName[19954:2c55] Message from my_serial_dispatch_queue
  * 
- * This formatter allows you to replace the standard detail info with the dispatch_queue name.
+ * This formatter allows you to replace the standard [box:info] with the dispatch_queue name.
  * For example:
  * 
  * 2011-10-17 20:32:31.111 AppName[img-scaling] Message from my_serial_dispatch_queue
  * 2011-10-17 20:32:31.112 AppName[img-scaling] Message from my_serial_dispatch_queue
  * 2011-10-17 20:32:31.113 AppName[img-scaling] Message from my_serial_dispatch_queue
+ * 
+ * If the dispatch_queue doesn't have a set name, then it falls back to the thread name.
+ * If the current thread doesn't have a set name, then it falls back to the mach_thread_id in hex (like normal).
+ * 
+ * Note: If manually creating your own background threads (via NSThread/alloc/init or NSThread/detachNeThread),
+ * you can use [[NSThread currentThread] setName:(NSString *)].
 **/
 @interface DispatchQueueLogFormatter : NSObject <DDLogFormatter>
 
 /**
  * Standard init method.
- * 
- * @see queueLength
- * @see rightAlign
+ * Configure using properties as desired.
 **/
 - (id)init;
 
 /**
- * The queueLength is simply the number of characters that will be inside the [detail box].
- * For example:
+ * The minQueueLength restricts the minimum size of the [detail box].
+ * If the minQueueLength is set to 0, there is no restriction.
  * 
- * Say a dispatch_queue has a label of "diskIO".
- * If the queueLength is 4: [disk]
- * If the queueLength is 5: [diskI]
- * If the queueLength is 6: [diskIO]
- * If the queueLength is 7: [diskIO ]
- * If the queueLength is 8: [diskIO  ]
+ * For example, say a dispatch_queue has a label of "diskIO":
  * 
- * The default queueLength is 6.
+ * If the minQueueLength is 0: [diskIO]
+ * If the minQueueLength is 4: [diskIO]
+ * If the minQueueLength is 5: [diskIO]
+ * If the minQueueLength is 6: [diskIO]
+ * If the minQueueLength is 7: [diskIO ]
+ * If the minQueueLength is 8: [diskIO  ]
  * 
- * The output will also be influenced by the rightAlign property.
+ * The default minQueueLength is 0 (no minimum, so [detail box] won't be padded).
 **/
-@property (assign) int queueLength;
+@property (assign) NSUInteger minQueueLength;
 
 /**
- * The rightAlign property allows you to specify whether the detail info should be
- * left or right aligned within the [detail box].
- * 
+ * The maxQueueLength restricts the number of characters that will be inside the [detail box].
+ * If the maxQueueLength is 0, there is no restriction.
  * For example:
- * Say a dispatch_queue has a label of "diskIO".
  * 
- * If leftAlign and queueLength is 4: [disk]
- * If leftAlign and queueLength is 5: [diskI]
- * If leftAlign and queueLength is 6: [diskIO]
- * If leftAlign and queueLength is 7: [diskIO ]
- * If leftAlign and queueLength is 8: [diskIO  ]
+ * Say a dispatch_queue has a label of "diskIO". (standardizedQueueLength==NO)
+ * If the maxQueueLength is 0: [diskIO]
+ * If the maxQueueLength is 4: [disk]
+ * If the maxQueueLength is 5: [diskI]
+ * If the maxQueueLength is 6: [diskIO]
+ * If the maxQueueLength is 7: [diskIO]
+ * If the maxQueueLength is 8: [diskIO]
  * 
- * If rightAlign and queueLength is 4: [skIO]
- * If rightAlign and queueLength is 5: [iskIO]
- * If rightAlign and queueLength is 6: [diskIO]
- * If rightAlign and queueLength is 7: [ diskIO]
- * If rightAlign and queueLength is 8: [  diskIO]
- * 
- * The default is leftAlignment.
+ * The default maxQueueLength is 0 (no maximum, so [thread box] queue names won't be truncated).
 **/
-@property (assign) BOOL rightAlign;
+@property (assign) NSUInteger maxQueueLength;
 
 /**
  * Sometimes queue labels have long names like "com.apple.main-queue",
