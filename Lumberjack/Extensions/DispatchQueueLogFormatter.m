@@ -170,7 +170,7 @@
 	{
 		// Padding
 		
-		NSUInteger numSpaces = maxQueueLength - labelLength;
+		NSUInteger numSpaces = minQueueLength - labelLength;
 		
 		char spaces[numSpaces + 1];
 		memset(spaces, ' ', numSpaces);
