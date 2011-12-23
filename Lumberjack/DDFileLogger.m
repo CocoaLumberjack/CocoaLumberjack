@@ -686,6 +686,13 @@
 	}
 	
 	currentLogFileInfo = nil;
+	
+	if (rollingTimer)
+	{
+		dispatch_source_cancel(rollingTimer);
+		dispatch_release(rollingTimer);
+		rollingTimer = NULL;
+	}
 }
 
 - (void)maybeRollLogFileDueToAge
@@ -835,6 +842,13 @@
 		
 		[self maybeRollLogFileDueToSize];
 	}
+}
+
+- (void)willRemoveLogger
+{
+	// If you override me be sure to invoke [super willRemoveLogger];
+	
+	[self rollLogFileNow];
 }
 
 - (NSString *)loggerName
