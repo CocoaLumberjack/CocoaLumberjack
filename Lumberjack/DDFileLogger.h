@@ -146,7 +146,7 @@
 	DDLogFileInfo *currentLogFileInfo;
 	NSFileHandle *currentLogFileHandle;
 	
-	NSTimer *rollingTimer;
+	dispatch_source_t rollingTimer;
 	
 	unsigned long long maximumFileSize;
 	NSTimeInterval rollingFrequency;

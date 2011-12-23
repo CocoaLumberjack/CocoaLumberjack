@@ -43,7 +43,7 @@
 @interface DDFileLogger (PrivateAPI)
 
 - (void)rollLogFileNow;
-- (void)maybeRollLogFileDueToAge:(NSTimer *)aTimer;
+- (void)maybeRollLogFileDueToAge;
 - (void)maybeRollLogFileDueToSize;
 
 @end
@@ -437,10 +437,6 @@
 
 @implementation DDFileLogger
 
-@synthesize maximumFileSize;
-@synthesize rollingFrequency;
-@synthesize logFileManager;
-
 - (id)init
 {
 	DDLogFileManagerDefault *defaultLogFileManager = [[DDLogFileManagerDefault alloc] init];
@@ -467,31 +463,44 @@
 	[currentLogFileHandle synchronizeFile];
 	[currentLogFileHandle closeFile];
 	
-	[rollingTimer invalidate];
+	if (rollingTimer)
+	{
+		dispatch_source_cancel(rollingTimer);
+		dispatch_release(rollingTimer);
+		rollingTimer = NULL;
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Configuration
+#pragma mark Properties
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@synthesize logFileManager;
 
 - (unsigned long long)maximumFileSize
 {
 	// The design of this method is taken from the DDAbstractLogger implementation.
-	// For documentation please refer to the DDAbstractLogger implementation.
+	// For extensive documentation please refer to the DDAbstractLogger implementation.
 	
 	// Note: The internal implementation should access the maximumFileSize variable directly,
 	// but if we forget to do this, then this method should at least work properly.
-		
-	if (dispatch_get_current_queue() == loggerQueue)
+	
+	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	if (currentQueue == loggerQueue)
 	{
 		return maximumFileSize;
 	}
 	else
 	{
+		dispatch_queue_t loggingQueue = [DDLog loggingQueue];
+		NSAssert(currentQueue != loggingQueue, @"Core architecture requirement failure");
+		
 		__block unsigned long long result;
 		
-		dispatch_sync([DDLog loggingQueue], ^{
-			result = maximumFileSize;
+		dispatch_sync(loggingQueue, ^{
+			dispatch_sync(loggerQueue, ^{
+				result = maximumFileSize;
+			});
 		});
 		
 		return result;
@@ -510,10 +519,20 @@
 		
 	}};
 	
-	if (dispatch_get_current_queue() == loggerQueue)
+	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	if (currentQueue == loggerQueue)
+	{
 		block();
+	}
 	else
-		dispatch_async([DDLog loggingQueue], block);
+	{
+		dispatch_queue_t loggingQueue = [DDLog loggingQueue];
+		NSAssert(currentQueue != loggingQueue, @"Core architecture requirement failure");
+		
+		dispatch_async(loggingQueue, ^{
+			dispatch_async(loggerQueue, block);
+		});
+	}
 }
 
 - (NSTimeInterval)rollingFrequency
@@ -523,17 +542,23 @@
 	
 	// Note: The internal implementation should access the rollingFrequency variable directly,
 	// but if we forget to do this, then this method should at least work properly.
-		
-	if (dispatch_get_current_queue() == loggerQueue)
+	
+	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	if (currentQueue == loggerQueue)
 	{
 		return rollingFrequency;
 	}
 	else
 	{
+		dispatch_queue_t loggingQueue = [DDLog loggingQueue];
+		NSAssert(currentQueue != loggingQueue, @"Core architecture requirement failure");
+		
 		__block NSTimeInterval result;
 		
-		dispatch_sync([DDLog loggingQueue], ^{
-			result = rollingFrequency;
+		dispatch_sync(loggingQueue, ^{
+			dispatch_sync(loggerQueue, ^{
+				result = rollingFrequency;
+			});
 		});
 		
 		return result;
@@ -548,14 +573,24 @@
 	dispatch_block_t block = ^{ @autoreleasepool {
 		
 		rollingFrequency = newRollingFrequency;
-		[self maybeRollLogFileDueToAge:nil];
+		[self maybeRollLogFileDueToAge];
 		
 	}};
 	
-	if (dispatch_get_current_queue() == loggerQueue)
+	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	if (currentQueue == loggerQueue)
+	{
 		block();
+	}
 	else
-		dispatch_async([DDLog loggingQueue], block);
+	{
+		dispatch_queue_t loggingQueue = [DDLog loggingQueue];
+		NSAssert(currentQueue != loggingQueue, @"Core architecture requirement failure");
+		
+		dispatch_async(loggingQueue, ^{
+			dispatch_async(loggerQueue, block);
+		});
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -566,8 +601,9 @@
 {
 	if (rollingTimer)
 	{
-		[rollingTimer invalidate];
-		rollingTimer = nil;
+		dispatch_source_cancel(rollingTimer);
+		dispatch_release(rollingTimer);
+		rollingTimer = NULL;
 	}
 	
 	if (currentLogFileInfo == nil)
@@ -587,27 +623,56 @@
 	NSLogVerbose(@"DDFileLogger: logFileCreationDate: %@", logFileCreationDate);
 	NSLogVerbose(@"DDFileLogger: logFileRollingDate : %@", logFileRollingDate);
 	
-	rollingTimer = [NSTimer scheduledTimerWithTimeInterval:[logFileRollingDate timeIntervalSinceNow]
-	                                                target:self
-	                                              selector:@selector(maybeRollLogFileDueToAge:)
-	                                              userInfo:nil
-	                                               repeats:NO];
+	rollingTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, loggerQueue);
+	
+	dispatch_source_set_event_handler(rollingTimer, ^{ @autoreleasepool {
+		
+		[self maybeRollLogFileDueToAge];
+		
+	}});
+	
+	uint64_t delay = [logFileRollingDate timeIntervalSinceNow] * NSEC_PER_SEC;
+	dispatch_time_t fireTime = dispatch_time(DISPATCH_TIME_NOW, delay);
+	
+	dispatch_source_set_timer(rollingTimer, fireTime, DISPATCH_TIME_FOREVER, 1.0);
+	dispatch_resume(rollingTimer);
 }
 
 - (void)rollLogFile
 {
 	// This method is public.
 	// We need to execute the rolling on our logging thread/queue.
+	// 
+	// The design of this method is taken from the DDAbstractLogger implementation.
+	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_async([DDLog loggingQueue], ^{ @autoreleasepool {
+	dispatch_block_t block = ^{ @autoreleasepool {
 		
 		[self rollLogFileNow];
-	}});
+	}};
+	
+	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	if (currentQueue == loggerQueue)
+	{
+		block();
+	}
+	else
+	{
+		dispatch_queue_t loggingQueue = [DDLog loggingQueue];
+		NSAssert(currentQueue != loggingQueue, @"Core architecture requirement failure");
+		
+		dispatch_async(loggingQueue, ^{
+			dispatch_async(loggerQueue, block);
+		});
+	}
 }
 
 - (void)rollLogFileNow
 {
 	NSLogVerbose(@"DDFileLogger: rollLogFileNow");
+	
+	
+	if (currentLogFileHandle == nil) return;
 	
 	[currentLogFileHandle synchronizeFile];
 	[currentLogFileHandle closeFile];
@@ -623,7 +688,7 @@
 	currentLogFileInfo = nil;
 }
 
-- (void)maybeRollLogFileDueToAge:(NSTimer *)aTimer
+- (void)maybeRollLogFileDueToAge
 {
 	if (currentLogFileInfo.age >= rollingFrequency)
 	{

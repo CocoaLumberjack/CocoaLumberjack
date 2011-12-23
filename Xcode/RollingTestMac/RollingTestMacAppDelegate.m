@@ -22,11 +22,25 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	
 	[DDLog addLogger:fileLogger];
 	
+	// Test auto log file roll
+	
 	[NSTimer scheduledTimerWithTimeInterval:1.0
 									 target:self
 								   selector:@selector(fillLogFiles:)
 								   userInfo:nil
 									repeats:YES];
+	
+	// Test forced log file roll
+	
+//	DDLogInfo(@"Log file 1 : Log message 1");
+//	DDLogInfo(@"Log file 1 : Log message 2");
+//	DDLogInfo(@"Log file 1 : Log message 3");
+//	
+//	[fileLogger rollLogFile];
+//	
+//	DDLogInfo(@"Log file 2 : Log message 1");
+//	DDLogInfo(@"Log file 2 : Log message 2");
+//	DDLogInfo(@"Log file 2 : Log message 3");
 }
 
 - (void)fillLogFiles:(NSTimer *)aTimer
