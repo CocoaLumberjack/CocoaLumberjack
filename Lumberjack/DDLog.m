@@ -262,6 +262,7 @@ static unsigned int numProcessors;
        file:(const char *)file
    function:(const char *)function
        line:(int)line
+        tag:(id)tag
      format:(NSString *)format, ...
 {
 	va_list args;
@@ -276,7 +277,8 @@ static unsigned int numProcessors;
 		                                                        context:context
 		                                                           file:file
 		                                                       function:function
-		                                                           line:line];
+		                                                           line:line
+		                                                            tag:tag];
 		
 		[self queueLogMessage:logMessage asynchronously:asynchronous];
 		
@@ -763,6 +765,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
                 file:(const char *)aFile
             function:(const char *)aFunction
                 line:(int)line
+                 tag:(id)aTag
 {
 	if ((self = [super init]))
 	{
@@ -773,6 +776,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 		file       = aFile;
 		function   = aFunction;
 		lineNumber = line;
+		tag        = aTag;
 		
 		timestamp = [[NSDate alloc] init];
 		

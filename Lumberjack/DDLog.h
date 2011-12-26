@@ -50,6 +50,7 @@
         file:__FILE__                                             \
     function:fnct                                                 \
         line:__LINE__                                             \
+         tag:nil                                                  \
       format:(frmt), ##__VA_ARGS__]
 
 
@@ -238,6 +239,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
        file:(const char *)file
    function:(const char *)function
        line:(int)line
+        tag:(id)tag
      format:(NSString *)format, ...;
 
 /**
@@ -422,6 +424,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 	mach_port_t machThreadID;
     char *queueLabel;
 	NSString *threadName;
+	id tag; // For 3rd party extensions to the framework, where flags and contexts aren't enough.
 
 // The private variables below are only calculated if needed.
 // You should use the public methods to access this information.
@@ -446,7 +449,8 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
              context:(int)logContext
                 file:(const char *)file
             function:(const char *)function
-                line:(int)line;
+                line:(int)line
+                 tag:(id)tag;
 
 /**
  * Returns the threadID as it appears in NSLog.
