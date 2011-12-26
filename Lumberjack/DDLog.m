@@ -934,12 +934,12 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 	}
 	else
 	{
-		dispatch_queue_t loggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != loggingQueue, @"Core architecture requirement failure");
+		dispatch_queue_t _loggingQueue = [DDLog loggingQueue];
+		NSAssert(currentQueue != _loggingQueue, @"Core architecture requirement failure");
 		
 		__block id <DDLogFormatter> result;
 		
-		dispatch_sync(loggingQueue, ^{
+		dispatch_sync(_loggingQueue, ^{
 			dispatch_sync(loggerQueue, ^{
 				result = formatter;
 			});
@@ -966,10 +966,10 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 	}
 	else
 	{
-		dispatch_queue_t loggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != loggingQueue, @"Core architecture requirement failure");
+		dispatch_queue_t _loggingQueue = [DDLog loggingQueue];
+		NSAssert(currentQueue != _loggingQueue, @"Core architecture requirement failure");
 		
-		dispatch_async(loggingQueue, ^{
+		dispatch_async(_loggingQueue, ^{
 			dispatch_async(loggerQueue, block);
 		});
 	}
