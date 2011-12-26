@@ -18,6 +18,10 @@
 #endif
 
 @interface LoggingContextSet : NSObject
+{
+	OSSpinLock lock;
+	NSMutableSet *set;
+}
 
 - (void)addToSet:(int)loggingContext;
 - (void)removeFromSet:(int)loggingContext;
@@ -33,9 +37,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation ContextWhitelistFilterLogFormatter
-{
-	LoggingContextSet *contextSet;
-}
 
 - (id)init
 {
@@ -82,9 +83,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation ContextBlacklistFilterLogFormatter
-{
-	LoggingContextSet *contextSet;
-}
 
 - (id)init
 {
@@ -131,10 +129,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation LoggingContextSet
-{
-	OSSpinLock lock;
-	NSMutableSet *set;
-}
 
 - (id)init
 {
