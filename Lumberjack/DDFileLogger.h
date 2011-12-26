@@ -61,7 +61,7 @@
 
 // Public properties
 
-@property (readwrite, assign) NSUInteger maximumNumberOfLogFiles;
+@property (readwrite, assign, atomic) NSUInteger maximumNumberOfLogFiles;
 
 // Public methods
 
@@ -180,9 +180,9 @@
 //   Allows you to retrieve the list of log files,
 //   and configure the maximum number of archived log files to keep.
 
-@property (readwrite, assign) unsigned long long maximumFileSize;
+@property (readwrite, assign, atomic) unsigned long long maximumFileSize;
 
-@property (readwrite, assign) NSTimeInterval rollingFrequency;
+@property (readwrite, assign, atomic) NSTimeInterval rollingFrequency;
 
 @property (strong, nonatomic, readonly) id <DDLogFileManager> logFileManager;
 
