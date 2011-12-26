@@ -633,10 +633,10 @@
 		
 	}});
 	
-	uint64_t delay = [logFileRollingDate timeIntervalSinceNow] * NSEC_PER_SEC;
-	dispatch_time_t fireTime = dispatch_time(DISPATCH_TIME_NOW, delay);
+	uint64_t delay = (uint64_t)([logFileRollingDate timeIntervalSinceNow] * NSEC_PER_SEC);
+	dispatch_time_t fireTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)delay);
 	
-	dispatch_source_set_timer(rollingTimer, fireTime, DISPATCH_TIME_FOREVER, 1.0);
+	dispatch_source_set_timer(rollingTimer, fireTime, DISPATCH_TIME_FOREVER, 1);
 	dispatch_resume(rollingTimer);
 }
 

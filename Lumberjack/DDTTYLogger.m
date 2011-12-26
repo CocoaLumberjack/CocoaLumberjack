@@ -57,7 +57,7 @@ static DDTTYLogger *sharedInstance;
 	
 	if ((self = [super init]))
 	{
-		isaTTY = isatty(STDERR_FILENO);
+		isaTTY = (BOOL)isatty(STDERR_FILENO);
 		
 		if (isaTTY)
 		{
@@ -164,7 +164,7 @@ static DDTTYLogger *sharedInstance;
 			v[5].iov_len = 1;
 			
 			v[6].iov_base = tidCStr;
-			v[6].iov_len = MIN((size_t)8, tidLen); // snprintf doesn't return what you might think
+			v[6].iov_len = MIN((size_t)8, (size_t)tidLen); // snprintf doesn't return what you might think
 			
 			v[7].iov_base = "] ";
 			v[7].iov_len = 2;

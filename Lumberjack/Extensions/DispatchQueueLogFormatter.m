@@ -101,7 +101,7 @@
 		                  "com.apple.root.default-overcommit-priority",
 		                  "com.apple.root.high-overcommit-priority"     };
 		
-		int i;
+		unsigned long i;
 		for (i = 0; i < sizeof(names); i++)
 		{
 			if (strcmp(logMessage->queueLabel, names[1]) == 0)
