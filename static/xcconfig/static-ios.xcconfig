@@ -1,0 +1,2 @@
+#include "static.xcconfig"
+#include "IOS.xcconfig"

@@ -1,0 +1,14 @@
+// architectures
+ARCHS = arm7
+VALID_ARCHS = armv7
+SDKROOT = iphoneos
+SUPPORTED_PLATFORMS = iphonesimulator iphoneos
+
+
+// build options
+GCC_VERSION = com.apple.compilers.llvm.clang.1_0
+
+
+// deployment
+IPHONEOS_DEPLOYMENT_TARGET = 4.2
+TARGETED_DEVICE_FAMILY = 1,2
