@@ -368,8 +368,8 @@
 	CFUUIDRef uuid = CFUUIDCreate(NULL);
 	
 	CFStringRef fullStr = CFUUIDCreateString(NULL, uuid);
-	NSString *result = (__bridge_transfer NSString *)CFStringCreateWithSubstring(NULL, fullStr, CFRangeMake(0, 6));
-	
+	NSString* result = CFBridgingRelease(CFStringCreateWithSubstring(NULL, fullStr, CFRangeMake(0, 6)));
+    
 	CFRelease(fullStr);
 	CFRelease(uuid);
 	
