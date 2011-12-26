@@ -313,6 +313,8 @@ static unsigned int numProcessors;
 	//      users had VoiceOver enabled [...]. I was able to work around it by searching the
 	//      result of class_copyMethodList() instead of calling class_getClassMethod()"
 	
+	BOOL result = NO;
+	
 	unsigned int methodCount, i;
 	Method *methodList = class_copyMethodList(object_getClass(class), &methodCount);
 	
@@ -336,14 +338,15 @@ static unsigned int numProcessors;
 			
 			if (getterFound && setterFound)
 			{
-				return YES;
+				result = YES;
+				break;
 			}
 		}
 		
 		free(methodList);
 	}
 	
-	return NO;
+	return result;
 	
 #else
 	
