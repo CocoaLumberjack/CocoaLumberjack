@@ -1,4 +1,5 @@
 #import "DDAbstractDatabaseLogger.h"
+#import <math.h>
 
 /**
  * Welcome to Cocoa Lumberjack!
@@ -273,7 +274,7 @@
 {
 	dispatch_block_t block = ^{
 	
-		if (saveInterval != interval)
+        if (!islessgreater(saveInterval, interval))
 		{
 			saveInterval = interval;
 			
@@ -353,7 +354,7 @@
 {
 	dispatch_block_t block = ^{
 		
-		if (maxAge != interval)
+        if (!islessgreater(maxAge, interval))
 		{
 			NSTimeInterval oldMaxAge = maxAge;
 			NSTimeInterval newMaxAge = interval;
@@ -439,7 +440,7 @@
 {
 	dispatch_block_t block = ^{
 		
-		if (deleteInterval != interval)
+        if (!islessgreater(deleteInterval, interval))
 		{
 			deleteInterval = interval;
 			
