@@ -56,6 +56,7 @@
 // The DDLogFileInfo class is documented below, and provides a handy wrapper that
 // gives you easy access to various file attributes such as the creation date or the file size.
 
+DDLOG_CLASS_EXPORT
 @protocol DDLogFileManager <NSObject>
 @required
 
@@ -104,8 +105,10 @@
 // 
 // Archived log files are automatically deleted according to the maximumNumberOfLogFiles property.
 
+DDLOG_CLASS_EXPORT
 @interface DDLogFileManagerDefault : NSObject <DDLogFileManager>
 {
+@private
 	NSUInteger maximumNumberOfLogFiles;
 	NSString *_logsDirectory;
 }
@@ -128,8 +131,10 @@
 // In addition to the convenience of having a logical default formatter,
 // it will also provide a template that makes it easy for developers to copy and change.
 
+DDLOG_CLASS_EXPORT
 @interface DDLogFileFormatterDefault : NSObject <DDLogFormatter>
 {
+@private
 	NSDateFormatter *dateFormatter;
 }
 
@@ -139,8 +144,10 @@
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+DDLOG_CLASS_EXPORT
 @interface DDFileLogger : DDAbstractLogger <DDLogger>
 {
+@private
 	__strong id <DDLogFileManager> logFileManager;
 	
 	DDLogFileInfo *currentLogFileInfo;
@@ -215,8 +222,10 @@
 // If you absolutely must get updated values,
 // you can invoke the reset method which will clear the cache.
 
+DDLOG_CLASS_EXPORT
 @interface DDLogFileInfo : NSObject
 {
+@private
 	__strong NSString *filePath;
 	__strong NSString *fileName;
 	

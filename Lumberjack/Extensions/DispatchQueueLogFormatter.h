@@ -48,8 +48,11 @@
  * Note: If manually creating your own background threads (via NSThread/alloc/init or NSThread/detachNeThread),
  * you can use [[NSThread currentThread] setName:(NSString *)].
 **/
+
+DDLOG_CLASS_EXPORT
 @interface DispatchQueueLogFormatter : NSObject <DDLogFormatter>
 {
+@private
 	OSSpinLock lock;
 	NSDateFormatter *dateFormatter;
 	

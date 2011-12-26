@@ -19,6 +19,7 @@
  * and override the methods in the implementation file that are prefixed with "db_".
 **/
 
+DDLOG_CLASS_EXPORT
 @interface DDAbstractDatabaseLogger : DDAbstractLogger {
 @protected
 	NSUInteger saveThreshold;

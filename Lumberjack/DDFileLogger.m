@@ -15,6 +15,7 @@
  * https://github.com/robbiehanson/CocoaLumberjack/wiki/GettingStarted
 **/
 
+
 #if (TARGET_OS_EMBEDDED || TARGET_OS_IPHONE) && !__has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #elif !defined(__OBJC_GC__) && !__has_feature(objc_arc)

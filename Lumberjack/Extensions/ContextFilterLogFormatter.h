@@ -31,8 +31,11 @@
  * For example, logically separate parts of your app each have a different logging context.
  * Also 3rd party frameworks that make use of Lumberjack generally use their own dedicated logging context.
 **/
+
+DDLOG_CLASS_EXPORT
 @interface ContextWhitelistFilterLogFormatter : NSObject <DDLogFormatter>
 {
+@private
 	LoggingContextSet *contextSet;
 }
 
@@ -54,8 +57,11 @@
 /**
  * This class provides a log formatter that filters log statements from a logging context on the blacklist.
 **/
+
+DDLOG_CLASS_EXPORT
 @interface ContextBlacklistFilterLogFormatter : NSObject <DDLogFormatter>
 {
+@private
 	LoggingContextSet *contextSet;
 }
 
