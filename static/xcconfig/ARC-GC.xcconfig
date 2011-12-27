@@ -1,0 +1,15 @@
+// enable ARC globally, falling back to GC for x86
+
+
+// language
+CLANG_ENABLE_OBJC_ARC                               = YES
+CLANG_ENABLE_OBJC_ARC[sdk=iphoneos*][arch=*]        = YES
+CLANG_ENABLE_OBJC_ARC[sdk=iphonesimulator*][arch=*] = YES
+CLANG_ENABLE_OBJC_ARC[sdk=macosx*][arch=x86_64]     = YES
+CLANG_ENABLE_OBJC_ARC[sdk=macosx*][arch=i386]       = NO
+GCC_ENABLE_OBJC_GC                                  = unsupported
+GCC_ENABLE_OBJC_GC[sdk=iphoneos*][arch=*]           = unsupported
+GCC_ENABLE_OBJC_GC[sdk=iphonesimulator*][arch=*]    = unsupported
+GCC_ENABLE_OBJC_GC[sdk=macosx*][arch=x86_64]        = unsupported
+GCC_ENABLE_OBJC_GC[sdk=macosx*][arch=i386]          = required
+

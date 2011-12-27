@@ -13,8 +13,10 @@
  * https://github.com/robbiehanson/CocoaLumberjack/wiki/GettingStarted
 **/
 
-#if ! __has_feature(objc_arc)
+#if (TARGET_OS_EMBEDDED || TARGET_OS_IPHONE) && !__has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
+#elif !defined(__OBJC_GC__) && !__has_feature(objc_arc)
+#warning This file must be compiled with ARC where available, GC otherwise.
 #endif
 
 
@@ -55,7 +57,7 @@ static DDTTYLogger *sharedInstance;
 	
 	if ((self = [super init]))
 	{
-		isaTTY = isatty(STDERR_FILENO);
+		isaTTY = (BOOL)isatty(STDERR_FILENO);
 		
 		if (isaTTY)
 		{
@@ -162,7 +164,7 @@ static DDTTYLogger *sharedInstance;
 			v[5].iov_len = 1;
 			
 			v[6].iov_base = tidCStr;
-			v[6].iov_len = MIN((size_t)8, tidLen); // snprintf doesn't return what you might think
+			v[6].iov_len = MIN((size_t)8, (size_t)tidLen); // snprintf doesn't return what you might think
 			
 			v[7].iov_base = "] ";
 			v[7].iov_len = 2;

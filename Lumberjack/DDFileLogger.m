@@ -15,8 +15,11 @@
  * https://github.com/robbiehanson/CocoaLumberjack/wiki/GettingStarted
 **/
 
-#if ! __has_feature(objc_arc)
+
+#if (TARGET_OS_EMBEDDED || TARGET_OS_IPHONE) && !__has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
+#elif !defined(__OBJC_GC__) && !__has_feature(objc_arc)
+#warning This file must be compiled with ARC where available, GC otherwise.
 #endif
 
 // We probably shouldn't be using DDLog() statements within the DDLog implementation.
@@ -366,8 +369,8 @@
 	CFUUIDRef uuid = CFUUIDCreate(NULL);
 	
 	CFStringRef fullStr = CFUUIDCreateString(NULL, uuid);
-	NSString *result = (__bridge_transfer NSString *)CFStringCreateWithSubstring(NULL, fullStr, CFRangeMake(0, 6));
-	
+	NSString* result = CFBridgingRelease(CFStringCreateWithSubstring(NULL, fullStr, CFRangeMake(0, 6)));
+    
 	CFRelease(fullStr);
 	CFRelease(uuid);
 	
@@ -631,10 +634,10 @@
 		
 	}});
 	
-	uint64_t delay = [logFileRollingDate timeIntervalSinceNow] * NSEC_PER_SEC;
-	dispatch_time_t fireTime = dispatch_time(DISPATCH_TIME_NOW, delay);
+	uint64_t delay = (uint64_t)([logFileRollingDate timeIntervalSinceNow] * NSEC_PER_SEC);
+	dispatch_time_t fireTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)delay);
 	
-	dispatch_source_set_timer(rollingTimer, fireTime, DISPATCH_TIME_FOREVER, 1.0);
+	dispatch_source_set_timer(rollingTimer, fireTime, DISPATCH_TIME_FOREVER, 1);
 	dispatch_resume(rollingTimer);
 }
 

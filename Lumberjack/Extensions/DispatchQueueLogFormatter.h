@@ -48,7 +48,18 @@
  * Note: If manually creating your own background threads (via NSThread/alloc/init or NSThread/detachNeThread),
  * you can use [[NSThread currentThread] setName:(NSString *)].
 **/
+
+DDLOG_CLASS_EXPORT
 @interface DispatchQueueLogFormatter : NSObject <DDLogFormatter>
+{
+@private
+	OSSpinLock lock;
+	NSDateFormatter *dateFormatter;
+	
+	NSUInteger _minQueueLength;           // _prefix == Only access via atomic property
+	NSUInteger _maxQueueLength;           // _prefix == Only access via atomic property
+	NSMutableDictionary *_replacements;   // _prefix == Only access from within spinlock
+}
 
 /**
  * Standard init method.
@@ -71,7 +82,7 @@
  * 
  * The default minQueueLength is 0 (no minimum, so [detail box] won't be padded).
 **/
-@property (assign) NSUInteger minQueueLength;
+@property (assign, atomic) NSUInteger minQueueLength;
 
 /**
  * The maxQueueLength restricts the number of characters that will be inside the [detail box].
@@ -88,7 +99,7 @@
  * 
  * The default maxQueueLength is 0 (no maximum, so [thread box] queue names won't be truncated).
 **/
-@property (assign) NSUInteger maxQueueLength;
+@property (assign, atomic) NSUInteger maxQueueLength;
 
 /**
  * Sometimes queue labels have long names like "com.apple.main-queue",

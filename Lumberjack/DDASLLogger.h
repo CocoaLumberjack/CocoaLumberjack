@@ -26,8 +26,10 @@
  * you may choose to use a file logger and a tty logger.
 **/
 
+DDLOG_CLASS_EXPORT
 @interface DDASLLogger : DDAbstractLogger <DDLogger>
 {
+@private
 	aslclient client;
 }
 

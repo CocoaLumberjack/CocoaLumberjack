@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A556BFA14A93CBA00402308 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7DC4ED14154E4900601B40 /* Cocoa.framework */; };
+		6A556C1114A93D4900402308 /* Lions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC51B14154E8E00601B40 /* Lions.m */; };
+		6A556C1214A93D5100402308 /* Tigers.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC51E14154FDA00601B40 /* Tigers.m */; };
+		6A556C1314A93D5600402308 /* RegisteredLoggingTestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC50014154E4900601B40 /* RegisteredLoggingTestAppDelegate.m */; };
+		6A556C1414A93D6100402308 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC7DC50214154E4900601B40 /* MainMenu.xib */; };
+		6A556C1514A93D6900402308 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DC7DC4F614154E4900601B40 /* InfoPlist.strings */; };
+		6A556C1614A93D6E00402308 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC4F914154E4900601B40 /* main.m */; };
+		6A556C1714A93D7400402308 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DC7DC4FC14154E4900601B40 /* Credits.rtf */; };
+		6A556C2614A93DD900402308 /* libCocoaLumberjackMac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A556C2314A93DBC00402308 /* libCocoaLumberjackMac.a */; };
 		DC7DC4EE14154E4900601B40 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7DC4ED14154E4900601B40 /* Cocoa.framework */; };
 		DC7DC4F814154E4900601B40 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DC7DC4F614154E4900601B40 /* InfoPlist.strings */; };
 		DC7DC4FA14154E4900601B40 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC4F914154E4900601B40 /* main.m */; };
@@ -25,7 +34,33 @@
 		DCA67D5F146B4ADA003411EE /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = DCA67D57146B4ADA003411EE /* README.txt */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		6A556C2014A93DBC00402308 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6A556C1814A93DBC00402308 /* CocoaLumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6A1628CA14A88E7000530FFA;
+			remoteInfo = CocoaLumberjackIOS;
+		};
+		6A556C2214A93DBC00402308 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6A556C1814A93DBC00402308 /* CocoaLumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6A1628D914A88EAB00530FFA;
+			remoteInfo = CocoaLumberjackMac;
+		};
+		6A556C2414A93DC900402308 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6A556C1814A93DBC00402308 /* CocoaLumberjack.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 6A1628D814A88EAB00530FFA;
+			remoteInfo = CocoaLumberjackMac;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		6A556BF814A93CBA00402308 /* RegisteredLoggingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RegisteredLoggingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A556C1814A93DBC00402308 /* CocoaLumberjack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CocoaLumberjack.xcodeproj; path = ../../../../static/CocoaLumberjack/CocoaLumberjack.xcodeproj; sourceTree = "<group>"; };
 		DC7DC4E914154E4900601B40 /* RegisteredLoggingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RegisteredLoggingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC7DC4ED14154E4900601B40 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DC7DC4F014154E4900601B40 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -61,6 +96,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6A556BF514A93CBA00402308 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A556C2614A93DD900402308 /* libCocoaLumberjackMac.a in Frameworks */,
+				6A556BFA14A93CBA00402308 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC7DC4E614154E4900601B40 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -72,6 +116,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A556C1914A93DBC00402308 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6A556C2114A93DBC00402308 /* libCocoaLumberjackIOS.a */,
+				6A556C2314A93DBC00402308 /* libCocoaLumberjackMac.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		DC7DC4DE14154E4900601B40 = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				DC7DC4E914154E4900601B40 /* RegisteredLoggingTest.app */,
+				6A556BF814A93CBA00402308 /* RegisteredLoggingTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -93,6 +147,7 @@
 		DC7DC4EC14154E4900601B40 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6A556C1814A93DBC00402308 /* CocoaLumberjack.xcodeproj */,
 				DC7DC4ED14154E4900601B40 /* Cocoa.framework */,
 				DC7DC4EF14154E4900601B40 /* Other Frameworks */,
 			);
@@ -170,6 +225,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		6A556BF714A93CBA00402308 /* RegisteredLoggingTestWithStatic32bitAndGC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A556C0F14A93CBA00402308 /* Build configuration list for PBXNativeTarget "RegisteredLoggingTestWithStatic32bitAndGC" */;
+			buildPhases = (
+				6A556BF414A93CBA00402308 /* Sources */,
+				6A556BF514A93CBA00402308 /* Frameworks */,
+				6A556BF614A93CBA00402308 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6A556C2514A93DC900402308 /* PBXTargetDependency */,
+			);
+			name = RegisteredLoggingTestWithStatic32bitAndGC;
+			productName = RegisteredLoggingTestWithStatic;
+			productReference = 6A556BF814A93CBA00402308 /* RegisteredLoggingTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 		DC7DC4E814154E4900601B40 /* RegisteredLoggingTest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC7DC50714154E4900601B40 /* Build configuration list for PBXNativeTarget "RegisteredLoggingTest" */;
@@ -205,14 +278,48 @@
 			mainGroup = DC7DC4DE14154E4900601B40;
 			productRefGroup = DC7DC4EA14154E4900601B40 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 6A556C1914A93DBC00402308 /* Products */;
+					ProjectRef = 6A556C1814A93DBC00402308 /* CocoaLumberjack.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				DC7DC4E814154E4900601B40 /* RegisteredLoggingTest */,
+				6A556BF714A93CBA00402308 /* RegisteredLoggingTestWithStatic32bitAndGC */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		6A556C2114A93DBC00402308 /* libCocoaLumberjackIOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCocoaLumberjackIOS.a;
+			remoteRef = 6A556C2014A93DBC00402308 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		6A556C2314A93DBC00402308 /* libCocoaLumberjackMac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCocoaLumberjackMac.a;
+			remoteRef = 6A556C2214A93DBC00402308 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
+		6A556BF614A93CBA00402308 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A556C1414A93D6100402308 /* MainMenu.xib in Resources */,
+				6A556C1514A93D6900402308 /* InfoPlist.strings in Resources */,
+				6A556C1714A93D7400402308 /* Credits.rtf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC7DC4E714154E4900601B40 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -227,6 +334,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6A556BF414A93CBA00402308 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A556C1114A93D4900402308 /* Lions.m in Sources */,
+				6A556C1214A93D5100402308 /* Tigers.m in Sources */,
+				6A556C1314A93D5600402308 /* RegisteredLoggingTestAppDelegate.m in Sources */,
+				6A556C1614A93D6E00402308 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC7DC4E514154E4900601B40 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -246,6 +364,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6A556C2514A93DC900402308 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaLumberjackMac;
+			targetProxy = 6A556C2414A93DC900402308 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		DC7DC4F614154E4900601B40 /* InfoPlist.strings */ = {
@@ -275,6 +401,38 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		6A556C0D14A93CBA00402308 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				"CLANG_ENABLE_OBJC_ARC[arch=i386]" = NO;
+				GCC_ENABLE_OBJC_GC = required;
+				"GCC_ENABLE_OBJC_GC[arch=i386]" = required;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RegisteredLoggingTest/RegisteredLoggingTest-Prefix.pch";
+				INFOPLIST_FILE = "RegisteredLoggingTest/RegisteredLoggingTest-Info.plist";
+				PRODUCT_NAME = RegisteredLoggingTest;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		6A556C0E14A93CBA00402308 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				"CLANG_ENABLE_OBJC_ARC[arch=i386]" = NO;
+				GCC_ENABLE_OBJC_GC = required;
+				"GCC_ENABLE_OBJC_GC[arch=i386]" = required;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RegisteredLoggingTest/RegisteredLoggingTest-Prefix.pch";
+				INFOPLIST_FILE = "RegisteredLoggingTest/RegisteredLoggingTest-Info.plist";
+				PRODUCT_NAME = RegisteredLoggingTest;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		DC7DC50514154E4900601B40 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -347,6 +505,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6A556C0F14A93CBA00402308 /* Build configuration list for PBXNativeTarget "RegisteredLoggingTestWithStatic32bitAndGC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A556C0D14A93CBA00402308 /* Debug */,
+				6A556C0E14A93CBA00402308 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		DC7DC4E314154E4900601B40 /* Build configuration list for PBXProject "RegisteredLoggingTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

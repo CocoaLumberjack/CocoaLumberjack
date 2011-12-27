@@ -1,0 +1,19 @@
+#include "Common.xcconfig"
+
+
+// deployment
+COPY_PHASE_STRIP = NO
+STRIP_INSTALLED_PRODUCT = NO
+
+
+// code generation
+GCC_OPTIMIZATION_LEVEL = 0
+GCC_GENERATE_DEBUGGING_SYMBOLS = YES
+
+
+// language
+OTHER_CFLAGS = $(COMMON_CFLAGS) -fcatch-undefined-behavior -ftrapv -fverbose-asm
+
+
+// preprocessing
+GCC_PREPROCESSOR_DEFINITIONS = $(COMMON_GCC_PREPROCESSOR_DEFINITIONS) DEBUG DEBUG_$(USER)

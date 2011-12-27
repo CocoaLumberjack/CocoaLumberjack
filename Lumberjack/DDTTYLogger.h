@@ -26,8 +26,11 @@
  * you may choose to use only a file logger and a tty logger.
 **/
 
+DDLOG_CLASS_EXPORT
 @interface DDTTYLogger : DDAbstractLogger <DDLogger>
 {
+@private
+
 	BOOL isaTTY;
 	
 	NSDateFormatter *dateFormatter;

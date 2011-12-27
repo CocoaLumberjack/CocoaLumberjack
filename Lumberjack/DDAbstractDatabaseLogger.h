@@ -19,6 +19,7 @@
  * and override the methods in the implementation file that are prefixed with "db_".
 **/
 
+DDLOG_CLASS_EXPORT
 @interface DDAbstractDatabaseLogger : DDAbstractLogger {
 @protected
 	NSUInteger saveThreshold;
@@ -56,8 +57,8 @@
  * The default saveThreshold is 500.
  * The default saveInterval is 60 seconds.
 **/
-@property (assign, readwrite) NSUInteger saveThreshold;
-@property (assign, readwrite) NSTimeInterval saveInterval;
+@property (assign, readwrite, atomic) NSUInteger saveThreshold;
+@property (assign, readwrite, atomic) NSTimeInterval saveInterval;
 
 /**
  * It is likely you don't want the log entries to persist forever.
@@ -85,9 +86,9 @@
  * The default deleteInterval is 5 minutes.
  * The default deleteOnEverySave is NO.
 **/
-@property (assign, readwrite) NSTimeInterval maxAge;
-@property (assign, readwrite) NSTimeInterval deleteInterval;
-@property (assign, readwrite) BOOL deleteOnEverySave;
+@property (assign, readwrite, atomic) NSTimeInterval maxAge;
+@property (assign, readwrite, atomic) NSTimeInterval deleteInterval;
+@property (assign, readwrite, atomic) BOOL deleteOnEverySave;
 
 /**
  * Forces a save of any pending log entries (flushes log entries to disk).

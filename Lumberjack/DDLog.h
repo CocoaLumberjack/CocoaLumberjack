@@ -38,6 +38,24 @@
 @protocol DDLogger;
 @protocol DDLogFormatter;
 
+
+#if defined(__cplusplus)
+#   define DDLOG_EXTERN extern "C"
+#else
+#   define DDLOG_EXTERN extern
+#endif
+
+#define DDLOG_VISIBLE       __attribute__ ((visibility("default")))
+#define DDLOG_USED          __attribute__ ((used))
+
+#if defined(DDLOG_LIBRARY_TARGET)
+#define DDLOG_EXPORT        DDLOG_VISIBLE DDLOG_USED DDLOG_EXTERN
+#define DDLOG_CLASS_EXPORT  DDLOG_VISIBLE
+#else
+#define DDLOG_EXPORT
+#define DDLOG_CLASS_EXPORT
+#endif
+
 /**
  * Define our big multiline macros so all the other macros will be easy to read.
 **/
@@ -196,7 +214,7 @@
  * For example: DDLogWarn(@"%@: Unable to find thingy", THIS_FILE) -> @"MyViewController: Unable to find thingy"
 **/
 
-NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
+DDLOG_EXPORT NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 
 #define THIS_FILE (ExtractFileNameWithoutExtension(__FILE__, NO))
 
@@ -216,6 +234,8 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+DDLOG_CLASS_EXPORT
 @interface DDLog : NSObject
 
 /**
@@ -283,6 +303,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+DDLOG_CLASS_EXPORT
 @protocol DDLogger <NSObject>
 @required
 
@@ -345,6 +366,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+DDLOG_CLASS_EXPORT
 @protocol DDLogFormatter <NSObject>
 @required
 
@@ -368,6 +390,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+DDLOG_CLASS_EXPORT
 @protocol DDRegisteredDynamicLogging
 
 /**
@@ -406,6 +429,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * If you write custom loggers or formatters, you will be dealing with objects of this class.
 **/
 
+DDLOG_CLASS_EXPORT
 @interface DDLogMessage : NSObject
 {
 
@@ -492,10 +516,11 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * and they can ACCESS THE FORMATTER VARIABLE DIRECTLY from within their logMessage method!
 **/
 
+DDLOG_CLASS_EXPORT
 @interface DDAbstractLogger : NSObject <DDLogger>
 {
+@protected
 	id <DDLogFormatter> formatter;
-	
 	dispatch_queue_t loggerQueue;
 }
 
