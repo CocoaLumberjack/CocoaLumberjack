@@ -1,5 +1,4 @@
 #import "DispatchQueueLogFormatter.h"
-#import <libkern/OSAtomic.h>
 
 /**
  * Welcome to Cocoa Lumberjack!
@@ -17,14 +16,6 @@
 
 
 @implementation DispatchQueueLogFormatter
-{
-	OSSpinLock lock;
-	NSDateFormatter *dateFormatter;
-	
-	NSUInteger _minQueueLength;           // _prefix == Only access via atomic property
-	NSUInteger _maxQueueLength;           // _prefix == Only access via atomic property
-	NSMutableDictionary *_replacements;   // _prefix == Only access from within spinlock
-}
 
 - (id)init
 {
@@ -82,18 +73,16 @@
 #pragma mark DDLogFormatter
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (NSString *)formatLogMessage:(DDLogMessage *)logMessage
+- (NSString *)queueThreadLabelForLogMessage:(DDLogMessage *)logMessage
 {
 	// As per the DDLogFormatter contract, this method is always invoked on the same thread/dispatch_queue
-	
-	NSString *timestamp = [dateFormatter stringFromDate:(logMessage->timestamp)];
 	
 	NSUInteger minQueueLength = self.minQueueLength;
 	NSUInteger maxQueueLength = self.maxQueueLength;
 	
 	// Get the name of the queue, thread, or machID (whichever we are to use).
 	
-	NSString *threadLabel = nil;
+	NSString *queueThreadLabel = nil;
 	
 	BOOL useQueueLabel = YES;
 	BOOL useThreadName = NO;
@@ -103,14 +92,19 @@
 		// If you manually create a thread, it's dispatch_queue will have one of the thread names below.
 		// Since all such threads have the same name, we'd prefer to use the threadName or the machThreadID.
 		
-		char *names[] = { "com.apple.root.low-overcommit-priority",
+		char *names[] = { "com.apple.root.low-priority",
+		                  "com.apple.root.default-priority",
+		                  "com.apple.root.high-priority",
+		                  "com.apple.root.low-overcommit-priority",
 		                  "com.apple.root.default-overcommit-priority",
 		                  "com.apple.root.high-overcommit-priority"     };
 		
+		int length = sizeof(names) / sizeof(char *);
+		
 		int i;
-		for (i = 0; i < sizeof(names); i++)
+		for (i = 0; i < length; i++)
 		{
-			if (strcmp(logMessage->queueLabel, names[1]) == 0)
+			if (strcmp(logMessage->queueLabel, names[i]) == 0)
 			{
 				useQueueLabel = NO;
 				useThreadName = [logMessage->threadName length] > 0;
@@ -141,18 +135,18 @@
 		OSSpinLockUnlock(&lock);
 		
 		if (abrvLabel)
-			threadLabel = abrvLabel;
+			queueThreadLabel = abrvLabel;
 		else
-			threadLabel = fullLabel;
+			queueThreadLabel = fullLabel;
 	}
 	else
 	{
-		threadLabel = [NSString stringWithFormat:@"%x", logMessage->machThreadID];
+		queueThreadLabel = [NSString stringWithFormat:@"%x", logMessage->machThreadID];
 	}
 	
 	// Now use the thread label in the output
 	
-	NSUInteger labelLength = [threadLabel length];
+	NSUInteger labelLength = [queueThreadLabel length];
 	
 	// labelLength > maxQueueLength : truncate
 	// labelLength < minQueueLength : padding
@@ -162,9 +156,7 @@
 	{
 		// Truncate
 		
-		NSString *subLabel = [threadLabel substringToIndex:maxQueueLength];
-		
-		return [NSString stringWithFormat:@"%@ [%@] %@", timestamp, subLabel, logMessage->logMsg];
+		return [queueThreadLabel substringToIndex:maxQueueLength];
 	}
 	else if (labelLength < minQueueLength)
 	{
@@ -176,14 +168,22 @@
 		memset(spaces, ' ', numSpaces);
 		spaces[numSpaces] = '\0';
 		
-		return [NSString stringWithFormat:@"%@ [%@%s] %@", timestamp, threadLabel, spaces, logMessage->logMsg];
+		return [NSString stringWithFormat:@"%@%s", queueThreadLabel, spaces];
 	}
 	else
 	{
 		// Exact
 		
-		return [NSString stringWithFormat:@"%@ [%@] %@", timestamp, threadLabel, logMessage->logMsg];
+		return queueThreadLabel;
 	}
+}
+
+- (NSString *)formatLogMessage:(DDLogMessage *)logMessage
+{
+	NSString *timestamp = [dateFormatter stringFromDate:(logMessage->timestamp)];
+	NSString *queueThreadLabel = [self queueThreadLabelForLogMessage:logMessage];
+	
+	return [NSString stringWithFormat:@"%@ [%@] %@", timestamp, queueThreadLabel, logMessage->logMsg];
 }
 
 @end
