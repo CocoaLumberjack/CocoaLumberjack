@@ -1,6 +1,5 @@
 #import "DynamicLogging.h"
 #import "PerformanceTesting.h"
-#import "DDLog.h"
 
 #define FILENAME @"DynamicLogging"
 

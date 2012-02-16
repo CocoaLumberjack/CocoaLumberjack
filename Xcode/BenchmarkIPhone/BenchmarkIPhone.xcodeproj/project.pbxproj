@@ -15,15 +15,29 @@
 		2899E5220DE3E06400AC0155 /* BenchmarkIPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* BenchmarkIPhoneViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* BenchmarkIPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* BenchmarkIPhoneViewController.m */; };
-		DC74770A12029D4300A55869 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC74770712029D4300A55869 /* DDASLLogger.m */; };
-		DC74770B12029D4300A55869 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC74770912029D4300A55869 /* DDTTYLogger.m */; };
-		DC987BCD11928FA50020FF52 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987BC711928FA50020FF52 /* DDFileLogger.m */; };
-		DC987BCE11928FA50020FF52 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987BC911928FA50020FF52 /* DDLog.m */; };
+		53E7CC61144D67ED002A014D /* libLumberjackLogger.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E7CC57144D67DE002A014D /* libLumberjackLogger.a */; };
 		DC987BDF11928FD60020FF52 /* BaseNSLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987BD811928FD60020FF52 /* BaseNSLogging.m */; };
 		DC987BE011928FD60020FF52 /* DynamicLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987BDA11928FD60020FF52 /* DynamicLogging.m */; };
 		DC987BE111928FD60020FF52 /* PerformanceTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987BDC11928FD60020FF52 /* PerformanceTesting.m */; };
 		DC987BE211928FD60020FF52 /* StaticLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987BDE11928FD60020FF52 /* StaticLogging.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		53E7CC56144D67DE002A014D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53E7CC4F144D67DE002A014D /* LumberjackLogger.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D /* libLumberjackLogger.a */;
+			remoteInfo = LumberjackLogger;
+		};
+		53E7CC62144D67FB002A014D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53E7CC4F144D67DE002A014D /* LumberjackLogger.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D /* LumberjackLogger */;
+			remoteInfo = LumberjackLogger;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -38,15 +52,8 @@
 		28D7ACF70DDB3853001CB0EB /* BenchmarkIPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BenchmarkIPhoneViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* BenchmarkIPhone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BenchmarkIPhone_Prefix.pch; sourceTree = "<group>"; };
+		53E7CC4F144D67DE002A014D /* LumberjackLogger.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LumberjackLogger.xcodeproj; path = ../../Lumberjack/LumberjackLogger/LumberjackLogger.xcodeproj; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* BenchmarkIPhone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BenchmarkIPhone-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		DC74770612029D4300A55869 /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDASLLogger.h; path = ../../Lumberjack/DDASLLogger.h; sourceTree = SOURCE_ROOT; };
-		DC74770712029D4300A55869 /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDASLLogger.m; path = ../../Lumberjack/DDASLLogger.m; sourceTree = SOURCE_ROOT; };
-		DC74770812029D4300A55869 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDTTYLogger.h; path = ../../Lumberjack/DDTTYLogger.h; sourceTree = SOURCE_ROOT; };
-		DC74770912029D4300A55869 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDTTYLogger.m; path = ../../Lumberjack/DDTTYLogger.m; sourceTree = SOURCE_ROOT; };
-		DC987BC611928FA50020FF52 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDFileLogger.h; path = ../../Lumberjack/DDFileLogger.h; sourceTree = SOURCE_ROOT; };
-		DC987BC711928FA50020FF52 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDFileLogger.m; path = ../../Lumberjack/DDFileLogger.m; sourceTree = SOURCE_ROOT; };
-		DC987BC811928FA50020FF52 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDLog.h; path = ../../Lumberjack/DDLog.h; sourceTree = SOURCE_ROOT; };
-		DC987BC911928FA50020FF52 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDLog.m; path = ../../Lumberjack/DDLog.m; sourceTree = SOURCE_ROOT; };
 		DC987BD711928FD60020FF52 /* BaseNSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseNSLogging.h; path = ../../Benchmarking/BaseNSLogging.h; sourceTree = SOURCE_ROOT; };
 		DC987BD811928FD60020FF52 /* BaseNSLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseNSLogging.m; path = ../../Benchmarking/BaseNSLogging.m; sourceTree = SOURCE_ROOT; };
 		DC987BD911928FD60020FF52 /* DynamicLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicLogging.h; path = ../../Benchmarking/DynamicLogging.h; sourceTree = SOURCE_ROOT; };
@@ -62,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53E7CC61144D67ED002A014D /* libLumberjackLogger.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -93,7 +101,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				DC987BBC11928DCF0020FF52 /* Logging */,
+				53E7CC4F144D67DE002A014D /* LumberjackLogger.xcodeproj */,
 				DC987BD611928FB50020FF52 /* Benchmarking */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -133,19 +141,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DC987BBC11928DCF0020FF52 /* Logging */ = {
+		53E7CC50144D67DE002A014D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DC987BC811928FA50020FF52 /* DDLog.h */,
-				DC987BC911928FA50020FF52 /* DDLog.m */,
-				DC74770612029D4300A55869 /* DDASLLogger.h */,
-				DC74770712029D4300A55869 /* DDASLLogger.m */,
-				DC74770812029D4300A55869 /* DDTTYLogger.h */,
-				DC74770912029D4300A55869 /* DDTTYLogger.m */,
-				DC987BC611928FA50020FF52 /* DDFileLogger.h */,
-				DC987BC711928FA50020FF52 /* DDFileLogger.m */,
+				53E7CC57144D67DE002A014D /* libLumberjackLogger.a */,
 			);
-			name = Logging;
+			name = Products;
 			sourceTree = "<group>";
 		};
 		DC987BD611928FB50020FF52 /* Benchmarking */ = {
@@ -177,6 +178,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				53E7CC63144D67FB002A014D /* PBXTargetDependency */,
 			);
 			name = BenchmarkIPhone;
 			productName = BenchmarkIPhone;
@@ -203,12 +205,28 @@
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 53E7CC50144D67DE002A014D /* Products */;
+					ProjectRef = 53E7CC4F144D67DE002A014D /* LumberjackLogger.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* BenchmarkIPhone */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		53E7CC57144D67DE002A014D /* libLumberjackLogger.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libLumberjackLogger.a;
+			remoteRef = 53E7CC56144D67DE002A014D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1D60588D0D05DD3D006BFB54 /* Resources */ = {
@@ -230,18 +248,22 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* BenchmarkIPhoneAppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* BenchmarkIPhoneViewController.m in Sources */,
-				DC987BCD11928FA50020FF52 /* DDFileLogger.m in Sources */,
-				DC987BCE11928FA50020FF52 /* DDLog.m in Sources */,
 				DC987BDF11928FD60020FF52 /* BaseNSLogging.m in Sources */,
 				DC987BE011928FD60020FF52 /* DynamicLogging.m in Sources */,
 				DC987BE111928FD60020FF52 /* PerformanceTesting.m in Sources */,
 				DC987BE211928FD60020FF52 /* StaticLogging.m in Sources */,
-				DC74770A12029D4300A55869 /* DDASLLogger.m in Sources */,
-				DC74770B12029D4300A55869 /* DDTTYLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		53E7CC63144D67FB002A014D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LumberjackLogger;
+			targetProxy = 53E7CC62144D67FB002A014D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
@@ -280,8 +302,10 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../../;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -292,8 +316,10 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../../;
 				SDKROOT = iphoneos;
 			};
 			name = Release;

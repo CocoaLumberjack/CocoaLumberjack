@@ -3,6 +3,12 @@
 //
 
 #ifdef __OBJC__
-    #import <Foundation/Foundation.h>
-    #import <UIKit/UIKit.h>
+   #import <Lumberjack/DDLog.h>
+   #import <Lumberjack/DDASLLogger.h>
+   #import <Lumberjack/DDTTYLogger.h>
+   #import <Lumberjack/DDFileLogger.h>
+
+
+   #import <Foundation/Foundation.h>
+   #import <UIKit/UIKit.h>
 #endif

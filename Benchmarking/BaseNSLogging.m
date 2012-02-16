@@ -1,6 +1,11 @@
 #import "BaseNSLogging.h"
 #import "PerformanceTesting.h"
 
+#undef DDLogVerbose 
+#undef DDLogInfo    
+#undef DDLogWarn    
+#undef DDLogError   
+
 #define DDLogVerbose NSLog
 #define DDLogInfo    NSLog
 #define DDLogWarn    NSLog
