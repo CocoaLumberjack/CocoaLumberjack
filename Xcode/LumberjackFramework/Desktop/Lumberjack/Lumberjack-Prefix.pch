@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Lumberjack' target in the 'Lumberjack' project
+//
+
+#ifdef __OBJC__
+	#import <Cocoa/Cocoa.h>
+#endif
