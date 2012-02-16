@@ -196,9 +196,9 @@
  * For example: DDLogWarn(@"%@: Unable to find thingy", THIS_FILE) -> @"MyViewController: Unable to find thingy"
 **/
 
-NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
+NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 
-#define THIS_FILE (ExtractFileNameWithoutExtension(__FILE__, NO))
+#define THIS_FILE (DDExtractFileNameWithoutExtension(__FILE__, NO))
 
 /**
  * The THIS_METHOD macro gives you the name of the current objective-c method.

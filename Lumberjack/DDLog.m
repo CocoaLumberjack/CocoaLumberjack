@@ -647,7 +647,7 @@ static unsigned int numProcessors;
 #pragma mark Utilities
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
+NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 {
 	if (filePath == NULL) return nil;
 	
@@ -813,7 +813,7 @@ NSString *ExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 {
 	if (fileName == nil && file != NULL)
 	{
-		fileName = ExtractFileNameWithoutExtension(file, NO);
+		fileName = DDExtractFileNameWithoutExtension(file, NO);
 	}
 	
 	return fileName;
