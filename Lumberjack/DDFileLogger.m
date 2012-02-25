@@ -180,7 +180,7 @@
 - (NSString *)defaultLogsDirectory
 {
 #if TARGET_OS_IPHONE
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
 	NSString *baseDir = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
 	NSString *logsDirectory = [baseDir stringByAppendingPathComponent:@"Logs"];
     
