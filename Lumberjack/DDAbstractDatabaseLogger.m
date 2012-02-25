@@ -1,4 +1,5 @@
 #import "DDAbstractDatabaseLogger.h"
+#import <math.h>
 
 /**
  * Welcome to Cocoa Lumberjack!
@@ -270,7 +271,10 @@
 {
 	dispatch_block_t block = ^{
 	
-		if (saveInterval != interval)
+		// C99 recommended floating point comparison macro
+		// Read: isLessThanOrGreaterThan(floatA, floatB)
+		
+		if (/* saveInterval != interval */ islessgreater(saveInterval, interval))
 		{
 			saveInterval = interval;
 			
@@ -350,7 +354,10 @@
 {
 	dispatch_block_t block = ^{
 		
-		if (maxAge != interval)
+		// C99 recommended floating point comparison macro
+		// Read: isLessThanOrGreaterThan(floatA, floatB)
+		
+		if (/* maxAge != interval */ islessgreater(maxAge, interval))
 		{
 			NSTimeInterval oldMaxAge = maxAge;
 			NSTimeInterval newMaxAge = interval;
@@ -436,7 +443,10 @@
 {
 	dispatch_block_t block = ^{
 		
-		if (deleteInterval != interval)
+		// C99 recommended floating point comparison macro
+		// Read: isLessThanOrGreaterThan(floatA, floatB)
+		
+		if (/* deleteInterval != interval */ islessgreater(deleteInterval, interval))
 		{
 			deleteInterval = interval;
 			
