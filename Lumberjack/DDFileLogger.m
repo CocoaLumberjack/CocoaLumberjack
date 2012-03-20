@@ -122,9 +122,14 @@
 {
 	NSLogVerbose(@"DDLogFileManagerDefault: deleteOldLogFiles");
 	
-	NSArray *sortedLogFileInfos = [self sortedLogFileInfos];
-	
 	NSUInteger maxNumLogFiles = self.maximumNumberOfLogFiles;
+	if (maxNumLogFiles == 0)
+	{
+		// Unlimited - don't delete any log files
+		return;
+	}
+	
+	NSArray *sortedLogFileInfos = [self sortedLogFileInfos];
 	
 	// Do we consider the first file?
 	// We are only supposed to be deleting archived files.
@@ -156,16 +161,13 @@
 	}
 	
 	NSUInteger i;
-	for (i = 0; i < count; i++)
+	for (i = maxNumLogFiles; i < count; i++)
 	{
-		if (i >= maxNumLogFiles)
-		{
-			DDLogFileInfo *logFileInfo = [sortedArchivedLogFileInfos objectAtIndex:i];
-			
-			NSLogInfo(@"DDLogFileManagerDefault: Deleting file: %@", logFileInfo.fileName);
-			
-			[[NSFileManager defaultManager] removeItemAtPath:logFileInfo.filePath error:nil];
-		}
+		DDLogFileInfo *logFileInfo = [sortedArchivedLogFileInfos objectAtIndex:i];
+		
+		NSLogInfo(@"DDLogFileManagerDefault: Deleting file: %@", logFileInfo.fileName);
+		
+		[[NSFileManager defaultManager] removeItemAtPath:logFileInfo.filePath error:nil];
 	}
 }
 
@@ -413,11 +415,23 @@
 
 - (id)init
 {
-	if((self = [super init]))
+	return [self initWithDateFormatter:nil];
+}
+
+- (id)initWithDateFormatter:(NSDateFormatter *)aDateFormatter
+{
+	if ((self = [super init]))
 	{
-		dateFormatter = [[NSDateFormatter alloc] init];
-		[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-		[dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss:SSS"];
+		if (aDateFormatter)
+		{
+			dateFormatter = aDateFormatter;
+		}
+		else
+		{
+			dateFormatter = [[NSDateFormatter alloc] init];
+			[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4]; // 10.4+ style
+			[dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss:SSS"];
+		}
 	}
 	return self;
 }

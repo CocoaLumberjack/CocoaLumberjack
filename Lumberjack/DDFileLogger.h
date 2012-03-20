@@ -61,6 +61,14 @@
 
 // Public properties
 
+/**
+ * The maximum number of archived log files to keep on disk.
+ * For example, if this property is set to 3,
+ * then the LogFileManager will only keep 3 archived log files (plus the current active log file) on disk.
+ * Once the active log file is rolled/archived, then the oldest of the existing 3 rolled/archived log files is deleted.
+ * 
+ * You may optionally disable deleting old/rolled/archived log files by setting this property to zero.
+**/
 @property (readwrite, assign) NSUInteger maximumNumberOfLogFiles;
 
 // Public methods
@@ -114,6 +122,22 @@
 - (id)init;
 - (id)initWithLogsDirectory:(NSString *)logsDirectory;
 
+/* Inherited from DDLogFileManager protocol:
+
+@property (readwrite, assign) NSUInteger maximumNumberOfLogFiles;
+
+- (NSString *)logsDirectory;
+
+- (NSArray *)unsortedLogFilePaths;
+- (NSArray *)unsortedLogFileNames;
+- (NSArray *)unsortedLogFileInfos;
+
+- (NSArray *)sortedLogFilePaths;
+- (NSArray *)sortedLogFileNames;
+- (NSArray *)sortedLogFileInfos;
+
+*/
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,6 +158,9 @@
 {
 	NSDateFormatter *dateFormatter;
 }
+
+- (id)init;
+- (id)initWithDateFormatter:(NSDateFormatter *)dateFormatter;
 
 @end
 
