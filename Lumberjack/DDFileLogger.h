@@ -92,18 +92,19 @@
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Default log file manager.
-// 
-// All log files are placed inside the logsDirectory.
-// If a specific logsDirectory isn't specified, the default directory is used.
-// On Mac, this is in ~/Library/Logs/<Application Name>.
-// On iPhone, this is in ~/Library/Caches/Logs.
-// 
-// Log files are named "log-<uuid>.txt",
-// where uuid is a 6 character hexadecimal consisting of the set [0123456789ABCDEF].
-// 
-// Archived log files are automatically deleted according to the maximumNumberOfLogFiles property.
-
+/**
+ * Default log file manager.
+ * 
+ * All log files are placed inside the logsDirectory.
+ * If a specific logsDirectory isn't specified, the default directory is used.
+ * On Mac, this is in ~/Library/Logs/<Application Name>.
+ * On iPhone, this is in ~/Library/Caches/Logs.
+ * 
+ * Log files are named "log-<uuid>.txt",
+ * where uuid is a 6 character hexadecimal consisting of the set [0123456789ABCDEF].
+ * 
+ * Archived log files are automatically deleted according to the maximumNumberOfLogFiles property.
+**/
 @interface DDLogFileManagerDefault : NSObject <DDLogFileManager>
 {
 	NSUInteger maximumNumberOfLogFiles;
@@ -119,15 +120,16 @@
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Most users will want file log messages to be prepended with the date and time.
-// Rather than forcing the majority of users to write their own formatter,
-// we will supply a logical default formatter.
-// Users can easily replace this formatter with their own by invoking the setLogFormatter method.
-// It can also be removed by calling setLogFormatter, and passing a nil parameter.
-// 
-// In addition to the convenience of having a logical default formatter,
-// it will also provide a template that makes it easy for developers to copy and change.
-
+/**
+ * Most users will want file log messages to be prepended with the date and time.
+ * Rather than forcing the majority of users to write their own formatter,
+ * we will supply a logical default formatter.
+ * Users can easily replace this formatter with their own by invoking the setLogFormatter method.
+ * It can also be removed by calling setLogFormatter, and passing a nil parameter.
+ * 
+ * In addition to the convenience of having a logical default formatter,
+ * it will also provide a template that makes it easy for developers to copy and change.
+**/
 @interface DDLogFileFormatterDefault : NSObject <DDLogFormatter>
 {
 	NSDateFormatter *dateFormatter;
@@ -155,35 +157,46 @@
 - (id)init;
 - (id)initWithLogFileManager:(id <DDLogFileManager>)logFileManager;
 
-// Configuration
-// 
-// maximumFileSize:
-//   The approximate maximum size to allow log files to grow.
-//   If a log file is larger than this value after a write,
-//   then the log file is rolled.
-// 
-// rollingFrequency
-//   How often to roll the log file.
-//   The frequency is given as an NSTimeInterval, which is a double that specifies the interval in seconds.
-//   Once the log file gets to be this old, it is rolled.
-// 
-// Both the maximumFileSize and the rollingFrequency are used to manage rolling.
-// Whichever occurs first will cause the log file to be rolled.
-// 
-// For example:
-// The rollingFrequency is 24 hours,
-// but the log file surpasses the maximumFileSize after only 20 hours.
-// The log file will be rolled at that 20 hour mark.
-// A new log file will be created, and the 24 hour timer will be restarted.
-// 
-// logFileManager
-//   Allows you to retrieve the list of log files,
-//   and configure the maximum number of archived log files to keep.
-
+/**
+ * Log File Rolling:
+ * 
+ * maximumFileSize:
+ *   The approximate maximum size to allow log files to grow.
+ *   If a log file is larger than this value after a log statement is appended,
+ *   then the log file is rolled.
+ * 
+ * rollingFrequency
+ *   How often to roll the log file.
+ *   The frequency is given as an NSTimeInterval, which is a double that specifies the interval in seconds.
+ *   Once the log file gets to be this old, it is rolled.
+ * 
+ * Both the maximumFileSize and the rollingFrequency are used to manage rolling.
+ * Whichever occurs first will cause the log file to be rolled.
+ * 
+ * For example:
+ * The rollingFrequency is 24 hours,
+ * but the log file surpasses the maximumFileSize after only 20 hours.
+ * The log file will be rolled at that 20 hour mark.
+ * A new log file will be created, and the 24 hour timer will be restarted.
+ * 
+ * You may optionally disable rolling due to filesize by setting maximumFileSize to zero.
+ * If you do so, rolling is based solely on rollingFrequency.
+ * 
+ * You may optionally disable rolling due to time by setting rollingFrequency to zero (or any non-positive number).
+ * If you do so, rolling is based solely on maximumFileSize.
+ * 
+ * If you disable both maximumFileSize and rollingFrequency, then the log file won't ever be rolled.
+ * This is strongly discouraged.
+**/
 @property (readwrite, assign) unsigned long long maximumFileSize;
-
 @property (readwrite, assign) NSTimeInterval rollingFrequency;
 
+/**
+ * The DDLogFileManager instance can be used to retrieve the list of log files,
+ * and configure the maximum number of archived log files to keep.
+ * 
+ * @see DDLogFileManager.maximumNumberOfLogFiles
+**/
 @property (strong, nonatomic, readonly) id <DDLogFileManager> logFileManager;
 
 
@@ -202,19 +215,20 @@
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// DDLogFileInfo is a simple class that provides access to various file attributes.
-// It provides good performance as it only fetches the information if requested,
-// and it caches the information to prevent duplicate fetches.
-// 
-// It was designed to provide quick snapshots of the current state of log files,
-// and to help sort log files in an array.
-// 
-// This class does not monitor the files, or update it's cached attribute values if the file changes on disk.
-// This is not what the class was designed for.
-// 
-// If you absolutely must get updated values,
-// you can invoke the reset method which will clear the cache.
-
+/**
+ * DDLogFileInfo is a simple class that provides access to various file attributes.
+ * It provides good performance as it only fetches the information if requested,
+ * and it caches the information to prevent duplicate fetches.
+ * 
+ * It was designed to provide quick snapshots of the current state of log files,
+ * and to help sort log files in an array.
+ * 
+ * This class does not monitor the files, or update it's cached attribute values if the file changes on disk.
+ * This is not what the class was designed for.
+ * 
+ * If you absolutely must get updated values,
+ * you can invoke the reset method which will clear the cache.
+**/
 @interface DDLogFileInfo : NSObject
 {
 	__strong NSString *filePath;
