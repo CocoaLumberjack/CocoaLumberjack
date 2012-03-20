@@ -211,7 +211,7 @@
 		DCC29DD314730AA9005E8FD4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = DCC29DD614730AA9005E8FD4 /* Build configuration list for PBXProject "BenchmarkMac" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -383,6 +383,7 @@
 				DCC29DFC14730AA9005E8FD4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
