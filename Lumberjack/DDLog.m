@@ -806,32 +806,20 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 
 - (NSString *)threadID
 {
-	if (threadID == nil)
-	{
-		threadID = [[NSString alloc] initWithFormat:@"%x", machThreadID];
-	}
-	
-	return threadID;
+	return [[NSString alloc] initWithFormat:@"%x", machThreadID];
 }
 
 - (NSString *)fileName
 {
-	if (fileName == nil && file != NULL)
-	{
-		fileName = DDExtractFileNameWithoutExtension(file, NO);
-	}
-	
-	return fileName;
+	return DDExtractFileNameWithoutExtension(file, NO);
 }
 
 - (NSString *)methodName
 {
-	if (methodName == nil && function != NULL)
-	{
-		methodName = [[NSString alloc] initWithUTF8String:function];
-	}
-	
-	return methodName;
+	if (function == NULL)
+		return nil;
+	else
+		return [[NSString alloc] initWithUTF8String:function];
 }
 
 - (void)dealloc

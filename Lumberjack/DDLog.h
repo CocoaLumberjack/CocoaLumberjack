@@ -425,14 +425,6 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
     char *queueLabel;
 	NSString *threadName;
 	id tag; // For 3rd party extensions to the framework, where flags and contexts aren't enough.
-
-// The private variables below are only calculated if needed.
-// You should use the public methods to access this information.
-	
-@private
-	NSString *threadID;
-	NSString *fileName;
-	NSString *methodName;
 }
 
 /**
@@ -457,18 +449,18 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * Returns the threadID as it appears in NSLog.
  * That is, it is a hexadecimal value which is calculated from the machThreadID.
 **/
-@property (nonatomic, readonly) NSString *threadID;
+- (NSString *)threadID;
 
 /**
  * Convenience property to get just the file name, as the file variable is generally the full file path.
  * This method does not include the file extension, which is generally unwanted for logging purposes.
 **/
-@property (nonatomic, readonly) NSString *fileName;
+- (NSString *)fileName;
 
 /**
  * Returns the function variable in NSString form.
 **/
-@property (nonatomic, readonly) NSString *methodName;
+- (NSString *)methodName;
 
 @end
 
