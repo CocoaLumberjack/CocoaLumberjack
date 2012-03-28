@@ -240,7 +240,7 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
    function:(const char *)function
        line:(int)line
         tag:(id)tag
-     format:(NSString *)format, ...;
+     format:(NSString *)format, ... __attribute__ ((format (__NSString__, 9, 10)));
 
 /**
  * Since logging can be asynchronous, there may be times when you want to flush the logs.
