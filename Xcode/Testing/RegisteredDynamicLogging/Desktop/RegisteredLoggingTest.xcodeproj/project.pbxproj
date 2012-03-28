@@ -193,7 +193,7 @@
 		DC7DC4E014154E4900601B40 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = DC7DC4E314154E4900601B40 /* Build configuration list for PBXProject "RegisteredLoggingTest" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -280,6 +280,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -306,6 +307,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -323,7 +325,6 @@
 		DC7DC50814154E4900601B40 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RegisteredLoggingTest/RegisteredLoggingTest-Prefix.pch";
 				INFOPLIST_FILE = "RegisteredLoggingTest/RegisteredLoggingTest-Info.plist";
@@ -335,7 +336,6 @@
 		DC7DC50914154E4900601B40 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RegisteredLoggingTest/RegisteredLoggingTest-Prefix.pch";
 				INFOPLIST_FILE = "RegisteredLoggingTest/RegisteredLoggingTest-Info.plist";

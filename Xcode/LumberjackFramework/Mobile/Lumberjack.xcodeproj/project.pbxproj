@@ -256,7 +256,7 @@
 		DC58E47F14DC70CF006B16E2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = DC58E48214DC70CF006B16E2 /* Build configuration list for PBXProject "Lumberjack" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -462,6 +462,7 @@
 				DC58E4DB14DC8BE2006B16E2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

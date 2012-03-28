@@ -191,6 +191,9 @@
 /* Begin PBXProject section */
 		DC7DC5221415523E00601B40 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
 			buildConfigurationList = DC7DC5251415523E00601B40 /* Build configuration list for PBXProject "RegisteredLoggingTest" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;

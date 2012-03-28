@@ -183,7 +183,7 @@
 		DC25B75D146A0294000F32F4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = DC25B760146A0294000F32F4 /* Build configuration list for PBXProject "DispatchQueueLogger" */;
 			compatibilityVersion = "Xcode 3.2";

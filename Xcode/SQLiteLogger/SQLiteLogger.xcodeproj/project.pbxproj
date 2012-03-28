@@ -191,7 +191,7 @@
 		DCFF741913427FF600F53777 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = Voalte;
 			};
 			buildConfigurationList = DCFF741C13427FF600F53777 /* Build configuration list for PBXProject "SQLiteLogger" */;

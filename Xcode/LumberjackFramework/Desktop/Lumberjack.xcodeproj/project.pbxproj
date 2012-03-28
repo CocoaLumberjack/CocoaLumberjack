@@ -266,7 +266,7 @@
 		DCB3184714EB418D001CFBEE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = DCB3184A14EB418D001CFBEE /* Build configuration list for PBXProject "Lumberjack" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -502,6 +502,7 @@
 				DCB318E114ED6C3B001CFBEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -13,13 +13,13 @@
 		DCA67DFF146B531D003411EE /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DCA67DFD146B531D003411EE /* Credits.rtf */; };
 		DCA67E02146B531E003411EE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67E01146B531E003411EE /* AppDelegate.m */; };
 		DCA67E05146B531E003411EE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCA67E03146B531E003411EE /* MainMenu.xib */; };
-		DCA67E1C146B534D003411EE /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67E0D146B534D003411EE /* DDAbstractDatabaseLogger.m */; };
-		DCA67E1D146B534D003411EE /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67E0F146B534D003411EE /* DDASLLogger.m */; };
-		DCA67E1E146B534D003411EE /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67E11146B534D003411EE /* DDFileLogger.m */; };
-		DCA67E1F146B534D003411EE /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67E13146B534D003411EE /* DDLog.m */; };
-		DCA67E20146B534D003411EE /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67E15146B534D003411EE /* DDTTYLogger.m */; };
-		DCA67E21146B534D003411EE /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67E18146B534D003411EE /* ContextFilterLogFormatter.m */; };
-		DCA67E22146B534D003411EE /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67E1A146B534D003411EE /* DispatchQueueLogFormatter.m */; };
+		DCA67E1C146B534D003411EE /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67E0D146B534D003411EE /* DDAbstractDatabaseLogger.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		DCA67E1D146B534D003411EE /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67E0F146B534D003411EE /* DDASLLogger.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		DCA67E1E146B534D003411EE /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67E11146B534D003411EE /* DDFileLogger.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		DCA67E1F146B534D003411EE /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67E13146B534D003411EE /* DDLog.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		DCA67E20146B534D003411EE /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67E15146B534D003411EE /* DDTTYLogger.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		DCA67E21146B534D003411EE /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67E18146B534D003411EE /* ContextFilterLogFormatter.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		DCA67E22146B534D003411EE /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67E1A146B534D003411EE /* DispatchQueueLogFormatter.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		DCA67E23146B534D003411EE /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = DCA67E1B146B534D003411EE /* README.txt */; };
 /* End PBXBuildFile section */
 
@@ -183,7 +183,7 @@
 		DCA67DE1146B531D003411EE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = DCA67DE4146B531D003411EE /* Build configuration list for PBXProject "NonArcTest" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -349,6 +349,7 @@
 				DCA67E0A146B531E003411EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

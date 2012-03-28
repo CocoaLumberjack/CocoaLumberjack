@@ -172,7 +172,7 @@
 		DCE86C001343C419004FD85F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = DCE86C031343C419004FD85F /* Build configuration list for PBXProject "CoreDataLogger" */;
 			compatibilityVersion = "Xcode 3.2";

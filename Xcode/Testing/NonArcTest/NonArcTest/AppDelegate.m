@@ -1,12 +1,11 @@
-//
-//  AppDelegate.m
-//  NonArcTest
-//
-//  Created by Robbie Hanson on 11/9/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
-//
-
 #import "AppDelegate.h"
+#import "DDLog.h"
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
+
+// Log levels: off, error, warn, info, verbose
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+
 
 @implementation AppDelegate
 
@@ -19,7 +18,10 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	// Insert code here to initialize your application
+	[DDLog addLogger:[DDASLLogger sharedInstance]];
+	[DDLog addLogger:[DDTTYLogger sharedInstance]];
+	
+	DDLogVerbose(@"Testing");
 }
 
 @end
