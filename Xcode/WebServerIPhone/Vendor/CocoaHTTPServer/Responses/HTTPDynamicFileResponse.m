@@ -2,6 +2,10 @@
 #import "HTTPConnection.h"
 #import "HTTPLogging.h"
 
+#if ! __has_feature(objc_arc)
+#warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
+#endif
+
 // Log levels : off, error, warn, info, verbose
 // Other flags: trace
 static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
@@ -20,8 +24,8 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 	{
 		HTTPLogTrace();
 		
-		separator = [[separatorStr dataUsingEncoding:NSUTF8StringEncoding] retain];
-		replacementDict = [dict retain];
+		separator = [separatorStr dataUsingEncoding:NSUTF8StringEncoding];
+		replacementDict = dict;
 	}
 	return self;
 }
@@ -212,7 +216,6 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 						}
 					}
 					
-					[key release];
 				}
 				
 				found1 = found2 = NO;
@@ -283,10 +286,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 {
 	HTTPLogTrace();
 	
-	[separator release];
-	[replacementDict release];
 	
-	[super dealloc];
 }
 
 @end

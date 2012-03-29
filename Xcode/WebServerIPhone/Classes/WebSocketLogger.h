@@ -3,6 +3,8 @@
 #import "WebSocket.h"
 
 
+#define WebSocketLoggerDidDieNotification  @"WebSocketLoggerDidDie"
+
 @interface WebSocketLogger : DDAbstractLogger <DDLogger>
 {
 	WebSocket *websocket;

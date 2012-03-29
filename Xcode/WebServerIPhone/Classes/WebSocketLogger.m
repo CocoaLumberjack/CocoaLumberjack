@@ -12,13 +12,6 @@
 		websocket.delegate = self;
 		
 		formatter = [[WebSocketFormatter alloc] init];
-		
-		// Add our logger
-		// 
-		// We do this here (as opposed to in webSocketDidOpen:) so the logging framework will retain us.
-		// This is important as nothing else is retaining us.
-		// It may be a bit hackish, but it's also the simplest solution.
-		[DDLog addLogger:self];
 	}
 	return self;
 }
@@ -26,7 +19,6 @@
 - (void)dealloc
 {
 	[websocket setDelegate:nil];
-	
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -38,6 +30,9 @@
 	// This method is invoked on the websocketQueue
 	
 	isWebSocketOpen = YES;
+	
+	// Add our logger
+	[DDLog addLogger:self];
 }
 
 - (void)webSocketDidClose:(WebSocket *)ws
@@ -48,6 +43,9 @@
 	
 	// Remove our logger
 	[DDLog removeLogger:self];
+	
+	// Post notification
+	[[NSNotificationCenter defaultCenter] postNotificationName:WebSocketLoggerDidDieNotification object:self];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,17 +71,14 @@
     
 	if (logMsg)
 	{
-		dispatch_async(websocket.websocketQueue, ^{
+		dispatch_async(websocket.websocketQueue, ^{ @autoreleasepool {
 			
 			if (isWebSocketOpen)
 			{
-				@autoreleasepool {
+				[websocket sendMessage:logMsg];
 				
-					[websocket sendMessage:logMsg];
-				
-				}
 			}
-		});
+		}});
 	}
 }
 

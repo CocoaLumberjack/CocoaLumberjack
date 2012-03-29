@@ -5,6 +5,10 @@
 #import "DDData.h"
 #import "HTTPLogging.h"
 
+#if ! __has_feature(objc_arc)
+#warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
+#endif
+
 // Log levels: off, error, warn, info, verbose
 // Other flags : trace
 static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
@@ -114,7 +118,6 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 	
 	if (aRequest == nil)
 	{
-		[self release];
 		return nil;
 	}
 	
@@ -126,13 +129,12 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 			
 			NSString *temp = [[NSString alloc] initWithData:requestHeaders encoding:NSUTF8StringEncoding];
 			HTTPLogVerbose(@"%@[%p] Request Headers:\n%@", THIS_FILE, self, temp);
-			[temp release];
 		}
 		
 		websocketQueue = dispatch_queue_create("WebSocket", NULL);
-		request = [aRequest retain];
+		request = aRequest;
 		
-		asyncSocket = [socket retain];
+		asyncSocket = socket;
 		[asyncSocket setDelegate:self delegateQueue:websocketQueue];
 		
 		isOpen = NO;
@@ -149,13 +151,10 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 	
 	dispatch_release(websocketQueue);
 	
-	[request release];
 	
 	[asyncSocket setDelegate:nil delegateQueue:NULL];
 	[asyncSocket disconnect];
-	[asyncSocket release];
 	
-	[super dealloc];
 }
 
 - (id)delegate
@@ -189,8 +188,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 	// This method is not exactly designed to be overriden.
 	// Subclasses are encouraged to override the didOpen method instead.
 	
-	dispatch_async(websocketQueue, ^{
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	dispatch_async(websocketQueue, ^{ @autoreleasepool {
 		
 		if (isStarted) return;
 		isStarted = YES;
@@ -204,9 +202,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 			[self sendResponseHeaders];
 			[self didOpen];
 		}
-		
-		[pool drain];
-	});
+	}});
 }
 
 /**
@@ -218,13 +214,10 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 	// This method is not exactly designed to be overriden.
 	// Subclasses are encouraged to override the didClose method instead.
 	
-	dispatch_async(websocketQueue, ^{
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	dispatch_async(websocketQueue, ^{ @autoreleasepool {
 		
 		[asyncSocket disconnect];
-		
-		[pool drain];
-	});
+	}});
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -360,13 +353,11 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 	
 	NSData *responseHeaders = [wsResponse messageData];
 	
-	[wsResponse release];
 	
 	if (HTTP_LOG_VERBOSE)
 	{
 		NSString *temp = [[NSString alloc] initWithData:responseHeaders encoding:NSUTF8StringEncoding];
 		HTTPLogVerbose(@"%@[%p] Response Headers:\n%@", THIS_FILE, self, temp);
-		[temp release];
 	}
 	
 	[asyncSocket writeData:responseHeaders withTimeout:TIMEOUT_NONE tag:TAG_HTTP_RESPONSE_HEADERS];
@@ -461,11 +452,6 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 		HTTPLogVerbose(@"key0 concat : raw(%@) str(%@)", d0, s0);
 		HTTPLogVerbose(@"responseBody: raw(%@) str(%@)", responseBody, sH);
 		
-		[s1 release];
-		[s2 release];
-		[s3 release];
-		[s0 release];
-		[sH release];
 	}
 }
 
@@ -581,7 +567,6 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 		
 		[self didReceiveMessage:msg];
 		
-		[msg release];
 		
 		// Read next message
 		[asyncSocket readDataToLength:1 withTimeout:TIMEOUT_NONE tag:TAG_PREFIX];

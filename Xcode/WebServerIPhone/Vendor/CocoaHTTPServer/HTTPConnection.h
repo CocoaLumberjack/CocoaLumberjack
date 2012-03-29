@@ -15,16 +15,16 @@
 
 @interface HTTPConfig : NSObject
 {
-	HTTPServer *server;
-	NSString *documentRoot;
+	HTTPServer __unsafe_unretained *server;
+	NSString __strong *documentRoot;
 	dispatch_queue_t queue;
 }
 
 - (id)initWithServer:(HTTPServer *)server documentRoot:(NSString *)documentRoot;
 - (id)initWithServer:(HTTPServer *)server documentRoot:(NSString *)documentRoot queue:(dispatch_queue_t)q;
 
-@property (nonatomic, readonly) HTTPServer *server;
-@property (nonatomic, readonly) NSString *documentRoot;
+@property (nonatomic, unsafe_unretained, readonly) HTTPServer *server;
+@property (nonatomic, strong, readonly) NSString *documentRoot;
 @property (nonatomic, readonly) dispatch_queue_t queue;
 
 @end

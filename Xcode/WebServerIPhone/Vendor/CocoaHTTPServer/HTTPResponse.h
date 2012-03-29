@@ -53,7 +53,7 @@
  * 
  * Important: You should read the discussion at the bottom of this header.
 **/
-- (BOOL)delayResponeHeaders;
+- (BOOL)delayResponseHeaders;
 
 /**
  * Status code for response.

@@ -13,6 +13,59 @@
 
 @implementation MyHTTPConnection
 
+static NSMutableSet *webSocketLoggers;
+
+/**
+ * The runtime sends initialize to each class in a program exactly one time just before the class,
+ * or any class that inherits from it, is sent its first message from within the program. (Thus the
+ * method may never be invoked if the class is not used.) The runtime sends the initialize message to
+ * classes in a thread-safe manner. Superclasses receive this message before their subclasses.
+ *
+ * This method may also be called directly (assumably by accident), hence the safety mechanism.
+**/
++ (void)initialize
+{
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		
+		// We need some place to store the webSocketLogger instances.
+		// So we'll store them here, in a class variable.
+		// 
+		// We'll also use a simple notification system to release them when they die.
+		
+		webSocketLoggers = [[NSMutableSet alloc] init];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self
+		                                         selector:@selector(webSocketLoggerDidDie:)
+		                                             name:WebSocketLoggerDidDieNotification
+		                                           object:nil];
+	});
+}
+
++ (void)addWebSocketLogger:(WebSocketLogger *)webSocketLogger
+{
+	@synchronized(webSocketLoggers)
+	{
+		[webSocketLoggers addObject:webSocketLogger];
+	}
+}
+
++ (void)webSocketLoggerDidDie:(NSNotification *)notification
+{
+	@synchronized(webSocketLoggers)
+	{
+		[webSocketLoggers removeObject:[notification object]];
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark Utilities
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Returns the logFileManager, which is a part of the DDFileLogger system.
+ * The DDLogFileManager is the subsystem which manages the location and creation of log files.
+**/
 - (id <DDLogFileManager>)logFileManager
 {
 	WebServerIPhoneAppDelegate *appDelegate;
@@ -21,6 +74,38 @@
 	return appDelegate.fileLogger.logFileManager;
 }
 
+/**
+ * Dynamic discovery of proper websocket href. 
+**/
+- (NSString *)wsLocation
+{
+	NSString *port = [NSString stringWithFormat:@"%hu", [asyncSocket localPort]];
+	
+	NSString *wsLocation;
+	NSString *wsHost = [request headerField:@"Host"];
+	
+	if (wsHost == nil)
+	{
+		wsLocation = [NSString stringWithFormat:@"ws://localhost:%@/livelog", port];
+	}
+	else
+	{
+		wsLocation = [NSString stringWithFormat:@"ws://%@/livelog", wsHost];
+	}
+	
+	return wsLocation;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark /logs.html
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Returns the response body for requests to "/logs/index.html".
+ * 
+ * The response is generated dynamically.
+ * It returns the list of log files currently on the system, along with their creation date and file size.
+**/
 - (NSData *)generateIndexData
 {
 	NSArray *sortedLogFileInfos = [[self logFileManager] sortedLogFileInfos];
@@ -83,7 +168,17 @@
 	return [response dataUsingEncoding:NSUTF8StringEncoding];
 }
 
-- (NSString *)filePathForURI:(NSString *)path
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark HTTPConnection
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Overrides method in HTTPConnection.
+ * 
+ * This method is invoked to retrieve the filePath for a given URI.
+ * We override it to provide proper mapping for log file paths.
+**/
+- (NSString *)filePathForURI:(NSString *)path allowDirectory:(BOOL)allowDirectory
 {
 	if ([path hasPrefix:@"/logs/"])
 	{
@@ -91,32 +186,19 @@
 		return [logsDir stringByAppendingPathComponent:[path lastPathComponent]];
 	}
 	
-	return [super filePathForURI:path];
+	// Fall through
+	return [super filePathForURI:path allowDirectory:allowDirectory];
 }
 
-- (NSString *)wsLocation
-{
-	NSString *port = [NSString stringWithFormat:@"%hu", [asyncSocket localPort]];
-	
-	NSString *wsLocation;
-	NSString *wsHost = [request headerField:@"Host"];
-	
-	if (wsHost == nil)
-	{
-		wsLocation = [NSString stringWithFormat:@"ws://localhost:%@/livelog", port];
-	}
-	else
-	{
-		wsLocation = [NSString stringWithFormat:@"ws://%@/livelog", wsHost];
-	}
-	
-	return wsLocation;
-}
-
+/**
+ * Overrides method in HTTPConnection.
+**/
 - (NSObject<HTTPResponse> *)httpResponseForMethod:(NSString *)method URI:(NSString *)path
 {
 	if ([path isEqualToString:@"/logs.html"])
 	{
+		// Dynamically generate html response with list of available log files
+		
 		NSData *indexData = [self generateIndexData];
 		return [[HTTPDataResponse alloc] initWithData:indexData];
 	}
@@ -139,30 +221,26 @@
 		                                                separator:@"%%"
 		                                    replacementDictionary:replacementDict];
 	}
-	else
-	{
-		return [super httpResponseForMethod:method URI:path];
-	}
+	
+	// Fall through
+	return [super httpResponseForMethod:method URI:path];
 }
 
+/**
+ * Overrides method in HTTPConnection.
+**/
 - (WebSocket *)webSocketForURI:(NSString *)path
 {
 	if ([path isEqualToString:@"/livelog"])
 	{
 		// Create the WebSocket
-		WebSocket *ws = [[WebSocket alloc] initWithRequest:request socket:asyncSocket];
+		WebSocket *webSocket = [[WebSocket alloc] initWithRequest:request socket:asyncSocket];
 		
 		// Create the WebSocketLogger
-		WebSocketLogger *wsLogger = [[WebSocketLogger alloc] initWithWebSocket:ws];
+		WebSocketLogger *webSocketLogger = [[WebSocketLogger alloc] initWithWebSocket:webSocket];
 		
-		// Todo - Broken under ARC. Needs a fix. Commens below from pre-arc.
-		// 
-		// Memory management:
-		// The WebSocket will be retained by the HTTPServer and the WebSocketLogger.
-		// The WebSocketLogger will be retained by the logging framework,
-		// as it adds itself to the list of active loggers from within its init method.
-		
-		return ws;
+		[[self class] addWebSocketLogger:webSocketLogger];
+		return webSocket;
 	}
 	
 	return [super webSocketForURI:path];

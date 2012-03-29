@@ -4,5 +4,4 @@
 
 @interface MyHTTPConnection : HTTPConnection
 
-
 @end

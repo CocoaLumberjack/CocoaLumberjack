@@ -38,7 +38,7 @@ static char encodingTable[64] = {
         [stringBuffer appendFormat:@"%02x", (unsigned long)dataBuffer[i]];
 	}
     
-    return [[stringBuffer copy] autorelease];
+    return [stringBuffer copy];
 }
 
 - (NSString *)base64Encoded
@@ -101,7 +101,8 @@ static char encodingTable[64] = {
 	unsigned long ixtext = 0;
 	unsigned long lentext = [self length];
 	unsigned char ch = 0;
-	unsigned char inbuf[4], outbuf[3];
+	unsigned char inbuf[4] = {0, 0, 0, 0};
+	unsigned char outbuf[3] = {0, 0, 0};
 	short i = 0, ixinbuf = 0;
 	BOOL flignore = NO;
 	BOOL flendtext = NO;

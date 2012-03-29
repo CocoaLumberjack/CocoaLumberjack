@@ -1,5 +1,9 @@
 #import "HTTPMessage.h"
 
+#if ! __has_feature(objc_arc)
+#warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
+#endif
+
 
 @implementation HTTPMessage
 
@@ -16,7 +20,10 @@
 {
 	if ((self = [super init]))
 	{
-		message = CFHTTPMessageCreateRequest(NULL, (CFStringRef)method, (CFURLRef)url, (CFStringRef)version);
+		message = CFHTTPMessageCreateRequest(NULL,
+		                                    (__bridge CFStringRef)method,
+		                                    (__bridge CFURLRef)url,
+		                                    (__bridge CFStringRef)version);
 	}
 	return self;
 }
@@ -25,7 +32,10 @@
 {
 	if ((self = [super init]))
 	{
-		message = CFHTTPMessageCreateResponse(NULL, (CFIndex)code, (CFStringRef)description, (CFStringRef)version);
+		message = CFHTTPMessageCreateResponse(NULL,
+		                                      (CFIndex)code,
+		                                      (__bridge CFStringRef)description,
+		                                      (__bridge CFStringRef)version);
 	}
 	return self;
 }
@@ -36,7 +46,6 @@
 	{
 		CFRelease(message);
 	}
-	[super dealloc];
 }
 
 - (BOOL)appendData:(NSData *)data
@@ -51,17 +60,17 @@
 
 - (NSString *)version
 {
-	return [NSMakeCollectable(CFHTTPMessageCopyVersion(message)) autorelease];
+	return (__bridge_transfer NSString *)CFHTTPMessageCopyVersion(message);
 }
 
 - (NSString *)method
 {
-	return [NSMakeCollectable(CFHTTPMessageCopyRequestMethod(message)) autorelease];
+	return (__bridge_transfer NSString *)CFHTTPMessageCopyRequestMethod(message);
 }
 
 - (NSURL *)url
 {
-	return [NSMakeCollectable(CFHTTPMessageCopyRequestURL(message)) autorelease];
+	return (__bridge_transfer NSURL *)CFHTTPMessageCopyRequestURL(message);
 }
 
 - (NSInteger)statusCode
@@ -71,32 +80,34 @@
 
 - (NSDictionary *)allHeaderFields
 {
-	return [NSMakeCollectable(CFHTTPMessageCopyAllHeaderFields(message)) autorelease];
+	return (__bridge_transfer NSDictionary *)CFHTTPMessageCopyAllHeaderFields(message);
 }
 
 - (NSString *)headerField:(NSString *)headerField
 {
-	return [NSMakeCollectable(CFHTTPMessageCopyHeaderFieldValue(message, (CFStringRef)headerField)) autorelease];
+	return (__bridge_transfer NSString *)CFHTTPMessageCopyHeaderFieldValue(message, (__bridge CFStringRef)headerField);
 }
 
 - (void)setHeaderField:(NSString *)headerField value:(NSString *)headerFieldValue
 {
-	CFHTTPMessageSetHeaderFieldValue(message, (CFStringRef)headerField, (CFStringRef)headerFieldValue);
+	CFHTTPMessageSetHeaderFieldValue(message,
+	                                 (__bridge CFStringRef)headerField,
+	                                 (__bridge CFStringRef)headerFieldValue);
 }
 
 - (NSData *)messageData
 {
-	return [NSMakeCollectable(CFHTTPMessageCopySerializedMessage(message)) autorelease];
+	return (__bridge_transfer NSData *)CFHTTPMessageCopySerializedMessage(message);
 }
 
 - (NSData *)body
 {
-	return [NSMakeCollectable(CFHTTPMessageCopyBody(message)) autorelease];
+	return (__bridge_transfer NSData *)CFHTTPMessageCopyBody(message);
 }
 
 - (void)setBody:(NSData *)body
 {
-	CFHTTPMessageSetBody(message, (CFDataRef)body);
+	CFHTTPMessageSetBody(message, (__bridge CFDataRef)body);
 }
 
 @end

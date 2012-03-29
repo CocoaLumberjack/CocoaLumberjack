@@ -27,20 +27,20 @@
 		DCA67D9D146B4D7D003411EE /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67D94146B4D7D003411EE /* ContextFilterLogFormatter.m */; };
 		DCA67D9E146B4D7D003411EE /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67D96146B4D7D003411EE /* DispatchQueueLogFormatter.m */; };
 		DCA67D9F146B4D7D003411EE /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = DCA67D97146B4D7D003411EE /* README.txt */; };
-		DCA67DBF146B4DB4003411EE /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DA3146B4DB4003411EE /* DDData.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DCA67DC0146B4DB4003411EE /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DA5146B4DB4003411EE /* DDNumber.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DCA67DC1146B4DB4003411EE /* DDRange.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DA7146B4DB4003411EE /* DDRange.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DCA67DC2146B4DB4003411EE /* HTTPAuthenticationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DA9146B4DB4003411EE /* HTTPAuthenticationRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DCA67DC3146B4DB4003411EE /* HTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DAB146B4DB4003411EE /* HTTPConnection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DCA67DC4146B4DB4003411EE /* HTTPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DAE146B4DB4003411EE /* HTTPMessage.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DCA67DC5146B4DB4003411EE /* HTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DB1146B4DB4003411EE /* HTTPServer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DCA67DC6146B4DB4003411EE /* HTTPAsyncFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DB4146B4DB4003411EE /* HTTPAsyncFileResponse.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DCA67DC7146B4DB4003411EE /* HTTPDataResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DB6146B4DB4003411EE /* HTTPDataResponse.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DCA67DC8146B4DB4003411EE /* HTTPDynamicFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DB8146B4DB4003411EE /* HTTPDynamicFileResponse.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DCA67DC9146B4DB4003411EE /* HTTPFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DBA146B4DB4003411EE /* HTTPFileResponse.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DCA67DCA146B4DB4003411EE /* HTTPRedirectResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DBC146B4DB4003411EE /* HTTPRedirectResponse.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DCA67DCB146B4DB4003411EE /* WebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DBE146B4DB4003411EE /* WebSocket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DCA67DCF146B4E3C003411EE /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DCE146B4E3C003411EE /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DCA67DBF146B4DB4003411EE /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DA3146B4DB4003411EE /* DDData.m */; };
+		DCA67DC0146B4DB4003411EE /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DA5146B4DB4003411EE /* DDNumber.m */; };
+		DCA67DC1146B4DB4003411EE /* DDRange.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DA7146B4DB4003411EE /* DDRange.m */; };
+		DCA67DC2146B4DB4003411EE /* HTTPAuthenticationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DA9146B4DB4003411EE /* HTTPAuthenticationRequest.m */; };
+		DCA67DC3146B4DB4003411EE /* HTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DAB146B4DB4003411EE /* HTTPConnection.m */; };
+		DCA67DC4146B4DB4003411EE /* HTTPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DAE146B4DB4003411EE /* HTTPMessage.m */; };
+		DCA67DC5146B4DB4003411EE /* HTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DB1146B4DB4003411EE /* HTTPServer.m */; };
+		DCA67DC6146B4DB4003411EE /* HTTPAsyncFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DB4146B4DB4003411EE /* HTTPAsyncFileResponse.m */; };
+		DCA67DC7146B4DB4003411EE /* HTTPDataResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DB6146B4DB4003411EE /* HTTPDataResponse.m */; };
+		DCA67DC8146B4DB4003411EE /* HTTPDynamicFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DB8146B4DB4003411EE /* HTTPDynamicFileResponse.m */; };
+		DCA67DC9146B4DB4003411EE /* HTTPFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DBA146B4DB4003411EE /* HTTPFileResponse.m */; };
+		DCA67DCA146B4DB4003411EE /* HTTPRedirectResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DBC146B4DB4003411EE /* HTTPRedirectResponse.m */; };
+		DCA67DCB146B4DB4003411EE /* WebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DBE146B4DB4003411EE /* WebSocket.m */; };
+		DCA67DCF146B4E3C003411EE /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DCE146B4E3C003411EE /* GCDAsyncSocket.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -397,13 +397,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WebServerIPhone_Prefix.pch;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "WebServerIPhone-Info.plist";
 				PRODUCT_NAME = WebServerIPhone;
 			};
@@ -413,11 +411,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WebServerIPhone_Prefix.pch;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "WebServerIPhone-Info.plist";
 				PRODUCT_NAME = WebServerIPhone;
 			};
@@ -427,8 +423,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				SDKROOT = iphoneos;
@@ -439,8 +437,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				SDKROOT = iphoneos;
