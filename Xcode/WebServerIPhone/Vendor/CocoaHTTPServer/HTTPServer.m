@@ -108,6 +108,10 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	dispatch_release(connectionQueue);
 	
 	[asyncSocket setDelegate:nil delegateQueue:NULL];
+	
+	
+	
+	
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
