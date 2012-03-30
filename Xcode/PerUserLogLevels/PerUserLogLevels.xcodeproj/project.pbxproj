@@ -24,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DC28B92D15263ED00043126F /* LumberjackUser.bash */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = LumberjackUser.bash; path = Scripts/LumberjackUser.bash; sourceTree = SOURCE_ROOT; };
 		DC87A6F41525AEA3005A09B0 /* PerUserLogLevels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerUserLogLevels.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC87A6F81525AEA3005A09B0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DC87A6FB1525AEA3005A09B0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -53,7 +54,6 @@
 		DC87A7241525AEB3005A09B0 /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
 		DC87A7251525AEB3005A09B0 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		DC87A72E1525B051005A09B0 /* LumberjackUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LumberjackUser.h; path = ../Xcode/PerUserLogLevels/PerUserLogLevels/LumberjackUser.h; sourceTree = "<group>"; };
-		DC87A7331525B191005A09B0 /* LumberjackUser.bash */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = LumberjackUser.bash; path = PerUserLogLevels/LumberjackUser.bash; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,7 +163,7 @@
 		DC87A7301525B10C005A09B0 /* LumberjackUser */ = {
 			isa = PBXGroup;
 			children = (
-				DC87A7331525B191005A09B0 /* LumberjackUser.bash */,
+				DC28B92D15263ED00043126F /* LumberjackUser.bash */,
 				DC87A72E1525B051005A09B0 /* LumberjackUser.h */,
 			);
 			name = LumberjackUser;
@@ -242,7 +242,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = /Users/robbie/Programs/GitHub/CocoaLumberjack/Xcode/PerUserLogLevels/PerUserLogLevels/LumberjackUser.bash;
+			shellScript = "${PROJECT_DIR}/Scripts/LumberjackUser.bash";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -381,6 +381,7 @@
 				DC87A7141525AEA3005A09B0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -22,3 +22,7 @@ Icon?
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+
+# Other
+Xcode/PerUserLogLevels/PerUserLogLevels/LumberjackUser.h
+Xcode/PerUserLogLevels/PerUserLogLevels/LumberjackUser.temp.h
