@@ -269,7 +269,19 @@ static unsigned int numProcessors;
 	if (format)
 	{
 		va_start(args, format);
-		[self log:asynchronous level:level flag:flag context:context file:file function:function line:line tag:tag format:format args:args];
+		
+		NSString *logMsg = [[NSString alloc] initWithFormat:format arguments:args];
+		DDLogMessage *logMessage = [[DDLogMessage alloc] initWithLogMsg:logMsg
+		                                                          level:level
+		                                                           flag:flag
+		                                                        context:context
+		                                                           file:file
+		                                                       function:function
+		                                                           line:line
+		                                                            tag:tag];
+		
+		[self queueLogMessage:logMessage asynchronously:asynchronous];
+		
 		va_end(args);
 	}
 }
@@ -283,11 +295,11 @@ static unsigned int numProcessors;
        line:(int)line
         tag:(id)tag
      format:(NSString *)format
-       args:(va_list)argList
+       args:(va_list)args
 {
 	if (format)
 	{
-		NSString *logMsg = [[NSString alloc] initWithFormat:format arguments:argList];
+		NSString *logMsg = [[NSString alloc] initWithFormat:format arguments:args];
 		DDLogMessage *logMessage = [[DDLogMessage alloc] initWithLogMsg:logMsg
 		                                                          level:level
 		                                                           flag:flag
