@@ -243,6 +243,23 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
      format:(NSString *)format, ... __attribute__ ((format (__NSString__, 9, 10)));
 
 /**
+ * Logging Primitive.
+ * 
+ * This method can be used if you have a prepared va_list.
+ */
++ (void)log:(BOOL)asynchronous
+      level:(int)level
+       flag:(int)flag
+    context:(int)context
+       file:(const char *)file
+   function:(const char *)function
+       line:(int)line
+        tag:(id)tag
+     format:(NSString *)format
+       args:(va_list)argList;
+
+
+/**
  * Since logging can be asynchronous, there may be times when you want to flush the logs.
  * The framework invokes this automatically when the application quits.
 **/
