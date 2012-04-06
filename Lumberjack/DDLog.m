@@ -286,6 +286,33 @@ static unsigned int numProcessors;
 	}
 }
 
++ (void)log:(BOOL)asynchronous
+      level:(int)level
+       flag:(int)flag
+    context:(int)context
+       file:(const char *)file
+   function:(const char *)function
+       line:(int)line
+        tag:(id)tag
+     format:(NSString *)format
+       args:(va_list)args
+{
+	if (format)
+	{
+		NSString *logMsg = [[NSString alloc] initWithFormat:format arguments:args];
+		DDLogMessage *logMessage = [[DDLogMessage alloc] initWithLogMsg:logMsg
+		                                                          level:level
+		                                                           flag:flag
+		                                                        context:context
+		                                                           file:file
+		                                                       function:function
+		                                                           line:line
+		                                                            tag:tag];
+		
+		[self queueLogMessage:logMessage asynchronously:asynchronous];
+	}
+}
+
 + (void)flushLog
 {
 	dispatch_sync(loggingQueue, ^{ @autoreleasepool {
