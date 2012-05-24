@@ -96,6 +96,7 @@
 @interface DDTTYLoggerColorProfile : NSObject {
 @public
 	int mask;
+	int context;
 	
 	uint8_t fg_r;
 	uint8_t fg_g;
@@ -122,6 +123,7 @@
 }
 
 - (id)initWithForegroundColor:(OSColor *)fgColor backgroundColor:(OSColor *)bgColor flag:(int)mask;
+- (id)initWithForegroundColor:(OSColor *)fgColor backgroundColor:(OSColor *)bgColor flag:(int)mask context:(int)ctxt;
 
 @end
 
@@ -892,17 +894,25 @@ static DDTTYLogger *sharedInstance;
 
 - (void)setForegroundColor:(OSColor *)txtColor backgroundColor:(OSColor *)bgColor forFlag:(int)mask
 {
+	[self setForegroundColor:txtColor backgroundColor:bgColor forFlag:mask context:0];
+}
+
+- (void)setForegroundColor:(OSColor *)txtColor backgroundColor:(OSColor *)bgColor forFlag:(int)mask context:(int)ctxt
+{
 	dispatch_block_t block = ^{ @autoreleasepool {
 		
 		DDTTYLoggerColorProfile *newColorProfile =
-		    [[DDTTYLoggerColorProfile alloc] initWithForegroundColor:txtColor backgroundColor:bgColor flag:mask];
+		    [[DDTTYLoggerColorProfile alloc] initWithForegroundColor:txtColor
+		                                             backgroundColor:bgColor
+		                                                        flag:mask
+		                                                     context:ctxt];
 		
 		NSLogInfo(@"DDTTYLogger: newColorProfile: %@", newColorProfile);
 		
 		NSUInteger i = 0;
 		for (DDTTYLoggerColorProfile *colorProfile in colorProfiles)
 		{
-			if (colorProfile->mask == mask)
+			if ((colorProfile->mask == mask) && (colorProfile->context == ctxt))
 			{
 				break;
 			}
@@ -937,12 +947,17 @@ static DDTTYLogger *sharedInstance;
 
 - (void)clearColorsForFlag:(int)mask
 {
+	[self clearColorsForFlag:mask context:0];
+}
+
+- (void)clearColorsForFlag:(int)mask context:(int)context
+{
 	dispatch_block_t block = ^{ @autoreleasepool {
 		
 		NSUInteger i = 0;
 		for (DDTTYLoggerColorProfile *colorProfile in colorProfiles)
 		{
-			if (colorProfile->mask == mask)
+			if ((colorProfile->mask == mask) && (colorProfile->context == context))
 			{
 				break;
 			}
@@ -1024,7 +1039,7 @@ static DDTTYLogger *sharedInstance;
 		{
 			for (DDTTYLoggerColorProfile *cp in colorProfiles)
 			{
-				if ((logMessage->logFlag & cp->mask) != 0)
+				if ((logMessage->logFlag & cp->mask) && (logMessage->logContext == cp->context))
 				{
 					colorProfile = cp;
 					break;
@@ -1180,9 +1195,15 @@ static DDTTYLogger *sharedInstance;
 
 - (id)initWithForegroundColor:(OSColor *)fgColor backgroundColor:(OSColor *)bgColor flag:(int)aMask
 {
+	return [self initWithForegroundColor:fgColor backgroundColor:bgColor flag:aMask context:0];
+}
+
+- (id)initWithForegroundColor:(OSColor *)fgColor backgroundColor:(OSColor *)bgColor flag:(int)aMask context:(int)ctxt
+{
 	if ((self = [super init]))
 	{
 		mask = aMask;
+		context = ctxt;
 		
 		CGFloat r, g, b;
 		
@@ -1286,8 +1307,8 @@ static DDTTYLogger *sharedInstance;
 - (NSString *)description
 {
 	return [NSString stringWithFormat:
-			@"<DDTTYLoggerColorProfile: %x mask:%i fg:%u,%u,%u bg:%u,%u,%u fgCode:%@ bgCode:%@>",
-			self, mask, fg_r, fg_g, fg_b, bg_r, bg_g, bg_b, fgCodeRaw, bgCodeRaw];
+			@"<DDTTYLoggerColorProfile: %x mask:%i ctxt:%i fg:%u,%u,%u bg:%u,%u,%u fgCode:%@ bgCode:%@>",
+			self, mask, context, fg_r, fg_g, fg_b, bg_r, bg_g, bg_b, fgCodeRaw, bgCodeRaw];
 }
 
 @end

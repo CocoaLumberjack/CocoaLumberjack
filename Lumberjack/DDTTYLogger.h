@@ -81,6 +81,8 @@
  * 
  * If you run the application from a shell, then DDTTYLogger will automatically try to map the given color to
  * the closest available color. (xterm-256color or xterm-color which have 256 and 16 supported colors respectively.)
+ * 
+ * This method invokes setForegroundColor:backgroundColor:forFlag:context:, and passes the default context (0).
 **/
 #if TARGET_OS_IPHONE
 - (void)setForegroundColor:(UIColor *)txtColor backgroundColor:(UIColor *)bgColor forFlag:(int)mask;
@@ -89,9 +91,33 @@
 #endif
 
 /**
- * Allows you to clear color mappings, either per flag or all.
+ * Allows you to customize the color for a particular flag, within a particular logging context.
+ * 
+ * A logging context may identify log messages coming from a 3rd party framework.
+ * Logging context's are explained in further detail here:
+ * https://github.com/robbiehanson/CocoaLumberjack/wiki/CustomContext
+**/
+#if TARGET_OS_IPHONE
+- (void)setForegroundColor:(UIColor *)txtColor backgroundColor:(UIColor *)bgColor forFlag:(int)mask context:(int)ctxt;
+#else
+- (void)setForegroundColor:(NSColor *)txtColor backgroundColor:(NSColor *)bgColor forFlag:(int)mask context:(int)ctxt;
+#endif
+
+/**
+ * Clears the color profiles for a particular flag.
+ * 
+ * This method invokes clearColorsForFlag:context:, and passes the default context (0).
 **/
 - (void)clearColorsForFlag:(int)mask;
+
+/**
+ * Clears the color profiles for a particular flag, within a particular logging context.
+**/
+- (void)clearColorsForFlag:(int)mask context:(int)context;
+
+/**
+ * Clears all color profiles.
+**/
 - (void)clearColorsForAllFlags;
 
 
