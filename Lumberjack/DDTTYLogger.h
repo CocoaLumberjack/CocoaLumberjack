@@ -28,18 +28,72 @@
 
 @interface DDTTYLogger : DDAbstractLogger <DDLogger>
 {
-	BOOL isaTTY;
+	NSCalendar *calendar;
+	NSUInteger calendarUnitFlags;
 	
-	NSDateFormatter *dateFormatter;
-	
-	char *app; // Not null terminated
-	char *pid; // Not null terminated
-	
+	NSString *appName;
+	char *app;
 	size_t appLen;
+	
+	NSString *processID;
+	char *pid;
 	size_t pidLen;
+	
+	BOOL colorsEnabled;
+	NSMutableArray *colorProfiles;
 }
 
 + (DDTTYLogger *)sharedInstance;
+
+/**
+ * Want to use different colors for different log levels?
+ * Enable this property.
+ * 
+ * If you run the application via the Terminal (not Xcode),
+ * the logger will map colors to xterm-256color or xterm-color (if available).
+ * 
+ * Xcode does NOT natively support colors in the Xcode debugging console.
+ * You'll need to install the XcodeColors plugin to see colors in the Xcode console.
+ * https://github.com/robbiehanson/XcodeColors
+ * 
+ * The default value if NO.
+**/
+@property (readwrite, assign) BOOL colorsEnabled;
+
+/**
+ * The default color set (foregroundColor, backgroundColor) is:
+ * 
+ * - LOG_FLAG_ERROR = (red, nil)
+ * - LOG_FLAG_WARN  = (orange, nil)
+ * 
+ * You can customize the colors however you see fit.
+ * There are a few things you may need to be aware of:
+ * 
+ * You are passing a flag, NOT a level.
+ * 
+ * GOOD : [ttyLogger setForegroundColor:pink backgroundColor:nil forFlag:LOG_FLAG_INFO];  // <- Good :)
+ *  BAD : [ttyLogger setForegroundColor:pink backgroundColor:nil forFlag:LOG_LEVEL_INFO]; // <- BAD! :(
+ * 
+ * LOG_FLAG_INFO  = 0...00100
+ * LOG_LEVEL_INFO = 0...00111 <- Would match LOG_FLAG_INFO and LOG_FLAG_WARN and LOG_FLAG_ERROR
+ * 
+ * If you run the application within Xcode, then the XcodeColors plugin is required.
+ * 
+ * If you run the application from a shell, then DDTTYLogger will automatically try to map the given color to
+ * the closest available color. (xterm-256color or xterm-color which have 256 and 16 supported colors respectively.)
+**/
+#if TARGET_OS_IPHONE
+- (void)setForegroundColor:(UIColor *)txtColor backgroundColor:(UIColor *)bgColor forFlag:(int)mask;
+#else
+- (void)setForegroundColor:(NSColor *)txtColor backgroundColor:(NSColor *)bgColor forFlag:(int)mask;
+#endif
+
+/**
+ * Allows you to clear color mappings, either per flag or all.
+**/
+- (void)clearColorsForFlag:(int)mask;
+- (void)clearColorsForAllFlags;
+
 
 // Inherited from DDAbstractLogger
 
