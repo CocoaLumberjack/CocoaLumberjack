@@ -506,12 +506,12 @@
 	}
 	else
 	{
-		dispatch_queue_t loggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != loggingQueue, @"Core architecture requirement failure");
+		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
 		
 		__block unsigned long long result;
 		
-		dispatch_sync(loggingQueue, ^{
+		dispatch_sync(globalLoggingQueue, ^{
 			dispatch_sync(loggerQueue, ^{
 				result = maximumFileSize;
 			});
@@ -540,10 +540,10 @@
 	}
 	else
 	{
-		dispatch_queue_t loggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != loggingQueue, @"Core architecture requirement failure");
+		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
 		
-		dispatch_async(loggingQueue, ^{
+		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
 		});
 	}
@@ -564,12 +564,12 @@
 	}
 	else
 	{
-		dispatch_queue_t loggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != loggingQueue, @"Core architecture requirement failure");
+		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
 		
 		__block NSTimeInterval result;
 		
-		dispatch_sync(loggingQueue, ^{
+		dispatch_sync(globalLoggingQueue, ^{
 			dispatch_sync(loggerQueue, ^{
 				result = rollingFrequency;
 			});
@@ -598,10 +598,10 @@
 	}
 	else
 	{
-		dispatch_queue_t loggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != loggingQueue, @"Core architecture requirement failure");
+		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
 		
-		dispatch_async(loggingQueue, ^{
+		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
 		});
 	}
@@ -672,10 +672,10 @@
 	}
 	else
 	{
-		dispatch_queue_t loggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != loggingQueue, @"Core architecture requirement failure");
+		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
 		
-		dispatch_async(loggingQueue, ^{
+		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
 		});
 	}
