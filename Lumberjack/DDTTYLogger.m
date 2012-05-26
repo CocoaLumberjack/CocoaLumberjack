@@ -676,6 +676,46 @@ static DDTTYLogger *sharedInstance;
 	NSAssert([codes_fg count] == [colors count],   @"Invalid colors/codes array(s)");
 }
 
++ (void)getRed:(CGFloat *)rPtr green:(CGFloat *)gPtr blue:(CGFloat *)bPtr fromColor:(OSColor *)color
+{
+	#if TARGET_OS_IPHONE
+	
+	// iOS
+	
+	if ([color respondsToSelector:@selector(getRed:green:blue:alpha:)])
+	{
+		[color getRed:rPtr green:gPtr blue:bPtr alpha:NULL];
+	}
+	else
+	{
+		// The method getRed:green:blue:alpha: was only available starting iOS 5.
+		// So in iOS 4 and earlier, we have to jump through hoops.
+		
+		CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+		
+		unsigned char pixel[4];
+		CGContextRef context = CGBitmapContextCreate(&pixel, 1, 1, 8, 4, rgbColorSpace, kCGImageAlphaNoneSkipLast);
+		
+		CGContextSetFillColorWithColor(context, [color CGColor]);
+		CGContextFillRect(context, CGRectMake(0, 0, 1, 1));
+		
+		if (rPtr) { *rPtr = pixel[0] / 255.0f; }
+		if (gPtr) { *gPtr = pixel[1] / 255.0f; }
+		if (bPtr) { *bPtr = pixel[2] / 255.0f; }
+		
+		CGContextRelease(context);
+		CGColorSpaceRelease(rgbColorSpace);
+	}
+	
+	#else
+	
+	// Mac OS X
+	
+	[color getRed:rPtr green:gPtr blue:bPtr alpha:NULL];
+	
+	#endif
+}
+
 /**
  * Maps the given color to the closest available color supported by the shell.
  * The shell may support 256 colors, or only 16.
@@ -687,7 +727,7 @@ static DDTTYLogger *sharedInstance;
 + (NSUInteger)codeIndexForColor:(OSColor *)inColor
 {
 	CGFloat inR, inG, inB;
-	[inColor getRed:&inR green:&inG blue:&inB alpha:NULL];
+	[self getRed:&inR green:&inG blue:&inB fromColor:inColor];
 	
 	NSUInteger bestIndex = 0;
 	CGFloat lowestDistance = 100.0f;
@@ -698,7 +738,7 @@ static DDTTYLogger *sharedInstance;
 		// Calculate Euclidean distance (lower value means closer to given color)
 		
 		CGFloat r, g, b;
-		[color getRed:&r green:&g blue:&b alpha:NULL];
+		[self getRed:&r green:&g blue:&b fromColor:color];
 		
 	#if CGFLOAT_IS_DOUBLE
 		CGFloat distance = sqrt(pow(r-inR, 2.0) + pow(g-inG, 2.0) + pow(b-inB, 2.0));
@@ -1207,17 +1247,22 @@ static DDTTYLogger *sharedInstance;
 		
 		CGFloat r, g, b;
 		
-		[fgColor getRed:&r green:&g blue:&b alpha:NULL];
-		
-		fg_r = (uint8_t)(r * 255.0f);
-		fg_g = (uint8_t)(g * 255.0f);
-		fg_b = (uint8_t)(b * 255.0f);
-		
-		[bgColor getRed:&r green:&g blue:&b alpha:NULL];
-		
-		bg_r = (uint8_t)(r * 255.0f);
-		bg_g = (uint8_t)(g * 255.0f);
-		bg_b = (uint8_t)(b * 255.0f);
+		if (fgColor)
+		{
+			[DDTTYLogger getRed:&r green:&g blue:&b fromColor:fgColor];
+			
+			fg_r = (uint8_t)(r * 255.0f);
+			fg_g = (uint8_t)(g * 255.0f);
+			fg_b = (uint8_t)(b * 255.0f);
+		}
+		if (bgColor)
+		{
+			[DDTTYLogger getRed:&r green:&g blue:&b fromColor:bgColor];
+			
+			bg_r = (uint8_t)(r * 255.0f);
+			bg_g = (uint8_t)(g * 255.0f);
+			bg_b = (uint8_t)(b * 255.0f);
+		}
 		
 		if (fgColor && isaColorTTY)
 		{
