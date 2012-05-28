@@ -793,6 +793,16 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 
 @implementation DDLogMessage
 
+static char *dd_c_string_copy(const char *aString)
+{
+	if (aString == NULL) return NULL;
+	size_t length = strlen(aString);
+	char * result = malloc(length + 1);
+	strncpy(result, aString, length);
+	result[length] = 0;
+	return result;
+}
+
 - (id)initWithLogMsg:(NSString *)msg
                level:(int)level
                 flag:(int)flag
@@ -808,8 +818,8 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 		logLevel   = level;
 		logFlag    = flag;
 		logContext = context;
-		file       = aFile;
-		function   = aFunction;
+		file       = dd_c_string_copy(aFile);
+		function   = dd_c_string_copy(aFunction);
 		lineNumber = line;
 		tag        = aTag;
 		
@@ -818,13 +828,7 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 		machThreadID = pthread_mach_thread_np(pthread_self());
 		
 		const char *label = dispatch_queue_get_label(dispatch_get_current_queue());
-		if (label)
-		{
-			size_t labelLength = strlen(label);
-			queueLabel = malloc(labelLength+1);
-			strncpy(queueLabel, label, labelLength);
-			queueLabel[labelLength] = 0;
-		}
+		queueLabel = dd_c_string_copy(label);
 		
 		threadName = [[NSThread currentThread] name];
 	}
@@ -853,6 +857,12 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 {
 	if (queueLabel != NULL) {
 		free(queueLabel);
+	}
+	if (file != NULL) {
+		free(file);
+	}
+	if (function != NULL) {
+		free(function);
 	}
 }
 
