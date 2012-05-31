@@ -246,7 +246,8 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * Logging Primitive.
  * 
  * This method can be used if you have a prepared va_list.
- */
+**/
+
 + (void)log:(BOOL)asynchronous
       level:(int)level
        flag:(int)flag
@@ -423,6 +424,12 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * If you write custom loggers or formatters, you will be dealing with objects of this class.
 **/
 
+enum {
+	DDLogMessageCopyFile     = 1 << 0,
+	DDLogMessageCopyFunction = 1 << 1,
+};
+typedef int DDLogMessageOptions;
+
 @interface DDLogMessage : NSObject
 {
 
@@ -435,23 +442,34 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 	int logContext;
 	NSString *logMsg;
 	NSDate *timestamp;
-	const char *file;
-	const char *function;
+	char *file;
+	char *function;
 	int lineNumber;
 	mach_port_t machThreadID;
     char *queueLabel;
 	NSString *threadName;
-	id tag; // For 3rd party extensions to the framework, where flags and contexts aren't enough.
+	
+	// For 3rd party extensions to the framework, where flags and contexts aren't enough.
+	id tag;
+	
+	// For 3rd party extensions that manually create DDLogMessage instances.
+	DDLogMessageOptions options;
 }
 
 /**
- * The initializer is somewhat reserved for internal use.
- * However, if you find need to manually create logMessage objects, there is one thing you should be aware of:
+ * Standard init method for a log message object.
+ * Used by the logging primitives. (And the macros use the logging primitives.)
  * 
- * The initializer expects the file and function parameters to be string literals.
+ * If you find need to manually create logMessage objects, there is one thing you should be aware of:
+ * 
+ * If no flags are passed, the method expects the file and function parameters to be string literals.
  * That is, it expects the given strings to exist for the duration of the object's lifetime,
  * and it expects the given strings to be immutable.
  * In other words, it does not copy these strings, it simply points to them.
+ * This is due to the fact that __FILE__ and __FUNCTION__ are usually used to specify these parameters,
+ * so it makes sense to optimize and skip the unnecessary allocations.
+ * However, if you need them to be copied you may use the options parameter to specify this.
+ * Options is a bitmask which supports DDLogMessageCopyFile and DDLogMessageCopyFunction.
 **/
 - (id)initWithLogMsg:(NSString *)logMsg
                level:(int)logLevel
@@ -460,7 +478,8 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
                 file:(const char *)file
             function:(const char *)function
                 line:(int)line
-                 tag:(id)tag;
+                 tag:(id)tag
+             options:(DDLogMessageOptions)optionsMask;
 
 /**
  * Returns the threadID as it appears in NSLog.

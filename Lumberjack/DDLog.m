@@ -278,7 +278,8 @@ static unsigned int numProcessors;
 		                                                           file:file
 		                                                       function:function
 		                                                           line:line
-		                                                            tag:tag];
+		                                                            tag:tag
+		                                                        options:0];
 		
 		[self queueLogMessage:logMessage asynchronously:asynchronous];
 		
@@ -307,7 +308,8 @@ static unsigned int numProcessors;
 		                                                           file:file
 		                                                       function:function
 		                                                           line:line
-		                                                            tag:tag];
+		                                                            tag:tag
+		                                                        options:0];
 		
 		[self queueLogMessage:logMessage asynchronously:asynchronous];
 	}
@@ -793,6 +795,18 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 
 @implementation DDLogMessage
 
+static char *dd_str_copy(const char *str)
+{
+	if (str == NULL) return NULL;
+	
+	size_t length = strlen(str);
+	char * result = malloc(length + 1);
+	strncpy(result, str, length);
+	result[length] = 0;
+	
+	return result;
+}
+
 - (id)initWithLogMsg:(NSString *)msg
                level:(int)level
                 flag:(int)flag
@@ -801,6 +815,7 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
             function:(const char *)aFunction
                 line:(int)line
                  tag:(id)aTag
+             options:(DDLogMessageOptions)optionsMask
 {
 	if ((self = [super init]))
 	{
@@ -808,23 +823,25 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 		logLevel   = level;
 		logFlag    = flag;
 		logContext = context;
-		file       = aFile;
-		function   = aFunction;
 		lineNumber = line;
 		tag        = aTag;
+		options    = optionsMask;
+		
+		if (options & DDLogMessageCopyFile)
+			file = dd_str_copy(aFile);
+		else
+			file = (char *)aFile;
+		
+		if (options & DDLogMessageCopyFunction)
+			file = dd_str_copy(aFunction);
+		else
+			function = (char *)aFunction;
 		
 		timestamp = [[NSDate alloc] init];
 		
 		machThreadID = pthread_mach_thread_np(pthread_self());
 		
-		const char *label = dispatch_queue_get_label(dispatch_get_current_queue());
-		if (label)
-		{
-			size_t labelLength = strlen(label);
-			queueLabel = malloc(labelLength+1);
-			strncpy(queueLabel, label, labelLength);
-			queueLabel[labelLength] = 0;
-		}
+		queueLabel = dd_str_copy(dispatch_queue_get_label(dispatch_get_current_queue()));
 		
 		threadName = [[NSThread currentThread] name];
 	}
@@ -851,9 +868,14 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
 
 - (void)dealloc
 {
-	if (queueLabel != NULL) {
+	if (file && (options & DDLogMessageCopyFile))
+		free(file);
+	
+	if (function && (options & DDLogMessageCopyFunction))
+		free(function);
+	
+	if (queueLabel)
 		free(queueLabel);
-	}
 }
 
 @end
