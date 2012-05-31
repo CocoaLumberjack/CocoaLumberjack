@@ -1088,10 +1088,15 @@ static DDTTYLogger *sharedInstance;
 		}
 		
 		// Convert log message to C string.
-		// The technique below is faster than using the UTF8String method.
+		// 
+		// We use the stack instead of the heap for speed if possible.
+		// But we're extra cautious to avoid a stack overflow.
 		
 		NSUInteger msgLen = [logMsg lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-		char msg[msgLen + 1];
+		const BOOL useStack = msgLen < (1024 * 4);
+		
+		char msgStack[useStack ? (msgLen + 1) : 0];
+		char *msg = useStack ? msgStack : (char *)malloc(msgLen + 1);
 		
 		[logMsg getCString:msg maxLength:(msgLen + 1) encoding:NSUTF8StringEncoding];
 		
@@ -1218,6 +1223,10 @@ static DDTTYLogger *sharedInstance;
 			v[10].iov_len = (msg[msgLen] == '\n') ? 0 : 1;
 			
 			writev(STDERR_FILENO, v, 12);
+		}
+		
+		if (!useStack) {
+			free(msg);
 		}
 	}
 }
