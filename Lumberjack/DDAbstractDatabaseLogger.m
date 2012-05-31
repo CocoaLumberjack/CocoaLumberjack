@@ -115,6 +115,12 @@
 	if (saveTimer)
 	{
 		dispatch_source_cancel(saveTimer);
+		if (saveTimerSuspended)
+		{
+			// Must resume a timer before releasing it (or it will crash)
+			dispatch_resume(saveTimer);
+			saveTimerSuspended = NO;
+		}
 		dispatch_release(saveTimer);
 		saveTimer = NULL;
 	}
