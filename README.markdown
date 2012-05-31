@@ -34,4 +34,4 @@ This framework is for you if:
 Can't find the answer to your question in any of the [wiki](https://github.com/robbiehanson/CocoaLumberjack/wiki) articles? Try the **[mailing list](http://groups.google.com/group/cocoalumberjack)**.
 <br/>
 <br/>
-Love the project? Wanna buy me a coffee? (or a beer :D) [![donation](http://www.paypal.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RW6R9U4ZWWZ8C)
+Love the project? Wanna buy me a coffee? (or a beer :D) [![donation](http://www.paypal.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UZRA26JPJB3DA)
