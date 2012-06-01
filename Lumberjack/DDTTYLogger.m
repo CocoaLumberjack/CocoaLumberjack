@@ -55,14 +55,7 @@
 // To reset the foreground and background color (to default values) in one operation:
 // Insert the ESCAPE_SEQ into your string, followed by ";"
 
-#define XCODE_COLORS_ESCAPE_SEQ_MAC "\033["
-#define XCODE_COLORS_ESCAPE_SEQ_IOS "\xC2\xA0["
-
-#if TARGET_OS_IPHONE
-  #define XCODE_COLORS_ESCAPE_SEQ  XCODE_COLORS_ESCAPE_SEQ_IOS
-#else
-  #define XCODE_COLORS_ESCAPE_SEQ  XCODE_COLORS_ESCAPE_SEQ_MAC
-#endif
+#define XCODE_COLORS_ESCAPE_SEQ "\033["
 
 #define XCODE_COLORS_RESET_FG  XCODE_COLORS_ESCAPE_SEQ "fg;" // Clear any foreground color
 #define XCODE_COLORS_RESET_BG  XCODE_COLORS_ESCAPE_SEQ "bg;" // Clear any background color
