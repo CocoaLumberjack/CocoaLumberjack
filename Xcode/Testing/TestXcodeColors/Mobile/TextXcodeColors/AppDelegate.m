@@ -46,6 +46,25 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
 	self.window.rootViewController = self.viewController;
 	[self.window makeKeyAndVisible];
+	
+	// Update label for better understanding.
+	// 
+	// Be sure to install XcodeColors (an Xcode plugin)
+	// https://github.com/robbiehanson/XcodeColors
+	
+	char *xcode_colors = getenv("XcodeColors");
+	if (xcode_colors)
+	{
+		if (strcmp(xcode_colors, "YES") == 0)
+			viewController.label.text = @"XcodeColors enabled";
+		else
+			viewController.label.text = @"XcodeColors disabled";
+	}
+	else
+	{
+		viewController.label.text = @"XcodeColors not detected";
+	}
+	
 	return YES;
 }
 

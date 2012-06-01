@@ -3,4 +3,6 @@
 
 @implementation ViewController
 
+@synthesize label;
+
 @end
