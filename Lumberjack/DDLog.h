@@ -39,26 +39,33 @@
 @protocol DDLogFormatter;
 
 /**
- * Define our big multiline macros so all the other macros will be easy to read.
+ * This is the single macro that all other macros below compile into.
+ * This big multiline macro makes all the other macros easier to read.
 **/
 
-#define LOG_MACRO(isAsynchronous, lvl, flg, ctx, fnct, frmt, ...) \
-  [DDLog log:isAsynchronous                                       \
-       level:lvl                                                  \
-        flag:flg                                                  \
-     context:ctx                                                  \
-        file:__FILE__                                             \
-    function:fnct                                                 \
-        line:__LINE__                                             \
-         tag:nil                                                  \
+#define LOG_MACRO(isAsynchronous, lvl, flg, ctx, atag, fnct, frmt, ...) \
+  [DDLog log:isAsynchronous                                             \
+       level:lvl                                                        \
+        flag:flg                                                        \
+     context:ctx                                                        \
+        file:__FILE__                                                   \
+    function:fnct                                                       \
+        line:__LINE__                                                   \
+         tag:atag                                                       \
       format:(frmt), ##__VA_ARGS__]
 
+/**
+ * Define the Objective-C and C versions of the macro.
+ * These automatically inject the proper function name for either an objective-c method or c function.
+ * 
+ * We also define shorthand versions for asynchronous and synchronous logging.
+**/
 
 #define LOG_OBJC_MACRO(async, lvl, flg, ctx, frmt, ...) \
-             LOG_MACRO(async, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+             LOG_MACRO(async, lvl, flg, ctx, nil, sel_getName(_cmd), frmt, ##__VA_ARGS__)
 
 #define LOG_C_MACRO(async, lvl, flg, ctx, frmt, ...) \
-          LOG_MACRO(async, lvl, flg, ctx, __FUNCTION__, frmt, ##__VA_ARGS__)
+          LOG_MACRO(async, lvl, flg, ctx, nil, __FUNCTION__, frmt, ##__VA_ARGS__)
 
 #define  SYNC_LOG_OBJC_MACRO(lvl, flg, ctx, frmt, ...) \
               LOG_OBJC_MACRO( NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
@@ -72,9 +79,26 @@
 #define ASYNC_LOG_C_MACRO(lvl, flg, ctx, frmt, ...) \
               LOG_C_MACRO(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
+/**
+ * Define version of the macro that only execute if the logLevel is above the threshold.
+ * The compiled versions essentially look like this:
+ * 
+ * if (logFlagForThisLogMsg & ddLogLevel) { execute log message }
+ * 
+ * As shown further below, Lumberjack actually uses a bitmask as opposed to primitive log levels.
+ * This allows for a great amount of flexibility and some pretty advanced fine grained logging techniques.
+ * 
+ * Note that when compiler optimizations are enabled (as they are for your release builds),
+ * the log messages above your logging threshold will automatically be compiled out.
+ * 
+ * (If the compiler sees ddLogLevel declared as a constant, the compiler simply checks to see if the 'if' statement
+ *  would execute, and if not it strips it from the binary.)
+ * 
+ * We also define shorthand versions for asynchronous and synchronous logging.
+**/
 
 #define LOG_MAYBE(async, lvl, flg, ctx, fnct, frmt, ...) \
-  do { if(lvl & flg) LOG_MACRO(async, lvl, flg, ctx, fnct, frmt, ##__VA_ARGS__); } while(0)
+  do { if(lvl & flg) LOG_MACRO(async, lvl, flg, ctx, nil, fnct, frmt, ##__VA_ARGS__); } while(0)
 
 #define LOG_OBJC_MAYBE(async, lvl, flg, ctx, frmt, ...) \
              LOG_MAYBE(async, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
@@ -93,6 +117,31 @@
 
 #define ASYNC_LOG_C_MAYBE(lvl, flg, ctx, frmt, ...) \
               LOG_C_MAYBE(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
+
+/**
+ * Define versions of the macros that also accept tags.
+ * 
+ * The DDLogMessage object includes a 'tag' ivar that may be used for a variety of purposes.
+ * It may be used to pass custom information to loggers or formatters.
+ * Or it may be used by 3rd party extensions to the framework.
+ * 
+ * Thes macros just make it a little easier to extend logging functionality.
+**/
+
+#define LOG_OBJC_TAG_MACRO(async, lvl, flg, ctx, tag, frmt, ...) \
+                 LOG_MACRO(async, lvl, flg, ctx, tag, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+
+#define LOG_C_TAG_MACRO(async, lvl, flg, ctx, tag, frmt, ...) \
+              LOG_MACRO(async, lvl, flg, ctx, tag, __FUNCTION__, frmt, ##__VA_ARGS__)
+
+#define LOG_TAG_MAYBE(async, lvl, flg, ctx, tag, fnct, frmt, ...) \
+  do { if(lvl & flg) LOG_MACRO(async, lvl, flg, ctx, tag, fnct, frmt, ##__VA_ARGS__); } while(0)
+
+#define LOG_OBJC_TAG_MAYBE(async, lvl, flg, ctx, tag, frmt, ...) \
+             LOG_TAG_MAYBE(async, lvl, flg, ctx, tag, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+
+#define LOG_C_TAG_MAYBE(async, lvl, flg, ctx, tag, frmt, ...) \
+          LOG_TAG_MAYBE(async, lvl, flg, ctx, tag, __FUNCTION__, frmt, ##__VA_ARGS__)
 
 /**
  * Define the standard options.
@@ -308,8 +357,9 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 
 /**
  * Formatters may optionally be added to any logger.
- * If no formatter is set, the logger simply logs the message as it is given in logMessage.
- * Or it may use its own built in formatting style.
+ * 
+ * If no formatter is set, the logger simply logs the message as it is given in logMessage,
+ * or it may use its own built in formatting style.
 **/
 - (id <DDLogFormatter>)logFormatter;
 - (void)setLogFormatter:(id <DDLogFormatter>)formatter;
