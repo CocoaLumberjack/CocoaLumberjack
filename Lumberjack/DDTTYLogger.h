@@ -1,5 +1,4 @@
 #import <Foundation/Foundation.h>
-
 #import "DDLog.h"
 
 /**
@@ -40,10 +39,28 @@
 	size_t pidLen;
 	
 	BOOL colorsEnabled;
-	NSMutableArray *colorProfiles;
+	NSMutableArray *colorProfilesArray;
+	NSMutableDictionary *colorProfilesDict;
 }
 
 + (DDTTYLogger *)sharedInstance;
+
+/* Inherited from the DDLogger protocol:
+ * 
+ * Formatters may optionally be added to any logger.
+ * 
+ * If no formatter is set, the logger simply logs the message as it is given in logMessage,
+ * or it may use its own built in formatting style.
+ * 
+ * More information about formatters can be found here:
+ * https://github.com/robbiehanson/CocoaLumberjack/wiki/CustomFormatters
+ * 
+ * The actual implementation of these methods is inherited from DDAbstractLogger.
+
+- (id <DDLogFormatter>)logFormatter;
+- (void)setLogFormatter:(id <DDLogFormatter>)formatter;
+ 
+*/
 
 /**
  * Want to use different colors for different log levels?
@@ -67,9 +84,7 @@
  * - LOG_FLAG_WARN  = (orange, nil)
  * 
  * You can customize the colors however you see fit.
- * There are a few things you may need to be aware of:
- * 
- * You are passing a flag, NOT a level.
+ * Please note that you are passing a flag, NOT a level.
  * 
  * GOOD : [ttyLogger setForegroundColor:pink backgroundColor:nil forFlag:LOG_FLAG_INFO];  // <- Good :)
  *  BAD : [ttyLogger setForegroundColor:pink backgroundColor:nil forFlag:LOG_LEVEL_INFO]; // <- BAD! :(
@@ -79,10 +94,10 @@
  * 
  * If you run the application within Xcode, then the XcodeColors plugin is required.
  * 
- * If you run the application from a shell, then DDTTYLogger will automatically try to map the given color to
+ * If you run the application from a shell, then DDTTYLogger will automatically map the given color to
  * the closest available color. (xterm-256color or xterm-color which have 256 and 16 supported colors respectively.)
  * 
- * This method invokes setForegroundColor:backgroundColor:forFlag:context:, and passes the default context (0).
+ * This method invokes setForegroundColor:backgroundColor:forFlag:context: and passes the default context (0).
 **/
 #if TARGET_OS_IPHONE
 - (void)setForegroundColor:(UIColor *)txtColor backgroundColor:(UIColor *)bgColor forFlag:(int)mask;
@@ -91,9 +106,11 @@
 #endif
 
 /**
- * Allows you to customize the color for a particular flag, within a particular logging context.
+ * Just like setForegroundColor:backgroundColor:flag, but allows you to specify a particular logging context.
  * 
- * A logging context may identify log messages coming from a 3rd party framework.
+ * A logging context is often used to identify log messages coming from a 3rd party framework,
+ * although logging context's can be used for many different functions.
+ * 
  * Logging context's are explained in further detail here:
  * https://github.com/robbiehanson/CocoaLumberjack/wiki/CustomContext
 **/
@@ -104,26 +121,41 @@
 #endif
 
 /**
- * Clears the color profiles for a particular flag.
+ * Similar to the methods above, but allows you to map DDLogMessage->tag to a particular color profile.
+ * For example, you could do something like this:
  * 
- * This method invokes clearColorsForFlag:context:, and passes the default context (0).
+ * static NSString *const PurpleTag = @"PurpleTag";
+ * 
+ * #define DDLogPurple(frmt, ...) LOG_OBJC_TAG_MACRO(NO, 0, 0, 0, PurpleTag, frmt, ##__VA_ARGS__)
+ * 
+ * And then in your applicationDidFinishLaunching, or wherever you configure Lumberjack:
+ * 
+ * #if TARGET_OS_IPHONE
+ *   UIColor *purple = [UIColor colorWithRed:(64/255.0) green:(0/255.0) blue:(128/255.0) alpha:1.0];
+ * #else
+ *   NSColor *purple = [NSColor colorWithCalibratedRed:(64/255.0) green:(0/255.0) blue:(128/255.0) alpha:1.0];
+ * 
+ * [[DDTTYLogger sharedInstance] setForegroundColor:purple backgroundColor:nil forTag:PurpleTag];
+ * [DDLog addLogger:[DDTTYLogger sharedInstance]];
+ * 
+ * This would essentially give you a straight NSLog replacement that prints in purple:
+ * 
+ * DDLogPurple(@"I'm a purple log message!");
+**/
+#if TARGET_OS_IPHONE
+- (void)setForegroundColor:(UIColor *)txtColor backgroundColor:(UIColor *)bgColor forTag:(id <NSCopying>)tag;
+#else
+- (void)setForegroundColor:(NSColor *)txtColor backgroundColor:(NSColor *)bgColor forTag:(id <NSCopying>)tag;
+#endif
+
+/**
+ * Clearing color profiles.
 **/
 - (void)clearColorsForFlag:(int)mask;
-
-/**
- * Clears the color profiles for a particular flag, within a particular logging context.
-**/
 - (void)clearColorsForFlag:(int)mask context:(int)context;
-
-/**
- * Clears all color profiles.
-**/
+- (void)clearColorsForTag:(id <NSCopying>)tag;
 - (void)clearColorsForAllFlags;
-
-
-// Inherited from DDAbstractLogger
-
-// - (id <DDLogFormatter>)logFormatter;
-// - (void)setLogFormatter:(id <DDLogFormatter>)formatter;
+- (void)clearColorsForAllTags;
+- (void)clearAllColors;
 
 @end

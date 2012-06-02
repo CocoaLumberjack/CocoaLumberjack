@@ -6,6 +6,11 @@
 // Log levels: off, error, warn, info, verbose
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
+@interface AppDelegate ()
+- (void)demoColorTags;
+@end
+
+#pragma mark -
 
 @implementation AppDelegate
 
@@ -34,11 +39,19 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	// Now let's do some customization:
 	// Info  : Pink
 	
+  #if TARGET_OS_IPHONE
 	UIColor *pink = [UIColor colorWithRed:(255/255.0) green:(58/255.0) blue:(159/255.0) alpha:1.0];
+  #else
+	NSColor *pink = [NSColor colorWithCalibratedRed:(255/255.0) green:(58/255.0) blue:(159/255.0) alpha:1.0];
+  #endif
 	
 	[[DDTTYLogger sharedInstance] setForegroundColor:pink backgroundColor:nil forFlag:LOG_FLAG_INFO];
 	
 	DDLogInfo(@"Warming up printer (post-customization)");
+	
+	// Now let's get crazy
+	
+	[self demoColorTags];
 	
 	// Normal iOS UI stuff
 	
@@ -66,6 +79,33 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	}
 	
 	return YES;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Lumberjack is extermely flexible.
+ * 
+ * Below we're going to make a straight NSLog replacement that prints in color.
+ * We're also going to demonstrate that log levels are not a requirement to use Lumberjack.
+**/
+
+static NSString *const PurpleTag = @"PurpleTag";
+
+#define DDLogPurple(frmt, ...) LOG_OBJC_TAG_MACRO(NO, 0, 0, 0, PurpleTag, frmt, ##__VA_ARGS__)
+
+
+- (void)demoColorTags
+{
+  #if TARGET_OS_IPHONE
+	UIColor *purple = [UIColor colorWithRed:(64/255.0) green:(0/255.0) blue:(128/255.0) alpha:1.0];
+  #else
+	NSColor *purple = [NSColor colorWithCalibratedRed:(64/255.0) green:(0/255.0) blue:(128/255.0) alpha:1.0];
+  #endif
+	
+	[[DDTTYLogger sharedInstance] setForegroundColor:purple backgroundColor:nil forTag:PurpleTag];
+	
+	DDLogPurple(@"I'm a purple log message.");
 }
 
 @end
