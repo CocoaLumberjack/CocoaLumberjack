@@ -62,8 +62,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	
 	// Update label for better understanding.
 	// 
-	// Be sure to install XcodeColors (an Xcode plugin)
-	// https://github.com/robbiehanson/XcodeColors
+	// Be sure to follow the instructions for seting up XcodeColors here:
+	// https://github.com/robbiehanson/CocoaLumberjack/wiki/XcodeColors
 	
 	char *xcode_colors = getenv("XcodeColors");
 	if (xcode_colors)

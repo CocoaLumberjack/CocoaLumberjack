@@ -1,4 +1,9 @@
 #import <Foundation/Foundation.h>
+
+#if !TARGET_OS_IPHONE
+#import <AppKit/NSColor.h>
+#endif
+
 #import "DDLog.h"
 
 /**
