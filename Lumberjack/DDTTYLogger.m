@@ -1473,7 +1473,7 @@ static DDTTYLogger *sharedInstance;
 - (NSString *)description
 {
 	return [NSString stringWithFormat:
-			@"<DDTTYLoggerColorProfile: %x mask:%i ctxt:%i fg:%u,%u,%u bg:%u,%u,%u fgCode:%@ bgCode:%@>",
+			@"<DDTTYLoggerColorProfile: %p mask:%i ctxt:%i fg:%u,%u,%u bg:%u,%u,%u fgCode:%@ bgCode:%@>",
 			self, mask, context, fg_r, fg_g, fg_b, bg_r, bg_g, bg_b, fgCodeRaw, bgCodeRaw];
 }
 
