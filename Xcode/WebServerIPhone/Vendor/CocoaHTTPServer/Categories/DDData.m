@@ -35,7 +35,7 @@ static char encodingTable[64] = {
     
     for (i = 0; i < [self length]; ++i)
 	{
-        [stringBuffer appendFormat:@"%02x", (unsigned long)dataBuffer[i]];
+        [stringBuffer appendFormat:@"%02x", (unsigned int)dataBuffer[i]];
 	}
     
     return [stringBuffer copy];

@@ -15,6 +15,7 @@
 		2899E5220DE3E06400AC0155 /* WebServerIPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* WebServerIPhoneViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* WebServerIPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* WebServerIPhoneViewController.m */; };
+		DC588A1F158DF014007AFCFC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC588A1E158DF014007AFCFC /* Security.framework */; };
 		DC987C90119294FD0020FF52 /* MyHTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987C8B119294FD0020FF52 /* MyHTTPConnection.m */; };
 		DC987C92119294FD0020FF52 /* WebSocketLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987C8F119294FD0020FF52 /* WebSocketLogger.m */; };
 		DC987C96119295650020FF52 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC987C95119295650020FF52 /* CFNetwork.framework */; };
@@ -57,6 +58,7 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* WebServerIPhone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebServerIPhone_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* WebServerIPhone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WebServerIPhone-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		DC588A1E158DF014007AFCFC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		DC987C8A119294FD0020FF52 /* MyHTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyHTTPConnection.h; path = Classes/MyHTTPConnection.h; sourceTree = "<group>"; };
 		DC987C8B119294FD0020FF52 /* MyHTTPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyHTTPConnection.m; path = Classes/MyHTTPConnection.m; sourceTree = "<group>"; };
 		DC987C8E119294FD0020FF52 /* WebSocketLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebSocketLogger.h; path = Classes/WebSocketLogger.h; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC588A1F158DF014007AFCFC /* Security.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -187,6 +190,7 @@
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
 				DC987C95119295650020FF52 /* CFNetwork.framework */,
+				DC588A1E158DF014007AFCFC /* Security.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

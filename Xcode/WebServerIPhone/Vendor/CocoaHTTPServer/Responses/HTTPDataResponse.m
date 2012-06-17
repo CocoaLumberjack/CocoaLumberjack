@@ -48,7 +48,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_OFF; // | HTTP_LOG_FLAG_TRACE;
 
 - (void)setOffset:(UInt64)offsetParam
 {
-	HTTPLogTrace2(@"%@[%p]: setOffset:%llu", THIS_FILE, self, offset);
+	HTTPLogTrace2(@"%@[%p]: setOffset:%lu", THIS_FILE, self, (unsigned long)offset);
 	
 	offset = (NSUInteger)offsetParam;
 }
