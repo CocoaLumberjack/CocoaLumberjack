@@ -1212,7 +1212,7 @@ static DDTTYLogger *sharedInstance;
 		NSUInteger msgLen = [logMsg lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
 		const BOOL useStack = msgLen < (1024 * 4);
 		
-		char msgStack[useStack ? (msgLen + 1) : 0];
+		char msgStack[useStack ? (msgLen + 1) : 1]; // Analyzer doesn't like zero-size array, hence the 1
 		char *msg = useStack ? msgStack : (char *)malloc(msgLen + 1);
 		
 		[logMsg getCString:msg maxLength:(msgLen + 1) encoding:NSUTF8StringEncoding];
