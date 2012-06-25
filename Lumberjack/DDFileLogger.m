@@ -1042,16 +1042,14 @@
 
 - (NSString *)description
 {
-	return [[NSDictionary dictionaryWithObjectsAndKeys:
-		self.filePath, @"filePath",
-		self.fileName, @"fileName",
-		self.fileAttributes, @"fileAttributes",
-		self.creationDate, @"creationDate",
-		self.modificationDate, @"modificationDate",
-		[NSNumber numberWithUnsignedLongLong:self.fileSize], @"fileSize",
-		[NSNumber numberWithDouble:self.age], @"age",
-		[NSNumber numberWithBool:self.isArchived], @"isArchived",
-	nil] description];
+	return [@{@"filePath": self.filePath,
+		@"fileName": self.fileName,
+		@"fileAttributes": self.fileAttributes,
+		@"creationDate": self.creationDate,
+		@"modificationDate": self.modificationDate,
+		@"fileSize": @(self.fileSize),
+		@"age": @(self.age),
+		@"isArchived": @(self.isArchived)} description];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
