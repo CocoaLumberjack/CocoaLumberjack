@@ -1,6 +1,10 @@
 #import "TestFormatter.h"
 
 
+/**
+ * For more information about creating custom formatters, see the wiki article:
+ * https://github.com/robbiehanson/CocoaLumberjack/wiki/CustomFormatters
+**/
 @implementation TestFormatter
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage
