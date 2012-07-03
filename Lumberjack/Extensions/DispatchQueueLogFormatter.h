@@ -53,9 +53,12 @@
 {
 	@protected
 	
-	NSDateFormatter *dateFormatter;
+	NSString *dateFormatString;
 	
 	@private
+	
+	int32_t atomicLoggerCount;
+	NSDateFormatter *threadUnsafeDateFormatter; // Use [self stringFromDate]
 	
 	OSSpinLock lock;
 	

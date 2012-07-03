@@ -18,29 +18,23 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	if (YES)
+	if (NO)
 	{
-		// Log statements *AFTER* DispatchQueueLogFormatter
+		// See what log statements look like *BEFORE* using DispatchQueueLogFormatter :(
+	}
+	else
+	{
+		// See what log statements look like *AFTER* using DispatchQueueLogFormatter :)
 		
 		DispatchQueueLogFormatter *formatter = [[DispatchQueueLogFormatter alloc] init];
 		formatter.minQueueLength = 4;
 		formatter.maxQueueLength = 0;
-		
-		[formatter setReplacementString:@"main"              forQueueLabel:@"com.apple.main-thread"];
-		[formatter setReplacementString:@"global-background" forQueueLabel:@"com.apple.root.background-priority"];
-		[formatter setReplacementString:@"global-low"        forQueueLabel:@"com.apple.root.low-priority"];
-		[formatter setReplacementString:@"global-default"    forQueueLabel:@"com.apple.root.default-priority"];
-		[formatter setReplacementString:@"global-high"       forQueueLabel:@"com.apple.root.high-priority"];
 		
 		[formatter setReplacementString:@"downloading" forQueueLabel:@"downloadingQueue"];
 		[formatter setReplacementString:@"parsing"     forQueueLabel:@"parsingQueue"];
 		[formatter setReplacementString:@"processing"  forQueueLabel:@"processingQueue"];
 		
 		[[DDTTYLogger sharedInstance] setLogFormatter:formatter];
-	}
-	else
-	{
-		// Log statements *BEFORE* DispatchQueueLogFormatter
 	}
 	
 	[DDLog addLogger:[DDTTYLogger sharedInstance]];
@@ -68,23 +62,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 		dispatch_async(downloadingQueue, blockA);
 		dispatch_async(parsingQueue,     blockB);
 		dispatch_async(processingQueue,  blockC);
-	}
-	
-	dispatch_queue_t bgq = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-	dispatch_queue_t lgq = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
-	dispatch_queue_t dgq = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-	dispatch_queue_t hgq = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-	
-	dispatch_block_t blockD = ^{
-		DDLogVerbose(@"Some log statement");
-	};
-	
-	for (i = 0; i < count; i++)
-	{
-		dispatch_async(bgq, blockD);
-		dispatch_async(lgq, blockD);
-		dispatch_async(dgq, blockD);
-		dispatch_async(hgq, blockD);
 	}
 	
 	[NSThread detachNewThreadSelector:@selector(backgroundThread:) toTarget:self withObject:nil];

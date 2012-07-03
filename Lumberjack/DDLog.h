@@ -427,8 +427,21 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * The formatter may also optionally filter the log message by returning nil,
  * in which case the logger will not log the message.
 **/
-
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage;
+
+@optional
+
+/**
+ * A single formatter instance can be added to multiple loggers.
+ * These methods provides hooks to notify the formatter of when it's added/removed.
+ *
+ * This is primarily for thread-safety.
+ * If a formatter is explicitly not thread-safe, it may wish to throw an exception if added to multiple loggers.
+ * Or if a formatter has potentially thread-unsafe code (e.g. NSDateFormatter),
+ * it could possibly use these hooks to switch to thread-safe versions of the code.
+**/
+- (void)didAddToLogger:(id <DDLogger>)logger;
+- (void)willRemoveFromLogger:(id <DDLogger>)logger;
 
 @end
 

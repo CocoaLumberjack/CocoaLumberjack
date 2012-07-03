@@ -1022,11 +1022,21 @@ static char *dd_str_copy(const char *str)
 {
 	// The design of this method is documented extensively in the logFormatter message (above in code).
 	
-	dispatch_block_t block = ^{
-		if (formatter != logFormatter) {
+	dispatch_block_t block = ^{ @autoreleasepool {
+		
+		if (formatter != logFormatter)
+		{
+			if ([formatter respondsToSelector:@selector(willRemoveFromLogger:)]) {
+				[formatter willRemoveFromLogger:self];
+			}
+				
 			formatter = logFormatter;
+			
+			if ([formatter respondsToSelector:@selector(didAddToLogger:)]) {
+				[formatter didAddToLogger:self];
+			}
 		}
-	};
+	}};
 	
 	dispatch_queue_t currentQueue = dispatch_get_current_queue();
 	if (currentQueue == loggerQueue)
