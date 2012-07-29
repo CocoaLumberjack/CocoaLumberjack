@@ -125,7 +125,6 @@
 
 @implementation DDTTYLogger
 
-static BOOL isaTTY;
 static BOOL isaColorTTY;
 static BOOL isaColor256TTY;
 static BOOL isaXcodeColorTTY;
@@ -770,8 +769,6 @@ static DDTTYLogger *sharedInstance;
 	{
 		initialized = YES;
 		
-		isaTTY = isatty(STDERR_FILENO);
-		
 		char *term = getenv("TERM");
 		if (term)
 		{
@@ -822,42 +819,39 @@ static DDTTYLogger *sharedInstance;
 	
 	if ((self = [super init]))
 	{
-		if (isaTTY)
-		{
-			calendar = [NSCalendar autoupdatingCurrentCalendar];
-			
-			calendarUnitFlags = 0;
-			calendarUnitFlags |= NSYearCalendarUnit;
-			calendarUnitFlags |= NSMonthCalendarUnit;
-			calendarUnitFlags |= NSDayCalendarUnit;
-			calendarUnitFlags |= NSHourCalendarUnit;
-			calendarUnitFlags |= NSMinuteCalendarUnit;
-			calendarUnitFlags |= NSSecondCalendarUnit;
-			
-			// Initialze 'app' variable (char *)
-			
-			appName = [[NSProcessInfo processInfo] processName];
-			
-			appLen = [appName lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-			app = (char *)malloc(appLen + 1);
-			
-			[appName getCString:app maxLength:(appLen+1) encoding:NSUTF8StringEncoding];
-			
-			// Initialize 'pid' variable (char *)
-			
-			processID = [NSString stringWithFormat:@"%i", (int)getpid()];
-			
-			pidLen = [processID lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-			pid = (char *)malloc(pidLen + 1);
-			
-			[processID getCString:pid maxLength:(pidLen+1) encoding:NSUTF8StringEncoding];
-			
-			// Initialize color stuff
-			
-			colorsEnabled = NO;
-			colorProfilesArray = [[NSMutableArray alloc] initWithCapacity:8];
-			colorProfilesDict = [[NSMutableDictionary alloc] initWithCapacity:8];
-		}
+		calendar = [NSCalendar autoupdatingCurrentCalendar];
+		
+		calendarUnitFlags = 0;
+		calendarUnitFlags |= NSYearCalendarUnit;
+		calendarUnitFlags |= NSMonthCalendarUnit;
+		calendarUnitFlags |= NSDayCalendarUnit;
+		calendarUnitFlags |= NSHourCalendarUnit;
+		calendarUnitFlags |= NSMinuteCalendarUnit;
+		calendarUnitFlags |= NSSecondCalendarUnit;
+		
+		// Initialze 'app' variable (char *)
+		
+		appName = [[NSProcessInfo processInfo] processName];
+		
+		appLen = [appName lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+		app = (char *)malloc(appLen + 1);
+		
+		[appName getCString:app maxLength:(appLen+1) encoding:NSUTF8StringEncoding];
+		
+		// Initialize 'pid' variable (char *)
+		
+		processID = [NSString stringWithFormat:@"%i", (int)getpid()];
+		
+		pidLen = [processID lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+		pid = (char *)malloc(pidLen + 1);
+		
+		[processID getCString:pid maxLength:(pidLen+1) encoding:NSUTF8StringEncoding];
+		
+		// Initialize color stuff
+		
+		colorsEnabled = NO;
+		colorProfilesArray = [[NSMutableArray alloc] initWithCapacity:8];
+		colorProfilesDict = [[NSMutableDictionary alloc] initWithCapacity:8];
 	}
 	return self;
 }
@@ -1168,8 +1162,6 @@ static DDTTYLogger *sharedInstance;
 
 - (void)logMessage:(DDLogMessage *)logMessage
 {
-	if (!isaTTY) return;
-	
 	NSString *logMsg = logMessage->logMsg;
 	BOOL isFormatted = NO;
 	
