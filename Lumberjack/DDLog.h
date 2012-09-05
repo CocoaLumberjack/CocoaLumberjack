@@ -252,7 +252,7 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 /**
  * The THIS_METHOD macro gives you the name of the current objective-c method.
  * 
- * For example: DDLogWarn(@"%@ - Requires non-nil strings") -> @"setMake:model: requires non-nil strings"
+ * For example: DDLogWarn(@"%@ - Requires non-nil strings", THIS_METHOD) -> @"setMake:model: requires non-nil strings"
  * 
  * Note: This does NOT work in straight C functions (non objective-c).
  * Instead you should use the predefined __FUNCTION__ macro.
