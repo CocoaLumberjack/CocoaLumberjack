@@ -26,10 +26,14 @@
 
 #define LOG_LEVEL 2
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpedantic"
 #define NSLogError(frmt, ...)    do{ if(LOG_LEVEL >= 1) NSLog((frmt), ##__VA_ARGS__); } while(0)
 #define NSLogWarn(frmt, ...)     do{ if(LOG_LEVEL >= 2) NSLog((frmt), ##__VA_ARGS__); } while(0)
 #define NSLogInfo(frmt, ...)     do{ if(LOG_LEVEL >= 3) NSLog((frmt), ##__VA_ARGS__); } while(0)
 #define NSLogVerbose(frmt, ...)  do{ if(LOG_LEVEL >= 4) NSLog((frmt), ##__VA_ARGS__); } while(0)
+#pragma clang diagnostic pop
+
 
 // Xcode does NOT natively support colors in the Xcode debugging console.
 // You'll need to install the XcodeColors plugin to see colors in the Xcode console.
@@ -240,8 +244,8 @@ static DDTTYLogger *sharedInstance;
 	codes_bg = [m_codes_bg copy];
 	colors   = [m_colors   copy];
 	
-	NSAssert([codes_fg count] == [codes_bg count], @"Invalid colors/codes array(s)");
-	NSAssert([codes_fg count] == [colors count],   @"Invalid colors/codes array(s)");
+	NSAssert([codes_fg count] == [codes_bg count], @"Invalid colors/codes array(s)", nil);
+	NSAssert([codes_fg count] == [colors count],   @"Invalid colors/codes array(s)", nil);
 }
 
 /**
@@ -663,8 +667,8 @@ static DDTTYLogger *sharedInstance;
 	codes_bg = [m_codes_bg copy];
 	colors   = [m_colors   copy];
 			 
-	NSAssert([codes_fg count] == [codes_bg count], @"Invalid colors/codes array(s)");
-	NSAssert([codes_fg count] == [colors count],   @"Invalid colors/codes array(s)");
+	NSAssert([codes_fg count] == [codes_bg count], @"Invalid colors/codes array(s)", nil);
+	NSAssert([codes_fg count] == [colors count],   @"Invalid colors/codes array(s)", nil);
 }
 
 + (void)getRed:(CGFloat *)rPtr green:(CGFloat *)gPtr blue:(CGFloat *)bPtr fromColor:(OSColor *)color
@@ -875,7 +879,7 @@ static DDTTYLogger *sharedInstance;
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure", nil);
 		
 		__block BOOL result;
 		
@@ -911,7 +915,7 @@ static DDTTYLogger *sharedInstance;
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure", nil);
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -964,7 +968,7 @@ static DDTTYLogger *sharedInstance;
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure", nil);
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -974,7 +978,7 @@ static DDTTYLogger *sharedInstance;
 
 - (void)setForegroundColor:(OSColor *)txtColor backgroundColor:(OSColor *)bgColor forTag:(id <NSCopying>)tag
 {
-	NSAssert([(id <NSObject>)tag conformsToProtocol:@protocol(NSCopying)], @"Invalid tag");
+	NSAssert([(id <NSObject>)tag conformsToProtocol:@protocol(NSCopying)], @"Invalid tag", nil);
 	
 	dispatch_block_t block = ^{ @autoreleasepool {
 		
@@ -1000,7 +1004,7 @@ static DDTTYLogger *sharedInstance;
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure", nil);
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -1045,7 +1049,7 @@ static DDTTYLogger *sharedInstance;
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure", nil);
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -1055,7 +1059,7 @@ static DDTTYLogger *sharedInstance;
 
 - (void)clearColorsForTag:(id <NSCopying>)tag
 {
-	NSAssert([(id <NSObject>)tag conformsToProtocol:@protocol(NSCopying)], @"Invalid tag");
+	NSAssert([(id <NSObject>)tag conformsToProtocol:@protocol(NSCopying)], @"Invalid tag", nil);
 	
 	dispatch_block_t block = ^{ @autoreleasepool {
 		
@@ -1073,7 +1077,7 @@ static DDTTYLogger *sharedInstance;
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure", nil);
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -1099,7 +1103,7 @@ static DDTTYLogger *sharedInstance;
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure", nil);
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -1125,7 +1129,7 @@ static DDTTYLogger *sharedInstance;
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure", nil);
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -1152,7 +1156,7 @@ static DDTTYLogger *sharedInstance;
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure", nil);
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -1265,7 +1269,7 @@ static DDTTYLogger *sharedInstance;
 						   (long)components.minute,
 						   (long)components.second, milliseconds);
 			
-			size_t tsLen = MIN(24-1, len);
+			size_t tsLen = len < 24-1 ? len : 24-1;
 			
 			// Calculate thread ID
 			// 
@@ -1278,7 +1282,7 @@ static DDTTYLogger *sharedInstance;
 			char tid[9];
 			len = snprintf(tid, 9, "%x", logMessage->machThreadID);
 			
-			size_t tidLen = MIN(9-1, len);
+			size_t tidLen = len < 9-1 ? len : 9-1;
 			
 			// Here is our format: "%s %s[%i:%s] %s", timestamp, appName, processID, threadID, logMsg
 			
@@ -1320,7 +1324,7 @@ static DDTTYLogger *sharedInstance;
 			v[6].iov_len = 1;
 			
 			v[7].iov_base = tid;
-			v[7].iov_len = MIN((size_t)8, tidLen); // snprintf doesn't return what you might think
+			v[7].iov_len = 8 < tidLen ? 8 :tidLen; // snprintf doesn't return what you might think
 			
 			v[8].iov_base = "] ";
 			v[8].iov_len = 2;
@@ -1401,7 +1405,7 @@ static DDTTYLogger *sharedInstance;
 			const char *escapeSeq = XCODE_COLORS_ESCAPE_SEQ;
 			
 			int result = snprintf(fgCode, 24, "%sfg%u,%u,%u;", escapeSeq, fg_r, fg_g, fg_b);
-			fgCodeLen = MIN(result, (24-1));
+			fgCodeLen = result < 24-1 ? result : 24-1;
 		}
 		else
 		{
@@ -1435,7 +1439,7 @@ static DDTTYLogger *sharedInstance;
 			const char *escapeSeq = XCODE_COLORS_ESCAPE_SEQ;
 			
 			int result = snprintf(bgCode, 24, "%sbg%u,%u,%u;", escapeSeq, bg_r, bg_g, bg_b);
-			bgCodeLen = MIN(result, (24-1));
+			bgCodeLen = result < 24-1 ? result : 24-1;
 		}
 		else
 		{

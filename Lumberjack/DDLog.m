@@ -56,7 +56,10 @@
 
 #define DD_DEBUG NO
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpedantic"
 #define NSLogDebug(frmt, ...) do{ if(DD_DEBUG) NSLog((frmt), ##__VA_ARGS__); } while(0)
+#pragma clang diagnostic pop
 
 // Specifies the maximum queue size of the logging thread.
 // 
@@ -134,7 +137,7 @@ static unsigned int numProcessors;
 		
 		loggers = [[NSMutableArray alloc] initWithCapacity:4];
 		
-		NSLogDebug(@"DDLog: Using grand central dispatch");
+		NSLogDebug(@"DDLog: Using grand central dispatch", nil);
 		
 		loggingQueue = dispatch_queue_create("cocoa.lumberjack", NULL);
 		loggingGroup = dispatch_group_create();
@@ -153,7 +156,7 @@ static unsigned int numProcessors;
 		unsigned int result = (unsigned int)(hostInfo.max_cpus);
 		unsigned int one    = (unsigned int)(1);
 		
-		numProcessors = MAX(result, one);
+		numProcessors = result > one ? result : one;
 		
 		NSLogDebug(@"DDLog: numProcessors = %u", numProcessors);
 			
@@ -577,7 +580,7 @@ static unsigned int numProcessors;
 	
 	if (loggerNode == nil)
 	{
-		NSLogDebug(@"DDLog: Request to remove logger which wasn't added");
+		NSLogDebug(@"DDLog: Request to remove logger which wasn't added", nil);
 		return;
 	}
 	
@@ -1004,7 +1007,7 @@ static char *dd_str_copy(const char *str)
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure", nil);
 		
 		__block id <DDLogFormatter> result;
 		
@@ -1046,7 +1049,7 @@ static char *dd_str_copy(const char *str)
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure", nil);
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);

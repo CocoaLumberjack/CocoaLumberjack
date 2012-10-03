@@ -53,10 +53,13 @@
 
 #define LOG_LEVEL 2
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpedantic"
 #define NSLogError(frmt, ...)    do{ if(LOG_LEVEL >= 1) NSLog((frmt), ##__VA_ARGS__); } while(0)
 #define NSLogWarn(frmt, ...)     do{ if(LOG_LEVEL >= 2) NSLog((frmt), ##__VA_ARGS__); } while(0)
 #define NSLogInfo(frmt, ...)     do{ if(LOG_LEVEL >= 3) NSLog((frmt), ##__VA_ARGS__); } while(0)
 #define NSLogVerbose(frmt, ...)  do{ if(LOG_LEVEL >= 4) NSLog((frmt), ##__VA_ARGS__); } while(0)
+#pragma clang diagnotic pop
 
 @interface DDLogFileManagerDefault (PrivateAPI)
 
@@ -132,7 +135,7 @@
 	
 	if ([keyPath isEqualToString:@"maximumNumberOfLogFiles"])
 	{
-		NSLogInfo(@"DDFileLogManagerDefault: Responding to configuration change: maximumNumberOfLogFiles");
+		NSLogInfo(@"DDFileLogManagerDefault: Responding to configuration change: maximumNumberOfLogFiles", nil);
 		
 		dispatch_async([DDLog loggingQueue], ^{ @autoreleasepool {
 			
@@ -150,7 +153,7 @@
 **/
 - (void)deleteOldLogFiles
 {
-	NSLogVerbose(@"DDLogFileManagerDefault: deleteOldLogFiles");
+	NSLogVerbose(@"DDLogFileManagerDefault: deleteOldLogFiles", nil);
 	
 	NSUInteger maxNumLogFiles = self.maximumNumberOfLogFiles;
 	if (maxNumLogFiles == 0)
@@ -536,7 +539,7 @@
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure", nil);
 		
 		__block unsigned long long result;
 		
@@ -570,7 +573,7 @@
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure", nil);
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -594,7 +597,7 @@
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure", nil);
 		
 		__block NSTimeInterval result;
 		
@@ -628,7 +631,7 @@
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure", nil);
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -660,7 +663,7 @@
 	
 	NSDate *logFileRollingDate = [NSDate dateWithTimeIntervalSinceReferenceDate:ti];
 	
-	NSLogVerbose(@"DDFileLogger: scheduleTimerToRollLogFileDueToAge");
+	NSLogVerbose(@"DDFileLogger: scheduleTimerToRollLogFileDueToAge", nil);
 	
 	NSLogVerbose(@"DDFileLogger: logFileCreationDate: %@", logFileCreationDate);
 	NSLogVerbose(@"DDFileLogger: logFileRollingDate : %@", logFileRollingDate);
@@ -708,7 +711,7 @@
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure", nil);
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -718,7 +721,7 @@
 
 - (void)rollLogFileNow
 {
-	NSLogVerbose(@"DDFileLogger: rollLogFileNow");
+	NSLogVerbose(@"DDFileLogger: rollLogFileNow", nil);
 	
 	
 	if (currentLogFileHandle == nil) return;
@@ -747,7 +750,7 @@
 {
 	if (rollingFrequency > 0.0 && currentLogFileInfo.age >= rollingFrequency)
 	{
-		NSLogVerbose(@"DDFileLogger: Rolling log file due to age...");
+		NSLogVerbose(@"DDFileLogger: Rolling log file due to age...", nil);
 		
 		[self rollLogFileNow];
 	}
@@ -771,7 +774,7 @@
 		
 		if (fileSize >= maximumFileSize)
 		{
-			NSLogVerbose(@"DDFileLogger: Rolling log file due to size (%qu)...", fileSize);
+			NSLogVerbose(@"DDFileLogger: Rolling log file due to size (%llu)...", fileSize);
 			
 			[self rollLogFileNow];
 		}
