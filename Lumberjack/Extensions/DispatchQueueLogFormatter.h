@@ -88,7 +88,7 @@
  * 
  * The default minQueueLength is 0 (no minimum, so [detail box] won't be padded).
 **/
-@property (assign) NSUInteger minQueueLength;
+@property (assign, nonatomic) NSUInteger minQueueLength;
 
 /**
  * The maxQueueLength restricts the number of characters that will be inside the [detail box].
@@ -105,7 +105,7 @@
  * 
  * The default maxQueueLength is 0 (no maximum, so [thread box] queue names won't be truncated).
 **/
-@property (assign) NSUInteger maxQueueLength;
+@property (assign, nonatomic) NSUInteger maxQueueLength;
 
 /**
  * Sometimes queue labels have long names like "com.apple.main-queue",

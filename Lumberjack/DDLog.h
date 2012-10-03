@@ -43,6 +43,8 @@
  * This big multiline macro makes all the other macros easier to read.
 **/
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpedantic"
 #define LOG_MACRO(isAsynchronous, lvl, flg, ctx, atag, fnct, frmt, ...) \
   [DDLog log:isAsynchronous                                             \
        level:lvl                                                        \
@@ -53,7 +55,7 @@
         line:__LINE__                                                   \
          tag:atag                                                       \
       format:(frmt), ##__VA_ARGS__]
-
+#pragma clang diagnostic pop
 /**
  * Define the Objective-C and C versions of the macro.
  * These automatically inject the proper function name for either an objective-c method or c function.
