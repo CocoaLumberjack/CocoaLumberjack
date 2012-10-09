@@ -239,7 +239,7 @@
 
 - (NSUInteger)saveThreshold
 {
-	if (dispatch_get_current_queue() == loggerQueue)
+	if (dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) == loggerQueue)
 	{
 		return saveThreshold;
 	}
@@ -279,7 +279,7 @@
 		}
 	};
 	
-	if (dispatch_get_current_queue() == loggerQueue)
+	if (dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) == loggerQueue)
 		block();
 	else
 		dispatch_async(loggerQueue, block);
@@ -287,7 +287,7 @@
 
 - (NSTimeInterval)saveInterval
 {
-	if (dispatch_get_current_queue() == loggerQueue)
+	if (dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) == loggerQueue)
 	{
 		return saveInterval;
 	}
@@ -362,7 +362,7 @@
 		}
 	};
 	
-	if (dispatch_get_current_queue() == loggerQueue)
+	if (dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) == loggerQueue)
 		block();
 	else
 		dispatch_async(loggerQueue, block);
@@ -370,7 +370,7 @@
 
 - (NSTimeInterval)maxAge
 {
-	if (dispatch_get_current_queue() == loggerQueue)
+	if (dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) == loggerQueue)
 	{
 		return maxAge;
 	}
@@ -451,7 +451,7 @@
 		}
 	};
 	
-	if (dispatch_get_current_queue() == loggerQueue)
+	if (dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) == loggerQueue)
 		block();
 	else
 		dispatch_async(loggerQueue, block);
@@ -459,7 +459,7 @@
 
 - (NSTimeInterval)deleteInterval
 {
-	if (dispatch_get_current_queue() == loggerQueue)
+	if (dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) == loggerQueue)
 	{
 		return deleteInterval;
 	}
@@ -533,7 +533,7 @@
 		}
 	};
 	
-	if (dispatch_get_current_queue() == loggerQueue)
+	if (dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) == loggerQueue)
 		block();
 	else
 		dispatch_async(loggerQueue, block);
@@ -541,7 +541,7 @@
 
 - (BOOL)deleteOnEverySave
 {
-	if (dispatch_get_current_queue() == loggerQueue)
+	if (dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) == loggerQueue)
 	{
 		return deleteOnEverySave;
 	}
@@ -564,7 +564,7 @@
 		deleteOnEverySave = flag;
 	};
 	
-	if (dispatch_get_current_queue() == loggerQueue)
+	if (dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) == loggerQueue)
 		block();
 	else
 		dispatch_async(loggerQueue, block);
@@ -581,7 +581,7 @@
 		[self performSaveAndSuspendSaveTimer];
 	}};
 	
-	if (dispatch_get_current_queue() == loggerQueue)
+	if (dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) == loggerQueue)
 		block();
 	else
 		dispatch_async(loggerQueue, block);
@@ -594,7 +594,7 @@
 		[self performDelete];
 	}};
 	
-	if (dispatch_get_current_queue() == loggerQueue)
+	if (dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) == loggerQueue)
 		block();
 	else
 		dispatch_async(loggerQueue, block);
