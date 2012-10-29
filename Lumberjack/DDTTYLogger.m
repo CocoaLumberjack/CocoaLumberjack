@@ -1210,32 +1210,38 @@ static DDTTYLogger *sharedInstance;
 		{
 			// The log message has already been formatted.
 			
-			struct iovec v[4];
+			struct iovec v[5];
 			
 			if (colorProfile)
 			{
 				v[0].iov_base = colorProfile->fgCode;
 				v[0].iov_len = colorProfile->fgCodeLen;
-				
-				v[3].iov_base = colorProfile->resetCode;
-				v[3].iov_len = colorProfile->resetCodeLen;
+
+				v[1].iov_base = colorProfile->bgCode;
+				v[1].iov_len = colorProfile->bgCodeLen;
+
+				v[4].iov_base = colorProfile->resetCode;
+				v[4].iov_len = colorProfile->resetCodeLen;
 			}
 			else
 			{
 				v[0].iov_base = "";
 				v[0].iov_len = 0;
 				
-				v[3].iov_base = "";
-				v[3].iov_len = 0;
+				v[1].iov_base = "";
+				v[1].iov_len = 0;
+				
+				v[4].iov_base = "";
+				v[4].iov_len = 0;
 			}
 			
-			v[1].iov_base = (char *)msg;
-			v[1].iov_len = msgLen;
+			v[2].iov_base = (char *)msg;
+			v[2].iov_len = msgLen;
 			
-			v[2].iov_base = "\n";
-			v[2].iov_len = (msg[msgLen] == '\n') ? 0 : 1;
+			v[3].iov_base = "\n";
+			v[3].iov_len = (msg[msgLen] == '\n') ? 0 : 1;
 			
-			writev(STDERR_FILENO, v, 4);
+			writev(STDERR_FILENO, v, 5);
 		}
 		else
 		{
@@ -1277,56 +1283,62 @@ static DDTTYLogger *sharedInstance;
 			
 			// Here is our format: "%s %s[%i:%s] %s", timestamp, appName, processID, threadID, logMsg
 			
-			struct iovec v[12];
+			struct iovec v[13];
 			
 			if (colorProfile)
 			{
 				v[0].iov_base = colorProfile->fgCode;
 				v[0].iov_len = colorProfile->fgCodeLen;
-				
-				v[11].iov_base = colorProfile->resetCode;
-				v[11].iov_len = colorProfile->resetCodeLen;
+
+				v[1].iov_base = colorProfile->bgCode;
+				v[1].iov_len = colorProfile->bgCodeLen;
+
+				v[12].iov_base = colorProfile->resetCode;
+				v[12].iov_len = colorProfile->resetCodeLen;
 			}
 			else
 			{
 				v[0].iov_base = "";
 				v[0].iov_len = 0;
-				
-				v[11].iov_base = "";
-				v[11].iov_len = 0;
+
+				v[1].iov_base = "";
+				v[1].iov_len = 0;
+
+				v[12].iov_base = "";
+				v[12].iov_len = 0;
 			}
 			
-			v[1].iov_base = ts;
-			v[1].iov_len = tsLen;
+			v[2].iov_base = ts;
+			v[2].iov_len = tsLen;
 			
-			v[2].iov_base = " ";
-			v[2].iov_len = 1;
+			v[3].iov_base = " ";
+			v[3].iov_len = 1;
 			
-			v[3].iov_base = app;
-			v[3].iov_len = appLen;
+			v[4].iov_base = app;
+			v[4].iov_len = appLen;
 			
-			v[4].iov_base = "[";
-			v[4].iov_len = 1;
+			v[5].iov_base = "[";
+			v[5].iov_len = 1;
 			
-			v[5].iov_base = pid;
-			v[5].iov_len = pidLen;
+			v[6].iov_base = pid;
+			v[6].iov_len = pidLen;
 			
-			v[6].iov_base = ":";
-			v[6].iov_len = 1;
+			v[7].iov_base = ":";
+			v[7].iov_len = 1;
 			
-			v[7].iov_base = tid;
-			v[7].iov_len = MIN((size_t)8, tidLen); // snprintf doesn't return what you might think
+			v[8].iov_base = tid;
+			v[8].iov_len = MIN((size_t)8, tidLen); // snprintf doesn't return what you might think
 			
-			v[8].iov_base = "] ";
-			v[8].iov_len = 2;
+			v[9].iov_base = "] ";
+			v[9].iov_len = 2;
 			
-			v[9].iov_base = (char *)msg;
-			v[9].iov_len = msgLen;
+			v[10].iov_base = (char *)msg;
+			v[10].iov_len = msgLen;
 			
-			v[10].iov_base = "\n";
-			v[10].iov_len = (msg[msgLen] == '\n') ? 0 : 1;
+			v[11].iov_base = "\n";
+			v[11].iov_len = (msg[msgLen] == '\n') ? 0 : 1;
 			
-			writev(STDERR_FILENO, v, 12);
+			writev(STDERR_FILENO, v, 13);
 		}
 		
 		if (!useStack) {
