@@ -528,7 +528,7 @@
 	// Note: The internal implementation should access the maximumFileSize variable directly,
 	// but if we forget to do this, then this method should at least work properly.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	dispatch_queue_t currentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	if (currentQueue == loggerQueue)
 	{
 		return maximumFileSize;
@@ -562,7 +562,7 @@
 		
 	}};
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	dispatch_queue_t currentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	if (currentQueue == loggerQueue)
 	{
 		block();
@@ -586,7 +586,7 @@
 	// Note: The internal implementation should access the rollingFrequency variable directly,
 	// but if we forget to do this, then this method should at least work properly.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	dispatch_queue_t currentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	if (currentQueue == loggerQueue)
 	{
 		return rollingFrequency;
@@ -620,7 +620,7 @@
 		
 	}};
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	dispatch_queue_t currentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	if (currentQueue == loggerQueue)
 	{
 		block();
@@ -700,7 +700,7 @@
 		[self rollLogFileNow];
 	}};
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	dispatch_queue_t currentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	if (currentQueue == loggerQueue)
 	{
 		block();

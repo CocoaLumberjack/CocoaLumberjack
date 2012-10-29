@@ -867,7 +867,7 @@ static DDTTYLogger *sharedInstance;
 	// The design of this method is taken from the DDAbstractLogger implementation.
 	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	dispatch_queue_t currentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	if (currentQueue == loggerQueue)
 	{
 		return colorsEnabled;
@@ -903,7 +903,7 @@ static DDTTYLogger *sharedInstance;
 	// The design of the setter logic below is taken from the DDAbstractLogger implementation.
 	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	dispatch_queue_t currentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	if (currentQueue == loggerQueue)
 	{
 		block();
@@ -956,7 +956,7 @@ static DDTTYLogger *sharedInstance;
 	// The design of the setter logic below is taken from the DDAbstractLogger implementation.
 	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	dispatch_queue_t currentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	if (currentQueue == loggerQueue)
 	{
 		block();
@@ -992,7 +992,7 @@ static DDTTYLogger *sharedInstance;
 	// The design of the setter logic below is taken from the DDAbstractLogger implementation.
 	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	dispatch_queue_t currentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	if (currentQueue == loggerQueue)
 	{
 		block();
@@ -1037,7 +1037,7 @@ static DDTTYLogger *sharedInstance;
 	// The design of the setter logic below is taken from the DDAbstractLogger implementation.
 	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	dispatch_queue_t currentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	if (currentQueue == loggerQueue)
 	{
 		block();
@@ -1065,7 +1065,7 @@ static DDTTYLogger *sharedInstance;
 	// The design of the setter logic below is taken from the DDAbstractLogger implementation.
 	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	dispatch_queue_t currentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	if (currentQueue == loggerQueue)
 	{
 		block();
@@ -1091,7 +1091,7 @@ static DDTTYLogger *sharedInstance;
 	// The design of the setter logic below is taken from the DDAbstractLogger implementation.
 	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	dispatch_queue_t currentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	if (currentQueue == loggerQueue)
 	{
 		block();
@@ -1117,7 +1117,7 @@ static DDTTYLogger *sharedInstance;
 	// The design of the setter logic below is taken from the DDAbstractLogger implementation.
 	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	dispatch_queue_t currentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	if (currentQueue == loggerQueue)
 	{
 		block();
@@ -1144,7 +1144,7 @@ static DDTTYLogger *sharedInstance;
 	// The design of the setter logic below is taken from the DDAbstractLogger implementation.
 	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
+	dispatch_queue_t currentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	if (currentQueue == loggerQueue)
 	{
 		block();
