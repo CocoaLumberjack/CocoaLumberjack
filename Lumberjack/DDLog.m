@@ -71,6 +71,14 @@
 
 #define LOG_MAX_QUEUE_SIZE 1000 // Should not exceed INT32_MAX
 
+// The "global logging queue" refers to [DDLog loggingQueue].
+// It is the queue that all log statements go through.
+//
+// The logging queue sets a flag via dispatch_queue_set_specific using this key.
+// We can check for this key via dispatch_get_specific() to see if we're on the "global logging queue".
+
+static void *const GlobalLoggingQueueIdentityKey = (void *)&GlobalLoggingQueueIdentityKey;
+
 
 @interface DDLoggerNode : NSObject {
 @public 
@@ -138,6 +146,9 @@ static unsigned int numProcessors;
 		
 		loggingQueue = dispatch_queue_create("cocoa.lumberjack", NULL);
 		loggingGroup = dispatch_group_create();
+		
+		void *nonNullValue = GlobalLoggingQueueIdentityKey; // Whatever, just not null
+		dispatch_queue_set_specific(loggingQueue, GlobalLoggingQueueIdentityKey, nonNullValue, NULL);
 		
 		queueSemaphore = dispatch_semaphore_create(LOG_MAX_QUEUE_SIZE);
 		
@@ -868,7 +879,24 @@ static char *dd_str_copy(const char *str)
 		
 		machThreadID = pthread_mach_thread_np(pthread_self());
 		
-		queueLabel = dd_str_copy(dispatch_queue_get_label(dispatch_get_current_queue()));
+		#pragma clang diagnostic push
+		#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+		// The documentation for dispatch_get_current_queue() states:
+		//
+		// > [This method is] "recommended for debugging and logging purposes only"...
+		//
+		// Well that's exactly how we're using it here. Literally for logging purposes only.
+		// However, Apple has decided to deprecate this method anyway.
+		// However they have not given us an alternate version of dispatch_queue_get_label() that
+		// automatically uses the current queue, thus dispatch_get_current_queue() is still required.
+		// 
+		// If dispatch_get_current_queue() disappears, without a dispatch_queue_get_label() alternative,
+		// Apple will have effectively taken away our ability to properly log the name of executing dispatch queue.
+		
+		dispatch_queue_t currentQueue = dispatch_get_current_queue();
+		#pragma clang diagnostic pop
+		
+		queueLabel = dd_str_copy(dispatch_queue_get_label(currentQueue));
 		
 		threadName = [[NSThread currentThread] name];
 	}
@@ -924,6 +952,25 @@ static char *dd_str_copy(const char *str)
 		}
 		
 		loggerQueue = dispatch_queue_create(loggerQueueName, NULL);
+		
+		// We're going to use dispatch_queue_set_specific() to "mark" our loggerQueue.
+		// Later we can use dispatch_get_specific() to determine if we're executing on our loggerQueue.
+		// The documentation states:
+		//
+		// > Keys are only compared as pointers and are never dereferenced.
+		// > Thus, you can use a pointer to a static variable for a specific subsystem or
+		// > any other value that allows you to identify the value uniquely.
+		// > Specifying a pointer to a string constant is not recommended.
+		//
+		// So we're going to use the very convenient key of "self",
+		// which also works when multiple logger classes extend this class, as each will have a different "self" key.
+		//
+		// This is used primarily for thread-safety assertions (via the isOnInternalLoggerQueue method below).
+		
+		void *key = (__bridge void *)self;
+		void *nonNullValue = (__bridge void *)self;
+		
+		dispatch_queue_set_specific(loggerQueue, key, nonNullValue, NULL);
 	}
 	return self;
 }
@@ -950,77 +997,69 @@ static char *dd_str_copy(const char *str)
 	// 
 	// They would expect formatter to equal myFormatter.
 	// This functionality must be ensured by the getter and setter method.
-	// 
+	//
 	// The thread safety must not come at a cost to the performance of the logMessage method.
 	// This method is likely called sporadically, while the logMessage method is called repeatedly.
 	// This means, the implementation of this method:
 	// - Must NOT require the logMessage method to acquire a lock.
 	// - Must NOT require the logMessage method to access an atomic property (also a lock of sorts).
-	// 
+	//
 	// Thread safety is ensured by executing access to the formatter variable on the loggerQueue.
 	// This is the same queue that the logMessage method operates on.
-	// 
+	//
 	// Note: The last time I benchmarked the performance of direct access vs atomic property access,
 	// direct access was over twice as fast on the desktop and over 6 times as fast on the iPhone.
 	// 
-	// 
-	// loggerQueue  : Our own private internal queue that the logMessage method runs on.
-	//                Operations are added to this queue from the global loggingQueue.
-	// 
-	// loggingQueue : The queue that all log messages go through before they arrive in our loggerQueue.
-	// 
-	// It is important to note that, while the loggerQueue is used to create thread-safety for our formatter,
-	// changes to the formatter variable are queued through the loggingQueue.
-	// 
-	// Since this will obviously confuse the hell out of me later, here is a better description.
-	// Imagine the following code:
-	// 
+	// Furthermore, consider the following code:
+	//
 	// DDLogVerbose(@"log msg 1");
 	// DDLogVerbose(@"log msg 2");
 	// [logger setFormatter:myFormatter];
 	// DDLogVerbose(@"log msg 3");
-	// 
+	//
 	// Our intuitive requirement means that the new formatter will only apply to the 3rd log message.
-	// But notice what happens if we have asynchronous logging enabled for verbose mode.
+	// This must remain true even when using asynchronous logging.
+	// We must keep in mind the various queue's that are in play here:
 	// 
-	// Log msg 1 starts executing asynchronously on the loggingQueue.
-	// The loggingQueue executes the log statement on each logger concurrently.
-	// That means it executes log msg 1 on our loggerQueue.
-	// While log msg 1 is executing, log msg 2 gets added to the loggingQueue.
-	// Then the user requests that we change our formatter.
-	// So at this exact moment, our queues look like this:
+	// loggerQueue : Our own private internal queue that the logMessage method runs on.
+	//               Operations are added to this queue from the global loggingQueue.
 	// 
-	// loggerQueue  : executing log msg 1, nil
-	// loggingQueue : executing log msg 1, log msg 2, nil
+	// globalLoggingQueue : The queue that all log messages go through before they arrive in our loggerQueue.
 	// 
-	// So direct access to the formatter is only available if requested from the loggerQueue.
-	// In all other circumstances we need to go through the loggingQueue to get the proper value.
+	// All log statements go through the serial gloabalLoggingQueue before they arrive at our loggerQueue.
+	// Thus this method also goes through the serial globalLoggingQueue to ensure intuitive operation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
-	if (currentQueue == loggerQueue)
-	{
-		return formatter;
-	}
-	else
-	{
-		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
-		
-		__block id <DDLogFormatter> result;
-		
-		dispatch_sync(globalLoggingQueue, ^{
-			dispatch_sync(loggerQueue, ^{
-				result = formatter;
-			});
+	// IMPORTANT NOTE:
+	// 
+	// Methods within the DDLogger implementation MUST access the formatter ivar directly.
+	// This method is designed explicitly for external access.
+	//
+	// Using "self." syntax to go through this method will cause immediate deadlock.
+	// This is the intended result. Fix it by accessing the ivar directly.
+	// Great strides have been take to ensure this is safe to do. Plus it's MUCH faster.
+	
+	NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+	NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.");
+	
+	dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
+	
+	__block id <DDLogFormatter> result;
+	
+	dispatch_sync(globalLoggingQueue, ^{
+		dispatch_sync(loggerQueue, ^{
+			result = formatter;
 		});
-		
-		return result;
-	}
+	});
+	
+	return result;
 }
 
 - (void)setLogFormatter:(id <DDLogFormatter>)logFormatter
 {
 	// The design of this method is documented extensively in the logFormatter message (above in code).
+	
+	NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+	NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.");
 	
 	dispatch_block_t block = ^{ @autoreleasepool {
 		
@@ -1029,7 +1068,7 @@ static char *dd_str_copy(const char *str)
 			if ([formatter respondsToSelector:@selector(willRemoveFromLogger:)]) {
 				[formatter willRemoveFromLogger:self];
 			}
-				
+			
 			formatter = logFormatter;
 			
 			if ([formatter respondsToSelector:@selector(didAddToLogger:)]) {
@@ -1038,20 +1077,11 @@ static char *dd_str_copy(const char *str)
 		}
 	}};
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
-	if (currentQueue == loggerQueue)
-	{
-		block();
-	}
-	else
-	{
-		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
-		
-		dispatch_async(globalLoggingQueue, ^{
-			dispatch_async(loggerQueue, block);
-		});
-	}
+	dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
+	
+	dispatch_async(globalLoggingQueue, ^{
+		dispatch_async(loggerQueue, block);
+	});
 }
 
 - (dispatch_queue_t)loggerQueue
@@ -1062,6 +1092,17 @@ static char *dd_str_copy(const char *str)
 - (NSString *)loggerName
 {
 	return NSStringFromClass([self class]);
+}
+
+- (BOOL)isOnGlobalLoggingQueue
+{
+	return (dispatch_get_specific(GlobalLoggingQueueIdentityKey) != NULL);
+}
+
+- (BOOL)isOnInternalLoggerQueue
+{
+	void *key = (__bridge void *)self;
+	return (dispatch_get_specific(key) != NULL);
 }
 
 @end

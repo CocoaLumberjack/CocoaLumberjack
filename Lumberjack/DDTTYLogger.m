@@ -865,28 +865,29 @@ static DDTTYLogger *sharedInstance;
 - (BOOL)colorsEnabled
 {
 	// The design of this method is taken from the DDAbstractLogger implementation.
-	// For documentation please refer to the DDAbstractLogger implementation.
+	// For extensive documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
-	if (currentQueue == loggerQueue)
-	{
-		return colorsEnabled;
-	}
-	else
-	{
-		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
-		
-		__block BOOL result;
-		
-		dispatch_sync(globalLoggingQueue, ^{
-			dispatch_sync(loggerQueue, ^{
-				result = colorsEnabled;
-			});
+	// Note: The internal implementation MUST access the colorsEnabled variable directly,
+	// This method is designed explicitly for external access.
+	//
+	// Using "self." syntax to go through this method will cause immediate deadlock.
+	// This is the intended result. Fix it by accessing the ivar directly.
+	// Great strides have been take to ensure this is safe to do. Plus it's MUCH faster.
+	
+	NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+	NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.");
+	
+	dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
+	
+	__block BOOL result;
+	
+	dispatch_sync(globalLoggingQueue, ^{
+		dispatch_sync(loggerQueue, ^{
+			result = colorsEnabled;
 		});
-		
-		return result;
-	}
+	});
+	
+	return result;
 }
 
 - (void)setColorsEnabled:(BOOL)newColorsEnabled
@@ -900,23 +901,24 @@ static DDTTYLogger *sharedInstance;
 		}
 	}};
 	
-	// The design of the setter logic below is taken from the DDAbstractLogger implementation.
-	// For documentation please refer to the DDAbstractLogger implementation.
+	// The design of this method is taken from the DDAbstractLogger implementation.
+	// For extensive documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
-	if (currentQueue == loggerQueue)
-	{
-		block();
-	}
-	else
-	{
-		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
-		
-		dispatch_async(globalLoggingQueue, ^{
-			dispatch_async(loggerQueue, block);
-		});
-	}
+	// Note: The internal implementation MUST access the colorsEnabled variable directly,
+	// This method is designed explicitly for external access.
+	//
+	// Using "self." syntax to go through this method will cause immediate deadlock.
+	// This is the intended result. Fix it by accessing the ivar directly.
+	// Great strides have been take to ensure this is safe to do. Plus it's MUCH faster.
+	
+	NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+	NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.");
+	
+	dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
+	
+	dispatch_async(globalLoggingQueue, ^{
+		dispatch_async(loggerQueue, block);
+	});
 }
 
 - (void)setForegroundColor:(OSColor *)txtColor backgroundColor:(OSColor *)bgColor forFlag:(int)mask
@@ -956,15 +958,14 @@ static DDTTYLogger *sharedInstance;
 	// The design of the setter logic below is taken from the DDAbstractLogger implementation.
 	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
-	if (currentQueue == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 	{
 		block();
 	}
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -992,15 +993,14 @@ static DDTTYLogger *sharedInstance;
 	// The design of the setter logic below is taken from the DDAbstractLogger implementation.
 	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
-	if (currentQueue == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 	{
 		block();
 	}
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -1037,15 +1037,14 @@ static DDTTYLogger *sharedInstance;
 	// The design of the setter logic below is taken from the DDAbstractLogger implementation.
 	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
-	if (currentQueue == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 	{
 		block();
 	}
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -1065,15 +1064,14 @@ static DDTTYLogger *sharedInstance;
 	// The design of the setter logic below is taken from the DDAbstractLogger implementation.
 	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
-	if (currentQueue == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 	{
 		block();
 	}
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -1091,15 +1089,14 @@ static DDTTYLogger *sharedInstance;
 	// The design of the setter logic below is taken from the DDAbstractLogger implementation.
 	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
-	if (currentQueue == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 	{
 		block();
 	}
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -1117,15 +1114,14 @@ static DDTTYLogger *sharedInstance;
 	// The design of the setter logic below is taken from the DDAbstractLogger implementation.
 	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
-	if (currentQueue == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 	{
 		block();
 	}
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);
@@ -1144,15 +1140,14 @@ static DDTTYLogger *sharedInstance;
 	// The design of the setter logic below is taken from the DDAbstractLogger implementation.
 	// For documentation please refer to the DDAbstractLogger implementation.
 	
-	dispatch_queue_t currentQueue = dispatch_get_current_queue();
-	if (currentQueue == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 	{
 		block();
 	}
 	else
 	{
 		dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-		NSAssert(currentQueue != globalLoggingQueue, @"Core architecture requirement failure");
+		NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 		
 		dispatch_async(globalLoggingQueue, ^{
 			dispatch_async(loggerQueue, block);

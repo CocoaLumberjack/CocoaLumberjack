@@ -594,4 +594,8 @@ typedef int DDLogMessageOptions;
 - (id <DDLogFormatter>)logFormatter;
 - (void)setLogFormatter:(id <DDLogFormatter>)formatter;
 
+// For thread-safety assertions
+- (BOOL)isOnGlobalLoggingQueue;
+- (BOOL)isOnInternalLoggerQueue;
+
 @end
