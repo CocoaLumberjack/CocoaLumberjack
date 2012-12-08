@@ -15,6 +15,8 @@
 		2899E5220DE3E06400AC0155 /* BenchmarkIPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* BenchmarkIPhoneViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* BenchmarkIPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* BenchmarkIPhoneViewController.m */; };
+		DC3D2F391674073100DFAFAA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC3D2F381674073100DFAFAA /* Default-568h@2x.png */; };
+		DC3D2F3C1674074300DFAFAA /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3D2F3B1674074300DFAFAA /* DDAbstractDatabaseLogger.m */; };
 		DC74770A12029D4300A55869 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC74770712029D4300A55869 /* DDASLLogger.m */; };
 		DC74770B12029D4300A55869 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC74770912029D4300A55869 /* DDTTYLogger.m */; };
 		DC987BCD11928FA50020FF52 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987BC711928FA50020FF52 /* DDFileLogger.m */; };
@@ -39,6 +41,9 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* BenchmarkIPhone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BenchmarkIPhone_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* BenchmarkIPhone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BenchmarkIPhone-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		DC3D2F381674073100DFAFAA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		DC3D2F3A1674074300DFAFAA /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDAbstractDatabaseLogger.h; path = ../../Lumberjack/DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
+		DC3D2F3B1674074300DFAFAA /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDAbstractDatabaseLogger.m; path = ../../Lumberjack/DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
 		DC74770612029D4300A55869 /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDASLLogger.h; path = ../../Lumberjack/DDASLLogger.h; sourceTree = SOURCE_ROOT; };
 		DC74770712029D4300A55869 /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDASLLogger.m; path = ../../Lumberjack/DDASLLogger.m; sourceTree = SOURCE_ROOT; };
 		DC74770812029D4300A55869 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDTTYLogger.h; path = ../../Lumberjack/DDTTYLogger.h; sourceTree = SOURCE_ROOT; };
@@ -118,6 +123,7 @@
 			children = (
 				2899E5210DE3E06400AC0155 /* BenchmarkIPhoneViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				DC3D2F381674073100DFAFAA /* Default-568h@2x.png */,
 				8D1107310486CEB800E47090 /* BenchmarkIPhone-Info.plist */,
 			);
 			name = Resources;
@@ -144,6 +150,8 @@
 				DC74770912029D4300A55869 /* DDTTYLogger.m */,
 				DC987BC611928FA50020FF52 /* DDFileLogger.h */,
 				DC987BC711928FA50020FF52 /* DDFileLogger.m */,
+				DC3D2F3A1674074300DFAFAA /* DDAbstractDatabaseLogger.h */,
+				DC3D2F3B1674074300DFAFAA /* DDAbstractDatabaseLogger.m */,
 			);
 			name = Logging;
 			sourceTree = "<group>";
@@ -217,6 +225,7 @@
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				2899E5220DE3E06400AC0155 /* BenchmarkIPhoneViewController.xib in Resources */,
+				DC3D2F391674073100DFAFAA /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +247,7 @@
 				DC987BE211928FD60020FF52 /* StaticLogging.m in Sources */,
 				DC74770A12029D4300A55869 /* DDASLLogger.m in Sources */,
 				DC74770B12029D4300A55869 /* DDTTYLogger.m in Sources */,
+				DC3D2F3C1674074300DFAFAA /* DDAbstractDatabaseLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
