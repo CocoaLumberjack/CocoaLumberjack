@@ -176,7 +176,7 @@
 		NSString *abrvLabel;
 		
 		if (useQueueLabel)
-			fullLabel = @(logMessage->queueLabel);
+			fullLabel = [NSString stringWithUTF8String:logMessage->queueLabel];
 		else
 			fullLabel = logMessage->threadName;
 		

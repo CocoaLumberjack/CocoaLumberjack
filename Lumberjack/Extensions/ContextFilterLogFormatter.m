@@ -148,7 +148,7 @@
 {
 	OSSpinLockLock(&lock);
 	{
-		[set addObject:@(loggingContext)];
+		[set addObject:[NSNumber numberWithInt:loggingContext]];
 	}
 	OSSpinLockUnlock(&lock);
 }
@@ -157,7 +157,7 @@
 {
 	OSSpinLockLock(&lock);
 	{
-		[set removeObject:@(loggingContext)];
+		[set removeObject:[NSNumber numberWithInt:loggingContext]];
 	}
 	OSSpinLockUnlock(&lock);
 }
@@ -181,7 +181,7 @@
 	
 	OSSpinLockLock(&lock);
 	{
-		result = [set containsObject:@(loggingContext)];
+		result = [set containsObject:[NSNumber numberWithInt:loggingContext]];
 	}
 	OSSpinLockUnlock(&lock);
 	
