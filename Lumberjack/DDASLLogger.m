@@ -76,15 +76,15 @@ static DDASLLogger *sharedInstance;
 		const char *msg = [logMsg UTF8String];
 		
 		int aslLogLevel;
-		switch (logMessage->logLevel)
+		switch (logMessage->logFlag)
 		{
 			// Note: By default ASL will filter anything above level 5 (Notice).
 			// So our mappings shouldn't go above that level.
 			
-			case 1  : aslLogLevel = ASL_LEVEL_CRIT;    break;
-			case 2  : aslLogLevel = ASL_LEVEL_ERR;     break;
-			case 3  : aslLogLevel = ASL_LEVEL_WARNING; break;
-			default : aslLogLevel = ASL_LEVEL_NOTICE;  break;
+			case LOG_FLAG_ERROR : aslLogLevel = ASL_LEVEL_CRIT;    break;
+			case LOG_FLAG_WARN  : aslLogLevel = ASL_LEVEL_ERR;     break;
+			case LOG_FLAG_INFO  : aslLogLevel = ASL_LEVEL_WARNING; break;
+			default             : aslLogLevel = ASL_LEVEL_NOTICE;  break;
 		}
 		
 		asl_log(client, NULL, aslLogLevel, "%s", msg);
