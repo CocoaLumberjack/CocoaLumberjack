@@ -933,6 +933,36 @@ static char *dd_str_copy(const char *str)
 		free(queueLabel);
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    DDLogMessage *newMessage = [DDLogMessage new];
+    
+    newMessage->logLevel = message->logLevel;
+    newMessage->logFlag = message->logFlag;
+    newMessage->logContext = message->logContext;
+    newMessage->logMsg = line;
+    newMessage->timestamp = message->timestamp;
+    
+    if (message->options & DDLogMessageCopyFile) {
+        newMessage->file = dd_str_copy(message->file);
+    } else {
+        newMessage->file = message->file;
+    }
+    
+    if (message->options & DDLogMessageCopyFile) {
+        newMessage->function = dd_str_copy(message->function);
+    } else {
+        newMessage->function = message->function;
+    }
+    
+    newMessage->machThreadID = message->machThreadID;
+    newMessage->queueLabel = dd_str_copy(message->queueLabel);
+    newMessage->threadName = message->threadName;
+    newMessage->tag = message->tag;
+    newMessage->options = message->options;
+    
+    return newMessage;
+}
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
