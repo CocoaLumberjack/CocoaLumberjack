@@ -1,4 +1,4 @@
-#import "ContextFilterLogFormatter.h"
+#import "DDContextFilterLogFormatter.h"
 #import <libkern/OSAtomic.h>
 
 /**
@@ -15,7 +15,7 @@
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-@interface LoggingContextSet : NSObject
+@interface DDLoggingContextSet : NSObject
 
 - (void)addToSet:(int)loggingContext;
 - (void)removeFromSet:(int)loggingContext;
@@ -30,16 +30,16 @@
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@implementation ContextWhitelistFilterLogFormatter
+@implementation DDContextWhitelistFilterLogFormatter
 {
-	LoggingContextSet *contextSet;
+	DDLoggingContextSet *contextSet;
 }
 
 - (id)init
 {
 	if ((self = [super init]))
 	{
-		contextSet = [[LoggingContextSet alloc] init];
+		contextSet = [[DDLoggingContextSet alloc] init];
 	}
 	return self;
 }
@@ -79,16 +79,16 @@
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@implementation ContextBlacklistFilterLogFormatter
+@implementation DDContextBlacklistFilterLogFormatter
 {
-	LoggingContextSet *contextSet;
+	DDLoggingContextSet *contextSet;
 }
 
 - (id)init
 {
 	if ((self = [super init]))
 	{
-		contextSet = [[LoggingContextSet alloc] init];
+		contextSet = [[DDLoggingContextSet alloc] init];
 	}
 	return self;
 }
@@ -128,7 +128,7 @@
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@implementation LoggingContextSet
+@implementation DDLoggingContextSet
 {
 	OSSpinLock lock;
 	NSMutableSet *set;

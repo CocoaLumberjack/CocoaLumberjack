@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16A0891C168738EC004B6D3D /* DDContextFilterLogFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 16A08916168738EC004B6D3D /* DDContextFilterLogFormatter.h */; };
+		16A0891D168738EC004B6D3D /* DDContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A08917168738EC004B6D3D /* DDContextFilterLogFormatter.m */; };
+		16A0891E168738EC004B6D3D /* DDDispatchQueueLogFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 16A08918168738EC004B6D3D /* DDDispatchQueueLogFormatter.h */; };
+		16A0891F168738EC004B6D3D /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A08919168738EC004B6D3D /* DDDispatchQueueLogFormatter.m */; };
 		16A08920168738EC004B6D3D /* DDMultiFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 16A0891A168738EC004B6D3D /* DDMultiFormatter.h */; };
 		16A08921168738EC004B6D3D /* DDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A0891B168738EC004B6D3D /* DDMultiFormatter.m */; };
 		DCB3185514EB418E001CFBEE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCB3185414EB418E001CFBEE /* Cocoa.framework */; };
@@ -21,10 +25,6 @@
 		DCB318BD14ED6BAB001CFBEE /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB318AD14ED6BAB001CFBEE /* DDLog.m */; };
 		DCB318BE14ED6BAB001CFBEE /* DDTTYLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DCB318AE14ED6BAB001CFBEE /* DDTTYLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DCB318BF14ED6BAB001CFBEE /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB318AF14ED6BAB001CFBEE /* DDTTYLogger.m */; };
-		DCB318C014ED6BAB001CFBEE /* ContextFilterLogFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = DCB318B114ED6BAB001CFBEE /* ContextFilterLogFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DCB318C114ED6BAB001CFBEE /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB318B214ED6BAB001CFBEE /* ContextFilterLogFormatter.m */; };
-		DCB318C214ED6BAB001CFBEE /* DispatchQueueLogFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = DCB318B314ED6BAB001CFBEE /* DispatchQueueLogFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DCB318C314ED6BAB001CFBEE /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB318B414ED6BAB001CFBEE /* DispatchQueueLogFormatter.m */; };
 		DCB318C514ED6BFD001CFBEE /* Lumberjack.h in Headers */ = {isa = PBXBuildFile; fileRef = DCB3186114EB418E001CFBEE /* Lumberjack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DCB318CC14ED6C3B001CFBEE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCB3185414EB418E001CFBEE /* Cocoa.framework */; };
 		DCB318D214ED6C3B001CFBEE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCB318D014ED6C3B001CFBEE /* InfoPlist.strings */; };
@@ -46,6 +46,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		16A08916168738EC004B6D3D /* DDContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDContextFilterLogFormatter.h; sourceTree = "<group>"; };
+		16A08917168738EC004B6D3D /* DDContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDContextFilterLogFormatter.m; sourceTree = "<group>"; };
+		16A08918168738EC004B6D3D /* DDDispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDispatchQueueLogFormatter.h; sourceTree = "<group>"; };
+		16A08919168738EC004B6D3D /* DDDispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDispatchQueueLogFormatter.m; sourceTree = "<group>"; };
 		16A0891A168738EC004B6D3D /* DDMultiFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMultiFormatter.h; sourceTree = "<group>"; };
 		16A0891B168738EC004B6D3D /* DDMultiFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMultiFormatter.m; sourceTree = "<group>"; };
 		DCB3185114EB418E001CFBEE /* Lumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,10 +71,6 @@
 		DCB318AD14ED6BAB001CFBEE /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDLog.m; path = ../../../../Lumberjack/DDLog.m; sourceTree = "<group>"; };
 		DCB318AE14ED6BAB001CFBEE /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDTTYLogger.h; path = ../../../../Lumberjack/DDTTYLogger.h; sourceTree = "<group>"; };
 		DCB318AF14ED6BAB001CFBEE /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDTTYLogger.m; path = ../../../../Lumberjack/DDTTYLogger.m; sourceTree = "<group>"; };
-		DCB318B114ED6BAB001CFBEE /* ContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContextFilterLogFormatter.h; sourceTree = "<group>"; };
-		DCB318B214ED6BAB001CFBEE /* ContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContextFilterLogFormatter.m; sourceTree = "<group>"; };
-		DCB318B314ED6BAB001CFBEE /* DispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueueLogFormatter.h; sourceTree = "<group>"; };
-		DCB318B414ED6BAB001CFBEE /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
 		DCB318CA14ED6C3B001CFBEE /* FmwkTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FmwkTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCB318CF14ED6C3B001CFBEE /* FmwkTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FmwkTest-Info.plist"; sourceTree = "<group>"; };
 		DCB318D114ED6C3B001CFBEE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -175,10 +175,10 @@
 		DCB318B014ED6BAB001CFBEE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DCB318B114ED6BAB001CFBEE /* ContextFilterLogFormatter.h */,
-				DCB318B214ED6BAB001CFBEE /* ContextFilterLogFormatter.m */,
-				DCB318B314ED6BAB001CFBEE /* DispatchQueueLogFormatter.h */,
-				DCB318B414ED6BAB001CFBEE /* DispatchQueueLogFormatter.m */,
+				16A08916168738EC004B6D3D /* DDContextFilterLogFormatter.h */,
+				16A08917168738EC004B6D3D /* DDContextFilterLogFormatter.m */,
+				16A08918168738EC004B6D3D /* DDDispatchQueueLogFormatter.h */,
+				16A08919168738EC004B6D3D /* DDDispatchQueueLogFormatter.m */,
 				16A0891A168738EC004B6D3D /* DDMultiFormatter.h */,
 				16A0891B168738EC004B6D3D /* DDMultiFormatter.m */,
 			);
@@ -221,9 +221,9 @@
 				DCB318B814ED6BAB001CFBEE /* DDASLLogger.h in Headers */,
 				DCB318BA14ED6BAB001CFBEE /* DDFileLogger.h in Headers */,
 				DCB318BE14ED6BAB001CFBEE /* DDTTYLogger.h in Headers */,
-				DCB318C014ED6BAB001CFBEE /* ContextFilterLogFormatter.h in Headers */,
-				DCB318C214ED6BAB001CFBEE /* DispatchQueueLogFormatter.h in Headers */,
 				DCB318C514ED6BFD001CFBEE /* Lumberjack.h in Headers */,
+				16A0891C168738EC004B6D3D /* DDContextFilterLogFormatter.h in Headers */,
+				16A0891E168738EC004B6D3D /* DDDispatchQueueLogFormatter.h in Headers */,
 				16A08920168738EC004B6D3D /* DDMultiFormatter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,8 +324,8 @@
 				DCB318BB14ED6BAB001CFBEE /* DDFileLogger.m in Sources */,
 				DCB318BD14ED6BAB001CFBEE /* DDLog.m in Sources */,
 				DCB318BF14ED6BAB001CFBEE /* DDTTYLogger.m in Sources */,
-				DCB318C114ED6BAB001CFBEE /* ContextFilterLogFormatter.m in Sources */,
-				DCB318C314ED6BAB001CFBEE /* DispatchQueueLogFormatter.m in Sources */,
+				16A0891D168738EC004B6D3D /* DDContextFilterLogFormatter.m in Sources */,
+				16A0891F168738EC004B6D3D /* DDDispatchQueueLogFormatter.m in Sources */,
 				16A08921168738EC004B6D3D /* DDMultiFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
