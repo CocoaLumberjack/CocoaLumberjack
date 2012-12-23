@@ -6,5 +6,6 @@
 #import <Lumberjack/DDFileLogger.h>
 #import <Lumberjack/DDTTYLogger.h>
 
-#import <Lumberjack/ContextFilterLogFormatter.h>
-#import <Lumberjack/DispatchQueueLogFormatter.h>
+#import <Lumberjack/DDContextFilterLogFormatter.h>
+#import <Lumberjack/DDDispatchQueueLogFormatter.h>
+#import <Lumberjack/DDMultiFormatter.h>
