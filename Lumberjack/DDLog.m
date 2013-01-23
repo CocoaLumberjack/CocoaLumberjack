@@ -871,7 +871,7 @@ static char *dd_str_copy(const char *str)
 			file = (char *)aFile;
 		
 		if (options & DDLogMessageCopyFunction)
-			file = dd_str_copy(aFunction);
+			function = dd_str_copy(aFunction);
 		else
 			function = (char *)aFunction;
 		
