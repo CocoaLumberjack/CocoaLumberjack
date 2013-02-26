@@ -1207,7 +1207,11 @@ static DDTTYLogger *sharedInstance;
 		if (msg == NULL) return;
 		
 		BOOL logMsgEnc = [logMsg getCString:msg maxLength:(msgLen + 1) encoding:NSUTF8StringEncoding];
-		if (!logMsgEnc) return;
+		if (!logMsgEnc)
+		{
+			if (!useStack && msg != NULL) free(msg);
+			return;
+		}
 		
 		// Write the log message to STDERR
 		
