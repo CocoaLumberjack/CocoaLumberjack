@@ -158,7 +158,7 @@
 {
 	if ((saveTimer != NULL) && (saveInterval > 0.0) && (unsavedTime > 0.0))
 	{
-		uint64_t interval = saveInterval * NSEC_PER_SEC;
+		uint64_t interval = (uint64_t)(saveInterval * NSEC_PER_SEC);
 		dispatch_time_t startTime = dispatch_time(unsavedTime, interval);
 		
 		dispatch_source_set_timer(saveTimer, startTime, interval, 1.0);
@@ -203,7 +203,7 @@
 {
 	if ((deleteTimer != NULL) && (deleteInterval > 0.0) && (maxAge > 0.0))
 	{
-		uint64_t interval = deleteInterval * NSEC_PER_SEC;
+		uint64_t interval = (uint64_t)(deleteInterval * NSEC_PER_SEC);
 		dispatch_time_t startTime;
 		
 		if (lastDeleteTime > 0)

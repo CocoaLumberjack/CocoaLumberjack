@@ -489,7 +489,7 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 
 enum {
 	DDLogMessageCopyFile     = 1 << 0,
-	DDLogMessageCopyFunction = 1 << 1,
+	DDLogMessageCopyFunction = 1 << 1
 };
 typedef int DDLogMessageOptions;
 
