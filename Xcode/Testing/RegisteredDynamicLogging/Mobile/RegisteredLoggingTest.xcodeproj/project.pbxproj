@@ -26,6 +26,7 @@
 		DCA67D7B146B4B36003411EE /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67D72146B4B36003411EE /* ContextFilterLogFormatter.m */; };
 		DCA67D7C146B4B36003411EE /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67D74146B4B36003411EE /* DispatchQueueLogFormatter.m */; };
 		DCA67D7D146B4B36003411EE /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = DCA67D75146B4B36003411EE /* README.txt */; };
+		DCD6EACA16FFC34C00710668 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD6EAC916FFC34C00710668 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		DCA67D73146B4B36003411EE /* DispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueueLogFormatter.h; sourceTree = "<group>"; };
 		DCA67D74146B4B36003411EE /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
 		DCA67D75146B4B36003411EE /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		DCD6EAC916FFC34C00710668 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 		DC7DC5201415523E00601B40 = {
 			isa = PBXGroup;
 			children = (
+				DCD6EAC916FFC34C00710668 /* Default-568h@2x.png */,
 				DCA67D65146B4B2A003411EE /* Logging */,
 				DC7DC5351415523E00601B40 /* RegisteredLoggingTest */,
 				DC7DC52E1415523E00601B40 /* Frameworks */,
@@ -192,7 +195,7 @@
 		DC7DC5221415523E00601B40 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0460;
 			};
 			buildConfigurationList = DC7DC5251415523E00601B40 /* Build configuration list for PBXProject "RegisteredLoggingTest" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -220,6 +223,7 @@
 				DC7DC5431415523F00601B40 /* MainWindow.xib in Resources */,
 				DC7DC5491415523F00601B40 /* RegisteredLoggingTestViewController.xib in Resources */,
 				DCA67D7D146B4B36003411EE /* README.txt in Resources */,
+				DCD6EACA16FFC34C00710668 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

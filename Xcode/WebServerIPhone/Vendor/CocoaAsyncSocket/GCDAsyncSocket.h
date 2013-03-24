@@ -94,57 +94,6 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface GCDAsyncSocket : NSObject
-{
-	uint32_t flags;
-	uint16_t config;
-	
-#if __has_feature(objc_arc_weak)
-	__weak id delegate;
-#else
-	__unsafe_unretained id delegate;
-#endif
-	dispatch_queue_t delegateQueue;
-	
-	int socket4FD;
-	int socket6FD;
-	int connectIndex;
-	NSData * connectInterface4;
-	NSData * connectInterface6;
-	
-	dispatch_queue_t socketQueue;
-	
-	dispatch_source_t accept4Source;
-	dispatch_source_t accept6Source;
-	dispatch_source_t connectTimer;
-	dispatch_source_t readSource;
-	dispatch_source_t writeSource;
-	dispatch_source_t readTimer;
-	dispatch_source_t writeTimer;
-	
-	NSMutableArray *readQueue;
-	NSMutableArray *writeQueue;
-	
-	GCDAsyncReadPacket *currentRead;
-	GCDAsyncWritePacket *currentWrite;
-	
-	unsigned long socketFDBytesAvailable;
-	
-	GCDAsyncSocketPreBuffer *preBuffer;
-		
-#if TARGET_OS_IPHONE
-	CFStreamClientContext streamContext;
-	CFReadStreamRef readStream;
-	CFWriteStreamRef writeStream;
-#endif
-#if SECURE_TRANSPORT_MAYBE_AVAILABLE
-	SSLContextRef sslContext;
-	GCDAsyncSocketPreBuffer *sslPreBuffer;
-	size_t sslWriteCachedLength;
-	OSStatus sslErrCode;
-#endif
-	
-	id userData;
-}
 
 /**
  * GCDAsyncSocket uses the standard delegate paradigm,
@@ -157,6 +106,8 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * The socket queue is optional.
  * If you pass NULL, GCDAsyncSocket will automatically create it's own socket queue.
  * If you choose to provide a socket queue, the socket queue must not be a concurrent queue.
+ * If you choose to provide a socket queue, and the socket queue has a configured target queue,
+ * then please see the discussion for the method markSocketQueueTargetQueue.
  * 
  * The delegate queue and socket queue can optionally be the same.
 **/
@@ -178,39 +129,6 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
 - (void)getDelegate:(id *)delegatePtr delegateQueue:(dispatch_queue_t *)delegateQueuePtr;
 - (void)setDelegate:(id)delegate delegateQueue:(dispatch_queue_t)delegateQueue;
 - (void)synchronouslySetDelegate:(id)delegate delegateQueue:(dispatch_queue_t)delegateQueue;
-
-/**
- * Traditionally sockets are not closed until the conversation is over.
- * However, it is technically possible for the remote enpoint to close its write stream.
- * Our socket would then be notified that there is no more data to be read,
- * but our socket would still be writeable and the remote endpoint could continue to receive our data.
- * 
- * The argument for this confusing functionality stems from the idea that a client could shut down its
- * write stream after sending a request to the server, thus notifying the server there are to be no further requests.
- * In practice, however, this technique did little to help server developers.
- * 
- * To make matters worse, from a TCP perspective there is no way to tell the difference from a read stream close
- * and a full socket close. They both result in the TCP stack receiving a FIN packet. The only way to tell
- * is by continuing to write to the socket. If it was only a read stream close, then writes will continue to work.
- * Otherwise an error will be occur shortly (when the remote end sends us a RST packet).
- * 
- * In addition to the technical challenges and confusion, many high level socket/stream API's provide
- * no support for dealing with the problem. If the read stream is closed, the API immediately declares the
- * socket to be closed, and shuts down the write stream as well. In fact, this is what Apple's CFStream API does.
- * It might sound like poor design at first, but in fact it simplifies development.
- * 
- * The vast majority of the time if the read stream is closed it's because the remote endpoint closed its socket.
- * Thus it actually makes sense to close the socket at this point.
- * And in fact this is what most networking developers want and expect to happen.
- * However, if you are writing a server that interacts with a plethora of clients,
- * you might encounter a client that uses the discouraged technique of shutting down its write stream.
- * If this is the case, you can set this property to NO,
- * and make use of the socketDidCloseReadStream delegate method.
- * 
- * The default value is YES.
-**/
-- (BOOL)autoDisconnectOnClosedReadStream;
-- (void)setAutoDisconnectOnClosedReadStream:(BOOL)flag;
 
 /**
  * By default, both IPv4 and IPv6 are enabled.
@@ -796,6 +714,114 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
 #pragma mark Advanced
 
 /**
+ * Traditionally sockets are not closed until the conversation is over.
+ * However, it is technically possible for the remote enpoint to close its write stream.
+ * Our socket would then be notified that there is no more data to be read,
+ * but our socket would still be writeable and the remote endpoint could continue to receive our data.
+ * 
+ * The argument for this confusing functionality stems from the idea that a client could shut down its
+ * write stream after sending a request to the server, thus notifying the server there are to be no further requests.
+ * In practice, however, this technique did little to help server developers.
+ * 
+ * To make matters worse, from a TCP perspective there is no way to tell the difference from a read stream close
+ * and a full socket close. They both result in the TCP stack receiving a FIN packet. The only way to tell
+ * is by continuing to write to the socket. If it was only a read stream close, then writes will continue to work.
+ * Otherwise an error will be occur shortly (when the remote end sends us a RST packet).
+ * 
+ * In addition to the technical challenges and confusion, many high level socket/stream API's provide
+ * no support for dealing with the problem. If the read stream is closed, the API immediately declares the
+ * socket to be closed, and shuts down the write stream as well. In fact, this is what Apple's CFStream API does.
+ * It might sound like poor design at first, but in fact it simplifies development.
+ * 
+ * The vast majority of the time if the read stream is closed it's because the remote endpoint closed its socket.
+ * Thus it actually makes sense to close the socket at this point.
+ * And in fact this is what most networking developers want and expect to happen.
+ * However, if you are writing a server that interacts with a plethora of clients,
+ * you might encounter a client that uses the discouraged technique of shutting down its write stream.
+ * If this is the case, you can set this property to NO,
+ * and make use of the socketDidCloseReadStream delegate method.
+ * 
+ * The default value is YES.
+**/
+- (BOOL)autoDisconnectOnClosedReadStream;
+- (void)setAutoDisconnectOnClosedReadStream:(BOOL)flag;
+
+/**
+ * GCDAsyncSocket maintains thread safety by using an internal serial dispatch_queue.
+ * In most cases, the instance creates this queue itself.
+ * However, to allow for maximum flexibility, the internal queue may be passed in the init method.
+ * This allows for some advanced options such as controlling socket priority via target queues.
+ * However, when one begins to use target queues like this, they open the door to some specific deadlock issues.
+ * 
+ * For example, imagine there are 2 queues:
+ * dispatch_queue_t socketQueue;
+ * dispatch_queue_t socketTargetQueue;
+ * 
+ * If you do this (pseudo-code):
+ * socketQueue.targetQueue = socketTargetQueue;
+ * 
+ * Then all socketQueue operations will actually get run on the given socketTargetQueue.
+ * This is fine and works great in most situations.
+ * But if you run code directly from within the socketTargetQueue that accesses the socket,
+ * you could potentially get deadlock. Imagine the following code:
+ * 
+ * - (BOOL)socketHasSomething
+ * {
+ *     __block BOOL result = NO;
+ *     dispatch_block_t block = ^{
+ *         result = [self someInternalMethodToBeRunOnlyOnSocketQueue];
+ *     }
+ *     if (is_executing_on_queue(socketQueue))
+ *         block();
+ *     else
+ *         dispatch_sync(socketQueue, block);
+ *     
+ *     return result;
+ * }
+ * 
+ * What happens if you call this method from the socketTargetQueue? The result is deadlock.
+ * This is because the GCD API offers no mechanism to discover a queue's targetQueue.
+ * Thus we have no idea if our socketQueue is configured with a targetQueue.
+ * If we had this information, we could easily avoid deadlock.
+ * But, since these API's are missing or unfeasible, you'll have to explicitly set it.
+ * 
+ * IF you pass a socketQueue via the init method,
+ * AND you've configured the passed socketQueue with a targetQueue,
+ * THEN you should pass the end queue in the target hierarchy.
+ * 
+ * For example, consider the following queue hierarchy:
+ * socketQueue -> ipQueue -> moduleQueue
+ *
+ * This example demonstrates priority shaping within some server.
+ * All incoming client connections from the same IP address are executed on the same target queue.
+ * And all connections for a particular module are executed on the same target queue.
+ * Thus, the priority of all networking for the entire module can be changed on the fly.
+ * Additionally, networking traffic from a single IP cannot monopolize the module.
+ * 
+ * Here's how you would accomplish something like that:
+ * - (dispatch_queue_t)newSocketQueueForConnectionFromAddress:(NSData *)address onSocket:(GCDAsyncSocket *)sock
+ * {
+ *     dispatch_queue_t socketQueue = dispatch_queue_create("", NULL);
+ *     dispatch_queue_t ipQueue = [self ipQueueForAddress:address];
+ *     
+ *     dispatch_set_target_queue(socketQueue, ipQueue);
+ *     dispatch_set_target_queue(iqQueue, moduleQueue);
+ *     
+ *     return socketQueue;
+ * }
+ * - (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket
+ * {
+ *     [clientConnections addObject:newSocket];
+ *     [newSocket markSocketQueueTargetQueue:moduleQueue];
+ * }
+ * 
+ * Note: This workaround is ONLY needed if you intend to execute code directly on the ipQueue or moduleQueue.
+ * This is often NOT the case, as such queues are used solely for execution shaping.
+**/
+- (void)markSocketQueueTargetQueue:(dispatch_queue_t)socketQueuesPreConfiguredTargetQueue;
+- (void)unmarkSocketQueueTargetQueue:(dispatch_queue_t)socketQueuesPreviouslyConfiguredTargetQueue;
+
+/**
  * It's not thread-safe to access certain variables from outside the socket's internal queue.
  * 
  * For example, the socket file descriptor.
@@ -888,7 +914,9 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
 **/
 - (BOOL)enableBackgroundingOnSocket;
 
-#else
+#endif
+
+#if SECURE_TRANSPORT_MAYBE_AVAILABLE
 
 /**
  * This method is only available from within the context of a performBlock: invocation.

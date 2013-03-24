@@ -63,12 +63,22 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	{
 		HTTPLogTrace();
 		
-		// Initialize underlying dispatch queue and GCD based tcp socket
+		// Setup underlying dispatch queues
 		serverQueue = dispatch_queue_create("HTTPServer", NULL);
+		connectionQueue = dispatch_queue_create("HTTPConnection", NULL);
+		
+		IsOnServerQueueKey = &IsOnServerQueueKey;
+		IsOnConnectionQueueKey = &IsOnConnectionQueueKey;
+		
+		void *nonNullUnusedPointer = (__bridge void *)self; // Whatever, just not null
+		
+		dispatch_queue_set_specific(serverQueue, IsOnServerQueueKey, nonNullUnusedPointer, NULL);
+		dispatch_queue_set_specific(connectionQueue, IsOnConnectionQueueKey, nonNullUnusedPointer, NULL);
+		
+		// Initialize underlying GCD based tcp socket
 		asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:serverQueue];
 		
 		// Use default connection class of HTTPConnection
-		connectionQueue = dispatch_queue_create("HTTPConnection", NULL);
 		connectionClass = [HTTPConnection self];
 		
 		// By default bind on all available interfaces, en1, wifi etc
@@ -280,7 +290,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 		result = domain;
 	});
 	
-    return domain;
+    return result;
 }
 
 - (void)setDomain:(NSString *)value
@@ -308,7 +318,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 		result = name;
 	});
 	
-	return name;
+	return result;
 }
 
 - (NSString *)publishedName
@@ -383,6 +393,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	
 	return result;
 }
+
 - (void)setTXTRecordDictionary:(NSDictionary *)value
 {
 	HTTPLogTrace();
@@ -577,7 +588,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 {
 	HTTPLogTrace();
 	
-	NSAssert(dispatch_get_current_queue() == serverQueue, @"Invalid queue");
+	NSAssert(dispatch_get_specific(IsOnServerQueueKey) != NULL, @"Must be on serverQueue");
 	
 	if (type)
 	{
@@ -612,7 +623,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 {
 	HTTPLogTrace();
 	
-	NSAssert(dispatch_get_current_queue() == serverQueue, @"Invalid queue");
+	NSAssert(dispatch_get_specific(IsOnServerQueueKey) != NULL, @"Must be on serverQueue");
 	
 	if (netService)
 	{
@@ -748,13 +759,15 @@ static NSThread *bonjourThread;
 		
 		// We can't run the run loop unless it has an associated input source or a timer.
 		// So we'll just create a timer that will never fire - unless the server runs for 10,000 years.
-		
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
 		[NSTimer scheduledTimerWithTimeInterval:[[NSDate distantFuture] timeIntervalSinceNow]
 		                                 target:self
 		                               selector:@selector(donothingatall:)
 		                               userInfo:nil
 		                                repeats:YES];
-		
+#pragma clang diagnostic pop
+
 		[[NSRunLoop currentRunLoop] run];
 		
 		HTTPLogVerbose(@"%@: BonjourThread: Aborted", THIS_FILE);

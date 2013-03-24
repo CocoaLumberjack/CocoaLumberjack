@@ -18,9 +18,9 @@
 
 
 // Log levels: off, error, warn, info, verbose
-#if defined(DEBUG) && defined(robbie_hanson)
+#if DEBUG && robbie_hanson
   static const int ddLogLevel = LOG_LEVEL_VERBOSE; // Log level for robbie (debug)
-#elif defined(DEBUG)
+#elif DEBUG
   static const int ddLogLevel = LOG_LEVEL_INFO;    // Log level for other team members (debug)
 #else
   static const int ddLogLevel = LOG_LEVEL_WARN;    // Log level for release build

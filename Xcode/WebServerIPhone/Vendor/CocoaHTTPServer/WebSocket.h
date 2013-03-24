@@ -52,11 +52,19 @@
 
 /**
  * Public API
- * 
+ *
  * Sends a message over the WebSocket.
  * This method is thread-safe.
-**/
+ **/
 - (void)sendMessage:(NSString *)msg;
+
+/**
+ * Public API
+ *
+ * Sends a message over the WebSocket.
+ * This method is thread-safe.
+ **/
+- (void)sendData:(NSData *)msg;
 
 /**
  * Subclass API

@@ -559,11 +559,16 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 }
 
 - (void)sendMessage:(NSString *)msg
-{
-	HTTPLogTrace();
-	
+{	
 	NSData *msgData = [msg dataUsingEncoding:NSUTF8StringEncoding];
-	NSMutableData *data = nil;
+	[self sendData:msgData];
+}
+
+- (void)sendData:(NSData *)msgData
+{
+    HTTPLogTrace();
+    
+    NSMutableData *data = nil;
 	
 	if (isRFC6455)
 	{
@@ -595,7 +600,7 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 	else
 	{
 		data = [NSMutableData dataWithCapacity:([msgData length] + 2)];
-
+        
 		[data appendBytes:"\x00" length:1];
 		[data appendData:msgData];
 		[data appendBytes:"\xFF" length:1];
