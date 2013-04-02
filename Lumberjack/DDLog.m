@@ -429,6 +429,7 @@ static unsigned int numProcessors;
 	// So we can allocate our buffer, and get pointers to all the class definitions.
 	
 	Class *classes = (Class *)malloc(sizeof(Class) * numClasses);
+	if (classes == NULL) return nil;
 	
 	numClasses = objc_getClassList(classes, numClasses);
 	
@@ -814,6 +815,7 @@ static char *dd_str_copy(const char *str)
 	
 	size_t length = strlen(str);
 	char * result = malloc(length + 1);
+	if (result == NULL) return NULL;
 	strncpy(result, str, length);
 	result[length] = 0;
 	
