@@ -15,5 +15,5 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
   s.source_files = 'Lumberjack'
-  s.clean_paths = 'Benchmarking', 'Xcode'
+  s.preserve_paths = 'Benchmarking', 'Xcode'
 end
