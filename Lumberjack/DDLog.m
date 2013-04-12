@@ -855,25 +855,12 @@ static char *dd_str_copy(const char *str)
 		timestamp = [[NSDate alloc] init];
 		
 		machThreadID = pthread_mach_thread_np(pthread_self());
-		
-		#pragma clang diagnostic push
-		#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-		// The documentation for dispatch_get_current_queue() states:
-		//
-		// > [This method is] "recommended for debugging and logging purposes only"...
-		//
-		// Well that's exactly how we're using it here. Literally for logging purposes only.
-		// However, Apple has decided to deprecate this method anyway.
-		// However they have not given us an alternate version of dispatch_queue_get_label() that
-		// automatically uses the current queue, thus dispatch_get_current_queue() is still required.
-		// 
-		// If dispatch_get_current_queue() disappears, without a dispatch_queue_get_label() alternative,
-		// Apple will have effectively taken away our ability to properly log the name of executing dispatch queue.
-		
-		dispatch_queue_t currentQueue = dispatch_get_current_queue();
-		#pragma clang diagnostic pop
-		
-		queueLabel = dd_str_copy(dispatch_queue_get_label(currentQueue));
+
+        // dispatch_get_current_queue() is deprecated and most importantly it
+        // crashes sometimes and there's no other way to reliably get the name
+        // of the current queue.
+
+        queueLabel = dd_str_copy("");
 		
 		threadName = [[NSThread currentThread] name];
 	}
