@@ -24,5 +24,6 @@ Icon?
 .Trashes
 
 # Other
+.DS_Store
 Xcode/PerUserLogLevels/PerUserLogLevels/LumberjackUser.h
 Xcode/PerUserLogLevels/PerUserLogLevels/LumberjackUser.temp.h
