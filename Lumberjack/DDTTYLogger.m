@@ -673,11 +673,14 @@ static DDTTYLogger *sharedInstance;
 	
 	// iOS
 	
+	BOOL done = NO;
+	
 	if ([color respondsToSelector:@selector(getRed:green:blue:alpha:)])
 	{
-		[color getRed:rPtr green:gPtr blue:bPtr alpha:NULL];
+		done = [color getRed:rPtr green:gPtr blue:bPtr alpha:NULL];
 	}
-	else
+	
+	if (!done)
 	{
 		// The method getRed:green:blue:alpha: was only available starting iOS 5.
 		// So in iOS 4 and earlier, we have to jump through hoops.
@@ -702,7 +705,9 @@ static DDTTYLogger *sharedInstance;
 	
 	// Mac OS X
 	
-	[color getRed:rPtr green:gPtr blue:bPtr alpha:NULL];
+	NSColor *safeColor = [color colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+	
+	[safeColor getRed:rPtr green:gPtr blue:bPtr alpha:NULL];
 	
 	#endif
 }
