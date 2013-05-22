@@ -34,7 +34,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	DDLogError(@"Paper jam");
 	DDLogWarn(@"Toner is low");
 	DDLogInfo(@"Warming up printer (pre-customization)");
-	DDLogVerbose(@"Intializing protcol x26");
+	DDLogVerbose(@"Intializing protcol x26 (pre-customization)");
 	
 	// Now let's do some customization:
 	// Info  : Pink
@@ -48,6 +48,18 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	[[DDTTYLogger sharedInstance] setForegroundColor:pink backgroundColor:nil forFlag:LOG_FLAG_INFO];
 	
 	DDLogInfo(@"Warming up printer (post-customization)");
+	
+	// Verbose: Gray
+	
+  #if TARGET_OS_IPHONE
+	UIColor *gray = [UIColor grayColor];
+  #else
+	NSColor *gray = [NSColor grayColor];
+  #endif
+	
+	[[DDTTYLogger sharedInstance] setForegroundColor:gray backgroundColor:nil forFlag:LOG_FLAG_VERBOSE];
+	
+	DDLogVerbose(@"Intializing protcol x26 (post-customization)");
 	
 	// Now let's get crazy
 	
