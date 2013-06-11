@@ -685,7 +685,7 @@ static DDTTYLogger *sharedInstance;
 		CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
 		
 		unsigned char pixel[4];
-		CGContextRef context = CGBitmapContextCreate(&pixel, 1, 1, 8, 4, rgbColorSpace, kCGImageAlphaNoneSkipLast);
+		CGContextRef context = CGBitmapContextCreate(&pixel, 1, 1, 8, 4, rgbColorSpace, (CGBitmapInfo)kCGImageAlphaNoneSkipLast);
 		
 		CGContextSetFillColorWithColor(context, [color CGColor]);
 		CGContextFillRect(context, CGRectMake(0, 0, 1, 1));
