@@ -133,8 +133,6 @@ static NSArray *codes_fg = nil;
 static NSArray *codes_bg = nil;
 static NSArray *colors   = nil;
 
-static DDTTYLogger *sharedInstance;
-
 /**
  * Initializes the colors array, as well as the codes_fg and codes_bg arrays, for 16 color mode.
  * 
@@ -769,19 +767,16 @@ static DDTTYLogger *sharedInstance;
 **/
 + (void)initialize
 {
-	static BOOL initialized = NO;
-	if (!initialized)
-	{
-		initialized = YES;
-		
-		char *term = getenv("TERM");
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        char *term = getenv("TERM");
 		if (term)
 		{
 			if (strcasestr(term, "color") != NULL)
 			{
 				isaColorTTY = YES;
 				isaColor256TTY = (strcasestr(term, "256") != NULL);
-				
+
 				if (isaColor256TTY)
 					[self initialize_colors_256];
 				else
@@ -792,36 +787,34 @@ static DDTTYLogger *sharedInstance;
 		{
 			// Xcode does NOT natively support colors in the Xcode debugging console.
 			// You'll need to install the XcodeColors plugin to see colors in the Xcode console.
-			// 
+			//
 			// PS - Please read the header file before diving into the source code.
-			
+
 			char *xcode_colors = getenv("XcodeColors");
 			if (xcode_colors && (strcmp(xcode_colors, "YES") == 0))
 			{
 				isaXcodeColorTTY = YES;
 			}
 		}
-		
+
 		NSLogInfo(@"DDTTYLogger: isaColorTTY = %@", (isaColorTTY ? @"YES" : @"NO"));
 		NSLogInfo(@"DDTTYLogger: isaColor256TTY: %@", (isaColor256TTY ? @"YES" : @"NO"));
 		NSLogInfo(@"DDTTYLogger: isaXcodeColorTTY: %@", (isaXcodeColorTTY ? @"YES" : @"NO"));
-		
-		sharedInstance = [[DDTTYLogger alloc] init];
-	}
+    });
 }
 
 + (DDTTYLogger *)sharedInstance
 {
+    static DDTTYLogger sharedInstance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[DDTTYLogger alloc] init];
+    });
 	return sharedInstance;
 }
 
 - (id)init
 {
-	if (sharedInstance != nil)
-	{
-		return nil;
-	}
-	
 	if ((self = [super init]))
 	{
 		calendar = [NSCalendar autoupdatingCurrentCalendar];
