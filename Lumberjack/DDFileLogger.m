@@ -1017,11 +1017,11 @@
 
 - (NSString *)description
 {
-	return [@{@"filePath": self.filePath,
-		@"fileName": self.fileName,
-		@"fileAttributes": self.fileAttributes,
-		@"creationDate": self.creationDate,
-		@"modificationDate": self.modificationDate,
+	return [@{@"filePath": (self.filePath ?: @""),
+		@"fileName": (self.fileName ?: @""),
+		@"fileAttributes": (self.fileAttributes ?: @""),
+		@"creationDate": (self.creationDate ?: @""),
+		@"modificationDate": (self.modificationDate ?: @""),
 		@"fileSize": @(self.fileSize),
 		@"age": @(self.age),
 		@"isArchived": @(self.isArchived)} description];
