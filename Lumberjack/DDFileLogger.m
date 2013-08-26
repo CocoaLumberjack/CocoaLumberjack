@@ -912,7 +912,7 @@
 
 + (instancetype)logFileWithPath:(NSString *)aFilePath
 {
-	return [[DDLogFileInfo alloc] initWithFilePath:aFilePath];
+	return [[self alloc] initWithFilePath:aFilePath];
 }
 
 - (id)initWithFilePath:(NSString *)aFilePath
