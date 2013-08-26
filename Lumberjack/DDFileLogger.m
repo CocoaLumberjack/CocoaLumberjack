@@ -910,7 +910,7 @@
 
 #pragma mark Lifecycle
 
-+ (id)logFileWithPath:(NSString *)aFilePath
++ (instancetype)logFileWithPath:(NSString *)aFilePath
 {
 	return [[DDLogFileInfo alloc] initWithFilePath:aFilePath];
 }

@@ -283,7 +283,7 @@
 
 @property (nonatomic, readwrite) BOOL isArchived;
 
-+ (id)logFileWithPath:(NSString *)filePath;
++ (instancetype)logFileWithPath:(NSString *)filePath;
 
 - (id)initWithFilePath:(NSString *)filePath;
 
