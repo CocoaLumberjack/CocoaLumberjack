@@ -1165,6 +1165,10 @@ static DDTTYLogger *sharedInstance;
 
 - (void)logMessage:(DDLogMessage *)logMessage
 {
+    if (![self shouldLogMessage:logMessage]) {
+        return;
+    }
+    
 	NSString *logMsg = logMessage->logMsg;
 	BOOL isFormatted = NO;
 	

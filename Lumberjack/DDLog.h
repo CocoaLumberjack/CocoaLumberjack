@@ -591,8 +591,15 @@ typedef int DDLogMessageOptions;
 	dispatch_queue_t loggerQueue;
 }
 
+/**
+ *  Each logger can have a different logLevel, ignoring messages that are beyond this level
+ */
+@property (nonatomic, assign) int logLevel;
+
 - (id <DDLogFormatter>)logFormatter;
 - (void)setLogFormatter:(id <DDLogFormatter>)formatter;
+
+- (BOOL)shouldLogMessage:(DDLogMessage *)logMessage;
 
 // For thread-safety assertions
 - (BOOL)isOnGlobalLoggingQueue;

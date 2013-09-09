@@ -64,6 +64,10 @@ static DDASLLogger *sharedInstance;
 
 - (void)logMessage:(DDLogMessage *)logMessage
 {
+    if (![self shouldLogMessage:logMessage]) {
+        return;
+    }
+    
 	NSString *logMsg = logMessage->logMsg;
 	
 	if (formatter)
