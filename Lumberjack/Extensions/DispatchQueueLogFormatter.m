@@ -43,7 +43,7 @@
 		
 		// Set default replacements:
 		
-		[_replacements setObject:@"main" forKey:@"com.apple.main-thread"];
+		_replacements[@"com.apple.main-thread"] = @"main";
 	}
 	return self;
 }
@@ -62,7 +62,7 @@
 	
 	OSSpinLockLock(&lock);
 	{
-		result = [_replacements objectForKey:longLabel];
+		result = _replacements[longLabel];
 	}
 	OSSpinLockUnlock(&lock);
 	
@@ -74,7 +74,7 @@
 	OSSpinLockLock(&lock);
 	{
 		if (shortLabel)
-			[_replacements setObject:shortLabel forKey:longLabel];
+			_replacements[longLabel] = shortLabel;
 		else
 			[_replacements removeObjectForKey:longLabel];
 	}
@@ -111,7 +111,7 @@
 		NSString *key = @"DispatchQueueLogFormatter_NSDateFormatter";
 		
 		NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
-		NSDateFormatter *dateFormatter = [threadDictionary objectForKey:key];
+		NSDateFormatter *dateFormatter = threadDictionary[key];
 		
 		if (dateFormatter == nil)
 		{
@@ -119,7 +119,7 @@
 			[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
 			[dateFormatter setDateFormat:dateFormatString];
 			
-			[threadDictionary setObject:dateFormatter forKey:key];
+			threadDictionary[key] = dateFormatter;
 		}
 		
         [dateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar]];
@@ -184,7 +184,7 @@
 		
 		OSSpinLockLock(&lock);
 		{
-			abrvLabel = [_replacements objectForKey:fullLabel];
+			abrvLabel = _replacements[fullLabel];
 		}
 		OSSpinLockUnlock(&lock);
 		
