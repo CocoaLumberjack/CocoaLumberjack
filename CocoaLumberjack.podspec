@@ -13,8 +13,9 @@ Pod::Spec.new do |s|
                   'such as multi-threading, grand central dispatch (if available), lockless '      \
                   'atomic operations, and the dynamic nature of the objective-c runtime.'
 
-  s.requires_arc = true
-  
+  s.requires_arc   = true
+  s.ios.platform   = :ios, '5.0'
+  s.osx.platform   = :osx, '10.7'
   s.source_files   = 'Lumberjack/**/*.{h,m}'
   s.preserve_paths = 'Lumberjack/**/README*'
 end
