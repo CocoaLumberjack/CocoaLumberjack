@@ -100,6 +100,7 @@
 			[threadUnsafeDateFormatter setDateFormat:dateFormatString];
 		}
 		
+        [threadUnsafeDateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar]];
 		return [threadUnsafeDateFormatter stringFromDate:date];
 	}
 	else
@@ -121,6 +122,7 @@
 			[threadDictionary setObject:dateFormatter forKey:key];
 		}
 		
+        [dateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar]];
 		return [dateFormatter stringFromDate:date];
 	}
 }
