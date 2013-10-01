@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.homepage = 'https://github.com/robbiehanson/CocoaLumberjack'
   s.author   = { 'Robbie Hanson' => 'robbiehanson@deusty.com' }
   s.source   = { :git => 'https://github.com/robbiehanson/CocoaLumberjack.git',
-                 :tag => '1.6.2' }
+                 :tag => "#{s.version}" }
 
   s.description = 'It is similar in concept to other popular logging frameworks such as log4j, '   \
                   'yet is designed specifically for objective-c, and takes advantage of features ' \
@@ -14,6 +14,7 @@ Pod::Spec.new do |s|
                   'atomic operations, and the dynamic nature of the objective-c runtime.'
 
   s.requires_arc = true
-  s.source_files = 'Lumberjack/**/*'
-  s.preserve_paths = 'Benchmarking', 'Xcode'
+  
+  s.source_files   = 'Lumberjack/**/*.{h,m}'
+  s.preserve_paths = 'Lumberjack/**/README*'
 end
