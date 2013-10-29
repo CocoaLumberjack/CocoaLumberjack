@@ -1182,10 +1182,24 @@ static DDTTYLogger *sharedInstance;
 			{
 				for (DDTTYLoggerColorProfile *cp in colorProfilesArray)
 				{
-					if ((logMessage->logFlag & cp->mask) && (logMessage->logContext == cp->context))
+					if (logMessage->logFlag & cp->mask)
 					{
-						colorProfile = cp;
-						break;
+                        // Color profile set for this context?
+                        if (logMessage->logContext == cp->context)
+                        {
+                            colorProfile = cp;
+                            
+                            // Stop searching
+                            break;
+                        }
+						
+                        // Check if LOG_CONTEXT_ALL was specified as a default color for this flag
+                        if (cp->context == LOG_CONTEXT_ALL)
+                        {
+                            colorProfile = cp;
+                            
+                            // We don't break to keep searching for more specific color profiles for the context
+                        }
 					}
 				}
 			}
