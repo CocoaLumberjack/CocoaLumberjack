@@ -849,6 +849,10 @@
 static int exception_count = 0;
 - (void)logMessage:(DDLogMessage *)logMessage
 {
+    if (![self shouldLogMessage:logMessage]) {
+        return;
+    }
+    
 	NSString *logMsg = logMessage->logMsg;
 	
 	if (formatter)

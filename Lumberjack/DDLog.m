@@ -961,7 +961,15 @@ static char *dd_str_copy(const char *str)
 
 - (void)logMessage:(DDLogMessage *)logMessage
 {
-	// Override me
+	// Override me and use shouldLogMessage for filtering
+}
+
+- (BOOL)shouldLogMessage:(DDLogMessage *)logMessage {
+    // if the logLevel was not set (0 is default), then we don't need to filter anything, otherwise no logs will pass the following validation
+    if (self.logLevel == 0) {
+        return YES;
+    }
+    return (logMessage->logFlag <= self.logLevel);
 }
 
 - (id <DDLogFormatter>)logFormatter
