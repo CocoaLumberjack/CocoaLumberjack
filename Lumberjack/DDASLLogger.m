@@ -36,11 +36,11 @@ static DDASLLogger *sharedInstance;
 	{
 		initialized = YES;
 		
-		sharedInstance = [[DDASLLogger alloc] init];
+		sharedInstance = [[[self class] alloc] init];
 	}
 }
 
-+ (DDASLLogger *)sharedInstance
++ (instancetype)sharedInstance
 {
 	return sharedInstance;
 }

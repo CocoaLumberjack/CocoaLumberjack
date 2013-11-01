@@ -534,15 +534,15 @@ typedef int DDLogMessageOptions;
  * However, if you need them to be copied you may use the options parameter to specify this.
  * Options is a bitmask which supports DDLogMessageCopyFile and DDLogMessageCopyFunction.
 **/
-- (id)initWithLogMsg:(NSString *)logMsg
-               level:(int)logLevel
-                flag:(int)logFlag
-             context:(int)logContext
-                file:(const char *)file
-            function:(const char *)function
-                line:(int)line
-                 tag:(id)tag
-             options:(DDLogMessageOptions)optionsMask;
+- (instancetype)initWithLogMsg:(NSString *)logMsg
+                         level:(int)logLevel
+                          flag:(int)logFlag
+                       context:(int)logContext
+                          file:(const char *)file
+                      function:(const char *)function
+                          line:(int)line
+                           tag:(id)tag
+                       options:(DDLogMessageOptions)optionsMask;
 
 /**
  * Returns the threadID as it appears in NSLog.

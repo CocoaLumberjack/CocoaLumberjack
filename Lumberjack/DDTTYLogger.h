@@ -49,7 +49,7 @@
 	NSMutableDictionary *colorProfilesDict;
 }
 
-+ (DDTTYLogger *)sharedInstance;
++ (instancetype)sharedInstance;
 
 /* Inherited from the DDLogger protocol:
  * 

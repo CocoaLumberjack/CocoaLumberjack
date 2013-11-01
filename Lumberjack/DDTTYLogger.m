@@ -115,7 +115,7 @@
 	size_t resetCodeLen;
 }
 
-- (id)initWithForegroundColor:(OSColor *)fgColor backgroundColor:(OSColor *)bgColor flag:(int)mask context:(int)ctxt;
+- (instancetype)initWithForegroundColor:(OSColor *)fgColor backgroundColor:(OSColor *)bgColor flag:(int)mask context:(int)ctxt;
 
 @end
 
@@ -806,11 +806,11 @@ static DDTTYLogger *sharedInstance;
 		NSLogInfo(@"DDTTYLogger: isaColor256TTY: %@", (isaColor256TTY ? @"YES" : @"NO"));
 		NSLogInfo(@"DDTTYLogger: isaXcodeColorTTY: %@", (isaXcodeColorTTY ? @"YES" : @"NO"));
 		
-		sharedInstance = [[DDTTYLogger alloc] init];
+		sharedInstance = [[[self class] alloc] init];
 	}
 }
 
-+ (DDTTYLogger *)sharedInstance
++ (instancetype)sharedInstance
 {
 	return sharedInstance;
 }
@@ -1372,7 +1372,7 @@ static DDTTYLogger *sharedInstance;
 
 @implementation DDTTYLoggerColorProfile
 
-- (id)initWithForegroundColor:(OSColor *)fgColor backgroundColor:(OSColor *)bgColor flag:(int)aMask context:(int)ctxt
+- (instancetype)initWithForegroundColor:(OSColor *)fgColor backgroundColor:(OSColor *)bgColor flag:(int)aMask context:(int)ctxt
 {
 	if ((self = [super init]))
 	{

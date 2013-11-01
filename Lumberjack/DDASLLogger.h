@@ -31,7 +31,7 @@
 	aslclient client;
 }
 
-+ (DDASLLogger *)sharedInstance;
++ (instancetype)sharedInstance;
 
 // Inherited from DDAbstractLogger
 

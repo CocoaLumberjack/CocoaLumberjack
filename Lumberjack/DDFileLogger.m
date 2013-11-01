@@ -61,7 +61,7 @@
 	return [self initWithLogsDirectory:nil];
 }
 
-- (id)initWithLogsDirectory:(NSString *)aLogsDirectory
+- (instancetype)initWithLogsDirectory:(NSString *)aLogsDirectory
 {
 	if ((self = [super init]))
 	{
@@ -423,7 +423,7 @@
 	return [self initWithDateFormatter:nil];
 }
 
-- (id)initWithDateFormatter:(NSDateFormatter *)aDateFormatter
+- (instancetype)initWithDateFormatter:(NSDateFormatter *)aDateFormatter
 {
 	if ((self = [super init]))
 	{
@@ -463,7 +463,7 @@
 	return [self initWithLogFileManager:defaultLogFileManager];
 }
 
-- (id)initWithLogFileManager:(id <DDLogFileManager>)aLogFileManager
+- (instancetype)initWithLogFileManager:(id <DDLogFileManager>)aLogFileManager
 {
 	if ((self = [super init]))
 	{
@@ -926,7 +926,7 @@ static int exception_count = 0;
 	return [[self alloc] initWithFilePath:aFilePath];
 }
 
-- (id)initWithFilePath:(NSString *)aFilePath
+- (instancetype)initWithFilePath:(NSString *)aFilePath
 {
 	if ((self = [super init]))
 	{
