@@ -1,4 +1,4 @@
-#import "DispatchQueueLogFormatter.h"
+#import "DDDispatchQueueLogFormatter.h"
 #import <libkern/OSAtomic.h>
 
 /**
@@ -16,7 +16,7 @@
 #endif
 
 
-@implementation DispatchQueueLogFormatter
+@implementation DDDispatchQueueLogFormatter
 {
 	int32_t atomicLoggerCount;
 	NSDateFormatter *threadUnsafeDateFormatter; // Use [self stringFromDate]
