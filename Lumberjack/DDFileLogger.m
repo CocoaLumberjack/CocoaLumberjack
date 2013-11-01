@@ -74,7 +74,7 @@
 		
 		NSKeyValueObservingOptions kvoOptions = NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew;
 		
-		[self addObserver:self forKeyPath:@"maximumNumberOfLogFiles" options:kvoOptions context:nil];
+		[self addObserver:self forKeyPath:NSStringFromSelector(@selector(maximumNumberOfLogFiles)) options:kvoOptions context:nil];
 		
 		NSLogVerbose(@"DDFileLogManagerDefault: logsDirectory:\n%@", [self logsDirectory]);
 		NSLogVerbose(@"DDFileLogManagerDefault: sortedLogFileNames:\n%@", [self sortedLogFileNames]);
@@ -84,7 +84,13 @@
 
 - (void)dealloc
 {
-	[self removeObserver:self forKeyPath:@"maximumNumberOfLogFiles"];
+    // try-catch because the observer might be removed or never added. In this case, removeObserver throws and exception
+    @try {
+        [self removeObserver:self forKeyPath:@"maximumNumberOfLogFiles"];
+    }
+    @catch (NSException *exception) {
+        
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
