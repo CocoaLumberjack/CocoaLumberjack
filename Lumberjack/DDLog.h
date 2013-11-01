@@ -323,9 +323,15 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * you should create and add a logger.
 **/
 
-+ (void)addLogger:(id <DDLogger>)logger;
-+ (void)removeLogger:(id <DDLogger>)logger;
++ (void)addLogger:(id <DDLogger>)logger;    // adds the logger using maximum log level (LOG_LEVEL_VERBOSE)
 
+/**
+ * Please use as logLevels the LOG_LEVEL_* macros
+ *
+**/
++ (void)addLogger:(id <DDLogger>)logger withLogLevel:(int)logLevel;
+
++ (void)removeLogger:(id <DDLogger>)logger;
 + (void)removeAllLoggers;
 
 /**
