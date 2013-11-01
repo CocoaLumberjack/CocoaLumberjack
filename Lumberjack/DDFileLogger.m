@@ -921,9 +921,9 @@ static int exception_count = 0;
 
 #pragma mark Lifecycle
 
-+ (id)logFileWithPath:(NSString *)aFilePath
++ (instancetype)logFileWithPath:(NSString *)aFilePath
 {
-	return [[DDLogFileInfo alloc] initWithFilePath:aFilePath];
+	return [[self alloc] initWithFilePath:aFilePath];
 }
 
 - (id)initWithFilePath:(NSString *)aFilePath
