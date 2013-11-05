@@ -183,12 +183,7 @@ static unsigned int numProcessors;
 
 + (void)addLogger:(id <DDLogger>)logger
 {
-	if (logger == nil) return;
-		
-	dispatch_async(loggingQueue, ^{ @autoreleasepool {
-		
-		[self lt_addLogger:logger logLevel:LOG_LEVEL_VERBOSE];
-	}});
+    [self addLogger:logger withLogLevel:LOG_LEVEL_VERBOSE];
 }
 
 + (void)addLogger:(id <DDLogger>)logger withLogLevel:(int)logLevel
