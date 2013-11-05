@@ -105,7 +105,7 @@
  * If you run the application from a shell, then DDTTYLogger will automatically map the given color to
  * the closest available color. (xterm-256color or xterm-color which have 256 and 16 supported colors respectively.)
  * 
- * This method invokes setForegroundColor:backgroundColor:forFlag:context: and passes the default context (0).
+ * This method invokes setForegroundColor:backgroundColor:forFlag:context: and applies it to `LOG_CONTEXT_ALL`.
 **/
 #if TARGET_OS_IPHONE
 - (void)setForegroundColor:(UIColor *)txtColor backgroundColor:(UIColor *)bgColor forFlag:(int)mask;
