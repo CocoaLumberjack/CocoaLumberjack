@@ -931,7 +931,7 @@ static DDTTYLogger *sharedInstance;
 
 - (void)setForegroundColor:(OSColor *)txtColor backgroundColor:(OSColor *)bgColor forFlag:(int)mask
 {
-	[self setForegroundColor:txtColor backgroundColor:bgColor forFlag:mask context:0];
+	[self setForegroundColor:txtColor backgroundColor:bgColor forFlag:mask context:LOG_CONTEXT_ALL];
 }
 
 - (void)setForegroundColor:(OSColor *)txtColor backgroundColor:(OSColor *)bgColor forFlag:(int)mask context:(int)ctxt
