@@ -879,13 +879,16 @@ static char *dd_str_copy(const char *str)
         // crashes sometimes.
 
 #ifdef DISPATCH_CURRENT_QUEUE_LABEL
+        // If compiling with iOS 7.0+ SDK for any deployment target
         if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
+            // If runtime environment is iOS 7.0+
             queueLabel = dd_str_copy(dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL));
         }
         else {
             queueLabel = dd_str_copy("");
         }
 #elif __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000
+        // Else if deployment target is iOS 6.0+
         queueLabel = dd_str_copy("");
 #else
 		#pragma clang diagnostic push
