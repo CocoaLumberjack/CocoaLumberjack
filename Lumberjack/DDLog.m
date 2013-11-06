@@ -879,7 +879,7 @@ static char *dd_str_copy(const char *str)
         // dispatch_get_current_queue() is deprecated and most importantly it
         // crashes sometimes.
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_7_0
+#ifdef DISPATCH_CURRENT_QUEUE_LABEL
         // If compiling with iOS 7.0+ SDK for any deployment target
         if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
             // If runtime environment is iOS 7.0+
