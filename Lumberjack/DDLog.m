@@ -875,16 +875,18 @@ static char *dd_str_copy(const char *str)
 		
 		machThreadID = pthread_mach_thread_np(pthread_self());
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000
         // dispatch_get_current_queue() is deprecated and most importantly it
         // crashes sometimes.
 
+#ifdef DISPATCH_CURRENT_QUEUE_LABEL
         if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
             queueLabel = dd_str_copy(dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL));
         }
         else {
             queueLabel = dd_str_copy("");
         }
+#elif __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000
+        queueLabel = dd_str_copy("");
 #else
 		#pragma clang diagnostic push
 		#pragma clang diagnostic ignored "-Wdeprecated-declarations"
