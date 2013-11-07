@@ -6,6 +6,7 @@
 #import <mach/host_info.h>
 #import <libkern/OSAtomic.h>
 #import <Availability.h>
+#import <UIKit/UIDevice.h>
 
 
 /**
