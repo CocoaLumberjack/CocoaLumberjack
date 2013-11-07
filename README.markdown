@@ -30,6 +30,11 @@ This framework is for you if:
 **[Get started using Lumberjack](https://github.com/robbiehanson/CocoaLumberjack/wiki/GettingStarted)**<br/>
 **[Learn more about Lumberjack](https://github.com/robbiehanson/CocoaLumberjack/wiki)**<br/>
 
+### Requirements 
+- Xcode 4.4 or later is required
+- iOS 5 or later
+- OS X 10.7 or later
+
 <br/>
 Can't find the answer to your question in any of the [wiki](https://github.com/robbiehanson/CocoaLumberjack/wiki) articles? Try the **[mailing list](http://groups.google.com/group/cocoalumberjack)**.
 <br/>

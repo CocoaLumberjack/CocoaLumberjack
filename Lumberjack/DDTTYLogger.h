@@ -7,6 +7,8 @@
 
 #import "DDLog.h"
 
+#define LOG_CONTEXT_ALL NSIntegerMax
+
 /**
  * Welcome to Cocoa Lumberjack!
  * 
@@ -49,7 +51,7 @@
 	NSMutableDictionary *colorProfilesDict;
 }
 
-+ (DDTTYLogger *)sharedInstance;
++ (instancetype)sharedInstance;
 
 /* Inherited from the DDLogger protocol:
  * 
@@ -103,7 +105,7 @@
  * If you run the application from a shell, then DDTTYLogger will automatically map the given color to
  * the closest available color. (xterm-256color or xterm-color which have 256 and 16 supported colors respectively.)
  * 
- * This method invokes setForegroundColor:backgroundColor:forFlag:context: and passes the default context (0).
+ * This method invokes setForegroundColor:backgroundColor:forFlag:context: and applies it to `LOG_CONTEXT_ALL`.
 **/
 #if TARGET_OS_IPHONE
 - (void)setForegroundColor:(UIColor *)txtColor backgroundColor:(UIColor *)bgColor forFlag:(int)mask;
@@ -116,6 +118,8 @@
  * 
  * A logging context is often used to identify log messages coming from a 3rd party framework,
  * although logging context's can be used for many different functions.
+ * 
+ * Use LOG_CONTEXT_ALL to set the deafult color for all contexts that have no specific color set defined.
  * 
  * Logging context's are explained in further detail here:
  * https://github.com/robbiehanson/CocoaLumberjack/wiki/CustomContext

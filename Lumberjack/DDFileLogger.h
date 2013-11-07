@@ -120,7 +120,7 @@
 }
 
 - (id)init;
-- (id)initWithLogsDirectory:(NSString *)logsDirectory;
+- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory;
 
 /* Inherited from DDLogFileManager protocol:
 
@@ -160,7 +160,7 @@
 }
 
 - (id)init;
-- (id)initWithDateFormatter:(NSDateFormatter *)dateFormatter;
+- (instancetype)initWithDateFormatter:(NSDateFormatter *)dateFormatter;
 
 @end
 
@@ -182,7 +182,7 @@
 }
 
 - (id)init;
-- (id)initWithLogFileManager:(id <DDLogFileManager>)logFileManager;
+- (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager;
 
 /**
  * Log File Rolling:
@@ -283,9 +283,9 @@
 
 @property (nonatomic, readwrite) BOOL isArchived;
 
-+ (id)logFileWithPath:(NSString *)filePath;
++ (instancetype)logFileWithPath:(NSString *)filePath;
 
-- (id)initWithFilePath:(NSString *)filePath;
+- (instancetype)initWithFilePath:(NSString *)filePath;
 
 - (void)reset;
 - (void)renameFile:(NSString *)newFileName;

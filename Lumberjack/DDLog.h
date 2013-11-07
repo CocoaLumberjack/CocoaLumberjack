@@ -329,9 +329,15 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * you should create and add a logger.
 **/
 
-+ (void)addLogger:(id <DDLogger>)logger;
-+ (void)removeLogger:(id <DDLogger>)logger;
++ (void)addLogger:(id <DDLogger>)logger;    // adds the logger using maximum log level (LOG_LEVEL_VERBOSE)
 
+/**
+ * Please use as logLevels the LOG_LEVEL_* macros
+ *
+**/
++ (void)addLogger:(id <DDLogger>)logger withLogLevel:(int)logLevel;
+
++ (void)removeLogger:(id <DDLogger>)logger;
 + (void)removeAllLoggers;
 
 /**
@@ -540,15 +546,15 @@ typedef int DDLogMessageOptions;
  * However, if you need them to be copied you may use the options parameter to specify this.
  * Options is a bitmask which supports DDLogMessageCopyFile and DDLogMessageCopyFunction.
 **/
-- (id)initWithLogMsg:(NSString *)logMsg
-               level:(int)logLevel
-                flag:(int)logFlag
-             context:(int)logContext
-                file:(const char *)file
-            function:(const char *)function
-                line:(int)line
-                 tag:(id)tag
-             options:(DDLogMessageOptions)optionsMask;
+- (instancetype)initWithLogMsg:(NSString *)logMsg
+                         level:(int)logLevel
+                          flag:(int)logFlag
+                       context:(int)logContext
+                          file:(const char *)file
+                      function:(const char *)function
+                          line:(int)line
+                           tag:(id)tag
+                       options:(DDLogMessageOptions)optionsMask;
 
 /**
  * Returns the threadID as it appears in NSLog.
