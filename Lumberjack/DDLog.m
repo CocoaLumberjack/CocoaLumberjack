@@ -5,6 +5,7 @@
 #import <mach/mach_host.h>
 #import <mach/host_info.h>
 #import <libkern/OSAtomic.h>
+#import <Availability.h>
 
 
 /**
@@ -875,11 +876,20 @@ static char *dd_str_copy(const char *str)
 		
 		machThreadID = pthread_mach_thread_np(pthread_self());
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000
         // dispatch_get_current_queue() is deprecated and most importantly it
-        // crashes sometimes and there's no other way to reliably get the name
-        // of the current queue.
+        // crashes sometimes.
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0
+        // If compiling with iOS 7.0+ SDK for any deployment target
+        if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
+            // If runtime environment is iOS 7.0+
+            queueLabel = dd_str_copy(dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL));
+        }
+        else {
+            queueLabel = dd_str_copy("");
+        }
+#elif __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0
+        // Else if deployment target is iOS 6.0+
         queueLabel = dd_str_copy("");
 #else
 		#pragma clang diagnostic push
