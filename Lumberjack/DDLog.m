@@ -6,8 +6,9 @@
 #import <mach/host_info.h>
 #import <libkern/OSAtomic.h>
 #import <Availability.h>
-#import <UIKit/UIDevice.h>
-
+#if TARGET_OS_IPHONE
+    #import <UIKit/UIDevice.h>
+#endif
 
 /**
  * Welcome to Cocoa Lumberjack!
@@ -877,41 +878,42 @@ static char *dd_str_copy(const char *str)
 		
 		machThreadID = pthread_mach_thread_np(pthread_self());
 
-        // dispatch_get_current_queue() is deprecated and most importantly it
-        // crashes sometimes.
-
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0
-        // If compiling with iOS 7.0+ SDK for any deployment target
-        if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
-            // If runtime environment is iOS 7.0+
+        // Try to get the current queue's label
+        
+        // a) Compiling against newer SDK's (iOS 7+/OS X 10.9+) where DISPATCH_CURRENT_QUEUE_LABEL is defined
+        //    on a (iOS 7.0+/OS X 10.9+) runtime version
+        BOOL gotLabel = NO;
+        #ifdef DISPATCH_CURRENT_QUEUE_LABEL
+        if (
+            #if TARGET_OS_IPHONE
+            [[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending // 7.0+
+            #else
+            [[NSApplication sharedApplication] respondsToSelector:@selector(occlusionState)] // No nice way to check for OS X 10.9+
+            #endif
+            ) {
             queueLabel = dd_str_copy(dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL));
+            gotLabel = YES;
         }
-        else {
+        #endif
+        
+        // b) Systems where dispatch_get_current_queue is not yet deprecated and won't crash (< iOS 6.0/OS X 10.9)
+        //    dispatch_get_current_queue(void); __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_6,__MAC_10_9,__IPHONE_4_0,__IPHONE_6_0)
+        if (!gotLabel &&
+        #if TARGET_OS_IPHONE
+            [[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] == NSOrderedAscending // < 6.0
+        #else
+            ![[NSApplication sharedApplication] respondsToSelector:@selector(occlusionState)] // < OS X 10.9
+        #endif
+            ) {
+            dispatch_queue_t currentQueue = dispatch_get_current_queue();
+            queueLabel = dd_str_copy(dispatch_queue_get_label(currentQueue));
+            gotLabel = YES;
+        }
+        
+        // c) Give up
+        if (!gotLabel) {
             queueLabel = dd_str_copy("");
         }
-#elif __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0
-        // Else if deployment target is iOS 6.0+
-        queueLabel = dd_str_copy("");
-#else
-		#pragma clang diagnostic push
-		#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-		// The documentation for dispatch_get_current_queue() states:
-		//
-		// > [This method is] "recommended for debugging and logging purposes only"...
-		//
-		// Well that's exactly how we're using it here. Literally for logging purposes only.
-		// However, Apple has decided to deprecate this method anyway.
-		// However they have not given us an alternate version of dispatch_queue_get_label() that
-		// automatically uses the current queue, thus dispatch_get_current_queue() is still required.
-		// 
-		// If dispatch_get_current_queue() disappears, without a dispatch_queue_get_label() alternative,
-		// Apple will have effectively taken away our ability to properly log the name of executing dispatch queue.
-		
-		dispatch_queue_t currentQueue = dispatch_get_current_queue();
-		#pragma clang diagnostic pop
-		
-		queueLabel = dd_str_copy(dispatch_queue_get_label(currentQueue));
-#endif
 		
 		threadName = [[NSThread currentThread] name];
 	}
