@@ -880,18 +880,25 @@ static char *dd_str_copy(const char *str)
 
         // dispatch_get_current_queue() is deprecated and most importantly it
         // crashes sometimes.
-
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0
-        // If compiling with iOS 7.0+ SDK for any deployment target
-        if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
-            // If runtime environment is iOS 7.0+
+        
+#if (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0) || (__MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_9)
+        // If compiling against iOS 7.0+/OS X 10.9+ SDK for any deployment target
+        
+        if (
+#if TARGET_OS_IPHONE
+            [[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending
+#else
+            [[NSApplication sharedApplication] respondsToSelector:@selector(occlusionState)] // No nice way to check for OS X 10.9+
+#endif
+            ) {
+            // If runtime environment is iOS 7.0+ or OS X 10.9+
             queueLabel = dd_str_copy(dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL));
         }
         else {
             queueLabel = dd_str_copy("");
         }
 #elif __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0
-        // Else if deployment target is iOS 6.0+
+        // If deployment target is iOS 6.0+
         queueLabel = dd_str_copy("");
 #else
 		// The documentation for dispatch_get_current_queue() states:
