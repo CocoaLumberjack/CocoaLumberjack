@@ -54,6 +54,18 @@
          tag:atag                                                       \
       format:(frmt), ##__VA_ARGS__]
 
+#define LOGV_MACRO(isAsynchronous, lvl, flg, ctx, atag, fnct, frmt, avalist) \
+  [DDLog log:isAsynchronous                                                  \
+       level:lvl                                                             \
+        flag:flg                                                             \
+     context:ctx                                                             \
+        file:__FILE__                                                        \
+    function:fnct                                                            \
+        line:__LINE__                                                        \
+         tag:atag                                                            \
+      format:frmt                                                            \
+        args:avalist]
+
 /**
  * Define the Objective-C and C versions of the macro.
  * These automatically inject the proper function name for either an objective-c method or c function.
@@ -64,20 +76,38 @@
 #define LOG_OBJC_MACRO(async, lvl, flg, ctx, frmt, ...) \
              LOG_MACRO(async, lvl, flg, ctx, nil, sel_getName(_cmd), frmt, ##__VA_ARGS__)
 
+#define LOGV_OBJC_MACRO(async, lvl, flg, ctx, frmt, avalist) \
+             LOGV_MACRO(async, lvl, flg, ctx, nil, sel_getName(_cmd), frmt, avalist)
+
 #define LOG_C_MACRO(async, lvl, flg, ctx, frmt, ...) \
           LOG_MACRO(async, lvl, flg, ctx, nil, __FUNCTION__, frmt, ##__VA_ARGS__)
+
+#define LOGV_C_MACRO(async, lvl, flg, ctx, frmt, avalist) \
+          LOGV_MACRO(async, lvl, flg, ctx, nil, __FUNCTION__, frmt, avalist)
 
 #define  SYNC_LOG_OBJC_MACRO(lvl, flg, ctx, frmt, ...) \
               LOG_OBJC_MACRO( NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
+#define  SYNC_LOGV_OBJC_MACRO(lvl, flg, ctx, frmt, avalist) \
+              LOGV_OBJC_MACRO( NO, lvl, flg, ctx, frmt, avalist)
+
 #define ASYNC_LOG_OBJC_MACRO(lvl, flg, ctx, frmt, ...) \
               LOG_OBJC_MACRO(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
+
+#define ASYNC_LOGV_OBJC_MACRO(lvl, flg, ctx, frmt, avalist) \
+              LOGV_OBJC_MACRO(YES, lvl, flg, ctx, frmt, avalist)
 
 #define  SYNC_LOG_C_MACRO(lvl, flg, ctx, frmt, ...) \
               LOG_C_MACRO( NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
+#define  SYNC_LOGV_C_MACRO(lvl, flg, ctx, frmt, avalist) \
+              LOGV_C_MACRO( NO, lvl, flg, ctx, frmt, avalist)
+
 #define ASYNC_LOG_C_MACRO(lvl, flg, ctx, frmt, ...) \
               LOG_C_MACRO(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
+
+#define ASYNC_LOGV_C_MACRO(lvl, flg, ctx, frmt, avalist) \
+              LOGV_C_MACRO(YES, lvl, flg, ctx, frmt, avalist)
 
 /**
  * Define version of the macro that only execute if the logLevel is above the threshold.
@@ -100,23 +130,44 @@
 #define LOG_MAYBE(async, lvl, flg, ctx, fnct, frmt, ...) \
   do { if(lvl & flg) LOG_MACRO(async, lvl, flg, ctx, nil, fnct, frmt, ##__VA_ARGS__); } while(0)
 
+#define LOGV_MAYBE(async, lvl, flg, ctx, fnct, frmt, avalist) \
+  do { if(lvl & flg) LOGV_MACRO(async, lvl, flg, ctx, nil, fnct, frmt, avalist); } while(0)
+
 #define LOG_OBJC_MAYBE(async, lvl, flg, ctx, frmt, ...) \
              LOG_MAYBE(async, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+
+#define LOGV_OBJC_MAYBE(async, lvl, flg, ctx, frmt, avalist) \
+             LOGV_MAYBE(async, lvl, flg, ctx, sel_getName(_cmd), frmt, avalist)
 
 #define LOG_C_MAYBE(async, lvl, flg, ctx, frmt, ...) \
           LOG_MAYBE(async, lvl, flg, ctx, __FUNCTION__, frmt, ##__VA_ARGS__)
 
+#define LOGV_C_MAYBE(async, lvl, flg, ctx, frmt, avalist) \
+        LOGV_MAYBE(async, lvl, flg, ctx, __FUNCTION__, frmt, avalist)
+
 #define  SYNC_LOG_OBJC_MAYBE(lvl, flg, ctx, frmt, ...) \
               LOG_OBJC_MAYBE( NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
+
+#define  SYNC_LOGV_OBJC_MAYBE(lvl, flg, ctx, frmt, avalist) \
+              LOGV_OBJC_MAYBE( NO, lvl, flg, ctx, frmt, avalist)
 
 #define ASYNC_LOG_OBJC_MAYBE(lvl, flg, ctx, frmt, ...) \
               LOG_OBJC_MAYBE(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
+#define ASYNC_LOGV_OBJC_MAYBE(lvl, flg, ctx, frmt, avalist) \
+              LOGV_OBJC_MAYBE(YES, lvl, flg, ctx, frmt, avalist)
+
 #define  SYNC_LOG_C_MAYBE(lvl, flg, ctx, frmt, ...) \
               LOG_C_MAYBE( NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
+#define  SYNC_LOGV_C_MAYBE(lvl, flg, ctx, frmt, avalist) \
+              LOGV_C_MAYBE( NO, lvl, flg, ctx, frmt, avalist)
+
 #define ASYNC_LOG_C_MAYBE(lvl, flg, ctx, frmt, ...) \
               LOG_C_MAYBE(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
+
+#define ASYNC_LOGV_C_MAYBE(lvl, flg, ctx, frmt, avalist) \
+              LOGV_C_MAYBE(YES, lvl, flg, ctx, frmt, avalist)
 
 /**
  * Define versions of the macros that also accept tags.
@@ -131,17 +182,33 @@
 #define LOG_OBJC_TAG_MACRO(async, lvl, flg, ctx, tag, frmt, ...) \
                  LOG_MACRO(async, lvl, flg, ctx, tag, sel_getName(_cmd), frmt, ##__VA_ARGS__)
 
+#define LOGV_OBJC_TAG_MACRO(async, lvl, flg, ctx, tag, frmt, avalist) \
+                 LOGV_MACRO(async, lvl, flg, ctx, tag, sel_getName(_cmd), frmt, avalist)
+
 #define LOG_C_TAG_MACRO(async, lvl, flg, ctx, tag, frmt, ...) \
               LOG_MACRO(async, lvl, flg, ctx, tag, __FUNCTION__, frmt, ##__VA_ARGS__)
+
+#define LOGV_C_TAG_MACRO(async, lvl, flg, ctx, tag, frmt, avalist) \
+               LOGV_MACRO(async, lvl, flg, ctx, tag, __FUNCTION__, frmt, avalist)
 
 #define LOG_TAG_MAYBE(async, lvl, flg, ctx, tag, fnct, frmt, ...) \
   do { if(lvl & flg) LOG_MACRO(async, lvl, flg, ctx, tag, fnct, frmt, ##__VA_ARGS__); } while(0)
 
+#define LOGV_TAG_MAYBE(async, lvl, flg, ctx, tag, fnct, frmt, avalist) \
+  do { if(lvl & flg) LOGV_MACRO(async, lvl, flg, ctx, tag, fnct, frmt, avalist); } while(0)
+
 #define LOG_OBJC_TAG_MAYBE(async, lvl, flg, ctx, tag, frmt, ...) \
              LOG_TAG_MAYBE(async, lvl, flg, ctx, tag, sel_getName(_cmd), frmt, ##__VA_ARGS__)
 
+#define LOGV_OBJC_TAG_MAYBE(async, lvl, flg, ctx, tag, frmt, avalist) \
+             LOGV_TAG_MAYBE(async, lvl, flg, ctx, tag, sel_getName(_cmd), frmt, avalist)
+
+
 #define LOG_C_TAG_MAYBE(async, lvl, flg, ctx, tag, frmt, ...) \
           LOG_TAG_MAYBE(async, lvl, flg, ctx, tag, __FUNCTION__, frmt, ##__VA_ARGS__)
+
+#define LOGV_C_TAG_MAYBE(async, lvl, flg, ctx, tag, frmt, avalist) \
+          LOGV_TAG_MAYBE(async, lvl, flg, ctx, tag, __FUNCTION__, frmt, avalist)
 
 /**
  * Define the standard options.
@@ -238,11 +305,21 @@
 #define DDLogDebug(frmt, ...)   LOG_OBJC_MAYBE(LOG_ASYNC_DEBUG,   ddLogLevel, LOG_FLAG_DEBUG,   0, frmt, ##__VA_ARGS__)
 #define DDLogVerbose(frmt, ...) LOG_OBJC_MAYBE(LOG_ASYNC_VERBOSE, ddLogLevel, LOG_FLAG_VERBOSE, 0, frmt, ##__VA_ARGS__)
 
+#define DDLogvError(frmt, avalist)   LOGV_OBJC_MAYBE(LOG_ASYNC_ERROR,   ddLogLevel, LOG_FLAG_ERROR,   0, frmt, avalist)
+#define DDLogvWarn(frmt, avalist)    LOGV_OBJC_MAYBE(LOG_ASYNC_WARN,    ddLogLevel, LOG_FLAG_WARN,    0, frmt, avalist)
+#define DDLogvInfo(frmt, avalist)    LOGV_OBJC_MAYBE(LOG_ASYNC_INFO,    ddLogLevel, LOG_FLAG_INFO,    0, frmt, avalist)
+#define DDLogvVerbose(frmt, avalist) LOGV_OBJC_MAYBE(LOG_ASYNC_VERBOSE, ddLogLevel, LOG_FLAG_VERBOSE, 0, frmt, avalist)
+
 #define DDLogCError(frmt, ...)   LOG_C_MAYBE(LOG_ASYNC_ERROR,   ddLogLevel, LOG_FLAG_ERROR,   0, frmt, ##__VA_ARGS__)
 #define DDLogCWarn(frmt, ...)    LOG_C_MAYBE(LOG_ASYNC_WARN,    ddLogLevel, LOG_FLAG_WARN,    0, frmt, ##__VA_ARGS__)
 #define DDLogCInfo(frmt, ...)    LOG_C_MAYBE(LOG_ASYNC_INFO,    ddLogLevel, LOG_FLAG_INFO,    0, frmt, ##__VA_ARGS__)
 #define DDLogCDebug(frmt, ...)   LOG_C_MAYBE(LOG_ASYNC_DEBUG,   ddLogLevel, LOG_FLAG_DEBUG,   0, frmt, ##__VA_ARGS__)
 #define DDLogCVerbose(frmt, ...) LOG_C_MAYBE(LOG_ASYNC_VERBOSE, ddLogLevel, LOG_FLAG_VERBOSE, 0, frmt, ##__VA_ARGS__)
+
+#define DDLogvCError(frmt, avalist)   LOGV_C_MAYBE(LOG_ASYNC_ERROR,   ddLogLevel, LOG_FLAG_ERROR,   0, frmt, avalist)
+#define DDLogvCWarn(frmt, avalist)    LOGV_C_MAYBE(LOG_ASYNC_WARN,    ddLogLevel, LOG_FLAG_WARN,    0, frmt, avalist)
+#define DDLogvCInfo(frmt, avalist)    LOGV_C_MAYBE(LOG_ASYNC_INFO,    ddLogLevel, LOG_FLAG_INFO,    0, frmt, avalist)
+#define DDLogvCVerbose(frmt, avalist) LOGV_C_MAYBE(LOG_ASYNC_VERBOSE, ddLogLevel, LOG_FLAG_VERBOSE, 0, frmt, avalist)
 
 /**
  * The THIS_FILE macro gives you an NSString of the file name.
