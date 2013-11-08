@@ -611,3 +611,5 @@ typedef int DDLogMessageOptions;
 - (BOOL)isOnInternalLoggerQueue;
 
 @end
+
+extern int ddLogLevel;
