@@ -17,26 +17,31 @@
 #undef LOG_FLAG_ERROR
 #undef LOG_FLAG_WARN 
 #undef LOG_FLAG_INFO
+#undef LOG_FLAG_DEBUG
 #undef LOG_FLAG_VERBOSE
 
 #undef LOG_LEVEL_ERROR
 #undef LOG_LEVEL_WARN
 #undef LOG_LEVEL_INFO
+#undef LOG_LEVEL_DEBUG
 #undef LOG_LEVEL_VERBOSE
 
 #undef LOG_ERROR
 #undef LOG_WARN
 #undef LOG_INFO
+#undef LOG_DEBUG
 #undef LOG_VERBOSE
 
 #undef DDLogError
 #undef DDLogWarn
 #undef DDLogInfo
+#undef DDLogDebug
 #undef DDLogVerbose
 
 #undef DDLogCError
 #undef DDLogCWarn
 #undef DDLogCInfo
+#undef DDLogCDebug
 #undef DDLogCVerbose
 
 // Now define everything how we want it
