@@ -146,6 +146,10 @@
 }
 
 - (void)setCachedStatement:(FMStatement*)statement forQuery:(NSString*)query {
+    if (!query) {
+        return;
+    }
+    
     //NSLog(@"setting query: %@", query);
     query = [query copy]; // in case we got handed in a mutable string...
     [statement setQuery:query];
@@ -807,7 +811,7 @@
 }
 
 - (NSString*)description {
-    return [NSString stringWithFormat:@"%@ %d hit(s) for query %@", [super description], useCount, query];
+    return [NSString stringWithFormat:@"%@ %ld hit(s) for query %@", [super description], useCount, query];
 }
 
 
