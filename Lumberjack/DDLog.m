@@ -894,8 +894,6 @@ static char *dd_str_copy(const char *str)
         // Else if deployment target is iOS 6.0+
         queueLabel = dd_str_copy("");
 #else
-		#pragma clang diagnostic push
-		#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 		// The documentation for dispatch_get_current_queue() states:
 		//
 		// > [This method is] "recommended for debugging and logging purposes only"...
@@ -909,7 +907,6 @@ static char *dd_str_copy(const char *str)
 		// Apple will have effectively taken away our ability to properly log the name of executing dispatch queue.
 		
 		dispatch_queue_t currentQueue = dispatch_get_current_queue();
-		#pragma clang diagnostic pop
 		
 		queueLabel = dd_str_copy(dispatch_queue_get_label(currentQueue));
 #endif
