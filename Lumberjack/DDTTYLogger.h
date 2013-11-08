@@ -7,7 +7,7 @@
 
 #import "DDLog.h"
 
-#define LOG_CONTEXT_ALL NSIntegerMax
+#define LOG_CONTEXT_ALL INT_MAX
 
 /**
  * Welcome to Cocoa Lumberjack!
