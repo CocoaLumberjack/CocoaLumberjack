@@ -205,37 +205,43 @@
  * https://github.com/robbiehanson/CocoaLumberjack/wiki/CustomLogLevels
 **/
 
-#define LOG_FLAG_ERROR    (1 << 0)  // 0...0001
-#define LOG_FLAG_WARN     (1 << 1)  // 0...0010
-#define LOG_FLAG_INFO     (1 << 2)  // 0...0100
-#define LOG_FLAG_VERBOSE  (1 << 3)  // 0...1000
+#define LOG_FLAG_ERROR    (1 << 0)  // 0...00001
+#define LOG_FLAG_WARN     (1 << 1)  // 0...00010
+#define LOG_FLAG_INFO     (1 << 2)  // 0...00100
+#define LOG_FLAG_DEBUG    (1 << 3)  // 0...01000
+#define LOG_FLAG_VERBOSE  (1 << 4)  // 0...10000
 
 #define LOG_LEVEL_OFF     0
-#define LOG_LEVEL_ERROR   (LOG_FLAG_ERROR)                                                    // 0...0001
-#define LOG_LEVEL_WARN    (LOG_FLAG_ERROR | LOG_FLAG_WARN)                                    // 0...0011
-#define LOG_LEVEL_INFO    (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO)                    // 0...0111
-#define LOG_LEVEL_VERBOSE (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO | LOG_FLAG_VERBOSE) // 0...1111
+#define LOG_LEVEL_ERROR   (LOG_FLAG_ERROR)                                                                          // 0...00001
+#define LOG_LEVEL_WARN    (LOG_FLAG_ERROR | LOG_FLAG_WARN)                                                          // 0...00011
+#define LOG_LEVEL_INFO    (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO)                                          // 0...00111
+#define LOG_LEVEL_DEBUG   (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO | LOG_FLAG_DEBUG)                         // 0...01111
+#define LOG_LEVEL_VERBOSE (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO | LOG_FLAG_DEBUG | LOG_FLAG_VERBOSE)      // 0...11111
 
-#define LOG_ERROR   (ddLogLevel & LOG_FLAG_ERROR)
-#define LOG_WARN    (ddLogLevel & LOG_FLAG_WARN)
-#define LOG_INFO    (ddLogLevel & LOG_FLAG_INFO)
-#define LOG_VERBOSE (ddLogLevel & LOG_FLAG_VERBOSE)
+#define LOG_ERROR    (ddLogLevel & LOG_FLAG_ERROR)
+#define LOG_WARN     (ddLogLevel & LOG_FLAG_WARN)
+#define LOG_INFO     (ddLogLevel & LOG_FLAG_INFO)
+#define LOG_DEBUG    (ddLogLevel & LOG_FLAG_DEBUG)
+#define LOG_VERBOSE  (ddLogLevel & LOG_FLAG_VERBOSE)
 
 #define LOG_ASYNC_ENABLED YES
 
-#define LOG_ASYNC_ERROR   ( NO && LOG_ASYNC_ENABLED)
-#define LOG_ASYNC_WARN    (YES && LOG_ASYNC_ENABLED)
-#define LOG_ASYNC_INFO    (YES && LOG_ASYNC_ENABLED)
-#define LOG_ASYNC_VERBOSE (YES && LOG_ASYNC_ENABLED)
+#define LOG_ASYNC_ERROR    ( NO && LOG_ASYNC_ENABLED)
+#define LOG_ASYNC_WARN     (YES && LOG_ASYNC_ENABLED)
+#define LOG_ASYNC_INFO     (YES && LOG_ASYNC_ENABLED)
+#define LOG_ASYNC_DEBUG    (YES && LOG_ASYNC_ENABLED)
+#define LOG_ASYNC_VERBOSE  (YES && LOG_ASYNC_ENABLED)
 
 #define DDLogError(frmt, ...)   LOG_OBJC_MAYBE(LOG_ASYNC_ERROR,   ddLogLevel, LOG_FLAG_ERROR,   0, frmt, ##__VA_ARGS__)
 #define DDLogWarn(frmt, ...)    LOG_OBJC_MAYBE(LOG_ASYNC_WARN,    ddLogLevel, LOG_FLAG_WARN,    0, frmt, ##__VA_ARGS__)
 #define DDLogInfo(frmt, ...)    LOG_OBJC_MAYBE(LOG_ASYNC_INFO,    ddLogLevel, LOG_FLAG_INFO,    0, frmt, ##__VA_ARGS__)
+#define DDLogDebug(frmt, ...)   LOG_OBJC_MAYBE(LOG_ASYNC_DEBUG,   ddLogLevel, LOG_FLAG_DEBUG,   0, frmt, ##__VA_ARGS__)
 #define DDLogVerbose(frmt, ...) LOG_OBJC_MAYBE(LOG_ASYNC_VERBOSE, ddLogLevel, LOG_FLAG_VERBOSE, 0, frmt, ##__VA_ARGS__)
 
 #define DDLogCError(frmt, ...)   LOG_C_MAYBE(LOG_ASYNC_ERROR,   ddLogLevel, LOG_FLAG_ERROR,   0, frmt, ##__VA_ARGS__)
 #define DDLogCWarn(frmt, ...)    LOG_C_MAYBE(LOG_ASYNC_WARN,    ddLogLevel, LOG_FLAG_WARN,    0, frmt, ##__VA_ARGS__)
 #define DDLogCInfo(frmt, ...)    LOG_C_MAYBE(LOG_ASYNC_INFO,    ddLogLevel, LOG_FLAG_INFO,    0, frmt, ##__VA_ARGS__)
+#define DDLogCDebug(frmt, ...)   LOG_C_MAYBE(LOG_ASYNC_DEBUG,   ddLogLevel, LOG_FLAG_DEBUG,   0, frmt, ##__VA_ARGS__)
 #define DDLogCVerbose(frmt, ...) LOG_C_MAYBE(LOG_ASYNC_VERBOSE, ddLogLevel, LOG_FLAG_VERBOSE, 0, frmt, ##__VA_ARGS__)
 
 /**
