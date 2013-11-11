@@ -46,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DADEC5BA182CE2D5003DF172 /* DDLog+LOGV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DDLog+LOGV.h"; sourceTree = "<group>"; };
 		DC58E48814DC70CF006B16E2 /* libLumberjack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLumberjack.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC58E48B14DC70CF006B16E2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DC58E48F14DC70CF006B16E2 /* Lumberjack-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lumberjack-Prefix.pch"; sourceTree = "<group>"; };
@@ -139,6 +140,7 @@
 				DC58E49014DC70CF006B16E2 /* Lumberjack.h */,
 				DC58E4A114DC7176006B16E2 /* DDLog.h */,
 				DC58E4A214DC7176006B16E2 /* DDLog.m */,
+				DADEC5BA182CE2D5003DF172 /* DDLog+LOGV.h */,
 				DC58E49B14DC7176006B16E2 /* DDAbstractDatabaseLogger.h */,
 				DC58E49C14DC7176006B16E2 /* DDAbstractDatabaseLogger.m */,
 				DC58E49D14DC7176006B16E2 /* DDASLLogger.h */,
