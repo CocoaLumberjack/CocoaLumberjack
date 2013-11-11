@@ -635,10 +635,10 @@ static unsigned int numProcessors;
 		
 		for (DDLoggerNode *loggerNode in loggers)
 		{
-            // skip the loggers that shouldn't write this message based on the logLevel
+			// skip the loggers that shouldn't write this message based on the logLevel
 
-            if (logMessage->logFlag > loggerNode.logLevel)
-                continue;
+			if (logMessage->logFlag > loggerNode.logLevel)
+				continue;
 
 			dispatch_group_async(loggingGroup, loggerNode->loggerQueue, ^{ @autoreleasepool {
 				
@@ -655,10 +655,10 @@ static unsigned int numProcessors;
 		
 		for (DDLoggerNode *loggerNode in loggers)
 		{
-            // skip the loggers that shouldn't write this message based on the logLevel
-
-            if (logMessage->logFlag > loggerNode.logLevel)
-                continue;
+			// skip the loggers that shouldn't write this message based on the logLevel
+            
+			if (logMessage->logFlag > loggerNode.logLevel)
+				continue;
 
 			dispatch_sync(loggerNode->loggerQueue, ^{ @autoreleasepool {
 				
