@@ -19,7 +19,8 @@ One log statement can be sent to multiple loggers, meaning you can log to a file
 Configure your logging however you want. Change log levels per file (perfect for debugging). Change log levels per logger (verbose console, but concise log file). Change log levels per xcode configuration (verbose debug, but concise release). Have your log statements compiled out of the release build. Customize the number of log levels for your application. Add your own fine-grained logging. Dynamically change log levels during runtime. Choose how & when you want your log files to be rolled. Upload your log files to a central server. Compress archived log files to save disk space...
 
 <br/>
-This framework is for you if:
+
+###This framework is for you if:
 
 -   You're looking for a way to track down that impossible-to-reproduce bug that keeps popping up in the field.
 -   You're frustrated with the super short console log on the iPhone.
@@ -27,8 +28,17 @@ This framework is for you if:
 -   You're looking for an enterprise level logging solution for your application (Mac or iPhone).
 
 <br/>
-**[Get started using Lumberjack](https://github.com/robbiehanson/CocoaLumberjack/wiki/GettingStarted)**<br/>
-**[Learn more about Lumberjack](https://github.com/robbiehanson/CocoaLumberjack/wiki)**<br/>
+
+### Documentation
+- **[Get started using Lumberjack](https://github.com/robbiehanson/CocoaLumberjack/wiki/GettingStarted)**<br/>
+- [Different log levels for Debug and Release builds](https://github.com/robbiehanson/CocoaLumberjack/wiki/XcodeTricks)<br/>
+- [Different log levels for each logger](https://github.com/robbiehanson/CocoaLumberjack/wiki/PerLoggerLogLevels)<br/>
+- [Use colors in the Xcode debugging console](https://github.com/robbiehanson/CocoaLumberjack/wiki/XcodeColors)<br/>
+- [Write your own custom formatters](https://github.com/robbiehanson/CocoaLumberjack/wiki/CustomFormatters)<br/>
+- [FAQ](https://github.com/robbiehanson/CocoaLumberjack/wiki/FAQ)<br/>
+- [Analysis of performance with benchmarks](https://github.com/robbiehanson/CocoaLumberjack/wiki/Performance)<br/>
+- [Common issues you may encounter and their solutions](https://github.com/robbiehanson/CocoaLumberjack/wiki/ProblemSolution)<br/>
+- **[full Lumberjack wiki](https://github.com/robbiehanson/CocoaLumberjack/wiki)**<br/>
 
 ### Requirements 
 - Xcode 4.4 or later is required
