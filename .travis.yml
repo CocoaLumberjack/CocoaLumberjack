@@ -1,0 +1,25 @@
+language: objective-c
+script:
+  - xctool -project Xcode/ContextFilter/ContextFilter.xcodeproj -scheme 'ContextFilter'
+  - xctool -project Xcode/CoreDataLogger/CoreDataLogger.xcodeproj -scheme 'CoreDataLogger'
+  - xctool -project Xcode/CustomFormatters/CustomFormatters.xcodeproj -scheme 'CustomFormatters'
+  - xctool -project Xcode/CustomLogLevels/CustomLogLevels.xcodeproj -scheme 'CustomLogLevels'
+  - xctool -project Xcode/DispatchQueueLogger/DispatchQueueLogger.xcodeproj -scheme 'DispatchQueueLogger'
+  - xctool -project Xcode/FineGrainedLogging/FineGrainedLogging.xcodeproj -scheme 'FineGrainedLogging'
+  - xctool -project Xcode/GlobalLogLevel/GlobalLogLevel.xcodeproj -scheme 'GlobalLogLevel'
+  - xctool -project Xcode/LogFileCompressor/LogFileCompressor.xcodeproj -scheme 'LogFileCompressor'
+  - xctool -project Xcode/LumberjackFramework/Desktop/Lumberjack.xcodeproj -scheme 'FmwkTest'
+  - xctool -project Xcode/LumberjackFramework/Mobile/Lumberjack.xcodeproj -scheme 'LibTest' -configuration Release -sdk iphonesimulator -arch i386 build
+  - xctool -project Xcode/Testing/NonArcTest/NonArcTest.xcodeproj -scheme 'NonArcTest'
+  - xctool -project Xcode/OverflowTestMac/OverflowTestMac.xcodeproj -scheme 'OverflowTestMac'
+  - xctool -project Xcode/PerUserLogLevels/PerUserLogLevels.xcodeproj -scheme 'PerUserLogLevels'
+  - xctool -project Xcode/Testing/RegisteredDynamicLogging/Mobile/RegisteredLoggingTest.xcodeproj -scheme 'RegisteredLoggingTest' -configuration Release -sdk iphonesimulator -arch i386 build
+  - xctool -project Xcode/Testing/RegisteredDynamicLogging/Desktop/RegisteredLoggingTest.xcodeproj -scheme 'RegisteredLoggingTest'
+  - xctool -project Xcode/RollingTestMac/RollingTestMac.xcodeproj -scheme 'RollingTestMac'
+  - xctool -project Xcode/Testing/TestXcodeColors/Mobile/TextXcodeColors.xcodeproj -scheme 'TextXcodeColors' -configuration Release -sdk iphonesimulator -arch i386 build
+  - xctool -project Xcode/WebServerIPhone/WebServerIPhone.xcodeproj -scheme 'WebServerIPhone' -configuration Release -sdk iphonesimulator -arch i386 build
+  - xctool -project Xcode/BenchmarkMac/BenchmarkMac.xcodeproj -scheme 'BenchmarkMac'
+  - xctool -project Xcode/SQLiteLogger/SQLiteLogger.xcodeproj -scheme 'SQLiteLogger'
+  - xctool -project Xcode/BenchmarkIPhone/BenchmarkIPhone.xcodeproj -scheme 'BenchmarkIPhone' -configuration Release -sdk iphonesimulator -arch i386 build
+  - xctool -project Xcode/Testing/TestXcodeColors/Desktop/TestXcodeColors.xcodeproj -scheme 'TestXcodeColors'
+  - xctool -project Xcode/UniversalApp/UniversalApp.xcodeproj -scheme 'UniversalApp' -configuration Release -sdk iphonesimulator -arch i386 build
