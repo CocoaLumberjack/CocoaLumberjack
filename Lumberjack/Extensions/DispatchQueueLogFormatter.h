@@ -114,3 +114,15 @@
 - (void)setReplacementString:(NSString *)shortLabel forQueueLabel:(NSString *)longLabel;
 
 @end
+
+/**
+ * Method declarations that make it easier to extend/modify DispatchQueueLogFormatter
+**/
+@interface DispatchQueueLogFormatter (OverridableMethods)
+
+- (NSString *)stringFromDate:(NSDate *)date;
+- (NSString *)queueThreadLabelForLogMessage:(DDLogMessage *)logMessage;
+- (NSString *)formatLogMessage:(DDLogMessage *)logMessage;
+
+@end
+
