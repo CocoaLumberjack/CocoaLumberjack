@@ -624,14 +624,6 @@ static unsigned int numProcessors;
 {
 	// Execute the given log message on each of our loggers.
     
-    // filter the loggers that should write this message based on the logLevel
-    NSMutableArray *filteredLoggers = [NSMutableArray arrayWithCapacity:loggers.count];
-    for (DDLoggerNode *loggerNode in loggers) {
-        if (logMessage->logFlag <= loggerNode.logLevel) {
-            [filteredLoggers addObject:loggerNode];
-        }
-    }
-		
 	if (numProcessors > 1)
 	{
 		// Execute each logger concurrently, each within its own queue.
@@ -641,8 +633,13 @@ static unsigned int numProcessors;
 		// The waiting ensures that a slow logger doesn't end up with a large queue of pending log messages.
 		// This would defeat the purpose of the efforts we made earlier to restrict the max queue size.
 		
-		for (DDLoggerNode *loggerNode in filteredLoggers)
+		for (DDLoggerNode *loggerNode in loggers)
 		{
+			// skip the loggers that shouldn't write this message based on the logLevel
+
+			if (logMessage->logFlag > loggerNode.logLevel)
+				continue;
+
 			dispatch_group_async(loggingGroup, loggerNode->loggerQueue, ^{ @autoreleasepool {
 				
 				[loggerNode->logger logMessage:logMessage];
@@ -656,8 +653,13 @@ static unsigned int numProcessors;
 	{
 		// Execute each logger serialy, each within its own queue.
 		
-		for (DDLoggerNode *loggerNode in filteredLoggers)
+		for (DDLoggerNode *loggerNode in loggers)
 		{
+			// skip the loggers that shouldn't write this message based on the logLevel
+            
+			if (logMessage->logFlag > loggerNode.logLevel)
+				continue;
+
 			dispatch_sync(loggerNode->loggerQueue, ^{ @autoreleasepool {
 				
 				[loggerNode->logger logMessage:logMessage];
