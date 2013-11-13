@@ -907,7 +907,11 @@ static char *dd_str_copy(const char *str)
             ![[NSApplication sharedApplication] respondsToSelector:@selector(occlusionState)] // < OS X 10.9
         #endif
             ) {
+            #pragma clang diagnostic push
+            #pragma clang diagnostic ignored "-Wdeprecated-declarations"
             dispatch_queue_t currentQueue = dispatch_get_current_queue();
+            #pragma clang diagnostic pop
+            
             queueLabel = dd_str_copy(dispatch_queue_get_label(currentQueue));
             gotLabel = YES;
         }
