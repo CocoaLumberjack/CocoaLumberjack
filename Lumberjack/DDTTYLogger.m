@@ -807,7 +807,8 @@ static DDTTYLogger *sharedInstance;
 		NSLogInfo(@"DDTTYLogger: isaColor256TTY: %@", (isaColor256TTY ? @"YES" : @"NO"));
 		NSLogInfo(@"DDTTYLogger: isaXcodeColorTTY: %@", (isaXcodeColorTTY ? @"YES" : @"NO"));
 		
-		sharedInstance = [[[self class] alloc] init];
+        DDTTYLogger *objInstance = [[[self class] alloc] init];
+		sharedInstance = objInstance;
 	}
 }
 
