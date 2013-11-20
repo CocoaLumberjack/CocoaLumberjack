@@ -888,7 +888,9 @@ static char *dd_str_copy(const char *str)
         #ifdef DISPATCH_CURRENT_QUEUE_LABEL
         if (
             #if TARGET_OS_IPHONE
-            [[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending // 7.0+
+            //[[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending // 7.0+
+            //Make it consistent with ios6 check, plus it's faster
+            floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1
             #else
             [[NSApplication sharedApplication] respondsToSelector:@selector(occlusionState)] // No nice way to check for OS X 10.9+
             #endif
@@ -902,7 +904,9 @@ static char *dd_str_copy(const char *str)
         //    dispatch_get_current_queue(void); __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_6,__MAC_10_9,__IPHONE_4_0,__IPHONE_6_0)
         if (!gotLabel &&
         #if TARGET_OS_IPHONE
-            [[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] == NSOrderedAscending // < 6.0
+            //[[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] == NSOrderedAscending // < 6.0
+            //Above wont work for iOS 6.1, let's do it the Apple way!
+        	floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1
         #else
             ![[NSApplication sharedApplication] respondsToSelector:@selector(occlusionState)] // < OS X 10.9
         #endif
