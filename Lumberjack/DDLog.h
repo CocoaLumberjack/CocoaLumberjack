@@ -23,6 +23,18 @@
  * // Log levels: off, error, warn, info, verbose
  * static const int ddLogLevel = LOG_LEVEL_VERBOSE;
  * 
+ * Step 2 [3rd party frameworks]:
+ *
+ * Define your LOG_LEVEL_DEF to a different variable/function than ddLogLevel:
+ *
+ * // #undef LOG_LEVEL_DEF // Undefine first only if needed
+ * #define LOG_LEVEL_DEF myLibLogLevel
+ *
+ * Define your logging level in your implementation file:
+ *
+ * // Log levels: off, error, warn, info, verbose
+ * static const int myLibLogLevel = LOG_LEVEL_VERBOSE;
+ *
  * Step 3:
  * Replace your NSLog statements with DDLog statements according to the severity of the message.
  * 
@@ -32,6 +44,9 @@
  * This means you can pass it multiple variables just like NSLog.
 **/
 
+#ifndef LOG_LEVEL_DEF
+    #define LOG_LEVEL_DEF ddLogLevel
+#endif
 
 @class DDLogMessage;
 
@@ -85,6 +100,8 @@
  * 
  * if (logFlagForThisLogMsg & ddLogLevel) { execute log message }
  * 
+ * When LOG_LEVEL_DEF is defined as ddLogLevel.
+ *
  * As shown further below, Lumberjack actually uses a bitmask as opposed to primitive log levels.
  * This allows for a great amount of flexibility and some pretty advanced fine grained logging techniques.
  * 
@@ -166,6 +183,8 @@
  * 
  * static const int ddLogLevel = LOG_FLAG_ERROR | LOG_FLAG_INFO;
  * 
+ * When LOG_LEVEL_DEF is defined as ddLogLevel.
+ *
  * Flags may also be consulted when writing custom log formatters,
  * as the DDLogMessage class captures the individual flag that caused the log message to fire.
  * 
@@ -218,11 +237,11 @@
 #define LOG_LEVEL_DEBUG   (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO | LOG_FLAG_DEBUG)                         // 0...01111
 #define LOG_LEVEL_VERBOSE (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO | LOG_FLAG_DEBUG | LOG_FLAG_VERBOSE)      // 0...11111
 
-#define LOG_ERROR    (ddLogLevel & LOG_FLAG_ERROR)
-#define LOG_WARN     (ddLogLevel & LOG_FLAG_WARN)
-#define LOG_INFO     (ddLogLevel & LOG_FLAG_INFO)
-#define LOG_DEBUG    (ddLogLevel & LOG_FLAG_DEBUG)
-#define LOG_VERBOSE  (ddLogLevel & LOG_FLAG_VERBOSE)
+#define LOG_ERROR    (LOG_LEVEL_DEF & LOG_FLAG_ERROR)
+#define LOG_WARN     (LOG_LEVEL_DEF & LOG_FLAG_WARN)
+#define LOG_INFO     (LOG_LEVEL_DEF & LOG_FLAG_INFO)
+#define LOG_DEBUG    (LOG_LEVEL_DEF & LOG_FLAG_DEBUG)
+#define LOG_VERBOSE  (LOG_LEVEL_DEF & LOG_FLAG_VERBOSE)
 
 #define LOG_ASYNC_ENABLED YES
 
@@ -232,17 +251,17 @@
 #define LOG_ASYNC_DEBUG    (YES && LOG_ASYNC_ENABLED)
 #define LOG_ASYNC_VERBOSE  (YES && LOG_ASYNC_ENABLED)
 
-#define DDLogError(frmt, ...)   LOG_OBJC_MAYBE(LOG_ASYNC_ERROR,   ddLogLevel, LOG_FLAG_ERROR,   0, frmt, ##__VA_ARGS__)
-#define DDLogWarn(frmt, ...)    LOG_OBJC_MAYBE(LOG_ASYNC_WARN,    ddLogLevel, LOG_FLAG_WARN,    0, frmt, ##__VA_ARGS__)
-#define DDLogInfo(frmt, ...)    LOG_OBJC_MAYBE(LOG_ASYNC_INFO,    ddLogLevel, LOG_FLAG_INFO,    0, frmt, ##__VA_ARGS__)
-#define DDLogDebug(frmt, ...)   LOG_OBJC_MAYBE(LOG_ASYNC_DEBUG,   ddLogLevel, LOG_FLAG_DEBUG,   0, frmt, ##__VA_ARGS__)
-#define DDLogVerbose(frmt, ...) LOG_OBJC_MAYBE(LOG_ASYNC_VERBOSE, ddLogLevel, LOG_FLAG_VERBOSE, 0, frmt, ##__VA_ARGS__)
+#define DDLogError(frmt, ...)   LOG_OBJC_MAYBE(LOG_ASYNC_ERROR,   LOG_LEVEL_DEF, LOG_FLAG_ERROR,   0, frmt, ##__VA_ARGS__)
+#define DDLogWarn(frmt, ...)    LOG_OBJC_MAYBE(LOG_ASYNC_WARN,    LOG_LEVEL_DEF, LOG_FLAG_WARN,    0, frmt, ##__VA_ARGS__)
+#define DDLogInfo(frmt, ...)    LOG_OBJC_MAYBE(LOG_ASYNC_INFO,    LOG_LEVEL_DEF, LOG_FLAG_INFO,    0, frmt, ##__VA_ARGS__)
+#define DDLogDebug(frmt, ...)   LOG_OBJC_MAYBE(LOG_ASYNC_DEBUG,   LOG_LEVEL_DEF, LOG_FLAG_DEBUG,   0, frmt, ##__VA_ARGS__)
+#define DDLogVerbose(frmt, ...) LOG_OBJC_MAYBE(LOG_ASYNC_VERBOSE, LOG_LEVEL_DEF, LOG_FLAG_VERBOSE, 0, frmt, ##__VA_ARGS__)
 
-#define DDLogCError(frmt, ...)   LOG_C_MAYBE(LOG_ASYNC_ERROR,   ddLogLevel, LOG_FLAG_ERROR,   0, frmt, ##__VA_ARGS__)
-#define DDLogCWarn(frmt, ...)    LOG_C_MAYBE(LOG_ASYNC_WARN,    ddLogLevel, LOG_FLAG_WARN,    0, frmt, ##__VA_ARGS__)
-#define DDLogCInfo(frmt, ...)    LOG_C_MAYBE(LOG_ASYNC_INFO,    ddLogLevel, LOG_FLAG_INFO,    0, frmt, ##__VA_ARGS__)
-#define DDLogCDebug(frmt, ...)   LOG_C_MAYBE(LOG_ASYNC_DEBUG,   ddLogLevel, LOG_FLAG_DEBUG,   0, frmt, ##__VA_ARGS__)
-#define DDLogCVerbose(frmt, ...) LOG_C_MAYBE(LOG_ASYNC_VERBOSE, ddLogLevel, LOG_FLAG_VERBOSE, 0, frmt, ##__VA_ARGS__)
+#define DDLogCError(frmt, ...)   LOG_C_MAYBE(LOG_ASYNC_ERROR,   LOG_LEVEL_DEF, LOG_FLAG_ERROR,   0, frmt, ##__VA_ARGS__)
+#define DDLogCWarn(frmt, ...)    LOG_C_MAYBE(LOG_ASYNC_WARN,    LOG_LEVEL_DEF, LOG_FLAG_WARN,    0, frmt, ##__VA_ARGS__)
+#define DDLogCInfo(frmt, ...)    LOG_C_MAYBE(LOG_ASYNC_INFO,    LOG_LEVEL_DEF, LOG_FLAG_INFO,    0, frmt, ##__VA_ARGS__)
+#define DDLogCDebug(frmt, ...)   LOG_C_MAYBE(LOG_ASYNC_DEBUG,   LOG_LEVEL_DEF, LOG_FLAG_DEBUG,   0, frmt, ##__VA_ARGS__)
+#define DDLogCVerbose(frmt, ...) LOG_C_MAYBE(LOG_ASYNC_VERBOSE, LOG_LEVEL_DEF, LOG_FLAG_VERBOSE, 0, frmt, ##__VA_ARGS__)
 
 /**
  * The THIS_FILE macro gives you an NSString of the file name.
