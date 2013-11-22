@@ -902,7 +902,7 @@ static char *dd_str_copy(const char *str)
         //    dispatch_get_current_queue(void); __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_6,__MAC_10_9,__IPHONE_4_0,__IPHONE_6_0)
         if (!gotLabel &&
         #if TARGET_OS_IPHONE
-            floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_0
+            floor(NSFoundationVersionNumber) < NSFoundationVersionNumber_iOS_6_0
         #else
             ![[NSApplication sharedApplication] respondsToSelector:@selector(occlusionState)] // < OS X 10.9
         #endif
