@@ -375,17 +375,44 @@
  * Generates a short UUID suitable for use in the log file's name.
  * The result will have six characters, all in the hexadecimal set [0123456789ABCDEF].
 **/
-- (NSString *)generateShortUUID
+- (NSString *)generateLogFileNameWithConvention:(DDLogFileNamingConvention)convention attempt:(NSUInteger)attempt
 {
-	CFUUIDRef uuid = CFUUIDCreate(NULL);
+    NSString *uniquePart = nil;
+    
+    switch(convention) {
+        case DDLogFileNamingConventionUUID: {
+            CFUUIDRef uuid = CFUUIDCreate(NULL);
+            
+            CFStringRef fullStr = CFUUIDCreateString(NULL, uuid);
+            uniquePart = (__bridge_transfer NSString *)CFStringCreateWithSubstring(NULL, fullStr, CFRangeMake(0, 6));
+            
+            CFRelease(fullStr);
+            CFRelease(uuid);
+            
+            break;
+        }
+
+        case DDLogFileNamingConventionTimestamp: {
+            NSDate *now = [NSDate date];
+            
+            // RFC 3339 format, UTC time
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
+            [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+            
+            NSString *formattedDate = [dateFormatter stringFromDate:now];
+            
+            if (attempt == 1) {
+                uniquePart = formattedDate;
+            } else {
+                uniquePart = [NSString stringWithFormat:@"%@ %lu", formattedDate, (unsigned long)attempt];
+            }
+            
+            break;
+        }
+    }
 	
-	CFStringRef fullStr = CFUUIDCreateString(NULL, uuid);
-	NSString *result = (__bridge_transfer NSString *)CFStringCreateWithSubstring(NULL, fullStr, CFRangeMake(0, 6));
-	
-	CFRelease(fullStr);
-	CFRelease(uuid);
-	
-	return result;
+	return [NSString stringWithFormat:@"log-%@.txt", uniquePart];
 }
 
 /**
@@ -396,15 +423,16 @@
 	// Generate a random log file name, and create the file (if there isn't a collision)
 	
 	NSString *logsDirectory = [self logsDirectory];
+    NSUInteger attempt = 1;
 	do
 	{
-		NSString *fileName = [NSString stringWithFormat:@"log-%@.txt", [self generateShortUUID]];
+		NSString *fileName = [self generateLogFileNameWithConvention:self.fileNamingConvention attempt:attempt];
 		
 		NSString *filePath = [logsDirectory stringByAppendingPathComponent:fileName];
 		
 		if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
 		{
-			NSLogVerbose(@"DDLogFileManagerDefault: Creating new log file: %@", fileName);
+			NSLog(@"DDLogFileManagerDefault: Creating new log file: %@", fileName);
 			
 			[[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
 			
@@ -412,7 +440,9 @@
 			[self deleteOldLogFiles];
 			
 			return filePath;
-		}
+		} else {
+            attempt++;
+        }
 		
 	} while(YES);
 }

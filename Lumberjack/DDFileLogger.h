@@ -29,6 +29,12 @@
 #define DEFAULT_LOG_ROLLING_FREQUENCY (60 * 60 * 24)  // 24 Hours
 #define DEFAULT_LOG_MAX_NUM_LOG_FILES (5)             //  5 Files
 
+// How should we produce unique file names? by UUID or timestamp?
+typedef enum {
+    DDLogFileNamingConventionUUID,
+    DDLogFileNamingConventionTimestamp
+} DDLogFileNamingConvention;
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
@@ -118,6 +124,8 @@
 	NSUInteger maximumNumberOfLogFiles;
 	NSString *_logsDirectory;
 }
+
+@property (readwrite, assign) DDLogFileNamingConvention fileNamingConvention;
 
 - (id)init;
 - (instancetype)initWithLogsDirectory:(NSString *)logsDirectory;
