@@ -12,8 +12,8 @@
 		DC361283156E1C5B00956227 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC361276156E1C5B00956227 /* DDFileLogger.m */; };
 		DC361284156E1C5B00956227 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DC361278156E1C5B00956227 /* DDLog.m */; };
 		DC361285156E1C5B00956227 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC36127A156E1C5B00956227 /* DDTTYLogger.m */; };
-		DC361286156E1C5B00956227 /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DC36127D156E1C5B00956227 /* ContextFilterLogFormatter.m */; };
-		DC361287156E1C5B00956227 /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DC36127F156E1C5B00956227 /* DispatchQueueLogFormatter.m */; };
+		DC361286156E1C5B00956227 /* DDContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DC36127D156E1C5B00956227 /* DDContextFilterLogFormatter.m */; };
+		DC361287156E1C5B00956227 /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DC36127F156E1C5B00956227 /* DDDispatchQueueLogFormatter.m */; };
 		DC361288156E1C5B00956227 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = DC361280156E1C5B00956227 /* README.txt */; };
 		DCAACA831565CEBD001A5857 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCAACA821565CEBD001A5857 /* Cocoa.framework */; };
 		DCAACA8D1565CEBD001A5857 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCAACA8B1565CEBD001A5857 /* InfoPlist.strings */; };
@@ -34,10 +34,10 @@
 		DC361278156E1C5B00956227 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
 		DC361279156E1C5B00956227 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
 		DC36127A156E1C5B00956227 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
-		DC36127C156E1C5B00956227 /* ContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContextFilterLogFormatter.h; sourceTree = "<group>"; };
-		DC36127D156E1C5B00956227 /* ContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContextFilterLogFormatter.m; sourceTree = "<group>"; };
-		DC36127E156E1C5B00956227 /* DispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueueLogFormatter.h; sourceTree = "<group>"; };
-		DC36127F156E1C5B00956227 /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
+		DC36127C156E1C5B00956227 /* DDContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDContextFilterLogFormatter.h; sourceTree = "<group>"; };
+		DC36127D156E1C5B00956227 /* DDContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDContextFilterLogFormatter.m; sourceTree = "<group>"; };
+		DC36127E156E1C5B00956227 /* DDDispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDispatchQueueLogFormatter.h; sourceTree = "<group>"; };
+		DC36127F156E1C5B00956227 /* DDDispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDispatchQueueLogFormatter.m; sourceTree = "<group>"; };
 		DC361280156E1C5B00956227 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		DCAACA7E1565CEBD001A5857 /* TestXcodeColors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestXcodeColors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCAACA821565CEBD001A5857 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -88,10 +88,10 @@
 		DC36127B156E1C5B00956227 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DC36127C156E1C5B00956227 /* ContextFilterLogFormatter.h */,
-				DC36127D156E1C5B00956227 /* ContextFilterLogFormatter.m */,
-				DC36127E156E1C5B00956227 /* DispatchQueueLogFormatter.h */,
-				DC36127F156E1C5B00956227 /* DispatchQueueLogFormatter.m */,
+				DC36127C156E1C5B00956227 /* DDContextFilterLogFormatter.h */,
+				DC36127D156E1C5B00956227 /* DDContextFilterLogFormatter.m */,
+				DC36127E156E1C5B00956227 /* DDDispatchQueueLogFormatter.h */,
+				DC36127F156E1C5B00956227 /* DDDispatchQueueLogFormatter.m */,
 				DC361280156E1C5B00956227 /* README.txt */,
 			);
 			path = Extensions;
@@ -228,8 +228,8 @@
 				DC361283156E1C5B00956227 /* DDFileLogger.m in Sources */,
 				DC361284156E1C5B00956227 /* DDLog.m in Sources */,
 				DC361285156E1C5B00956227 /* DDTTYLogger.m in Sources */,
-				DC361286156E1C5B00956227 /* ContextFilterLogFormatter.m in Sources */,
-				DC361287156E1C5B00956227 /* DispatchQueueLogFormatter.m in Sources */,
+				DC361286156E1C5B00956227 /* DDContextFilterLogFormatter.m in Sources */,
+				DC361287156E1C5B00956227 /* DDDispatchQueueLogFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

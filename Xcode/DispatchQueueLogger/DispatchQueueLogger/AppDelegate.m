@@ -1,7 +1,7 @@
 #import "AppDelegate.h"
 #import "DDLog.h"
 #import "DDTTYLogger.h"
-#import "DispatchQueueLogFormatter.h"
+#import "DDDispatchQueueLogFormatter.h"
 
 // Log levels: 0-off, 1-error, 2-warn, 3-info, 4-verbose
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -26,7 +26,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	{
 		// See what log statements look like *AFTER* using DispatchQueueLogFormatter :)
 		
-		DispatchQueueLogFormatter *formatter = [[DispatchQueueLogFormatter alloc] init];
+		DDDispatchQueueLogFormatter *formatter = [[DDDispatchQueueLogFormatter alloc] init];
 		formatter.minQueueLength = 4;
 		formatter.maxQueueLength = 0;
 		

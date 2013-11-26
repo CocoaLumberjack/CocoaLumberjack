@@ -1,8 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "DDLog.h"
 
-@class ContextFilterLogFormatter;
-
 /**
  * Welcome to Cocoa Lumberjack!
  * 
@@ -31,7 +29,7 @@
  * For example, logically separate parts of your app each have a different logging context.
  * Also 3rd party frameworks that make use of Lumberjack generally use their own dedicated logging context.
 **/
-@interface ContextWhitelistFilterLogFormatter : NSObject <DDLogFormatter>
+@interface DDContextWhitelistFilterLogFormatter : NSObject <DDLogFormatter>
 
 - (id)init;
 
@@ -51,7 +49,7 @@
 /**
  * This class provides a log formatter that filters log statements from a logging context on the blacklist.
 **/
-@interface ContextBlacklistFilterLogFormatter : NSObject <DDLogFormatter>
+@interface DDContextBlacklistFilterLogFormatter : NSObject <DDLogFormatter>
 
 - (id)init;
 
