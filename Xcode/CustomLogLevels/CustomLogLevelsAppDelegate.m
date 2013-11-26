@@ -14,8 +14,9 @@ static const int ddLogLevel = LOG_LEVEL_DEBUG;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	[DDLog addLogger:[DDASLLogger sharedInstance]];
-	[DDLog addLogger:[DDTTYLogger sharedInstance]];
+    // since the verbose log level was undefined, we need to specify the log level for every logger
+	[DDLog addLogger:[DDASLLogger sharedInstance] withLogLevel:LOG_LEVEL_DEBUG];
+    [DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:LOG_LEVEL_DEBUG];
 	
 	DDLogFatal(@"Fatal");
 	DDLogError(@"Error");
