@@ -524,7 +524,7 @@ enum {
 };
 typedef int DDLogMessageOptions;
 
-@interface DDLogMessage : NSObject
+@interface DDLogMessage : NSObject <NSCopying>
 {
 
 // The public variables below can be accessed directly (for speed).
