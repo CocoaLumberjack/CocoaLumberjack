@@ -8,3 +8,4 @@
 
 #import <Lumberjack/DDContextFilterLogFormatter.h>
 #import <Lumberjack/DDDispatchQueueLogFormatter.h>
+#import <Lumberjack/DDMultiFormatter.h>

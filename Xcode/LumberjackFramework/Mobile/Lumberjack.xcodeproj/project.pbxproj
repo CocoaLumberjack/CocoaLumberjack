@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA3130A01844B265002E953B /* DDMultiFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = DA31309E1844B265002E953B /* DDMultiFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA3130A11844B265002E953B /* DDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA31309F1844B265002E953B /* DDMultiFormatter.m */; };
 		DC58E48C14DC70CF006B16E2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58E48B14DC70CF006B16E2 /* Foundation.framework */; };
 		DC58E4AB14DC7176006B16E2 /* DDAbstractDatabaseLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DC58E49B14DC7176006B16E2 /* DDAbstractDatabaseLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DC58E4AC14DC7176006B16E2 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58E49C14DC7176006B16E2 /* DDAbstractDatabaseLogger.m */; };
@@ -46,6 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DA31309E1844B265002E953B /* DDMultiFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMultiFormatter.h; sourceTree = "<group>"; };
+		DA31309F1844B265002E953B /* DDMultiFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMultiFormatter.m; sourceTree = "<group>"; };
 		DADEC5BA182CE2D5003DF172 /* DDLog+LOGV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DDLog+LOGV.h"; sourceTree = "<group>"; };
 		DC58E48814DC70CF006B16E2 /* libLumberjack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLumberjack.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC58E48B14DC70CF006B16E2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -170,6 +174,8 @@
 				DC58E4A714DC7176006B16E2 /* DDContextFilterLogFormatter.m */,
 				DC58E4A814DC7176006B16E2 /* DDDispatchQueueLogFormatter.h */,
 				DC58E4A914DC7176006B16E2 /* DDDispatchQueueLogFormatter.m */,
+				DA31309E1844B265002E953B /* DDMultiFormatter.h */,
+				DA31309F1844B265002E953B /* DDMultiFormatter.m */,
 			);
 			name = Extensions;
 			path = ../../../../Lumberjack/Extensions;
@@ -211,6 +217,7 @@
 				DC58E4B914DC727F006B16E2 /* Lumberjack.h in Headers */,
 				DC58E4B514DC7176006B16E2 /* DDContextFilterLogFormatter.h in Headers */,
 				DC58E4AD14DC7176006B16E2 /* DDASLLogger.h in Headers */,
+				DA3130A01844B265002E953B /* DDMultiFormatter.h in Headers */,
 				DC58E4B714DC7176006B16E2 /* DDDispatchQueueLogFormatter.h in Headers */,
 				DC58E4B314DC7176006B16E2 /* DDTTYLogger.h in Headers */,
 				DC58E4AF14DC7176006B16E2 /* DDFileLogger.h in Headers */,
@@ -303,6 +310,7 @@
 				DC58E4AE14DC7176006B16E2 /* DDASLLogger.m in Sources */,
 				DC58E4B014DC7176006B16E2 /* DDFileLogger.m in Sources */,
 				DC58E4B214DC7176006B16E2 /* DDLog.m in Sources */,
+				DA3130A11844B265002E953B /* DDMultiFormatter.m in Sources */,
 				DC58E4B414DC7176006B16E2 /* DDTTYLogger.m in Sources */,
 				DC58E4B614DC7176006B16E2 /* DDContextFilterLogFormatter.m in Sources */,
 				DC58E4B814DC7176006B16E2 /* DDDispatchQueueLogFormatter.m in Sources */,
