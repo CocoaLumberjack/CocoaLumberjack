@@ -866,13 +866,15 @@
 	if (currentLogFileHandle == nil)
 	{
 		NSString *logFilePath = [[self currentLogFileInfo] filePath];
-		
-		currentLogFileHandle = [NSFileHandle fileHandleForWritingAtPath:logFilePath];
-		[currentLogFileHandle seekToEndOfFile];
-		
+		NSError *error;
+		currentLogFileHandle = [NSFileHandle fileHandleForWritingToURL:[NSURL URLWithString:logFilePath] error:&error];;
 		if (currentLogFileHandle)
 		{
+			[currentLogFileHandle seekToEndOfFile];
 			[self scheduleTimerToRollLogFileDueToAge];
+		} else
+		{
+			NSLogError(@"%@", error);
 		}
 	}
 	
@@ -1008,42 +1010,7 @@ static int exception_count = 0;
 {
 	if (creationDate == nil)
 	{
-	
-	#if TARGET_OS_IPHONE
-	
-		const char *path = [filePath UTF8String];
-		
-		struct attrlist attrList;
-		memset(&attrList, 0, sizeof(attrList));
-		attrList.bitmapcount = ATTR_BIT_MAP_COUNT;
-		attrList.commonattr = ATTR_CMN_CRTIME;
-		
-		struct {
-			u_int32_t attrBufferSizeInBytes;
-			struct timespec crtime;
-		} attrBuffer;
-		
-		int result = getattrlist(path, &attrList, &attrBuffer, sizeof(attrBuffer), 0);
-		if (result == 0)
-		{
-			double seconds = (double)(attrBuffer.crtime.tv_sec);
-			double nanos   = (double)(attrBuffer.crtime.tv_nsec);
-			
-			NSTimeInterval ti = seconds + (nanos / 1000000000.0);
-			
-			creationDate = [NSDate dateWithTimeIntervalSince1970:ti];
-		}
-		else
-		{
-			NSLogError(@"DDLogFileInfo: creationDate(%@): getattrlist result = %i", self.fileName, result);
-		}
-		
-	#else
-		
 		creationDate = [[self fileAttributes] objectForKey:NSFileCreationDate];
-		
-	#endif
-		
 	}
 	return creationDate;
 }
