@@ -540,7 +540,7 @@ typedef int DDLogMessageOptions;
 	char *function;
 	int lineNumber;
 	mach_port_t machThreadID;
-    char *queueLabel;
+	char *queueLabel;
 	NSString *threadName;
 	
 	// For 3rd party extensions to the framework, where flags and contexts aren't enough.
