@@ -432,7 +432,7 @@
 		
 		if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
 		{
-			NSLog(@"DDLogFileManagerDefault: Creating new log file: %@", fileName);
+			NSLogVerbose(@"DDLogFileManagerDefault: Creating new log file: %@", fileName);
 			
 			[[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
 			
