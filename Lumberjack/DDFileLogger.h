@@ -31,8 +31,8 @@
 
 // How should we produce unique file names? by UUID or timestamp?
 typedef enum {
-    DDLogFileNamingConventionUUID,
-    DDLogFileNamingConventionTimestamp
+	DDLogFileNamingConventionUUID,
+	DDLogFileNamingConventionTimestamp
 } DDLogFileNamingConvention;
 
 

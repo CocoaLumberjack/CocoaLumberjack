@@ -85,13 +85,13 @@
 
 - (void)dealloc
 {
-    // try-catch because the observer might be removed or never added. In this case, removeObserver throws and exception
-    @try {
-        [self removeObserver:self forKeyPath:@"maximumNumberOfLogFiles"];
-    }
-    @catch (NSException *exception) {
-        
-    }
+	// try-catch because the observer might be removed or never added. In this case, removeObserver throws and exception
+	@try {
+		[self removeObserver:self forKeyPath:@"maximumNumberOfLogFiles"];
+	}
+	@catch (NSException *exception) {
+		
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,15 +197,15 @@
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
 	NSString *baseDir = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
 	NSString *logsDirectory = [baseDir stringByAppendingPathComponent:@"Logs"];
-    
+	
 #else
 	NSString *appName = [[NSProcessInfo processInfo] processName];
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
 	NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
 	NSString *logsDirectory = [[basePath stringByAppendingPathComponent:@"Logs"] stringByAppendingPathComponent:appName];
-
+	
 #endif
-
+	
 	return logsDirectory;
 }
 
@@ -377,40 +377,40 @@
 **/
 - (NSString *)generateLogFileNameWithConvention:(DDLogFileNamingConvention)convention attempt:(NSUInteger)attempt
 {
-    NSString *uniquePart = nil;
-    
-    switch(convention) {
-        case DDLogFileNamingConventionUUID: {
-            CFUUIDRef uuid = CFUUIDCreate(NULL);
-            
-            CFStringRef fullStr = CFUUIDCreateString(NULL, uuid);
-            uniquePart = (__bridge_transfer NSString *)CFStringCreateWithSubstring(NULL, fullStr, CFRangeMake(0, 6));
-            
-            CFRelease(fullStr);
-            CFRelease(uuid);
-            
-            break;
-        }
-
-        case DDLogFileNamingConventionTimestamp: {
-            NSDate *now = [NSDate date];
-            
-            // RFC 3339 format, UTC time
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
-            [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-            
-            NSString *formattedDate = [dateFormatter stringFromDate:now];
-            
-            if (attempt == 1) {
-                uniquePart = formattedDate;
-            } else {
-                uniquePart = [NSString stringWithFormat:@"%@ %lu", formattedDate, (unsigned long)attempt];
-            }
-            
-            break;
-        }
-    }
+	NSString *uniquePart = nil;
+	
+	switch(convention) {
+		case DDLogFileNamingConventionUUID: {
+			CFUUIDRef uuid = CFUUIDCreate(NULL);
+			
+			CFStringRef fullStr = CFUUIDCreateString(NULL, uuid);
+			uniquePart = (__bridge_transfer NSString *)CFStringCreateWithSubstring(NULL, fullStr, CFRangeMake(0, 6));
+			
+			CFRelease(fullStr);
+			CFRelease(uuid);
+			
+			break;
+		}
+		
+		case DDLogFileNamingConventionTimestamp: {
+			NSDate *now = [NSDate date];
+			
+			// RFC 3339 format, UTC time
+			NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+			[dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
+			[dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+			
+			NSString *formattedDate = [dateFormatter stringFromDate:now];
+			
+			if (attempt == 1) {
+				uniquePart = formattedDate;
+			} else {
+				uniquePart = [NSString stringWithFormat:@"%@ %lu", formattedDate, (unsigned long)attempt];
+			}
+			
+			break;
+		}
+	}
 	
 	return [NSString stringWithFormat:@"log-%@.txt", uniquePart];
 }
@@ -423,7 +423,7 @@
 	// Generate a random log file name, and create the file (if there isn't a collision)
 	
 	NSString *logsDirectory = [self logsDirectory];
-    NSUInteger attempt = 1;
+	NSUInteger attempt = 1;
 	do
 	{
 		NSString *fileName = [self generateLogFileNameWithConvention:self.fileNamingConvention attempt:attempt];
@@ -441,8 +441,8 @@
 			
 			return filePath;
 		} else {
-            attempt++;
-        }
+	        attempt++;
+	    }
 		
 	} while(YES);
 }

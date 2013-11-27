@@ -28,7 +28,7 @@
 {
 	if ((self = [super init]))
 	{
-        saveThreshold = 500;
+		saveThreshold = 500;
 		saveInterval = 60;           // 60 seconds
 		maxAge = (60 * 60 * 24 * 7); //  7 days
 		deleteInterval = (60 * 5);   //  5 minutes
@@ -194,18 +194,18 @@
 	if ((deleteTimer == NULL) && (deleteInterval > 0.0) && (maxAge > 0.0))
 	{
 		deleteTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, loggerQueue);
-
-        if (deleteTimer != NULL) {
-            dispatch_source_set_event_handler(deleteTimer, ^{ @autoreleasepool {
-
-                [self performDelete];
-
-            }});
-
-            [self updateDeleteTimer];
-            
-            if (deleteTimer != NULL) dispatch_resume(deleteTimer);
-        }
+		
+		if (deleteTimer != NULL) {
+			dispatch_source_set_event_handler(deleteTimer, ^{ @autoreleasepool {
+				
+				[self performDelete];
+				
+			}});
+			
+			[self updateDeleteTimer];
+			
+			if (deleteTimer != NULL) dispatch_resume(deleteTimer);
+		}
 	}
 }
 
