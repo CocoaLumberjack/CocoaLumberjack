@@ -956,6 +956,35 @@ static char *dd_str_copy(const char *str)
 		free(queueLabel);
 }
 
+
+- (id)copyWithZone:(NSZone *)zone {
+    DDLogMessage *newMessage = [[DDLogMessage alloc] init];
+    
+    newMessage->logLevel = self->logLevel;
+    newMessage->logFlag = self->logFlag;
+    newMessage->logContext = self->logContext;
+    newMessage->logMsg = self->logMsg;
+    newMessage->timestamp = self->timestamp;
+    
+    if (self->options & DDLogMessageCopyFile) {
+        newMessage->file = dd_str_copy(self->file);
+        newMessage->function = dd_str_copy(self->function);
+    } else {
+        newMessage->file = self->file;
+        newMessage->function = self->function;
+    }
+    
+    newMessage->lineNumber = self->lineNumber;
+    
+    newMessage->machThreadID = self->machThreadID;
+    newMessage->queueLabel = dd_str_copy(self->queueLabel);
+    newMessage->threadName = self->threadName;
+    newMessage->tag = self->tag;
+    newMessage->options = self->options;
+    
+    return newMessage;
+}
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -19,8 +19,8 @@
 		DC2E3347129ADC68009F096E /* MyContextFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2E3346129ADC68009F096E /* MyContextFilter.m */; };
 		DC2E334A129ADCE0009F096E /* ThirdPartyFramework.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2E3349129ADCE0009F096E /* ThirdPartyFramework.m */; };
 		DCF89E9515A3604500112881 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF89E9415A3604500112881 /* DDAbstractDatabaseLogger.m */; };
-		DCF89E9D15A3605200112881 /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF89E9915A3605200112881 /* ContextFilterLogFormatter.m */; };
-		DCF89E9E15A3605200112881 /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF89E9B15A3605200112881 /* DispatchQueueLogFormatter.m */; };
+		DCF89E9D15A3605200112881 /* DDContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF89E9915A3605200112881 /* DDContextFilterLogFormatter.m */; };
+		DCF89E9E15A3605200112881 /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF89E9B15A3605200112881 /* DDDispatchQueueLogFormatter.m */; };
 		DCF89E9F15A3605200112881 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = DCF89E9C15A3605200112881 /* README.txt */; };
 /* End PBXBuildFile section */
 
@@ -51,10 +51,10 @@
 		DC2E3349129ADCE0009F096E /* ThirdPartyFramework.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdPartyFramework.m; sourceTree = "<group>"; };
 		DCF89E9315A3604500112881 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDAbstractDatabaseLogger.h; path = ../../Lumberjack/DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
 		DCF89E9415A3604500112881 /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDAbstractDatabaseLogger.m; path = ../../Lumberjack/DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
-		DCF89E9815A3605200112881 /* ContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContextFilterLogFormatter.h; sourceTree = "<group>"; };
-		DCF89E9915A3605200112881 /* ContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContextFilterLogFormatter.m; sourceTree = "<group>"; };
-		DCF89E9A15A3605200112881 /* DispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueueLogFormatter.h; sourceTree = "<group>"; };
-		DCF89E9B15A3605200112881 /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
+		DCF89E9815A3605200112881 /* DDContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDContextFilterLogFormatter.h; sourceTree = "<group>"; };
+		DCF89E9915A3605200112881 /* DDContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDContextFilterLogFormatter.m; sourceTree = "<group>"; };
+		DCF89E9A15A3605200112881 /* DDDispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDispatchQueueLogFormatter.h; sourceTree = "<group>"; };
+		DCF89E9B15A3605200112881 /* DDDispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDispatchQueueLogFormatter.m; sourceTree = "<group>"; };
 		DCF89E9C15A3605200112881 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -171,10 +171,10 @@
 		DCF89E9715A3605200112881 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DCF89E9815A3605200112881 /* ContextFilterLogFormatter.h */,
-				DCF89E9915A3605200112881 /* ContextFilterLogFormatter.m */,
-				DCF89E9A15A3605200112881 /* DispatchQueueLogFormatter.h */,
-				DCF89E9B15A3605200112881 /* DispatchQueueLogFormatter.m */,
+				DCF89E9815A3605200112881 /* DDContextFilterLogFormatter.h */,
+				DCF89E9915A3605200112881 /* DDContextFilterLogFormatter.m */,
+				DCF89E9A15A3605200112881 /* DDDispatchQueueLogFormatter.h */,
+				DCF89E9B15A3605200112881 /* DDDispatchQueueLogFormatter.m */,
 				DCF89E9C15A3605200112881 /* README.txt */,
 			);
 			name = Extensions;
@@ -256,8 +256,8 @@
 				DC2E3347129ADC68009F096E /* MyContextFilter.m in Sources */,
 				DC2E334A129ADCE0009F096E /* ThirdPartyFramework.m in Sources */,
 				DCF89E9515A3604500112881 /* DDAbstractDatabaseLogger.m in Sources */,
-				DCF89E9D15A3605200112881 /* ContextFilterLogFormatter.m in Sources */,
-				DCF89E9E15A3605200112881 /* DispatchQueueLogFormatter.m in Sources */,
+				DCF89E9D15A3605200112881 /* DDContextFilterLogFormatter.m in Sources */,
+				DCF89E9E15A3605200112881 /* DDDispatchQueueLogFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

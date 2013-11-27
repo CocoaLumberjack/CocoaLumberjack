@@ -20,8 +20,8 @@
 		DC3612CC156E1DAD00956227 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612BF156E1DAD00956227 /* DDFileLogger.m */; };
 		DC3612CD156E1DAD00956227 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612C1156E1DAD00956227 /* DDLog.m */; };
 		DC3612CE156E1DAD00956227 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612C3156E1DAD00956227 /* DDTTYLogger.m */; };
-		DC3612CF156E1DAD00956227 /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612C6156E1DAD00956227 /* ContextFilterLogFormatter.m */; };
-		DC3612D0156E1DAD00956227 /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612C8156E1DAD00956227 /* DispatchQueueLogFormatter.m */; };
+		DC3612CF156E1DAD00956227 /* DDContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612C6156E1DAD00956227 /* DDContextFilterLogFormatter.m */; };
+		DC3612D0156E1DAD00956227 /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612C8156E1DAD00956227 /* DDDispatchQueueLogFormatter.m */; };
 		DC3612D1156E1DAD00956227 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = DC3612C9156E1DAD00956227 /* README.txt */; };
 		DCD6EACC16FFC47500710668 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD6EACB16FFC47500710668 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
@@ -50,10 +50,10 @@
 		DC3612C1156E1DAD00956227 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
 		DC3612C2156E1DAD00956227 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
 		DC3612C3156E1DAD00956227 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
-		DC3612C5156E1DAD00956227 /* ContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContextFilterLogFormatter.h; sourceTree = "<group>"; };
-		DC3612C6156E1DAD00956227 /* ContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContextFilterLogFormatter.m; sourceTree = "<group>"; };
-		DC3612C7156E1DAD00956227 /* DispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueueLogFormatter.h; sourceTree = "<group>"; };
-		DC3612C8156E1DAD00956227 /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
+		DC3612C5156E1DAD00956227 /* DDContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDContextFilterLogFormatter.h; sourceTree = "<group>"; };
+		DC3612C6156E1DAD00956227 /* DDContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDContextFilterLogFormatter.m; sourceTree = "<group>"; };
+		DC3612C7156E1DAD00956227 /* DDDispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDispatchQueueLogFormatter.h; sourceTree = "<group>"; };
+		DC3612C8156E1DAD00956227 /* DDDispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDispatchQueueLogFormatter.m; sourceTree = "<group>"; };
 		DC3612C9156E1DAD00956227 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		DCD6EACB16FFC47500710668 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,10 +147,10 @@
 		DC3612C4156E1DAD00956227 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DC3612C5156E1DAD00956227 /* ContextFilterLogFormatter.h */,
-				DC3612C6156E1DAD00956227 /* ContextFilterLogFormatter.m */,
-				DC3612C7156E1DAD00956227 /* DispatchQueueLogFormatter.h */,
-				DC3612C8156E1DAD00956227 /* DispatchQueueLogFormatter.m */,
+				DC3612C5156E1DAD00956227 /* DDContextFilterLogFormatter.h */,
+				DC3612C6156E1DAD00956227 /* DDContextFilterLogFormatter.m */,
+				DC3612C7156E1DAD00956227 /* DDDispatchQueueLogFormatter.h */,
+				DC3612C8156E1DAD00956227 /* DDDispatchQueueLogFormatter.m */,
 				DC3612C9156E1DAD00956227 /* README.txt */,
 			);
 			path = Extensions;
@@ -228,8 +228,8 @@
 				DC3612CC156E1DAD00956227 /* DDFileLogger.m in Sources */,
 				DC3612CD156E1DAD00956227 /* DDLog.m in Sources */,
 				DC3612CE156E1DAD00956227 /* DDTTYLogger.m in Sources */,
-				DC3612CF156E1DAD00956227 /* ContextFilterLogFormatter.m in Sources */,
-				DC3612D0156E1DAD00956227 /* DispatchQueueLogFormatter.m in Sources */,
+				DC3612CF156E1DAD00956227 /* DDContextFilterLogFormatter.m in Sources */,
+				DC3612D0156E1DAD00956227 /* DDDispatchQueueLogFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
