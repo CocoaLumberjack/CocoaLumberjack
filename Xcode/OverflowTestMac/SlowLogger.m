@@ -5,7 +5,7 @@
 
 - (void)logMessage:(DDLogMessage *)logMessage
 {
-	[NSThread sleepForTimeInterval:0.25];
+    [NSThread sleepForTimeInterval:0.25];
 }
 
 @end

@@ -5,8 +5,8 @@
 
 @interface BenchmarkIPhoneAppDelegate : NSObject <UIApplicationDelegate>
 {
-	UIWindow *window;
-	BenchmarkIPhoneViewController *viewController;
+    UIWindow *window;
+    BenchmarkIPhoneViewController *viewController;
 }
 
 @property (nonatomic, strong) IBOutlet UIWindow *window;

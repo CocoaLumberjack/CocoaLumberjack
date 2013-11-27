@@ -24,16 +24,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	[DDLog addLogger:[DDASLLogger sharedInstance]];
-	[DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
     
-	// Override point for customization after application launch.
-	
-	// Add the view controller's view to the window and display.
-	[window addSubview:viewController.view];
-	[window makeKeyAndVisible];
-	
-	return YES;
+    // Override point for customization after application launch.
+    
+    // Add the view controller's view to the window and display.
+    [window addSubview:viewController.view];
+    [window makeKeyAndVisible];
+    
+    return YES;
 }
 
 

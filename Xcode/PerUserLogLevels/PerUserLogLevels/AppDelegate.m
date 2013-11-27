@@ -33,11 +33,11 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	[DDLog addLogger:[DDTTYLogger sharedInstance]];
-	
-	DDLogVerbose(@"Invoking machine_init_cold");
-	DDLogInfo(@"Waiting for machine to warm up...");
-	DDLogWarn(@"Toner is low");
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
+    DDLogVerbose(@"Invoking machine_init_cold");
+    DDLogInfo(@"Waiting for machine to warm up...");
+    DDLogWarn(@"Toner is low");
 }
 
 @end

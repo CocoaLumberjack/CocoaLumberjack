@@ -8,7 +8,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	[PerformanceTesting startPerformanceTests];
+    [PerformanceTesting startPerformanceTests];
 }
 
 @end

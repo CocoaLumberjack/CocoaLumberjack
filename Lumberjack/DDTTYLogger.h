@@ -35,20 +35,20 @@
 
 @interface DDTTYLogger : DDAbstractLogger <DDLogger>
 {
-	NSCalendar *calendar;
-	NSUInteger calendarUnitFlags;
-	
-	NSString *appName;
-	char *app;
-	size_t appLen;
-	
-	NSString *processID;
-	char *pid;
-	size_t pidLen;
-	
-	BOOL colorsEnabled;
-	NSMutableArray *colorProfilesArray;
-	NSMutableDictionary *colorProfilesDict;
+    NSCalendar *calendar;
+    NSUInteger calendarUnitFlags;
+    
+    NSString *appName;
+    char *app;
+    size_t appLen;
+    
+    NSString *processID;
+    char *pid;
+    size_t pidLen;
+    
+    BOOL colorsEnabled;
+    NSMutableArray *colorProfilesArray;
+    NSMutableDictionary *colorProfilesDict;
 }
 
 + (instancetype)sharedInstance;

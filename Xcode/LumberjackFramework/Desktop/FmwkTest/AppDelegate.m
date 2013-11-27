@@ -11,12 +11,12 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	[DDLog addLogger:[DDTTYLogger sharedInstance]];
-	
-	DDLogVerbose(@"Verbose");
-	DDLogInfo(@"Info");
-	DDLogWarn(@"Warn");
-	DDLogError(@"Error");
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
+    DDLogVerbose(@"Verbose");
+    DDLogInfo(@"Info");
+    DDLogWarn(@"Warn");
+    DDLogError(@"Error");
 }
 
 @end

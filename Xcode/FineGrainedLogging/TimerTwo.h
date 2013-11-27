@@ -3,8 +3,8 @@
 
 @interface TimerTwo : NSObject
 {
-	NSTimer *foodTimer;
-	NSTimer *sleepTimer;
+    NSTimer *foodTimer;
+    NSTimer *sleepTimer;
 }
 
 @end

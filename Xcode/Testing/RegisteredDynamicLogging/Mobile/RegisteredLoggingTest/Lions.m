@@ -9,20 +9,20 @@ static int ddLogLevel = LOG_LEVEL_WARN;
 
 + (int)ddLogLevel
 {
-	return ddLogLevel;
+    return ddLogLevel;
 }
 
 + (void)ddSetLogLevel:(int)logLevel
 {
-	ddLogLevel = logLevel;
+    ddLogLevel = logLevel;
 }
 
 + (void)logStuff
 {
-	DDLogError(@"%@ - Error", THIS_FILE);
-	DDLogWarn(@"%@ - Warn", THIS_FILE);
-	DDLogInfo(@"%@ - Info", THIS_FILE);
-	DDLogVerbose(@"%@ - Verbose", THIS_FILE);
+    DDLogError(@"%@ - Error", THIS_FILE);
+    DDLogWarn(@"%@ - Warn", THIS_FILE);
+    DDLogInfo(@"%@ - Info", THIS_FILE);
+    DDLogVerbose(@"%@ - Verbose", THIS_FILE);
 }
 
 @end

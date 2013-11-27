@@ -9,31 +9,31 @@
 
 - (id)initWithPath:(NSString*)aPath {
     self = [super init];
-	
+    
     if (self) {
         databasePath        = [aPath copy];
-		openResultSets      = [[NSMutableSet alloc] init];
+        openResultSets      = [[NSMutableSet alloc] init];
         db                  = 0x00;
         logsErrors          = 0x00;
         crashOnErrors       = 0x00;
         busyRetryTimeout    = 0x00;
     }
-	
-	return self;
+    
+    return self;
 }
 
 - (void)finalize {
-	[self close];
-	[super finalize];
+    [self close];
+    [super finalize];
 }
 
 - (void)dealloc {
-	[self close];
+    [self close];
     
-	[openResultSets release];
+    [openResultSets release];
     [cachedStatements release];
     [databasePath release];
-	
+    
     [super dealloc];
 }
 
@@ -50,27 +50,27 @@
 }
 
 - (BOOL)open {
-	if (db) {
-		return YES;
-	}
-	
-	int err = sqlite3_open((databasePath ? [databasePath fileSystemRepresentation] : ":memory:"), &db );
-	if(err != SQLITE_OK) {
+    if (db) {
+        return YES;
+    }
+    
+    int err = sqlite3_open((databasePath ? [databasePath fileSystemRepresentation] : ":memory:"), &db );
+    if(err != SQLITE_OK) {
         NSLog(@"error opening!: %d", err);
-		return NO;
-	}
-	
-	return YES;
+        return NO;
+    }
+    
+    return YES;
 }
 
 #if SQLITE_VERSION_NUMBER >= 3005000
 - (BOOL)openWithFlags:(int)flags {
     int err = sqlite3_open_v2((databasePath ? [databasePath fileSystemRepresentation] : ":memory:"), &db, flags, NULL /* Name of VFS module to use */);
-	if(err != SQLITE_OK) {
-		NSLog(@"error opening!: %d", err);
-		return NO;
-	}
-	return YES;
+    if(err != SQLITE_OK) {
+        NSLog(@"error opening!: %d", err);
+        return NO;
+    }
+    return YES;
 }
 #endif
 
@@ -78,9 +78,9 @@
 - (BOOL)close {
     
     [self clearCachedStatements];
-	[self closeOpenResultSets];
+    [self closeOpenResultSets];
     
-	if (!db) {
+    if (!db) {
         return YES;
     }
     
@@ -105,7 +105,7 @@
     }
     while (retry);
     
-	db = nil;
+    db = nil;
     return YES;
 }
 
@@ -115,30 +115,30 @@
     FMStatement *cachedStmt;
 
     while ((cachedStmt = [e nextObject])) {
-    	[cachedStmt close];
+        [cachedStmt close];
     }
     
     [cachedStatements removeAllObjects];
 }
 
 - (void)closeOpenResultSets {
-	//Copy the set so we don't get mutation errors
-	NSSet *resultSets = [[openResultSets copy] autorelease];
-	
-	NSEnumerator *e = [resultSets objectEnumerator];
-	NSValue *returnedResultSet = nil;
-	
-	while((returnedResultSet = [e nextObject])) {
-		FMResultSet *rs = (FMResultSet *)[returnedResultSet pointerValue];
-		if ([rs respondsToSelector:@selector(close)]) {
-			[rs close];
-		}
-	}
+    //Copy the set so we don't get mutation errors
+    NSSet *resultSets = [[openResultSets copy] autorelease];
+    
+    NSEnumerator *e = [resultSets objectEnumerator];
+    NSValue *returnedResultSet = nil;
+    
+    while((returnedResultSet = [e nextObject])) {
+        FMResultSet *rs = (FMResultSet *)[returnedResultSet pointerValue];
+        if ([rs respondsToSelector:@selector(close)]) {
+            [rs close];
+        }
+    }
 }
 
 - (void)resultSetDidClose:(FMResultSet *)resultSet {
-	NSValue *setValue = [NSValue valueWithNonretainedObject:resultSet];
-	[openResultSets removeObject:setValue];
+    NSValue *setValue = [NSValue valueWithNonretainedObject:resultSet];
+    [openResultSets removeObject:setValue];
 }
 
 - (FMStatement*)cachedStatementForQuery:(NSString*)query {
@@ -247,11 +247,11 @@
 }
 
 - (int)changes {
-	if (inUse) {
+    if (inUse) {
         [self compainAboutInUse];
         return 0;
     }
-	
+    
     [self setInUse:YES];
     int ret = sqlite3_changes(db);
     [self setInUse:NO];
@@ -410,8 +410,8 @@
     // the statement gets closed in rs's dealloc or [rs close];
     rs = [FMResultSet resultSetWithStatement:statement usingParentDatabase:self];
     [rs setQuery:sql];
-	NSValue *openResultSet = [NSValue valueWithNonretainedObject:rs];
-	[openResultSets addObject:openResultSet];
+    NSValue *openResultSet = [NSValue valueWithNonretainedObject:rs];
+    [openResultSets addObject:openResultSet];
     
     statement.useCount = statement.useCount + 1;
     
@@ -437,7 +437,7 @@
 }
 
 - (BOOL)executeUpdate:(NSString*)sql error:(NSError**)outErr withArgumentsInArray:(NSArray*)arrayArgs orVAList:(va_list)args {
-	
+    
     if (inUse) {
         [self compainAboutInUse];
         return NO;
@@ -547,12 +547,12 @@
             // this will happen if the db is locked, like if we are doing an update or insert.
             // in that case, retry the step... and maybe wait just 10 milliseconds.
             retry = YES;
-			if (SQLITE_LOCKED == rc) {
-				rc = sqlite3_reset(pStmt);
-				if (rc != SQLITE_LOCKED) {
-					NSLog(@"Unexpected result from sqlite3_reset (%d) eu", rc);
-				}
-			}
+            if (SQLITE_LOCKED == rc) {
+                rc = sqlite3_reset(pStmt);
+                if (rc != SQLITE_LOCKED) {
+                    NSLog(@"Unexpected result from sqlite3_reset (%d) eu", rc);
+                }
+            }
             usleep(20);
             
             if (busyRetryTimeout && (numberOfRetries++ > busyRetryTimeout)) {
@@ -757,14 +757,14 @@
 @implementation FMStatement
 
 - (void)finalize {
-	[self close];
-	[super finalize];
+    [self close];
+    [super finalize];
 }
 
 - (void)dealloc {
-	[self close];
+    [self close];
     [query release];
-	[super dealloc];
+    [super dealloc];
 }
 
 

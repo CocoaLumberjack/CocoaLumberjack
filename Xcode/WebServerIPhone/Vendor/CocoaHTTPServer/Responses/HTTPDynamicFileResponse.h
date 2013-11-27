@@ -40,8 +40,8 @@
 
 @interface HTTPDynamicFileResponse : HTTPAsyncFileResponse
 {
-	NSData *separator;
-	NSDictionary *replacementDict;
+    NSData *separator;
+    NSDictionary *replacementDict;
 }
 
 - (id)initWithFilePath:(NSString *)filePath

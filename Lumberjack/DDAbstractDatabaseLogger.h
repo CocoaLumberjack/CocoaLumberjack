@@ -21,18 +21,18 @@
 
 @interface DDAbstractDatabaseLogger : DDAbstractLogger {
 @protected
-	NSUInteger saveThreshold;
-	NSTimeInterval saveInterval;
-	NSTimeInterval maxAge;
-	NSTimeInterval deleteInterval;
-	BOOL deleteOnEverySave;
-	
-	BOOL saveTimerSuspended;
-	NSUInteger unsavedCount;
-	dispatch_time_t unsavedTime;
-	dispatch_source_t saveTimer;
-	dispatch_time_t lastDeleteTime;
-	dispatch_source_t deleteTimer;
+    NSUInteger saveThreshold;
+    NSTimeInterval saveInterval;
+    NSTimeInterval maxAge;
+    NSTimeInterval deleteInterval;
+    BOOL deleteOnEverySave;
+    
+    BOOL saveTimerSuspended;
+    NSUInteger unsavedCount;
+    dispatch_time_t unsavedTime;
+    dispatch_source_t saveTimer;
+    dispatch_time_t lastDeleteTime;
+    dispatch_source_t deleteTimer;
 }
 
 /**

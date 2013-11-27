@@ -7,10 +7,10 @@
 @interface FMDBLogger : DDAbstractDatabaseLogger <DDLogger>
 {
   @private
-	NSString *logDirectory;
-	NSMutableArray *pendingLogEntries;
-	
-	FMDatabase *database;
+    NSString *logDirectory;
+    NSMutableArray *pendingLogEntries;
+    
+    FMDatabase *database;
 }
 
 /**

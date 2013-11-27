@@ -4,8 +4,8 @@
 
 @interface HTTPDataResponse : NSObject <HTTPResponse>
 {
-	NSUInteger offset;
-	NSData *data;
+    NSUInteger offset;
+    NSData *data;
 }
 
 - (id)initWithData:(NSData *)data;
