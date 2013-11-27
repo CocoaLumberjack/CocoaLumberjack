@@ -5,9 +5,9 @@
 
 @interface RollingTestMacAppDelegate : NSObject <NSApplicationDelegate>
 {
-	DDFileLogger *fileLogger;
-	
-	NSWindow *__unsafe_unretained window;
+    DDFileLogger *fileLogger;
+    
+    NSWindow *__unsafe_unretained window;
 }
 
 @property (unsafe_unretained) IBOutlet NSWindow *window;

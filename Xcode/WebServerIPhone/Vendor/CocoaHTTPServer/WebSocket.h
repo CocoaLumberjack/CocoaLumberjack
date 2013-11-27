@@ -8,18 +8,18 @@
 
 @interface WebSocket : NSObject
 {
-	dispatch_queue_t websocketQueue;
-	
-	HTTPMessage *request;
-	GCDAsyncSocket *asyncSocket;
-	
-	NSData *term;
-	
-	BOOL isStarted;
-	BOOL isOpen;
-	BOOL isVersion76;
-	
-	id __unsafe_unretained delegate;
+    dispatch_queue_t websocketQueue;
+    
+    HTTPMessage *request;
+    GCDAsyncSocket *asyncSocket;
+    
+    NSData *term;
+    
+    BOOL isStarted;
+    BOOL isOpen;
+    BOOL isVersion76;
+    
+    id __unsafe_unretained delegate;
 }
 
 + (BOOL)isWebSocketRequest:(HTTPMessage *)request;

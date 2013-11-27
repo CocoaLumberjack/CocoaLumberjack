@@ -13,8 +13,8 @@
 {
     [window addSubview:viewController.view];
     [window makeKeyAndVisible];
-	
-	[PerformanceTesting startPerformanceTests];
+    
+    [PerformanceTesting startPerformanceTests];
 }
 
 

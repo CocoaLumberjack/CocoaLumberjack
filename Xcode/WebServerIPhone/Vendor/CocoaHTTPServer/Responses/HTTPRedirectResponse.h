@@ -4,7 +4,7 @@
 
 @interface HTTPRedirectResponse : NSObject <HTTPResponse>
 {
-	NSString *redirectPath;
+    NSString *redirectPath;
 }
 
 - (id)initWithPath:(NSString *)redirectPath;

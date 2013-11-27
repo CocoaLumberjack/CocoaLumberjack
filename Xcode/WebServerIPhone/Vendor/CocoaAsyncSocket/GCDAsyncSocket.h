@@ -77,15 +77,15 @@ extern NSString *const GCDAsyncSocketSSLDiffieHellmanParameters;
 
 enum GCDAsyncSocketError
 {
-	GCDAsyncSocketNoError = 0,           // Never used
-	GCDAsyncSocketBadConfigError,        // Invalid configuration
-	GCDAsyncSocketBadParamError,         // Invalid parameter was passed
-	GCDAsyncSocketConnectTimeoutError,   // A connect operation timed out
-	GCDAsyncSocketReadTimeoutError,      // A read operation timed out
-	GCDAsyncSocketWriteTimeoutError,     // A write operation timed out
-	GCDAsyncSocketReadMaxedOutError,     // Reached set maxLength without completing
-	GCDAsyncSocketClosedError,           // The remote peer closed the connection
-	GCDAsyncSocketOtherError,            // Description provided in userInfo
+    GCDAsyncSocketNoError = 0,           // Never used
+    GCDAsyncSocketBadConfigError,        // Invalid configuration
+    GCDAsyncSocketBadParamError,         // Invalid parameter was passed
+    GCDAsyncSocketConnectTimeoutError,   // A connect operation timed out
+    GCDAsyncSocketReadTimeoutError,      // A read operation timed out
+    GCDAsyncSocketWriteTimeoutError,     // A write operation timed out
+    GCDAsyncSocketReadMaxedOutError,     // Reached set maxLength without completing
+    GCDAsyncSocketClosedError,           // The remote peer closed the connection
+    GCDAsyncSocketOtherError,            // Description provided in userInfo
 };
 typedef enum GCDAsyncSocketError GCDAsyncSocketError;
 
@@ -431,9 +431,9 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * the method [NSData dataWithBytesNoCopy:length:freeWhenDone:NO].
 **/
 - (void)readDataWithTimeout:(NSTimeInterval)timeout
-					 buffer:(NSMutableData *)buffer
-			   bufferOffset:(NSUInteger)offset
-						tag:(long)tag;
+                     buffer:(NSMutableData *)buffer
+               bufferOffset:(NSUInteger)offset
+                        tag:(long)tag;
 
 /**
  * Reads the first available bytes that become available on the socket.

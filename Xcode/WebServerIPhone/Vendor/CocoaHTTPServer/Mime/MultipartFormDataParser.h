@@ -33,22 +33,22 @@ Multipart/form-data http://tools.ietf.org/html/rfc2388
 //-----------------------------------------------------------------
 
 @interface MultipartFormDataParser : NSObject {
-NSMutableData*						pendingData;
-    NSData*							boundaryData;
-    MultipartMessageHeader*			currentHeader;
+NSMutableData*                      pendingData;
+    NSData*                         boundaryData;
+    MultipartMessageHeader*         currentHeader;
 
-	BOOL							waitingForCRLF;
-	BOOL							reachedEpilogue;
-	BOOL							processedPreamble;
-	BOOL							checkForContentEnd;
+    BOOL                            waitingForCRLF;
+    BOOL                            reachedEpilogue;
+    BOOL                            processedPreamble;
+    BOOL                            checkForContentEnd;
 
 #if __has_feature(objc_arc_weak)
-	__weak id<MultipartFormDataParserDelegate>                  delegate;
+    __weak id<MultipartFormDataParserDelegate>                  delegate;
 #else
-	__unsafe_unretained id<MultipartFormDataParserDelegate>     delegate;
-#endif	
-	int									currentEncoding;
-	NSStringEncoding					formEncoding;
+    __unsafe_unretained id<MultipartFormDataParserDelegate>     delegate;
+#endif  
+    int                                 currentEncoding;
+    NSStringEncoding                    formEncoding;
 }
 
 - (BOOL) appendData:(NSData*) data;
@@ -60,6 +60,6 @@ NSMutableData*						pendingData;
 #else
     @property(unsafe_unretained, readwrite) id delegate;
 #endif
-@property(readwrite) NSStringEncoding	formEncoding;
+@property(readwrite) NSStringEncoding   formEncoding;
 
 @end

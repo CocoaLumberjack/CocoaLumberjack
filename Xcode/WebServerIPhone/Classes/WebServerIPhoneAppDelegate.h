@@ -6,12 +6,12 @@
 
 @interface WebServerIPhoneAppDelegate : NSObject <UIApplicationDelegate>
 {
-	DDFileLogger *fileLogger;
-	
-	HTTPServer *httpServer;
-	
-	UIWindow *window;
-	WebServerIPhoneViewController *viewController;
+    DDFileLogger *fileLogger;
+    
+    HTTPServer *httpServer;
+    
+    UIWindow *window;
+    WebServerIPhoneViewController *viewController;
 }
 
 @property (nonatomic, readonly) DDFileLogger *fileLogger;

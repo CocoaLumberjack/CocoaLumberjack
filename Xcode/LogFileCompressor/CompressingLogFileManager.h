@@ -4,8 +4,8 @@
 
 @interface CompressingLogFileManager : DDLogFileManagerDefault
 {
-	BOOL upToDate;
-	BOOL isCompressing;
+    BOOL upToDate;
+    BOOL isCompressing;
 }
 
 @end

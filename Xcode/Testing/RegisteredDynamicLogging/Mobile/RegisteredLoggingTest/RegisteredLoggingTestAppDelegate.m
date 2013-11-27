@@ -16,25 +16,25 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	[DDLog addLogger:[DDTTYLogger sharedInstance]];
-	
-	[Lions logStuff];
-	[Tigers logStuff];
-	
-	NSArray *registeredClassNames = [DDLog registeredClassNames];
-	DDLogVerbose(@"registeredClassNames: %@", registeredClassNames);
-	
-	NSArray *registeredClasses = [DDLog registeredClasses];
-	for (Class class in registeredClasses)
-	{
-		[class ddSetLogLevel:LOG_LEVEL_VERBOSE];
-	}
-	
-	[Lions logStuff];
-	[Tigers logStuff];
-	
-	self.window.rootViewController = self.viewController;
-	[self.window makeKeyAndVisible];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
+    [Lions logStuff];
+    [Tigers logStuff];
+    
+    NSArray *registeredClassNames = [DDLog registeredClassNames];
+    DDLogVerbose(@"registeredClassNames: %@", registeredClassNames);
+    
+    NSArray *registeredClasses = [DDLog registeredClasses];
+    for (Class class in registeredClasses)
+    {
+        [class ddSetLogLevel:LOG_LEVEL_VERBOSE];
+    }
+    
+    [Lions logStuff];
+    [Tigers logStuff];
+    
+    self.window.rootViewController = self.viewController;
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

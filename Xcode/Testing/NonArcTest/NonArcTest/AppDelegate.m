@@ -18,10 +18,10 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	[DDLog addLogger:[DDASLLogger sharedInstance]];
-	[DDLog addLogger:[DDTTYLogger sharedInstance]];
-	
-	DDLogVerbose(@"Testing");
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
+    DDLogVerbose(@"Testing");
 }
 
 @end

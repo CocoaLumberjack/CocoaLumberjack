@@ -51,8 +51,8 @@
 **/
 @interface DDDispatchQueueLogFormatter : NSObject <DDLogFormatter> {
 @protected
-	
-	NSString *dateFormatString;
+    
+    NSString *dateFormatString;
 }
 
 /**

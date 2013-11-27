@@ -14,60 +14,60 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_OFF; // | HTTP_LOG_FLAG_TRACE;
 
 - (id)initWithPath:(NSString *)path
 {
-	if ((self = [super init]))
-	{
-		HTTPLogTrace();
-		
-		redirectPath = [path copy];
-	}
-	return self;
+    if ((self = [super init]))
+    {
+        HTTPLogTrace();
+        
+        redirectPath = [path copy];
+    }
+    return self;
 }
 
 - (UInt64)contentLength
 {
-	return 0;
+    return 0;
 }
 
 - (UInt64)offset
 {
-	return 0;
+    return 0;
 }
 
 - (void)setOffset:(UInt64)offset
 {
-	// Nothing to do
+    // Nothing to do
 }
 
 - (NSData *)readDataOfLength:(NSUInteger)length
 {
-	HTTPLogTrace();
-	
-	return nil;
+    HTTPLogTrace();
+    
+    return nil;
 }
 
 - (BOOL)isDone
 {
-	return YES;
+    return YES;
 }
 
 - (NSDictionary *)httpHeaders
 {
-	HTTPLogTrace();
-	
-	return [NSDictionary dictionaryWithObject:redirectPath forKey:@"Location"];
+    HTTPLogTrace();
+    
+    return [NSDictionary dictionaryWithObject:redirectPath forKey:@"Location"];
 }
 
 - (NSInteger)status
 {
-	HTTPLogTrace();
-	
-	return 302;
+    HTTPLogTrace();
+    
+    return 302;
 }
 
 - (void)dealloc
 {
-	HTTPLogTrace();
-	
+    HTTPLogTrace();
+    
 }
 
 @end

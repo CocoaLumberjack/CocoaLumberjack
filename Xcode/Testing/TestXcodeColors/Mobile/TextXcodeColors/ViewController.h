@@ -2,7 +2,7 @@
 
 @interface ViewController : UIViewController
 {
-	IBOutlet UILabel *label;
+    IBOutlet UILabel *label;
 }
 
 @property (nonatomic, readonly) UILabel *label;

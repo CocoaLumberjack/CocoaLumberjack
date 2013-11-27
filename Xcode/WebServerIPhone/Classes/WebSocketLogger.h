@@ -7,8 +7,8 @@
 
 @interface WebSocketLogger : DDAbstractLogger <DDLogger>
 {
-	WebSocket *websocket;
-	BOOL isWebSocketOpen;
+    WebSocket *websocket;
+    BOOL isWebSocketOpen;
 }
 
 - (id)initWithWebSocket:(WebSocket *)ws;
@@ -17,7 +17,7 @@
 
 @interface WebSocketFormatter : NSObject <DDLogFormatter>
 {
-	NSDateFormatter *dateFormatter;
+    NSDateFormatter *dateFormatter;
 }
 
 @end

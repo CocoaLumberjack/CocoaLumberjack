@@ -17,11 +17,11 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	[DDLog addLogger:[DDASLLogger sharedInstance]];
-	[DDLog addLogger:[DDTTYLogger sharedInstance]];
-	
-	timerOne = [[TimerOne alloc] init];
-	timerTwo = [[TimerTwo alloc] init];
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
+    timerOne = [[TimerOne alloc] init];
+    timerTwo = [[TimerTwo alloc] init];
 }
 
 @end

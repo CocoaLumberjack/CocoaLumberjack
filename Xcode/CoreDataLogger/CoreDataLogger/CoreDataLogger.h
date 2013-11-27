@@ -5,12 +5,12 @@
 @interface CoreDataLogger : DDAbstractDatabaseLogger <DDLogger>
 {
   @private
-	NSString *logDirectory;
-	
-	NSManagedObjectModel *managedObjectModel;
-	NSPersistentStoreCoordinator *persistentStoreCoordinator;
-	NSManagedObjectContext *managedObjectContext;
-	NSEntityDescription *logEntryEntity;
+    NSString *logDirectory;
+    
+    NSManagedObjectModel *managedObjectModel;
+    NSPersistentStoreCoordinator *persistentStoreCoordinator;
+    NSManagedObjectContext *managedObjectContext;
+    NSEntityDescription *logEntryEntity;
 }
 
 /**

@@ -31,70 +31,70 @@ static DDASLLogger *sharedInstance;
 **/
 + (void)initialize
 {
-	static BOOL initialized = NO;
-	if (!initialized)
-	{
-		initialized = YES;
-		
-		sharedInstance = [[[self class] alloc] init];
-	}
+    static BOOL initialized = NO;
+    if (!initialized)
+    {
+        initialized = YES;
+        
+        sharedInstance = [[[self class] alloc] init];
+    }
 }
 
 + (instancetype)sharedInstance
 {
-	return sharedInstance;
+    return sharedInstance;
 }
 
 - (id)init
 {
-	if (sharedInstance != nil)
-	{
-		return nil;
-	}
-	
-	if ((self = [super init]))
-	{
-		// A default asl client is provided for the main thread,
-		// but background threads need to create their own client.
-		
-		client = asl_open(NULL, "com.apple.console", 0);
-	}
-	return self;
+    if (sharedInstance != nil)
+    {
+        return nil;
+    }
+    
+    if ((self = [super init]))
+    {
+        // A default asl client is provided for the main thread,
+        // but background threads need to create their own client.
+        
+        client = asl_open(NULL, "com.apple.console", 0);
+    }
+    return self;
 }
 
 - (void)logMessage:(DDLogMessage *)logMessage
 {
-	NSString *logMsg = logMessage->logMsg;
-	
-	if (formatter)
-	{
-		logMsg = [formatter formatLogMessage:logMessage];
-	}
-	
-	if (logMsg)
-	{
-		const char *msg = [logMsg UTF8String];
-		
-		int aslLogLevel;
-		switch (logMessage->logFlag)
-		{
-			// Note: By default ASL will filter anything above level 5 (Notice).
-			// So our mappings shouldn't go above that level.
-			
-			case LOG_FLAG_ERROR : aslLogLevel = ASL_LEVEL_ALERT;   break;
-			case LOG_FLAG_WARN  : aslLogLevel = ASL_LEVEL_CRIT;    break;
-			case LOG_FLAG_INFO  : aslLogLevel = ASL_LEVEL_ERR;     break;
-			case LOG_FLAG_DEBUG : aslLogLevel = ASL_LEVEL_WARNING; break;
-			default             : aslLogLevel = ASL_LEVEL_NOTICE;  break;
-		}
-		
-		asl_log(client, NULL, aslLogLevel, "%s", msg);
-	}
+    NSString *logMsg = logMessage->logMsg;
+    
+    if (formatter)
+    {
+        logMsg = [formatter formatLogMessage:logMessage];
+    }
+    
+    if (logMsg)
+    {
+        const char *msg = [logMsg UTF8String];
+        
+        int aslLogLevel;
+        switch (logMessage->logFlag)
+        {
+            // Note: By default ASL will filter anything above level 5 (Notice).
+            // So our mappings shouldn't go above that level.
+            
+            case LOG_FLAG_ERROR : aslLogLevel = ASL_LEVEL_ALERT;   break;
+            case LOG_FLAG_WARN  : aslLogLevel = ASL_LEVEL_CRIT;    break;
+            case LOG_FLAG_INFO  : aslLogLevel = ASL_LEVEL_ERR;     break;
+            case LOG_FLAG_DEBUG : aslLogLevel = ASL_LEVEL_WARNING; break;
+            default             : aslLogLevel = ASL_LEVEL_NOTICE;  break;
+        }
+        
+        asl_log(client, NULL, aslLogLevel, "%s", msg);
+    }
 }
 
 - (NSString *)loggerName
 {
-	return @"cocoa.lumberjack.aslLogger";
+    return @"cocoa.lumberjack.aslLogger";
 }
 
 @end

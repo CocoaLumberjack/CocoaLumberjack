@@ -121,8 +121,8 @@ typedef enum {
 **/
 @interface DDLogFileManagerDefault : NSObject <DDLogFileManager>
 {
-	NSUInteger maximumNumberOfLogFiles;
-	NSString *_logsDirectory;
+    NSUInteger maximumNumberOfLogFiles;
+    NSString *_logsDirectory;
 }
 
 @property (readwrite, assign) DDLogFileNamingConvention fileNamingConvention;
@@ -164,7 +164,7 @@ typedef enum {
 **/
 @interface DDLogFileFormatterDefault : NSObject <DDLogFormatter>
 {
-	NSDateFormatter *dateFormatter;
+    NSDateFormatter *dateFormatter;
 }
 
 - (id)init;
@@ -178,15 +178,15 @@ typedef enum {
 
 @interface DDFileLogger : DDAbstractLogger <DDLogger>
 {
-	__strong id <DDLogFileManager> logFileManager;
-	
-	DDLogFileInfo *currentLogFileInfo;
-	NSFileHandle *currentLogFileHandle;
-	
-	dispatch_source_t rollingTimer;
-	
-	unsigned long long maximumFileSize;
-	NSTimeInterval rollingFrequency;
+    __strong id <DDLogFileManager> logFileManager;
+    
+    DDLogFileInfo *currentLogFileInfo;
+    NSFileHandle *currentLogFileHandle;
+    
+    dispatch_source_t rollingTimer;
+    
+    unsigned long long maximumFileSize;
+    NSTimeInterval rollingFrequency;
 }
 
 - (id)init;
@@ -266,15 +266,15 @@ typedef enum {
 **/
 @interface DDLogFileInfo : NSObject
 {
-	__strong NSString *filePath;
-	__strong NSString *fileName;
-	
-	__strong NSDictionary *fileAttributes;
-	
-	__strong NSDate *creationDate;
-	__strong NSDate *modificationDate;
-	
-	unsigned long long fileSize;
+    __strong NSString *filePath;
+    __strong NSString *fileName;
+    
+    __strong NSDictionary *fileAttributes;
+    
+    __strong NSDate *creationDate;
+    __strong NSDate *modificationDate;
+    
+    unsigned long long fileSize;
 }
 
 @property (strong, nonatomic, readonly) NSString *filePath;

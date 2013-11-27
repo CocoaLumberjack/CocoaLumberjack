@@ -9,43 +9,43 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE | LOG_FLAG_TIMERS;
 
 - (id)init
 {
-	if ((self = [super init]))
-	{
-		DDLogVerbose(@"TimerOne: Creating timers...");
-		
-		foodTimer = [NSTimer scheduledTimerWithTimeInterval:2.0
-													  target:self
-													selector:@selector(foodTimerDidFire:)
-													userInfo:nil
-													 repeats:YES];
-		
-		sleepTimer = [NSTimer scheduledTimerWithTimeInterval:6.0
-													   target:self
-													 selector:@selector(sleepTimerDidFire:)
-													 userInfo:nil
-													  repeats:YES];
-	}
-	return self;
+    if ((self = [super init]))
+    {
+        DDLogVerbose(@"TimerOne: Creating timers...");
+        
+        foodTimer = [NSTimer scheduledTimerWithTimeInterval:2.0
+                                                      target:self
+                                                    selector:@selector(foodTimerDidFire:)
+                                                    userInfo:nil
+                                                     repeats:YES];
+        
+        sleepTimer = [NSTimer scheduledTimerWithTimeInterval:6.0
+                                                       target:self
+                                                     selector:@selector(sleepTimerDidFire:)
+                                                     userInfo:nil
+                                                      repeats:YES];
+    }
+    return self;
 }
 
 - (void)foodTimerDidFire:(NSTimer *)aTimer
 {
-	DDLogFoodTimer(@"TimerOne: Hungry - Need Food");
+    DDLogFoodTimer(@"TimerOne: Hungry - Need Food");
 }
 
 - (void)sleepTimerDidFire:(NSTimer *)aTimer
 {
-	DDLogSleepTimer(@"TimerOne: Tired - Need Sleep");
+    DDLogSleepTimer(@"TimerOne: Tired - Need Sleep");
 }
 
 - (void)dealloc
 {
-	DDLogVerbose(@"TimerOne: dealloc");
-	
-	[foodTimer invalidate];
-	
-	[sleepTimer invalidate];
-	
+    DDLogVerbose(@"TimerOne: dealloc");
+    
+    [foodTimer invalidate];
+    
+    [sleepTimer invalidate];
+    
 }
 
 @end
