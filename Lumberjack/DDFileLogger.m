@@ -87,7 +87,7 @@
 {
     // try-catch because the observer might be removed or never added. In this case, removeObserver throws and exception
     @try {
-        [self removeObserver:self forKeyPath:@"maximumNumberOfLogFiles"];
+        [self removeObserver:self forKeyPath:NSStringFromSelector(@selector(maximumNumberOfLogFiles))];
     }
     @catch (NSException *exception) {
         
@@ -112,7 +112,7 @@
         return;
     }
     
-    if ([keyPath isEqualToString:@"maximumNumberOfLogFiles"])
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(maximumNumberOfLogFiles))])
     {
         NSLogInfo(@"DDFileLogManagerDefault: Responding to configuration change: maximumNumberOfLogFiles");
         
