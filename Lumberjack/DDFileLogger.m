@@ -87,7 +87,7 @@
 {
     // try-catch because the observer might be removed or never added. In this case, removeObserver throws and exception
     @try {
-        [self removeObserver:self forKeyPath:@"maximumNumberOfLogFiles"];
+        [self removeObserver:self forKeyPath:NSStringFromSelector(@selector(maximumNumberOfLogFiles))];
     }
     @catch (NSException *exception) {
         
@@ -112,7 +112,7 @@
         return;
     }
     
-    if ([keyPath isEqualToString:@"maximumNumberOfLogFiles"])
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(maximumNumberOfLogFiles))])
     {
         NSLogInfo(@"DDFileLogManagerDefault: Responding to configuration change: maximumNumberOfLogFiles");
         
@@ -321,8 +321,8 @@
 
 /**
  * Just like the unsortedLogFilePaths method, but sorts the array.
- * The items in the array are sorted by modification date.
- * The first item in the array will be the most recently modified log file.
+ * The items in the array are sorted by creation date.
+ * The first item in the array will be the most recently created log file.
 **/
 - (NSArray *)sortedLogFilePaths
 {
@@ -340,8 +340,8 @@
 
 /**
  * Just like the unsortedLogFileNames method, but sorts the array.
- * The items in the array are sorted by modification date.
- * The first item in the array will be the most recently modified log file.
+ * The items in the array are sorted by creation date.
+ * The first item in the array will be the most recently created log file.
 **/
 - (NSArray *)sortedLogFileNames
 {
@@ -359,8 +359,8 @@
 
 /**
  * Just like the unsortedLogFileInfos method, but sorts the array.
- * The items in the array are sorted by modification date.
- * The first item in the array will be the most recently modified log file.
+ * The items in the array are sorted by creation date.
+ * The first item in the array will be the most recently created log file.
 **/
 - (NSArray *)sortedLogFileInfos
 {
@@ -372,8 +372,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Generates a short UUID suitable for use in the log file's name.
- * The result will have six characters, all in the hexadecimal set [0123456789ABCDEF].
+ * Generates log file name with "log-UUID.txt" or "log-TIMESTAMP.txt" format, depending on convention parameter.
+ * UUID has six characters, all in the hexadecimal set [0123456789ABCDEF].
+ * TIMESTAMP is UTC time in RFC 3339 format.
 **/
 - (NSString *)generateLogFileNameWithConvention:(DDLogFileNamingConvention)convention attempt:(NSUInteger)attempt
 {
@@ -1238,7 +1239,7 @@ static int exception_count = 0;
     // Example:
     // attrName = "archived"
     // 
-    // "log-ABC123.txt" -> "log-ABC123.archived.txt"
+    // "log-ABC123.archived.txt" -> "log-ABC123.txt"
     
     NSArray *components = [[self fileName] componentsSeparatedByString:@"."];
     
