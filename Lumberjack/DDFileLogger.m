@@ -701,7 +701,13 @@
     dispatch_resume(rollingTimer);
 }
 
+
 - (void)rollLogFile
+{
+    [self rollLogFileWithCompletionBlock:nil];
+}
+
+- (void)rollLogFileWithCompletionBlock:(void (^)())completionBlock
 {
     // This method is public.
     // We need to execute the rolling on our logging thread/queue.
@@ -709,6 +715,13 @@
     dispatch_block_t block = ^{ @autoreleasepool {
         
         [self rollLogFileNow];
+
+        if (completionBlock)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionBlock();
+            });
+        }
     }};
     
     // The design of this method is taken from the DDAbstractLogger implementation.
