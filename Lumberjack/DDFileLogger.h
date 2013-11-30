@@ -183,6 +183,7 @@ typedef enum {
     DDLogFileInfo *currentLogFileInfo;
     NSFileHandle *currentLogFileHandle;
     
+    dispatch_source_t currentLogFileVnode;
     dispatch_source_t rollingTimer;
     
     unsigned long long maximumFileSize;

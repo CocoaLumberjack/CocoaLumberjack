@@ -519,7 +519,12 @@
 {
     [currentLogFileHandle synchronizeFile];
     [currentLogFileHandle closeFile];
-    
+
+    if (currentLogFileVnode) {
+        dispatch_source_cancel(currentLogFileVnode);
+        currentLogFileVnode = NULL;
+    }
+
     if (rollingTimer)
     {
         dispatch_source_cancel(rollingTimer);
@@ -762,6 +767,11 @@
     
     currentLogFileInfo = nil;
     
+    if (currentLogFileVnode) {
+        dispatch_source_cancel(currentLogFileVnode);
+        currentLogFileVnode = NULL;
+    }
+
     if (rollingTimer)
     {
         dispatch_source_cancel(rollingTimer);
@@ -887,6 +897,29 @@
         if (currentLogFileHandle)
         {
             [self scheduleTimerToRollLogFileDueToAge];
+
+            // Here we are monitoring the log file. In case if it would be deleted ormoved
+            // somewhere we want to roll it and use a new one.
+            currentLogFileVnode = dispatch_source_create(
+                DISPATCH_SOURCE_TYPE_VNODE,
+                [currentLogFileHandle fileDescriptor],
+                DISPATCH_VNODE_DELETE | DISPATCH_VNODE_RENAME,
+                loggerQueue
+            );
+
+            dispatch_source_set_event_handler(currentLogFileVnode, ^{ @autoreleasepool {
+                NSLogInfo(@"DDFileLogger: Current logfile was moved. Rolling it and creating a new one");
+                [self rollLogFileNow];
+            }});
+
+            #if !OS_OBJECT_USE_OBJC
+            dispatch_source_t vnode = currentLogFileVnode;
+            dispatch_source_set_cancel_handler(currentLogFileVnode, ^{
+                dispatch_release(vnode);
+            });
+            #endif
+
+            dispatch_resume(currentLogFileVnode);
         }
     }
     
