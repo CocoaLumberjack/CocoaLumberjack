@@ -49,6 +49,10 @@
 
 @end
 
+#if TARGET_OS_IPHONE
+BOOL doesAppRunInBackground(void);
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -434,8 +438,23 @@
         if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
         {
             NSLogVerbose(@"DDLogFileManagerDefault: Creating new log file: %@", fileName);
+
+            NSDictionary *attributes = nil;
+
+        #if TARGET_OS_IPHONE
+             // When creating log file on iOS we're setting NSFileProtectionKey attribute to NSFileProtectionCompleteUnlessOpen.
+             // 
+             // But in case if app is able to launch from background we need to have an ability to open log file any time we
+             // want (even if device is locked). Thats why that attribute have to be changed to
+             // NSFileProtectionCompleteUntilFirstUserAuthentication.
+
+            NSString *key = doesAppRunInBackground() ?
+                NSFileProtectionCompleteUntilFirstUserAuthentication : NSFileProtectionCompleteUnlessOpen;
+
+            attributes = @{ NSFileProtectionKey : key };
+        #endif
             
-            [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
+            [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:attributes];
             
             // Since we just created a new log file, we may need to delete some old log files
             [self deleteOldLogFiles];
@@ -853,6 +872,27 @@
                 useExistingLogFile = NO;
                 shouldArchiveMostRecent = YES;
             }
+
+
+        #if TARGET_OS_IPHONE
+            // When creating log file on iOS we're setting NSFileProtectionKey attribute to NSFileProtectionCompleteUnlessOpen.
+            // 
+            // But in case if app is able to launch from background we need to have an ability to open log file any time we
+            // want (even if device is locked). Thats why that attribute have to be changed to
+            // NSFileProtectionCompleteUntilFirstUserAuthentication.
+            //
+            // If previous log was created when app wasn't running in background, but now it is - we archive it and create
+            // a new one.
+
+            if (useExistingLogFile && doesAppRunInBackground()) {
+                NSString *key = mostRecentLogFileInfo.fileAttributes[NSFileProtectionKey];
+
+                if (! [key isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication]) {
+                    useExistingLogFile = NO;
+                    shouldArchiveMostRecent = YES;
+                }
+            }
+        #endif
             
             if (useExistingLogFile)
             {
@@ -1411,3 +1451,29 @@ static int exception_count = 0;
 }
 
 @end
+
+#if TARGET_OS_IPHONE
+/**
+ * When creating log file on iOS we're setting NSFileProtectionKey attribute to NSFileProtectionCompleteUnlessOpen.
+ *
+ * But in case if app is able to launch from background we need to have an ability to open log file any time we
+ * want (even if device is locked). Thats why that attribute have to be changed to
+ * NSFileProtectionCompleteUntilFirstUserAuthentication.
+ */
+BOOL doesAppRunInBackground()
+{
+    BOOL answer = NO;
+
+    NSArray *backgroundModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
+
+    for (NSString *mode in backgroundModes) {
+        if (mode.length > 0) {
+            answer = YES;
+            break;
+        }
+    }
+
+    return answer;
+}
+#endif
+
