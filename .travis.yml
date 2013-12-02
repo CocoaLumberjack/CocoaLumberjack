@@ -1,5 +1,9 @@
+
 language: objective-c
+
 script:
+  - pod repo update --silent
+  - pod lib lint
   - xctool -project Xcode/ContextFilter/ContextFilter.xcodeproj -scheme 'ContextFilter'
   - xctool -project Xcode/CoreDataLogger/CoreDataLogger.xcodeproj -scheme 'CoreDataLogger'
   - xctool -project Xcode/CustomFormatters/CustomFormatters.xcodeproj -scheme 'CustomFormatters'
