@@ -153,13 +153,28 @@ static unsigned int numProcessors;
     #if TARGET_OS_IPHONE
         NSString *notificationName = @"UIApplicationWillTerminateNotification";
     #else
-        NSString *notificationName = @"NSApplicationWillTerminateNotification";
+        NSString *notificationName = nil;
+
+        if (NSApp)
+        {
+            notificationName = @"NSApplicationWillTerminateNotification";
+        }
+        else
+        {
+            // If there is no NSApp -> we are running Command Line Tool app.
+            // In this case terminate notification wouldn't be fired, so we use workaround.
+            atexit_b(^{
+                [self applicationWillTerminate:nil];
+            });
+        }
     #endif
         
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(applicationWillTerminate:)
-                                                     name:notificationName
-                                                   object:nil];
+        if (notificationName) {
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(applicationWillTerminate:)
+                                                         name:notificationName
+                                                       object:nil];
+        }
     }
 }
 
