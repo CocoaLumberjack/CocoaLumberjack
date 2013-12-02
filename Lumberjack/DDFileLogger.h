@@ -183,6 +183,7 @@ typedef enum {
     DDLogFileInfo *currentLogFileInfo;
     NSFileHandle *currentLogFileHandle;
     
+    dispatch_source_t currentLogFileVnode;
     dispatch_source_t rollingTimer;
     
     unsigned long long maximumFileSize;
@@ -236,8 +237,13 @@ typedef enum {
 
 
 // You can optionally force the current log file to be rolled with this method.
+// CompletionBlock will be called on main queue.
 
-- (void)rollLogFile;
+- (void)rollLogFileWithCompletionBlock:(void (^)())completionBlock;
+
+// Method is deprecated. Use rollLogFileWithCompletionBlock: method instead.
+
+- (void)rollLogFile __attribute((deprecated));
 
 // Inherited from DDAbstractLogger
 

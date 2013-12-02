@@ -49,6 +49,10 @@
 
 @end
 
+#if TARGET_OS_IPHONE
+BOOL doesAppRunInBackground(void);
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -434,8 +438,23 @@
         if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
         {
             NSLogVerbose(@"DDLogFileManagerDefault: Creating new log file: %@", fileName);
+
+            NSDictionary *attributes = nil;
+
+        #if TARGET_OS_IPHONE
+             // When creating log file on iOS we're setting NSFileProtectionKey attribute to NSFileProtectionCompleteUnlessOpen.
+             // 
+             // But in case if app is able to launch from background we need to have an ability to open log file any time we
+             // want (even if device is locked). Thats why that attribute have to be changed to
+             // NSFileProtectionCompleteUntilFirstUserAuthentication.
+
+            NSString *key = doesAppRunInBackground() ?
+                NSFileProtectionCompleteUntilFirstUserAuthentication : NSFileProtectionCompleteUnlessOpen;
+
+            attributes = @{ NSFileProtectionKey : key };
+        #endif
             
-            [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
+            [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:attributes];
             
             // Since we just created a new log file, we may need to delete some old log files
             [self deleteOldLogFiles];
@@ -519,7 +538,12 @@
 {
     [currentLogFileHandle synchronizeFile];
     [currentLogFileHandle closeFile];
-    
+
+    if (currentLogFileVnode) {
+        dispatch_source_cancel(currentLogFileVnode);
+        currentLogFileVnode = NULL;
+    }
+
     if (rollingTimer)
     {
         dispatch_source_cancel(rollingTimer);
@@ -701,7 +725,13 @@
     dispatch_resume(rollingTimer);
 }
 
+
 - (void)rollLogFile
+{
+    [self rollLogFileWithCompletionBlock:nil];
+}
+
+- (void)rollLogFileWithCompletionBlock:(void (^)())completionBlock
 {
     // This method is public.
     // We need to execute the rolling on our logging thread/queue.
@@ -709,6 +739,13 @@
     dispatch_block_t block = ^{ @autoreleasepool {
         
         [self rollLogFileNow];
+
+        if (completionBlock)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionBlock();
+            });
+        }
     }};
     
     // The design of this method is taken from the DDAbstractLogger implementation.
@@ -749,6 +786,11 @@
     
     currentLogFileInfo = nil;
     
+    if (currentLogFileVnode) {
+        dispatch_source_cancel(currentLogFileVnode);
+        currentLogFileVnode = NULL;
+    }
+
     if (rollingTimer)
     {
         dispatch_source_cancel(rollingTimer);
@@ -830,6 +872,27 @@
                 useExistingLogFile = NO;
                 shouldArchiveMostRecent = YES;
             }
+
+
+        #if TARGET_OS_IPHONE
+            // When creating log file on iOS we're setting NSFileProtectionKey attribute to NSFileProtectionCompleteUnlessOpen.
+            // 
+            // But in case if app is able to launch from background we need to have an ability to open log file any time we
+            // want (even if device is locked). Thats why that attribute have to be changed to
+            // NSFileProtectionCompleteUntilFirstUserAuthentication.
+            //
+            // If previous log was created when app wasn't running in background, but now it is - we archive it and create
+            // a new one.
+
+            if (useExistingLogFile && doesAppRunInBackground()) {
+                NSString *key = mostRecentLogFileInfo.fileAttributes[NSFileProtectionKey];
+
+                if (! [key isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication]) {
+                    useExistingLogFile = NO;
+                    shouldArchiveMostRecent = YES;
+                }
+            }
+        #endif
             
             if (useExistingLogFile)
             {
@@ -874,6 +937,29 @@
         if (currentLogFileHandle)
         {
             [self scheduleTimerToRollLogFileDueToAge];
+
+            // Here we are monitoring the log file. In case if it would be deleted ormoved
+            // somewhere we want to roll it and use a new one.
+            currentLogFileVnode = dispatch_source_create(
+                DISPATCH_SOURCE_TYPE_VNODE,
+                [currentLogFileHandle fileDescriptor],
+                DISPATCH_VNODE_DELETE | DISPATCH_VNODE_RENAME,
+                loggerQueue
+            );
+
+            dispatch_source_set_event_handler(currentLogFileVnode, ^{ @autoreleasepool {
+                NSLogInfo(@"DDFileLogger: Current logfile was moved. Rolling it and creating a new one");
+                [self rollLogFileNow];
+            }});
+
+            #if !OS_OBJECT_USE_OBJC
+            dispatch_source_t vnode = currentLogFileVnode;
+            dispatch_source_set_cancel_handler(currentLogFileVnode, ^{
+                dispatch_release(vnode);
+            });
+            #endif
+
+            dispatch_resume(currentLogFileVnode);
         }
     }
     
@@ -1365,3 +1451,29 @@ static int exception_count = 0;
 }
 
 @end
+
+#if TARGET_OS_IPHONE
+/**
+ * When creating log file on iOS we're setting NSFileProtectionKey attribute to NSFileProtectionCompleteUnlessOpen.
+ *
+ * But in case if app is able to launch from background we need to have an ability to open log file any time we
+ * want (even if device is locked). Thats why that attribute have to be changed to
+ * NSFileProtectionCompleteUntilFirstUserAuthentication.
+ */
+BOOL doesAppRunInBackground()
+{
+    BOOL answer = NO;
+
+    NSArray *backgroundModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
+
+    for (NSString *mode in backgroundModes) {
+        if (mode.length > 0) {
+            answer = YES;
+            break;
+        }
+    }
+
+    return answer;
+}
+#endif
+
