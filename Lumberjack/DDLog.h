@@ -285,6 +285,9 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 
 #define THIS_METHOD NSStringFromSelector(_cmd)
 
+#ifndef NSFoundationVersionNumber_iOS_6_0
+#define NSFoundationVersionNumber_iOS_6_0 993.00
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
