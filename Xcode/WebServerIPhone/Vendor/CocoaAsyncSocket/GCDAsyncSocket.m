@@ -64,7 +64,7 @@
 // Logging Enabled - See log level below
 
 // Logging uses the CocoaLumberjack framework (which is also GCD based).
-// https://github.com/robbiehanson/CocoaLumberjack
+// https://github.com/CocoaLumberjack/CocoaLumberjack
 // 
 // It allows us to do a lot of logging without significantly slowing down the code.
 #import "DDLog.h"

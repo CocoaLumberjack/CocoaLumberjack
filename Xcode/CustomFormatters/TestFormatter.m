@@ -3,7 +3,7 @@
 
 /**
  * For more information about creating custom formatters, see the wiki article:
- * https://github.com/robbiehanson/CocoaLumberjack/wiki/CustomFormatters
+ * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomFormatters
 **/
 @implementation TestFormatter
 
