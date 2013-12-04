@@ -903,9 +903,12 @@ static char *dd_str_copy(const char *str)
         #ifdef DISPATCH_CURRENT_QUEUE_LABEL
         if (
             #if TARGET_OS_IPHONE
-                floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_0
+                #ifndef NSFoundationVersionNumber_iOS_6_1
+                #define NSFoundationVersionNumber_iOS_6_1 993.00
+                #endif
+                floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1 // iOS 7+ (> iOS 6.1)
             #else
-                [[NSApplication sharedApplication] respondsToSelector:@selector(occlusionState)] // No nice way to check for OS X 10.9+
+                [[NSApplication sharedApplication] respondsToSelector:@selector(occlusionState)] // OS X 10.9+
             #endif
             ) {
             queueLabel = dd_str_copy(dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL));
@@ -917,7 +920,10 @@ static char *dd_str_copy(const char *str)
         //    dispatch_get_current_queue(void); __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_6,__MAC_10_9,__IPHONE_4_0,__IPHONE_6_0)
         if (!gotLabel &&
         #if TARGET_OS_IPHONE
-            floor(NSFoundationVersionNumber) < NSFoundationVersionNumber_iOS_6_0
+            #ifndef NSFoundationVersionNumber_iOS_6_0
+            #define NSFoundationVersionNumber_iOS_6_0 993.00
+            #endif
+            floor(NSFoundationVersionNumber) < NSFoundationVersionNumber_iOS_6_0 // < iOS 6.0
         #else
             ![[NSApplication sharedApplication] respondsToSelector:@selector(occlusionState)] // < OS X 10.9
         #endif
@@ -933,7 +939,7 @@ static char *dd_str_copy(const char *str)
         
         // c) Give up
         if (!gotLabel) {
-            queueLabel = dd_str_copy("");
+            queueLabel = dd_str_copy(""); // iOS 6.x only
         }
         
         threadName = [[NSThread currentThread] name];
