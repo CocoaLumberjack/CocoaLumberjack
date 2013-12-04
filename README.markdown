@@ -30,15 +30,15 @@ Configure your logging however you want. Change log levels per file (perfect for
 <br/>
 
 ### Documentation
-- **[Get started using Lumberjack](https://github.com/robbiehanson/CocoaLumberjack/wiki/GettingStarted)**<br/>
-- [Different log levels for Debug and Release builds](https://github.com/robbiehanson/CocoaLumberjack/wiki/XcodeTricks)<br/>
-- [Different log levels for each logger](https://github.com/robbiehanson/CocoaLumberjack/wiki/PerLoggerLogLevels)<br/>
-- [Use colors in the Xcode debugging console](https://github.com/robbiehanson/CocoaLumberjack/wiki/XcodeColors)<br/>
-- [Write your own custom formatters](https://github.com/robbiehanson/CocoaLumberjack/wiki/CustomFormatters)<br/>
-- [FAQ](https://github.com/robbiehanson/CocoaLumberjack/wiki/FAQ)<br/>
-- [Analysis of performance with benchmarks](https://github.com/robbiehanson/CocoaLumberjack/wiki/Performance)<br/>
-- [Common issues you may encounter and their solutions](https://github.com/robbiehanson/CocoaLumberjack/wiki/ProblemSolution)<br/>
-- **[full Lumberjack wiki](https://github.com/robbiehanson/CocoaLumberjack/wiki)**<br/>
+- **[Get started using Lumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/GettingStarted)**<br/>
+- [Different log levels for Debug and Release builds](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/XcodeTricks)<br/>
+- [Different log levels for each logger](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/PerLoggerLogLevels)<br/>
+- [Use colors in the Xcode debugging console](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/XcodeColors)<br/>
+- [Write your own custom formatters](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomFormatters)<br/>
+- [FAQ](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/FAQ)<br/>
+- [Analysis of performance with benchmarks](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/Performance)<br/>
+- [Common issues you may encounter and their solutions](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/ProblemSolution)<br/>
+- **[full Lumberjack wiki](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki)**<br/>
 
 ### Requirements 
 - Xcode 4.4 or later is required
@@ -46,7 +46,7 @@ Configure your logging however you want. Change log levels per file (perfect for
 - OS X 10.7 or later
 
 <br/>
-Can't find the answer to your question in any of the [wiki](https://github.com/robbiehanson/CocoaLumberjack/wiki) articles? Try the **[mailing list](http://groups.google.com/group/cocoalumberjack)**.
+Can't find the answer to your question in any of the [wiki](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki) articles? Try the **[mailing list](http://groups.google.com/group/cocoalumberjack)**.
 <br/>
 <br/>
 Love the project? Wanna buy me a coffee? (or a beer :D) [![donation](http://www.paypal.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UZRA26JPJB3DA)

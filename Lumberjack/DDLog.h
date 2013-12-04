@@ -4,10 +4,10 @@
  * Welcome to Cocoa Lumberjack!
  * 
  * The project page has a wealth of documentation if you have any questions.
- * https://github.com/robbiehanson/CocoaLumberjack
+ * https://github.com/CocoaLumberjack/CocoaLumberjack
  * 
  * If you're new to the project you may wish to read the "Getting Started" wiki.
- * https://github.com/robbiehanson/CocoaLumberjack/wiki/GettingStarted
+ * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/GettingStarted
  * 
  * Otherwise, here is a quick refresher.
  * There are three steps to using the macros:
@@ -168,11 +168,11 @@
  * 
  * More advanced users may choose to completely customize the levels (and level names) to suite their needs.
  * For more information on this see the "Custom Log Levels" page:
- * https://github.com/robbiehanson/CocoaLumberjack/wiki/CustomLogLevels
+ * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomLogLevels
  * 
  * Advanced users may also notice that we're using a bitmask.
  * This is to allow for custom fine grained logging:
- * https://github.com/robbiehanson/CocoaLumberjack/wiki/FineGrainedLogging
+ * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/FineGrainedLogging
  * 
  * -- Flags --
  * 
@@ -221,7 +221,7 @@
  * Instead, create your own MyLogging.h or ApplicationNameLogging.h or CompanyLogging.h
  * 
  * For an example of customizing your logging experience, see the "Custom Log Levels" page:
- * https://github.com/robbiehanson/CocoaLumberjack/wiki/CustomLogLevels
+ * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomLogLevels
 **/
 
 #define LOG_FLAG_ERROR    (1 << 0)  // 0...00001
@@ -453,7 +453,7 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * For example, log messages for log files may be formatted differently than log messages for the console.
  * 
  * For more information about formatters, see the "Custom Formatters" page:
- * https://github.com/robbiehanson/CocoaLumberjack/wiki/CustomFormatters
+ * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomFormatters
  * 
  * The formatter may also optionally filter the log message by returning nil,
  * in which case the logger will not log the message.

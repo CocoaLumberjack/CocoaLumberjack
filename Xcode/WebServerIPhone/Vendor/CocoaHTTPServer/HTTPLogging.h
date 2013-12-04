@@ -2,7 +2,7 @@
  * In order to provide fast and flexible logging, this project uses Cocoa Lumberjack.
  * 
  * The Google Code page has a wealth of documentation if you have any questions.
- * https://github.com/robbiehanson/CocoaLumberjack
+ * https://github.com/CocoaLumberjack/CocoaLumberjack
  * 
  * Here's what you need to know concerning how logging is setup for CocoaHTTPServer:
  * 

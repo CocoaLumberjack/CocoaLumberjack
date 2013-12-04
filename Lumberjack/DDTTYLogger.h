@@ -13,10 +13,10 @@
  * Welcome to Cocoa Lumberjack!
  * 
  * The project page has a wealth of documentation if you have any questions.
- * https://github.com/robbiehanson/CocoaLumberjack
+ * https://github.com/CocoaLumberjack/CocoaLumberjack
  * 
  * If you're new to the project you may wish to read the "Getting Started" wiki.
- * https://github.com/robbiehanson/CocoaLumberjack/wiki/GettingStarted
+ * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/GettingStarted
  * 
  * 
  * This class provides a logger for Terminal output or Xcode console output,
@@ -61,7 +61,7 @@
  * or it may use its own built in formatting style.
  * 
  * More information about formatters can be found here:
- * https://github.com/robbiehanson/CocoaLumberjack/wiki/CustomFormatters
+ * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomFormatters
  * 
  * The actual implementation of these methods is inherited from DDAbstractLogger.
 
@@ -122,7 +122,7 @@
  * Use LOG_CONTEXT_ALL to set the deafult color for all contexts that have no specific color set defined.
  * 
  * Logging context's are explained in further detail here:
- * https://github.com/robbiehanson/CocoaLumberjack/wiki/CustomContext
+ * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomContext
 **/
 #if TARGET_OS_IPHONE
 - (void)setForegroundColor:(UIColor *)txtColor backgroundColor:(UIColor *)bgColor forFlag:(int)mask context:(int)ctxt;
