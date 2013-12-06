@@ -233,28 +233,59 @@ BOOL doesAppRunInBackground(void);
 
 - (BOOL)isLogFile:(NSString *)fileName
 {
-    // A log file has a name like "log-<uuid>.txt", where <uuid> is a HEX-string of 6 characters.
-    // 
-    // For example: log-DFFE99.txt
-    
     BOOL hasProperPrefix = [fileName hasPrefix:@"log-"];
-    
-    BOOL hasProperLength = [fileName length] >= 10;
-    
-    
-    if (hasProperPrefix && hasProperLength)
+    BOOL hasProperLength = NO;
+    BOOL hasProperEnding = NO;
+
+    if (self.fileNamingConvention == DDLogFileNamingConventionUUID)
     {
+        // A log file has a name like "log-<uuid>.txt", where <uuid> is a HEX-string of 6 characters.
+        //
+        // For example: log-DFFE99.txt
+
+        hasProperLength = [fileName length] >= 10;
+
         NSCharacterSet *hexSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789ABCDEF"];
-        
+
         NSString *hex = [fileName substringWithRange:NSMakeRange(4, 6)];
         NSString *nohex = [hex stringByTrimmingCharactersInSet:hexSet];
-        
+
         if ([nohex length] == 0)
         {
-            return YES;
+            hasProperEnding = YES;
         }
     }
-    
+    else if (self.fileNamingConvention == DDLogFileNamingConventionTimestamp)
+    {
+        // A log file has a name like "log-<timestamp>.txt", where <timestamp> is UTC time in RFC 3339 format.
+        // Dashes are used instead of colons because colon is illegal filename character.
+        //
+        // For example: log-2013-12-20T15-20-30Z.txt
+
+        hasProperLength = [fileName length] >= 24;
+
+        if (hasProperLength)
+        {
+            NSString *substring = [[fileName substringFromIndex:4] substringToIndex:20];
+
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH'-'mm'-'ss'Z'"];
+            [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+
+            NSDate *date = [dateFormatter dateFromString:substring];
+
+            if (date)
+            {
+                hasProperEnding = YES;
+            }
+        }
+    }
+
+    if (hasProperPrefix && hasProperLength && hasProperEnding)
+    {
+        return YES;
+    }
+
     return NO;
 }
 
@@ -376,9 +407,12 @@ BOOL doesAppRunInBackground(void);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Generates log file name with "log-UUID.txt" or "log-TIMESTAMP.txt" format, depending on convention parameter.
- * UUID has six characters, all in the hexadecimal set [0123456789ABCDEF].
- * TIMESTAMP is UTC time in RFC 3339 format.
+ * Generates log file name with "log-<uuid>.txt" or "log-<timestamp.txt" format, depending on convention parameter.
+ * <uuid> has six characters, all in the hexadecimal set [0123456789ABCDEF].
+ * Example: log-DFFE99.txt
+ *
+ * <timestamp> is UTC time in RFC 3339 format. Dashes are used instead of colons because colon is illegal filename character.
+ * Example: log-2013-12-20T15-20-30Z.txt
 **/
 - (NSString *)generateLogFileNameWithConvention:(DDLogFileNamingConvention)convention attempt:(NSUInteger)attempt
 {
@@ -402,7 +436,7 @@ BOOL doesAppRunInBackground(void);
             
             // RFC 3339 format, UTC time
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
+            [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH'-'mm'-'ss'Z'"];
             [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
             
             NSString *formattedDate = [dateFormatter stringFromDate:now];
