@@ -6,9 +6,11 @@ before_install:
     - pod --version
     - pod setup
     - pod repo update --silent
+    - env
+    - locale
 
 script:
-    #- pod lib lint
+    - pod lib lint
     - xctool -project Xcode/ContextFilter/ContextFilter.xcodeproj -scheme 'ContextFilter'
     - xctool -project Xcode/CoreDataLogger/CoreDataLogger.xcodeproj -scheme 'CoreDataLogger'
     - xctool -project Xcode/CustomFormatters/CustomFormatters.xcodeproj -scheme 'CustomFormatters'
