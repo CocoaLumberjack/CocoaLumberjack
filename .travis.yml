@@ -6,6 +6,7 @@ before_install:
     - pod --version
     - pod setup
     - pod repo update --silent
+    - export LANG=en_US.UTF-8
     - env
     - locale
 
