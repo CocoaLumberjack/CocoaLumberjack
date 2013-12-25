@@ -108,8 +108,8 @@
  * On Mac, this is in ~/Library/Logs/<Application Name>.
  * On iPhone, this is in ~/Library/Caches/Logs.
  * 
- * Log files are named "log-<uuid>.txt",
- * where uuid is a 6 character hexadecimal consisting of the set [0123456789ABCDEF].
+ * Log files are named "<app name> <date> <time>.log"
+ * Example: MobileSafari 2013-12-03 17-14.log
  * 
  * Archived log files are automatically deleted according to the maximumNumberOfLogFiles property.
 **/
