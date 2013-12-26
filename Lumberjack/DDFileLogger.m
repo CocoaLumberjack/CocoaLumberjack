@@ -480,23 +480,28 @@ BOOL doesAppRunInBackground(void);
 
 - (NSString *)applicationName
 {
-#if TARGET_OS_IPHONE
-    NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    static NSString *_appName;
+    static dispatch_once_t onceToken;
 
-    if (! appName)
-    {
-        appName = [[NSProcessInfo processInfo] processName];
-    }
-#else
-    NSString *appName = [[NSProcessInfo processInfo] processName];
-#endif
+    dispatch_once(&onceToken, ^{
+    #if TARGET_OS_IPHONE
+        _appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
 
-    if (! appName)
-    {
-        appName = @"";
-    }
+        if (! _appName)
+        {
+            _appName = [[NSProcessInfo processInfo] processName];
+        }
+    #else
+        _appName = [[NSProcessInfo processInfo] processName];
+    #endif
 
-    return appName;
+        if (! _appName)
+        {
+            _appName = @"";
+        }
+    });
+
+    return _appName;
 }
 
 @end
