@@ -32,4 +32,9 @@ Pod::Spec.new do |s|
     ss.source_files = 'Lumberjack/Extensions/*.{h,m}'
   end
   
+  s.subspec 'CLI' do |ss|
+      ss.dependency 'CocoaLumberjack/Core'
+      ss.source_files = 'Lumberjack/CLI/*.{h,m}'
+  end
+  
 end
