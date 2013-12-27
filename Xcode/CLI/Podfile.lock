@@ -1,0 +1,16 @@
+PODS:
+  - CocoaLumberjack/CLI (1.6.5.1):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Core (1.6.5.1)
+
+DEPENDENCIES:
+  - CocoaLumberjack/CLI (from `../../`)
+
+EXTERNAL SOURCES:
+  CocoaLumberjack:
+    :path: ../../
+
+SPEC CHECKSUMS:
+  CocoaLumberjack: 73af07f16e5a4ca2605aa9285186be033df8e965
+
+COCOAPODS: 0.28.0
