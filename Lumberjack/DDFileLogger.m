@@ -237,11 +237,7 @@ BOOL doesAppRunInBackground(void);
 **/
 - (BOOL)isLogFile:(NSString *)fileName
 {
-#if TARGET_OS_IPHONE
-    NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-#else
-    NSString *appName = [[NSProcessInfo processInfo] processName];
-#endif
+    NSString *appName = [self applicationName];
 
     BOOL hasProperPrefix = [fileName hasPrefix:appName];
     BOOL hasProperSuffix = [fileName hasSuffix:@".log"];
@@ -416,11 +412,7 @@ BOOL doesAppRunInBackground(void);
 **/
 - (NSString *)generateLogFileNameWithAttempt:(NSUInteger)attempt
 {
-#if TARGET_OS_IPHONE
-    NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-#else
-    NSString *appName = [[NSProcessInfo processInfo] processName];
-#endif
+    NSString *appName = [self applicationName];
 
     NSDateFormatter *dateFormatter = [self logFileDateFormatter];
     NSString *formattedDate = [dateFormatter stringFromDate:[NSDate date]];
@@ -480,6 +472,36 @@ BOOL doesAppRunInBackground(void);
         }
         
     } while(YES);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark Utility
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (NSString *)applicationName
+{
+    static NSString *_appName;
+    static dispatch_once_t onceToken;
+
+    dispatch_once(&onceToken, ^{
+    #if TARGET_OS_IPHONE
+        _appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+
+        if (! _appName)
+        {
+            _appName = [[NSProcessInfo processInfo] processName];
+        }
+    #else
+        _appName = [[NSProcessInfo processInfo] processName];
+    #endif
+
+        if (! _appName)
+        {
+            _appName = @"";
+        }
+    });
+
+    return _appName;
 }
 
 @end
