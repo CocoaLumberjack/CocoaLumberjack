@@ -843,7 +843,8 @@ static DDTTYLogger *sharedInstance;
         app = (char *)malloc(appLen + 1);
         if (app == NULL) return nil;
         
-        [appName getCString:app maxLength:(appLen+1) encoding:NSUTF8StringEncoding];
+        BOOL processedAppName = [appName getCString:app maxLength:(appLen+1) encoding:NSUTF8StringEncoding];
+        if (NO == processedAppName) return nil;
         
         // Initialize 'pid' variable (char *)
         
