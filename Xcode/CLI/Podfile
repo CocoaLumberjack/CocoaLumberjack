@@ -1,0 +1,4 @@
+
+platform :osx
+
+pod 'CocoaLumberjack/CLI', :path => '../../'

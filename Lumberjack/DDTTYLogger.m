@@ -65,15 +65,14 @@
 // Some simple defines to make life easier on ourself
 
 #if TARGET_OS_IPHONE
-  #define MakeColor(r, g, b) [UIColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f]
-#else
-  #define MakeColor(r, g, b) [NSColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f]
-#endif
-
-#if TARGET_OS_IPHONE
   #define OSColor UIColor
-#else
+  #define MakeColor(r, g, b) [UIColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f]
+#elif !defined (COCOAPODS_POD_AVAILABLE_CocoaLumberjack_CLI)
   #define OSColor NSColor
+  #define MakeColor(r, g, b) [NSColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f]
+#else
+  #define OSColor CLIColor
+  #define MakeColor(r, g, b) [CLIColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f]
 #endif
 
 // If running in a shell, not all RGB colors will be supported.
@@ -702,13 +701,19 @@ static DDTTYLogger *sharedInstance;
         CGColorSpaceRelease(rgbColorSpace);
     }
     
-    #else
+    #elif !defined (COCOAPODS_POD_AVAILABLE_CocoaLumberjack_CLI)
     
-    // Mac OS X
+    // OS X with AppKit
     
     NSColor *safeColor = [color colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
     
     [safeColor getRed:rPtr green:gPtr blue:bPtr alpha:NULL];
+    
+    #else
+    
+    // OS X without AppKit
+    
+    [color getRed:rPtr green:gPtr blue:bPtr alpha:NULL];
     
     #endif
 }

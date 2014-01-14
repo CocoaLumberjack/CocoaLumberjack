@@ -1,8 +1,10 @@
 #import <Foundation/Foundation.h>
 #if TARGET_OS_IPHONE
-#import <UIKit/UIColor.h>
+#import <UIKit/UIColor.h>   // iOS
+#elif !defined (COCOAPODS_POD_AVAILABLE_CocoaLumberjack_CLI)
+#import <AppKit/NSColor.h>  // OS X with AppKit
 #else
-#import <AppKit/NSColor.h>
+#import "CLIColor.h"        // OS X without AppKit
 #endif
 
 #import "DDLog.h"
@@ -109,8 +111,10 @@
 **/
 #if TARGET_OS_IPHONE
 - (void)setForegroundColor:(UIColor *)txtColor backgroundColor:(UIColor *)bgColor forFlag:(int)mask;
-#else
+#elif !defined (COCOAPODS_POD_AVAILABLE_CocoaLumberjack_CLI)
 - (void)setForegroundColor:(NSColor *)txtColor backgroundColor:(NSColor *)bgColor forFlag:(int)mask;
+#else
+- (void)setForegroundColor:(CLIColor *)txtColor backgroundColor:(CLIColor *)bgColor forFlag:(int)mask;
 #endif
 
 /**
@@ -126,8 +130,10 @@
 **/
 #if TARGET_OS_IPHONE
 - (void)setForegroundColor:(UIColor *)txtColor backgroundColor:(UIColor *)bgColor forFlag:(int)mask context:(int)ctxt;
-#else
+#elif !defined (COCOAPODS_POD_AVAILABLE_CocoaLumberjack_CLI)
 - (void)setForegroundColor:(NSColor *)txtColor backgroundColor:(NSColor *)bgColor forFlag:(int)mask context:(int)ctxt;
+#else
+- (void)setForegroundColor:(CLIColor *)txtColor backgroundColor:(CLIColor *)bgColor forFlag:(int)mask context:(int)ctxt;
 #endif
 
 /**
@@ -144,6 +150,8 @@
  *   UIColor *purple = [UIColor colorWithRed:(64/255.0) green:(0/255.0) blue:(128/255.0) alpha:1.0];
  * #else
  *   NSColor *purple = [NSColor colorWithCalibratedRed:(64/255.0) green:(0/255.0) blue:(128/255.0) alpha:1.0];
+ *
+ * Note: For CLI OS X projects that don't link with AppKit use CLIColor objects instead
  * 
  * [[DDTTYLogger sharedInstance] setForegroundColor:purple backgroundColor:nil forTag:PurpleTag];
  * [DDLog addLogger:[DDTTYLogger sharedInstance]];
@@ -154,8 +162,10 @@
 **/
 #if TARGET_OS_IPHONE
 - (void)setForegroundColor:(UIColor *)txtColor backgroundColor:(UIColor *)bgColor forTag:(id <NSCopying>)tag;
-#else
+#elif !defined (COCOAPODS_POD_AVAILABLE_CocoaLumberjack_CLI)
 - (void)setForegroundColor:(NSColor *)txtColor backgroundColor:(NSColor *)bgColor forTag:(id <NSCopying>)tag;
+#else
+- (void)setForegroundColor:(CLIColor *)txtColor backgroundColor:(CLIColor *)bgColor forTag:(id <NSCopying>)tag;
 #endif
 
 /**

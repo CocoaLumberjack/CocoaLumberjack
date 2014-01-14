@@ -32,3 +32,6 @@ script:
     - xctool -project Xcode/BenchmarkIPhone/BenchmarkIPhone.xcodeproj -scheme 'BenchmarkIPhone' -configuration Release -sdk iphonesimulator -arch i386 build
     - xctool -project Xcode/Testing/TestXcodeColors/Desktop/TestXcodeColors.xcodeproj -scheme 'TestXcodeColors'
     - xctool -project Xcode/UniversalApp/UniversalApp.xcodeproj -scheme 'UniversalApp' -configuration Release -sdk iphonesimulator -arch i386 build
+    - cd Xcode/CLI
+    - pod install
+    - xctool -workspace CLI.xcworkspace -scheme 'CLI'
