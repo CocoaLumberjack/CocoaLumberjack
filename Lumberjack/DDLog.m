@@ -652,7 +652,7 @@ static unsigned int numProcessors;
         {
             // skip the loggers that shouldn't write this message based on the logLevel
 
-            if (logMessage->logFlag > loggerNode.logLevel)
+            if (!(logMessage->logFlag & loggerNode.logLevel))
                 continue;
 
             dispatch_group_async(loggingGroup, loggerNode->loggerQueue, ^{ @autoreleasepool {
@@ -672,7 +672,7 @@ static unsigned int numProcessors;
         {
             // skip the loggers that shouldn't write this message based on the logLevel
             
-            if (logMessage->logFlag > loggerNode.logLevel)
+            if (!(logMessage->logFlag & loggerNode.logLevel))
                 continue;
 
             dispatch_sync(loggerNode->loggerQueue, ^{ @autoreleasepool {
