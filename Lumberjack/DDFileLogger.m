@@ -484,16 +484,12 @@ BOOL doesAppRunInBackground(void);
     static dispatch_once_t onceToken;
 
     dispatch_once(&onceToken, ^{
-    #if TARGET_OS_IPHONE
-        _appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+        _appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
 
         if (! _appName)
         {
             _appName = [[NSProcessInfo processInfo] processName];
         }
-    #else
-        _appName = [[NSProcessInfo processInfo] processName];
-    #endif
 
         if (! _appName)
         {
