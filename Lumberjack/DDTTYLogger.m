@@ -838,7 +838,7 @@ static DDTTYLogger *sharedInstance;
         // Initialze 'app' variable (char *)
         
         appName = [[NSProcessInfo processInfo] processName];
-
+        
         appLen = [appName lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
         if (appLen == 0) {
             appName = @"<UnnamedApp>";
