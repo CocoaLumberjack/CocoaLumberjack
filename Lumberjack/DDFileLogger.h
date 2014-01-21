@@ -108,8 +108,8 @@
  * On Mac, this is in ~/Library/Logs/<Application Name>.
  * On iPhone, this is in ~/Library/Caches/Logs.
  * 
- * Log files are named "<app name> <date> <time>.log"
- * Example: MobileSafari 2013-12-03 17-14.log
+ * Log files are named "<bundle identifier> <date> <time>.log"
+ * Example: com.organization.myapp 2013-12-03 17-14.log
  * 
  * Archived log files are automatically deleted according to the maximumNumberOfLogFiles property.
 **/
@@ -125,8 +125,8 @@
 /*
  * Methods to override.
  *
- * Log files are named "<app name> <date> <time>.log"
- * Example: MobileSafari 2013-12-03 17-14.log
+ * Log files are named "<bundle identifier> <date> <time>.log"
+ * Example: com.organization.myapp 2013-12-03 17-14.log
  *
  * If you wish to change default filename, you can override following two methods.
  * - newLogFileName method would be called on new logfile creation.
@@ -138,11 +138,14 @@
  * to filename before extension. You have to handle this case in isLogFile: method.
  *
  * Example:
- * - newLogFileName returns "MobileSafari 2013-12-03.log", file "MobileSafari 2013-12-03.log" would be created.
- * - after some time "MobileSafari 2013-12-03.log" is archived
- * - newLogFileName again returns "MobileSafari 2013-12-03.log", file "MobileSafari 2013-12-03 2.log" would be created.
- * - after some time "MobileSafari 2013-12-03 1.log" is archived
- * - newLogFileName again returns "MobileSafari 2013-12-03.log", file "MobileSafari 2013-12-03 3.log" would be created.
+ * - newLogFileName returns "com.organization.myapp 2013-12-03.log",
+ *   file "com.organization.myapp 2013-12-03.log" would be created.
+ * - after some time "com.organization.myapp 2013-12-03.log" is archived
+ * - newLogFileName again returns "com.organization.myapp 2013-12-03.log",
+ *   file "com.organization.myapp 2013-12-03 2.log" would be created.
+ * - after some time "com.organization.myapp 2013-12-03 1.log" is archived
+ * - newLogFileName again returns "com.organization.myapp 2013-12-03.log",
+ *   file "com.organization.myapp 2013-12-03 3.log" would be created.
 **/
 - (NSString *)newLogFileName;
 - (BOOL)isLogFile:(NSString *)fileName;

@@ -232,7 +232,7 @@ BOOL doesAppRunInBackground(void);
 }
 
 /**
- * Default log file name is "<app name> <date> <time>.log".
+ * Default log file name is "<bundle identifier> <date> <time>.log".
  * Example: MobileSafari 2013-12-03 17-14.log
  *
  * You can change it by overriding newLogFileName and isLogFile: methods.
@@ -409,7 +409,7 @@ BOOL doesAppRunInBackground(void);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Generates log file name with default format "<app name> <date> <time>.log"
+ * Generates log file name with default format "<bundle identifier> <date> <time>.log"
  * Example: MobileSafari 2013-12-03 17-14.log
  *
  * You can change it by overriding newLogFileName and isLogFile: methods.
