@@ -845,11 +845,16 @@ static DDTTYLogger *sharedInstance;
         appName = [[NSProcessInfo processInfo] processName];
         
         appLen = [appName lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+        if (appLen == 0) {
+            appName = @"<UnnamedApp>";
+            appLen = [appName lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+        }
         app = (char *)malloc(appLen + 1);
         if (app == NULL) return nil;
         
-        [appName getCString:app maxLength:(appLen+1) encoding:NSUTF8StringEncoding];
-        
+        BOOL processedAppName = [appName getCString:app maxLength:(appLen+1) encoding:NSUTF8StringEncoding];
+        if (NO == processedAppName) return nil;
+
         // Initialize 'pid' variable (char *)
         
         processID = [NSString stringWithFormat:@"%i", (int)getpid()];
