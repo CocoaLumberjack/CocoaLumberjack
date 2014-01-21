@@ -232,8 +232,10 @@ BOOL doesAppRunInBackground(void);
 }
 
 /**
- * A log file has a name like "<app name> <date> <time>.log".
+ * Default log file name is "<bundle identifier> <date> <time>.log".
  * Example: MobileSafari 2013-12-03 17-14.log
+ *
+ * You can change it by overriding newLogFileName and isLogFile: methods.
 **/
 - (BOOL)isLogFile:(NSString *)fileName
 {
@@ -256,7 +258,7 @@ BOOL doesAppRunInBackground(void);
             NSArray *components = [middle componentsSeparatedByString:@" "];
 
             // When creating logfile if there is existing file with the same name, we append attemp number at the end.
-            // Thats why here we can have three or four components. For details see generateLogFileNameWithAttempt: method.
+            // Thats why here we can have three or four components. For details see createNewLogFile method.
             //
             // Components:
             //     "", "2013-12-03", "17-14"
@@ -407,24 +409,19 @@ BOOL doesAppRunInBackground(void);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Generates log file name with format "<app name> <date> <time>.log"
+ * Generates log file name with default format "<bundle identifier> <date> <time>.log"
  * Example: MobileSafari 2013-12-03 17-14.log
+ *
+ * You can change it by overriding newLogFileName and isLogFile: methods.
 **/
-- (NSString *)generateLogFileNameWithAttempt:(NSUInteger)attempt
+- (NSString *)newLogFileName
 {
     NSString *appName = [self applicationName];
 
     NSDateFormatter *dateFormatter = [self logFileDateFormatter];
     NSString *formattedDate = [dateFormatter stringFromDate:[NSDate date]];
 
-    if (attempt > 1)
-    {
-        return [NSString stringWithFormat:@"%@ %@ %lu.log", appName, formattedDate, (unsigned long)attempt];
-    }
-    else
-    {
-        return [NSString stringWithFormat:@"%@ %@.log", appName, formattedDate];
-    }
+    return [NSString stringWithFormat:@"%@ %@.log", appName, formattedDate];
 }
 
 /**
@@ -432,19 +429,29 @@ BOOL doesAppRunInBackground(void);
 **/
 - (NSString *)createNewLogFile
 {
-    // Generate a random log file name, and create the file (if there isn't a collision)
-    
+    NSString *fileName = [self newLogFileName];
     NSString *logsDirectory = [self logsDirectory];
+
     NSUInteger attempt = 1;
     do
     {
-        NSString *fileName = [self generateLogFileNameWithAttempt:attempt];
-        
-        NSString *filePath = [logsDirectory stringByAppendingPathComponent:fileName];
-        
+        NSString *actualFileName = fileName;
+
+        if (attempt > 1) {
+            NSString *extension = [actualFileName pathExtension];
+
+            actualFileName = [actualFileName stringByDeletingPathExtension];
+            actualFileName = [actualFileName stringByAppendingFormat:@" %lu", (unsigned long)attempt];
+            if (extension.length) {
+                actualFileName = [actualFileName stringByAppendingPathExtension:extension];
+            }
+        }
+
+        NSString *filePath = [logsDirectory stringByAppendingPathComponent:actualFileName];
+
         if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
         {
-            NSLogVerbose(@"DDLogFileManagerDefault: Creating new log file: %@", fileName);
+            NSLogVerbose(@"DDLogFileManagerDefault: Creating new log file: %@", actualFileName);
 
             NSDictionary *attributes = nil;
 

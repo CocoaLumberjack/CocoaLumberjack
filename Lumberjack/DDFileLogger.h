@@ -108,8 +108,8 @@
  * On Mac, this is in ~/Library/Logs/<Application Name>.
  * On iPhone, this is in ~/Library/Caches/Logs.
  * 
- * Log files are named "<app name> <date> <time>.log"
- * Example: MobileSafari 2013-12-03 17-14.log
+ * Log files are named "<bundle identifier> <date> <time>.log"
+ * Example: com.organization.myapp 2013-12-03 17-14.log
  * 
  * Archived log files are automatically deleted according to the maximumNumberOfLogFiles property.
 **/
@@ -121,6 +121,34 @@
 
 - (id)init;
 - (instancetype)initWithLogsDirectory:(NSString *)logsDirectory;
+
+/*
+ * Methods to override.
+ *
+ * Log files are named "<bundle identifier> <date> <time>.log"
+ * Example: com.organization.myapp 2013-12-03 17-14.log
+ *
+ * If you wish to change default filename, you can override following two methods.
+ * - newLogFileName method would be called on new logfile creation.
+ * - isLogFile: method would be called to filter logfiles from all other files in logsDirectory.
+ *   You have to parse given filename and return YES if it is logFile.
+ *
+ * **NOTE**
+ * newLogFileName returns filename. If appropriate file already exists, number would be added
+ * to filename before extension. You have to handle this case in isLogFile: method.
+ *
+ * Example:
+ * - newLogFileName returns "com.organization.myapp 2013-12-03.log",
+ *   file "com.organization.myapp 2013-12-03.log" would be created.
+ * - after some time "com.organization.myapp 2013-12-03.log" is archived
+ * - newLogFileName again returns "com.organization.myapp 2013-12-03.log",
+ *   file "com.organization.myapp 2013-12-03 2.log" would be created.
+ * - after some time "com.organization.myapp 2013-12-03 1.log" is archived
+ * - newLogFileName again returns "com.organization.myapp 2013-12-03.log",
+ *   file "com.organization.myapp 2013-12-03 3.log" would be created.
+**/
+- (NSString *)newLogFileName;
+- (BOOL)isLogFile:(NSString *)fileName;
 
 /* Inherited from DDLogFileManager protocol:
 
