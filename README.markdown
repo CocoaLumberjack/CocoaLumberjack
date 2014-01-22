@@ -50,3 +50,7 @@ Can't find the answer to your question in any of the [wiki](https://github.com/C
 <br/>
 <br/>
 Love the project? Wanna buy me a coffee? (or a beer :D) [![donation](http://www.paypal.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UZRA26JPJB3DA)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/CocoaLumberjack/cocoalumberjack/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
