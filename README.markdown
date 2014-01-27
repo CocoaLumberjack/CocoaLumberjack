@@ -1,4 +1,8 @@
-CocoaLumberjack is a fast & simple, yet powerful & flexible logging framework for Mac and iOS.
+<p align="center" >
+  <img src="LumberjackLogo.png" title="Lumberjack logo" float=left>
+</p>
+
+**CocoaLumberjack** is a fast & simple, yet powerful & flexible logging framework for Mac and iOS.
 
 #### Lumberjack is Fast & Simple, yet Powerful & Flexible.
 
