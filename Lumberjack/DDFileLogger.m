@@ -1238,13 +1238,16 @@ static int exception_count = 0;
         
         NSLogVerbose(@"DDLogFileInfo: Renaming file: '%@' -> '%@'", self.fileName, newFileName);
 
-        if (![[NSFileManager defaultManager] fileExistsAtPath:newFilePath])
-        {
-            NSError *error = nil;
-            if (![[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newFilePath error:&error])
-            {
-                NSLogError(@"DDLogFileInfo: Error renaming file (%@): %@", self.fileName, error);
+        NSError *error = nil;
+        if (![[NSFileManager defaultManager] fileExistsAtPath:newFilePath]){
+            if([[NSFileManager defaultManager] removeItemAtPath:newFilePath error:&error]){
+                NSLogError(@"DDLogFileInfo: Error deleting archive (%@): %@", self.fileName, error);
             }
+        }
+
+        if (![[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newFilePath error:&error])
+        {
+            NSLogError(@"DDLogFileInfo: Error renaming file (%@): %@", self.fileName, error);
         }
 
         filePath = newFilePath;
