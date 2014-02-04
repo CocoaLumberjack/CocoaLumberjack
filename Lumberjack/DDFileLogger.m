@@ -1237,17 +1237,21 @@ static int exception_count = 0;
         NSString *newFilePath = [fileDir stringByAppendingPathComponent:newFileName];
         
         NSLogVerbose(@"DDLogFileInfo: Renaming file: '%@' -> '%@'", self.fileName, newFileName);
-        
-        NSError *error = nil;
-        if (![[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newFilePath error:&error])
+
+        if (![[NSFileManager defaultManager] fileExistsAtPath:newFilePath])
         {
-            NSLogError(@"DDLogFileInfo: Error renaming file (%@): %@", self.fileName, error);
+            NSError *error = nil;
+            if (![[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newFilePath error:&error])
+            {
+                NSLogError(@"DDLogFileInfo: Error renaming file (%@): %@", self.fileName, error);
+            }
         }
-        
+
         filePath = newFilePath;
         [self reset];
     }
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Attribute Management
