@@ -1271,35 +1271,29 @@ static int exception_count = 0;
     // This method is only used on the iPhone simulator, where normal extended attributes are broken.
     // See full explanation in the header file.
     
-    // Split the file name into components.
-    // 
-    // log-ABC123.archived.uploaded.txt
-    // 
-    // 0. log-ABC123
-    // 1. archived
-    // 2. uploaded
-    // 3. txt
-    // 
-    // So we want to search for the attrName in the components (ignoring the first and last array indexes).
+    // Split the file name into components. File name may have various format, but generally
+    // structure is same:
+    //
+    // <name part>.<extension part> and <name part>.archived.<extension part>
+    // or
+    // <name part> and <name part>.archived
+    //
+    // So we want to search for the attrName in the components (ignoring the first array index).
     
     NSArray *components = [[self fileName] componentsSeparatedByString:@"."];
     
     // Watch out for file names without an extension
-    
-    NSUInteger count = [components count];
-    NSUInteger max = (count >= 2) ? count-1 : count;
-    
-    NSUInteger i;
-    for (i = 1; i < max; i++)
+
+    for (NSUInteger i = 1; i < components.count; i++)
     {
         NSString *attr = [components objectAtIndex:i];
-        
+
         if ([attrName isEqualToString:attr])
         {
             return YES;
         }
     }
-    
+
     return NO;
 }
 
@@ -1312,9 +1306,10 @@ static int exception_count = 0;
     
     // Example:
     // attrName = "archived"
-    // 
-    // "log-ABC123.txt" -> "log-ABC123.archived.txt"
-    
+    //
+    // "mylog.txt" -> "mylog.archived.txt"
+    // "mylog"     -> "mylog.archived"
+
     NSArray *components = [[self fileName] componentsSeparatedByString:@"."];
     
     NSUInteger count = [components count];
@@ -1372,7 +1367,8 @@ static int exception_count = 0;
     // Example:
     // attrName = "archived"
     // 
-    // "log-ABC123.archived.txt" -> "log-ABC123.txt"
+    // "mylog.archived.txt" -> "mylog.txt"
+    // "mylog.archived"     -> "mylog"
     
     NSArray *components = [[self fileName] componentsSeparatedByString:@"."];
     

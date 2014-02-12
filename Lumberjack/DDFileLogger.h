@@ -343,7 +343,8 @@
 // On the simulator we add an attribute by appending a filename extension.
 // 
 // For example:
-// log-ABC123.txt -> log-ABC123.archived.txt
+// "mylog.txt" -> "mylog.archived.txt"
+// "mylog"     -> "mylog.archived"
 
 - (BOOL)hasExtensionAttributeWithName:(NSString *)attrName;
 
