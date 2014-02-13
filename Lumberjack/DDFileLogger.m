@@ -306,7 +306,18 @@ BOOL doesAppRunInBackground(void);
     {
         // Filter out any files that aren't log files. (Just for extra safety)
         
+    #if TARGET_IPHONE_SIMULATOR
+        // In case of iPhone simulator there can be 'archived' extension. isLogFile:
+        // method knows nothing about it. Thus removing it for this method.
+        //
+        // See full explanation in the header file.
+        NSString *theFileName = [fileName stringByReplacingOccurrencesOfString:@".archived"
+                                                                    withString:@""];
+
+        if ([self isLogFile:theFileName])
+    #else
         if ([self isLogFile:fileName])
+    #endif
         {
             NSString *filePath = [logsDirectory stringByAppendingPathComponent:fileName];
             
