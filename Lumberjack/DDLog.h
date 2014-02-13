@@ -359,6 +359,8 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 + (void)removeLogger:(id <DDLogger>)logger;
 + (void)removeAllLoggers;
 
++ (NSArray *)allLoggers;
+
 /**
  * Registered Dynamic Logging
  * 

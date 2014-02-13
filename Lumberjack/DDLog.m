@@ -77,6 +77,7 @@ static void *const GlobalLoggingQueueIdentityKey = (void *)&GlobalLoggingQueueId
 + (void)lt_addLogger:(id <DDLogger>)logger logLevel:(int)logLevel;
 + (void)lt_removeLogger:(id <DDLogger>)logger;
 + (void)lt_removeAllLoggers;
++ (NSArray *)lt_allLoggers;
 + (void)lt_log:(DDLogMessage *)logMessage;
 + (void)lt_flush;
 
@@ -230,6 +231,17 @@ static unsigned int numProcessors;
         
         [self lt_removeAllLoggers];
     }});
+}
+
++ (NSArray *)allLoggers
+{
+    __block NSArray *theLoggers;
+
+    dispatch_sync(loggingQueue, ^{ @autoreleasepool {
+        theLoggers = [self lt_allLoggers];
+    }});
+
+    return theLoggers;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -630,6 +642,21 @@ static unsigned int numProcessors;
     // Remove all loggers from array
     
     [loggers removeAllObjects];
+}
+
+/**
+ * This method should only be run on the logging thread/queue.
+**/
++ (NSArray *)lt_allLoggers
+{
+    NSMutableArray *theLoggers = [NSMutableArray new];
+
+    for (DDLoggerNode *loggerNode in loggers)
+    {
+        [theLoggers addObject:loggerNode->logger];
+    }
+
+    return [theLoggers copy];
 }
 
 /**
