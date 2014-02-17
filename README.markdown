@@ -57,6 +57,7 @@ pod 'CocoaLumberjack'
 - Xcode 4.4 or later is required
 - iOS 5 or later
 - OS X 10.7 or later
+- for OS X < 10.7 support, use the 1.6.0 version
 
 ### Author
 - [Robbie Hanson](https://github.com/robbiehanson)
