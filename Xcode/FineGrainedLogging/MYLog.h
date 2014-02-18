@@ -3,8 +3,8 @@
 // The first 4 bits are being used by the standard levels (0 - 3) 
 // All other bits are fair game for us to use.
 
-#define LOG_FLAG_FOOD_TIMER    (1 << 4)  // 0...0010000
-#define LOG_FLAG_SLEEP_TIMER   (1 << 5)  // 0...0100000
+#define LOG_FLAG_FOOD_TIMER    (1 << 5)  // 0...0100000
+#define LOG_FLAG_SLEEP_TIMER   (1 << 6)  // 0...1000000
 
 #define LOG_FOOD_TIMER  (ddLogLevel & LOG_FLAG_FOOD_TIMER)
 #define LOG_SLEEP_TIMER (ddLogLevel & LOG_FLAG_SLEEP_TIMER)
