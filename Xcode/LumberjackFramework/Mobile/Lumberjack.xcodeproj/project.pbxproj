@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DA3130A01844B265002E953B /* DDMultiFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = DA31309E1844B265002E953B /* DDMultiFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA3130A11844B265002E953B /* DDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA31309F1844B265002E953B /* DDMultiFormatter.m */; };
+		DA455A1518B5E7F100D1E13A /* Formatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA455A1418B5E7F100D1E13A /* Formatter.m */; };
 		DC58E48C14DC70CF006B16E2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58E48B14DC70CF006B16E2 /* Foundation.framework */; };
 		DC58E4AB14DC7176006B16E2 /* DDAbstractDatabaseLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DC58E49B14DC7176006B16E2 /* DDAbstractDatabaseLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DC58E4AC14DC7176006B16E2 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58E49C14DC7176006B16E2 /* DDAbstractDatabaseLogger.m */; };
@@ -50,6 +51,8 @@
 /* Begin PBXFileReference section */
 		DA31309E1844B265002E953B /* DDMultiFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMultiFormatter.h; sourceTree = "<group>"; };
 		DA31309F1844B265002E953B /* DDMultiFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMultiFormatter.m; sourceTree = "<group>"; };
+		DA455A1318B5E7F100D1E13A /* Formatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Formatter.h; sourceTree = "<group>"; };
+		DA455A1418B5E7F100D1E13A /* Formatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Formatter.m; sourceTree = "<group>"; };
 		DADEC5BA182CE2D5003DF172 /* DDLog+LOGV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "DDLog+LOGV.h"; path = "../../../../Lumberjack/DDLog+LOGV.h"; sourceTree = "<group>"; };
 		DC58E48814DC70CF006B16E2 /* libLumberjack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLumberjack.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC58E48B14DC70CF006B16E2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -190,6 +193,8 @@
 				DC58E4D514DC8BE2006B16E2 /* ViewController.m */,
 				DC58E4D714DC8BE2006B16E2 /* ViewController.xib */,
 				DC58E4C914DC8BE2006B16E2 /* Supporting Files */,
+				DA455A1318B5E7F100D1E13A /* Formatter.h */,
+				DA455A1418B5E7F100D1E13A /* Formatter.m */,
 			);
 			path = LibTest;
 			sourceTree = "<group>";
@@ -323,6 +328,7 @@
 			files = (
 				DC58E4CF14DC8BE2006B16E2 /* main.m in Sources */,
 				DC58E4D314DC8BE2006B16E2 /* AppDelegate.m in Sources */,
+				DA455A1518B5E7F100D1E13A /* Formatter.m in Sources */,
 				DC58E4D614DC8BE2006B16E2 /* ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
