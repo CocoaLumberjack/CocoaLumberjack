@@ -37,6 +37,7 @@
 		2A37F9F318E37536009FAAA7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F9F218E37536009FAAA7 /* ViewController.m */; };
 		2A37F9F518E37536009FAAA7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F9F418E37536009FAAA7 /* Images.xcassets */; };
 		2A37FA0F18E375D8009FAAA7 /* libLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A37F97718E37270009FAAA7 /* libLumberjack.a */; };
+		DA9C209B192A04E100AB7171 /* Formatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C209A192A04E100AB7171 /* Formatter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -98,6 +99,8 @@
 		2A37F9F218E37536009FAAA7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		2A37F9F418E37536009FAAA7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2A37F9FB18E37536009FAAA7 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		DA9C2099192A04E100AB7171 /* Formatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Formatter.h; sourceTree = "<group>"; };
+		DA9C209A192A04E100AB7171 /* Formatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Formatter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +202,8 @@
 		2A37F9DF18E37536009FAAA7 /* LibTest */ = {
 			isa = PBXGroup;
 			children = (
+				DA9C2099192A04E100AB7171 /* Formatter.h */,
+				DA9C209A192A04E100AB7171 /* Formatter.m */,
 				2A37F9E818E37536009FAAA7 /* AppDelegate.h */,
 				2A37F9E918E37536009FAAA7 /* AppDelegate.m */,
 				2A37F9EB18E37536009FAAA7 /* Main_iPhone.storyboard */,
@@ -329,6 +334,7 @@
 			files = (
 				2A37F9F318E37536009FAAA7 /* ViewController.m in Sources */,
 				2A37F9EA18E37536009FAAA7 /* AppDelegate.m in Sources */,
+				DA9C209B192A04E100AB7171 /* Formatter.m in Sources */,
 				2A37F9E618E37536009FAAA7 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
