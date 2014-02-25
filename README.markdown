@@ -51,6 +51,7 @@ pod 'CocoaLumberjack'
 - [FAQ](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/FAQ)<br/>
 - [Analysis of performance with benchmarks](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/Performance)<br/>
 - [Common issues you may encounter and their solutions](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/ProblemSolution)<br/>
+- [AppCode support](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/AppCode-support)
 - **[full Lumberjack wiki](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki)**<br/>
 
 ### Requirements 
