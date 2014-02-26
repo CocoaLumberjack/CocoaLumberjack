@@ -83,7 +83,7 @@
  * You'll need to install the XcodeColors plugin to see colors in the Xcode console.
  * https://github.com/robbiehanson/XcodeColors
  * 
- * The default value if NO.
+ * The default value is NO.
 **/
 @property (readwrite, assign) BOOL colorsEnabled;
 
