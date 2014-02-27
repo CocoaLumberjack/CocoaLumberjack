@@ -1527,7 +1527,7 @@ BOOL doesAppRunInBackground()
     NSArray *backgroundModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
 
     for (NSString *mode in backgroundModes) {
-        if (mode.length > 0) {
+        if (mode.length > 0 && ![mode isEqualToString:@"external-accessory"]) {
             answer = YES;
             break;
         }
