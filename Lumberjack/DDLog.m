@@ -156,11 +156,14 @@ static unsigned int numProcessors;
     #else
         NSString *notificationName = nil;
 
-        if (NSClassFromString(@"NSApplication"))
-        {
+        // on Command Line Tool apps AppKit may not be avaliable
+        #ifdef NSAppKitVersionNumber10_0
+        if (NSApp) {
             notificationName = @"NSApplicationWillTerminateNotification";
         }
-        else
+        #endif
+
+        if (! notificationName)
         {
             // If there is no NSApp -> we are running Command Line Tool app.
             // In this case terminate notification wouldn't be fired, so we use workaround.
