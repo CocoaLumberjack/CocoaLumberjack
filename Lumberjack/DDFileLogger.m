@@ -475,6 +475,7 @@ BOOL doesAppRunInBackground(void);
 
             NSString *key = doesAppRunInBackground() ?
                 NSFileProtectionCompleteUntilFirstUserAuthentication : NSFileProtectionCompleteUnlessOpen;
+            NSLog(@"Lumberjack -> key (476): %@", key);
 
             attributes = @{ NSFileProtectionKey : key };
         #endif
@@ -937,6 +938,7 @@ BOOL doesAppRunInBackground(void);
 
             if (useExistingLogFile && doesAppRunInBackground()) {
                 NSString *key = mostRecentLogFileInfo.fileAttributes[NSFileProtectionKey];
+                NSLog(@"Lumberjack -> key (939): %@", key);
 
                 if (! [key isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication]) {
                     useExistingLogFile = NO;
