@@ -475,7 +475,6 @@ BOOL doesAppRunInBackground(void);
 
             NSString *key = doesAppRunInBackground() ?
                 NSFileProtectionCompleteUntilFirstUserAuthentication : NSFileProtectionCompleteUnlessOpen;
-            NSLog(@"Lumberjack -> key (476): %@", key);
 
             attributes = @{ NSFileProtectionKey : key };
         #endif
@@ -937,12 +936,15 @@ BOOL doesAppRunInBackground(void);
             // a new one.
 
             if (useExistingLogFile && doesAppRunInBackground()) {
-                NSString *key = mostRecentLogFileInfo.fileAttributes[NSFileProtectionKey];
-                NSLog(@"Lumberjack -> key (939): %@", key);
+                // The NSFileProtectionKey is not returned in the file attributes dictionary when running in the iOS
+                // simulator. Therefore, resume the previous log file if NSFileProtectionKey is not specified.
+                if ([mostRecentLogFileInfo.fileAttributes.allKeys containsObject:NSFileProtectionKey]) {
+                    NSString *key = mostRecentLogFileInfo.fileAttributes[NSFileProtectionKey];
 
-                if (! [key isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication]) {
-                    useExistingLogFile = NO;
-                    shouldArchiveMostRecent = YES;
+                    if (! [key isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication]) {
+                        useExistingLogFile = NO;
+                        shouldArchiveMostRecent = YES;
+                    }
                 }
             }
         #endif
@@ -1529,7 +1531,7 @@ BOOL doesAppRunInBackground()
     NSArray *backgroundModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
 
     for (NSString *mode in backgroundModes) {
-        if (mode.length > 0 && ![mode isEqualToString:@"external-accessory"]) {
+        if (mode.length > 0) {
             answer = YES;
             break;
         }
