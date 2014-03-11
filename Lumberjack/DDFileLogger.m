@@ -575,6 +575,7 @@ BOOL doesAppRunInBackground(void);
 {
     if ((self = [super init]))
     {
+        _reuseLogFiles = TRUE;
         maximumFileSize = DEFAULT_LOG_MAX_FILE_SIZE;
         rollingFrequency = DEFAULT_LOG_ROLLING_FREQUENCY;
         
@@ -905,7 +906,7 @@ BOOL doesAppRunInBackground(void);
         {
             DDLogFileInfo *mostRecentLogFileInfo = [sortedLogFileInfos objectAtIndex:0];
             
-            BOOL useExistingLogFile = YES;
+            BOOL useExistingLogFile = _reuseLogFiles;
             BOOL shouldArchiveMostRecent = NO;
             
             if (mostRecentLogFileInfo.isArchived)
