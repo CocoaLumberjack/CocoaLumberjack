@@ -779,9 +779,20 @@ static DDTTYLogger *sharedInstance;
     if (!initialized)
     {
         initialized = YES;
-        
+
+        // Xcode does NOT natively support colors in the Xcode debugging console.
+        // You'll need to install the XcodeColors plugin to see colors in the Xcode console.
+        //
+        // PS - Please read the header file before diving into the source code.
+
+        char *xcode_colors = getenv("XcodeColors");
         char *term = getenv("TERM");
-        if (term)
+
+        if (xcode_colors && (strcmp(xcode_colors, "YES") == 0))
+        {
+            isaXcodeColorTTY = YES;
+        }
+        else if (term)
         {
             if (strcasestr(term, "color") != NULL)
             {
@@ -794,20 +805,7 @@ static DDTTYLogger *sharedInstance;
                     [self initialize_colors_16];
             }
         }
-        else
-        {
-            // Xcode does NOT natively support colors in the Xcode debugging console.
-            // You'll need to install the XcodeColors plugin to see colors in the Xcode console.
-            // 
-            // PS - Please read the header file before diving into the source code.
-            
-            char *xcode_colors = getenv("XcodeColors");
-            if (xcode_colors && (strcmp(xcode_colors, "YES") == 0))
-            {
-                isaXcodeColorTTY = YES;
-            }
-        }
-        
+
         NSLogInfo(@"DDTTYLogger: isaColorTTY = %@", (isaColorTTY ? @"YES" : @"NO"));
         NSLogInfo(@"DDTTYLogger: isaColor256TTY: %@", (isaColor256TTY ? @"YES" : @"NO"));
         NSLogInfo(@"DDTTYLogger: isaXcodeColorTTY: %@", (isaXcodeColorTTY ? @"YES" : @"NO"));
