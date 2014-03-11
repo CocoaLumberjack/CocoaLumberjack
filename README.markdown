@@ -71,6 +71,3 @@ pod 'CocoaLumberjack'
 
 ### License
 - CocoaLumberjack is available under the BSD license. See the [LICENSE file](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/LICENSE.txt).
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/CocoaLumberjack/cocoalumberjack/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
