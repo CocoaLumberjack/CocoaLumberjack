@@ -936,11 +936,15 @@ BOOL doesAppRunInBackground(void);
             // a new one.
 
             if (useExistingLogFile && doesAppRunInBackground()) {
-                NSString *key = mostRecentLogFileInfo.fileAttributes[NSFileProtectionKey];
+                // The NSFileProtectionKey is not returned in the file attributes dictionary when running in the iOS
+                // simulator. Therefore, resume the previous log file if NSFileProtectionKey is not specified.
+                if ([mostRecentLogFileInfo.fileAttributes.allKeys containsObject:NSFileProtectionKey]) {
+                    NSString *key = mostRecentLogFileInfo.fileAttributes[NSFileProtectionKey];
 
-                if (! [key isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication]) {
-                    useExistingLogFile = NO;
-                    shouldArchiveMostRecent = YES;
+                    if (! [key isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication]) {
+                        useExistingLogFile = NO;
+                        shouldArchiveMostRecent = YES;
+                    }
                 }
             }
         #endif
