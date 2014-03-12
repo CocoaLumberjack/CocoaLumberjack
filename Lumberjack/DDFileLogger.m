@@ -905,22 +905,18 @@ BOOL doesAppRunInBackground(void);
         {
             DDLogFileInfo *mostRecentLogFileInfo = [sortedLogFileInfos objectAtIndex:0];
             
-            BOOL useExistingLogFile = YES;
             BOOL shouldArchiveMostRecent = NO;
             
             if (mostRecentLogFileInfo.isArchived)
             {
-                useExistingLogFile = NO;
                 shouldArchiveMostRecent = NO;
             }
             else if (maximumFileSize > 0 && mostRecentLogFileInfo.fileSize >= maximumFileSize)
             {
-                useExistingLogFile = NO;
                 shouldArchiveMostRecent = YES;
             }
             else if (rollingFrequency > 0.0 && mostRecentLogFileInfo.age >= rollingFrequency)
             {
-                useExistingLogFile = NO;
                 shouldArchiveMostRecent = YES;
             }
 
@@ -935,17 +931,16 @@ BOOL doesAppRunInBackground(void);
             // If previous log was created when app wasn't running in background, but now it is - we archive it and create
             // a new one.
 
-            if (useExistingLogFile && doesAppRunInBackground()) {
+            if (!_doNotReuseLogFiles && doesAppRunInBackground()) {
                 NSString *key = mostRecentLogFileInfo.fileAttributes[NSFileProtectionKey];
 
                 if (! [key isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication]) {
-                    useExistingLogFile = NO;
                     shouldArchiveMostRecent = YES;
                 }
             }
         #endif
-            
-            if (useExistingLogFile)
+
+            if (!_doNotReuseLogFiles)
             {
                 NSLogVerbose(@"DDFileLogger: Resuming logging with file %@", mostRecentLogFileInfo.fileName);
                 

@@ -246,6 +246,7 @@
 **/
 @property (readwrite, assign) unsigned long long maximumFileSize;
 @property (readwrite, assign) NSTimeInterval rollingFrequency;
+@property (readwrite, assign) BOOL doNotReuseLogFiles;
 
 /**
  * The DDLogFileManager instance can be used to retrieve the list of log files,
