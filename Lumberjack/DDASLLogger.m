@@ -88,7 +88,10 @@ static DDASLLogger *sharedInstance;
             default             : aslLogLevel = ASL_LEVEL_NOTICE;  break;
         }
         
-        asl_log(client, NULL, aslLogLevel, "%s", msg);
+        aslmsg m = asl_new(ASL_TYPE_MSG);
+        asl_set(m, ASL_KEY_READ_UID, "501");
+        asl_log(client, m, aslLogLevel, "%s", msg);
+        asl_free(m);
     }
 }
 
