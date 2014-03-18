@@ -334,6 +334,8 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
        args:(va_list)argList;
 
 
++ (void)queueLogMessage:(DDLogMessage *)logMessage asynchronously:(BOOL)asyncFlag;
+
 /**
  * Since logging can be asynchronous, there may be times when you want to flush the logs.
  * The framework invokes this automatically when the application quits.
@@ -576,6 +578,16 @@ typedef int DDLogMessageOptions;
                           line:(int)line
                            tag:(id)tag
                        options:(DDLogMessageOptions)optionsMask;
+- (instancetype)initWithLogMsg:(NSString *)logMsg
+                         level:(int)logLevel
+                          flag:(int)logFlag
+                       context:(int)logContext
+                          file:(const char *)file
+                      function:(const char *)function
+                          line:(int)line
+                           tag:(id)tag
+                       options:(DDLogMessageOptions)optionsMask
+                     timestamp:(NSDate *)aTimestamp;
 
 /**
  * Returns the threadID as it appears in NSLog.

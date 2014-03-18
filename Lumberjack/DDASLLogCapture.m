@@ -1,5 +1,5 @@
 //
-//  AslLogCapture.m
+//  DDASLLogCapture.m
 //  Lumberjack
 //
 //  Created by Dario Ahdoot on 3/17/14.
@@ -34,31 +34,32 @@
 - (void)configureAslQuery:(aslmsg)query
 {
   // TODO: Make this confgurable based on current log level?
-	const char param[] = "7";	// ASL_LEVEL_DEBUG
-	asl_set_query(query, ASL_KEY_LEVEL, param, ASL_QUERY_OP_LESS_EQUAL | ASL_QUERY_OP_NUMERIC);
+  const char param[] = "7";  // ASL_LEVEL_DEBUG
+  asl_set_query(query, ASL_KEY_LEVEL, param, ASL_QUERY_OP_LESS_EQUAL | ASL_QUERY_OP_NUMERIC);
 
-  // TODO: If you want to filter based on process ID. On OSX, you will get log messages from every process if
-  // you don't set this. On iOS, where apps run in a sandbox, you don't need this
-//  int processId = [[NSProcessInfo processInfo] processIdentifier];
-//  char pid[16];
-//  sprintf(pid, "%d", processId);
-//  asl_set_query(query, ASL_KEY_PID, pid, ASL_QUERY_OP_EQUAL | ASL_QUERY_OP_NUMERIC);
+#if !TARGET_OS_IPHONE
+  int processId = [[NSProcessInfo processInfo] processIdentifier];
+  char pid[16];
+  sprintf(pid, "%d", processId);
+  asl_set_query(query, ASL_KEY_PID, pid, ASL_QUERY_OP_EQUAL | ASL_QUERY_OP_NUMERIC);
+#endif
 }
 
 - (void)aslMessageRecieved:(aslmsg)msg
 {
 //  NSString * sender = [NSString stringWithCString:asl_get(msg, ASL_KEY_SENDER) encoding:NSUTF8StringEncoding];
-//  NSString * message = [NSString stringWithCString:asl_get(msg, ASL_KEY_MSG) encoding:NSUTF8StringEncoding];
-//  NSString * level = [NSString stringWithCString:asl_get(msg, ASL_KEY_LEVEL) encoding:NSUTF8StringEncoding];
-//  NSString * timeString = [NSString stringWithCString:asl_get(msg, ASL_KEY_TIME) encoding:NSUTF8StringEncoding];
-//  NSDate * timeStamp = [NSDate dateWithTimeIntervalSince1970:[timeString integerValue]];
+  NSString * message = [NSString stringWithCString:asl_get(msg, ASL_KEY_MSG) encoding:NSUTF8StringEncoding];
+  NSString * level = [NSString stringWithCString:asl_get(msg, ASL_KEY_LEVEL) encoding:NSUTF8StringEncoding];
+  NSString * secondsStr = [NSString stringWithCString:asl_get(msg, ASL_KEY_TIME) encoding:NSUTF8StringEncoding];
+  NSString * nanoStr = [NSString stringWithCString:asl_get(msg, ASL_KEY_TIME_NSEC) encoding:NSUTF8StringEncoding];
 
-  // TODO: We have some options here. One is to call the corresponding DDLog macros based on the log level. However
-  // we won't get the timestamp of the original NSLog there, which is an important piece of information. Alternatively
-  // we will have to create a DDLogMessage object and set the timestamp directly, but there is no DDLog interface for
-  // accepting a DDLogMessage.
+  NSTimeInterval seconds = [secondsStr doubleValue];
+  NSTimeInterval nanoSeconds = [nanoStr doubleValue];
+  NSTimeInterval totalSeconds = seconds + (nanoSeconds / 1e9);
 
-/*  int logLevel = 0;
+  NSDate * timeStamp = [NSDate dateWithTimeIntervalSince1970:totalSeconds];
+
+  int logLevel = 0;
   switch([level intValue])
   {
     // TODO: Not too sure about these mappings
@@ -67,30 +68,32 @@
     case ASL_LEVEL_CRIT    : logLevel = LOG_FLAG_WARN;          break;
     case ASL_LEVEL_ERR     : logLevel = LOG_FLAG_INFO;          break;
     case ASL_LEVEL_WARNING : logLevel = LOG_FLAG_DEBUG;         break;
-    case ASL_LEVEL_NOTICE  : logLevel = LOG_FLAG_INFO;          break;
-    case ASL_LEVEL_INFO    : logLevel = LOG_FLAG_INFO;          break;
+    case ASL_LEVEL_NOTICE  : logLevel = LOG_FLAG_DEBUG;         break;
+    case ASL_LEVEL_INFO    : logLevel = LOG_FLAG_DEBUG;         break;
     case ASL_LEVEL_DEBUG   : logLevel = LOG_FLAG_DEBUG;         break;
     default                : logLevel = LOG_FLAG_VERBOSE;       break;
   }
 
+  // TODO: Need to set context/tag here so these can be filtered by the ASL logger. Not familiar enough
+  // with Lumberjack to do this properly.
   DDLogMessage * logMessage = [[DDLogMessage alloc]initWithLogMsg:message
                                                             level:logLevel
-                                                             flag:0
+                                                             flag:logLevel // <-- TODO: Need to get ddLogLevel here. Not sure now.
                                                           context:0
                                                              file:0
                                                          function:0
                                                              line:0
                                                               tag:nil
-                                                          options:0];
-  logMessage->timestamp = timeStamp;
-  [_logger logMessage:logMessage];
- */
+                                                          options:0
+                                                        timestamp:timeStamp];
+
+  [DDLog queueLogMessage:logMessage asynchronously:TRUE];
 }
 
 - (void)captureAslLogs
 {
-	@autoreleasepool
-	{
+  @autoreleasepool
+  {
     /*
      We use ASL_KEY_MSG_ID to see each message once, but there's no
      obvious way to get the "next" ID. To bootstrap the process, we'll
@@ -112,8 +115,9 @@
      Notify notifications don't carry any payload, so we need to search
      for the messages.
      */
-    int notifyToken;	// Can be used to unregister with notify_cancel().
-    notify_register_dispatch(kNotifyASLDBUpdate, &notifyToken, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(int token) {
+    int notifyToken;  // Can be used to unregister with notify_cancel().
+    notify_register_dispatch(kNotifyASLDBUpdate, &notifyToken, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(int token)
+    {
       // At least one message has been posted; build a search query.
       @autoreleasepool
       {
@@ -136,7 +140,6 @@
         aslresponse response = asl_search(NULL, query);
         while ((msg = aslresponse_next(response)))
         {
-          // TODO: See the aslMessageRecieved message for choice on how to proceed.
           [self aslMessageRecieved:msg];
 
           // Keep track of which messages we've seen.
@@ -151,8 +154,7 @@
         }
       }
     });
-	}
+  }
 }
-
 
 @end
