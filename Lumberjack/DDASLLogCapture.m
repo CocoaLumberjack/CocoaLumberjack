@@ -14,27 +14,31 @@
 #include <notify_keys.h>
 #include <sys/time.h>
 
-@implementation DDASLLogCapture
-{
-  BOOL cancel;
-}
+static BOOL asynchronous;
+static BOOL cancel;
 
-- (void)start
+@implementation DDASLLogCapture
+
++ (void)start:(BOOL)isAsynchronous
 {
   cancel = FALSE;
+  asynchronous = isAsynchronous;
 
-  [self performSelectorInBackground:@selector(captureAslLogs) withObject:nil];
+  dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void)
+  {
+    [DDASLLogCapture captureAslLogs];
+  });
 }
 
-- (void)stop
++ (void)stop
 {
   cancel = TRUE;
 }
 
-- (void)configureAslQuery:(aslmsg)query
++ (void)configureAslQuery:(aslmsg)query
 {
   // TODO: Make this confgurable based on current log level?
-  const char param[] = "7";  // ASL_LEVEL_DEBUG
+  const char param[] = "7";  // ASL_LEVEL_DEBUG, which is everything. We'll rely on regular DDlog log level to filter
   asl_set_query(query, ASL_KEY_LEVEL, param, ASL_QUERY_OP_LESS_EQUAL | ASL_QUERY_OP_NUMERIC);
 
 #if !TARGET_OS_IPHONE
@@ -45,7 +49,7 @@
 #endif
 }
 
-- (void)aslMessageRecieved:(aslmsg)msg
++ (void)aslMessageRecieved:(aslmsg)msg
 {
 //  NSString * sender = [NSString stringWithCString:asl_get(msg, ASL_KEY_SENDER) encoding:NSUTF8StringEncoding];
   NSString * message = [NSString stringWithCString:asl_get(msg, ASL_KEY_MSG) encoding:NSUTF8StringEncoding];
@@ -87,10 +91,10 @@
                                                           options:0
                                                         timestamp:timeStamp];
 
-  [DDLog queueLogMessage:logMessage asynchronously:TRUE];
+  [DDLog queueLogMessage:logMessage asynchronously:asynchronous];
 }
 
-- (void)captureAslLogs
++ (void)captureAslLogs
 {
   @autoreleasepool
   {
@@ -133,14 +137,14 @@
           snprintf(stringValue, sizeof stringValue, "%llu", startTime);
           asl_set_query(query, ASL_KEY_TIME, stringValue, ASL_QUERY_OP_GREATER_EQUAL | ASL_QUERY_OP_NUMERIC);
         }
-        [self configureAslQuery:query];
+        [DDASLLogCapture configureAslQuery:query];
 
         // Iterate over new messages.
         aslmsg msg;
         aslresponse response = asl_search(NULL, query);
         while ((msg = aslresponse_next(response)))
         {
-          [self aslMessageRecieved:msg];
+          [DDASLLogCapture aslMessageRecieved:msg];
 
           // Keep track of which messages we've seen.
           lastSeenID = atoll(asl_get(msg, ASL_KEY_MSG_ID));

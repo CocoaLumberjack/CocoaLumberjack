@@ -12,7 +12,7 @@
 
 @interface DDASLLogCapture : NSObject
 
-- (void)start;
-- (void)stop;
++ (void)start:(BOOL)isAsynchronous;
++ (void)stop;
 
 @end
