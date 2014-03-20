@@ -1,4 +1,4 @@
 
 platform :ios
 
-pod 'CocoaLumberjack/CLI', :path => '../../'
+pod 'CocoaLumberjack', :path => '../../'
