@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <CocoaLumberjack/DDLog.h>
 #import <CocoaLumberjack/DDASLLogCapture.h>
+#import <CocoaLumberjack/DDASLLogger.h>
 #import <CocoaLumberjack/DDTTYLogger.h>
 
 @interface SimpleFormatter : NSObject <DDLogFormatter>
@@ -19,7 +20,7 @@
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage
 {
-    return [NSString stringWithFormat:@"Captured: %@", logMessage->logMsg];
+    return [NSString stringWithFormat:@"  Captured: %@", logMessage->logMsg];
 }
 
 @end
@@ -31,6 +32,7 @@
 {
     DDTTYLogger.sharedInstance.logFormatter = [SimpleFormatter new];
     [DDLog addLogger:DDTTYLogger.sharedInstance];
+    [DDLog addLogger:DDASLLogger.sharedInstance];
     [DDASLLogCapture start:YES];
     
     return YES;

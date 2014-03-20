@@ -8,11 +8,13 @@
 
 #import "ViewController.h"
 
+static int count = 0;
+
 @implementation ViewController
 
 - (IBAction)log:(id)sender
 {
-    NSLog(@"ASL test message");
+    NSLog(@"ASL test message %d", count++);
 }
 
 @end
