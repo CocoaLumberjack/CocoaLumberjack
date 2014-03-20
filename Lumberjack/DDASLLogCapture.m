@@ -14,15 +14,15 @@
 #include <notify_keys.h>
 #include <sys/time.h>
 
-static BOOL asynchronous;
-static BOOL cancel;
+static BOOL _asynchronous;
+static BOOL _cancel;
 
 @implementation DDASLLogCapture
 
 + (void)start:(BOOL)isAsynchronous
 {
-  cancel = FALSE;
-  asynchronous = isAsynchronous;
+  _cancel = FALSE;
+  _asynchronous = isAsynchronous;
 
   dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void)
   {
@@ -32,7 +32,7 @@ static BOOL cancel;
 
 + (void)stop
 {
-  cancel = TRUE;
+  _cancel = TRUE;
 }
 
 + (void)configureAslQuery:(aslmsg)query
@@ -91,7 +91,7 @@ static BOOL cancel;
                                                           options:0
                                                         timestamp:timeStamp];
 
-  [DDLog log:asynchronous message:logMessage];
+  [DDLog log:_asynchronous message:logMessage];
 }
 
 + (void)captureAslLogs
@@ -151,7 +151,7 @@ static BOOL cancel;
         }
         aslresponse_free(response);
 
-        if(cancel)
+        if(_cancel)
         {
           notify_cancel(notifyToken);
           return;
