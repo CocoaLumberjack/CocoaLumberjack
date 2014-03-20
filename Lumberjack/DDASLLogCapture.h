@@ -6,7 +6,7 @@
 //
 //
 
-#import <Foundation/Foundation.h>
+#import "DDASLLogger.h"
 
 @protocol DDLogger;
 

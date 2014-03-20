@@ -100,7 +100,7 @@ static int _captureLogLevel = LOG_LEVEL_VERBOSE;
                                                              file:0
                                                          function:0
                                                              line:0
-                                                              tag:nil
+                                                              tag:DDASLLoggerIgnoreLogMessageTag
                                                           options:0
                                                         timestamp:timeStamp];
 
