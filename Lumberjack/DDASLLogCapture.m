@@ -91,7 +91,7 @@ static BOOL cancel;
                                                           options:0
                                                         timestamp:timeStamp];
 
-  [DDLog queueLogMessage:logMessage asynchronously:asynchronous];
+  [DDLog log:asynchronous message:logMessage];
 }
 
 + (void)captureAslLogs
