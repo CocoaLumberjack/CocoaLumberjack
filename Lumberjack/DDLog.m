@@ -451,7 +451,7 @@ static unsigned int numProcessors;
 
 + (NSArray *)registeredClasses
 {
-    int numClasses, i;
+    unsigned long int numClasses, i;
     
     // We're going to get the list of all registered classes.
     // The Objective-C runtime library automatically registers all the classes defined in your source code.
@@ -464,7 +464,7 @@ static unsigned int numProcessors;
     // registered class definitions without actually retrieving any class definitions.
     // This allows us to allocate the minimum amount of memory needed for the application.
     
-    numClasses = objc_getClassList(NULL, 0);
+    numClasses = (unsigned long)MAX(objc_getClassList(NULL, 0), 0);
     
     // The numClasses method now tells us how many classes we have.
     // So we can allocate our buffer, and get pointers to all the class definitions.
@@ -472,7 +472,7 @@ static unsigned int numProcessors;
     Class *classes = (Class *)malloc(sizeof(Class) * numClasses);
     if (classes == NULL) return nil;
     
-    numClasses = objc_getClassList(classes, numClasses);
+    numClasses = (unsigned long)MAX(objc_getClassList(classes, (int)numClasses), 0);
     
     // We can now loop through the classes, and test each one to see if it is a DDLogging class.
     
@@ -787,13 +787,13 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
         {
             // lastSlash -> lastDot
             subStr = lastSlash + 1;
-            subLen = lastDot - subStr;
+            subLen = (unsigned)(lastDot - subStr);
         }
         else
         {
             // lastSlash -> endOfString
             subStr = lastSlash + 1;
-            subLen = p - subStr;
+            subLen = (unsigned)(p - subStr);
         }
     }
     else
@@ -802,13 +802,13 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
         {
             // startOfString -> lastDot
             subStr = (char *)filePath;
-            subLen = lastDot - subStr;
+            subLen = (unsigned)(lastDot - subStr);
         }
         else
         {
             // startOfString -> endOfString
             subStr = (char *)filePath;
-            subLen = p - subStr;
+            subLen = (unsigned)(p - subStr);
         }
     }
     
