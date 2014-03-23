@@ -451,7 +451,7 @@ static unsigned int numProcessors;
 
 + (NSArray *)registeredClasses
 {
-    unsigned long int numClasses, i;
+    NSUInteger numClasses, i;
     
     // We're going to get the list of all registered classes.
     // The Objective-C runtime library automatically registers all the classes defined in your source code.
@@ -464,7 +464,7 @@ static unsigned int numProcessors;
     // registered class definitions without actually retrieving any class definitions.
     // This allows us to allocate the minimum amount of memory needed for the application.
     
-    numClasses = (unsigned long)MAX(objc_getClassList(NULL, 0), 0);
+    numClasses = (NSUInteger)MAX(objc_getClassList(NULL, 0), 0);
     
     // The numClasses method now tells us how many classes we have.
     // So we can allocate our buffer, and get pointers to all the class definitions.
@@ -472,7 +472,7 @@ static unsigned int numProcessors;
     Class *classes = (Class *)malloc(sizeof(Class) * numClasses);
     if (classes == NULL) return nil;
     
-    numClasses = (unsigned long)MAX(objc_getClassList(classes, (int)numClasses), 0);
+    numClasses = (NSUInteger)MAX(objc_getClassList(classes, (int)numClasses), 0);
     
     // We can now loop through the classes, and test each one to see if it is a DDLogging class.
     
