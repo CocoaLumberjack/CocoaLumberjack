@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0500"
+   LastUpgradeVersion = "0510"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
-            buildForTesting = "YES"
+            buildForTesting = "NO"
             buildForRunning = "YES"
             buildForProfiling = "YES"
             buildForArchiving = "YES"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DC58E4C014DC8BE2006B16E2"
+               BlueprintIdentifier = "2A37F9D918E37536009FAAA7"
                BuildableName = "LibTest.app"
                BlueprintName = "LibTest"
                ReferencedContainer = "container:Lumberjack.xcodeproj">
@@ -32,7 +32,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DC58E4C014DC8BE2006B16E2"
+            BlueprintIdentifier = "2A37F9D918E37536009FAAA7"
             BuildableName = "LibTest.app"
             BlueprintName = "LibTest"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
@@ -51,7 +51,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DC58E4C014DC8BE2006B16E2"
+            BlueprintIdentifier = "2A37F9D918E37536009FAAA7"
             BuildableName = "LibTest.app"
             BlueprintName = "LibTest"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
@@ -69,7 +69,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DC58E4C014DC8BE2006B16E2"
+            BlueprintIdentifier = "2A37F9D918E37536009FAAA7"
             BuildableName = "LibTest.app"
             BlueprintName = "LibTest"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
