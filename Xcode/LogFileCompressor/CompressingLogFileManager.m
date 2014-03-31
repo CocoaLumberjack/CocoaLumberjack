@@ -282,10 +282,10 @@
         // Tell it to put the compressed bytes into our output buffer.
         
         strm.next_in = (Bytef *)[inputData mutableBytes];   // Read from input buffer
-        strm.avail_in = inputDataSize;                      // as much as was read from file (plus leftovers).
+        strm.avail_in = (uInt)inputDataSize;                // as much as was read from file (plus leftovers).
         
         strm.next_out = (Bytef *)[outputData mutableBytes]; // Write data to output buffer
-        strm.avail_out = outputDataLength;                  // as much space as is available in the buffer.
+        strm.avail_out = (uInt)outputDataLength;            // as much space as is available in the buffer.
         
         // When we tell zlib to compress our data,
         // it won't directly tell us how much data was processed.
