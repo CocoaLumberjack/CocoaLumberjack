@@ -61,8 +61,11 @@
 - (void)compressLogFile:(DDLogFileInfo *)logFile
 {
     self.isCompressing = YES;
-    
-    [NSThread detachNewThreadSelector:@selector(backgroundThread_CompressLogFile:) toTarget:self withObject:logFile];
+
+    CompressingLogFileManager* __weak weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [weakSelf backgroundThread_CompressLogFile:logFile];
+    });
 }
 
 - (void)compressNextLogFile
