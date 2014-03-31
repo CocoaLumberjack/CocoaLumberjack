@@ -388,9 +388,10 @@
         
         // Report failure to class via logging thread/queue
         
+        CompressingLogFileManager* __weak weakSelf = self;
         dispatch_async([DDLog loggingQueue], ^{ @autoreleasepool {
             
-            [self compressionDidFail:logFile];
+            [weakSelf compressionDidFail:logFile];
         }});
     }
     else
@@ -417,9 +418,10 @@
         
         // Report success to class via logging thread/queue
         
+        CompressingLogFileManager* __weak weakSelf = self;
         dispatch_async([DDLog loggingQueue], ^{ @autoreleasepool {
             
-            [self compressionDidSucceed:compressedLogFile];
+            [weakSelf compressionDidSucceed:compressedLogFile];
         }});
     }
     
