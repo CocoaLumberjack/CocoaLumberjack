@@ -280,6 +280,10 @@
         NSUInteger inputBufferLength = inputDataLength - inputDataSize;
         
         NSInteger readLength = [inputStream read:(uint8_t *)inputBuffer maxLength:inputBufferLength];
+        if (readLength < 0) {
+            error = [inputStream streamError];
+            break;
+        }
         
         NSLogVerbose(@"CompressingLogFileManager: Read %li bytes from file", (long)readLength);
         
