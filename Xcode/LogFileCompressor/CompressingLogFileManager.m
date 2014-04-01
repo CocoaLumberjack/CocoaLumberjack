@@ -40,7 +40,12 @@
 
 - (id)init
 {
-    if ((self = [super init]))
+    return [self initWithLogsDirectory:nil];
+}
+
+- (id)initWithLogsDirectory:(NSString *)aLogsDirectory
+{
+    if ((self = [super initWithLogsDirectory:aLogsDirectory]))
     {
         upToDate = NO;
         
