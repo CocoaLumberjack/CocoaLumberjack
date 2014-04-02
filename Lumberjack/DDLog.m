@@ -117,10 +117,8 @@ static unsigned int numProcessors;
 **/
 + (void)initialize
 {
-    static BOOL initialized = NO;
-    if (!initialized)
-    {
-        initialized = YES;
+    static dispatch_once_t DDLogOnceToken;
+    dispatch_once(&DDLogOnceToken, ^{
         
         loggers = [[NSMutableArray alloc] initWithCapacity:4];
         
@@ -149,20 +147,20 @@ static unsigned int numProcessors;
         numProcessors = MAX(result, one);
         
         NSLogDebug(@"DDLog: numProcessors = %u", numProcessors);
-            
         
-    #if TARGET_OS_IPHONE
+        
+#if TARGET_OS_IPHONE
         NSString *notificationName = @"UIApplicationWillTerminateNotification";
-    #else
+#else
         NSString *notificationName = nil;
-
+        
         // on Command Line Tool apps AppKit may not be avaliable
-        #ifdef NSAppKitVersionNumber10_0
+#ifdef NSAppKitVersionNumber10_0
         if (NSApp) {
             notificationName = @"NSApplicationWillTerminateNotification";
         }
-        #endif
-
+#endif
+        
         if (! notificationName)
         {
             // If there is no NSApp -> we are running Command Line Tool app.
@@ -171,7 +169,7 @@ static unsigned int numProcessors;
                 [self applicationWillTerminate:nil];
             });
         }
-    #endif
+#endif
         
         if (notificationName) {
             [[NSNotificationCenter defaultCenter] addObserver:self
@@ -179,7 +177,8 @@ static unsigned int numProcessors;
                                                          name:notificationName
                                                        object:nil];
         }
-    }
+        
+    });
 }
 
 /**

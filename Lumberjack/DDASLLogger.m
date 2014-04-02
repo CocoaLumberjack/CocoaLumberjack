@@ -31,13 +31,10 @@ static DDASLLogger *sharedInstance;
 **/
 + (void)initialize
 {
-    static BOOL initialized = NO;
-    if (!initialized)
-    {
-        initialized = YES;
-        
+    static dispatch_once_t DDASLLoggerOnceToken;
+    dispatch_once(&onceToken, ^{
         sharedInstance = [[[self class] alloc] init];
-    }
+    });
 }
 
 + (instancetype)sharedInstance
