@@ -1,0 +1,4 @@
+
+platform :ios
+
+pod 'CocoaLumberjack', :path => '../../'

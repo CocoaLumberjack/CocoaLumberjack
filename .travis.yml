@@ -2,13 +2,13 @@
 language: objective-c
 
 before_install:
-    - gem install cocoapods --quiet
-    - pod --version
-    - pod setup
-    - pod repo update --silent
     - export LANG=en_US.UTF-8
     - env
     - locale
+    - gem install cocoapods --quiet
+    - pod --version
+    - pod setup --silent
+    - pod repo update --silent
 
 script:
     - pod lib lint
@@ -36,5 +36,8 @@ script:
     - xctool -project Xcode/Testing/TestXcodeColors/Desktop/TestXcodeColors.xcodeproj -scheme 'TestXcodeColors'
     - xctool -project Xcode/UniversalApp/UniversalApp.xcodeproj -scheme 'UniversalApp' -configuration Release -sdk iphonesimulator -arch i386 build
     - cd Xcode/CLI
-    - pod install
+    - pod update
     - xctool -workspace CLI.xcworkspace -scheme 'CLI'
+    - cd ../CaptureASL
+    - pod update
+    - xctool -workspace CaptureASL.xcworkspace -scheme 'CaptureASL' -configuration Release -sdk iphonesimulator -arch i386 build

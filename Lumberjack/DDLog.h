@@ -333,8 +333,14 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
      format:(NSString *)format
        args:(va_list)argList;
 
+/**
+ * Logging Primitive.
+ *
+ * This method can be used if you manualy prepared DDLogMessage.
+ **/
 
-+ (void)queueLogMessage:(DDLogMessage *)logMessage asynchronously:(BOOL)asyncFlag;
++ (void)log:(BOOL)asynchronous
+    message:(DDLogMessage *)logMessage;
 
 /**
  * Since logging can be asynchronous, there may be times when you want to flush the logs.

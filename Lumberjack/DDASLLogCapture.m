@@ -14,15 +14,16 @@
 #include <notify_keys.h>
 #include <sys/time.h>
 
-static BOOL asynchronous;
-static BOOL cancel;
+static BOOL _asynchronous;
+static BOOL _cancel;
+static int _captureLogLevel = LOG_LEVEL_VERBOSE;
 
 @implementation DDASLLogCapture
 
 + (void)start:(BOOL)isAsynchronous
 {
-  cancel = FALSE;
-  asynchronous = isAsynchronous;
+  _cancel = FALSE;
+  _asynchronous = isAsynchronous;
 
   dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void)
   {
@@ -32,8 +33,20 @@ static BOOL cancel;
 
 + (void)stop
 {
-  cancel = TRUE;
+  _cancel = TRUE;
 }
+
++ (int)captureLogLevel
+{
+    return _captureLogLevel;
+}
+
++ (void)setCaptureLogLevel:(int)LOG_LEVEL_XXX
+{
+    _captureLogLevel = LOG_LEVEL_XXX;
+}
+
+# pragma mark - Private methods
 
 + (void)configureAslQuery:(aslmsg)query
 {
@@ -63,35 +76,35 @@ static BOOL cancel;
 
   NSDate * timeStamp = [NSDate dateWithTimeIntervalSince1970:totalSeconds];
 
-  int logLevel = 0;
+  int flag;
   switch([level intValue])
   {
     // TODO: Not too sure about these mappings
-    case ASL_LEVEL_EMERG   : logLevel = LOG_FLAG_ERROR;         break;
-    case ASL_LEVEL_ALERT   : logLevel = LOG_FLAG_ERROR;         break;
-    case ASL_LEVEL_CRIT    : logLevel = LOG_FLAG_WARN;          break;
-    case ASL_LEVEL_ERR     : logLevel = LOG_FLAG_INFO;          break;
-    case ASL_LEVEL_WARNING : logLevel = LOG_FLAG_DEBUG;         break;
-    case ASL_LEVEL_NOTICE  : logLevel = LOG_FLAG_DEBUG;         break;
-    case ASL_LEVEL_INFO    : logLevel = LOG_FLAG_DEBUG;         break;
-    case ASL_LEVEL_DEBUG   : logLevel = LOG_FLAG_DEBUG;         break;
-    default                : logLevel = LOG_FLAG_VERBOSE;       break;
+    case ASL_LEVEL_EMERG   : flag = LOG_FLAG_ERROR;         break;
+    case ASL_LEVEL_ALERT   : flag = LOG_FLAG_ERROR;         break;
+    case ASL_LEVEL_CRIT    : flag = LOG_FLAG_ERROR;         break;
+    case ASL_LEVEL_ERR     : flag = LOG_FLAG_ERROR;         break;
+    case ASL_LEVEL_WARNING : flag = LOG_FLAG_WARN;          break;
+    case ASL_LEVEL_NOTICE  : flag = LOG_FLAG_INFO;          break;
+    case ASL_LEVEL_INFO    : flag = LOG_FLAG_DEBUG;         break;
+    case ASL_LEVEL_DEBUG   : flag = LOG_FLAG_VERBOSE;       break;
+    default                : flag = LOG_FLAG_VERBOSE;       break;
   }
 
   // TODO: Need to set context/tag here so these can be filtered by the ASL logger. Not familiar enough
   // with Lumberjack to do this properly.
   DDLogMessage * logMessage = [[DDLogMessage alloc]initWithLogMsg:message
-                                                            level:logLevel
-                                                             flag:logLevel // <-- TODO: Need to get ddLogLevel here. Not sure now.
+                                                            level:flag
+                                                             flag:_captureLogLevel
                                                           context:0
                                                              file:0
                                                          function:0
                                                              line:0
-                                                              tag:nil
+                                                              tag:DDASLLoggerIgnoreLogMessageTag
                                                           options:0
                                                         timestamp:timeStamp];
 
-  [DDLog queueLogMessage:logMessage asynchronously:asynchronous];
+  [DDLog log:_asynchronous message:logMessage];
 }
 
 + (void)captureAslLogs
@@ -151,7 +164,7 @@ static BOOL cancel;
         }
         aslresponse_free(response);
 
-        if(cancel)
+        if(_cancel)
         {
           notify_cancel(notifyToken);
           return;

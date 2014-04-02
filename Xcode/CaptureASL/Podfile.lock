@@ -1,10 +1,12 @@
 PODS:
-  - CocoaLumberjack/CLI (1.8.1):
-    - CocoaLumberjack/Core
+  - CocoaLumberjack (1.8.1):
+    - CocoaLumberjack/Extensions
   - CocoaLumberjack/Core (1.8.1)
+  - CocoaLumberjack/Extensions (1.8.1):
+    - CocoaLumberjack/Core
 
 DEPENDENCIES:
-  - CocoaLumberjack/CLI (from `../../`)
+  - CocoaLumberjack (from `../../`)
 
 EXTERNAL SOURCES:
   CocoaLumberjack:

@@ -367,6 +367,12 @@ static unsigned int numProcessors;
     }
 }
 
++ (void)log:(BOOL)asynchronous
+    message:(DDLogMessage *)logMessage
+{
+    [self queueLogMessage:logMessage asynchronously:asynchronous];
+}
+
 + (void)flushLog
 {
     dispatch_sync(loggingQueue, ^{ @autoreleasepool {
