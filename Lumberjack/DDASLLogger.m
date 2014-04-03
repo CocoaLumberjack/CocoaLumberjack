@@ -31,14 +31,17 @@ static DDASLLogger *sharedInstance;
 **/
 + (void)initialize
 {
-    static dispatch_once_t DDASLLoggerOnceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[[self class] alloc] init];
-    });
+    // the code has been moved to shareInstance where dispatch_once_t function is used
+    // omitting the accidental call to this method.
 }
 
 + (instancetype)sharedInstance
 {
+    static dispatch_once_t DDASLLoggerOnceToken;
+    dispatch_once(&DDASLLoggerOnceToken, ^{
+        sharedInstance = [[[self class] alloc] init];
+    });
+    
     return sharedInstance;
 }
 

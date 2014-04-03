@@ -775,6 +775,12 @@ static DDTTYLogger *sharedInstance;
 **/
 + (void)initialize
 {
+    // the code has been moved to shareInstance where dispatch_once_t function is used
+    // omitting the accidental call to this method.
+}
+
++ (instancetype)sharedInstance
+{
     static dispatch_once_t DDTTYLoggerOnceToken;
     dispatch_once(&DDTTYLoggerOnceToken, ^{
         
@@ -811,10 +817,7 @@ static DDTTYLogger *sharedInstance;
         
         sharedInstance = [[[self class] alloc] init];
     });
-}
-
-+ (instancetype)sharedInstance
-{
+    
     return sharedInstance;
 }
 
