@@ -765,29 +765,20 @@ static DDTTYLogger *sharedInstance;
     return bestIndex;
 }
 
-/**
- * The runtime sends initialize to each class in a program exactly one time just before the class,
- * or any class that inherits from it, is sent its first message from within the program. (Thus the
- * method may never be invoked if the class is not used.) The runtime sends the initialize message to
- * classes in a thread-safe manner. Superclasses receive this message before their subclasses.
- *
- * This method may also be called directly (assumably by accident), hence the safety mechanism.
-**/
-+ (void)initialize
++ (instancetype)sharedInstance
 {
-    static BOOL initialized = NO;
-    if (!initialized)
-    {
-        initialized = YES;
-
+    static dispatch_once_t DDTTYLoggerOnceToken;
+    dispatch_once(&DDTTYLoggerOnceToken, ^{
+        
+        
         // Xcode does NOT natively support colors in the Xcode debugging console.
         // You'll need to install the XcodeColors plugin to see colors in the Xcode console.
         //
         // PS - Please read the header file before diving into the source code.
-
+        
         char *xcode_colors = getenv("XcodeColors");
         char *term = getenv("TERM");
-
+        
         if (xcode_colors && (strcmp(xcode_colors, "YES") == 0))
         {
             isaXcodeColorTTY = YES;
@@ -805,17 +796,14 @@ static DDTTYLogger *sharedInstance;
                     [self initialize_colors_16];
             }
         }
-
+        
         NSLogInfo(@"DDTTYLogger: isaColorTTY = %@", (isaColorTTY ? @"YES" : @"NO"));
         NSLogInfo(@"DDTTYLogger: isaColor256TTY: %@", (isaColor256TTY ? @"YES" : @"NO"));
         NSLogInfo(@"DDTTYLogger: isaXcodeColorTTY: %@", (isaXcodeColorTTY ? @"YES" : @"NO"));
         
         sharedInstance = [[[self class] alloc] init];
-    }
-}
-
-+ (instancetype)sharedInstance
-{
+    });
+    
     return sharedInstance;
 }
 
