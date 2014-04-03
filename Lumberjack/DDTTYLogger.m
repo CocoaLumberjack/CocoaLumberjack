@@ -765,20 +765,6 @@ static DDTTYLogger *sharedInstance;
     return bestIndex;
 }
 
-/**
- * The runtime sends initialize to each class in a program exactly one time just before the class,
- * or any class that inherits from it, is sent its first message from within the program. (Thus the
- * method may never be invoked if the class is not used.) The runtime sends the initialize message to
- * classes in a thread-safe manner. Superclasses receive this message before their subclasses.
- *
- * This method may also be called directly (assumably by accident), hence the safety mechanism.
-**/
-+ (void)initialize
-{
-    // the code has been moved to shareInstance where dispatch_once_t function is used
-    // omitting the accidental call to this method.
-}
-
 + (instancetype)sharedInstance
 {
     static dispatch_once_t DDTTYLoggerOnceToken;
