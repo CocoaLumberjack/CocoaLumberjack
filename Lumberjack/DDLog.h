@@ -333,6 +333,14 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
      format:(NSString *)format
        args:(va_list)argList;
 
+/**
+ * Logging Primitive.
+ *
+ * This method can be used if you manualy prepared DDLogMessage.
+ **/
+
++ (void)log:(BOOL)asynchronous
+    message:(DDLogMessage *)logMessage;
 
 /**
  * Since logging can be asynchronous, there may be times when you want to flush the logs.
@@ -576,6 +584,16 @@ typedef int DDLogMessageOptions;
                           line:(int)line
                            tag:(id)tag
                        options:(DDLogMessageOptions)optionsMask;
+- (instancetype)initWithLogMsg:(NSString *)logMsg
+                         level:(int)logLevel
+                          flag:(int)logFlag
+                       context:(int)logContext
+                          file:(const char *)file
+                      function:(const char *)function
+                          line:(int)line
+                           tag:(id)tag
+                       options:(DDLogMessageOptions)optionsMask
+                     timestamp:(NSDate *)aTimestamp;
 
 /**
  * Returns the threadID as it appears in NSLog.

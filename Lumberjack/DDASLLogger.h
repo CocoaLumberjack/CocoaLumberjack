@@ -3,6 +3,8 @@
 
 #import "DDLog.h"
 
+extern NSString * const DDASLLoggerIgnoreLogMessageTag;
+
 /**
  * Welcome to Cocoa Lumberjack!
  * 
