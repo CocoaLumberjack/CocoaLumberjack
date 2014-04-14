@@ -94,8 +94,8 @@ static int _captureLogLevel = LOG_LEVEL_VERBOSE;
   // TODO: Need to set context/tag here so these can be filtered by the ASL logger. Not familiar enough
   // with Lumberjack to do this properly.
   DDLogMessage * logMessage = [[DDLogMessage alloc]initWithLogMsg:message
-                                                            level:flag
-                                                             flag:_captureLogLevel
+                                                            level:_captureLogLevel
+                                                             flag:flag
                                                           context:0
                                                              file:0
                                                          function:0
