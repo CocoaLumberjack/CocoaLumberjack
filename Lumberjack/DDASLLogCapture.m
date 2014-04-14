@@ -14,14 +14,18 @@
 #include <notify_keys.h>
 #include <sys/time.h>
 
-static BOOL _cancel;
+static BOOL _cancel = YES;
 static int _captureLogLevel = LOG_LEVEL_VERBOSE;
 
 @implementation DDASLLogCapture
 
 + (void)start
 {
-    _cancel = FALSE;
+    // Ignore subsequent calls
+    if (!_cancel)
+        return;
+    
+    _cancel = NO;
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void)
                    {
@@ -31,7 +35,7 @@ static int _captureLogLevel = LOG_LEVEL_VERBOSE;
 
 + (void)stop
 {
-    _cancel = TRUE;
+    _cancel = YES;
 }
 
 + (int)captureLogLevel
