@@ -1,5 +1,5 @@
 #import "DDASLLogger.h"
-
+#import <asl.h>
 #import <libkern/OSAtomic.h>
 
 /**
@@ -16,9 +16,12 @@
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-@implementation DDASLLogger
-
 static DDASLLogger *sharedInstance;
+
+@implementation DDASLLogger
+{
+    aslclient client;
+}
 
 + (instancetype)sharedInstance
 {
