@@ -138,7 +138,7 @@ static int _captureLogLevel = LOG_LEVEL_VERBOSE;
          Notify notifications don't carry any payload, so we need to search
          for the messages.
          */
-        int notifyToken;  // Can be used to unregister with notify_cancel().
+        int notifyToken = 0;  // Can be used to unregister with notify_cancel().
         notify_register_dispatch(kNotifyASLDBUpdate, &notifyToken, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(int token)
                                  {
                                      // At least one message has been posted; build a search query.
