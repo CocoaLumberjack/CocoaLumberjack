@@ -29,7 +29,6 @@ int main(int argc, const char * argv[])
                            forFlag:LOG_FLAG_INFO];
         [DDLog addLogger:logger];
         DDLogCInfo(@"Hello, World!");
-        
     }
     return 0;
 }
