@@ -14,16 +14,14 @@
 #include <notify_keys.h>
 #include <sys/time.h>
 
-static BOOL _asynchronous;
 static BOOL _cancel;
 static int _captureLogLevel = LOG_LEVEL_VERBOSE;
 
 @implementation DDASLLogCapture
 
-+ (void)start:(BOOL)isAsynchronous
++ (void)start
 {
     _cancel = FALSE;
-    _asynchronous = isAsynchronous;
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void)
                    {
@@ -77,18 +75,19 @@ static int _captureLogLevel = LOG_LEVEL_VERBOSE;
     NSDate * timeStamp = [NSDate dateWithTimeIntervalSince1970:totalSeconds];
     
     int flag;
+    BOOL async;
     switch([level intValue])
     {
-            // TODO: Not too sure about these mappings
-        case ASL_LEVEL_EMERG   : flag = LOG_FLAG_ERROR;         break;
-        case ASL_LEVEL_ALERT   : flag = LOG_FLAG_ERROR;         break;
-        case ASL_LEVEL_CRIT    : flag = LOG_FLAG_ERROR;         break;
-        case ASL_LEVEL_ERR     : flag = LOG_FLAG_WARN;          break;
-        case ASL_LEVEL_WARNING : flag = LOG_FLAG_INFO;          break; // By default all NSLog's with a warning flag
-        case ASL_LEVEL_NOTICE  : flag = LOG_FLAG_INFO;          break;
-        case ASL_LEVEL_INFO    : flag = LOG_FLAG_DEBUG;         break;
-        case ASL_LEVEL_DEBUG   : flag = LOG_FLAG_VERBOSE;       break;
-        default                : flag = LOG_FLAG_VERBOSE;       break;
+        // By default all NSLog's with a ASL_LEVEL_WARNING level
+        case ASL_LEVEL_EMERG    :
+        case ASL_LEVEL_ALERT    :
+        case ASL_LEVEL_CRIT     : flag = LOG_FLAG_ERROR;    async = LOG_ASYNC_ERROR;    break;
+        case ASL_LEVEL_ERR      : flag = LOG_FLAG_WARN;     async = LOG_ASYNC_WARN;     break;
+        case ASL_LEVEL_WARNING  : flag = LOG_FLAG_INFO;     async = LOG_ASYNC_INFO;     break;
+        case ASL_LEVEL_NOTICE   : flag = LOG_FLAG_DEBUG;    async = LOG_ASYNC_DEBUG;    break;
+        case ASL_LEVEL_INFO     :
+        case ASL_LEVEL_DEBUG    :
+        default                 : flag = LOG_FLAG_VERBOSE;  async = LOG_ASYNC_VERBOSE;  break;
     }
     
     if (!(_captureLogLevel & flag))
@@ -107,7 +106,7 @@ static int _captureLogLevel = LOG_LEVEL_VERBOSE;
                                                             options:0
                                                           timestamp:timeStamp];
     
-    [DDLog log:_asynchronous message:logMessage];
+    [DDLog log:async message:logMessage];
 }
 
 + (void)captureAslLogs
