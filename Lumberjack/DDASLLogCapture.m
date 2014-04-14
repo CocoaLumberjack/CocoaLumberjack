@@ -90,6 +90,9 @@ static int _captureLogLevel = LOG_LEVEL_VERBOSE;
     case ASL_LEVEL_DEBUG   : flag = LOG_FLAG_VERBOSE;       break;
     default                : flag = LOG_FLAG_VERBOSE;       break;
   }
+    
+    if (!(_captureLogLevel & flag))
+        return;
 
   // TODO: Need to set context/tag here so these can be filtered by the ASL logger. Not familiar enough
   // with Lumberjack to do this properly.
