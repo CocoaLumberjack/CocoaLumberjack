@@ -100,10 +100,10 @@ static int _captureLogLevel = LOG_LEVEL_VERBOSE;
                                                             level:_captureLogLevel
                                                              flag:flag
                                                           context:0
-                                                             file:0
+                                                             file:"DDASLLogCapture"
                                                          function:0
                                                              line:0
-                                                              tag:DDASLLoggerIgnoreLogMessageTag
+                                                              tag:nil
                                                           options:0
                                                         timestamp:timeStamp];
 

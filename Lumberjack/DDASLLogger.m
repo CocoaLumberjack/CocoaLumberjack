@@ -16,8 +16,6 @@
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-NSString * const DDASLLoggerIgnoreLogMessageTag = @"DDASLLoggerIgnoreLogMessageTag";
-
 @implementation DDASLLogger
 
 static DDASLLogger *sharedInstance;
@@ -51,7 +49,8 @@ static DDASLLogger *sharedInstance;
 
 - (void)logMessage:(DDLogMessage *)logMessage
 {
-    if ([logMessage->tag isEqualToString:DDASLLoggerIgnoreLogMessageTag])
+    // Skip captured log messages.
+    if (strcmp(logMessage->file, "DDASLLogCapture") == 0)
         return;
     
     NSString *logMsg = logMessage->logMsg;
