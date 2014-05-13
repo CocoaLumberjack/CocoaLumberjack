@@ -154,7 +154,7 @@ static unsigned int numProcessors;
 #else
         NSString *notificationName = nil;
         
-        // on Command Line Tool apps AppKit may not be avaliable
+        // On Command Line Tool apps AppKit may not be avaliable
 #ifdef NSAppKitVersionNumber10_0
         if (NSApp) {
             notificationName = @"NSApplicationWillTerminateNotification";

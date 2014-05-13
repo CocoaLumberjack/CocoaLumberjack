@@ -11,5 +11,6 @@
 @interface ViewController : UIViewController
 
 - (IBAction)log:(id)sender;
+- (IBAction)asl_log:(UIButton *)sender;
 
 @end

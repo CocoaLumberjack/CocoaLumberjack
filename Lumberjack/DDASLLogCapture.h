@@ -12,7 +12,7 @@
 
 @interface DDASLLogCapture : NSObject
 
-+ (void)start:(BOOL)isAsynchronous;
++ (void)start;
 + (void)stop;
 
 // Default log level: LOG_LEVEL_VERBOSE (i.e. capture all ASL messages).
@@ -20,3 +20,4 @@
 + (void)setCaptureLogLevel:(int)LOG_LEVEL_XXX;
 
 @end
+

@@ -1,9 +1,6 @@
 #import <Foundation/Foundation.h>
-#import <asl.h>
 
 #import "DDLog.h"
-
-extern NSString * const DDASLLoggerIgnoreLogMessageTag;
 
 /**
  * Welcome to Cocoa Lumberjack!
@@ -29,9 +26,6 @@ extern NSString * const DDASLLoggerIgnoreLogMessageTag;
 **/
 
 @interface DDASLLogger : DDAbstractLogger <DDLogger>
-{
-    aslclient client;
-}
 
 + (instancetype)sharedInstance;
 

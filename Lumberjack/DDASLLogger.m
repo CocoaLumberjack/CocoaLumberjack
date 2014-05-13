@@ -1,5 +1,5 @@
 #import "DDASLLogger.h"
-
+#import <asl.h>
 #import <libkern/OSAtomic.h>
 
 /**
@@ -16,11 +16,12 @@
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-NSString * const DDASLLoggerIgnoreLogMessageTag = @"DDASLLoggerIgnoreLogMessageTag";
+static DDASLLogger *sharedInstance;
 
 @implementation DDASLLogger
-
-static DDASLLogger *sharedInstance;
+{
+    aslclient client;
+}
 
 + (instancetype)sharedInstance
 {
@@ -51,7 +52,8 @@ static DDASLLogger *sharedInstance;
 
 - (void)logMessage:(DDLogMessage *)logMessage
 {
-    if ([logMessage->tag isEqualToString:DDASLLoggerIgnoreLogMessageTag])
+    // Skip captured log messages.
+    if (strcmp(logMessage->file, "DDASLLogCapture") == 0)
         return;
     
     NSString *logMsg = logMessage->logMsg;
@@ -70,12 +72,12 @@ static DDASLLogger *sharedInstance;
         {
             // Note: By default ASL will filter anything above level 5 (Notice).
             // So our mappings shouldn't go above that level.
-            
-            case LOG_FLAG_ERROR : aslLogLevel = ASL_LEVEL_ALERT;   break;
-            case LOG_FLAG_WARN  : aslLogLevel = ASL_LEVEL_CRIT;    break;
-            case LOG_FLAG_INFO  : aslLogLevel = ASL_LEVEL_ERR;     break;
-            case LOG_FLAG_DEBUG : aslLogLevel = ASL_LEVEL_WARNING; break;
-            default             : aslLogLevel = ASL_LEVEL_NOTICE;  break;
+            case LOG_FLAG_ERROR     : aslLogLevel = ASL_LEVEL_CRIT;     break;
+            case LOG_FLAG_WARN      : aslLogLevel = ASL_LEVEL_ERR;      break;
+            case LOG_FLAG_INFO      : aslLogLevel = ASL_LEVEL_WARNING;  break; // Regular NSLog's level
+            case LOG_FLAG_DEBUG     :
+            case LOG_FLAG_VERBOSE   :
+            default                 : aslLogLevel = ASL_LEVEL_NOTICE;   break;
         }
         
         aslmsg m = asl_new(ASL_TYPE_MSG);
