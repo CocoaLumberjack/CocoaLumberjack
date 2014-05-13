@@ -52,7 +52,6 @@ static int _captureLogLevel = LOG_LEVEL_VERBOSE;
 
 + (void)configureAslQuery:(aslmsg)query
 {
-    // TODO: Make this confgurable based on current log level?
     const char param[] = "7";  // ASL_LEVEL_DEBUG, which is everything. We'll rely on regular DDlog log level to filter
     asl_set_query(query, ASL_KEY_LEVEL, param, ASL_QUERY_OP_LESS_EQUAL | ASL_QUERY_OP_NUMERIC);
     
@@ -97,8 +96,6 @@ static int _captureLogLevel = LOG_LEVEL_VERBOSE;
     if (!(_captureLogLevel & flag))
         return;
     
-    // TODO: Need to set context/tag here so these can be filtered by the ASL logger. Not familiar enough
-    // with Lumberjack to do this properly.
     DDLogMessage * logMessage = [[DDLogMessage alloc]initWithLogMsg:message
                                                               level:_captureLogLevel
                                                                flag:flag
