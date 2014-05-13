@@ -56,7 +56,7 @@ static int _captureLogLevel = LOG_LEVEL_VERBOSE;
     const char param[] = "7";  // ASL_LEVEL_DEBUG, which is everything. We'll rely on regular DDlog log level to filter
     asl_set_query(query, ASL_KEY_LEVEL, param, ASL_QUERY_OP_LESS_EQUAL | ASL_QUERY_OP_NUMERIC);
     
-#if !TARGET_OS_IPHONE
+#if !TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
     int processId = [[NSProcessInfo processInfo] processIdentifier];
     char pid[16];
     sprintf(pid, "%d", processId);
