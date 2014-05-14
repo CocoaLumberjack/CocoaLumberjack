@@ -79,7 +79,7 @@
  * If you want every [detail box] to have the exact same width,
  * set both minQueueLength and maxQueueLength to the same value.
 **/
-@property (assign) NSUInteger minQueueLength;
+@property (assign, atomic) NSUInteger minQueueLength;
 
 /**
  * The maxQueueLength restricts the number of characters that will be inside the [detail box].
@@ -99,7 +99,7 @@
  * If you want every [detail box] to have the exact same width,
  * set both minQueueLength and maxQueueLength to the same value.
 **/
-@property (assign) NSUInteger maxQueueLength;
+@property (assign, atomic) NSUInteger maxQueueLength;
 
 /**
  * Sometimes queue labels have long names like "com.apple.main-queue",

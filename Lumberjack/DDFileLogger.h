@@ -69,7 +69,7 @@
  * 
  * You may optionally disable deleting old/rolled/archived log files by setting this property to zero.
 **/
-@property (readwrite, assign) NSUInteger maximumNumberOfLogFiles;
+@property (readwrite, assign, atomic) NSUInteger maximumNumberOfLogFiles;
 
 // Public methods
 
@@ -152,7 +152,7 @@
 
 /* Inherited from DDLogFileManager protocol:
 
-@property (readwrite, assign) NSUInteger maximumNumberOfLogFiles;
+@property (readwrite, assign, atomic) NSUInteger maximumNumberOfLogFiles;
 
 - (NSString *)logsDirectory;
 
@@ -246,7 +246,7 @@
 **/
 @property (readwrite, assign) unsigned long long maximumFileSize;
 @property (readwrite, assign) NSTimeInterval rollingFrequency;
-@property (readwrite, assign) BOOL doNotReuseLogFiles;
+@property (readwrite, assign, atomic) BOOL doNotReuseLogFiles;
 
 /**
  * The DDLogFileManager instance can be used to retrieve the list of log files,
