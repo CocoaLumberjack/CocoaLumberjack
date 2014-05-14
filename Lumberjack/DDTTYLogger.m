@@ -818,13 +818,12 @@ static DDTTYLogger *sharedInstance;
     {
         calendar = [NSCalendar autoupdatingCurrentCalendar];
         
-        calendarUnitFlags = 0;
-        calendarUnitFlags |= NSYearCalendarUnit;
-        calendarUnitFlags |= NSMonthCalendarUnit;
-        calendarUnitFlags |= NSDayCalendarUnit;
-        calendarUnitFlags |= NSHourCalendarUnit;
-        calendarUnitFlags |= NSMinuteCalendarUnit;
-        calendarUnitFlags |= NSSecondCalendarUnit;
+        calendarUnitFlags = (NSCalendarUnitYear     |
+                             NSCalendarUnitMonth    |
+                             NSCalendarUnitDay      |
+                             NSCalendarUnitHour     |
+                             NSCalendarUnitMinute   |
+                             NSCalendarUnitSecond);
         
         // Initialze 'app' variable (char *)
         
