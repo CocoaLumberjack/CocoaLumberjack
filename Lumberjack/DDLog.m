@@ -474,7 +474,7 @@ static unsigned int numProcessors;
     // The numClasses method now tells us how many classes we have.
     // So we can allocate our buffer, and get pointers to all the class definitions.
     
-    Class *classes = (Class *)malloc(sizeof(Class) * numClasses);
+    Class *classes = numClasses ? (Class *)malloc(sizeof(Class) * numClasses) : NULL;
     if (classes == NULL) return nil;
     
     numClasses = (NSUInteger)MAX(objc_getClassList(classes, (int)numClasses), 0);
