@@ -792,13 +792,13 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
         {
             // lastSlash -> lastDot
             subStr = lastSlash + 1;
-            subLen = (unsigned)(lastDot - subStr);
+            subLen = (NSUInteger)(lastDot - subStr);
         }
         else
         {
             // lastSlash -> endOfString
             subStr = lastSlash + 1;
-            subLen = (unsigned)(p - subStr);
+            subLen = (NSUInteger)(p - subStr);
         }
     }
     else
@@ -807,13 +807,13 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy)
         {
             // startOfString -> lastDot
             subStr = (char *)filePath;
-            subLen = (unsigned)(lastDot - subStr);
+            subLen = (NSUInteger)(lastDot - subStr);
         }
         else
         {
             // startOfString -> endOfString
             subStr = (char *)filePath;
-            subLen = (unsigned)(p - subStr);
+            subLen = (NSUInteger)(p - subStr);
         }
     }
     
