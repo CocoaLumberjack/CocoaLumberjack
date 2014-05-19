@@ -15,27 +15,26 @@ Pod::Spec.new do |s|
 
   s.requires_arc   = true
 
+  s.preserve_paths = 'README*'
   s.ios.deployment_target = '5.0'
   s.osx.deployment_target = '10.7'
   
-  s.preserve_paths = 'Lumberjack/**/README*'
-
-  s.public_header_files = 'Lumberjack/**/*.h'
+  s.public_header_files = 'Classes/*.h'
 
   s.default_subspec = 'Extensions'
 
   s.subspec 'Core' do |ss|
-    ss.source_files = 'Lumberjack/*.{h,m}'
+    ss.source_files = 'Classes/*.{h,m}'
   end
 
   s.subspec 'Extensions' do |ss|
     ss.dependency 'CocoaLumberjack/Core'
-    ss.source_files = 'Lumberjack/Extensions/*.{h,m}'
+    ss.source_files = 'Classes/Extensions/*.{h,m}'
   end
   
   s.subspec 'CLI' do |ss|
       ss.dependency 'CocoaLumberjack/Core'
-      ss.source_files = 'Lumberjack/CLI/*.{h,m}'
+      ss.source_files = 'Classes/CLI/*.{h,m}'
   end
   
 end
