@@ -117,10 +117,27 @@
 {
     NSUInteger maximumNumberOfLogFiles;
     NSString *_logsDirectory;
+#if TARGET_OS_IPHONE
+	NSString* _forcedFileProtectionLevel;
+#endif
 }
 
 - (id)init;
 - (instancetype)initWithLogsDirectory:(NSString *)logsDirectory;
+#if TARGET_OS_IPHONE
+/*
+ * Calling this Constructor you can override the default "automagically" chosen FileProtection level.
+ * Useful if you are writing a command line utility / CydiaSubstrate Addon for iOS that has no NSBundle
+ * or like SpringBoard no BackgroundModes in the bundle:
+ * 		iPhone:~ root# cycript -p SpringBoard
+ *		cy# [NSBundle mainBundle]
+ *		#"NSBundle </System/Library/CoreServices/SpringBoard.app> (loaded)"
+ * 		cy# [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
+ * 		null
+ * 		cy#
+ **/
+- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory defaultFileProtectionLevel:(NSString*)fileProtectionLevel;
+#endif
 
 /*
  * Methods to override.
