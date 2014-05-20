@@ -1,0 +1,14 @@
+xcodeproj 'ContextFilter'
+workspace '../../Lumberjack'
+inhibit_all_warnings!
+
+def import_pods
+  pod 'CocoaLumberjack', :path => '../../'
+end
+
+target :osx do
+  platform :osx, '10.7'
+  link_with 'ContextFilter'
+  import_pods
+end
+
