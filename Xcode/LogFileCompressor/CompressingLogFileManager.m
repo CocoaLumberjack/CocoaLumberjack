@@ -191,6 +191,7 @@
     
     NSString *tempOutputFilePath = [logFile tempFilePathByAppendingPathExtension:@"gz"];
     
+#if TARGET_OS_IPHONE
     // We use the same protection as the original file.  This means that it has the same security characteristics.
     // Also, if the app can run in the background, this means that it gets
     // NSFileProtectionCompleteUntilFirstUserAuthentication so that we can do this compression even with the
@@ -198,6 +199,7 @@
     NSString* protection = logFile.fileAttributes[NSFileProtectionKey];
     NSDictionary* attributes = protection == nil ? nil : @{NSFileProtectionKey: protection};
     [[NSFileManager defaultManager] createFileAtPath:tempOutputFilePath contents:nil attributes:attributes];
+#endif
     
     // STEP 2 & 3
     

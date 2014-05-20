@@ -87,6 +87,20 @@ BOOL doesAppRunInBackground(void);
     return self;
 }
 
+#if TARGET_OS_IPHONE
+- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory defaultFileProtectionLevel:(NSString*)fileProtectionLevel {
+    if ((self = [self initWithLogsDirectory:logsDirectory])) {
+        if ([fileProtectionLevel isEqualToString:NSFileProtectionNone] ||
+            [fileProtectionLevel isEqualToString:NSFileProtectionComplete] ||
+            [fileProtectionLevel isEqualToString:NSFileProtectionCompleteUnlessOpen] ||
+            [fileProtectionLevel isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication]) {
+            _defaultFileProtectionLevel = fileProtectionLevel;
+        }
+    }
+    return self;
+}
+#endif
+
 - (void)dealloc
 {
     // try-catch because the observer might be removed or never added. In this case, removeObserver throws and exception
@@ -473,8 +487,8 @@ BOOL doesAppRunInBackground(void);
              // want (even if device is locked). Thats why that attribute have to be changed to
              // NSFileProtectionCompleteUntilFirstUserAuthentication.
 
-            NSString *key = doesAppRunInBackground() ?
-                NSFileProtectionCompleteUntilFirstUserAuthentication : NSFileProtectionCompleteUnlessOpen;
+            NSString *key = _defaultFileProtectionLevel ? :
+                            (doesAppRunInBackground() ? NSFileProtectionCompleteUntilFirstUserAuthentication : NSFileProtectionCompleteUnlessOpen);
 
             attributes = @{ NSFileProtectionKey : key };
         #endif
@@ -930,11 +944,13 @@ BOOL doesAppRunInBackground(void);
             //
             // If previous log was created when app wasn't running in background, but now it is - we archive it and create
             // a new one.
+            //
+            // If user has owerwritten to NSFileProtectionNone there is no neeed to create a new one.
 
             if (!_doNotReuseLogFiles && doesAppRunInBackground()) {
                 NSString *key = mostRecentLogFileInfo.fileAttributes[NSFileProtectionKey];
 
-                if (! [key isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication]) {
+                if (! ([key isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication] || [key isEqualToString:NSFileProtectionNone])) {
                     shouldArchiveMostRecent = YES;
                 }
             }
