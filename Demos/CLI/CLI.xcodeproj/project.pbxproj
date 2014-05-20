@@ -29,7 +29,6 @@
 /* Begin PBXFileReference section */
 		43ABC344C3F14B5B9A93CCC7 /* Pods-osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-osx.xcconfig"; path = "Pods/Pods-osx.xcconfig"; sourceTree = "<group>"; };
 		72378CA33E0145DD984C493E /* libPods-osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B20D5BB500CA41A79FF3E365 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		E5EDB892186286BC002D0689 /* CLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CLI; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EDB895186286BC002D0689 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E5EDB898186286BC002D0689 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -56,7 +55,6 @@
 				E5EDB897186286BC002D0689 /* CLI */,
 				E5EDB894186286BC002D0689 /* Frameworks */,
 				E5EDB893186286BC002D0689 /* Products */,
-				B20D5BB500CA41A79FF3E365 /* Pods.xcconfig */,
 				43ABC344C3F14B5B9A93CCC7 /* Pods-osx.xcconfig */,
 			);
 			sourceTree = "<group>";
