@@ -7,21 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D4FB87070B84649A1A043A2 /* libPods-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E023847F3A04846920939B7 /* libPods-osx.a */; };
 		DCE86C0E1343C419004FD85F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE86C0D1343C419004FD85F /* Cocoa.framework */; };
 		DCE86C181343C419004FD85F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCE86C161343C419004FD85F /* InfoPlist.strings */; };
 		DCE86C1B1343C419004FD85F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE86C1A1343C419004FD85F /* main.m */; };
 		DCE86C1E1343C419004FD85F /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DCE86C1C1343C419004FD85F /* Credits.rtf */; };
 		DCE86C211343C419004FD85F /* CoreDataLoggerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE86C201343C419004FD85F /* CoreDataLoggerAppDelegate.m */; };
 		DCE86C241343C41A004FD85F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCE86C221343C41A004FD85F /* MainMenu.xib */; };
-		DCE86C411343C44D004FD85F /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE86C381343C44D004FD85F /* DDAbstractDatabaseLogger.m */; };
-		DCE86C441343C44D004FD85F /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE86C3E1343C44D004FD85F /* DDLog.m */; };
-		DCE86C451343C44D004FD85F /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE86C401343C44D004FD85F /* DDTTYLogger.m */; };
 		DCE86C551343C64F004FD85F /* CoreDataLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE86C501343C64F004FD85F /* CoreDataLogger.m */; };
 		DCE86C561343C64F004FD85F /* Log.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DCE86C511343C64F004FD85F /* Log.xcdatamodeld */; };
 		DCE86C571343C64F004FD85F /* LogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE86C541343C64F004FD85F /* LogEntry.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E023847F3A04846920939B7 /* libPods-osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6FC57611D3ED41C8BB727C47 /* Pods-osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-osx.xcconfig"; path = "Pods/Pods-osx.xcconfig"; sourceTree = "<group>"; };
 		DCE86C091343C419004FD85F /* CoreDataLogger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataLogger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCE86C0D1343C419004FD85F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DCE86C101343C419004FD85F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -35,12 +35,6 @@
 		DCE86C1F1343C419004FD85F /* CoreDataLoggerAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataLoggerAppDelegate.h; sourceTree = "<group>"; };
 		DCE86C201343C419004FD85F /* CoreDataLoggerAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataLoggerAppDelegate.m; sourceTree = "<group>"; };
 		DCE86C231343C41A004FD85F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		DCE86C371343C44D004FD85F /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDAbstractDatabaseLogger.h; path = ../../Lumberjack/DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
-		DCE86C381343C44D004FD85F /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDAbstractDatabaseLogger.m; path = ../../Lumberjack/DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
-		DCE86C3D1343C44D004FD85F /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDLog.h; path = ../../Lumberjack/DDLog.h; sourceTree = "<group>"; };
-		DCE86C3E1343C44D004FD85F /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDLog.m; path = ../../Lumberjack/DDLog.m; sourceTree = "<group>"; };
-		DCE86C3F1343C44D004FD85F /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDTTYLogger.h; path = ../../Lumberjack/DDTTYLogger.h; sourceTree = "<group>"; };
-		DCE86C401343C44D004FD85F /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDTTYLogger.m; path = ../../Lumberjack/DDTTYLogger.m; sourceTree = "<group>"; };
 		DCE86C4F1343C64F004FD85F /* CoreDataLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreDataLogger.h; path = CoreDataLogger/CoreDataLogger.h; sourceTree = "<group>"; };
 		DCE86C501343C64F004FD85F /* CoreDataLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CoreDataLogger.m; path = CoreDataLogger/CoreDataLogger.m; sourceTree = "<group>"; };
 		DCE86C521343C64F004FD85F /* CocoaBotLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CocoaBotLog.xcdatamodel; sourceTree = "<group>"; };
@@ -54,6 +48,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCE86C0E1343C419004FD85F /* Cocoa.framework in Frameworks */,
+				2D4FB87070B84649A1A043A2 /* libPods-osx.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +62,7 @@
 				DCE86C131343C419004FD85F /* CoreDataLogger */,
 				DCE86C0C1343C419004FD85F /* Frameworks */,
 				DCE86C0A1343C419004FD85F /* Products */,
+				6FC57611D3ED41C8BB727C47 /* Pods-osx.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -83,6 +79,7 @@
 			children = (
 				DCE86C0D1343C419004FD85F /* Cocoa.framework */,
 				DCE86C0F1343C419004FD85F /* Other Frameworks */,
+				2E023847F3A04846920939B7 /* libPods-osx.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -123,12 +120,6 @@
 		DCE86C351343C432004FD85F /* Logging */ = {
 			isa = PBXGroup;
 			children = (
-				DCE86C3D1343C44D004FD85F /* DDLog.h */,
-				DCE86C3E1343C44D004FD85F /* DDLog.m */,
-				DCE86C3F1343C44D004FD85F /* DDTTYLogger.h */,
-				DCE86C401343C44D004FD85F /* DDTTYLogger.m */,
-				DCE86C371343C44D004FD85F /* DDAbstractDatabaseLogger.h */,
-				DCE86C381343C44D004FD85F /* DDAbstractDatabaseLogger.m */,
 				DCE86C361343C43C004FD85F /* CoreData */,
 			);
 			name = Logging;
@@ -153,9 +144,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCE86C2A1343C41A004FD85F /* Build configuration list for PBXNativeTarget "CoreDataLogger" */;
 			buildPhases = (
+				8CCA0EBBED064C809FFE26DE /* Check Pods Manifest.lock */,
 				DCE86C051343C419004FD85F /* Sources */,
 				DCE86C061343C419004FD85F /* Frameworks */,
 				DCE86C071343C419004FD85F /* Resources */,
+				9F7D57202A9B442FA2531632 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -204,6 +197,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8CCA0EBBED064C809FFE26DE /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9F7D57202A9B442FA2531632 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-osx-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		DCE86C051343C419004FD85F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -211,9 +237,6 @@
 			files = (
 				DCE86C1B1343C419004FD85F /* main.m in Sources */,
 				DCE86C211343C419004FD85F /* CoreDataLoggerAppDelegate.m in Sources */,
-				DCE86C411343C44D004FD85F /* DDAbstractDatabaseLogger.m in Sources */,
-				DCE86C441343C44D004FD85F /* DDLog.m in Sources */,
-				DCE86C451343C44D004FD85F /* DDTTYLogger.m in Sources */,
 				DCE86C551343C64F004FD85F /* CoreDataLogger.m in Sources */,
 				DCE86C561343C64F004FD85F /* Log.xcdatamodeld in Sources */,
 				DCE86C571343C64F004FD85F /* LogEntry.m in Sources */,
@@ -300,6 +323,7 @@
 		};
 		DCE86C2B1343C41A004FD85F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6FC57611D3ED41C8BB727C47 /* Pods-osx.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -317,6 +341,7 @@
 		};
 		DCE86C2C1343C41A004FD85F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6FC57611D3ED41C8BB727C47 /* Pods-osx.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
