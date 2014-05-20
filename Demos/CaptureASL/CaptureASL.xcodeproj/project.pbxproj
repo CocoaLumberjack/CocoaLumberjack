@@ -35,7 +35,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0820C8635EE745228F578C87 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		D172BB59DDE2448CAEB62B96 /* Pods-ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.xcconfig"; path = "Pods/Pods-ios.xcconfig"; sourceTree = "<group>"; };
 		E5AE803718DA83A400E0501F /* CaptureASL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptureASL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AE803A18DA83A400E0501F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -91,7 +90,6 @@
 				E5AE805F18DA83A500E0501F /* CaptureASLTests */,
 				E5AE803918DA83A400E0501F /* Frameworks */,
 				E5AE803818DA83A400E0501F /* Products */,
-				0820C8635EE745228F578C87 /* Pods.xcconfig */,
 				D172BB59DDE2448CAEB62B96 /* Pods-ios.xcconfig */,
 			);
 			sourceTree = "<group>";
