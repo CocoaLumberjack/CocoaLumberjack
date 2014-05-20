@@ -70,7 +70,7 @@ BOOL doesAppRunInBackground(void);
 {
     if ((self = [super init]))
     {
-		maximumNumberOfLogFiles = DEFAULT_LOG_MAX_NUM_LOG_FILES;
+        maximumNumberOfLogFiles = DEFAULT_LOG_MAX_NUM_LOG_FILES;
         
         if (aLogsDirectory)
             _logsDirectory = [aLogsDirectory copy];
@@ -89,15 +89,15 @@ BOOL doesAppRunInBackground(void);
 
 #if TARGET_OS_IPHONE
 - (instancetype)initWithLogsDirectory:(NSString *)logsDirectory defaultFileProtectionLevel:(NSString*)fileProtectionLevel {
-	if ((self = [self initWithLogsDirectory:logsDirectory])) {
-		if ([fileProtectionLevel isEqualToString:NSFileProtectionNone] ||
-			[fileProtectionLevel isEqualToString:NSFileProtectionComplete] ||
-			[fileProtectionLevel isEqualToString:NSFileProtectionCompleteUnlessOpen] ||
-			[fileProtectionLevel isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication]) {
-			_defaultFileProtectionLevel = fileProtectionLevel;
-		}
-	}
-	return self;
+    if ((self = [self initWithLogsDirectory:logsDirectory])) {
+        if ([fileProtectionLevel isEqualToString:NSFileProtectionNone] ||
+            [fileProtectionLevel isEqualToString:NSFileProtectionComplete] ||
+            [fileProtectionLevel isEqualToString:NSFileProtectionCompleteUnlessOpen] ||
+            [fileProtectionLevel isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication]) {
+            _defaultFileProtectionLevel = fileProtectionLevel;
+        }
+    }
+    return self;
 }
 #endif
 
