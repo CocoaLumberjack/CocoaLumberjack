@@ -118,7 +118,7 @@
     NSUInteger maximumNumberOfLogFiles;
     NSString *_logsDirectory;
 #if TARGET_OS_IPHONE
-	NSString* _forcedFileProtectionLevel;
+	NSString* _defaultFileProtectionLevel;
 #endif
 }
 

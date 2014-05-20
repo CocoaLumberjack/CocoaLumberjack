@@ -70,9 +70,6 @@ BOOL doesAppRunInBackground(void);
 {
     if ((self = [super init]))
     {
-#if TARGET_OS_IPHONE
-        _forcedFileProtectionLevel = nil;
-#endif
 		maximumNumberOfLogFiles = DEFAULT_LOG_MAX_NUM_LOG_FILES;
         
         if (aLogsDirectory)
@@ -97,7 +94,7 @@ BOOL doesAppRunInBackground(void);
 			[fileProtectionLevel isEqualToString:NSFileProtectionComplete] ||
 			[fileProtectionLevel isEqualToString:NSFileProtectionCompleteUnlessOpen] ||
 			[fileProtectionLevel isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication]) {
-			_forcedFileProtectionLevel = fileProtectionLevel;
+			_defaultFileProtectionLevel = fileProtectionLevel;
 		}
 	}
 	return self;
@@ -490,7 +487,7 @@ BOOL doesAppRunInBackground(void);
              // want (even if device is locked). Thats why that attribute have to be changed to
              // NSFileProtectionCompleteUntilFirstUserAuthentication.
 
-            NSString *key = _forcedFileProtectionLevel ? :
+            NSString *key = _defaultFileProtectionLevel ? :
 							(doesAppRunInBackground() ? NSFileProtectionCompleteUntilFirstUserAuthentication : NSFileProtectionCompleteUnlessOpen);
 
             attributes = @{ NSFileProtectionKey : key };
@@ -947,8 +944,8 @@ BOOL doesAppRunInBackground(void);
             //
             // If previous log was created when app wasn't running in background, but now it is - we archive it and create
             // a new one.
-			//
-			// If user has owerwritten to NSFileProtectionNone there is no neeed to create a new one.
+            //
+            // If user has owerwritten to NSFileProtectionNone there is no neeed to create a new one.
 
             if (!_doNotReuseLogFiles && doesAppRunInBackground()) {
                 NSString *key = mostRecentLogFileInfo.fileAttributes[NSFileProtectionKey];
