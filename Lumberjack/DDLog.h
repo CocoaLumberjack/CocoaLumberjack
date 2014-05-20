@@ -59,15 +59,15 @@
 **/
 
 #define LOG_MACRO(isAsynchronous, lvl, flg, ctx, atag, fnct, frmt, ...) \
-  [DDLog log:isAsynchronous                                             \
-       level:lvl                                                        \
-        flag:flg                                                        \
-     context:ctx                                                        \
-        file:__FILE__                                                   \
-    function:fnct                                                       \
-        line:__LINE__                                                   \
-         tag:atag                                                       \
-      format:(frmt), ##__VA_ARGS__]
+        [DDLog log:isAsynchronous                                       \
+             level:lvl                                                  \
+              flag:flg                                                  \
+           context:ctx                                                  \
+              file:__FILE__                                             \
+          function:fnct                                                 \
+              line:__LINE__                                             \
+               tag:atag                                                 \
+            format:(frmt), ##__VA_ARGS__]
 
 /**
  * Define the Objective-C and C versions of the macro.
@@ -77,22 +77,22 @@
 **/
 
 #define LOG_OBJC_MACRO(async, lvl, flg, ctx, frmt, ...) \
-             LOG_MACRO(async, lvl, flg, ctx, nil, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+        LOG_MACRO(async, lvl, flg, ctx, nil, sel_getName(_cmd), frmt, ##__VA_ARGS__)
 
 #define LOG_C_MACRO(async, lvl, flg, ctx, frmt, ...) \
-          LOG_MACRO(async, lvl, flg, ctx, nil, __FUNCTION__, frmt, ##__VA_ARGS__)
+        LOG_MACRO(async, lvl, flg, ctx, nil, __FUNCTION__, frmt, ##__VA_ARGS__)
 
-#define  SYNC_LOG_OBJC_MACRO(lvl, flg, ctx, frmt, ...) \
-              LOG_OBJC_MACRO( NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
+#define SYNC_LOG_OBJC_MACRO(lvl, flg, ctx, frmt, ...) \
+        LOG_OBJC_MACRO(NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
 #define ASYNC_LOG_OBJC_MACRO(lvl, flg, ctx, frmt, ...) \
-              LOG_OBJC_MACRO(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
+        LOG_OBJC_MACRO(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
-#define  SYNC_LOG_C_MACRO(lvl, flg, ctx, frmt, ...) \
-              LOG_C_MACRO( NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
+#define SYNC_LOG_C_MACRO(lvl, flg, ctx, frmt, ...) \
+        LOG_C_MACRO(NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
 #define ASYNC_LOG_C_MACRO(lvl, flg, ctx, frmt, ...) \
-              LOG_C_MACRO(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
+        LOG_C_MACRO(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
 /**
  * Define version of the macro that only execute if the logLevel is above the threshold.
@@ -108,32 +108,32 @@
  * Note that when compiler optimizations are enabled (as they are for your release builds),
  * the log messages above your logging threshold will automatically be compiled out.
  * 
- * (If the compiler sees ddLogLevel declared as a constant, the compiler simply checks to see if the 'if' statement
- *  would execute, and if not it strips it from the binary.)
+ * (If the compiler sees LOG_LEVEL_DEF/ddLogLevel declared as a constant, the compiler simply checks to see
+ *  if the 'if' statement would execute, and if not it strips it from the binary.)
  * 
  * We also define shorthand versions for asynchronous and synchronous logging.
 **/
 
 #define LOG_MAYBE(async, lvl, flg, ctx, fnct, frmt, ...) \
-  do { if(lvl & flg) LOG_MACRO(async, lvl, flg, ctx, nil, fnct, frmt, ##__VA_ARGS__); } while(0)
+        do { if(lvl & flg) LOG_MACRO(async, lvl, flg, ctx, nil, fnct, frmt, ##__VA_ARGS__); } while(0)
 
 #define LOG_OBJC_MAYBE(async, lvl, flg, ctx, frmt, ...) \
-             LOG_MAYBE(async, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+        LOG_MAYBE(async, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
 
 #define LOG_C_MAYBE(async, lvl, flg, ctx, frmt, ...) \
-          LOG_MAYBE(async, lvl, flg, ctx, __FUNCTION__, frmt, ##__VA_ARGS__)
+        LOG_MAYBE(async, lvl, flg, ctx, __FUNCTION__, frmt, ##__VA_ARGS__)
 
-#define  SYNC_LOG_OBJC_MAYBE(lvl, flg, ctx, frmt, ...) \
-              LOG_OBJC_MAYBE( NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
+#define SYNC_LOG_OBJC_MAYBE(lvl, flg, ctx, frmt, ...) \
+        LOG_OBJC_MAYBE(NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
 #define ASYNC_LOG_OBJC_MAYBE(lvl, flg, ctx, frmt, ...) \
-              LOG_OBJC_MAYBE(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
+        LOG_OBJC_MAYBE(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
-#define  SYNC_LOG_C_MAYBE(lvl, flg, ctx, frmt, ...) \
-              LOG_C_MAYBE( NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
+#define SYNC_LOG_C_MAYBE(lvl, flg, ctx, frmt, ...) \
+        LOG_C_MAYBE(NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
 #define ASYNC_LOG_C_MAYBE(lvl, flg, ctx, frmt, ...) \
-              LOG_C_MAYBE(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
+        LOG_C_MAYBE(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
 /**
  * Define versions of the macros that also accept tags.
@@ -146,19 +146,19 @@
 **/
 
 #define LOG_OBJC_TAG_MACRO(async, lvl, flg, ctx, tag, frmt, ...) \
-                 LOG_MACRO(async, lvl, flg, ctx, tag, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+        LOG_MACRO(async, lvl, flg, ctx, tag, sel_getName(_cmd), frmt, ##__VA_ARGS__)
 
 #define LOG_C_TAG_MACRO(async, lvl, flg, ctx, tag, frmt, ...) \
-              LOG_MACRO(async, lvl, flg, ctx, tag, __FUNCTION__, frmt, ##__VA_ARGS__)
+        LOG_MACRO(async, lvl, flg, ctx, tag, __FUNCTION__, frmt, ##__VA_ARGS__)
 
 #define LOG_TAG_MAYBE(async, lvl, flg, ctx, tag, fnct, frmt, ...) \
-  do { if(lvl & flg) LOG_MACRO(async, lvl, flg, ctx, tag, fnct, frmt, ##__VA_ARGS__); } while(0)
+        do { if(lvl & flg) LOG_MACRO(async, lvl, flg, ctx, tag, fnct, frmt, ##__VA_ARGS__); } while(0)
 
 #define LOG_OBJC_TAG_MAYBE(async, lvl, flg, ctx, tag, frmt, ...) \
-             LOG_TAG_MAYBE(async, lvl, flg, ctx, tag, sel_getName(_cmd), frmt, ##__VA_ARGS__)
+        LOG_TAG_MAYBE(async, lvl, flg, ctx, tag, sel_getName(_cmd), frmt, ##__VA_ARGS__)
 
 #define LOG_C_TAG_MAYBE(async, lvl, flg, ctx, tag, frmt, ...) \
-          LOG_TAG_MAYBE(async, lvl, flg, ctx, tag, __FUNCTION__, frmt, ##__VA_ARGS__)
+        LOG_TAG_MAYBE(async, lvl, flg, ctx, tag, __FUNCTION__, frmt, ##__VA_ARGS__)
 
 /**
  * Define the standard options.
@@ -231,17 +231,17 @@
 #define LOG_FLAG_VERBOSE  (1 << 4)  // 0...10000
 
 #define LOG_LEVEL_OFF     0
-#define LOG_LEVEL_ERROR   (LOG_FLAG_ERROR)                                                                          // 0...00001
-#define LOG_LEVEL_WARN    (LOG_FLAG_ERROR | LOG_FLAG_WARN)                                                          // 0...00011
-#define LOG_LEVEL_INFO    (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO)                                          // 0...00111
-#define LOG_LEVEL_DEBUG   (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO | LOG_FLAG_DEBUG)                         // 0...01111
-#define LOG_LEVEL_VERBOSE (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO | LOG_FLAG_DEBUG | LOG_FLAG_VERBOSE)      // 0...11111
+#define LOG_LEVEL_ERROR   (LOG_FLAG_ERROR)                                                                      // 0...00001
+#define LOG_LEVEL_WARN    (LOG_FLAG_ERROR | LOG_FLAG_WARN)                                                      // 0...00011
+#define LOG_LEVEL_INFO    (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO)                                      // 0...00111
+#define LOG_LEVEL_DEBUG   (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO | LOG_FLAG_DEBUG)                     // 0...01111
+#define LOG_LEVEL_VERBOSE (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO | LOG_FLAG_DEBUG | LOG_FLAG_VERBOSE)  // 0...11111
 
-#define LOG_ERROR    (LOG_LEVEL_DEF & LOG_FLAG_ERROR)
-#define LOG_WARN     (LOG_LEVEL_DEF & LOG_FLAG_WARN)
-#define LOG_INFO     (LOG_LEVEL_DEF & LOG_FLAG_INFO)
-#define LOG_DEBUG    (LOG_LEVEL_DEF & LOG_FLAG_DEBUG)
-#define LOG_VERBOSE  (LOG_LEVEL_DEF & LOG_FLAG_VERBOSE)
+#define LOG_ERROR         (LOG_LEVEL_DEF & LOG_FLAG_ERROR)
+#define LOG_WARN          (LOG_LEVEL_DEF & LOG_FLAG_WARN)
+#define LOG_INFO          (LOG_LEVEL_DEF & LOG_FLAG_INFO)
+#define LOG_DEBUG         (LOG_LEVEL_DEF & LOG_FLAG_DEBUG)
+#define LOG_VERBOSE       (LOG_LEVEL_DEF & LOG_FLAG_VERBOSE)
 
 #define LOG_ASYNC_ENABLED YES
 
