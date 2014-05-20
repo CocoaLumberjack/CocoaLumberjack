@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		57CEE31B0B674E20B43972E9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0304251BFD614405BA5AAB2C /* libPods.a */; };
 		9F7038090BFC42908E686B51 /* libPods-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC120164036941DBAA73653B /* libPods-ios.a */; };
 		E5AE803B18DA83A400E0501F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803A18DA83A400E0501F /* Foundation.framework */; };
 		E5AE803D18DA83A400E0501F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803C18DA83A400E0501F /* CoreGraphics.framework */; };
@@ -36,7 +35,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0304251BFD614405BA5AAB2C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0820C8635EE745228F578C87 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		D172BB59DDE2448CAEB62B96 /* Pods-ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.xcconfig"; path = "Pods/Pods-ios.xcconfig"; sourceTree = "<group>"; };
 		E5AE803718DA83A400E0501F /* CaptureASL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptureASL.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,7 +67,6 @@
 				E5AE803D18DA83A400E0501F /* CoreGraphics.framework in Frameworks */,
 				E5AE803F18DA83A400E0501F /* UIKit.framework in Frameworks */,
 				E5AE803B18DA83A400E0501F /* Foundation.framework in Frameworks */,
-				57CEE31B0B674E20B43972E9 /* libPods.a in Frameworks */,
 				9F7038090BFC42908E686B51 /* libPods-ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -115,7 +112,6 @@
 				E5AE803C18DA83A400E0501F /* CoreGraphics.framework */,
 				E5AE803E18DA83A400E0501F /* UIKit.framework */,
 				E5AE805918DA83A400E0501F /* XCTest.framework */,
-				0304251BFD614405BA5AAB2C /* libPods.a */,
 				FC120164036941DBAA73653B /* libPods-ios.a */,
 			);
 			name = Frameworks;
