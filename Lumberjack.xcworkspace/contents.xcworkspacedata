@@ -10,4 +10,28 @@
    <FileRef
       location = "group:Framework/Mobile/Lumberjack.xcodeproj">
    </FileRef>
+   <Group
+      location = "container:"
+      name = "Demos">
+      <Group
+         location = "container:"
+         name = "Benchmark iPhone">
+         <FileRef
+            location = "group:Demos/BenchmarkIPhone/BenchmarkIPhone.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:Demos/BenchmarkIPhone/Pods/Pods.xcodeproj">
+         </FileRef>
+      </Group>
+      <Group
+         location = "container:"
+         name = "Benchmark Mac">
+         <FileRef
+            location = "group:Demos/BenchmarkMac/BenchmarkMac.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:Demos/BenchmarkMac/Pods/Pods.xcodeproj">
+         </FileRef>
+      </Group>
+   </Group>
 </Workspace>

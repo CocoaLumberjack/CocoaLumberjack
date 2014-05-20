@@ -1,0 +1,14 @@
+xcodeproj 'BenchmarkIPhone'
+workspace '../../Lumberjack'
+inhibit_all_warnings!
+
+def import_pods
+  pod 'CocoaLumberjack', :path => '../../'
+end
+
+target :ios do
+  platform :ios, '5.0'
+  link_with 'BenchmarkIPhone'
+  import_pods
+end
+
