@@ -488,7 +488,7 @@ BOOL doesAppRunInBackground(void);
              // NSFileProtectionCompleteUntilFirstUserAuthentication.
 
             NSString *key = _defaultFileProtectionLevel ? :
-							(doesAppRunInBackground() ? NSFileProtectionCompleteUntilFirstUserAuthentication : NSFileProtectionCompleteUnlessOpen);
+                            (doesAppRunInBackground() ? NSFileProtectionCompleteUntilFirstUserAuthentication : NSFileProtectionCompleteUnlessOpen);
 
             attributes = @{ NSFileProtectionKey : key };
         #endif
