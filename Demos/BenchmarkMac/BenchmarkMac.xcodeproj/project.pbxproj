@@ -7,20 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		462A66BC217E4487BB0D3D0C /* libPods-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75261F2BC23D494BAEE83819 /* libPods-osx.a */; };
 		DCC29DE114730AA9005E8FD4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC29DE014730AA9005E8FD4 /* Cocoa.framework */; };
 		DCC29DEB14730AA9005E8FD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCC29DE914730AA9005E8FD4 /* InfoPlist.strings */; };
 		DCC29DED14730AA9005E8FD4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29DEC14730AA9005E8FD4 /* main.m */; };
 		DCC29DF114730AA9005E8FD4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DCC29DEF14730AA9005E8FD4 /* Credits.rtf */; };
 		DCC29DF414730AA9005E8FD4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29DF314730AA9005E8FD4 /* AppDelegate.m */; };
 		DCC29DF714730AA9005E8FD4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCC29DF514730AA9005E8FD4 /* MainMenu.xib */; };
-		DCC29E0E14730AC0005E8FD4 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29DFF14730AC0005E8FD4 /* DDAbstractDatabaseLogger.m */; };
-		DCC29E0F14730AC0005E8FD4 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E0114730AC0005E8FD4 /* DDASLLogger.m */; };
-		DCC29E1014730AC0005E8FD4 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E0314730AC0005E8FD4 /* DDFileLogger.m */; };
-		DCC29E1114730AC0005E8FD4 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E0514730AC0005E8FD4 /* DDLog.m */; };
-		DCC29E1214730AC0005E8FD4 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E0714730AC0005E8FD4 /* DDTTYLogger.m */; };
-		DCC29E1314730AC0005E8FD4 /* DDContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E0A14730AC0005E8FD4 /* DDContextFilterLogFormatter.m */; };
-		DCC29E1414730AC0005E8FD4 /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E0C14730AC0005E8FD4 /* DDDispatchQueueLogFormatter.m */; };
-		DCC29E1514730AC0005E8FD4 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = DCC29E0D14730AC0005E8FD4 /* README.txt */; };
 		DCC29E1F14730B05005E8FD4 /* BaseNSLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E1814730B05005E8FD4 /* BaseNSLogging.m */; };
 		DCC29E2014730B05005E8FD4 /* DynamicLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E1A14730B05005E8FD4 /* DynamicLogging.m */; };
 		DCC29E2114730B05005E8FD4 /* PerformanceTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E1C14730B05005E8FD4 /* PerformanceTesting.m */; };
@@ -28,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		45EBFC3D865C402A97CA2954 /* Pods-osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-osx.xcconfig"; path = "Pods/Pods-osx.xcconfig"; sourceTree = "<group>"; };
+		75261F2BC23D494BAEE83819 /* libPods-osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCC29DDC14730AA9005E8FD4 /* BenchmarkMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BenchmarkMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCC29DE014730AA9005E8FD4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DCC29DE314730AA9005E8FD4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -41,21 +36,6 @@
 		DCC29DF214730AA9005E8FD4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DCC29DF314730AA9005E8FD4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DCC29DF614730AA9005E8FD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		DCC29DFE14730AC0005E8FD4 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDAbstractDatabaseLogger.h; path = ../../Lumberjack/DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
-		DCC29DFF14730AC0005E8FD4 /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDAbstractDatabaseLogger.m; path = ../../Lumberjack/DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
-		DCC29E0014730AC0005E8FD4 /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDASLLogger.h; path = ../../Lumberjack/DDASLLogger.h; sourceTree = "<group>"; };
-		DCC29E0114730AC0005E8FD4 /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDASLLogger.m; path = ../../Lumberjack/DDASLLogger.m; sourceTree = "<group>"; };
-		DCC29E0214730AC0005E8FD4 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDFileLogger.h; path = ../../Lumberjack/DDFileLogger.h; sourceTree = "<group>"; };
-		DCC29E0314730AC0005E8FD4 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDFileLogger.m; path = ../../Lumberjack/DDFileLogger.m; sourceTree = "<group>"; };
-		DCC29E0414730AC0005E8FD4 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDLog.h; path = ../../Lumberjack/DDLog.h; sourceTree = "<group>"; };
-		DCC29E0514730AC0005E8FD4 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDLog.m; path = ../../Lumberjack/DDLog.m; sourceTree = "<group>"; };
-		DCC29E0614730AC0005E8FD4 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDTTYLogger.h; path = ../../Lumberjack/DDTTYLogger.h; sourceTree = "<group>"; };
-		DCC29E0714730AC0005E8FD4 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDTTYLogger.m; path = ../../Lumberjack/DDTTYLogger.m; sourceTree = "<group>"; };
-		DCC29E0914730AC0005E8FD4 /* DDContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDContextFilterLogFormatter.h; sourceTree = "<group>"; };
-		DCC29E0A14730AC0005E8FD4 /* DDContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDContextFilterLogFormatter.m; sourceTree = "<group>"; };
-		DCC29E0B14730AC0005E8FD4 /* DDDispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDispatchQueueLogFormatter.h; sourceTree = "<group>"; };
-		DCC29E0C14730AC0005E8FD4 /* DDDispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDispatchQueueLogFormatter.m; sourceTree = "<group>"; };
-		DCC29E0D14730AC0005E8FD4 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		DCC29E1714730B05005E8FD4 /* BaseNSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseNSLogging.h; path = ../../Benchmarking/BaseNSLogging.h; sourceTree = "<group>"; };
 		DCC29E1814730B05005E8FD4 /* BaseNSLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseNSLogging.m; path = ../../Benchmarking/BaseNSLogging.m; sourceTree = "<group>"; };
 		DCC29E1914730B05005E8FD4 /* DynamicLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicLogging.h; path = ../../Benchmarking/DynamicLogging.h; sourceTree = "<group>"; };
@@ -72,6 +52,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCC29DE114730AA9005E8FD4 /* Cocoa.framework in Frameworks */,
+				462A66BC217E4487BB0D3D0C /* libPods-osx.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,11 +62,11 @@
 		DCC29DD114730AA9005E8FD4 = {
 			isa = PBXGroup;
 			children = (
-				DCC29DFD14730AB3005E8FD4 /* Logging */,
 				DCC29E1614730AC6005E8FD4 /* Benchmarking */,
 				DCC29DE614730AA9005E8FD4 /* BenchmarkMac */,
 				DCC29DDF14730AA9005E8FD4 /* Frameworks */,
 				DCC29DDD14730AA9005E8FD4 /* Products */,
+				45EBFC3D865C402A97CA2954 /* Pods-osx.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,6 +83,7 @@
 			children = (
 				DCC29DE014730AA9005E8FD4 /* Cocoa.framework */,
 				DCC29DE214730AA9005E8FD4 /* Other Frameworks */,
+				75261F2BC23D494BAEE83819 /* libPods-osx.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -139,37 +121,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		DCC29DFD14730AB3005E8FD4 /* Logging */ = {
-			isa = PBXGroup;
-			children = (
-				DCC29DFE14730AC0005E8FD4 /* DDAbstractDatabaseLogger.h */,
-				DCC29DFF14730AC0005E8FD4 /* DDAbstractDatabaseLogger.m */,
-				DCC29E0014730AC0005E8FD4 /* DDASLLogger.h */,
-				DCC29E0114730AC0005E8FD4 /* DDASLLogger.m */,
-				DCC29E0214730AC0005E8FD4 /* DDFileLogger.h */,
-				DCC29E0314730AC0005E8FD4 /* DDFileLogger.m */,
-				DCC29E0414730AC0005E8FD4 /* DDLog.h */,
-				DCC29E0514730AC0005E8FD4 /* DDLog.m */,
-				DCC29E0614730AC0005E8FD4 /* DDTTYLogger.h */,
-				DCC29E0714730AC0005E8FD4 /* DDTTYLogger.m */,
-				DCC29E0814730AC0005E8FD4 /* Extensions */,
-			);
-			name = Logging;
-			sourceTree = "<group>";
-		};
-		DCC29E0814730AC0005E8FD4 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				DCC29E0914730AC0005E8FD4 /* DDContextFilterLogFormatter.h */,
-				DCC29E0A14730AC0005E8FD4 /* DDContextFilterLogFormatter.m */,
-				DCC29E0B14730AC0005E8FD4 /* DDDispatchQueueLogFormatter.h */,
-				DCC29E0C14730AC0005E8FD4 /* DDDispatchQueueLogFormatter.m */,
-				DCC29E0D14730AC0005E8FD4 /* README.txt */,
-			);
-			name = Extensions;
-			path = ../../Lumberjack/Extensions;
-			sourceTree = "<group>";
-		};
 		DCC29E1614730AC6005E8FD4 /* Benchmarking */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,9 +143,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCC29DFA14730AA9005E8FD4 /* Build configuration list for PBXNativeTarget "BenchmarkMac" */;
 			buildPhases = (
+				CCC3BE78F0DF486A86ECB56A /* Check Pods Manifest.lock */,
 				DCC29DD814730AA9005E8FD4 /* Sources */,
 				DCC29DD914730AA9005E8FD4 /* Frameworks */,
 				DCC29DDA14730AA9005E8FD4 /* Resources */,
+				8506515FE7184EE6BF1F427F /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -238,11 +191,43 @@
 				DCC29DEB14730AA9005E8FD4 /* InfoPlist.strings in Resources */,
 				DCC29DF114730AA9005E8FD4 /* Credits.rtf in Resources */,
 				DCC29DF714730AA9005E8FD4 /* MainMenu.xib in Resources */,
-				DCC29E1514730AC0005E8FD4 /* README.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8506515FE7184EE6BF1F427F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-osx-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CCC3BE78F0DF486A86ECB56A /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DCC29DD814730AA9005E8FD4 /* Sources */ = {
@@ -251,13 +236,6 @@
 			files = (
 				DCC29DED14730AA9005E8FD4 /* main.m in Sources */,
 				DCC29DF414730AA9005E8FD4 /* AppDelegate.m in Sources */,
-				DCC29E0E14730AC0005E8FD4 /* DDAbstractDatabaseLogger.m in Sources */,
-				DCC29E0F14730AC0005E8FD4 /* DDASLLogger.m in Sources */,
-				DCC29E1014730AC0005E8FD4 /* DDFileLogger.m in Sources */,
-				DCC29E1114730AC0005E8FD4 /* DDLog.m in Sources */,
-				DCC29E1214730AC0005E8FD4 /* DDTTYLogger.m in Sources */,
-				DCC29E1314730AC0005E8FD4 /* DDContextFilterLogFormatter.m in Sources */,
-				DCC29E1414730AC0005E8FD4 /* DDDispatchQueueLogFormatter.m in Sources */,
 				DCC29E1F14730B05005E8FD4 /* BaseNSLogging.m in Sources */,
 				DCC29E2014730B05005E8FD4 /* DynamicLogging.m in Sources */,
 				DCC29E2114730B05005E8FD4 /* PerformanceTesting.m in Sources */,
@@ -354,6 +332,7 @@
 		};
 		DCC29DFB14730AA9005E8FD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 45EBFC3D865C402A97CA2954 /* Pods-osx.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BenchmarkMac/BenchmarkMac-Prefix.pch";
@@ -365,6 +344,7 @@
 		};
 		DCC29DFC14730AA9005E8FD4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 45EBFC3D865C402A97CA2954 /* Pods-osx.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BenchmarkMac/BenchmarkMac-Prefix.pch";
