@@ -1,5 +1,14 @@
+xcodeproj 'CaptureASL'
+workspace '../../Lumberjack'
+inhibit_all_warnings!
 
-platform :ios, '5.0'
+def import_pods
+  pod 'CocoaLumberjack', :path => '../../'
+end
 
-pod 'CocoaLumberjack', :path => '../../'
+target :ios do
+  platform :ios, '5.0'
+  link_with 'CaptureASL'
+  import_pods
+end
 
