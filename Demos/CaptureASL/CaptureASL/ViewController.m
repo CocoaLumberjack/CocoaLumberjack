@@ -42,7 +42,7 @@
         case 6  : level = "ASL_LEVEL_INFO";     break;
         case 7  : level = "ASL_LEVEL_DEBUG";    break;
     }
-    asl_log(client, NULL, sender.tag, "%s test message %d", level, count++);
+    asl_log(client, NULL, (int)sender.tag, "%s test message %d", level, count++);
 }
 
 @end

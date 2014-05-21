@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CocoaLumberjack/DDLog.h>
-#import "../Pods-osx-environment.h"
+#import "../Pods-CLI_osx-environment.h"
 #import <CocoaLumberjack/DDTTYLogger.h>
 
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;

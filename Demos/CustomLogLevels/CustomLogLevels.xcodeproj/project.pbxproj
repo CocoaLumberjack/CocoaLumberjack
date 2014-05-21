@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14375AB505BA464CAB51C5BE /* libPods-CLL_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4988234CE446411AA9339C72 /* libPods-CLL_osx.a */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* CustomLogLevelsAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* CustomLogLevelsAppDelegate.m */; };
-		544CCE8D01FE460A995DAAF8 /* libPods-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ECD30A2BF26B43D390E8BE08 /* libPods-osx.a */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -26,11 +26,11 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		4988234CE446411AA9339C72 /* libPods-CLL_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CLL_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		83A95EF2561341FAB9FDEF7B /* Pods-CLL_osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLL_osx.xcconfig"; path = "Pods/Pods-CLL_osx.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* CustomLogLevels-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CustomLogLevels-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* CustomLogLevels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomLogLevels.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D5CC470511F947A089C084AC /* Pods-osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-osx.xcconfig"; path = "Pods/Pods-osx.xcconfig"; sourceTree = "<group>"; };
 		DC399B18119CA5EA00C50939 /* MYLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYLog.h; sourceTree = "<group>"; };
-		ECD30A2BF26B43D390E8BE08 /* libPods-osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,7 +39,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				544CCE8D01FE460A995DAAF8 /* libPods-osx.a in Frameworks */,
+				14375AB505BA464CAB51C5BE /* libPods-CLL_osx.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +90,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				D5CC470511F947A089C084AC /* Pods-osx.xcconfig */,
+				83A95EF2561341FAB9FDEF7B /* Pods-CLL_osx.xcconfig */,
 			);
 			name = CustomLogLevels;
 			sourceTree = "<group>";
@@ -119,7 +119,7 @@
 			children = (
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
-				ECD30A2BF26B43D390E8BE08 /* libPods-osx.a */,
+				4988234CE446411AA9339C72 /* libPods-CLL_osx.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -214,7 +214,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-osx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Pods-CLL_osx-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -253,7 +253,7 @@
 /* Begin XCBuildConfiguration section */
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D5CC470511F947A089C084AC /* Pods-osx.xcconfig */;
+			baseConfigurationReference = 83A95EF2561341FAB9FDEF7B /* Pods-CLL_osx.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -273,7 +273,7 @@
 		};
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D5CC470511F947A089C084AC /* Pods-osx.xcconfig */;
+			baseConfigurationReference = 83A95EF2561341FAB9FDEF7B /* Pods-CLL_osx.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
