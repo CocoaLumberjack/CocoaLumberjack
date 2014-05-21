@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D3ADF94B979B42EBB7520045 /* libPods-TXC_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5D47FDFD974A50B5C006A5 /* libPods-TXC_ios.a */; };
 		DC361299156E1D3800956227 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC361298156E1D3800956227 /* UIKit.framework */; };
 		DC36129B156E1D3800956227 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC36129A156E1D3800956227 /* Foundation.framework */; };
 		DC36129D156E1D3800956227 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC36129C156E1D3800956227 /* CoreGraphics.framework */; };
@@ -15,18 +16,12 @@
 		DC3612A9156E1D3800956227 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612A8156E1D3800956227 /* AppDelegate.m */; };
 		DC3612AC156E1D3800956227 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612AB156E1D3800956227 /* ViewController.m */; };
 		DC3612AF156E1D3800956227 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC3612AD156E1D3800956227 /* ViewController.xib */; };
-		DC3612CA156E1DAD00956227 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612BB156E1DAD00956227 /* DDAbstractDatabaseLogger.m */; };
-		DC3612CB156E1DAD00956227 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612BD156E1DAD00956227 /* DDASLLogger.m */; };
-		DC3612CC156E1DAD00956227 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612BF156E1DAD00956227 /* DDFileLogger.m */; };
-		DC3612CD156E1DAD00956227 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612C1156E1DAD00956227 /* DDLog.m */; };
-		DC3612CE156E1DAD00956227 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612C3156E1DAD00956227 /* DDTTYLogger.m */; };
-		DC3612CF156E1DAD00956227 /* DDContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612C6156E1DAD00956227 /* DDContextFilterLogFormatter.m */; };
-		DC3612D0156E1DAD00956227 /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612C8156E1DAD00956227 /* DDDispatchQueueLogFormatter.m */; };
-		DC3612D1156E1DAD00956227 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = DC3612C9156E1DAD00956227 /* README.txt */; };
 		DCD6EACC16FFC47500710668 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD6EACB16FFC47500710668 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8E5D47FDFD974A50B5C006A5 /* libPods-TXC_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TXC_ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8C3AD65735444058C1D8810 /* Pods-TXC_ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TXC_ios.xcconfig"; path = "Pods/Pods-TXC_ios.xcconfig"; sourceTree = "<group>"; };
 		DC361294156E1D3800956227 /* TextXcodeColors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextXcodeColors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC361298156E1D3800956227 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DC36129A156E1D3800956227 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -40,21 +35,6 @@
 		DC3612AA156E1D3800956227 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		DC3612AB156E1D3800956227 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		DC3612AE156E1D3800956227 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
-		DC3612BA156E1DAD00956227 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
-		DC3612BB156E1DAD00956227 /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
-		DC3612BC156E1DAD00956227 /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
-		DC3612BD156E1DAD00956227 /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDASLLogger.m; sourceTree = "<group>"; };
-		DC3612BE156E1DAD00956227 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
-		DC3612BF156E1DAD00956227 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLogger.m; sourceTree = "<group>"; };
-		DC3612C0156E1DAD00956227 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
-		DC3612C1156E1DAD00956227 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
-		DC3612C2156E1DAD00956227 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
-		DC3612C3156E1DAD00956227 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
-		DC3612C5156E1DAD00956227 /* DDContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDContextFilterLogFormatter.h; sourceTree = "<group>"; };
-		DC3612C6156E1DAD00956227 /* DDContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDContextFilterLogFormatter.m; sourceTree = "<group>"; };
-		DC3612C7156E1DAD00956227 /* DDDispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDispatchQueueLogFormatter.h; sourceTree = "<group>"; };
-		DC3612C8156E1DAD00956227 /* DDDispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDispatchQueueLogFormatter.m; sourceTree = "<group>"; };
-		DC3612C9156E1DAD00956227 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		DCD6EACB16FFC47500710668 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,6 +46,7 @@
 				DC361299156E1D3800956227 /* UIKit.framework in Frameworks */,
 				DC36129B156E1D3800956227 /* Foundation.framework in Frameworks */,
 				DC36129D156E1D3800956227 /* CoreGraphics.framework in Frameworks */,
+				D3ADF94B979B42EBB7520045 /* libPods-TXC_ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,10 +57,10 @@
 			isa = PBXGroup;
 			children = (
 				DCD6EACB16FFC47500710668 /* Default-568h@2x.png */,
-				DC3612B9156E1DAD00956227 /* Lumberjack */,
 				DC36129E156E1D3800956227 /* TextXcodeColors */,
 				DC361297156E1D3800956227 /* Frameworks */,
 				DC361295156E1D3800956227 /* Products */,
+				C8C3AD65735444058C1D8810 /* Pods-TXC_ios.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,6 +78,7 @@
 				DC361298156E1D3800956227 /* UIKit.framework */,
 				DC36129A156E1D3800956227 /* Foundation.framework */,
 				DC36129C156E1D3800956227 /* CoreGraphics.framework */,
+				8E5D47FDFD974A50B5C006A5 /* libPods-TXC_ios.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -125,37 +107,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		DC3612B9156E1DAD00956227 /* Lumberjack */ = {
-			isa = PBXGroup;
-			children = (
-				DC3612C0156E1DAD00956227 /* DDLog.h */,
-				DC3612C1156E1DAD00956227 /* DDLog.m */,
-				DC3612BC156E1DAD00956227 /* DDASLLogger.h */,
-				DC3612BD156E1DAD00956227 /* DDASLLogger.m */,
-				DC3612C2156E1DAD00956227 /* DDTTYLogger.h */,
-				DC3612C3156E1DAD00956227 /* DDTTYLogger.m */,
-				DC3612BE156E1DAD00956227 /* DDFileLogger.h */,
-				DC3612BF156E1DAD00956227 /* DDFileLogger.m */,
-				DC3612BA156E1DAD00956227 /* DDAbstractDatabaseLogger.h */,
-				DC3612BB156E1DAD00956227 /* DDAbstractDatabaseLogger.m */,
-				DC3612C4156E1DAD00956227 /* Extensions */,
-			);
-			name = Lumberjack;
-			path = ../../../../Lumberjack;
-			sourceTree = "<group>";
-		};
-		DC3612C4156E1DAD00956227 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				DC3612C5156E1DAD00956227 /* DDContextFilterLogFormatter.h */,
-				DC3612C6156E1DAD00956227 /* DDContextFilterLogFormatter.m */,
-				DC3612C7156E1DAD00956227 /* DDDispatchQueueLogFormatter.h */,
-				DC3612C8156E1DAD00956227 /* DDDispatchQueueLogFormatter.m */,
-				DC3612C9156E1DAD00956227 /* README.txt */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -163,9 +114,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC3612B2156E1D3800956227 /* Build configuration list for PBXNativeTarget "TextXcodeColors" */;
 			buildPhases = (
+				1F450BAFFAAF4E0C9234609D /* Check Pods Manifest.lock */,
 				DC361290156E1D3800956227 /* Sources */,
 				DC361291156E1D3800956227 /* Frameworks */,
 				DC361292156E1D3800956227 /* Resources */,
+				CB70F1F0EEEB49A2BE62788D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -208,12 +161,44 @@
 			files = (
 				DC3612A3156E1D3800956227 /* InfoPlist.strings in Resources */,
 				DC3612AF156E1D3800956227 /* ViewController.xib in Resources */,
-				DC3612D1156E1DAD00956227 /* README.txt in Resources */,
 				DCD6EACC16FFC47500710668 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1F450BAFFAAF4E0C9234609D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		CB70F1F0EEEB49A2BE62788D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-TXC_ios-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DC361290156E1D3800956227 /* Sources */ = {
@@ -223,13 +208,6 @@
 				DC3612A5156E1D3800956227 /* main.m in Sources */,
 				DC3612A9156E1D3800956227 /* AppDelegate.m in Sources */,
 				DC3612AC156E1D3800956227 /* ViewController.m in Sources */,
-				DC3612CA156E1DAD00956227 /* DDAbstractDatabaseLogger.m in Sources */,
-				DC3612CB156E1DAD00956227 /* DDASLLogger.m in Sources */,
-				DC3612CC156E1DAD00956227 /* DDFileLogger.m in Sources */,
-				DC3612CD156E1DAD00956227 /* DDLog.m in Sources */,
-				DC3612CE156E1DAD00956227 /* DDTTYLogger.m in Sources */,
-				DC3612CF156E1DAD00956227 /* DDContextFilterLogFormatter.m in Sources */,
-				DC3612D0156E1DAD00956227 /* DDDispatchQueueLogFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +299,7 @@
 		};
 		DC3612B3156E1D3800956227 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C8C3AD65735444058C1D8810 /* Pods-TXC_ios.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TextXcodeColors/TextXcodeColors-Prefix.pch";
@@ -332,6 +311,7 @@
 		};
 		DC3612B4156E1D3800956227 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C8C3AD65735444058C1D8810 /* Pods-TXC_ios.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TextXcodeColors/TextXcodeColors-Prefix.pch";

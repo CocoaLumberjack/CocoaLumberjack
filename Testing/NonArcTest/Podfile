@@ -1,0 +1,13 @@
+xcodeproj 'NonArcTest'
+workspace '../../Testing'
+
+def import_pods
+  pod 'CocoaLumberjack', :path => '../../'
+end
+
+target :NAT_osx do
+  platform :osx, '10.7'
+  link_with 'NonArcTest'
+  import_pods
+end
+

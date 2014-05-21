@@ -1,0 +1,13 @@
+xcodeproj 'TextXcodeColors'
+workspace '../../../Testing'
+
+def import_pods
+  pod 'CocoaLumberjack', :path => '../../../'
+end
+
+target :TXC_ios do
+  platform :ios, '5.0'
+  link_with 'TextXcodeColors'
+  import_pods
+end
+
