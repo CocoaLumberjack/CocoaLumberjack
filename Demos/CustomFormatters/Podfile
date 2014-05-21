@@ -1,5 +1,5 @@
 xcodeproj 'CustomFormatters'
-workspace '../../Lumberjack'
+workspace '../../Lumberjack_Demos'
 
 def import_pods
   pod 'CocoaLumberjack', :path => '../../'
