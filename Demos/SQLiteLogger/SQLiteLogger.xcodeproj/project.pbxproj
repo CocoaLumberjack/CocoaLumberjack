@@ -7,16 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5766DA65D2514C43AD5C8F2F /* libPods-SQLL_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C61A40091F0B43FCAEE09F46 /* libPods-SQLL_osx.a */; };
 		DCE86BF213439AF6004FD85F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE86BF113439AF6004FD85F /* libsqlite3.dylib */; };
-		DCE86BFD1343C080004FD85F /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE86BFC1343C080004FD85F /* DDAbstractDatabaseLogger.m */; };
 		DCFF742713427FF600F53777 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFF742613427FF600F53777 /* Cocoa.framework */; };
 		DCFF743113427FF600F53777 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCFF742F13427FF600F53777 /* InfoPlist.strings */; };
 		DCFF743413427FF600F53777 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFF743313427FF600F53777 /* main.m */; };
 		DCFF743713427FF600F53777 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DCFF743513427FF600F53777 /* Credits.rtf */; };
 		DCFF743A13427FF600F53777 /* SQLiteLoggerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFF743913427FF600F53777 /* SQLiteLoggerAppDelegate.m */; };
 		DCFF743D13427FF600F53777 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCFF743B13427FF600F53777 /* MainMenu.xib */; };
-		DCFF744E1342802100F53777 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFF74491342802100F53777 /* DDLog.m */; };
-		DCFF744F1342802100F53777 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFF744B1342802100F53777 /* DDTTYLogger.m */; };
 		DCFF7454134280C500F53777 /* FMDBLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFF7453134280C500F53777 /* FMDBLogger.m */; };
 		DCFF745B134280CF00F53777 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFF7456134280CF00F53777 /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DCFF745C134280CF00F53777 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFF7458134280CF00F53777 /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -24,9 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A6BCF073C11F4C4A9BA920E5 /* Pods-SQLL_osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQLL_osx.xcconfig"; path = "Pods/Pods-SQLL_osx.xcconfig"; sourceTree = "<group>"; };
+		C61A40091F0B43FCAEE09F46 /* libPods-SQLL_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SQLL_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCE86BF113439AF6004FD85F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		DCE86BFB1343C080004FD85F /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDAbstractDatabaseLogger.h; path = ../../Lumberjack/DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
-		DCE86BFC1343C080004FD85F /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDAbstractDatabaseLogger.m; path = ../../Lumberjack/DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
 		DCFF742213427FF600F53777 /* SQLiteLogger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SQLiteLogger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCFF742613427FF600F53777 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DCFF742913427FF600F53777 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -40,10 +38,6 @@
 		DCFF743813427FF600F53777 /* SQLiteLoggerAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SQLiteLoggerAppDelegate.h; sourceTree = "<group>"; };
 		DCFF743913427FF600F53777 /* SQLiteLoggerAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SQLiteLoggerAppDelegate.m; sourceTree = "<group>"; };
 		DCFF743C13427FF600F53777 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		DCFF74481342802100F53777 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDLog.h; path = ../../Lumberjack/DDLog.h; sourceTree = "<group>"; };
-		DCFF74491342802100F53777 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDLog.m; path = ../../Lumberjack/DDLog.m; sourceTree = "<group>"; };
-		DCFF744A1342802100F53777 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDTTYLogger.h; path = ../../Lumberjack/DDTTYLogger.h; sourceTree = "<group>"; };
-		DCFF744B1342802100F53777 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDTTYLogger.m; path = ../../Lumberjack/DDTTYLogger.m; sourceTree = "<group>"; };
 		DCFF7452134280C500F53777 /* FMDBLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDBLogger.h; sourceTree = "<group>"; };
 		DCFF7453134280C500F53777 /* FMDBLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDBLogger.m; sourceTree = "<group>"; };
 		DCFF7455134280CF00F53777 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabase.h; path = FMDB/FMDatabase.h; sourceTree = "<group>"; };
@@ -61,6 +55,7 @@
 			files = (
 				DCE86BF213439AF6004FD85F /* libsqlite3.dylib in Frameworks */,
 				DCFF742713427FF600F53777 /* Cocoa.framework in Frameworks */,
+				5766DA65D2514C43AD5C8F2F /* libPods-SQLL_osx.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +69,7 @@
 				DCFF742C13427FF600F53777 /* SQLiteLogger */,
 				DCFF742513427FF600F53777 /* Frameworks */,
 				DCFF742313427FF600F53777 /* Products */,
+				A6BCF073C11F4C4A9BA920E5 /* Pods-SQLL_osx.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -91,6 +87,7 @@
 				DCFF742613427FF600F53777 /* Cocoa.framework */,
 				DCE86BF113439AF6004FD85F /* libsqlite3.dylib */,
 				DCFF742813427FF600F53777 /* Other Frameworks */,
+				C61A40091F0B43FCAEE09F46 /* libPods-SQLL_osx.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -131,12 +128,6 @@
 		DCFF74431342801000F53777 /* Logging */ = {
 			isa = PBXGroup;
 			children = (
-				DCFF74481342802100F53777 /* DDLog.h */,
-				DCFF74491342802100F53777 /* DDLog.m */,
-				DCFF744A1342802100F53777 /* DDTTYLogger.h */,
-				DCFF744B1342802100F53777 /* DDTTYLogger.m */,
-				DCE86BFB1343C080004FD85F /* DDAbstractDatabaseLogger.h */,
-				DCE86BFC1343C080004FD85F /* DDAbstractDatabaseLogger.m */,
 				DCFF74501342802B00F53777 /* SQLite */,
 			);
 			name = Logging;
@@ -172,9 +163,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCFF744013427FF600F53777 /* Build configuration list for PBXNativeTarget "SQLiteLogger" */;
 			buildPhases = (
+				2552E1A3D7634E28ADC4145D /* Check Pods Manifest.lock */,
 				DCFF741E13427FF600F53777 /* Sources */,
 				DCFF741F13427FF600F53777 /* Frameworks */,
 				DCFF742013427FF600F53777 /* Resources */,
+				484BB7107DE44253B505D3D6 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -191,7 +184,7 @@
 		DCFF741913427FF600F53777 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Voalte;
 			};
 			buildConfigurationList = DCFF741C13427FF600F53777 /* Build configuration list for PBXProject "SQLiteLogger" */;
@@ -224,6 +217,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2552E1A3D7634E28ADC4145D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		484BB7107DE44253B505D3D6 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-SQLL_osx-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		DCFF741E13427FF600F53777 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -231,13 +257,10 @@
 			files = (
 				DCFF743413427FF600F53777 /* main.m in Sources */,
 				DCFF743A13427FF600F53777 /* SQLiteLoggerAppDelegate.m in Sources */,
-				DCFF744E1342802100F53777 /* DDLog.m in Sources */,
-				DCFF744F1342802100F53777 /* DDTTYLogger.m in Sources */,
 				DCFF7454134280C500F53777 /* FMDBLogger.m in Sources */,
 				DCFF745B134280CF00F53777 /* FMDatabase.m in Sources */,
 				DCFF745C134280CF00F53777 /* FMDatabaseAdditions.m in Sources */,
 				DCFF745D134280CF00F53777 /* FMResultSet.m in Sources */,
-				DCE86BFD1343C080004FD85F /* DDAbstractDatabaseLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,8 +297,9 @@
 		DCFF743E13427FF600F53777 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -286,7 +310,9 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
@@ -297,8 +323,9 @@
 		DCFF743F13427FF600F53777 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -306,7 +333,9 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				SDKROOT = macosx;
@@ -315,9 +344,11 @@
 		};
 		DCFF744113427FF600F53777 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6BCF073C11F4C4A9BA920E5 /* Pods-SQLL_osx.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -331,9 +362,11 @@
 		};
 		DCFF744213427FF600F53777 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6BCF073C11F4C4A9BA920E5 /* Pods-SQLL_osx.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
