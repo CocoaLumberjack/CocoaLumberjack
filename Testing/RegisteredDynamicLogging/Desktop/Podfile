@@ -1,0 +1,13 @@
+xcodeproj 'RegisteredLoggingTest'
+workspace '../../../Testing'
+
+def import_pods
+  pod 'CocoaLumberjack', :path => '../../../'
+end
+
+target :RLT_osx do
+  platform :osx, '10.7'
+  link_with 'RegisteredLoggingTest'
+  import_pods
+end
+
