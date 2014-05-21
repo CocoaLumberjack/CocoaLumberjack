@@ -1,12 +1,11 @@
 xcodeproj 'CLI'
 workspace '../../Lumberjack'
-inhibit_all_warnings!
 
 def import_pods
   pod 'CocoaLumberjack/CLI', :path => '../../'
 end
 
-target :osx do
+target :CLI_osx do
   platform :osx, '10.7'
   link_with 'CLI'
   import_pods

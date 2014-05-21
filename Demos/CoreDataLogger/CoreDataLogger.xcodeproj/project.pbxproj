@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2D4FB87070B84649A1A043A2 /* libPods-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E023847F3A04846920939B7 /* libPods-osx.a */; };
+		1C2EF26CA49246A98E4F5CD7 /* libPods-CDL_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC7A9B6117D4036860BA066 /* libPods-CDL_osx.a */; };
 		DCE86C0E1343C419004FD85F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE86C0D1343C419004FD85F /* Cocoa.framework */; };
 		DCE86C181343C419004FD85F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCE86C161343C419004FD85F /* InfoPlist.strings */; };
 		DCE86C1B1343C419004FD85F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE86C1A1343C419004FD85F /* main.m */; };
@@ -20,8 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2E023847F3A04846920939B7 /* libPods-osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6FC57611D3ED41C8BB727C47 /* Pods-osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-osx.xcconfig"; path = "Pods/Pods-osx.xcconfig"; sourceTree = "<group>"; };
+		6EC7A9B6117D4036860BA066 /* libPods-CDL_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CDL_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D6E6293BDB940B59507EAF2 /* Pods-CDL_osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CDL_osx.xcconfig"; path = "Pods/Pods-CDL_osx.xcconfig"; sourceTree = "<group>"; };
 		DCE86C091343C419004FD85F /* CoreDataLogger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataLogger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCE86C0D1343C419004FD85F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DCE86C101343C419004FD85F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -48,7 +48,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCE86C0E1343C419004FD85F /* Cocoa.framework in Frameworks */,
-				2D4FB87070B84649A1A043A2 /* libPods-osx.a in Frameworks */,
+				1C2EF26CA49246A98E4F5CD7 /* libPods-CDL_osx.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,7 +62,7 @@
 				DCE86C131343C419004FD85F /* CoreDataLogger */,
 				DCE86C0C1343C419004FD85F /* Frameworks */,
 				DCE86C0A1343C419004FD85F /* Products */,
-				6FC57611D3ED41C8BB727C47 /* Pods-osx.xcconfig */,
+				9D6E6293BDB940B59507EAF2 /* Pods-CDL_osx.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,7 +79,7 @@
 			children = (
 				DCE86C0D1343C419004FD85F /* Cocoa.framework */,
 				DCE86C0F1343C419004FD85F /* Other Frameworks */,
-				2E023847F3A04846920939B7 /* libPods-osx.a */,
+				6EC7A9B6117D4036860BA066 /* libPods-CDL_osx.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -225,7 +225,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-osx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Pods-CDL_osx-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -323,7 +323,7 @@
 		};
 		DCE86C2B1343C41A004FD85F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6FC57611D3ED41C8BB727C47 /* Pods-osx.xcconfig */;
+			baseConfigurationReference = 9D6E6293BDB940B59507EAF2 /* Pods-CDL_osx.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -341,7 +341,7 @@
 		};
 		DCE86C2C1343C41A004FD85F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6FC57611D3ED41C8BB727C47 /* Pods-osx.xcconfig */;
+			baseConfigurationReference = 9D6E6293BDB940B59507EAF2 /* Pods-CDL_osx.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
