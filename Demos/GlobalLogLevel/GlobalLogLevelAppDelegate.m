@@ -11,10 +11,10 @@ int ddLogLevel;
 
 void someFunction()
 {
-    DDLogCError(@"%@: C_Error", THIS_FILE);
-    DDLogCWarn(@"%@: C_Warn", THIS_FILE);
-    DDLogCInfo(@"%@: C_Info", THIS_FILE);
-    DDLogCVerbose(@"%@: C_Verbose", THIS_FILE);
+    DDLogError(@"%@: C_Error", THIS_FILE);
+    DDLogWarn(@"%@: C_Warn", THIS_FILE);
+    DDLogInfo(@"%@: C_Info", THIS_FILE);
+    DDLogVerbose(@"%@: C_Verbose", THIS_FILE);
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification

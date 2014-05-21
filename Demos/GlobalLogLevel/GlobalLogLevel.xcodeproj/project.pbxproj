@@ -13,14 +13,12 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		DCEF891E131CB83F0010EB18 /* Stuff.m in Sources */ = {isa = PBXBuildFile; fileRef = DCEF891D131CB83F0010EB18 /* Stuff.m */; };
-		DCEF8928131CB8560010EB18 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCEF8921131CB8560010EB18 /* DDASLLogger.m */; };
-		DCEF8929131CB8560010EB18 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCEF8923131CB8560010EB18 /* DDFileLogger.m */; };
-		DCEF892A131CB8560010EB18 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DCEF8925131CB8560010EB18 /* DDLog.m */; };
-		DCEF892B131CB8560010EB18 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCEF8927131CB8560010EB18 /* DDTTYLogger.m */; };
+		DE470B18EF2B4B3B8044BE96 /* libPods-GLL_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F4B8F7213FB4122B5A49C67 /* libPods-GLL_osx.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0AB019D392334FB382CF9E99 /* Pods-GLL_osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GLL_osx.xcconfig"; path = "Pods/Pods-GLL_osx.xcconfig"; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -30,19 +28,12 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2F4B8F7213FB4122B5A49C67 /* libPods-GLL_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GLL_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D1107310486CEB800E47090 /* GlobalLogLevel-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GlobalLogLevel-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* GlobalLogLevel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlobalLogLevel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCEF891B131CB8350010EB18 /* MyLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLogging.h; sourceTree = "<group>"; };
 		DCEF891C131CB83F0010EB18 /* Stuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stuff.h; sourceTree = "<group>"; };
 		DCEF891D131CB83F0010EB18 /* Stuff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stuff.m; sourceTree = "<group>"; };
-		DCEF8920131CB8560010EB18 /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDASLLogger.h; path = ../../Lumberjack/DDASLLogger.h; sourceTree = SOURCE_ROOT; };
-		DCEF8921131CB8560010EB18 /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDASLLogger.m; path = ../../Lumberjack/DDASLLogger.m; sourceTree = SOURCE_ROOT; };
-		DCEF8922131CB8560010EB18 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDFileLogger.h; path = ../../Lumberjack/DDFileLogger.h; sourceTree = SOURCE_ROOT; };
-		DCEF8923131CB8560010EB18 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDFileLogger.m; path = ../../Lumberjack/DDFileLogger.m; sourceTree = SOURCE_ROOT; };
-		DCEF8924131CB8560010EB18 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDLog.h; path = ../../Lumberjack/DDLog.h; sourceTree = SOURCE_ROOT; };
-		DCEF8925131CB8560010EB18 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDLog.m; path = ../../Lumberjack/DDLog.m; sourceTree = SOURCE_ROOT; };
-		DCEF8926131CB8560010EB18 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDTTYLogger.h; path = ../../Lumberjack/DDTTYLogger.h; sourceTree = SOURCE_ROOT; };
-		DCEF8927131CB8560010EB18 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDTTYLogger.m; path = ../../Lumberjack/DDTTYLogger.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +42,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				DE470B18EF2B4B3B8044BE96 /* libPods-GLL_osx.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,12 +90,12 @@
 		29B97314FDCFA39411CA2CEA /* GlobalLogLevel */ = {
 			isa = PBXGroup;
 			children = (
-				DCEF891F131CB8460010EB18 /* Logging */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				0AB019D392334FB382CF9E99 /* Pods-GLL_osx.xcconfig */,
 			);
 			name = GlobalLogLevel;
 			sourceTree = "<group>";
@@ -132,23 +124,9 @@
 			children = (
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+				2F4B8F7213FB4122B5A49C67 /* libPods-GLL_osx.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		DCEF891F131CB8460010EB18 /* Logging */ = {
-			isa = PBXGroup;
-			children = (
-				DCEF8924131CB8560010EB18 /* DDLog.h */,
-				DCEF8925131CB8560010EB18 /* DDLog.m */,
-				DCEF8926131CB8560010EB18 /* DDTTYLogger.h */,
-				DCEF8927131CB8560010EB18 /* DDTTYLogger.m */,
-				DCEF8920131CB8560010EB18 /* DDASLLogger.h */,
-				DCEF8921131CB8560010EB18 /* DDASLLogger.m */,
-				DCEF8922131CB8560010EB18 /* DDFileLogger.h */,
-				DCEF8923131CB8560010EB18 /* DDFileLogger.m */,
-			);
-			name = Logging;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,9 +136,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "GlobalLogLevel" */;
 			buildPhases = (
+				0D23B4B62D464BDFBE5E1C81 /* Check Pods Manifest.lock */,
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
+				DC44A39793E940CA97F6EE5A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -211,6 +191,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0D23B4B62D464BDFBE5E1C81 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DC44A39793E940CA97F6EE5A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-GLL_osx-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -219,10 +232,6 @@
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				256AC3DA0F4B6AC300CF3369 /* GlobalLogLevelAppDelegate.m in Sources */,
 				DCEF891E131CB83F0010EB18 /* Stuff.m in Sources */,
-				DCEF8928131CB8560010EB18 /* DDASLLogger.m in Sources */,
-				DCEF8929131CB8560010EB18 /* DDFileLogger.m in Sources */,
-				DCEF892A131CB8560010EB18 /* DDLog.m in Sources */,
-				DCEF892B131CB8560010EB18 /* DDTTYLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +259,7 @@
 /* Begin XCBuildConfiguration section */
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0AB019D392334FB382CF9E99 /* Pods-GLL_osx.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -269,6 +279,7 @@
 		};
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0AB019D392334FB382CF9E99 /* Pods-GLL_osx.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
