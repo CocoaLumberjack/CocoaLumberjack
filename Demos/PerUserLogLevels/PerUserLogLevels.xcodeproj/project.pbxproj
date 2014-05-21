@@ -7,23 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		145FC9A96DC34918913D15B3 /* libPods-PULL_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0962D31C804C41988B625DA3 /* libPods-PULL_osx.a */; };
 		DC87A6F91525AEA3005A09B0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC87A6F81525AEA3005A09B0 /* Cocoa.framework */; };
 		DC87A7031525AEA3005A09B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DC87A7011525AEA3005A09B0 /* InfoPlist.strings */; };
 		DC87A7051525AEA3005A09B0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC87A7041525AEA3005A09B0 /* main.m */; };
 		DC87A7091525AEA3005A09B0 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DC87A7071525AEA3005A09B0 /* Credits.rtf */; };
 		DC87A70C1525AEA3005A09B0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC87A70B1525AEA3005A09B0 /* AppDelegate.m */; };
 		DC87A70F1525AEA3005A09B0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC87A70D1525AEA3005A09B0 /* MainMenu.xib */; };
-		DC87A7261525AEB3005A09B0 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC87A7171525AEB3005A09B0 /* DDAbstractDatabaseLogger.m */; };
-		DC87A7271525AEB3005A09B0 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC87A7191525AEB3005A09B0 /* DDASLLogger.m */; };
-		DC87A7281525AEB3005A09B0 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC87A71B1525AEB3005A09B0 /* DDFileLogger.m */; };
-		DC87A7291525AEB3005A09B0 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DC87A71D1525AEB3005A09B0 /* DDLog.m */; };
-		DC87A72A1525AEB3005A09B0 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC87A71F1525AEB3005A09B0 /* DDTTYLogger.m */; };
-		DC87A72B1525AEB3005A09B0 /* DDContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DC87A7221525AEB3005A09B0 /* DDContextFilterLogFormatter.m */; };
-		DC87A72C1525AEB3005A09B0 /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DC87A7241525AEB3005A09B0 /* DDDispatchQueueLogFormatter.m */; };
-		DC87A72D1525AEB3005A09B0 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = DC87A7251525AEB3005A09B0 /* README.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0962D31C804C41988B625DA3 /* libPods-PULL_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PULL_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		94B8B090BDCD4340AE8F9DEC /* Pods-PULL_osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PULL_osx.xcconfig"; path = "Pods/Pods-PULL_osx.xcconfig"; sourceTree = "<group>"; };
 		DC28B92D15263ED00043126F /* LumberjackUser.bash */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = LumberjackUser.bash; path = Scripts/LumberjackUser.bash; sourceTree = SOURCE_ROOT; };
 		DC87A6F41525AEA3005A09B0 /* PerUserLogLevels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerUserLogLevels.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC87A6F81525AEA3005A09B0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -38,21 +33,6 @@
 		DC87A70A1525AEA3005A09B0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DC87A70B1525AEA3005A09B0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DC87A70E1525AEA3005A09B0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		DC87A7161525AEB3005A09B0 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
-		DC87A7171525AEB3005A09B0 /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
-		DC87A7181525AEB3005A09B0 /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
-		DC87A7191525AEB3005A09B0 /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDASLLogger.m; sourceTree = "<group>"; };
-		DC87A71A1525AEB3005A09B0 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
-		DC87A71B1525AEB3005A09B0 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLogger.m; sourceTree = "<group>"; };
-		DC87A71C1525AEB3005A09B0 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
-		DC87A71D1525AEB3005A09B0 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
-		DC87A71E1525AEB3005A09B0 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
-		DC87A71F1525AEB3005A09B0 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
-		DC87A7211525AEB3005A09B0 /* DDContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDContextFilterLogFormatter.h; sourceTree = "<group>"; };
-		DC87A7221525AEB3005A09B0 /* DDContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDContextFilterLogFormatter.m; sourceTree = "<group>"; };
-		DC87A7231525AEB3005A09B0 /* DDDispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDispatchQueueLogFormatter.h; sourceTree = "<group>"; };
-		DC87A7241525AEB3005A09B0 /* DDDispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDispatchQueueLogFormatter.m; sourceTree = "<group>"; };
-		DC87A7251525AEB3005A09B0 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		DC87A72E1525B051005A09B0 /* LumberjackUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LumberjackUser.h; path = ../Xcode/PerUserLogLevels/PerUserLogLevels/LumberjackUser.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,6 +42,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC87A6F91525AEA3005A09B0 /* Cocoa.framework in Frameworks */,
+				145FC9A96DC34918913D15B3 /* libPods-PULL_osx.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,11 +52,11 @@
 		DC87A6E91525AEA2005A09B0 = {
 			isa = PBXGroup;
 			children = (
-				DC87A7151525AEB3005A09B0 /* Lumberjack */,
 				DC87A7301525B10C005A09B0 /* LumberjackUser */,
 				DC87A6FE1525AEA3005A09B0 /* PerUserLogLevels */,
 				DC87A6F71525AEA3005A09B0 /* Frameworks */,
 				DC87A6F51525AEA3005A09B0 /* Products */,
+				94B8B090BDCD4340AE8F9DEC /* Pods-PULL_osx.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -92,6 +73,7 @@
 			children = (
 				DC87A6F81525AEA3005A09B0 /* Cocoa.framework */,
 				DC87A6FA1525AEA3005A09B0 /* Other Frameworks */,
+				0962D31C804C41988B625DA3 /* libPods-PULL_osx.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -129,37 +111,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		DC87A7151525AEB3005A09B0 /* Lumberjack */ = {
-			isa = PBXGroup;
-			children = (
-				DC87A7161525AEB3005A09B0 /* DDAbstractDatabaseLogger.h */,
-				DC87A7171525AEB3005A09B0 /* DDAbstractDatabaseLogger.m */,
-				DC87A7181525AEB3005A09B0 /* DDASLLogger.h */,
-				DC87A7191525AEB3005A09B0 /* DDASLLogger.m */,
-				DC87A71A1525AEB3005A09B0 /* DDFileLogger.h */,
-				DC87A71B1525AEB3005A09B0 /* DDFileLogger.m */,
-				DC87A71C1525AEB3005A09B0 /* DDLog.h */,
-				DC87A71D1525AEB3005A09B0 /* DDLog.m */,
-				DC87A71E1525AEB3005A09B0 /* DDTTYLogger.h */,
-				DC87A71F1525AEB3005A09B0 /* DDTTYLogger.m */,
-				DC87A7201525AEB3005A09B0 /* Extensions */,
-			);
-			name = Lumberjack;
-			path = ../../Lumberjack;
-			sourceTree = "<group>";
-		};
-		DC87A7201525AEB3005A09B0 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				DC87A7211525AEB3005A09B0 /* DDContextFilterLogFormatter.h */,
-				DC87A7221525AEB3005A09B0 /* DDContextFilterLogFormatter.m */,
-				DC87A7231525AEB3005A09B0 /* DDDispatchQueueLogFormatter.h */,
-				DC87A7241525AEB3005A09B0 /* DDDispatchQueueLogFormatter.m */,
-				DC87A7251525AEB3005A09B0 /* README.txt */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		DC87A7301525B10C005A09B0 /* LumberjackUser */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,10 +128,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC87A7121525AEA3005A09B0 /* Build configuration list for PBXNativeTarget "PerUserLogLevels" */;
 			buildPhases = (
+				76E60D6416AA4C2AB3DFE316 /* Check Pods Manifest.lock */,
 				DC87A7341525B41D005A09B0 /* ShellScript */,
 				DC87A6F01525AEA3005A09B0 /* Sources */,
 				DC87A6F11525AEA3005A09B0 /* Frameworks */,
 				DC87A6F21525AEA3005A09B0 /* Resources */,
+				DB290A9ED1D14F6CA2ACE3FD /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -224,13 +177,42 @@
 				DC87A7031525AEA3005A09B0 /* InfoPlist.strings in Resources */,
 				DC87A7091525AEA3005A09B0 /* Credits.rtf in Resources */,
 				DC87A70F1525AEA3005A09B0 /* MainMenu.xib in Resources */,
-				DC87A72D1525AEB3005A09B0 /* README.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		76E60D6416AA4C2AB3DFE316 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DB290A9ED1D14F6CA2ACE3FD /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-PULL_osx-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		DC87A7341525B41D005A09B0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -253,13 +235,6 @@
 			files = (
 				DC87A7051525AEA3005A09B0 /* main.m in Sources */,
 				DC87A70C1525AEA3005A09B0 /* AppDelegate.m in Sources */,
-				DC87A7261525AEB3005A09B0 /* DDAbstractDatabaseLogger.m in Sources */,
-				DC87A7271525AEB3005A09B0 /* DDASLLogger.m in Sources */,
-				DC87A7281525AEB3005A09B0 /* DDFileLogger.m in Sources */,
-				DC87A7291525AEB3005A09B0 /* DDLog.m in Sources */,
-				DC87A72A1525AEB3005A09B0 /* DDTTYLogger.m in Sources */,
-				DC87A72B1525AEB3005A09B0 /* DDContextFilterLogFormatter.m in Sources */,
-				DC87A72C1525AEB3005A09B0 /* DDDispatchQueueLogFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +331,7 @@
 		};
 		DC87A7131525AEA3005A09B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94B8B090BDCD4340AE8F9DEC /* Pods-PULL_osx.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -368,6 +344,7 @@
 		};
 		DC87A7141525AEA3005A09B0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94B8B090BDCD4340AE8F9DEC /* Pods-PULL_osx.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
