@@ -1,5 +1,5 @@
 xcodeproj 'LogFileCompressor'
-workspace '../../Lumberjack_Demos'
+workspace '../../Demos'
 
 def import_pods
   pod 'CocoaLumberjack', :path => '../../'
