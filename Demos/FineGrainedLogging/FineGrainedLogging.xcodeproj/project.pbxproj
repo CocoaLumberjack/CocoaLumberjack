@@ -12,12 +12,9 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		DC6C0DFF119DBF49008094FC /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6C0DFB119DBF48008094FC /* DDFileLogger.m */; };
-		DC6C0E00119DBF49008094FC /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6C0DFD119DBF48008094FC /* DDLog.m */; };
+		AF01313230834410A94B64F3 /* libPods-FGL_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A94E4D661544393BDD070DF /* libPods-FGL_osx.a */; };
 		DC6C0E08119DC6C0008094FC /* TimerOne.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6C0E07119DC6C0008094FC /* TimerOne.m */; };
 		DC6C0E0C119DCED0008094FC /* TimerTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6C0E0B119DCED0008094FC /* TimerTwo.m */; };
-		DC7FBD44122CDB7C0003FA9B /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7FBD41122CDB7C0003FA9B /* DDASLLogger.m */; };
-		DC7FBD45122CDB7C0003FA9B /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7FBD43122CDB7C0003FA9B /* DDTTYLogger.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,21 +28,15 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		68DE281CB5694102AE46EA99 /* Pods-FGL_osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FGL_osx.xcconfig"; path = "Pods/Pods-FGL_osx.xcconfig"; sourceTree = "<group>"; };
+		7A94E4D661544393BDD070DF /* libPods-FGL_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FGL_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D1107310486CEB800E47090 /* FineGrainedLogging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "FineGrainedLogging-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* FineGrainedLogging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FineGrainedLogging.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		DC6C0DFA119DBF48008094FC /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDFileLogger.h; path = ../../Lumberjack/DDFileLogger.h; sourceTree = SOURCE_ROOT; };
-		DC6C0DFB119DBF48008094FC /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDFileLogger.m; path = ../../Lumberjack/DDFileLogger.m; sourceTree = SOURCE_ROOT; };
-		DC6C0DFC119DBF48008094FC /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDLog.h; path = ../../Lumberjack/DDLog.h; sourceTree = SOURCE_ROOT; };
-		DC6C0DFD119DBF48008094FC /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDLog.m; path = ../../Lumberjack/DDLog.m; sourceTree = SOURCE_ROOT; };
 		DC6C0E06119DC6C0008094FC /* TimerOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerOne.h; sourceTree = "<group>"; };
 		DC6C0E07119DC6C0008094FC /* TimerOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimerOne.m; sourceTree = "<group>"; };
 		DC6C0E09119DC7E7008094FC /* MYLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYLog.h; sourceTree = "<group>"; };
 		DC6C0E0A119DCED0008094FC /* TimerTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerTwo.h; sourceTree = "<group>"; };
 		DC6C0E0B119DCED0008094FC /* TimerTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimerTwo.m; sourceTree = "<group>"; };
-		DC7FBD40122CDB7C0003FA9B /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDASLLogger.h; path = ../../Lumberjack/DDASLLogger.h; sourceTree = SOURCE_ROOT; };
-		DC7FBD41122CDB7C0003FA9B /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDASLLogger.m; path = ../../Lumberjack/DDASLLogger.m; sourceTree = SOURCE_ROOT; };
-		DC7FBD42122CDB7C0003FA9B /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDTTYLogger.h; path = ../../Lumberjack/DDTTYLogger.h; sourceTree = SOURCE_ROOT; };
-		DC7FBD43122CDB7C0003FA9B /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDTTYLogger.m; path = ../../Lumberjack/DDTTYLogger.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +45,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				AF01313230834410A94B64F3 /* libPods-FGL_osx.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,12 +95,12 @@
 		29B97314FDCFA39411CA2CEA /* FineGrainedLogging */ = {
 			isa = PBXGroup;
 			children = (
-				DC6C0DF7119DBF28008094FC /* Logging */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				68DE281CB5694102AE46EA99 /* Pods-FGL_osx.xcconfig */,
 			);
 			name = FineGrainedLogging;
 			sourceTree = "<group>";
@@ -137,23 +129,9 @@
 			children = (
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+				7A94E4D661544393BDD070DF /* libPods-FGL_osx.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		DC6C0DF7119DBF28008094FC /* Logging */ = {
-			isa = PBXGroup;
-			children = (
-				DC6C0DFC119DBF48008094FC /* DDLog.h */,
-				DC6C0DFD119DBF48008094FC /* DDLog.m */,
-				DC7FBD40122CDB7C0003FA9B /* DDASLLogger.h */,
-				DC7FBD41122CDB7C0003FA9B /* DDASLLogger.m */,
-				DC7FBD42122CDB7C0003FA9B /* DDTTYLogger.h */,
-				DC7FBD43122CDB7C0003FA9B /* DDTTYLogger.m */,
-				DC6C0DFA119DBF48008094FC /* DDFileLogger.h */,
-				DC6C0DFB119DBF48008094FC /* DDFileLogger.m */,
-			);
-			name = Logging;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,9 +141,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "FineGrainedLogging" */;
 			buildPhases = (
+				A6E741C5168D4170BC5F9930 /* Check Pods Manifest.lock */,
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
+				8068EDD50A2240EAAE0068F0 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -216,6 +196,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8068EDD50A2240EAAE0068F0 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-FGL_osx-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A6E741C5168D4170BC5F9930 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -223,12 +236,8 @@
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				256AC3DA0F4B6AC300CF3369 /* FineGrainedLoggingAppDelegate.m in Sources */,
-				DC6C0DFF119DBF49008094FC /* DDFileLogger.m in Sources */,
-				DC6C0E00119DBF49008094FC /* DDLog.m in Sources */,
 				DC6C0E08119DC6C0008094FC /* TimerOne.m in Sources */,
 				DC6C0E0C119DCED0008094FC /* TimerTwo.m in Sources */,
-				DC7FBD44122CDB7C0003FA9B /* DDASLLogger.m in Sources */,
-				DC7FBD45122CDB7C0003FA9B /* DDTTYLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +265,7 @@
 /* Begin XCBuildConfiguration section */
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 68DE281CB5694102AE46EA99 /* Pods-FGL_osx.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -275,6 +285,7 @@
 		};
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 68DE281CB5694102AE46EA99 /* Pods-FGL_osx.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
