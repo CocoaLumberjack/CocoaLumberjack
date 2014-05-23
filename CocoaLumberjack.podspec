@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'CocoaLumberjack'
-  s.version  = '1.8.1'
+  s.version  = '1.9.0'
   s.license  = 'BSD'
   s.summary  = 'A fast & simple, yet powerful & flexible logging framework for Mac and iOS.'
   s.homepage = 'https://github.com/CocoaLumberjack/CocoaLumberjack'
