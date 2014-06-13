@@ -896,6 +896,66 @@ static char *dd_str_copy(const char *str)
     return result;
 }
 
+// Can we use DISPATCH_CURRENT_QUEUE_LABEL ?
+// Can we use dispatch_get_current_queue (without it crashing) ?
+//
+// a) Compiling against newer SDK's (iOS 7+/OS X 10.9+) where DISPATCH_CURRENT_QUEUE_LABEL is defined
+//    on a (iOS 7.0+/OS X 10.9+) runtime version
+//
+// b) Systems where dispatch_get_current_queue is not yet deprecated and won't crash (< iOS 6.0/OS X 10.9)
+//
+//    dispatch_get_current_queue(void);
+//      __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_6,__MAC_10_9,__IPHONE_4_0,__IPHONE_6_0)
+
+#if TARGET_OS_IPHONE
+
+  // Compiling for iOS
+
+  #ifndef __IPHONE_7_0
+    #define __IPHONE_7_0 70000
+  #endif
+
+  #if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_7_0 // iOS 7 or later required
+
+      #define USE_DISPATCH_CURRENT_QUEUE_LABEL  YES
+      #define USE_DISPATCH_GET_CURRENT_QUEUE    NO
+
+  #else                                                // iOS 7 NOT required
+
+      #ifndef NSFoundationVersionNumber_iOS_6_1
+        #define NSFoundationVersionNumber_iOS_6_1 993.00
+      #endif
+      #ifndef NSFoundationVersionNumber_iOS_6_0
+        #define NSFoundationVersionNumber_iOS_6_0 992.00
+      #endif
+
+      #define USE_DISPATCH_CURRENT_QUEUE_LABEL (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
+      #define USE_DISPATCH_GET_CURRENT_QUEUE   (floor(NSFoundationVersionNumber) < NSFoundationVersionNumber_iOS_6_0)
+
+    #endif
+
+#else
+
+  // Compiling for Mac OS X
+
+  #ifndef MAC_OS_X_VERSION_10_9
+    #define MAC_OS_X_VERSION_10_9 1090
+  #endif
+
+  #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_9 // Mac OS X 10.9 or later required
+
+    #define USE_DISPATCH_CURRENT_QUEUE_LABEL  YES
+    #define USE_DISPATCH_GET_CURRENT_QUEUE    NO
+
+  #else
+
+    #define USE_DISPATCH_CURRENT_QUEUE_LABEL ([NSTimer instancesRespondToSelector:@selector(tolerance)]) // OS X 10.9+
+    #define USE_DISPATCH_GET_CURRENT_QUEUE  (![NSTimer instancesRespondToSelector:@selector(tolerance)]) // < OS X 10.9
+
+  #endif
+
+#endif
+
 - (instancetype)initWithLogMsg:(NSString *)msg
                          level:(int)level
                           flag:(int)flag
@@ -957,50 +1017,23 @@ static char *dd_str_copy(const char *str)
 
     // Try to get the current queue's label
 
-    // a) Compiling against newer SDK's (iOS 7+/OS X 10.9+) where DISPATCH_CURRENT_QUEUE_LABEL is defined
-    //    on a (iOS 7.0+/OS X 10.9+) runtime version
-    BOOL gotLabel = NO;
-#ifdef DISPATCH_CURRENT_QUEUE_LABEL
-    if (
-#if TARGET_OS_IPHONE
-#ifndef NSFoundationVersionNumber_iOS_6_1
-#define NSFoundationVersionNumber_iOS_6_1 993.00
-#endif
-        floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1 // iOS 7+ (> iOS 6.1)
-#else
-        [NSTimer instancesRespondToSelector:@selector(tolerance)] // OS X 10.9+
-#endif
-        ) {
-      queueLabel = dd_str_copy(dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL));
-      gotLabel = YES;
-    }
-#endif
-
-    // b) Systems where dispatch_get_current_queue is not yet deprecated and won't crash (< iOS 6.0/OS X 10.9)
-    //    dispatch_get_current_queue(void); __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_6,__MAC_10_9,__IPHONE_4_0,__IPHONE_6_0)
-    if (!gotLabel &&
-#if TARGET_OS_IPHONE
-#ifndef NSFoundationVersionNumber_iOS_6_0
-#define NSFoundationVersionNumber_iOS_6_0 993.00
-#endif
-        floor(NSFoundationVersionNumber) < NSFoundationVersionNumber_iOS_6_0 // < iOS 6.0
-#else
-        ![NSTimer instancesRespondToSelector:@selector(tolerance)] // < OS X 10.9
-#endif
-        ) {
+    if (USE_DISPATCH_CURRENT_QUEUE_LABEL)
+	{
+		queueLabel = dd_str_copy(dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL));
+	}
+	else if (USE_DISPATCH_GET_CURRENT_QUEUE)
+	{
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-      dispatch_queue_t currentQueue = dispatch_get_current_queue();
+		dispatch_queue_t currentQueue = dispatch_get_current_queue();
 #pragma clang diagnostic pop
 
-      queueLabel = dd_str_copy(dispatch_queue_get_label(currentQueue));
-      gotLabel = YES;
-    }
-
-    // c) Give up
-    if (!gotLabel) {
-      queueLabel = dd_str_copy(""); // iOS 6.x only
-    }
+		queueLabel = dd_str_copy(dispatch_queue_get_label(currentQueue));
+	}
+	else
+	{
+		queueLabel = dd_str_copy(""); // iOS 6.x only
+	}
 
     threadName = [[NSThread currentThread] name];
   }
