@@ -236,6 +236,7 @@
 #define LOG_LEVEL_INFO    (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO)                                      // 0...00111
 #define LOG_LEVEL_DEBUG   (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO | LOG_FLAG_DEBUG)                     // 0...01111
 #define LOG_LEVEL_VERBOSE (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO | LOG_FLAG_DEBUG | LOG_FLAG_VERBOSE)  // 0...11111
+#define LOG_LEVEL_ALL      0xFFFFFFFF // 1111....11111 (LOG_LEVEL_VERBOSE plus any other flags)
 
 #define LOG_ERROR         (LOG_LEVEL_DEF & LOG_FLAG_ERROR)
 #define LOG_WARN          (LOG_LEVEL_DEF & LOG_FLAG_WARN)
@@ -352,15 +353,54 @@ NSString *DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 /** 
  * Loggers
  * 
- * If you want your log statements to go somewhere,
- * you should create and add a logger.
+ * In order for your log statements to go somewhere, you should create and add a logger.
+ * 
+ * You can add multiple loggers in order to direct your log statements to multiple places.
+ * And each logger can be configured separately.
+ * So you could have, for example, verbose logging to the console, but a concise log file with only warnings & errors.
 **/
 
-+ (void)addLogger:(id <DDLogger>)logger;    // adds the logger using maximum log level (LOG_LEVEL_VERBOSE)
+/**
+ * Adds the logger to the system.
+ * 
+ * This is equivalent to invoking [DDLog addLogger:logger withLogLevel:LOG_LEVEL_ALL].
+**/
++ (void)addLogger:(id <DDLogger>)logger;
 
 /**
- * Please use as logLevels the LOG_LEVEL_* macros
+ * Adds the logger to the system.
+ * 
+ * The logLevel that you provide here is a preemptive filter (for performance).
+ * That is, the logLevel specified here will be used to filter out logMessages so that
+ * the logger is never even invoked for the messages.
+ * 
+ * More information:
+ * When you issue a log statement, the logging framework iterates over each logger,
+ * and checks to see if it should forward the logMessage to the logger.
+ * This check is done using the logLevel parameter passed to this method.
+ * 
+ * For example:
+ * [DDLog addLogger:consoleLogger withLogLevel:LOG_LEVEL_VERBOSE];
+ * [DDLog addLogger:fileLogger    withLogLevel:LOG_LEVEL_WARN];
  *
+ * DDLogError(@"oh no"); => gets forwarded to consoleLogger & fileLogger
+ * DDLogInfo(@"hi");     => gets forwarded to consoleLogger only
+ *
+ * It is important to remember that Lumberjack uses a BITMASK.
+ * Many developers & third party frameworks may define extra log levels & flags.
+ * For example:
+ * 
+ * #define SOME_FRAMEWORK_LOG_FLAG_TRACE (1 << 6) // 0...1000000
+ *
+ * So if you specify LOG_LEVEL_VERBOSE to this method, you won't see the framework's trace messages.
+ *
+ * (SOME_FRAMEWORK_LOG_FLAG_TRACE & LOG_LEVEL_VERBOSE) => (01000000 & 00011111) => NO
+ * 
+ * Consider passing LOG_LEVEL_ALL to this method, which has all bits set.
+ * You can also use the exclusive-or bitwise operator to get a bitmask that has all flags set,
+ * except the ones you explicitly don't want. For example, if you wanted everything except verbose & debug:
+ * 
+ * ((LOG_LEVEL_ALL ^ LOG_LEVEL_VERBOSE) | LOG_LEVEL_INFO)
 **/
 + (void)addLogger:(id <DDLogger>)logger withLogLevel:(int)logLevel;
 
