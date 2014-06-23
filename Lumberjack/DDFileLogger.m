@@ -300,7 +300,7 @@ BOOL doesAppRunInBackground(void);
 {
     NSMutableDictionary *dictionary = [[NSThread currentThread]
                                        threadDictionary];
-    NSString *key = @"logFileDateFormatter";
+    NSString *key = @"yyyy'-'MM'-'dd' 'HH'-'mm'";
     NSDateFormatter *dateFormatter = [dictionary objectForKey:key];
     if (dateFormatter == nil) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
