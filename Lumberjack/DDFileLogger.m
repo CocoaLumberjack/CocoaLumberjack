@@ -300,11 +300,12 @@ BOOL doesAppRunInBackground(void);
 {
     NSMutableDictionary *dictionary = [[NSThread currentThread]
                                        threadDictionary];
-    NSString *key = @"yyyy'-'MM'-'dd' 'HH'-'mm'";
+    NSString *dateFormat = @"yyyy'-'MM'-'dd' 'HH'-'mm'";
+    NSString *key = [NSString stringWithFormat:@"logFileDateFormatter.%@", dateFormat];
     NSDateFormatter *dateFormatter = [dictionary objectForKey:key];
     if (dateFormatter == nil) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'-'mm'"];
+        [dateFormatter setDateFormat:dateFormat];
         [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
         [dictionary setObject:dateFormatter
                        forKey:key];
