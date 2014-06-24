@@ -298,10 +298,19 @@ BOOL doesAppRunInBackground(void);
 
 - (NSDateFormatter *)logFileDateFormatter
 {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'-'mm'"];
-    [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-
+    NSMutableDictionary *dictionary = [[NSThread currentThread]
+                                       threadDictionary];
+    NSString *dateFormat = @"yyyy'-'MM'-'dd' 'HH'-'mm'";
+    NSString *key = [NSString stringWithFormat:@"logFileDateFormatter.%@", dateFormat];
+    NSDateFormatter *dateFormatter = [dictionary objectForKey:key];
+    if (dateFormatter == nil) {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:dateFormat];
+        [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+        [dictionary setObject:dateFormatter
+                       forKey:key];
+    }
+    
     return dateFormatter;
 }
 
