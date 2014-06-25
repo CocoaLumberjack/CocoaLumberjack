@@ -304,7 +304,7 @@ BOOL doesAppRunInBackground(void);
     NSString *key = [NSString stringWithFormat:@"logFileDateFormatter.%@", dateFormat];
     NSDateFormatter *dateFormatter = [dictionary objectForKey:key];
     if (dateFormatter == nil) {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:dateFormat];
         [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
         [dictionary setObject:dateFormatter
