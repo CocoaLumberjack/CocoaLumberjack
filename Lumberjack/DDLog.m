@@ -911,28 +911,8 @@ static char *dd_str_copy(const char *str)
 
   // Compiling for iOS
 
-  #ifndef __IPHONE_7_0
-    #define __IPHONE_7_0 70000
-  #endif
-
-  #if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_7_0 // iOS 7 or later required
-
-      #define USE_DISPATCH_CURRENT_QUEUE_LABEL  YES
-      #define USE_DISPATCH_GET_CURRENT_QUEUE    NO
-
-  #else                                                // iOS 7 NOT required
-
-      #ifndef NSFoundationVersionNumber_iOS_6_1
-        #define NSFoundationVersionNumber_iOS_6_1 993.00
-      #endif
-      #ifndef NSFoundationVersionNumber_iOS_6_0
-        #define NSFoundationVersionNumber_iOS_6_0 992.00
-      #endif
-
-      #define USE_DISPATCH_CURRENT_QUEUE_LABEL (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
-      #define USE_DISPATCH_GET_CURRENT_QUEUE   (floor(NSFoundationVersionNumber) < NSFoundationVersionNumber_iOS_6_0)
-
-    #endif
+    #define USE_DISPATCH_CURRENT_QUEUE_LABEL ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+    #define USE_DISPATCH_GET_CURRENT_QUEUE ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.1)
 
 #else
 
