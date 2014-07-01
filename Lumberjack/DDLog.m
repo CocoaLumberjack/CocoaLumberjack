@@ -470,6 +470,7 @@ static unsigned int numProcessors;
     // This allows us to allocate the minimum amount of memory needed for the application.
     
     numClasses = (NSUInteger)MAX(objc_getClassList(NULL, 0), 0);
+    if (numClasses == 0) return nil;
     
     // The numClasses method now tells us how many classes we have.
     // So we can allocate our buffer, and get pointers to all the class definitions.
