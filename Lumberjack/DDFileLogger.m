@@ -60,6 +60,7 @@ BOOL doesAppRunInBackground(void);
 @implementation DDLogFileManagerDefault
 
 @synthesize maximumNumberOfLogFiles;
+@synthesize logFilesDiskQuota;
 
 - (id)init
 {
@@ -71,6 +72,7 @@ BOOL doesAppRunInBackground(void);
     if ((self = [super init]))
     {
         maximumNumberOfLogFiles = DEFAULT_LOG_MAX_NUM_LOG_FILES;
+        logFilesDiskQuota = DEFAULT_LOG_FILES_DISK_QUOTA;
         
         if (aLogsDirectory)
             _logsDirectory = [aLogsDirectory copy];
@@ -80,6 +82,7 @@ BOOL doesAppRunInBackground(void);
         NSKeyValueObservingOptions kvoOptions = NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew;
         
         [self addObserver:self forKeyPath:NSStringFromSelector(@selector(maximumNumberOfLogFiles)) options:kvoOptions context:nil];
+        [self addObserver:self forKeyPath:NSStringFromSelector(@selector(logFilesDiskQuota)) options:kvoOptions context:nil];
         
         NSLogVerbose(@"DDFileLogManagerDefault: logsDirectory:\n%@", [self logsDirectory]);
         NSLogVerbose(@"DDFileLogManagerDefault: sortedLogFileNames:\n%@", [self sortedLogFileNames]);
@@ -106,6 +109,7 @@ BOOL doesAppRunInBackground(void);
     // try-catch because the observer might be removed or never added. In this case, removeObserver throws and exception
     @try {
         [self removeObserver:self forKeyPath:NSStringFromSelector(@selector(maximumNumberOfLogFiles))];
+        [self removeObserver:self forKeyPath:NSStringFromSelector(@selector(logFilesDiskQuota))];
     }
     @catch (NSException *exception) {
         
@@ -130,9 +134,10 @@ BOOL doesAppRunInBackground(void);
         return;
     }
     
-    if ([keyPath isEqualToString:NSStringFromSelector(@selector(maximumNumberOfLogFiles))])
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(maximumNumberOfLogFiles))] ||
+        [keyPath isEqualToString:NSStringFromSelector(@selector(logFilesDiskQuota))])
     {
-        NSLogInfo(@"DDFileLogManagerDefault: Responding to configuration change: maximumNumberOfLogFiles");
+        NSLogInfo(@"DDFileLogManagerDefault: Responding to configuration change: %@", keyPath);
         
         dispatch_async([DDLog loggingQueue], ^{ @autoreleasepool {
             
@@ -146,58 +151,78 @@ BOOL doesAppRunInBackground(void);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Deletes archived log files that exceed the maximumNumberOfLogFiles configuration value.
+ * Deletes archived log files that exceed the maximumNumberOfLogFiles or logFilesDiskQuota configuration values.
 **/
 - (void)deleteOldLogFiles
 {
     NSLogVerbose(@"DDLogFileManagerDefault: deleteOldLogFiles");
     
-    NSUInteger maxNumLogFiles = self.maximumNumberOfLogFiles;
-    if (maxNumLogFiles == 0)
-    {
-        // Unlimited - don't delete any log files
-        return;
-    }
-    
     NSArray *sortedLogFileInfos = [self sortedLogFileInfos];
-    
-    // Do we consider the first file?
-    // We are only supposed to be deleting archived files.
-    // In most cases, the first file is likely the log file that is currently being written to.
-    // So in most cases, we do not want to consider this file for deletion.
-    
-    NSUInteger count = [sortedLogFileInfos count];
-    BOOL excludeFirstFile = NO;
-    
-    if (count > 0)
+
+    NSUInteger firstIndexToDelete = NSNotFound;
+
+    const unsigned long long diskQuota = self.logFilesDiskQuota;
+    const NSUInteger maxNumLogFiles = self.maximumNumberOfLogFiles;
+
+    if (diskQuota)
     {
-        DDLogFileInfo *logFileInfo = [sortedLogFileInfos objectAtIndex:0];
-        
-        if (!logFileInfo.isArchived)
+        unsigned long long used = 0;
+
+        for (NSUInteger i = 0; i < sortedLogFileInfos.count; i++)
         {
-            excludeFirstFile = YES;
+            DDLogFileInfo *info = sortedLogFileInfos[i];
+            used += info.fileSize;
+
+            if (used > diskQuota)
+            {
+                firstIndexToDelete = i;
+                break;
+            }
         }
     }
-    
-    NSArray *sortedArchivedLogFileInfos;
-    if (excludeFirstFile)
+
+    if (maxNumLogFiles)
     {
-        count--;
-        sortedArchivedLogFileInfos = [sortedLogFileInfos subarrayWithRange:NSMakeRange(1, count)];
+        if (firstIndexToDelete == NSNotFound)
+        {
+            firstIndexToDelete = maxNumLogFiles;
+        }
+        else
+        {
+            firstIndexToDelete = MIN(firstIndexToDelete, maxNumLogFiles);
+        }
     }
-    else
-    {
-        sortedArchivedLogFileInfos = sortedLogFileInfos;
+
+    if (firstIndexToDelete == 0) {
+        // Do we consider the first file?
+        // We are only supposed to be deleting archived files.
+        // In most cases, the first file is likely the log file that is currently being written to.
+        // So in most cases, we do not want to consider this file for deletion.
+
+        if (sortedLogFileInfos.count > 0)
+        {
+            DDLogFileInfo *logFileInfo = [sortedLogFileInfos objectAtIndex:0];
+
+            if (! logFileInfo.isArchived)
+            {
+                // Don't delete active file.
+                ++firstIndexToDelete;
+            }
+        }
     }
-    
-    NSUInteger i;
-    for (i = maxNumLogFiles; i < count; i++)
+
+    if (firstIndexToDelete != NSNotFound)
     {
-        DDLogFileInfo *logFileInfo = [sortedArchivedLogFileInfos objectAtIndex:i];
-        
-        NSLogInfo(@"DDLogFileManagerDefault: Deleting file: %@", logFileInfo.fileName);
-        
-        [[NSFileManager defaultManager] removeItemAtPath:logFileInfo.filePath error:nil];
+        // removing all logfiles starting with firstIndexToDelete
+
+        for (NSUInteger i = firstIndexToDelete; i < sortedLogFileInfos.count; i++)
+        {
+            DDLogFileInfo *logFileInfo = sortedLogFileInfos[i];
+
+            NSLogInfo(@"DDLogFileManagerDefault: Deleting file: %@", logFileInfo.fileName);
+
+            [[NSFileManager defaultManager] removeItemAtPath:logFileInfo.filePath error:nil];
+        }
     }
 }
 
