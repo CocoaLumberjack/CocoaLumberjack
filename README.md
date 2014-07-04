@@ -2,6 +2,13 @@
   <img src="LumberjackLogo.png" title="Lumberjack logo" float=left>
 </p>
 
+CocoaLumberjack
+===============
+[![Build Status](http://img.shields.io/travis/CocoaLumberjack/CocoaLumberjack/master.svg?style=flat)](https://travis-ci.org/CocoaLumberjack/CocoaLumberjack)
+[![Pod Version](http://img.shields.io/cocoapods/v/CocoaLumberjack.svg?style=flat)](http://cocoadocs.org/docsets/CocoaLumberjack/)
+[![Pod Platform](http://img.shields.io/cocoapods/p/CocoaLumberjack.svg?style=flat)](http://cocoadocs.org/docsets/CocoaLumberjack/)
+[![Pod License](http://img.shields.io/cocoapods/l/CocoaLumberjack.svg?style=flat)](http://opensource.org/licenses/BSD-3-Clause)
+
 **CocoaLumberjack** is a fast & simple, yet powerful & flexible logging framework for Mac and iOS.
 
 #### Lumberjack is Fast & Simple, yet Powerful & Flexible.
