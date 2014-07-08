@@ -815,9 +815,7 @@ static DDTTYLogger *sharedInstance;
     }
     
     if ((self = [super init]))
-    {
-        calendar = [NSCalendar autoupdatingCurrentCalendar];
-        
+    {        
         calendarUnitFlags = (NSCalendarUnitYear     |
                              NSCalendarUnitMonth    |
                              NSCalendarUnitDay      |
@@ -1279,7 +1277,7 @@ static DDTTYLogger *sharedInstance;
             // The technique below is faster than using NSDateFormatter.
             if (logMessage->timestamp)
             {
-                NSDateComponents *components = [calendar components:calendarUnitFlags fromDate:logMessage->timestamp];
+                NSDateComponents *components = [[NSCalendar autoupdatingCurrentCalendar] components:calendarUnitFlags fromDate:logMessage->timestamp];
                 
                 NSTimeInterval epoch = [logMessage->timestamp timeIntervalSinceReferenceDate];
                 int milliseconds = (int)((epoch - floor(epoch)) * 1000);

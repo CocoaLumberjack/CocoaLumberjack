@@ -37,7 +37,6 @@
 
 @interface DDTTYLogger : DDAbstractLogger <DDLogger>
 {
-    NSCalendar *calendar;
     NSUInteger calendarUnitFlags;
     
     NSString *appName;
