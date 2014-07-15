@@ -62,6 +62,7 @@ BOOL doesAppRunInBackground(void);
 @synthesize maximumNumberOfLogFiles;
 @synthesize logFilesDiskQuota;
 
+
 - (id)init
 {
     return [self initWithLogsDirectory:nil];
@@ -625,6 +626,7 @@ BOOL doesAppRunInBackground(void);
     {
         maximumFileSize = DEFAULT_LOG_MAX_FILE_SIZE;
         rollingFrequency = DEFAULT_LOG_ROLLING_FREQUENCY;
+        _automaticallyAppendNewlineForCustomFormatters = YES;
         
         logFileManager = aLogFileManager;
         
@@ -1070,17 +1072,21 @@ static int exception_count = 0;
 - (void)logMessage:(DDLogMessage *)logMessage
 {
     NSString *logMsg = logMessage->logMsg;
-    
+    BOOL isFormatted = NO;
+
     if (formatter)
     {
         logMsg = [formatter formatLogMessage:logMessage];
+        isFormatted = logMsg != logMessage->logMsg;
     }
     
     if (logMsg)
     {
-        if (![logMsg hasSuffix:@"\n"])
-        {
-            logMsg = [logMsg stringByAppendingString:@"\n"];
+        if ((isFormatted && _automaticallyAppendNewlineForCustomFormatters) || !isFormatted ) {
+            if (![logMsg hasSuffix:@"\n"])
+            {
+                logMsg = [logMsg stringByAppendingString:@"\n"];
+            }
         }
         
         NSData *logData = [logMsg dataUsingEncoding:NSUTF8StringEncoding];
