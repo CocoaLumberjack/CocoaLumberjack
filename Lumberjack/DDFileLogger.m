@@ -1082,7 +1082,8 @@ static int exception_count = 0;
     
     if (logMsg)
     {
-        if ((isFormatted && _automaticallyAppendNewlineForCustomFormatters) || !isFormatted ) {
+        if (!isFormatted || _automaticallyAppendNewlineForCustomFormatters)
+        {
             if (![logMsg hasSuffix:@"\n"])
             {
                 logMsg = [logMsg stringByAppendingString:@"\n"];
