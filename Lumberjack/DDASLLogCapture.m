@@ -158,14 +158,14 @@ static int _captureLogLevel = LOG_LEVEL_VERBOSE;
                                          // Iterate over new messages.
                                          aslmsg msg;
                                          aslresponse response = asl_search(NULL, query);
-                                         while ((msg = aslresponse_next(response)))
+                                         while ((msg = asl_next(response)))
                                          {
                                              [DDASLLogCapture aslMessageRecieved:msg];
                                              
                                              // Keep track of which messages we've seen.
                                              lastSeenID = atoll(asl_get(msg, ASL_KEY_MSG_ID));
                                          }
-                                         aslresponse_free(response);
+                                         asl_release(response);
                                          
                                          if(_cancel)
                                          {
