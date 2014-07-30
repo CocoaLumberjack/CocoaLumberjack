@@ -1082,12 +1082,10 @@ static int exception_count = 0;
     
     if (logMsg)
     {
-        if (!isFormatted || _automaticallyAppendNewlineForCustomFormatters)
+        if ((!isFormatted || _automaticallyAppendNewlineForCustomFormatters) &&
+        (![logMsg hasSuffix:@"\n"]))
         {
-            if (![logMsg hasSuffix:@"\n"])
-            {
                 logMsg = [logMsg stringByAppendingString:@"\n"];
-            }
         }
         
         NSData *logData = [logMsg dataUsingEncoding:NSUTF8StringEncoding];
