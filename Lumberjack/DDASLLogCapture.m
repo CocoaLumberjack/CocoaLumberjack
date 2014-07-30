@@ -172,6 +172,7 @@ static int _captureLogLevel = LOG_LEVEL_VERBOSE;
                                              notify_cancel(notifyToken);
                                              return;
                                          }
+                                         free(query);
                                      }
                                  });
     }
