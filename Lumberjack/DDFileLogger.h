@@ -285,6 +285,13 @@
 **/
 @property (strong, nonatomic, readonly) id <DDLogFileManager> logFileManager;
 
+/**
+ * When using a custom formatter you can set the logMessage method not to append
+ * '\n' character after each output. This allows for some greater flexibility with
+ * custom formatters. Default value is YES.
+**/
+ 
+@property (readwrite, assign) BOOL automaticallyAppendNewlineForCustomFormatters;
 
 // You can optionally force the current log file to be rolled with this method.
 // CompletionBlock will be called on main queue.
