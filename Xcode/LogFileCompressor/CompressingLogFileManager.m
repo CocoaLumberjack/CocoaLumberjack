@@ -92,6 +92,7 @@
     if (count == 0)
     {
         // Nothing to compress
+        upToDate = YES;
         return;
     }
     
