@@ -1046,8 +1046,7 @@ static char *dd_str_copy(const char *str)
     if (function && (options & DDLogMessageCopyFunction))
         free(function);
     
-    if (queueLabel)
-        free(queueLabel);
+    free(queueLabel);
 }
 
 
