@@ -95,20 +95,20 @@ script:
     - cd ..
     - xctool -workspace Demos.xcworkspace  -scheme 'WebServerIPhone' -configuration Release -sdk iphonesimulator -arch i386 build
 
-    - cd BenchmarkMac
+    - cd Benchmark/Desktop
     - pod install
-    - cd ..
+    - cd ../..
     - xctool -workspace Demos.xcworkspace -scheme 'BenchmarkMac'
+
+    - cd Benchmark/Mobile
+    - pod install
+    - cd ../..
+    - xctool -workspace Demos.xcworkspace -scheme 'BenchmarkIPhone' -configuration Release -sdk iphonesimulator -arch i386 build
 
     - cd SQLiteLogger
     - pod install
     - cd ..
     - xctool -workspace Demos.xcworkspace -scheme 'SQLiteLogger'
-
-    - cd BenchmarkIPhone
-    - pod install
-    - cd ..
-    - xctool -workspace Demos.xcworkspace -scheme 'BenchmarkIPhone' -configuration Release -sdk iphonesimulator -arch i386 build
 
     - cd TestXcodeColors/Desktop
     - pod install
