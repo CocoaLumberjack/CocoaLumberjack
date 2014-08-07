@@ -1,5 +1,5 @@
 xcodeproj 'TestXcodeColors'
-workspace '../../../Testing'
+workspace '../../Demos'
 
 def import_pods
   pod 'CocoaLumberjack', :path => '../../../'
