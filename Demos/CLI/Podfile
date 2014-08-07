@@ -1,5 +1,5 @@
 xcodeproj 'CLI'
-workspace '../../Demos'
+workspace '../Demos'
 
 def import_pods
   pod 'CocoaLumberjack/CLI', :path => '../../'
