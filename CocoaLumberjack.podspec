@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'CocoaLumberjack'
-  s.version  = '1.9.2'
+  s.version  = '2.0.0'
   s.license  = 'BSD'
   s.summary  = 'A fast & simple, yet powerful & flexible logging framework for Mac and iOS.'
   s.homepage = 'https://github.com/CocoaLumberjack/CocoaLumberjack'
@@ -21,20 +21,20 @@ Pod::Spec.new do |s|
   
   s.public_header_files = 'Classes/*.h'
 
-  s.default_subspec = 'Extensions'
+  s.source_files = 'Classes/CocoaLumberjack.{h,m}'
 
   s.subspec 'Core' do |ss|
     ss.source_files = 'Classes/*.{h,m}'
   end
 
   s.subspec 'Extensions' do |ss|
-    ss.dependency 'CocoaLumberjack/Core'
     ss.source_files = 'Classes/Extensions/*.{h,m}'
+    ss.dependency 'CocoaLumberjack/Core'
   end
   
   s.subspec 'CLI' do |ss|
-      ss.dependency 'CocoaLumberjack/Core'
       ss.source_files = 'Classes/CLI/*.{h,m}'
+      ss.dependency 'CocoaLumberjack/Core'
   end
   
 end
