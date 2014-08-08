@@ -1,6 +1,4 @@
 
-#import "DDLog.h"
-
 /**
  * Welcome to CocoaLumberjack!
  *
@@ -14,9 +12,9 @@
  * There are three steps to using the macros:
  *
  * Step 1:
- * Import the header in your implementation file:
+ * Import the header in your implementation or prefix file:
  *
- * #import "DDLog.h"
+ * #import <CocoaLumberjack/CocoaLumberjack.h>
  *
  * Step 2:
  * Define your logging level in your implementation file:
@@ -45,10 +43,6 @@
  * This means you can pass it multiple variables just like NSLog.
  **/
 
-#define DDLogError(frmt, ...)   LOG_OBJC_MAYBE(LOG_ASYNC_ERROR,   LOG_LEVEL_DEF, LOG_FLAG_ERROR,   0, frmt, ##__VA_ARGS__)
-#define DDLogWarn(frmt, ...)    LOG_OBJC_MAYBE(LOG_ASYNC_WARN,    LOG_LEVEL_DEF, LOG_FLAG_WARN,    0, frmt, ##__VA_ARGS__)
-#define DDLogInfo(frmt, ...)    LOG_OBJC_MAYBE(LOG_ASYNC_INFO,    LOG_LEVEL_DEF, LOG_FLAG_INFO,    0, frmt, ##__VA_ARGS__)
-#define DDLogDebug(frmt, ...)   LOG_OBJC_MAYBE(LOG_ASYNC_DEBUG,   LOG_LEVEL_DEF, LOG_FLAG_DEBUG,   0, frmt, ##__VA_ARGS__)
-#define DDLogVerbose(frmt, ...) LOG_OBJC_MAYBE(LOG_ASYNC_VERBOSE, LOG_LEVEL_DEF, LOG_FLAG_VERBOSE, 0, frmt, ##__VA_ARGS__)
-
-#import "DDAssert.h"
+#import "DDLog.h"
+#import "DDLogMacros.h"
+#import "DDAssertMacros.h"
