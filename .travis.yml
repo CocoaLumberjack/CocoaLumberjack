@@ -73,22 +73,27 @@ script:
     - cd RegisteredDynamicLogging/Mobile
     - pod install
     - cd ../..
-    - xctool -workspace Demos.xcworkspace -scheme 'RegisteredLoggingTest' -configuration Release -sdk iphonesimulator -arch i386 build
+    - xctool -workspace Demos.xcworkspace -scheme 'RegisteredLoggingTest (Mobile)' -configuration Release -sdk iphonesimulator -arch i386 build
 
     - cd RegisteredDynamicLogging/Desktop
     - pod install
     - cd ../..
-    - xctool -workspace Demos.xcworkspace -scheme 'RegisteredLoggingTest'
+    - xctool -workspace Demos.xcworkspace -scheme 'RegisteredLoggingTest (Desktop)'
 
     - cd RollingTestMac
     - pod install
     - cd ..
     - xctool -workspace Demos.xcworkspace -scheme 'RollingTestMac'
 
+    - cd TestXcodeColors/Desktop
+    - pod install
+    - cd ../..
+    - xctool -workspace Demos.xcworkspace -scheme 'TestXcodeColors (Desktop)'
+
     - cd TestXcodeColors/Mobile
     - pod install
     - cd ../..
-    - xctool -workspace Demos.xcworkspace -scheme 'TextXcodeColors' -configuration Release -sdk iphonesimulator -arch i386 build
+    - xctool -workspace Demos.xcworkspace -scheme 'TextXcodeColors (Mobile)' -configuration Release -sdk iphonesimulator -arch i386 build
 
     - cd WebServerIPhone
     - pod install
@@ -109,11 +114,6 @@ script:
     - pod install
     - cd ..
     - xctool -workspace Demos.xcworkspace -scheme 'SQLiteLogger'
-
-    - cd TestXcodeColors/Desktop
-    - pod install
-    - cd ../..
-    - xctool -workspace Demos.xcworkspace -scheme 'TestXcodeColors'
 
     - cd UniversalApp
     - pod install
