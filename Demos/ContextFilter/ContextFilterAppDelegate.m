@@ -1,6 +1,5 @@
 #import "ContextFilterAppDelegate.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
-#import <CocoaLumberjack/DDTTYLogger.h>
 #import "MyContextFilter.h"
 #import "ThirdPartyFramework.h"
 

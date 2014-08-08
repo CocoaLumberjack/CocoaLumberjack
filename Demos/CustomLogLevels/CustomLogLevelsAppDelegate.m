@@ -1,8 +1,6 @@
 #import "CustomLogLevelsAppDelegate.h"
 
 #import "MYLog.h"
-#import <CocoaLumberjack/DDASLLogger.h>
-#import <CocoaLumberjack/DDTTYLogger.h>
 
 // Debug levels: off, fatal, error, warn, notice, info, debug
 static const int ddLogLevel = LOG_LEVEL_DEBUG;

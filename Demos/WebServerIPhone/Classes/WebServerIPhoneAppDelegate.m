@@ -2,9 +2,6 @@
 #import "WebServerIPhoneViewController.h"
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
-#import <CocoaLumberjack/DDASLLogger.h>
-#import <CocoaLumberjack/DDTTYLogger.h>
-#import <CocoaLumberjack/DDFileLogger.h>
 
 #import "HTTPServer.h"
 #import "MyHTTPConnection.h"

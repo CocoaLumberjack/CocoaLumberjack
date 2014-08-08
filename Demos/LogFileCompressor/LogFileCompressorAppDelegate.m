@@ -1,9 +1,6 @@
 #import "LogFileCompressorAppDelegate.h"
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
-#import <CocoaLumberjack/DDASLLogger.h>
-#import <CocoaLumberjack/DDTTYLogger.h>
-#import <CocoaLumberjack/DDFileLogger.h>
 #import "CompressingLogFileManager.h"
 
 // Debug levels: off, error, warn, info, verbose

@@ -1,8 +1,6 @@
 #import "CustomFormattersAppDelegate.h"
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
-#import <CocoaLumberjack/DDASLLogger.h>
-#import <CocoaLumberjack/DDTTYLogger.h>
 #import "TestFormatter.h"
 
 // Debug levels: off, error, warn, info, verbose

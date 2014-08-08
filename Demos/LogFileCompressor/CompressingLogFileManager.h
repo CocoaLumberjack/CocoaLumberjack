@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import <CocoaLumberjack/DDFileLogger.h>
+#import <CocoaLumberjack/CocoaLumberjack.h>
 
 
 @interface CompressingLogFileManager : DDLogFileManagerDefault

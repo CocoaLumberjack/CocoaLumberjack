@@ -1,7 +1,6 @@
 #import "GlobalLogLevelAppDelegate.h"
 #import "Stuff.h"
 #import "MyLogging.h"
-#import <CocoaLumberjack/DDTTYLogger.h>
 
 int ddLogLevel;
 

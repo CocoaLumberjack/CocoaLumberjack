@@ -1,6 +1,5 @@
 #import "AppDelegate.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
-#import <CocoaLumberjack/DDTTYLogger.h>
 #import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
 
 // Log levels: 0-off, 1-error, 2-warn, 3-info, 4-verbose

@@ -7,10 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import <CocoaLumberjack/DDLog.h>
+#import <CocoaLumberjack/CocoaLumberjack.h>
 #import <CocoaLumberjack/DDASLLogCapture.h>
-#import <CocoaLumberjack/DDASLLogger.h>
-#import <CocoaLumberjack/DDTTYLogger.h>
 
 @interface SimpleFormatter : NSObject <DDLogFormatter>
 
