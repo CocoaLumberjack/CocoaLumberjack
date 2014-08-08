@@ -1,12 +1,15 @@
 //
-//  DDAssert.h
+//  DDAssertMacros.h
 //  CocoaLumberjack
 //
 //  Created by Ernesto Rivera on 2014/07/07.
 //
-//
 
-#import "DDLog.h"
+#import "DDLogMacros.h"
+
+/**
+ * NSAsset replacement that will output a log message even when assertions are disabled.
+ **/
 
 #define DDAssert(condition, frmt, ...) if (!(condition)) {                                                           \
                                            NSString * description = [NSString stringWithFormat:frmt, ##__VA_ARGS__]; \
