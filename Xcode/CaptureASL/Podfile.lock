@@ -1,8 +1,8 @@
 PODS:
-  - CocoaLumberjack (1.8.1):
+  - CocoaLumberjack (1.9.1):
     - CocoaLumberjack/Extensions
-  - CocoaLumberjack/Core (1.8.1)
-  - CocoaLumberjack/Extensions (1.8.1):
+  - CocoaLumberjack/Core (1.9.1)
+  - CocoaLumberjack/Extensions (1.9.1):
     - CocoaLumberjack/Core
 
 DEPENDENCIES:
@@ -13,6 +13,6 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  CocoaLumberjack: 020378ec400d658923bf5887178394f65f052c90
+  CocoaLumberjack: eb7803047aeb82522022bf4507fb01a0c5dd8580
 
-COCOAPODS: 0.31.1
+COCOAPODS: 0.33.1
