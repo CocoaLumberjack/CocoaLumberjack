@@ -1,7 +1,7 @@
 #import "RollingTestMacAppDelegate.h"
 
-#import "DDLog.h"
-#import "DDFileLogger.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
+#import <CocoaLumberjack/DDFileLogger.h>
 
 // Debug levels: off, error, warn, info, verbose
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;

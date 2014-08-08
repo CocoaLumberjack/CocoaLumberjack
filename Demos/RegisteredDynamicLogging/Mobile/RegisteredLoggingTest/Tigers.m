@@ -1,5 +1,5 @@
 #import "Tigers.h"
-#import "DDLog.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
 
 // Log levels: off, error, warn, info, verbose
 static int ddLogLevel = LOG_LEVEL_WARN;

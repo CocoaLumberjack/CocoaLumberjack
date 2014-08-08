@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "DDAbstractDatabaseLogger.h"
+#import <CocoaLumberjack/DDAbstractDatabaseLogger.h>
 
 
 @interface CoreDataLogger : DDAbstractDatabaseLogger <DDLogger>

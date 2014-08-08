@@ -1,6 +1,6 @@
 #import "CoreDataLoggerAppDelegate.h"
-#import "DDLog.h"
-#import "DDTTYLogger.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
+#import <CocoaLumberjack/DDTTYLogger.h>
 #import "CoreDataLogger.h"
 
 // Log levels: off, error, warn, info, verbose

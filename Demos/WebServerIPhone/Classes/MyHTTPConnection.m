@@ -5,8 +5,8 @@
 #import "HTTPDataResponse.h"
 #import "HTTPDynamicFileResponse.h"
 #import "GCDAsyncSocket.h"
-#import "DDLog.h"
-#import "DDFileLogger.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
+#import <CocoaLumberjack/DDFileLogger.h>
 #import "WebSocket.h"
 #import "WebSocketLogger.h"
 

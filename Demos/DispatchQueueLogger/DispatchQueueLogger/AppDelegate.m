@@ -1,7 +1,7 @@
 #import "AppDelegate.h"
-#import "DDLog.h"
-#import "DDTTYLogger.h"
-#import "DDDispatchQueueLogFormatter.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
+#import <CocoaLumberjack/DDTTYLogger.h>
+#import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
 
 // Log levels: 0-off, 1-error, 2-warn, 3-info, 4-verbose
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;

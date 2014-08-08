@@ -1,4 +1,4 @@
-#import "DDLog.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
 
 // The first 4 bits are being used by the standard levels (0 - 3) 
 // All other bits are fair game for us to use.

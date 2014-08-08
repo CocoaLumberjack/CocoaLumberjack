@@ -1,6 +1,6 @@
 #import "SQLiteLoggerAppDelegate.h"
-#import "DDLog.h"
-#import "DDTTYLogger.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
+#import <CocoaLumberjack/DDTTYLogger.h>
 #import "FMDBLogger.h"
 
 // Log levels: off, error, warn, info, verbose

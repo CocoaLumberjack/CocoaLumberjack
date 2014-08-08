@@ -1,7 +1,7 @@
 #import "RegisteredLoggingTestAppDelegate.h"
 #import "RegisteredLoggingTestViewController.h"
-#import "DDLog.h"
-#import "DDTTYLogger.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
+#import <CocoaLumberjack/DDTTYLogger.h>
 #import "Lions.h"
 #import "Tigers.h"
 

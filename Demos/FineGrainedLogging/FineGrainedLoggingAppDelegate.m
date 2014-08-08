@@ -1,8 +1,8 @@
 #import "FineGrainedLoggingAppDelegate.h"
 
 #import "MYLog.h"
-#import "DDASLLogger.h"
-#import "DDTTYLogger.h"
+#import <CocoaLumberjack/DDASLLogger.h>
+#import <CocoaLumberjack/DDTTYLogger.h>
 
 #import "TimerOne.h"
 #import "TimerTwo.h"

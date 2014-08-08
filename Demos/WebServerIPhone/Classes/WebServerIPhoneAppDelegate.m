@@ -1,10 +1,10 @@
 #import "WebServerIPhoneAppDelegate.h"
 #import "WebServerIPhoneViewController.h"
 
-#import "DDLog.h"
-#import "DDASLLogger.h"
-#import "DDTTYLogger.h"
-#import "DDFileLogger.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
+#import <CocoaLumberjack/DDASLLogger.h>
+#import <CocoaLumberjack/DDTTYLogger.h>
+#import <CocoaLumberjack/DDFileLogger.h>
 
 #import "HTTPServer.h"
 #import "MyHTTPConnection.h"

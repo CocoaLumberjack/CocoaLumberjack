@@ -9,9 +9,9 @@
 #import "UniversalAppAppDelegate.h"
 #import "UniversalAppViewController.h"
 
-#import "DDLog.h"
-#import "DDASLLogger.h"
-#import "DDTTYLogger.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
+#import <CocoaLumberjack/DDASLLogger.h>
+#import <CocoaLumberjack/DDTTYLogger.h>
 
 @implementation UniversalAppAppDelegate
 

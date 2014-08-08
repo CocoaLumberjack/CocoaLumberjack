@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CocoaLumberjack/DDLog.h>
+#import <CocoaLumberjack/CocoaLumberjack.h>
 #import "../Pods-CLI_osx-environment.h"
 #import <CocoaLumberjack/DDTTYLogger.h>
 

@@ -1,8 +1,8 @@
 #import "OverflowTestMacAppDelegate.h"
 
-#import "DDLog.h"
-#import "DDASLLogger.h"
-#import "DDTTYLogger.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
+#import <CocoaLumberjack/DDASLLogger.h>
+#import <CocoaLumberjack/DDTTYLogger.h>
 #import "SlowLogger.h"
 
 // Debug levels: off, error, warn, info, verbose
