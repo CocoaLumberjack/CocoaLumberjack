@@ -1,7 +1,8 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 
-#import <Lumberjack/Lumberjack.h>
+#import <CocoaLumberjack/CocoaLumberjack.h>
+#import <CocoaLumberjack/DDTTYLogger.h>
 #import "Formatter.h"
 
 // Log levels: off, error, warn, info, verbose

@@ -7,16 +7,16 @@
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
-            buildForTesting = "YES"
+            buildForTesting = "NO"
             buildForRunning = "YES"
             buildForProfiling = "YES"
             buildForArchiving = "YES"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DCB3185014EB418E001CFBEE"
-               BuildableName = "Lumberjack.framework"
-               BlueprintName = "Lumberjack"
+               BlueprintIdentifier = "2A37F97618E37270009FAAA7"
+               BuildableName = "libCocoaLumberjack.a"
+               BlueprintName = "CocoaLumberjack"
                ReferencedContainer = "container:Lumberjack.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

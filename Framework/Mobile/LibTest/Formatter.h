@@ -1,4 +1,4 @@
-#import <Lumberjack/Lumberjack.h>
+#import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
 
 @interface Formatter : DDDispatchQueueLogFormatter<DDLogFormatter>
 
