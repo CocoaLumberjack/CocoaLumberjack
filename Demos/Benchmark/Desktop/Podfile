@@ -1,8 +1,8 @@
 xcodeproj 'BenchmarkMac'
-workspace '../Demos'
+workspace '../../Demos'
 
 def import_pods
-  pod 'CocoaLumberjack', :path => '../../'
+  pod 'CocoaLumberjack', :path => '../../../'
 end
 
 target :BM_osx do
