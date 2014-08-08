@@ -27,3 +27,4 @@ DerivedData
 #
 Pods/
 Podfile.lock
+LumberjackUser*.h
