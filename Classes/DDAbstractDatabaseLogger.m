@@ -1,3 +1,8 @@
+//
+//  DDAbstractDatabaseLogger.m
+//  CocoaLumberjack
+//
+
 #import "DDAbstractDatabaseLogger.h"
 #import <math.h>
 

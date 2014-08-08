@@ -1,3 +1,8 @@
+//
+//  DDLog.h
+//  CocoaLumberjack
+//
+
 #import <Foundation/Foundation.h>
 
 @class DDLogMessage;

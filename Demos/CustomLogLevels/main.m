@@ -3,7 +3,6 @@
 //  CustomLogLevels
 //
 //  Created by Robbie Hanson on 5/13/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

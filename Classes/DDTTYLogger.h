@@ -1,4 +1,8 @@
-#import <Foundation/Foundation.h>
+//
+//  DDTTYLogger.h
+//  CocoaLumberjack
+//
+
 #if TARGET_OS_IPHONE
 #import <UIKit/UIColor.h>   // iOS
 #elif !defined (COCOAPODS_POD_AVAILABLE_CocoaLumberjack_CLI)

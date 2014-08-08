@@ -1,3 +1,8 @@
+//
+//  DDLog.m
+//  CocoaLumberjack
+//
+
 #import "DDLog.h"
 
 #import <pthread.h>

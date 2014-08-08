@@ -1,3 +1,8 @@
+//
+//  DDTTYLogger.m
+//  CocoaLumberjack
+//
+
 #import "DDTTYLogger.h"
 
 #import <unistd.h>

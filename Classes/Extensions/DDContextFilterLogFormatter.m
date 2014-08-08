@@ -1,3 +1,8 @@
+//
+//  DDContextFilterLogFormatter.m
+//  CocoaLumberjack
+//
+
 #import "DDContextFilterLogFormatter.h"
 #import <libkern/OSAtomic.h>
 

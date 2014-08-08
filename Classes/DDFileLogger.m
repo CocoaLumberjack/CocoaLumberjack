@@ -1,3 +1,8 @@
+//
+//  DDLogFileManager.m
+//  CocoaLumberjack
+//
+
 #import "DDFileLogger.h"
 
 #import <unistd.h>

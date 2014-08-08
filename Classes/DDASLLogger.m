@@ -1,3 +1,8 @@
+//
+//  DDASLLogger.m
+//  CocoaLumberjack
+//
+
 #import "DDASLLogger.h"
 #import <asl.h>
 #import <libkern/OSAtomic.h>

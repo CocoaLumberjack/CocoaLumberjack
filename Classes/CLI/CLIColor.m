@@ -4,7 +4,6 @@
 //
 //  Created by Ernesto Rivera on 2013/12/27.
 //
-//
 
 #import "CLIColor.h"
 

@@ -1,4 +1,7 @@
-#import <Foundation/Foundation.h>
+//
+//  DDAbstractDatabaseLogger.h
+//  CocoaLumberjack
+//
 
 #import "DDLog.h"
 

@@ -2,8 +2,7 @@
 //  main.m
 //  CLI
 //
-//  Created by 利辺羅 on 2013/12/19.
-//  Copyright (c) 2013年 CyberAgent Inc. All rights reserved.
+//  Created by Ernesto Rivera on 2013/12/19.
 //
 
 #import <Foundation/Foundation.h>

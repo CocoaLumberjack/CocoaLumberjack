@@ -1,3 +1,8 @@
+//
+//  DDMultiFormatter.m
+//  CocoaLumberjack
+//
+
 #import "DDMultiFormatter.h"
 
 /**

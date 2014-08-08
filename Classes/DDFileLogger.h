@@ -1,4 +1,8 @@
-#import <Foundation/Foundation.h>
+//
+//  DDLogFileManager.h
+//  CocoaLumberjack
+//
+
 #import "DDLog.h"
 
 @class DDLogFileInfo;
