@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0500"
+   LastUpgradeVersion = "0510"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DC361293156E1D3800956227"
-               BuildableName = "TextXcodeColors.app"
-               BlueprintName = "TextXcodeColors"
-               ReferencedContainer = "container:TextXcodeColors.xcodeproj">
+               BlueprintIdentifier = "DC7DC52A1415523E00601B40"
+               BuildableName = "RegisteredLoggingTest.app"
+               BlueprintName = "RegisteredLoggingTest"
+               ReferencedContainer = "container:RegisteredLoggingTest.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DC361293156E1D3800956227"
-            BuildableName = "TextXcodeColors.app"
-            BlueprintName = "TextXcodeColors"
-            ReferencedContainer = "container:TextXcodeColors.xcodeproj">
+            BlueprintIdentifier = "DC7DC52A1415523E00601B40"
+            BuildableName = "RegisteredLoggingTest.app"
+            BlueprintName = "RegisteredLoggingTest"
+            ReferencedContainer = "container:RegisteredLoggingTest.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -51,19 +51,12 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DC361293156E1D3800956227"
-            BuildableName = "TextXcodeColors.app"
-            BlueprintName = "TextXcodeColors"
-            ReferencedContainer = "container:TextXcodeColors.xcodeproj">
+            BlueprintIdentifier = "DC7DC52A1415523E00601B40"
+            BuildableName = "RegisteredLoggingTest.app"
+            BlueprintName = "RegisteredLoggingTest"
+            ReferencedContainer = "container:RegisteredLoggingTest.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "XcodeColors"
-            value = "YES"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -76,10 +69,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DC361293156E1D3800956227"
-            BuildableName = "TextXcodeColors.app"
-            BlueprintName = "TextXcodeColors"
-            ReferencedContainer = "container:TextXcodeColors.xcodeproj">
+            BlueprintIdentifier = "DC7DC52A1415523E00601B40"
+            BuildableName = "RegisteredLoggingTest.app"
+            BlueprintName = "RegisteredLoggingTest"
+            ReferencedContainer = "container:RegisteredLoggingTest.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

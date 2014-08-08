@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0500"
+   LastUpgradeVersion = "0510"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DC7DC4E814154E4900601B40"
-               BuildableName = "RegisteredLoggingTest.app"
-               BlueprintName = "RegisteredLoggingTest"
-               ReferencedContainer = "container:RegisteredLoggingTest.xcodeproj">
+               BlueprintIdentifier = "DCAACA7D1565CEBD001A5857"
+               BuildableName = "TestXcodeColors.app"
+               BlueprintName = "TestXcodeColors"
+               ReferencedContainer = "container:TestXcodeColors.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DC7DC4E814154E4900601B40"
-            BuildableName = "RegisteredLoggingTest.app"
-            BlueprintName = "RegisteredLoggingTest"
-            ReferencedContainer = "container:RegisteredLoggingTest.xcodeproj">
+            BlueprintIdentifier = "DCAACA7D1565CEBD001A5857"
+            BuildableName = "TestXcodeColors.app"
+            BlueprintName = "TestXcodeColors"
+            ReferencedContainer = "container:TestXcodeColors.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -51,10 +51,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DC7DC4E814154E4900601B40"
-            BuildableName = "RegisteredLoggingTest.app"
-            BlueprintName = "RegisteredLoggingTest"
-            ReferencedContainer = "container:RegisteredLoggingTest.xcodeproj">
+            BlueprintIdentifier = "DCAACA7D1565CEBD001A5857"
+            BuildableName = "TestXcodeColors.app"
+            BlueprintName = "TestXcodeColors"
+            ReferencedContainer = "container:TestXcodeColors.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -69,10 +69,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DC7DC4E814154E4900601B40"
-            BuildableName = "RegisteredLoggingTest.app"
-            BlueprintName = "RegisteredLoggingTest"
-            ReferencedContainer = "container:RegisteredLoggingTest.xcodeproj">
+            BlueprintIdentifier = "DCAACA7D1565CEBD001A5857"
+            BuildableName = "TestXcodeColors.app"
+            BlueprintName = "TestXcodeColors"
+            ReferencedContainer = "container:TestXcodeColors.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
