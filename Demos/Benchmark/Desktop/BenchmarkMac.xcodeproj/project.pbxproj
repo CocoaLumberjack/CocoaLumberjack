@@ -36,14 +36,14 @@
 		DCC29DF214730AA9005E8FD4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DCC29DF314730AA9005E8FD4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DCC29DF614730AA9005E8FD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		DCC29E1714730B05005E8FD4 /* BaseNSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseNSLogging.h; path = ../../Benchmarking/BaseNSLogging.h; sourceTree = "<group>"; };
-		DCC29E1814730B05005E8FD4 /* BaseNSLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseNSLogging.m; path = ../../Benchmarking/BaseNSLogging.m; sourceTree = "<group>"; };
-		DCC29E1914730B05005E8FD4 /* DynamicLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicLogging.h; path = ../../Benchmarking/DynamicLogging.h; sourceTree = "<group>"; };
-		DCC29E1A14730B05005E8FD4 /* DynamicLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DynamicLogging.m; path = ../../Benchmarking/DynamicLogging.m; sourceTree = "<group>"; };
-		DCC29E1B14730B05005E8FD4 /* PerformanceTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PerformanceTesting.h; path = ../../Benchmarking/PerformanceTesting.h; sourceTree = "<group>"; };
-		DCC29E1C14730B05005E8FD4 /* PerformanceTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PerformanceTesting.m; path = ../../Benchmarking/PerformanceTesting.m; sourceTree = "<group>"; };
-		DCC29E1D14730B05005E8FD4 /* StaticLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StaticLogging.h; path = ../../Benchmarking/StaticLogging.h; sourceTree = "<group>"; };
-		DCC29E1E14730B05005E8FD4 /* StaticLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StaticLogging.m; path = ../../Benchmarking/StaticLogging.m; sourceTree = "<group>"; };
+		DCC29E1714730B05005E8FD4 /* BaseNSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseNSLogging.h; sourceTree = "<group>"; };
+		DCC29E1814730B05005E8FD4 /* BaseNSLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseNSLogging.m; sourceTree = "<group>"; };
+		DCC29E1914730B05005E8FD4 /* DynamicLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicLogging.h; sourceTree = "<group>"; };
+		DCC29E1A14730B05005E8FD4 /* DynamicLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicLogging.m; sourceTree = "<group>"; };
+		DCC29E1B14730B05005E8FD4 /* PerformanceTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTesting.h; sourceTree = "<group>"; };
+		DCC29E1C14730B05005E8FD4 /* PerformanceTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceTesting.m; sourceTree = "<group>"; };
+		DCC29E1D14730B05005E8FD4 /* StaticLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticLogging.h; sourceTree = "<group>"; };
+		DCC29E1E14730B05005E8FD4 /* StaticLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaticLogging.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +134,7 @@
 				DCC29E1E14730B05005E8FD4 /* StaticLogging.m */,
 			);
 			name = Benchmarking;
+			path = ../../../Benchmarking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

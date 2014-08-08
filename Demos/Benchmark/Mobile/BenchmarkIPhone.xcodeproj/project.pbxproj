@@ -40,14 +40,14 @@
 		8D1107310486CEB800E47090 /* BenchmarkIPhone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BenchmarkIPhone-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		D9FF3ED2DE8E42ACA8EF26F1 /* Pods-BIP_ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BIP_ios.xcconfig"; path = "Pods/Pods-BIP_ios.xcconfig"; sourceTree = "<group>"; };
 		DC3D2F381674073100DFAFAA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		DC987BD711928FD60020FF52 /* BaseNSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseNSLogging.h; path = ../../Benchmarking/BaseNSLogging.h; sourceTree = SOURCE_ROOT; };
-		DC987BD811928FD60020FF52 /* BaseNSLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseNSLogging.m; path = ../../Benchmarking/BaseNSLogging.m; sourceTree = SOURCE_ROOT; };
-		DC987BD911928FD60020FF52 /* DynamicLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicLogging.h; path = ../../Benchmarking/DynamicLogging.h; sourceTree = SOURCE_ROOT; };
-		DC987BDA11928FD60020FF52 /* DynamicLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DynamicLogging.m; path = ../../Benchmarking/DynamicLogging.m; sourceTree = SOURCE_ROOT; };
-		DC987BDB11928FD60020FF52 /* PerformanceTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PerformanceTesting.h; path = ../../Benchmarking/PerformanceTesting.h; sourceTree = SOURCE_ROOT; };
-		DC987BDC11928FD60020FF52 /* PerformanceTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PerformanceTesting.m; path = ../../Benchmarking/PerformanceTesting.m; sourceTree = SOURCE_ROOT; };
-		DC987BDD11928FD60020FF52 /* StaticLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StaticLogging.h; path = ../../Benchmarking/StaticLogging.h; sourceTree = SOURCE_ROOT; };
-		DC987BDE11928FD60020FF52 /* StaticLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StaticLogging.m; path = ../../Benchmarking/StaticLogging.m; sourceTree = SOURCE_ROOT; };
+		DC987BD711928FD60020FF52 /* BaseNSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseNSLogging.h; path = ../../../Benchmarking/BaseNSLogging.h; sourceTree = SOURCE_ROOT; };
+		DC987BD811928FD60020FF52 /* BaseNSLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseNSLogging.m; path = ../../../Benchmarking/BaseNSLogging.m; sourceTree = SOURCE_ROOT; };
+		DC987BD911928FD60020FF52 /* DynamicLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicLogging.h; path = ../../../Benchmarking/DynamicLogging.h; sourceTree = SOURCE_ROOT; };
+		DC987BDA11928FD60020FF52 /* DynamicLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DynamicLogging.m; path = ../../../Benchmarking/DynamicLogging.m; sourceTree = SOURCE_ROOT; };
+		DC987BDB11928FD60020FF52 /* PerformanceTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PerformanceTesting.h; path = ../../../Benchmarking/PerformanceTesting.h; sourceTree = SOURCE_ROOT; };
+		DC987BDC11928FD60020FF52 /* PerformanceTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PerformanceTesting.m; path = ../../../Benchmarking/PerformanceTesting.m; sourceTree = SOURCE_ROOT; };
+		DC987BDD11928FD60020FF52 /* StaticLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StaticLogging.h; path = ../../../Benchmarking/StaticLogging.h; sourceTree = SOURCE_ROOT; };
+		DC987BDE11928FD60020FF52 /* StaticLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StaticLogging.m; path = ../../../Benchmarking/StaticLogging.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +142,7 @@
 				DC987BDA11928FD60020FF52 /* DynamicLogging.m */,
 			);
 			name = Benchmarking;
+			path = ../../../Benchmarking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,7 +173,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0510;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BenchmarkIPhone" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -292,11 +293,11 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -304,7 +305,6 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
