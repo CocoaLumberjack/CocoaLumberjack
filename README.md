@@ -50,6 +50,14 @@ pod 'CocoaLumberjack'
 - if you find issues or want to suggest improvements, create an issue or a pull request
 - for all kinds of questions involving CocoaLumberjack, use the [Google group](http://groups.google.com/group/cocoalumberjack) or StackOverflow (use [#lumberjack](http://stackoverflow.com/questions/tagged/lumberjack)).
 
+#### Migrating to 2.x
+
+Simply replace your `DDLog.h` imports by:
+
+```obj-c
+<CocoaLumberjack/CocoaLumberjack.h>
+```
+
 ### Documentation
 - **[Get started using Lumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/GettingStarted)**<br/>
 - [Different log levels for Debug and Release builds](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/XcodeTricks)<br/>

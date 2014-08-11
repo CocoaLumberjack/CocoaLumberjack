@@ -1,0 +1,13 @@
+xcodeproj 'FineGrainedLogging'
+workspace '../Demos'
+
+def import_pods
+  pod 'CocoaLumberjack', :path => '../../'
+end
+
+target :FGL_osx do
+  platform :osx, '10.7'
+  link_with 'FineGrainedLogging'
+  import_pods
+end
+

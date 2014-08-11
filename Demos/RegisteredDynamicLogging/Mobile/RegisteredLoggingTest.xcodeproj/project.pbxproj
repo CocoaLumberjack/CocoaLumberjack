@@ -1,0 +1,354 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		17B2853D03084AC2AD83B19B /* libPods-RLT_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E861734E8DC64B5C89A03AA1 /* libPods-RLT_ios.a */; };
+		DC7DC5301415523E00601B40 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7DC52F1415523E00601B40 /* UIKit.framework */; };
+		DC7DC5321415523E00601B40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7DC5311415523E00601B40 /* Foundation.framework */; };
+		DC7DC5341415523E00601B40 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7DC5331415523E00601B40 /* CoreGraphics.framework */; };
+		DC7DC53A1415523E00601B40 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DC7DC5381415523E00601B40 /* InfoPlist.strings */; };
+		DC7DC53C1415523E00601B40 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC53B1415523E00601B40 /* main.m */; };
+		DC7DC5401415523F00601B40 /* RegisteredLoggingTestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC53F1415523F00601B40 /* RegisteredLoggingTestAppDelegate.m */; };
+		DC7DC5431415523F00601B40 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC7DC5411415523F00601B40 /* MainWindow.xib */; };
+		DC7DC5461415523F00601B40 /* RegisteredLoggingTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC5451415523F00601B40 /* RegisteredLoggingTestViewController.m */; };
+		DC7DC5491415523F00601B40 /* RegisteredLoggingTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC7DC5471415523F00601B40 /* RegisteredLoggingTestViewController.xib */; };
+		DC7DC5671415538700601B40 /* Lions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC5641415538700601B40 /* Lions.m */; };
+		DC7DC5681415538700601B40 /* Tigers.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7DC5661415538700601B40 /* Tigers.m */; };
+		DCD6EACA16FFC34C00710668 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD6EAC916FFC34C00710668 /* Default-568h@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		DC7DC52B1415523E00601B40 /* RegisteredLoggingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RegisteredLoggingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC7DC52F1415523E00601B40 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		DC7DC5311415523E00601B40 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DC7DC5331415523E00601B40 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		DC7DC5371415523E00601B40 /* RegisteredLoggingTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RegisteredLoggingTest-Info.plist"; sourceTree = "<group>"; };
+		DC7DC5391415523E00601B40 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DC7DC53B1415523E00601B40 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DC7DC53D1415523E00601B40 /* RegisteredLoggingTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RegisteredLoggingTest-Prefix.pch"; sourceTree = "<group>"; };
+		DC7DC53E1415523F00601B40 /* RegisteredLoggingTestAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegisteredLoggingTestAppDelegate.h; sourceTree = "<group>"; };
+		DC7DC53F1415523F00601B40 /* RegisteredLoggingTestAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisteredLoggingTestAppDelegate.m; sourceTree = "<group>"; };
+		DC7DC5421415523F00601B40 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		DC7DC5441415523F00601B40 /* RegisteredLoggingTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegisteredLoggingTestViewController.h; sourceTree = "<group>"; };
+		DC7DC5451415523F00601B40 /* RegisteredLoggingTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisteredLoggingTestViewController.m; sourceTree = "<group>"; };
+		DC7DC5481415523F00601B40 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RegisteredLoggingTestViewController.xib; sourceTree = "<group>"; };
+		DC7DC5631415538700601B40 /* Lions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lions.h; sourceTree = "<group>"; };
+		DC7DC5641415538700601B40 /* Lions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lions.m; sourceTree = "<group>"; };
+		DC7DC5651415538700601B40 /* Tigers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tigers.h; sourceTree = "<group>"; };
+		DC7DC5661415538700601B40 /* Tigers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tigers.m; sourceTree = "<group>"; };
+		DCD6EAC916FFC34C00710668 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		E861734E8DC64B5C89A03AA1 /* libPods-RLT_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RLT_ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEB4FABF56594AD1AC90F66B /* Pods-RLT_ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RLT_ios.xcconfig"; path = "Pods/Pods-RLT_ios.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DC7DC5281415523E00601B40 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC7DC5301415523E00601B40 /* UIKit.framework in Frameworks */,
+				DC7DC5321415523E00601B40 /* Foundation.framework in Frameworks */,
+				DC7DC5341415523E00601B40 /* CoreGraphics.framework in Frameworks */,
+				17B2853D03084AC2AD83B19B /* libPods-RLT_ios.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DC7DC5201415523E00601B40 = {
+			isa = PBXGroup;
+			children = (
+				DCD6EAC916FFC34C00710668 /* Default-568h@2x.png */,
+				DC7DC5351415523E00601B40 /* RegisteredLoggingTest */,
+				DC7DC52E1415523E00601B40 /* Frameworks */,
+				DC7DC52C1415523E00601B40 /* Products */,
+				FEB4FABF56594AD1AC90F66B /* Pods-RLT_ios.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		DC7DC52C1415523E00601B40 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DC7DC52B1415523E00601B40 /* RegisteredLoggingTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DC7DC52E1415523E00601B40 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DC7DC52F1415523E00601B40 /* UIKit.framework */,
+				DC7DC5311415523E00601B40 /* Foundation.framework */,
+				DC7DC5331415523E00601B40 /* CoreGraphics.framework */,
+				E861734E8DC64B5C89A03AA1 /* libPods-RLT_ios.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DC7DC5351415523E00601B40 /* RegisteredLoggingTest */ = {
+			isa = PBXGroup;
+			children = (
+				DC7DC5631415538700601B40 /* Lions.h */,
+				DC7DC5641415538700601B40 /* Lions.m */,
+				DC7DC5651415538700601B40 /* Tigers.h */,
+				DC7DC5661415538700601B40 /* Tigers.m */,
+				DC7DC53E1415523F00601B40 /* RegisteredLoggingTestAppDelegate.h */,
+				DC7DC53F1415523F00601B40 /* RegisteredLoggingTestAppDelegate.m */,
+				DC7DC5411415523F00601B40 /* MainWindow.xib */,
+				DC7DC5441415523F00601B40 /* RegisteredLoggingTestViewController.h */,
+				DC7DC5451415523F00601B40 /* RegisteredLoggingTestViewController.m */,
+				DC7DC5471415523F00601B40 /* RegisteredLoggingTestViewController.xib */,
+				DC7DC5361415523E00601B40 /* Supporting Files */,
+			);
+			path = RegisteredLoggingTest;
+			sourceTree = "<group>";
+		};
+		DC7DC5361415523E00601B40 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DC7DC5371415523E00601B40 /* RegisteredLoggingTest-Info.plist */,
+				DC7DC5381415523E00601B40 /* InfoPlist.strings */,
+				DC7DC53B1415523E00601B40 /* main.m */,
+				DC7DC53D1415523E00601B40 /* RegisteredLoggingTest-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DC7DC52A1415523E00601B40 /* RegisteredLoggingTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC7DC54C1415523F00601B40 /* Build configuration list for PBXNativeTarget "RegisteredLoggingTest" */;
+			buildPhases = (
+				FA12C30316144F6E95AE179B /* Check Pods Manifest.lock */,
+				DC7DC5271415523E00601B40 /* Sources */,
+				DC7DC5281415523E00601B40 /* Frameworks */,
+				DC7DC5291415523E00601B40 /* Resources */,
+				7063814F578A4C06A5BD9EBE /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RegisteredLoggingTest;
+			productName = RegisteredLoggingTest;
+			productReference = DC7DC52B1415523E00601B40 /* RegisteredLoggingTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DC7DC5221415523E00601B40 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+			};
+			buildConfigurationList = DC7DC5251415523E00601B40 /* Build configuration list for PBXProject "RegisteredLoggingTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DC7DC5201415523E00601B40;
+			productRefGroup = DC7DC52C1415523E00601B40 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DC7DC52A1415523E00601B40 /* RegisteredLoggingTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DC7DC5291415523E00601B40 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC7DC53A1415523E00601B40 /* InfoPlist.strings in Resources */,
+				DC7DC5431415523F00601B40 /* MainWindow.xib in Resources */,
+				DC7DC5491415523F00601B40 /* RegisteredLoggingTestViewController.xib in Resources */,
+				DCD6EACA16FFC34C00710668 /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7063814F578A4C06A5BD9EBE /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-RLT_ios-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FA12C30316144F6E95AE179B /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DC7DC5271415523E00601B40 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC7DC53C1415523E00601B40 /* main.m in Sources */,
+				DC7DC5401415523F00601B40 /* RegisteredLoggingTestAppDelegate.m in Sources */,
+				DC7DC5461415523F00601B40 /* RegisteredLoggingTestViewController.m in Sources */,
+				DC7DC5671415538700601B40 /* Lions.m in Sources */,
+				DC7DC5681415538700601B40 /* Tigers.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DC7DC5381415523E00601B40 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC7DC5391415523E00601B40 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DC7DC5411415523F00601B40 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC7DC5421415523F00601B40 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		DC7DC5471415523F00601B40 /* RegisteredLoggingTestViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC7DC5481415523F00601B40 /* en */,
+			);
+			name = RegisteredLoggingTestViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DC7DC54A1415523F00601B40 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		DC7DC54B1415523F00601B40 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DC7DC54D1415523F00601B40 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FEB4FABF56594AD1AC90F66B /* Pods-RLT_ios.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RegisteredLoggingTest/RegisteredLoggingTest-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "RegisteredLoggingTest/RegisteredLoggingTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		DC7DC54E1415523F00601B40 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FEB4FABF56594AD1AC90F66B /* Pods-RLT_ios.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RegisteredLoggingTest/RegisteredLoggingTest-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "RegisteredLoggingTest/RegisteredLoggingTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DC7DC5251415523E00601B40 /* Build configuration list for PBXProject "RegisteredLoggingTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC7DC54A1415523F00601B40 /* Debug */,
+				DC7DC54B1415523F00601B40 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC7DC54C1415523F00601B40 /* Build configuration list for PBXNativeTarget "RegisteredLoggingTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC7DC54D1415523F00601B40 /* Debug */,
+				DC7DC54E1415523F00601B40 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DC7DC5221415523E00601B40 /* Project object */;
+}

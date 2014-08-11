@@ -1,6 +1,6 @@
 #import "StaticLogging.h"
 #import "PerformanceTesting.h"
-#import "DDLog.h"
+#import "DDLogMacros.h"
 
 #define FILENAME @"StaticLogging " // Trailing space to match exactly the others in length
 

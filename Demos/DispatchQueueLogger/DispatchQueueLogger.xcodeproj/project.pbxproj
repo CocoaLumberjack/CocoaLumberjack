@@ -1,0 +1,357 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		517CC2393FC74DCBB2D1BB22 /* libPods-DQL_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99BE457625A64E0EB8943E4A /* libPods-DQL_osx.a */; };
+		DC25B76B146A0294000F32F4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC25B76A146A0294000F32F4 /* Cocoa.framework */; };
+		DC25B775146A0294000F32F4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DC25B773146A0294000F32F4 /* InfoPlist.strings */; };
+		DC25B777146A0294000F32F4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC25B776146A0294000F32F4 /* main.m */; };
+		DC25B77B146A0294000F32F4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DC25B779146A0294000F32F4 /* Credits.rtf */; };
+		DC25B77E146A0294000F32F4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC25B77D146A0294000F32F4 /* AppDelegate.m */; };
+		DC25B781146A0295000F32F4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC25B77F146A0295000F32F4 /* MainMenu.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		99BE457625A64E0EB8943E4A /* libPods-DQL_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DQL_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC25B766146A0294000F32F4 /* DispatchQueueLogger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DispatchQueueLogger.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC25B76A146A0294000F32F4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		DC25B76D146A0294000F32F4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		DC25B76E146A0294000F32F4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		DC25B76F146A0294000F32F4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DC25B772146A0294000F32F4 /* DispatchQueueLogger-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DispatchQueueLogger-Info.plist"; sourceTree = "<group>"; };
+		DC25B774146A0294000F32F4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DC25B776146A0294000F32F4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DC25B778146A0294000F32F4 /* DispatchQueueLogger-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DispatchQueueLogger-Prefix.pch"; sourceTree = "<group>"; };
+		DC25B77A146A0294000F32F4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		DC25B77C146A0294000F32F4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		DC25B77D146A0294000F32F4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DC25B780146A0295000F32F4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E32347F72A604719B9CCE1E5 /* Pods-DQL_osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DQL_osx.xcconfig"; path = "Pods/Pods-DQL_osx.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DC25B763146A0294000F32F4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC25B76B146A0294000F32F4 /* Cocoa.framework in Frameworks */,
+				517CC2393FC74DCBB2D1BB22 /* libPods-DQL_osx.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DC25B75B146A0294000F32F4 = {
+			isa = PBXGroup;
+			children = (
+				DC25B770146A0294000F32F4 /* DispatchQueueLogger */,
+				DC25B769146A0294000F32F4 /* Frameworks */,
+				DC25B767146A0294000F32F4 /* Products */,
+				E32347F72A604719B9CCE1E5 /* Pods-DQL_osx.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		DC25B767146A0294000F32F4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DC25B766146A0294000F32F4 /* DispatchQueueLogger.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DC25B769146A0294000F32F4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DC25B76A146A0294000F32F4 /* Cocoa.framework */,
+				DC25B76C146A0294000F32F4 /* Other Frameworks */,
+				99BE457625A64E0EB8943E4A /* libPods-DQL_osx.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DC25B76C146A0294000F32F4 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DC25B76D146A0294000F32F4 /* AppKit.framework */,
+				DC25B76E146A0294000F32F4 /* CoreData.framework */,
+				DC25B76F146A0294000F32F4 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		DC25B770146A0294000F32F4 /* DispatchQueueLogger */ = {
+			isa = PBXGroup;
+			children = (
+				DC25B77C146A0294000F32F4 /* AppDelegate.h */,
+				DC25B77D146A0294000F32F4 /* AppDelegate.m */,
+				DC25B77F146A0295000F32F4 /* MainMenu.xib */,
+				DC25B771146A0294000F32F4 /* Supporting Files */,
+			);
+			path = DispatchQueueLogger;
+			sourceTree = "<group>";
+		};
+		DC25B771146A0294000F32F4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DC25B772146A0294000F32F4 /* DispatchQueueLogger-Info.plist */,
+				DC25B773146A0294000F32F4 /* InfoPlist.strings */,
+				DC25B776146A0294000F32F4 /* main.m */,
+				DC25B778146A0294000F32F4 /* DispatchQueueLogger-Prefix.pch */,
+				DC25B779146A0294000F32F4 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DC25B765146A0294000F32F4 /* DispatchQueueLogger */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC25B784146A0295000F32F4 /* Build configuration list for PBXNativeTarget "DispatchQueueLogger" */;
+			buildPhases = (
+				F0AFBE38FEBB42B39C1F4340 /* Check Pods Manifest.lock */,
+				DC25B762146A0294000F32F4 /* Sources */,
+				DC25B763146A0294000F32F4 /* Frameworks */,
+				DC25B764146A0294000F32F4 /* Resources */,
+				2669770F816F418BA7A68AA1 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DispatchQueueLogger;
+			productName = DispatchQueueLogger;
+			productReference = DC25B766146A0294000F32F4 /* DispatchQueueLogger.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DC25B75D146A0294000F32F4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+			};
+			buildConfigurationList = DC25B760146A0294000F32F4 /* Build configuration list for PBXProject "DispatchQueueLogger" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DC25B75B146A0294000F32F4;
+			productRefGroup = DC25B767146A0294000F32F4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DC25B765146A0294000F32F4 /* DispatchQueueLogger */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DC25B764146A0294000F32F4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC25B775146A0294000F32F4 /* InfoPlist.strings in Resources */,
+				DC25B77B146A0294000F32F4 /* Credits.rtf in Resources */,
+				DC25B781146A0295000F32F4 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2669770F816F418BA7A68AA1 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-DQL_osx-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F0AFBE38FEBB42B39C1F4340 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DC25B762146A0294000F32F4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC25B777146A0294000F32F4 /* main.m in Sources */,
+				DC25B77E146A0294000F32F4 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DC25B773146A0294000F32F4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC25B774146A0294000F32F4 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DC25B779146A0294000F32F4 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC25B77A146A0294000F32F4 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		DC25B77F146A0295000F32F4 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC25B780146A0295000F32F4 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DC25B782146A0295000F32F4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DC25B783146A0295000F32F4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DC25B785146A0295000F32F4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E32347F72A604719B9CCE1E5 /* Pods-DQL_osx.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DispatchQueueLogger/DispatchQueueLogger-Prefix.pch";
+				INFOPLIST_FILE = "DispatchQueueLogger/DispatchQueueLogger-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		DC25B786146A0295000F32F4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E32347F72A604719B9CCE1E5 /* Pods-DQL_osx.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DispatchQueueLogger/DispatchQueueLogger-Prefix.pch";
+				INFOPLIST_FILE = "DispatchQueueLogger/DispatchQueueLogger-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DC25B760146A0294000F32F4 /* Build configuration list for PBXProject "DispatchQueueLogger" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC25B782146A0295000F32F4 /* Debug */,
+				DC25B783146A0295000F32F4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC25B784146A0295000F32F4 /* Build configuration list for PBXNativeTarget "DispatchQueueLogger" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC25B785146A0295000F32F4 /* Debug */,
+				DC25B786146A0295000F32F4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DC25B75D146A0294000F32F4 /* Project object */;
+}

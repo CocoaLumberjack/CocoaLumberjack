@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:../Classes">
+   </FileRef>
+   <FileRef
+      location = "group:Benchmark/Mobile/BenchmarkIPhone.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Benchmark/Mobile/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Benchmark/Desktop/BenchmarkMac.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Benchmark/Desktop/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CaptureASL/CaptureASL.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CaptureASL/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CLI/CLI.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CLI/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:ContextFilter/ContextFilter.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:ContextFilter/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CoreDataLogger/CoreDataLogger.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CoreDataLogger/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CustomFormatters/CustomFormatters.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CustomFormatters/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CustomLogLevels/CustomLogLevels.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CustomLogLevels/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:DispatchQueueLogger/DispatchQueueLogger.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:DispatchQueueLogger/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:FineGrainedLogging/FineGrainedLogging.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:FineGrainedLogging/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:GlobalLogLevel/GlobalLogLevel.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:GlobalLogLevel/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:LogFileCompressor/LogFileCompressor.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:LogFileCompressor/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:OverflowTestMac/OverflowTestMac.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:OverflowTestMac/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PerUserLogLevels/PerUserLogLevels.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PerUserLogLevels/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:RollingTestMac/RollingTestMac.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:RollingTestMac/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:SQLiteLogger/SQLiteLogger.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:SQLiteLogger/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:UniversalApp/UniversalApp.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:UniversalApp/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:WebServerIPhone/WebServerIPhone.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:WebServerIPhone/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:NonArcTest/NonArcTest.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:NonArcTest/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:RegisteredDynamicLogging/Desktop/RegisteredLoggingTest.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:RegisteredDynamicLogging/Desktop/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:RegisteredDynamicLogging/Mobile/RegisteredLoggingTest.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:RegisteredDynamicLogging/Mobile/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:TestXcodeColors/Desktop/TestXcodeColors.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:TestXcodeColors/Desktop/Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:TestXcodeColors/Mobile/TextXcodeColors.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:TestXcodeColors/Mobile/Pods/Pods.xcodeproj">
+   </FileRef>
+</Workspace>

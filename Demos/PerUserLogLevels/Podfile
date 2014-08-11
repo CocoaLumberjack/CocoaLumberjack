@@ -1,0 +1,13 @@
+xcodeproj 'PerUserLogLevels'
+workspace '../Demos'
+
+def import_pods
+  pod 'CocoaLumberjack', :path => '../../'
+end
+
+target :PULL_osx do
+  platform :osx, '10.7'
+  link_with 'PerUserLogLevels'
+  import_pods
+end
+

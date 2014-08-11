@@ -1,0 +1,13 @@
+xcodeproj 'CustomLogLevels'
+workspace '../Demos'
+
+def import_pods
+  pod 'CocoaLumberjack', :path => '../../'
+end
+
+target :CLL_osx do
+  platform :osx, '10.7'
+  link_with 'CustomLogLevels'
+  import_pods
+end
+

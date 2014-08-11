@@ -1,0 +1,13 @@
+xcodeproj 'GlobalLogLevel'
+workspace '../Demos'
+
+def import_pods
+  pod 'CocoaLumberjack', :path => '../../'
+end
+
+target :GLL_osx do
+  platform :osx, '10.7'
+  link_with 'GlobalLogLevel'
+  import_pods
+end
+
