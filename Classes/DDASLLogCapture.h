@@ -19,4 +19,3 @@
 + (void)setCaptureLogLevel:(int)LOG_LEVEL_XXX;
 
 @end
-

@@ -12,9 +12,9 @@
     CGFloat _red, _green, _blue, _alpha;
 }
 
-+(CLIColor *)colorWithCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
-{
-    CLIColor * color = [CLIColor new];
++ (CLIColor *)colorWithCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha {
+    CLIColor *color = [CLIColor new];
+
     color->_red     = red;
     color->_green   = green;
     color->_blue    = blue;
@@ -22,12 +22,22 @@
     return color;
 }
 
-- (void)getRed:(CGFloat *)red green:(CGFloat *)green blue:(CGFloat *)blue alpha:(CGFloat *)alpha
-{
-    if (red)    *red    = _red;
-    if (green)  *green  = _green;
-    if (blue)   *blue   = _blue;
-    if (alpha)  *alpha  = _alpha;
+- (void)getRed:(CGFloat *)red green:(CGFloat *)green blue:(CGFloat *)blue alpha:(CGFloat *)alpha {
+    if (red) {
+        *red    = _red;
+    }
+
+    if (green) {
+        *green  = _green;
+    }
+
+    if (blue) {
+        *blue   = _blue;
+    }
+
+    if (alpha) {
+        *alpha  = _alpha;
+    }
 }
 
 @end

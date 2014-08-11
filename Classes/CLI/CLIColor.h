@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 
 /**
- Simple NSColor replacement for CLI projects that don't link with AppKit
+   Simple NSColor replacement for CLI projects that don't link with AppKit
  */
 @interface CLIColor : NSObject
 
