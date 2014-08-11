@@ -158,15 +158,22 @@ static int _captureLogLevel = LOG_LEVEL_VERBOSE;
                                          // Iterate over new messages.
                                          aslmsg msg;
                                          aslresponse response = asl_search(NULL, query);
+#if defined(__IPHONE_8_0) || defined(__MAC_10_10)
+                                         while ((msg = asl_next(response)))
+#else
                                          while ((msg = aslresponse_next(response)))
+#endif
                                          {
                                              [DDASLLogCapture aslMessageRecieved:msg];
                                              
                                              // Keep track of which messages we've seen.
                                              lastSeenID = atoll(asl_get(msg, ASL_KEY_MSG_ID));
                                          }
+#if defined(__IPHONE_8_0) || defined(__MAC_10_10)
+                                         asl_release(response);
+#else
                                          aslresponse_free(response);
-                                         
+#endif
                                          if(_cancel)
                                          {
                                              notify_cancel(notifyToken);
