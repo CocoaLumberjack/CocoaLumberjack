@@ -45,11 +45,9 @@
 
 
 
-#define LOGV_MAYBE(async, lvl, flg, ctx, fnct, frmt, avalist)            \
-    do { if (lvl & flg) {                                                \
-             LOGV_MACRO(async, lvl, flg, ctx, nil, fnct, frmt, avalist); \
-         }                                                               \
-    } while (0)
+#define LOGV_MAYBE(async, lvl, flg, ctx, fnct, frmt, avalist) \
+    do { if(lvl & flg) LOGV_MACRO(async, lvl, flg, ctx, nil, fnct, frmt, avalist); } while(0)
+
 
 #define LOGV_OBJC_MAYBE(async, lvl, flg, ctx, frmt, avalist) \
     LOGV_MAYBE(async, lvl, flg, ctx, sel_getName(_cmd), frmt, avalist)
@@ -77,11 +75,8 @@
 #define LOGV_C_TAG_MACRO(async, lvl, flg, ctx, tag, frmt, avalist) \
     LOGV_MACRO(async, lvl, flg, ctx, tag, __FUNCTION__, frmt, avalist)
 
-#define LOGV_TAG_MAYBE(async, lvl, flg, ctx, tag, fnct, frmt, avalist)   \
-    do { if (lvl & flg) {                                                \
-             LOGV_MACRO(async, lvl, flg, ctx, tag, fnct, frmt, avalist); \
-         }                                                               \
-    } while (0)
+#define LOGV_TAG_MAYBE(async, lvl, flg, ctx, tag, fnct, frmt, avalist) \
+    do { if(lvl & flg) LOGV_MACRO(async, lvl, flg, ctx, tag, fnct, frmt, avalist); } while(0)
 
 #define LOGV_OBJC_TAG_MAYBE(async, lvl, flg, ctx, tag, frmt, avalist) \
     LOGV_TAG_MAYBE(async, lvl, flg, ctx, tag, sel_getName(_cmd), frmt, avalist)
