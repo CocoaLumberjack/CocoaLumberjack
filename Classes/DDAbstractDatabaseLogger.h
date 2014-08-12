@@ -22,21 +22,7 @@
  * and override the methods in the implementation file that are prefixed with "db_".
  **/
 
-@interface DDAbstractDatabaseLogger : DDAbstractLogger {
-    @protected
-    NSUInteger saveThreshold;
-    NSTimeInterval saveInterval;
-    NSTimeInterval maxAge;
-    NSTimeInterval deleteInterval;
-    BOOL deleteOnEverySave;
-
-    BOOL saveTimerSuspended;
-    NSUInteger unsavedCount;
-    dispatch_time_t unsavedTime;
-    dispatch_source_t saveTimer;
-    dispatch_time_t lastDeleteTime;
-    dispatch_source_t deleteTimer;
-}
+@interface DDAbstractDatabaseLogger : DDAbstractLogger
 
 /**
  * Specifies how often to save the data to disk.
