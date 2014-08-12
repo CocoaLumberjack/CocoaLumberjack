@@ -76,19 +76,15 @@ static int _captureLogLevel = LOG_LEVEL_VERBOSE;
 
     switch ([level intValue]) {
         // By default all NSLog's with a ASL_LEVEL_WARNING level
-        case ASL_LEVEL_EMERG:
-        case ASL_LEVEL_ALERT:
-        case ASL_LEVEL_CRIT: flag = LOG_FLAG_ERROR;    async = LOG_ASYNC_ERROR;    break;
-
-        case ASL_LEVEL_ERR: flag = LOG_FLAG_WARN;     async = LOG_ASYNC_WARN;     break;
-
-        case ASL_LEVEL_WARNING: flag = LOG_FLAG_INFO;     async = LOG_ASYNC_INFO;     break;
-
-        case ASL_LEVEL_NOTICE: flag = LOG_FLAG_DEBUG;    async = LOG_ASYNC_DEBUG;    break;
-
-        case ASL_LEVEL_INFO:
-        case ASL_LEVEL_DEBUG:
-        default: flag = LOG_FLAG_VERBOSE;  async = LOG_ASYNC_VERBOSE;  break;
+        case ASL_LEVEL_EMERG    :
+        case ASL_LEVEL_ALERT    :
+        case ASL_LEVEL_CRIT     : flag = LOG_FLAG_ERROR;    async = LOG_ASYNC_ERROR;    break;
+        case ASL_LEVEL_ERR      : flag = LOG_FLAG_WARN;     async = LOG_ASYNC_WARN;     break;
+        case ASL_LEVEL_WARNING  : flag = LOG_FLAG_INFO;     async = LOG_ASYNC_INFO;     break;
+        case ASL_LEVEL_NOTICE   : flag = LOG_FLAG_DEBUG;    async = LOG_ASYNC_DEBUG;    break;
+        case ASL_LEVEL_INFO     :
+        case ASL_LEVEL_DEBUG    :
+        default                 : flag = LOG_FLAG_VERBOSE;  async = LOG_ASYNC_VERBOSE;  break;
     }
 
     if (!(_captureLogLevel & flag)) {
