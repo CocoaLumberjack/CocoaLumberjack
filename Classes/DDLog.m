@@ -306,16 +306,15 @@ static unsigned int numProcessors;
     }
 }
 
-+ (void) log:(BOOL)asynchronous
-       level:(int)level
-        flag:(int)flag
-     context:(int)context
-        file:(const char *)file
-    function:(const char *)function
-        line:(int)line
-         tag:(id)tag
-      format:(NSString *)format, ...
-{
++ (void)log:(BOOL)asynchronous
+      level:(int)level
+       flag:(int)flag
+    context:(int)context
+       file:(const char *)file
+   function:(const char *)function
+       line:(int)line
+        tag:(id)tag
+     format:(NSString *)format, ... {
     va_list args;
 
     if (format) {
@@ -338,16 +337,16 @@ static unsigned int numProcessors;
     }
 }
 
-+ (void) log:(BOOL)asynchronous
-       level:(int)level
-        flag:(int)flag
-     context:(int)context
-        file:(const char *)file
-    function:(const char *)function
-        line:(int)line
-         tag:(id)tag
-      format:(NSString *)format
-        args:(va_list)args {
++ (void)log:(BOOL)asynchronous
+      level:(int)level
+       flag:(int)flag
+    context:(int)context
+       file:(const char *)file
+   function:(const char *)function
+       line:(int)line
+        tag:(id)tag
+     format:(NSString *)format
+       args:(va_list)args {
     if (format) {
         NSString *logMsg = [[NSString alloc] initWithFormat:format arguments:args];
         DDLogMessage *logMessage = [[DDLogMessage alloc] initWithLogMsg:logMsg
