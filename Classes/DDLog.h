@@ -17,14 +17,14 @@
 
 #define LOG_MACRO(isAsynchronous, lvl, flg, ctx, atag, fnct, frmt, ...) \
     [DDLog log : isAsynchronous                                         \
-     level : lvl                                                        \
-     flag : flg                                                         \
-     context : ctx                                                      \
-     file : __FILE__                                                    \
-     function : fnct                                                    \
-     line : __LINE__                                                    \
-     tag : atag                                                         \
-     format : (frmt), ## __VA_ARGS__]
+         level : lvl                                                    \
+          flag : flg                                                    \
+       context : ctx                                                    \
+          file : __FILE__                                               \
+      function : fnct                                                   \
+          line : __LINE__                                               \
+           tag : atag                                                   \
+        format : (frmt), ## __VA_ARGS__]
 
 /**
  * Define the Objective-C and C versions of the macro.
@@ -34,13 +34,13 @@
  **/
 
 #define LOG_OBJC_MACRO(async, lvl, flg, ctx, frmt, ...) \
-    LOG_MACRO(async, lvl, flg, ctx, nil, __PRETTY_FUNCTION__, frmt, ## __VA_ARGS__)
+             LOG_MACRO(async, lvl, flg, ctx, nil, __PRETTY_FUNCTION__, frmt, ## __VA_ARGS__)
 
 #define SYNC_LOG_OBJC_MACRO(lvl, flg, ctx, frmt, ...) \
-    LOG_OBJC_MACRO(NO, lvl, flg, ctx, frmt, ## __VA_ARGS__)
+         LOG_OBJC_MACRO(NO, lvl, flg, ctx, frmt, ## __VA_ARGS__)
 
 #define ASYNC_LOG_OBJC_MACRO(lvl, flg, ctx, frmt, ...) \
-    LOG_OBJC_MACRO(YES, lvl, flg, ctx, frmt, ## __VA_ARGS__)
+         LOG_OBJC_MACRO(YES, lvl, flg, ctx, frmt, ## __VA_ARGS__)
 
 /**
  * Define version of the macro that only execute if the logLevel is above the threshold.
@@ -63,19 +63,16 @@
  **/
 
 #define LOG_MAYBE(async, lvl, flg, ctx, fnct, frmt, ...)                       \
-    do { if (lvl & flg) {                                                      \
-             LOG_MACRO(async, lvl, flg, ctx, nil, fnct, frmt, ## __VA_ARGS__); \
-         }                                                                     \
-    } while (0)
+    do { if(lvl & flg) LOG_MACRO(async, lvl, flg, ctx, nil, fnct, frmt, ##__VA_ARGS__); } while(0)
 
 #define LOG_OBJC_MAYBE(async, lvl, flg, ctx, frmt, ...) \
-    LOG_MAYBE(async, lvl, flg, ctx, __PRETTY_FUNCTION__, frmt, ## __VA_ARGS__)
+             LOG_MAYBE(async, lvl, flg, ctx, __PRETTY_FUNCTION__, frmt, ## __VA_ARGS__)
 
 #define SYNC_LOG_OBJC_MAYBE(lvl, flg, ctx, frmt, ...) \
-    LOG_OBJC_MAYBE(NO, lvl, flg, ctx, frmt, ## __VA_ARGS__)
+         LOG_OBJC_MAYBE(NO, lvl, flg, ctx, frmt, ## __VA_ARGS__)
 
 #define ASYNC_LOG_OBJC_MAYBE(lvl, flg, ctx, frmt, ...) \
-    LOG_OBJC_MAYBE(YES, lvl, flg, ctx, frmt, ## __VA_ARGS__)
+         LOG_OBJC_MAYBE(YES, lvl, flg, ctx, frmt, ## __VA_ARGS__)
 
 /**
  * Define versions of the macros that also accept tags.
@@ -88,16 +85,13 @@
  **/
 
 #define LOG_OBJC_TAG_MACRO(async, lvl, flg, ctx, tag, frmt, ...) \
-    LOG_MACRO(async, lvl, flg, ctx, tag, __PRETTY_FUNCTION__, frmt, ## __VA_ARGS__)
+                 LOG_MACRO(async, lvl, flg, ctx, tag, __PRETTY_FUNCTION__, frmt, ## __VA_ARGS__)
 
 #define LOG_TAG_MAYBE(async, lvl, flg, ctx, tag, fnct, frmt, ...)              \
-    do { if (lvl & flg) {                                                      \
-             LOG_MACRO(async, lvl, flg, ctx, tag, fnct, frmt, ## __VA_ARGS__); \
-         }                                                                     \
-    } while (0)
+    do { if(lvl & flg) LOG_MACRO(async, lvl, flg, ctx, tag, fnct, frmt, ##__VA_ARGS__); } while(0)
 
 #define LOG_OBJC_TAG_MAYBE(async, lvl, flg, ctx, tag, frmt, ...) \
-    LOG_TAG_MAYBE(async, lvl, flg, ctx, tag, __PRETTY_FUNCTION__, frmt, ## __VA_ARGS__)
+             LOG_TAG_MAYBE(async, lvl, flg, ctx, tag, __PRETTY_FUNCTION__, frmt, ## __VA_ARGS__)
 
 /**
  * Define the standard options.
@@ -185,7 +179,7 @@
 
 #define LOG_ASYNC_ENABLED YES
 
-#define LOG_ASYNC_ERROR   (NO && LOG_ASYNC_ENABLED)
+#define LOG_ASYNC_ERROR   ( NO && LOG_ASYNC_ENABLED)
 #define LOG_ASYNC_WARN    (YES && LOG_ASYNC_ENABLED)
 #define LOG_ASYNC_INFO    (YES && LOG_ASYNC_ENABLED)
 #define LOG_ASYNC_DEBUG   (YES && LOG_ASYNC_ENABLED)
@@ -234,15 +228,15 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * It is suggested you stick with the macros as they're easier to use.
  **/
 
-+ (void) log:(BOOL)synchronous
-       level:(int)level
-        flag:(int)flag
-     context:(int)context
-        file:(const char *)file
-    function:(const char *)function
-        line:(int)line
-         tag:(id)tag
-      format:(NSString *)format, ...__attribute__((format(__NSString__, 9, 10)));
++ (void)log:(BOOL)synchronous
+      level:(int)level
+       flag:(int)flag
+    context:(int)context
+       file:(const char *)file
+   function:(const char *)function
+       line:(int)line
+        tag:(id)tag
+     format:(NSString *)format, ...__attribute__((format(__NSString__, 9, 10)));
 
 /**
  * Logging Primitive.
@@ -250,16 +244,16 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * This method can be used if you have a prepared va_list.
  **/
 
-+ (void) log:(BOOL)asynchronous
-       level:(int)level
-        flag:(int)flag
-     context:(int)context
-        file:(const char *)file
-    function:(const char *)function
-        line:(int)line
-         tag:(id)tag
-      format:(NSString *)format
-        args:(va_list)argList;
++ (void)log:(BOOL)asynchronous
+      level:(int)level
+       flag:(int)flag
+    context:(int)context
+       file:(const char *)file
+   function:(const char *)function
+       line:(int)line
+        tag:(id)tag
+     format:(NSString *)format
+       args:(va_list)argList;
 
 /**
  * Logging Primitive.
