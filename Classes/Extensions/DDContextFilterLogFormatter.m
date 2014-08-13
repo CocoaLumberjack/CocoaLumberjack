@@ -35,33 +35,37 @@
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@implementation DDContextWhitelistFilterLogFormatter
-{
-    DDLoggingContextSet *contextSet;
+@interface DDContextWhitelistFilterLogFormatter () {
+    DDLoggingContextSet *_contextSet;
 }
+
+@end
+
+
+@implementation DDContextWhitelistFilterLogFormatter
 
 - (id)init {
     if ((self = [super init])) {
-        contextSet = [[DDLoggingContextSet alloc] init];
+        _contextSet = [[DDLoggingContextSet alloc] init];
     }
 
     return self;
 }
 
 - (void)addToWhitelist:(int)loggingContext {
-    [contextSet addToSet:loggingContext];
+    [_contextSet addToSet:loggingContext];
 }
 
 - (void)removeFromWhitelist:(int)loggingContext {
-    [contextSet removeFromSet:loggingContext];
+    [_contextSet removeFromSet:loggingContext];
 }
 
 - (NSArray *)whitelist {
-    return [contextSet currentSet];
+    return [_contextSet currentSet];
 }
 
 - (BOOL)isOnWhitelist:(int)loggingContext {
-    return [contextSet isInSet:loggingContext];
+    return [_contextSet isInSet:loggingContext];
 }
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
@@ -78,33 +82,37 @@
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@implementation DDContextBlacklistFilterLogFormatter
-{
-    DDLoggingContextSet *contextSet;
+@interface DDContextBlacklistFilterLogFormatter () {
+    DDLoggingContextSet *_contextSet;
 }
+
+@end
+
+
+@implementation DDContextBlacklistFilterLogFormatter
 
 - (id)init {
     if ((self = [super init])) {
-        contextSet = [[DDLoggingContextSet alloc] init];
+        _contextSet = [[DDLoggingContextSet alloc] init];
     }
 
     return self;
 }
 
 - (void)addToBlacklist:(int)loggingContext {
-    [contextSet addToSet:loggingContext];
+    [_contextSet addToSet:loggingContext];
 }
 
 - (void)removeFromBlacklist:(int)loggingContext {
-    [contextSet removeFromSet:loggingContext];
+    [_contextSet removeFromSet:loggingContext];
 }
 
 - (NSArray *)blacklist {
-    return [contextSet currentSet];
+    return [_contextSet currentSet];
 }
 
 - (BOOL)isOnBlacklist:(int)loggingContext {
-    return [contextSet isInSet:loggingContext];
+    return [_contextSet isInSet:loggingContext];
 }
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
@@ -121,44 +129,49 @@
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@implementation DDLoggingContextSet
-{
-    OSSpinLock lock;
-    NSMutableSet *set;
+
+@interface DDLoggingContextSet () {
+    OSSpinLock _lock;
+    NSMutableSet *_set;
 }
+
+@end
+
+
+@implementation DDLoggingContextSet
 
 - (id)init {
     if ((self = [super init])) {
-        set = [[NSMutableSet alloc] init];
+        _set = [[NSMutableSet alloc] init];
     }
 
     return self;
 }
 
 - (void)addToSet:(int)loggingContext {
-    OSSpinLockLock(&lock);
+    OSSpinLockLock(&_lock);
     {
-        [set addObject:@(loggingContext)];
+        [_set addObject:@(loggingContext)];
     }
-    OSSpinLockUnlock(&lock);
+    OSSpinLockUnlock(&_lock);
 }
 
 - (void)removeFromSet:(int)loggingContext {
-    OSSpinLockLock(&lock);
+    OSSpinLockLock(&_lock);
     {
-        [set removeObject:@(loggingContext)];
+        [_set removeObject:@(loggingContext)];
     }
-    OSSpinLockUnlock(&lock);
+    OSSpinLockUnlock(&_lock);
 }
 
 - (NSArray *)currentSet {
     NSArray *result = nil;
 
-    OSSpinLockLock(&lock);
+    OSSpinLockLock(&_lock);
     {
-        result = [set allObjects];
+        result = [_set allObjects];
     }
-    OSSpinLockUnlock(&lock);
+    OSSpinLockUnlock(&_lock);
 
     return result;
 }
@@ -166,11 +179,11 @@
 - (BOOL)isInSet:(int)loggingContext {
     BOOL result = NO;
 
-    OSSpinLockLock(&lock);
+    OSSpinLockLock(&_lock);
     {
-        result = [set containsObject:@(loggingContext)];
+        result = [_set containsObject:@(loggingContext)];
     }
-    OSSpinLockUnlock(&lock);
+    OSSpinLockUnlock(&_lock);
 
     return result;
 }
