@@ -21,22 +21,7 @@
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-@interface DDAbstractDatabaseLogger () {
-
-@protected
-    NSUInteger _saveThreshold;
-    NSTimeInterval _saveInterval;
-    NSTimeInterval _maxAge;
-    NSTimeInterval _deleteInterval;
-    BOOL _deleteOnEverySave;
-    
-    BOOL _saveTimerSuspended;
-    NSUInteger _unsavedCount;
-    dispatch_time_t _unsavedTime;
-    dispatch_source_t _saveTimer;
-    dispatch_time_t _lastDeleteTime;
-    dispatch_source_t _deleteTimer;
-}
+@interface DDAbstractDatabaseLogger ()
 
 - (void)destroySaveTimer;
 - (void)destroyDeleteTimer;
