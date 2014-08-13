@@ -254,7 +254,7 @@
 
 - (void)deleteOldLogEntries:(BOOL)shouldSaveWhenDone
 {
-    if (maxAge <= 0.0)
+    if (_maxAge <= 0.0)
     {
         // Deleting old log entries is disabled.
         // The superclass won't likely call us if this is the case, but we're being cautious.
@@ -264,10 +264,10 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"LogEntry"
                                               inManagedObjectContext:managedObjectContext];
     
-    NSDate *maxDate = [NSDate dateWithTimeIntervalSinceNow:(-1.0 * maxAge)];
+    NSDate *maxDate = [NSDate dateWithTimeIntervalSinceNow:(-1.0 * _maxAge)];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"timestamp < %@", maxDate];
     
-    NSUInteger batchSize = (saveThreshold > 0) ? saveThreshold : 500;
+    NSUInteger batchSize = (_saveThreshold > 0) ? _saveThreshold : 500;
     NSUInteger count = 0;
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];

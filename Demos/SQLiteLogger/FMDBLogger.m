@@ -56,7 +56,7 @@
     {
         logDirectory = [aLogDirectory copy];
         
-        pendingLogEntries = [[NSMutableArray alloc] initWithCapacity:saveThreshold];
+        pendingLogEntries = [[NSMutableArray alloc] initWithCapacity:_saveThreshold];
         
         [self validateLogDirectory];
         [self openDatabase];
@@ -222,7 +222,7 @@
 
 - (void)db_delete
 {
-    if (maxAge <= 0.0)
+    if (_maxAge <= 0.0)
     {
         // Deleting old log entries is disabled.
         // The superclass won't likely call us if this is the case, but we're being cautious.
@@ -231,7 +231,7 @@
     
     BOOL deleteOnlyTransaction = ![database inTransaction];
     
-    NSDate *maxDate = [NSDate dateWithTimeIntervalSinceNow:(-1.0 * maxAge)];
+    NSDate *maxDate = [NSDate dateWithTimeIntervalSinceNow:(-1.0 * _maxAge)];
     
     [database executeUpdate:@"DELETE FROM logs WHERE timestamp < ?", maxDate];
     
