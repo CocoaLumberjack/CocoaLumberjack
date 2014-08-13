@@ -128,6 +128,25 @@
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@interface DDTTYLogger () {
+    NSUInteger _calendarUnitFlags;
+    
+    NSString *_appName;
+    char *_app;
+    size_t _appLen;
+    
+    NSString *_processID;
+    char *_pid;
+    size_t _pidLen;
+    
+    BOOL _colorsEnabled;
+    NSMutableArray *_colorProfilesArray;
+    NSMutableDictionary *_colorProfilesDict;
+}
+
+@end
+
+
 @implementation DDTTYLogger
 
 static BOOL isaColorTTY;
@@ -814,7 +833,7 @@ static DDTTYLogger *sharedInstance;
     }
 
     if ((self = [super init])) {
-        calendarUnitFlags = (NSCalendarUnitYear     |
+        _calendarUnitFlags = (NSCalendarUnitYear     |
                              NSCalendarUnitMonth    |
                              NSCalendarUnitDay      |
                              NSCalendarUnitHour     |
@@ -823,22 +842,22 @@ static DDTTYLogger *sharedInstance;
 
         // Initialze 'app' variable (char *)
 
-        appName = [[NSProcessInfo processInfo] processName];
+        _appName = [[NSProcessInfo processInfo] processName];
 
-        appLen = [appName lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+        _appLen = [_appName lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
 
-        if (appLen == 0) {
-            appName = @"<UnnamedApp>";
-            appLen = [appName lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+        if (_appLen == 0) {
+            _appName = @"<UnnamedApp>";
+            _appLen = [_appName lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
         }
 
-        app = (char *)malloc(appLen + 1);
+        _app = (char *)malloc(_appLen + 1);
 
-        if (app == NULL) {
+        if (_app == NULL) {
             return nil;
         }
 
-        BOOL processedAppName = [appName getCString:app maxLength:(appLen + 1) encoding:NSUTF8StringEncoding];
+        BOOL processedAppName = [_appName getCString:_app maxLength:(_appLen + 1) encoding:NSUTF8StringEncoding];
 
         if (NO == processedAppName) {
             return nil;
@@ -846,16 +865,16 @@ static DDTTYLogger *sharedInstance;
 
         // Initialize 'pid' variable (char *)
 
-        processID = [NSString stringWithFormat:@"%i", (int)getpid()];
+        _processID = [NSString stringWithFormat:@"%i", (int)getpid()];
 
-        pidLen = [processID lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-        pid = (char *)malloc(pidLen + 1);
+        _pidLen = [_processID lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+        _pid = (char *)malloc(_pidLen + 1);
 
-        if (pid == NULL) {
+        if (_pid == NULL) {
             return nil;
         }
 
-        BOOL processedID = [processID getCString:pid maxLength:(pidLen + 1) encoding:NSUTF8StringEncoding];
+        BOOL processedID = [_processID getCString:_pid maxLength:(_pidLen + 1) encoding:NSUTF8StringEncoding];
 
         if (NO == processedID) {
             return nil;
@@ -863,9 +882,9 @@ static DDTTYLogger *sharedInstance;
 
         // Initialize color stuff
 
-        colorsEnabled = NO;
-        colorProfilesArray = [[NSMutableArray alloc] initWithCapacity:8];
-        colorProfilesDict = [[NSMutableDictionary alloc] initWithCapacity:8];
+        _colorsEnabled = NO;
+        _colorProfilesArray = [[NSMutableArray alloc] initWithCapacity:8];
+        _colorProfilesDict = [[NSMutableDictionary alloc] initWithCapacity:8];
 
         _automaticallyAppendNewlineForCustomFormatters = YES;
     }
@@ -898,7 +917,7 @@ static DDTTYLogger *sharedInstance;
 
     dispatch_sync(globalLoggingQueue, ^{
         dispatch_sync(loggerQueue, ^{
-            result = colorsEnabled;
+            result = _colorsEnabled;
         });
     });
 
@@ -908,9 +927,9 @@ static DDTTYLogger *sharedInstance;
 - (void)setColorsEnabled:(BOOL)newColorsEnabled {
     dispatch_block_t block = ^{
         @autoreleasepool {
-            colorsEnabled = newColorsEnabled;
+            _colorsEnabled = newColorsEnabled;
 
-            if ([colorProfilesArray count] == 0) {
+            if ([_colorProfilesArray count] == 0) {
                 [self loadDefaultColorProfiles];
             }
         }
@@ -953,7 +972,7 @@ static DDTTYLogger *sharedInstance;
 
             NSUInteger i = 0;
 
-            for (DDTTYLoggerColorProfile *colorProfile in colorProfilesArray) {
+            for (DDTTYLoggerColorProfile *colorProfile in _colorProfilesArray) {
                 if ((colorProfile->mask == mask) && (colorProfile->context == ctxt)) {
                     break;
                 }
@@ -961,10 +980,10 @@ static DDTTYLogger *sharedInstance;
                 i++;
             }
 
-            if (i < [colorProfilesArray count]) {
-                [colorProfilesArray replaceObjectAtIndex:i withObject:newColorProfile];
+            if (i < [_colorProfilesArray count]) {
+                [_colorProfilesArray replaceObjectAtIndex:i withObject:newColorProfile];
             } else {
-                [colorProfilesArray addObject:newColorProfile];
+                [_colorProfilesArray addObject:newColorProfile];
             }
         }
     };
@@ -997,7 +1016,7 @@ static DDTTYLogger *sharedInstance;
 
             NSLogInfo(@"DDTTYLogger: newColorProfile: %@", newColorProfile);
 
-            [colorProfilesDict setObject:newColorProfile forKey:tag];
+            [_colorProfilesDict setObject:newColorProfile forKey:tag];
         }
     };
 
@@ -1025,7 +1044,7 @@ static DDTTYLogger *sharedInstance;
         @autoreleasepool {
             NSUInteger i = 0;
 
-            for (DDTTYLoggerColorProfile *colorProfile in colorProfilesArray) {
+            for (DDTTYLoggerColorProfile *colorProfile in _colorProfilesArray) {
                 if ((colorProfile->mask == mask) && (colorProfile->context == context)) {
                     break;
                 }
@@ -1033,8 +1052,8 @@ static DDTTYLogger *sharedInstance;
                 i++;
             }
 
-            if (i < [colorProfilesArray count]) {
-                [colorProfilesArray removeObjectAtIndex:i];
+            if (i < [_colorProfilesArray count]) {
+                [_colorProfilesArray removeObjectAtIndex:i];
             }
         }
     };
@@ -1059,7 +1078,7 @@ static DDTTYLogger *sharedInstance;
 
     dispatch_block_t block = ^{
         @autoreleasepool {
-            [colorProfilesDict removeObjectForKey:tag];
+            [_colorProfilesDict removeObjectForKey:tag];
         }
     };
 
@@ -1081,7 +1100,7 @@ static DDTTYLogger *sharedInstance;
 - (void)clearColorsForAllFlags {
     dispatch_block_t block = ^{
         @autoreleasepool {
-            [colorProfilesArray removeAllObjects];
+            [_colorProfilesArray removeAllObjects];
         }
     };
 
@@ -1103,7 +1122,7 @@ static DDTTYLogger *sharedInstance;
 - (void)clearColorsForAllTags {
     dispatch_block_t block = ^{
         @autoreleasepool {
-            [colorProfilesDict removeAllObjects];
+            [_colorProfilesDict removeAllObjects];
         }
     };
 
@@ -1125,8 +1144,8 @@ static DDTTYLogger *sharedInstance;
 - (void)clearAllColors {
     dispatch_block_t block = ^{
         @autoreleasepool {
-            [colorProfilesArray removeAllObjects];
-            [colorProfilesDict removeAllObjects];
+            [_colorProfilesArray removeAllObjects];
+            [_colorProfilesDict removeAllObjects];
         }
     };
 
@@ -1159,13 +1178,13 @@ static DDTTYLogger *sharedInstance;
 
         DDTTYLoggerColorProfile *colorProfile = nil;
 
-        if (colorsEnabled) {
+        if (_colorsEnabled) {
             if (logMessage->tag) {
-                colorProfile = [colorProfilesDict objectForKey:logMessage->tag];
+                colorProfile = [_colorProfilesDict objectForKey:logMessage->tag];
             }
 
             if (colorProfile == nil) {
-                for (DDTTYLoggerColorProfile *cp in colorProfilesArray) {
+                for (DDTTYLoggerColorProfile *cp in _colorProfilesArray) {
                     if (logMessage->logFlag & cp->mask) {
                         // Color profile set for this context?
                         if (logMessage->logContext == cp->context) {
@@ -1257,7 +1276,7 @@ static DDTTYLogger *sharedInstance;
             // Calculate timestamp.
             // The technique below is faster than using NSDateFormatter.
             if (logMessage->timestamp) {
-                NSDateComponents *components = [[NSCalendar autoupdatingCurrentCalendar] components:calendarUnitFlags fromDate:logMessage->timestamp];
+                NSDateComponents *components = [[NSCalendar autoupdatingCurrentCalendar] components:_calendarUnitFlags fromDate:logMessage->timestamp];
 
                 NSTimeInterval epoch = [logMessage->timestamp timeIntervalSinceReferenceDate];
                 int milliseconds = (int)((epoch - floor(epoch)) * 1000);
@@ -1316,14 +1335,14 @@ static DDTTYLogger *sharedInstance;
             v[3].iov_base = " ";
             v[3].iov_len = 1;
 
-            v[4].iov_base = app;
-            v[4].iov_len = appLen;
+            v[4].iov_base = _app;
+            v[4].iov_len = _appLen;
 
             v[5].iov_base = "[";
             v[5].iov_len = 1;
 
-            v[6].iov_base = pid;
-            v[6].iov_len = pidLen;
+            v[6].iov_base = _pid;
+            v[6].iov_len = _pidLen;
 
             v[7].iov_base = ":";
             v[7].iov_len = 1;
