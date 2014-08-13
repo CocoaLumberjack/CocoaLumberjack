@@ -1,19 +1,20 @@
+// Software License Agreement (BSD License)
 //
-//  DDMultiFormatter.m
-//  CocoaLumberjack
+// Copyright (c) 2010-2014, Deusty, LLC
+// All rights reserved.
 //
+// Redistribution and use of this software in source and binary forms,
+// with or without modification, are permitted provided that the following conditions are met:
+//
+// * Redistributions of source code must retain the above copyright notice,
+//   this list of conditions and the following disclaimer.
+//
+// * Neither the name of Deusty nor the names of its contributors may be used
+//   to endorse or promote products derived from this software without specific
+//   prior written permission of Deusty, LLC.
 
 #import "DDMultiFormatter.h"
 
-/**
- * Welcome to Cocoa Lumberjack!
- *
- * The project page has a wealth of documentation if you have any questions.
- * https://github.com/CocoaLumberjack/CocoaLumberjack
- *
- * If you're new to the project you may wish to read the "Getting Started" page.
- * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/GettingStarted
- **/
 
 #if TARGET_OS_IPHONE
 // Compiling for iOS
