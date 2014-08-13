@@ -23,9 +23,8 @@
 
 static DDASLLogger *sharedInstance;
 
-@implementation DDASLLogger
-{
-    aslclient client;
+@implementation DDASLLogger {
+    aslclient _client;
 }
 
 + (instancetype)sharedInstance {
@@ -47,7 +46,7 @@ static DDASLLogger *sharedInstance;
         // A default asl client is provided for the main thread,
         // but background threads need to create their own client.
 
-        client = asl_open(NULL, "com.apple.console", 0);
+        _client = asl_open(NULL, "com.apple.console", 0);
     }
 
     return self;
@@ -83,7 +82,7 @@ static DDASLLogger *sharedInstance;
 
         aslmsg m = asl_new(ASL_TYPE_MSG);
         asl_set(m, ASL_KEY_READ_UID, "501");
-        asl_log(client, m, aslLogLevel, "%s", msg);
+        asl_log(_client, m, aslLogLevel, "%s", msg);
         asl_free(m);
     }
 }
