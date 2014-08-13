@@ -7,10 +7,14 @@
 
 #import "CLIColor.h"
 
-@implementation CLIColor
-{
+@interface CLIColor () {
     CGFloat _red, _green, _blue, _alpha;
 }
+
+@end
+
+
+@implementation CLIColor
 
 + (CLIColor *)colorWithCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha {
     CLIColor *color = [CLIColor new];
