@@ -39,20 +39,6 @@
 #define NSLogDebug(frmt, ...)    do{ if(LOG_LEVEL >= 4) NSLog((frmt), ##__VA_ARGS__); } while(0)
 #define NSLogVerbose(frmt, ...)  do{ if(LOG_LEVEL >= 5) NSLog((frmt), ##__VA_ARGS__); } while(0)
 
-@interface DDLogFileManagerDefault (PrivateAPI)
-
-- (void)deleteOldLogFiles;
-- (NSString *)defaultLogsDirectory;
-
-@end
-
-@interface DDFileLogger (PrivateAPI)
-
-- (void)rollLogFileNow;
-- (void)maybeRollLogFileDueToAge;
-- (void)maybeRollLogFileDueToSize;
-
-@end
 
 #if TARGET_OS_IPHONE
 BOOL doesAppRunInBackground(void);
@@ -62,10 +48,24 @@ BOOL doesAppRunInBackground(void);
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@interface DDLogFileManagerDefault () {
+    NSUInteger _maximumNumberOfLogFiles;
+    unsigned long long _logFilesDiskQuota;
+    NSString *_logsDirectory;
+#if TARGET_OS_IPHONE
+    NSString *_defaultFileProtectionLevel;
+#endif
+}
+
+- (void)deleteOldLogFiles;
+- (NSString *)defaultLogsDirectory;
+
+@end
+
 @implementation DDLogFileManagerDefault
 
-@synthesize maximumNumberOfLogFiles;
-@synthesize logFilesDiskQuota;
+@synthesize maximumNumberOfLogFiles = _maximumNumberOfLogFiles;
+@synthesize logFilesDiskQuota = _logFilesDiskQuota;
 
 
 - (id)init {
@@ -74,8 +74,8 @@ BOOL doesAppRunInBackground(void);
 
 - (instancetype)initWithLogsDirectory:(NSString *)aLogsDirectory {
     if ((self = [super init])) {
-        maximumNumberOfLogFiles = DEFAULT_LOG_MAX_NUM_LOG_FILES;
-        logFilesDiskQuota = DEFAULT_LOG_FILES_DISK_QUOTA;
+        _maximumNumberOfLogFiles = DEFAULT_LOG_MAX_NUM_LOG_FILES;
+        _logFilesDiskQuota = DEFAULT_LOG_FILES_DISK_QUOTA;
 
         if (aLogsDirectory) {
             _logsDirectory = [aLogsDirectory copy];
@@ -540,6 +540,12 @@ BOOL doesAppRunInBackground(void);
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@interface DDLogFileFormatterDefault () {
+    NSDateFormatter *_dateFormatter;
+}
+
+@end
+
 @implementation DDLogFileFormatterDefault
 
 - (id)init {
@@ -549,11 +555,11 @@ BOOL doesAppRunInBackground(void);
 - (instancetype)initWithDateFormatter:(NSDateFormatter *)aDateFormatter {
     if ((self = [super init])) {
         if (aDateFormatter) {
-            dateFormatter = aDateFormatter;
+            _dateFormatter = aDateFormatter;
         } else {
-            dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4]; // 10.4+ style
-            [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss:SSS"];
+            _dateFormatter = [[NSDateFormatter alloc] init];
+            [_dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4]; // 10.4+ style
+            [_dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss:SSS"];
         }
     }
 
@@ -561,7 +567,7 @@ BOOL doesAppRunInBackground(void);
 }
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
-    NSString *dateAndTime = [dateFormatter stringFromDate:(logMessage->timestamp)];
+    NSString *dateAndTime = [_dateFormatter stringFromDate:(logMessage->timestamp)];
 
     return [NSString stringWithFormat:@"%@  %@", dateAndTime, logMessage->logMsg];
 }
@@ -571,6 +577,25 @@ BOOL doesAppRunInBackground(void);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@interface DDFileLogger () {
+    __strong id <DDLogFileManager> _logFileManager;
+    
+    DDLogFileInfo *_currentLogFileInfo;
+    NSFileHandle *_currentLogFileHandle;
+    
+    dispatch_source_t _currentLogFileVnode;
+    dispatch_source_t _rollingTimer;
+    
+    unsigned long long _maximumFileSize;
+    NSTimeInterval _rollingFrequency;
+}
+
+- (void)rollLogFileNow;
+- (void)maybeRollLogFileDueToAge;
+- (void)maybeRollLogFileDueToSize;
+
+@end
 
 @implementation DDFileLogger
 
@@ -582,8 +607,8 @@ BOOL doesAppRunInBackground(void);
 
 - (instancetype)initWithLogFileManager:(id <DDLogFileManager>)aLogFileManager {
     if ((self = [super init])) {
-        maximumFileSize = DEFAULT_LOG_MAX_FILE_SIZE;
-        rollingFrequency = DEFAULT_LOG_ROLLING_FREQUENCY;
+        _maximumFileSize = DEFAULT_LOG_MAX_FILE_SIZE;
+        _rollingFrequency = DEFAULT_LOG_ROLLING_FREQUENCY;
         _automaticallyAppendNewlineForCustomFormatters = YES;
 
         logFileManager = aLogFileManager;
@@ -595,17 +620,17 @@ BOOL doesAppRunInBackground(void);
 }
 
 - (void)dealloc {
-    [currentLogFileHandle synchronizeFile];
-    [currentLogFileHandle closeFile];
+    [_currentLogFileHandle synchronizeFile];
+    [_currentLogFileHandle closeFile];
 
-    if (currentLogFileVnode) {
-        dispatch_source_cancel(currentLogFileVnode);
-        currentLogFileVnode = NULL;
+    if (_currentLogFileVnode) {
+        dispatch_source_cancel(_currentLogFileVnode);
+        _currentLogFileVnode = NULL;
     }
 
-    if (rollingTimer) {
-        dispatch_source_cancel(rollingTimer);
-        rollingTimer = NULL;
+    if (_rollingTimer) {
+        dispatch_source_cancel(_rollingTimer);
+        _rollingTimer = NULL;
     }
 }
 
@@ -619,7 +644,7 @@ BOOL doesAppRunInBackground(void);
     __block unsigned long long result;
 
     dispatch_block_t block = ^{
-        result = maximumFileSize;
+        result = _maximumFileSize;
     };
 
     // The design of this method is taken from the DDAbstractLogger implementation.
@@ -647,7 +672,7 @@ BOOL doesAppRunInBackground(void);
 - (void)setMaximumFileSize:(unsigned long long)newMaximumFileSize {
     dispatch_block_t block = ^{
         @autoreleasepool {
-            maximumFileSize = newMaximumFileSize;
+            _maximumFileSize = newMaximumFileSize;
             [self maybeRollLogFileDueToSize];
         }
     };
@@ -676,7 +701,7 @@ BOOL doesAppRunInBackground(void);
     __block NSTimeInterval result;
 
     dispatch_block_t block = ^{
-        result = rollingFrequency;
+        result = _rollingFrequency;
     };
 
     // The design of this method is taken from the DDAbstractLogger implementation.
@@ -704,7 +729,7 @@ BOOL doesAppRunInBackground(void);
 - (void)setRollingFrequency:(NSTimeInterval)newRollingFrequency {
     dispatch_block_t block = ^{
         @autoreleasepool {
-            rollingFrequency = newRollingFrequency;
+            _rollingFrequency = newRollingFrequency;
             [self maybeRollLogFileDueToAge];
         }
     };
@@ -734,19 +759,19 @@ BOOL doesAppRunInBackground(void);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)scheduleTimerToRollLogFileDueToAge {
-    if (rollingTimer) {
-        dispatch_source_cancel(rollingTimer);
-        rollingTimer = NULL;
+    if (_rollingTimer) {
+        dispatch_source_cancel(_rollingTimer);
+        _rollingTimer = NULL;
     }
 
-    if (currentLogFileInfo == nil || rollingFrequency <= 0.0) {
+    if (_currentLogFileInfo == nil || _rollingFrequency <= 0.0) {
         return;
     }
 
-    NSDate *logFileCreationDate = [currentLogFileInfo creationDate];
+    NSDate *logFileCreationDate = [_currentLogFileInfo creationDate];
 
     NSTimeInterval ti = [logFileCreationDate timeIntervalSinceReferenceDate];
-    ti += rollingFrequency;
+    ti += _rollingFrequency;
 
     NSDate *logFileRollingDate = [NSDate dateWithTimeIntervalSinceReferenceDate:ti];
 
@@ -755,15 +780,15 @@ BOOL doesAppRunInBackground(void);
     NSLogVerbose(@"DDFileLogger: logFileCreationDate: %@", logFileCreationDate);
     NSLogVerbose(@"DDFileLogger: logFileRollingDate : %@", logFileRollingDate);
 
-    rollingTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, loggerQueue);
+    _rollingTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, loggerQueue);
 
-    dispatch_source_set_event_handler(rollingTimer, ^{ @autoreleasepool {
+    dispatch_source_set_event_handler(_rollingTimer, ^{ @autoreleasepool {
                                                            [self maybeRollLogFileDueToAge];
                                                        } });
 
     #if !OS_OBJECT_USE_OBJC
-    dispatch_source_t theRollingTimer = rollingTimer;
-    dispatch_source_set_cancel_handler(rollingTimer, ^{
+    dispatch_source_t theRollingTimer = _rollingTimer;
+    dispatch_source_set_cancel_handler(_rollingTimer, ^{
         dispatch_release(theRollingTimer);
     });
     #endif
@@ -771,8 +796,8 @@ BOOL doesAppRunInBackground(void);
     uint64_t delay = (uint64_t)([logFileRollingDate timeIntervalSinceNow] * NSEC_PER_SEC);
     dispatch_time_t fireTime = dispatch_time(DISPATCH_TIME_NOW, delay);
 
-    dispatch_source_set_timer(rollingTimer, fireTime, DISPATCH_TIME_FOREVER, 1.0);
-    dispatch_resume(rollingTimer);
+    dispatch_source_set_timer(_rollingTimer, fireTime, DISPATCH_TIME_FOREVER, 1.0);
+    dispatch_resume(_rollingTimer);
 }
 
 - (void)rollLogFile {
@@ -813,35 +838,35 @@ BOOL doesAppRunInBackground(void);
 - (void)rollLogFileNow {
     NSLogVerbose(@"DDFileLogger: rollLogFileNow");
 
-    if (currentLogFileHandle == nil) {
+    if (_currentLogFileHandle == nil) {
         return;
     }
 
-    [currentLogFileHandle synchronizeFile];
-    [currentLogFileHandle closeFile];
-    currentLogFileHandle = nil;
+    [_currentLogFileHandle synchronizeFile];
+    [_currentLogFileHandle closeFile];
+    _currentLogFileHandle = nil;
 
-    currentLogFileInfo.isArchived = YES;
+    _currentLogFileInfo.isArchived = YES;
 
     if ([logFileManager respondsToSelector:@selector(didRollAndArchiveLogFile:)]) {
-        [logFileManager didRollAndArchiveLogFile:(currentLogFileInfo.filePath)];
+        [logFileManager didRollAndArchiveLogFile:(_currentLogFileInfo.filePath)];
     }
 
-    currentLogFileInfo = nil;
+    _currentLogFileInfo = nil;
 
-    if (currentLogFileVnode) {
-        dispatch_source_cancel(currentLogFileVnode);
-        currentLogFileVnode = NULL;
+    if (_currentLogFileVnode) {
+        dispatch_source_cancel(_currentLogFileVnode);
+        _currentLogFileVnode = NULL;
     }
 
-    if (rollingTimer) {
-        dispatch_source_cancel(rollingTimer);
-        rollingTimer = NULL;
+    if (_rollingTimer) {
+        dispatch_source_cancel(_rollingTimer);
+        _rollingTimer = NULL;
     }
 }
 
 - (void)maybeRollLogFileDueToAge {
-    if (rollingFrequency > 0.0 && currentLogFileInfo.age >= rollingFrequency) {
+    if (_rollingFrequency > 0.0 && _currentLogFileInfo.age >= _rollingFrequency) {
         NSLogVerbose(@"DDFileLogger: Rolling log file due to age...");
 
         [self rollLogFileNow];
@@ -857,10 +882,10 @@ BOOL doesAppRunInBackground(void);
     // Note: Use direct access to maximumFileSize variable.
     // We specifically wrote our own getter/setter method to allow us to do this (for performance reasons).
 
-    if (maximumFileSize > 0) {
-        unsigned long long fileSize = [currentLogFileHandle offsetInFile];
+    if (_maximumFileSize > 0) {
+        unsigned long long fileSize = [_currentLogFileHandle offsetInFile];
 
-        if (fileSize >= maximumFileSize) {
+        if (fileSize >= _maximumFileSize) {
             NSLogVerbose(@"DDFileLogger: Rolling log file due to size (%qu)...", fileSize);
 
             [self rollLogFileNow];
@@ -880,7 +905,7 @@ BOOL doesAppRunInBackground(void);
  * Otherwise a new file is created and returned.
  **/
 - (DDLogFileInfo *)currentLogFileInfo {
-    if (currentLogFileInfo == nil) {
+    if (_currentLogFileInfo == nil) {
         NSArray *sortedLogFileInfos = [logFileManager sortedLogFileInfos];
 
         if ([sortedLogFileInfos count] > 0) {
@@ -890,9 +915,9 @@ BOOL doesAppRunInBackground(void);
 
             if (mostRecentLogFileInfo.isArchived) {
                 shouldArchiveMostRecent = NO;
-            } else if (maximumFileSize > 0 && mostRecentLogFileInfo.fileSize >= maximumFileSize) {
+            } else if (_maximumFileSize > 0 && mostRecentLogFileInfo.fileSize >= _maximumFileSize) {
                 shouldArchiveMostRecent = YES;
-            } else if (rollingFrequency > 0.0 && mostRecentLogFileInfo.age >= rollingFrequency) {
+            } else if (_rollingFrequency > 0.0 && mostRecentLogFileInfo.age >= _rollingFrequency) {
                 shouldArchiveMostRecent = YES;
             }
 
@@ -921,7 +946,7 @@ BOOL doesAppRunInBackground(void);
             if (!_doNotReuseLogFiles && !mostRecentLogFileInfo.isArchived && !shouldArchiveMostRecent) {
                 NSLogVerbose(@"DDFileLogger: Resuming logging with file %@", mostRecentLogFileInfo.fileName);
 
-                currentLogFileInfo = mostRecentLogFileInfo;
+                _currentLogFileInfo = mostRecentLogFileInfo;
             } else {
                 if (shouldArchiveMostRecent) {
                     mostRecentLogFileInfo.isArchived = YES;
@@ -933,52 +958,52 @@ BOOL doesAppRunInBackground(void);
             }
         }
 
-        if (currentLogFileInfo == nil) {
+        if (_currentLogFileInfo == nil) {
             NSString *currentLogFilePath = [logFileManager createNewLogFile];
 
-            currentLogFileInfo = [[DDLogFileInfo alloc] initWithFilePath:currentLogFilePath];
+            _currentLogFileInfo = [[DDLogFileInfo alloc] initWithFilePath:currentLogFilePath];
         }
     }
 
-    return currentLogFileInfo;
+    return _currentLogFileInfo;
 }
 
 - (NSFileHandle *)currentLogFileHandle {
-    if (currentLogFileHandle == nil) {
+    if (_currentLogFileHandle == nil) {
         NSString *logFilePath = [[self currentLogFileInfo] filePath];
 
-        currentLogFileHandle = [NSFileHandle fileHandleForWritingAtPath:logFilePath];
-        [currentLogFileHandle seekToEndOfFile];
+        _currentLogFileHandle = [NSFileHandle fileHandleForWritingAtPath:logFilePath];
+        [_currentLogFileHandle seekToEndOfFile];
 
-        if (currentLogFileHandle) {
+        if (_currentLogFileHandle) {
             [self scheduleTimerToRollLogFileDueToAge];
 
             // Here we are monitoring the log file. In case if it would be deleted ormoved
             // somewhere we want to roll it and use a new one.
-            currentLogFileVnode = dispatch_source_create(
+            _currentLogFileVnode = dispatch_source_create(
                     DISPATCH_SOURCE_TYPE_VNODE,
-                    [currentLogFileHandle fileDescriptor],
+                    [_currentLogFileHandle fileDescriptor],
                     DISPATCH_VNODE_DELETE | DISPATCH_VNODE_RENAME,
                     loggerQueue
                     );
 
-            dispatch_source_set_event_handler(currentLogFileVnode, ^{ @autoreleasepool {
+            dispatch_source_set_event_handler(_currentLogFileVnode, ^{ @autoreleasepool {
                                                                           NSLogInfo(@"DDFileLogger: Current logfile was moved. Rolling it and creating a new one");
                                                                           [self rollLogFileNow];
                                                                       } });
 
             #if !OS_OBJECT_USE_OBJC
-            dispatch_source_t vnode = currentLogFileVnode;
-            dispatch_source_set_cancel_handler(currentLogFileVnode, ^{
+            dispatch_source_t vnode = _currentLogFileVnode;
+            dispatch_source_set_cancel_handler(_currentLogFileVnode, ^{
                 dispatch_release(vnode);
             });
             #endif
 
-            dispatch_resume(currentLogFileVnode);
+            dispatch_resume(_currentLogFileVnode);
         }
     }
 
-    return currentLogFileHandle;
+    return _currentLogFileHandle;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1043,6 +1068,21 @@ static int exception_count = 0;
   #define XATTR_ARCHIVED_NAME @"lumberjack.log.archived"
 #endif
 
+@interface DDLogFileInfo () {
+    __strong NSString *_filePath;
+    __strong NSString *_fileName;
+    
+    __strong NSDictionary *_fileAttributes;
+    
+    __strong NSDate *_creationDate;
+    __strong NSDate *_modificationDate;
+    
+    unsigned long long _fileSize;
+}
+
+@end
+
+
 @implementation DDLogFileInfo
 
 @synthesize filePath;
@@ -1076,43 +1116,43 @@ static int exception_count = 0;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (NSDictionary *)fileAttributes {
-    if (fileAttributes == nil) {
-        fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
+    if (_fileAttributes == nil) {
+        _fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
     }
 
-    return fileAttributes;
+    return _fileAttributes;
 }
 
 - (NSString *)fileName {
-    if (fileName == nil) {
-        fileName = [filePath lastPathComponent];
+    if (_fileName == nil) {
+        _fileName = [filePath lastPathComponent];
     }
 
-    return fileName;
+    return _fileName;
 }
 
 - (NSDate *)modificationDate {
-    if (modificationDate == nil) {
-        modificationDate = [[self fileAttributes] objectForKey:NSFileModificationDate];
+    if (_modificationDate == nil) {
+        _modificationDate = [[self fileAttributes] objectForKey:NSFileModificationDate];
     }
 
-    return modificationDate;
+    return _modificationDate;
 }
 
 - (NSDate *)creationDate {
-    if (creationDate == nil) {
-        creationDate = [[self fileAttributes] objectForKey:NSFileCreationDate];
+    if (_creationDate == nil) {
+        _creationDate = [[self fileAttributes] objectForKey:NSFileCreationDate];
     }
 
-    return creationDate;
+    return _creationDate;
 }
 
 - (unsigned long long)fileSize {
-    if (fileSize == 0) {
-        fileSize = [[[self fileAttributes] objectForKey:NSFileSize] unsignedLongLongValue];
+    if (_fileSize == 0) {
+        _fileSize = [[[self fileAttributes] objectForKey:NSFileSize] unsignedLongLongValue];
     }
 
-    return fileSize;
+    return _fileSize;
 }
 
 - (NSTimeInterval)age {
@@ -1179,10 +1219,10 @@ static int exception_count = 0;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)reset {
-    fileName = nil;
-    fileAttributes = nil;
-    creationDate = nil;
-    modificationDate = nil;
+    _fileName = nil;
+    _fileAttributes = nil;
+    _creationDate = nil;
+    _modificationDate = nil;
 }
 
 - (void)renameFile:(NSString *)newFileName {

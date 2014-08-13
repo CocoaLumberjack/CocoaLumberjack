@@ -129,14 +129,6 @@
  * Archived log files are automatically deleted according to the maximumNumberOfLogFiles property.
  **/
 @interface DDLogFileManagerDefault : NSObject <DDLogFileManager>
-{
-    NSUInteger maximumNumberOfLogFiles;
-    unsigned long long logFilesDiskQuota;
-    NSString *_logsDirectory;
-#if TARGET_OS_IPHONE
-    NSString *_defaultFileProtectionLevel;
-#endif
-}
 
 - (id)init;
 - (instancetype)initWithLogsDirectory:(NSString *)logsDirectory;
@@ -217,9 +209,6 @@
  * it will also provide a template that makes it easy for developers to copy and change.
  **/
 @interface DDLogFileFormatterDefault : NSObject <DDLogFormatter>
-{
-    NSDateFormatter *dateFormatter;
-}
 
 - (id)init;
 - (instancetype)initWithDateFormatter:(NSDateFormatter *)dateFormatter;
@@ -231,18 +220,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface DDFileLogger : DDAbstractLogger <DDLogger>
-{
-    __strong id <DDLogFileManager> logFileManager;
-
-    DDLogFileInfo *currentLogFileInfo;
-    NSFileHandle *currentLogFileHandle;
-
-    dispatch_source_t currentLogFileVnode;
-    dispatch_source_t rollingTimer;
-
-    unsigned long long maximumFileSize;
-    NSTimeInterval rollingFrequency;
-}
 
 - (id)init;
 - (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager;
@@ -333,17 +310,6 @@
  * you can invoke the reset method which will clear the cache.
  **/
 @interface DDLogFileInfo : NSObject
-{
-    __strong NSString *filePath;
-    __strong NSString *fileName;
-
-    __strong NSDictionary *fileAttributes;
-
-    __strong NSDate *creationDate;
-    __strong NSDate *modificationDate;
-
-    unsigned long long fileSize;
-}
 
 @property (strong, nonatomic, readonly) NSString *filePath;
 @property (strong, nonatomic, readonly) NSString *fileName;
