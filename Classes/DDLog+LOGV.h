@@ -12,16 +12,16 @@
 
 
 #define LOGV_MACRO(isAsynchronous, lvl, flg, ctx, atag, fnct, frmt, avalist) \
-    [DDLog log : isAsynchronous                                              \
-         level : lvl                                                         \
-          flag : flg                                                         \
-       context : ctx                                                         \
-          file : __FILE__                                                    \
-      function : fnct                                                        \
-          line : __LINE__                                                    \
-           tag : atag                                                        \
-        format : frmt                                                        \
-          args : avalist]
+    [DDLog log:isAsynchronous                                                \
+         level:lvl                                                           \
+          flag:flg                                                           \
+       context:ctx                                                           \
+          file:__FILE__                                                      \
+      function:fnct                                                          \
+          line:__LINE__                                                      \
+           tag:atag                                                          \
+        format:frmt                                                          \
+          args:avalist]
 
 #define LOGV_OBJC_MACRO(async, lvl, flg, ctx, frmt, avalist) \
              LOGV_MACRO(async, lvl, flg, ctx, nil, sel_getName(_cmd), frmt, avalist)
