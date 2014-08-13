@@ -23,9 +23,14 @@
 
 static DDASLLogger *sharedInstance;
 
-@implementation DDASLLogger {
+@interface DDASLLogger () {
     aslclient _client;
 }
+
+@end
+
+
+@implementation DDASLLogger
 
 + (instancetype)sharedInstance {
     static dispatch_once_t DDASLLoggerOnceToken;
