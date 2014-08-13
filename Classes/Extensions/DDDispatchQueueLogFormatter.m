@@ -21,25 +21,30 @@
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-
-@implementation DDDispatchQueueLogFormatter
-{
-    int32_t atomicLoggerCount;
-    NSDateFormatter *threadUnsafeDateFormatter; // Use [self stringFromDate]
-
-    OSSpinLock lock;
-
+@interface DDDispatchQueueLogFormatter () {
+    NSString *_dateFormatString;
+    
+    int32_t _atomicLoggerCount;
+    NSDateFormatter *_threadUnsafeDateFormatter; // Use [self stringFromDate]
+    
+    OSSpinLock _lock;
+    
     NSUInteger _minQueueLength;           // _prefix == Only access via atomic property
     NSUInteger _maxQueueLength;           // _prefix == Only access via atomic property
     NSMutableDictionary *_replacements;   // _prefix == Only access from within spinlock
 }
 
+@end
+
+
+@implementation DDDispatchQueueLogFormatter
+
 - (id)init {
     if ((self = [super init])) {
-        dateFormatString = @"yyyy-MM-dd HH:mm:ss:SSS";
+        _dateFormatString = @"yyyy-MM-dd HH:mm:ss:SSS";
 
-        atomicLoggerCount = 0;
-        threadUnsafeDateFormatter = nil;
+        _atomicLoggerCount = 0;
+        _threadUnsafeDateFormatter = nil;
 
         _minQueueLength = 0;
         _maxQueueLength = 0;
@@ -63,17 +68,17 @@
 - (NSString *)replacementStringForQueueLabel:(NSString *)longLabel {
     NSString *result = nil;
 
-    OSSpinLockLock(&lock);
+    OSSpinLockLock(&_lock);
     {
         result = _replacements[longLabel];
     }
-    OSSpinLockUnlock(&lock);
+    OSSpinLockUnlock(&_lock);
 
     return result;
 }
 
 - (void)setReplacementString:(NSString *)shortLabel forQueueLabel:(NSString *)longLabel {
-    OSSpinLockLock(&lock);
+    OSSpinLockLock(&_lock);
     {
         if (shortLabel) {
             _replacements[longLabel] = shortLabel;
@@ -81,7 +86,7 @@
             [_replacements removeObjectForKey:longLabel];
         }
     }
-    OSSpinLockUnlock(&lock);
+    OSSpinLockUnlock(&_lock);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,7 +94,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (NSString *)stringFromDate:(NSDate *)date {
-    int32_t loggerCount = OSAtomicAdd32(0, &atomicLoggerCount);
+    int32_t loggerCount = OSAtomicAdd32(0, &_atomicLoggerCount);
 
     NSString *calendarIdentifier = nil;
 
@@ -102,14 +107,14 @@
     if (loggerCount <= 1) {
         // Single-threaded mode.
 
-        if (threadUnsafeDateFormatter == nil) {
-            threadUnsafeDateFormatter = [[NSDateFormatter alloc] init];
-            [threadUnsafeDateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-            [threadUnsafeDateFormatter setDateFormat:dateFormatString];
+        if (_threadUnsafeDateFormatter == nil) {
+            _threadUnsafeDateFormatter = [[NSDateFormatter alloc] init];
+            [_threadUnsafeDateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+            [_threadUnsafeDateFormatter setDateFormat:_dateFormatString];
         }
 
-        [threadUnsafeDateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:calendarIdentifier]];
-        return [threadUnsafeDateFormatter stringFromDate:date];
+        [_threadUnsafeDateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:calendarIdentifier]];
+        return [_threadUnsafeDateFormatter stringFromDate:date];
     } else {
         // Multi-threaded mode.
         // NSDateFormatter is NOT thread-safe.
@@ -122,7 +127,7 @@
         if (dateFormatter == nil) {
             dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-            [dateFormatter setDateFormat:dateFormatString];
+            [dateFormatter setDateFormat:_dateFormatString];
 
             threadDictionary[key] = dateFormatter;
         }
@@ -184,11 +189,11 @@
             fullLabel = logMessage->threadName;
         }
 
-        OSSpinLockLock(&lock);
+        OSSpinLockLock(&_lock);
         {
             abrvLabel = _replacements[fullLabel];
         }
-        OSSpinLockUnlock(&lock);
+        OSSpinLockUnlock(&_lock);
 
         if (abrvLabel) {
             queueThreadLabel = abrvLabel;
@@ -236,11 +241,11 @@
 }
 
 - (void)didAddToLogger:(id <DDLogger>)logger {
-    OSAtomicIncrement32(&atomicLoggerCount);
+    OSAtomicIncrement32(&_atomicLoggerCount);
 }
 
 - (void)willRemoveFromLogger:(id <DDLogger>)logger {
-    OSAtomicDecrement32(&atomicLoggerCount);
+    OSAtomicDecrement32(&_atomicLoggerCount);
 }
 
 @end

@@ -55,11 +55,7 @@
  * Note: If manually creating your own background threads (via NSThread/alloc/init or NSThread/detachNeThread),
  * you can use [[NSThread currentThread] setName:(NSString *)].
  **/
-@interface DDDispatchQueueLogFormatter : NSObject <DDLogFormatter> {
-    @protected
-
-    NSString *dateFormatString;
-}
+@interface DDDispatchQueueLogFormatter : NSObject <DDLogFormatter>
 
 /**
  * Standard init method.
