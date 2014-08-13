@@ -38,17 +38,17 @@
 #endif
 
 
-@interface DDMultiFormatter ()
+@interface DDMultiFormatter () {
+    dispatch_queue_t _queue;
+    NSMutableArray *_formatters;
+}
 
 - (DDLogMessage *)logMessageForLine:(NSString *)line originalMessage:(DDLogMessage *)message;
 
 @end
 
 
-@implementation DDMultiFormatter {
-    dispatch_queue_t _queue;
-    NSMutableArray *_formatters;
-}
+@implementation DDMultiFormatter
 
 - (id)init {
     self = [super init];
