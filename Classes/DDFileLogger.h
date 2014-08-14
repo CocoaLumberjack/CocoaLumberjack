@@ -31,10 +31,10 @@
 //
 // You should carefully consider the proper configuration values for your application.
 
-#define DEFAULT_LOG_MAX_FILE_SIZE     (1024 * 1024)      //  1 MB
-#define DEFAULT_LOG_ROLLING_FREQUENCY (60 * 60 * 24)     // 24 Hours
-#define DEFAULT_LOG_MAX_NUM_LOG_FILES (5)                //  5 Files
-#define DEFAULT_LOG_FILES_DISK_QUOTA  (20 * 1024 * 1024) // 20 MB
+extern unsigned long long const DEFAULT_LOG_MAX_FILE_SIZE;
+extern NSTimeInterval const DEFAULT_LOG_ROLLING_FREQUENCY;
+extern NSUInteger const DEFAULT_LOG_MAX_NUM_LOG_FILES;
+extern unsigned long long const DEFAULT_LOG_FILES_DISK_QUOTA;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

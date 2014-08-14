@@ -44,6 +44,11 @@
 BOOL doesAppRunInBackground(void);
 #endif
 
+unsigned long long const DEFAULT_LOG_MAX_FILE_SIZE    = 1024 * 1024;      //  1 MB
+NSTimeInterval const DEFAULT_LOG_ROLLING_FREQUENCY    = 60 * 60 * 24;     // 26 Hours
+NSUInteger const DEFAULT_LOG_MAX_NUM_LOG_FILES        = 5;                // 5 Files
+unsigned long long const DEFAULT_LOG_FILES_DISK_QUOTA = 20 * 1024 * 1024; // 20 MB
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1063,9 +1068,9 @@ static int exception_count = 0;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #if TARGET_IPHONE_SIMULATOR
-  #define XATTR_ARCHIVED_NAME @"archived"
+    NSString * const XATTR_ARCHIVED_NAME = @"archived";
 #else
-  #define XATTR_ARCHIVED_NAME @"lumberjack.log.archived"
+    NSString * const XATTR_ARCHIVED_NAME = @"lumberjack.log.archived";
 #endif
 
 @interface DDLogFileInfo () {
