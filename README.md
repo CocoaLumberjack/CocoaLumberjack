@@ -12,6 +12,22 @@ CocoaLumberjack
 
 **CocoaLumberjack** is a fast & simple, yet powerful & flexible logging framework for Mac and iOS.
 
+### CocoaLumberjac 2 pre-release notes
+
+#### Migrating to 2.x-beta
+
+* Replace `DDLog.h` imports by `#import <CocoaLumberjack/CocoaLumberjack.h>`.
+* Replace all `DDLogC` macros for regular `DDLog` macros.
+
+#### Forcing 1.x
+
+If an included library requires it, you can force CocoaLumberjack 1.x by setting the version before the conflicting library:
+
+```ruby
+pod 'CocoaLumberjack', '~> 1.9'
+pod 'ConflictingLibrary'
+```
+
 #### Lumberjack is Fast & Simple, yet Powerful & Flexible.
 
 It is similar in concept to other popular logging frameworks such as log4j, yet is designed specifically for Objective-C, and takes advantage of features such as multi-threading, grand central dispatch (if available), lockless atomic operations, and the dynamic nature of the Objective-C runtime.
@@ -50,12 +66,8 @@ pod 'CocoaLumberjack'
 - if you find issues or want to suggest improvements, create an issue or a pull request
 - for all kinds of questions involving CocoaLumberjack, use the [Google group](http://groups.google.com/group/cocoalumberjack) or StackOverflow (use [#lumberjack](http://stackoverflow.com/questions/tagged/lumberjack)).
 
-#### Migrating from 1.x
-
-* Replace `DDLog.h` imports by `#import <CocoaLumberjack/CocoaLumberjack.h>`.
-* Replace all `DDLogC` macros for regular `DDLog` macros.
-
 ### Documentation
+
 - **[Get started using Lumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/GettingStarted)**<br/>
 - [Different log levels for Debug and Release builds](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/XcodeTricks)<br/>
 - [Different log levels for each logger](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/PerLoggerLogLevels)<br/>
