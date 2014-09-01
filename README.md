@@ -28,6 +28,8 @@ pod 'CocoaLumberjack', '~> 1.9'
 pod 'ConflictingLibrary'
 ```
 
+### Features
+
 #### Lumberjack is Fast & Simple, yet Powerful & Flexible.
 
 It is similar in concept to other popular logging frameworks such as log4j, yet is designed specifically for Objective-C, and takes advantage of features such as multi-threading, grand central dispatch (if available), lockless atomic operations, and the dynamic nature of the Objective-C runtime.
