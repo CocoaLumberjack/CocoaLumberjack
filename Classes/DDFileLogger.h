@@ -24,17 +24,17 @@
 
 // Default configuration and safety/sanity values.
 //
-// maximumFileSize         -> DEFAULT_LOG_MAX_FILE_SIZE
-// rollingFrequency        -> DEFAULT_LOG_ROLLING_FREQUENCY
-// maximumNumberOfLogFiles -> DEFAULT_LOG_MAX_NUM_LOG_FILES
-// logFilesDiskQuota       -> DEFAULT_LOG_FILES_DISK_QUOTA
+// maximumFileSize         -> kDDDefaultLogMaxFileSize
+// rollingFrequency        -> kDDDefaultLogRollingFrequency
+// maximumNumberOfLogFiles -> kDDDefaultLogMaxNumLogFiles
+// logFilesDiskQuota       -> kDDDefaultLogFilesDiskQuota
 //
 // You should carefully consider the proper configuration values for your application.
 
-#define DEFAULT_LOG_MAX_FILE_SIZE     (1024 * 1024)      //  1 MB
-#define DEFAULT_LOG_ROLLING_FREQUENCY (60 * 60 * 24)     // 24 Hours
-#define DEFAULT_LOG_MAX_NUM_LOG_FILES (5)                //  5 Files
-#define DEFAULT_LOG_FILES_DISK_QUOTA  (20 * 1024 * 1024) // 20 MB
+extern unsigned long long const kDDDefaultLogMaxFileSize;
+extern NSTimeInterval     const kDDDefaultLogRollingFrequency;
+extern NSUInteger         const kDDDefaultLogMaxNumLogFiles;
+extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

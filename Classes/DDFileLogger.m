@@ -44,6 +44,11 @@
 BOOL doesAppRunInBackground(void);
 #endif
 
+unsigned long long const kDDDefaultLogMaxFileSize      = 1024 * 1024;      //  1 MB
+NSTimeInterval     const kDDDefaultLogRollingFrequency = 60 * 60 * 24;     // 26 Hours
+NSUInteger         const kDDDefaultLogMaxNumLogFiles   = 5;                // 5 Files
+unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20 MB
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,8 +79,8 @@ BOOL doesAppRunInBackground(void);
 
 - (instancetype)initWithLogsDirectory:(NSString *)aLogsDirectory {
     if ((self = [super init])) {
-        _maximumNumberOfLogFiles = DEFAULT_LOG_MAX_NUM_LOG_FILES;
-        _logFilesDiskQuota = DEFAULT_LOG_FILES_DISK_QUOTA;
+        _maximumNumberOfLogFiles = kDDDefaultLogMaxNumLogFiles;
+        _logFilesDiskQuota = kDDDefaultLogFilesDiskQuota;
 
         if (aLogsDirectory) {
             _logsDirectory = [aLogsDirectory copy];
@@ -607,8 +612,8 @@ BOOL doesAppRunInBackground(void);
 
 - (instancetype)initWithLogFileManager:(id <DDLogFileManager>)aLogFileManager {
     if ((self = [super init])) {
-        _maximumFileSize = DEFAULT_LOG_MAX_FILE_SIZE;
-        _rollingFrequency = DEFAULT_LOG_ROLLING_FREQUENCY;
+        _maximumFileSize = kDDDefaultLogMaxFileSize;
+        _rollingFrequency = kDDDefaultLogRollingFrequency;
         _automaticallyAppendNewlineForCustomFormatters = YES;
 
         logFileManager = aLogFileManager;
@@ -1063,9 +1068,9 @@ static int exception_count = 0;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #if TARGET_IPHONE_SIMULATOR
-  #define XATTR_ARCHIVED_NAME @"archived"
+    NSString * const kDDXAttrArchivedName = @"archived";
 #else
-  #define XATTR_ARCHIVED_NAME @"lumberjack.log.archived"
+    NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
 #endif
 
 @interface DDLogFileInfo () {
@@ -1181,11 +1186,11 @@ static int exception_count = 0;
     // So we have to use a less attractive alternative.
     // See full explanation in the header file.
 
-    return [self hasExtensionAttributeWithName:XATTR_ARCHIVED_NAME];
+    return [self hasExtensionAttributeWithName:kDDXAttrArchivedName];
 
 #else
 
-    return [self hasExtendedAttributeWithName:XATTR_ARCHIVED_NAME];
+    return [self hasExtendedAttributeWithName:kDDXAttrArchivedName];
 
 #endif
 }
@@ -1198,17 +1203,17 @@ static int exception_count = 0;
     // See full explanation in the header file.
 
     if (flag) {
-        [self addExtensionAttributeWithName:XATTR_ARCHIVED_NAME];
+        [self addExtensionAttributeWithName:kDDXAttrArchivedName];
     } else {
-        [self removeExtensionAttributeWithName:XATTR_ARCHIVED_NAME];
+        [self removeExtensionAttributeWithName:kDDXAttrArchivedName];
     }
 
 #else
 
     if (flag) {
-        [self addExtendedAttributeWithName:XATTR_ARCHIVED_NAME];
+        [self addExtendedAttributeWithName:kDDXAttrArchivedName];
     } else {
-        [self removeExtendedAttributeWithName:XATTR_ARCHIVED_NAME];
+        [self removeExtendedAttributeWithName:kDDXAttrArchivedName];
     }
 
 #endif
