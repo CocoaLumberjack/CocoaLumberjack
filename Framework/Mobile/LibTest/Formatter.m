@@ -1,4 +1,5 @@
 #import "Formatter.h"
+#import <CocoaLumberjack/DDLogDeprecated.h>
 
 @interface Formatter ()
 

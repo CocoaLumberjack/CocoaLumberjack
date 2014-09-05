@@ -57,6 +57,14 @@
  * This means you can pass it multiple variables just like NSLog.
  **/
 
+#import <Foundation/Foundation.h>
+
+//! Project version number for CocoaLumberjack.
+FOUNDATION_EXPORT double CocoaLumberjackVersionNumber;
+
+//! Project version string for CocoaLumberjack.
+FOUNDATION_EXPORT const unsigned char CocoaLumberjackVersionString[];
+
 #import "DDLog.h"
 #import "DDLogMacros.h"
 #import "DDAssertMacros.h"

@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DCB3185014EB418E001CFBEE"
-               BuildableName = "CocoaLumberjack.framework"
-               BlueprintName = "CocoaLumberjack"
+               BlueprintIdentifier = "55CCBED919BA630700957A39"
+               BuildableName = "LibTest copy.app"
+               BlueprintName = "FramTest"
                ReferencedContainer = "container:Lumberjack.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,6 +29,15 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "55CCBED919BA630700957A39"
+            BuildableName = "LibTest copy.app"
+            BlueprintName = "FramTest"
+            ReferencedContainer = "container:Lumberjack.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -39,15 +48,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DCB3185014EB418E001CFBEE"
-            BuildableName = "CocoaLumberjack.framework"
-            BlueprintName = "CocoaLumberjack"
+            BlueprintIdentifier = "55CCBED919BA630700957A39"
+            BuildableName = "LibTest copy.app"
+            BlueprintName = "FramTest"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -57,6 +66,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "55CCBED919BA630700957A39"
+            BuildableName = "LibTest copy.app"
+            BlueprintName = "FramTest"
+            ReferencedContainer = "container:Lumberjack.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

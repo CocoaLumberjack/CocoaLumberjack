@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DCB3185014EB418E001CFBEE"
+               BlueprintIdentifier = "55CCBEA219BA5E5A00957A39"
                BuildableName = "CocoaLumberjack.framework"
-               BlueprintName = "CocoaLumberjack"
+               BlueprintName = "CocoaLumbFramework"
                ReferencedContainer = "container:Lumberjack.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DCB3185014EB418E001CFBEE"
+            BlueprintIdentifier = "55CCBEA219BA5E5A00957A39"
             BuildableName = "CocoaLumberjack.framework"
-            BlueprintName = "CocoaLumberjack"
+            BlueprintName = "CocoaLumbFramework"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -57,6 +57,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "55CCBEA219BA5E5A00957A39"
+            BuildableName = "CocoaLumberjack.framework"
+            BlueprintName = "CocoaLumbFramework"
+            ReferencedContainer = "container:Lumberjack.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
