@@ -206,10 +206,10 @@ static unsigned int numProcessors;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 + (void)addLogger:(id <DDLogger>)logger {
-    [self addLogger:logger withLogLevel:LOG_LEVEL_ALL]; // LOG_LEVEL_ALL has all bits set
+    [self addLogger:logger withLogLevel:DDLogLevelAll]; // LOG_LEVEL_ALL has all bits set
 }
 
-+ (void)addLogger:(id <DDLogger>)logger withLogLevel:(int)logLevel {
++ (void)addLogger:(id <DDLogger>)logger withLogLevel:(DDLogLevel)logLevel {
     if (logger == nil) {
         return;
     }
@@ -307,8 +307,8 @@ static unsigned int numProcessors;
 }
 
 + (void)log:(BOOL)asynchronous
-      level:(int)level
-       flag:(int)flag
+      level:(DDLogLevel)level
+       flag:(DDLogFlag)flag
     context:(int)context
        file:(const char *)file
    function:(const char *)function
@@ -338,8 +338,8 @@ static unsigned int numProcessors;
 }
 
 + (void)log:(BOOL)asynchronous
-      level:(int)level
-       flag:(int)flag
+      level:(DDLogLevel)level
+       flag:(DDLogFlag)flag
     context:(int)context
        file:(const char *)file
    function:(const char *)function
@@ -509,13 +509,13 @@ static unsigned int numProcessors;
     return [self logLevelForClass:aClass];
 }
 
-+ (void)setLogLevel:(int)logLevel forClass:(Class)aClass {
++ (void)setLogLevel:(DDLogLevel)logLevel forClass:(Class)aClass {
     if ([self isRegisteredClass:aClass]) {
         [aClass ddSetLogLevel:logLevel];
     }
 }
 
-+ (void)setLogLevel:(int)logLevel forClassWithName:(NSString *)aClassName {
++ (void)setLogLevel:(DDLogLevel)logLevel forClassWithName:(NSString *)aClassName {
     Class aClass = NSClassFromString(aClassName);
 
     [self setLogLevel:logLevel forClass:aClass];
@@ -881,8 +881,8 @@ static char * dd_str_copy(const char *str) {
 #endif /* if TARGET_OS_IPHONE */
 
 - (instancetype)initWithLogMsg:(NSString *)msg
-                         level:(int)level
-                          flag:(int)flag
+                         level:(DDLogLevel)level
+                          flag:(DDLogFlag)flag
                        context:(int)context
                           file:(const char *)aFile
                       function:(const char *)aFunction
@@ -902,8 +902,8 @@ static char * dd_str_copy(const char *str) {
 }
 
 - (instancetype)initWithLogMsg:(NSString *)msg
-                         level:(int)level
-                          flag:(int)flag
+                         level:(DDLogLevel)level
+                          flag:(DDLogFlag)flag
                        context:(int)context
                           file:(const char *)aFile
                       function:(const char *)aFunction
@@ -1024,6 +1024,7 @@ static char * dd_str_copy(const char *str) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation DDAbstractLogger
+@synthesize logFormatter = formatter;
 
 - (id)init {
     if ((self = [super init])) {

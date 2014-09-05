@@ -893,8 +893,8 @@ static DDTTYLogger *sharedInstance;
 }
 
 - (void)loadDefaultColorProfiles {
-    [self setForegroundColor:MakeColor(214,  57,  30) backgroundColor:nil forFlag:LOG_FLAG_ERROR];
-    [self setForegroundColor:MakeColor(204, 121,  32) backgroundColor:nil forFlag:LOG_FLAG_WARN];
+    [self setForegroundColor:MakeColor(214,  57,  30) backgroundColor:nil forFlag:DDLogFlagError];
+    [self setForegroundColor:MakeColor(204, 121,  32) backgroundColor:nil forFlag:DDLogFlagWarning];
 }
 
 - (BOOL)colorsEnabled {
