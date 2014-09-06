@@ -25,6 +25,8 @@ static DDASLLogger *sharedInstance;
 
 @interface DDASLLogger () {
     aslclient _client;
+    uid_t _readUID;
+    char _readUIDString[32];
 }
 
 @end
@@ -52,6 +54,10 @@ static DDASLLogger *sharedInstance;
         // but background threads need to create their own client.
 
         _client = asl_open(NULL, "com.apple.console", 0);
+
+        // -1 is any user.
+        _readUID = -1;
+        strlcpy(_readUIDString, "-1", sizeof(_readUIDString));
     }
 
     return self;
@@ -86,7 +92,7 @@ static DDASLLogger *sharedInstance;
         }
 
         aslmsg m = asl_new(ASL_TYPE_MSG);
-        asl_set(m, ASL_KEY_READ_UID, "501");
+        asl_set(m, ASL_KEY_READ_UID, _readUIDString);
         asl_log(_client, m, aslLogLevel, "%s", msg);
         asl_free(m);
     }
@@ -94,6 +100,15 @@ static DDASLLogger *sharedInstance;
 
 - (NSString *)loggerName {
     return @"cocoa.lumberjack.aslLogger";
+}
+
+- (uid_t)readUID {
+    return _readUID;
+}
+
+- (void)setReadUID:(uid_t)readUID {
+    _readUID = readUID;
+    snprintf(_readUIDString, sizeof(_readUIDString), "%d", _readUID);
 }
 
 @end
