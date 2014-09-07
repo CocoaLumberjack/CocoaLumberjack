@@ -87,15 +87,16 @@ static DDASLLogger *sharedInstance;
         static char const *const levels[] = { "0", "1", "2", "3", "4", "5", "6", "7" };
 
         // NSLog uses the current euid to set the ASL_KEY_READ_UID.
+        uid_t const readUID = geteuid();
+
         char readUIDString[16];
-        int l = snprintf(readUIDString, sizeof(readUIDString), "%d", geteuid());
+        int l = snprintf(readUIDString, sizeof(readUIDString), "%d", readUID);
 
         NSAssert(l < sizeof(readUIDString),
                  @"Formatted euid is too long.");
         NSAssert(aslLogLevel < (sizeof(levels) / sizeof(levels[0])),
                  @"Unhandled ASL log level.");
 
-        //TODO handle asl_* failures non-silently?
         aslmsg m = asl_new(ASL_TYPE_MSG);
         if (__builtin_expect(m != NULL, 1)) {
             __Require_noErr_Quiet(asl_set(m, ASL_KEY_LEVEL, levels[aslLogLevel]), asl_msg_done);
@@ -105,6 +106,8 @@ static DDASLLogger *sharedInstance;
         asl_msg_done:
             asl_free(m);
         }
+
+        //TODO handle asl_* failures non-silently?
     }
 }
 
