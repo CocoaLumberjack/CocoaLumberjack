@@ -14,7 +14,6 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDASLLogger.h"
-#include <AssertMacros.h>
 #import <asl.h>
 
 #if !__has_feature(objc_arc)
@@ -99,9 +98,9 @@ static DDASLLogger *sharedInstance;
 
         aslmsg m = asl_new(ASL_TYPE_MSG);
         if (__builtin_expect(m != NULL, 1)) {
-            __Require_noErr_Quiet(asl_set(m, ASL_KEY_LEVEL, level_strings[aslLogLevel]), asl_msg_done);
-            __Require_noErr_Quiet(asl_set(m, ASL_KEY_MSG, msg), asl_msg_done);
-            __Require_noErr_Quiet(asl_set(m, ASL_KEY_READ_UID, readUIDString), asl_msg_done);
+            if (__builtin_expect(asl_set(m, ASL_KEY_LEVEL, level_strings[aslLogLevel]) != 0, 0)) goto asl_msg_done;
+            if (__builtin_expect(asl_set(m, ASL_KEY_MSG, msg) != 0, 0)) goto asl_msg_done;
+            if (__builtin_expect(asl_set(m, ASL_KEY_READ_UID, readUIDString) != 0, 0)) goto asl_msg_done;
             asl_send(_client, m);
         asl_msg_done:
             asl_free(m);
