@@ -14,8 +14,8 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDASLLogger.h"
+#include <AssertMacros.h>
 #import <asl.h>
-#import <libkern/OSAtomic.h>
 
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
@@ -85,19 +85,26 @@ static DDASLLogger *sharedInstance;
         }
 
         static char const *const levels[] = { "0", "1", "2", "3", "4", "5", "6", "7" };
-        NSAssert(aslLogLevel < (sizeof(levels) / sizeof(levels[0])),
-                 @"Unhandled ASL log level in %@.", [self className]);
 
         // NSLog uses the current euid to set the ASL_KEY_READ_UID.
         char readUIDString[16];
-        snprintf(readUIDString, sizeof(readUIDString), "%d", geteuid());
+        int l = snprintf(readUIDString, sizeof(readUIDString), "%d", geteuid());
 
+        NSAssert(l < sizeof(readUIDString),
+                 @"Formatted euid is too long.");
+        NSAssert(aslLogLevel < (sizeof(levels) / sizeof(levels[0])),
+                 @"Unhandled ASL log level.");
+
+        //TODO handle asl_* failures non-silently?
         aslmsg m = asl_new(ASL_TYPE_MSG);
-        asl_set(m, ASL_KEY_LEVEL, levels[aslLogLevel]);
-        asl_set(m, ASL_KEY_MSG, msg);
-        asl_set(m, ASL_KEY_READ_UID, readUIDString);
-        asl_send(_client, m);
-        asl_free(m);
+        if (__builtin_expect(m != NULL, 1)) {
+            __Require_noErr_Quiet(asl_set(m, ASL_KEY_LEVEL, levels[aslLogLevel]), asl_msg_done);
+            __Require_noErr_Quiet(asl_set(m, ASL_KEY_MSG, msg), asl_msg_done);
+            __Require_noErr_Quiet(asl_set(m, ASL_KEY_READ_UID, readUIDString), asl_msg_done);
+            asl_send(_client, m);
+        asl_msg_done:
+            asl_free(m);
+        }
     }
 }
 
