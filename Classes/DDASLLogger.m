@@ -25,8 +25,6 @@ static DDASLLogger *sharedInstance;
 
 @interface DDASLLogger () {
     aslclient _client;
-    uid_t _readUID;
-    char _readUIDString[32];
 }
 
 @end
@@ -54,10 +52,6 @@ static DDASLLogger *sharedInstance;
         // but background threads need to create their own client.
 
         _client = asl_open(NULL, "com.apple.console", 0);
-
-        // -1 is any user.
-        _readUID = -1;
-        strlcpy(_readUIDString, "-1", sizeof(_readUIDString));
     }
 
     return self;
@@ -78,11 +72,10 @@ static DDASLLogger *sharedInstance;
     if (logMsg) {
         const char *msg = [logMsg UTF8String];
 
-        int aslLogLevel;
+        size_t aslLogLevel;
         switch (logMessage->logFlag) {
             // Note: By default ASL will filter anything above level 5 (Notice).
             // So our mappings shouldn't go above that level.
-                // So our mappings shouldn't go above that level.
             case LOG_FLAG_ERROR     : aslLogLevel = ASL_LEVEL_CRIT;     break;
             case LOG_FLAG_WARN      : aslLogLevel = ASL_LEVEL_ERR;      break;
             case LOG_FLAG_INFO      : aslLogLevel = ASL_LEVEL_WARNING;  break; // Regular NSLog's level
@@ -91,24 +84,25 @@ static DDASLLogger *sharedInstance;
             default                 : aslLogLevel = ASL_LEVEL_NOTICE;   break;
         }
 
+        static char const *const levels[] = { "0", "1", "2", "3", "4", "5", "6", "7" };
+        NSAssert(aslLogLevel < (sizeof(levels) / sizeof(levels[0])),
+                 @"Unhandled ASL log level in %@.", [self className]);
+
+        // NSLog uses the current euid to set the ASL_KEY_READ_UID.
+        char readUIDString[16];
+        snprintf(readUIDString, sizeof(readUIDString), "%d", geteuid());
+
         aslmsg m = asl_new(ASL_TYPE_MSG);
-        asl_set(m, ASL_KEY_READ_UID, _readUIDString);
-        asl_log(_client, m, aslLogLevel, "%s", msg);
+        asl_set(m, ASL_KEY_LEVEL, levels[aslLogLevel]);
+        asl_set(m, ASL_KEY_MSG, msg);
+        asl_set(m, ASL_KEY_READ_UID, readUIDString);
+        asl_send(_client, m);
         asl_free(m);
     }
 }
 
 - (NSString *)loggerName {
     return @"cocoa.lumberjack.aslLogger";
-}
-
-- (uid_t)readUID {
-    return _readUID;
-}
-
-- (void)setReadUID:(uid_t)readUID {
-    _readUID = readUID;
-    snprintf(_readUIDString, sizeof(_readUIDString), "%d", _readUID);
 }
 
 @end

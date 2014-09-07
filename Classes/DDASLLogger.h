@@ -32,8 +32,6 @@
 
 @interface DDASLLogger : DDAbstractLogger <DDLogger>
 
-@property (readwrite) uid_t readUID;
-
 + (instancetype)sharedInstance;
 
 // Inherited from DDAbstractLogger
