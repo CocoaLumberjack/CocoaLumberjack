@@ -167,7 +167,7 @@
  * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomLogLevels
  **/
 
-typedef NS_OPTIONS(unsigned int, DDLogFlag) {
+typedef NS_OPTIONS(NSUInteger, DDLogFlag) {
 	DDLogFlagError      = (1 << 0),  // 0...00001
 	DDLogFlagWarning    = (1 << 1),  // 0...00010
 	DDLogFlagInfo       = (1 << 2),  // 0...00100
@@ -175,14 +175,14 @@ typedef NS_OPTIONS(unsigned int, DDLogFlag) {
     DDLogFlagVerbose    = (1 << 4)   // 0...10000
 };
 
-typedef NS_ENUM(unsigned int, DDLogLevel) {
+typedef NS_ENUM(NSUInteger, DDLogLevel) {
 	DDLogLevelOff       = 0,
 	DDLogLevelError     = (DDLogFlagError),                             // 0...00001
 	DDLogLevelWarning   = (DDLogLevelError | DDLogFlagWarning),         // 0...00011
 	DDLogLevelInfo      = (DDLogLevelWarning | DDLogFlagInfo),          // 0...00111
     DDLogLevelDebug     = (DDLogLevelInfo | DDLogFlagDebug),            // 0...01111
 	DDLogLevelVerbose   = (DDLogLevelDebug | DDLogFlagVerbose),         // 0...11111
-    DDLogLevelAll       = 0xFFFFFFFF                                    // 1111....11111 (LOG_LEVEL_VERBOSE plus any other flags)
+    DDLogLevelAll       = NSUIntegerMax                                 // 1111....11111 (LOG_LEVEL_VERBOSE plus any other flags)
 };
 
 #define LOG_ERROR         (LOG_LEVEL_DEF & DDLogFlagError)
@@ -377,8 +377,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * If no formatter is set, the logger simply logs the message as it is given in logMessage,
  * or it may use its own built in formatting style.
  **/
-- (id <DDLogFormatter>)logFormatter;
-- (void)setLogFormatter:(id <DDLogFormatter>)formatter;
+@property id <DDLogFormatter> logFormatter;
 
 @optional
 
