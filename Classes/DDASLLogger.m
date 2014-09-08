@@ -97,15 +97,14 @@ static DDASLLogger *sharedInstance;
                  @"Unhandled ASL log level.");
 
         aslmsg m = asl_new(ASL_TYPE_MSG);
-        if (__builtin_expect(m != NULL, 1)) {
-            if (__builtin_expect(asl_set(m, ASL_KEY_LEVEL, level_strings[aslLogLevel]) != 0, 0)) goto asl_msg_done;
-            if (__builtin_expect(asl_set(m, ASL_KEY_MSG, msg) != 0, 0)) goto asl_msg_done;
-            if (__builtin_expect(asl_set(m, ASL_KEY_READ_UID, readUIDString) != 0, 0)) goto asl_msg_done;
-            asl_send(_client, m);
-        asl_msg_done:
+        if (m != NULL) {
+            if (asl_set(m, ASL_KEY_LEVEL, level_strings[aslLogLevel]) == 0 &&
+                asl_set(m, ASL_KEY_MSG, msg) == 0 &&
+                asl_set(m, ASL_KEY_READ_UID, readUIDString) == 0) {
+                asl_send(_client, m);
+            }
             asl_free(m);
         }
-
         //TODO handle asl_* failures non-silently?
     }
 }
