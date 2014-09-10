@@ -15,7 +15,6 @@
 
 #import "DDASLLogger.h"
 #import <asl.h>
-#import <libkern/OSAtomic.h>
 
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
@@ -72,11 +71,10 @@ static DDASLLogger *sharedInstance;
     if (logMsg) {
         const char *msg = [logMsg UTF8String];
 
-        int aslLogLevel;
+        size_t aslLogLevel;
         switch (logMessage->logFlag) {
             // Note: By default ASL will filter anything above level 5 (Notice).
             // So our mappings shouldn't go above that level.
-                // So our mappings shouldn't go above that level.
             case LOG_FLAG_ERROR     : aslLogLevel = ASL_LEVEL_CRIT;     break;
             case LOG_FLAG_WARN      : aslLogLevel = ASL_LEVEL_ERR;      break;
             case LOG_FLAG_INFO      : aslLogLevel = ASL_LEVEL_WARNING;  break; // Regular NSLog's level
@@ -85,10 +83,29 @@ static DDASLLogger *sharedInstance;
             default                 : aslLogLevel = ASL_LEVEL_NOTICE;   break;
         }
 
+        static char const *const level_strings[] = { "0", "1", "2", "3", "4", "5", "6", "7" };
+
+        // NSLog uses the current euid to set the ASL_KEY_READ_UID.
+        uid_t const readUID = geteuid();
+
+        char readUIDString[16];
+        int l = snprintf(readUIDString, sizeof(readUIDString), "%d", readUID);
+
+        NSAssert(l < sizeof(readUIDString),
+                 @"Formatted euid is too long.");
+        NSAssert(aslLogLevel < (sizeof(level_strings) / sizeof(level_strings[0])),
+                 @"Unhandled ASL log level.");
+
         aslmsg m = asl_new(ASL_TYPE_MSG);
-        asl_set(m, ASL_KEY_READ_UID, "501");
-        asl_log(_client, m, aslLogLevel, "%s", msg);
-        asl_free(m);
+        if (m != NULL) {
+            if (asl_set(m, ASL_KEY_LEVEL, level_strings[aslLogLevel]) == 0 &&
+                asl_set(m, ASL_KEY_MSG, msg) == 0 &&
+                asl_set(m, ASL_KEY_READ_UID, readUIDString) == 0) {
+                asl_send(_client, m);
+            }
+            asl_free(m);
+        }
+        //TODO handle asl_* failures non-silently?
     }
 }
 
