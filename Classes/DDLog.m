@@ -645,7 +645,7 @@ static unsigned int numProcessors;
         for (DDLoggerNode *loggerNode in loggers) {
             // skip the loggers that shouldn't write this message based on the logLevel
 
-            if (!(logMessage->logFlag & loggerNode.logLevel)) {
+            if (!(logMessage->logFlag && loggerNode.logLevel)) {
                 continue;
             }
 
@@ -661,7 +661,7 @@ static unsigned int numProcessors;
         for (DDLoggerNode *loggerNode in loggers) {
             // skip the loggers that shouldn't write this message based on the logLevel
 
-            if (!(logMessage->logFlag & loggerNode.logLevel)) {
+            if (!(logMessage->logFlag && loggerNode.logLevel)) {
                 continue;
             }
 
