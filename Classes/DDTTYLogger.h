@@ -40,6 +40,27 @@
  * you may choose to use only a file logger and a tty logger.
  **/
 
+#import "DDLog.h"
+
+#define LOG_CONTEXT_ALL INT_MAX
+
+#if TARGET_OS_IPHONE
+    // iOS
+    #import <UIKit/UIColor.h>
+    #define DDColor UIColor
+    #define DDMakeColor(r, g, b) [UIColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f]
+#elif !defined (COCOAPODS_POD_AVAILABLE_CocoaLumberjack_CLI)
+    // OS X with AppKit
+    #import <AppKit/NSColor.h>
+    #define DDColor NSColor
+    #define DDMakeColor(r, g, b) [NSColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f]
+#else
+    // OS X CLI
+    #import "CLIColor.h"
+    #define DDColor CLIColor
+    #define DDMakeColor(r, g, b) [CLIColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f]
+#endif
+
 @interface DDTTYLogger : DDAbstractLogger <DDLogger>
 
 + (instancetype)sharedInstance;
@@ -106,13 +127,7 @@
  *
  * This method invokes setForegroundColor:backgroundColor:forFlag:context: and applies it to `LOG_CONTEXT_ALL`.
  **/
-#if TARGET_OS_IPHONE
-- (void)setForegroundColor:(UIColor *)txtColor backgroundColor:(UIColor *)bgColor forFlag:(int)mask;
-#elif !defined (COCOAPODS_POD_AVAILABLE_CocoaLumberjack_CLI)
-- (void)setForegroundColor:(NSColor *)txtColor backgroundColor:(NSColor *)bgColor forFlag:(int)mask;
-#else
-- (void)setForegroundColor:(CLIColor *)txtColor backgroundColor:(CLIColor *)bgColor forFlag:(int)mask;
-#endif
+- (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forFlag:(int)mask;
 
 /**
  * Just like setForegroundColor:backgroundColor:flag, but allows you to specify a particular logging context.
@@ -125,13 +140,7 @@
  * Logging context's are explained in further detail here:
  * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomContext
  **/
-#if TARGET_OS_IPHONE
-- (void)setForegroundColor:(UIColor *)txtColor backgroundColor:(UIColor *)bgColor forFlag:(int)mask context:(int)ctxt;
-#elif !defined (COCOAPODS_POD_AVAILABLE_CocoaLumberjack_CLI)
-- (void)setForegroundColor:(NSColor *)txtColor backgroundColor:(NSColor *)bgColor forFlag:(int)mask context:(int)ctxt;
-#else
-- (void)setForegroundColor:(CLIColor *)txtColor backgroundColor:(CLIColor *)bgColor forFlag:(int)mask context:(int)ctxt;
-#endif
+- (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forFlag:(int)mask context:(int)ctxt;
 
 /**
  * Similar to the methods above, but allows you to map DDLogMessage->tag to a particular color profile.
@@ -140,13 +149,12 @@
  * static NSString *const PurpleTag = @"PurpleTag";
  *
  * #define DDLogPurple(frmt, ...) LOG_OBJC_TAG_MACRO(NO, 0, 0, 0, PurpleTag, frmt, ##__VA_ARGS__)
+ * 
+ * And then where you configure CocoaLumberjack:
  *
- * And then in your applicationDidFinishLaunching, or wherever you configure Lumberjack:
+ * purple = DDMakeColor((64/255.0), (0/255.0), (128/255.0));
  *
- * #if TARGET_OS_IPHONE
- *   UIColor *purple = [UIColor colorWithRed:(64/255.0) green:(0/255.0) blue:(128/255.0) alpha:1.0];
- * #else
- *   NSColor *purple = [NSColor colorWithCalibratedRed:(64/255.0) green:(0/255.0) blue:(128/255.0) alpha:1.0];
+ * or any UIColor/NSColor constructor.
  *
  * Note: For CLI OS X projects that don't link with AppKit use CLIColor objects instead
  *
@@ -157,13 +165,7 @@
  *
  * DDLogPurple(@"I'm a purple log message!");
  **/
-#if TARGET_OS_IPHONE
-- (void)setForegroundColor:(UIColor *)txtColor backgroundColor:(UIColor *)bgColor forTag:(id <NSCopying>)tag;
-#elif !defined (COCOAPODS_POD_AVAILABLE_CocoaLumberjack_CLI)
-- (void)setForegroundColor:(NSColor *)txtColor backgroundColor:(NSColor *)bgColor forTag:(id <NSCopying>)tag;
-#else
-- (void)setForegroundColor:(CLIColor *)txtColor backgroundColor:(CLIColor *)bgColor forTag:(id <NSCopying>)tag;
-#endif
+- (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forTag:(id <NSCopying>)tag;
 
 /**
  * Clearing color profiles.

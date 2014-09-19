@@ -67,19 +67,6 @@
 #define XCODE_COLORS_RESET_BG   XCODE_COLORS_ESCAPE_SEQ "bg;" // Clear any background color
 #define XCODE_COLORS_RESET      XCODE_COLORS_ESCAPE_SEQ ";"  // Clear any foreground or background color
 
-// Some simple defines to make life easier on ourself
-
-#if TARGET_OS_IPHONE
-  #define OSColor               UIColor
-  #define MakeColor(r, g, b)    [UIColor colorWithRed : (r / 255.0f)green : (g / 255.0f)blue : (b / 255.0f)alpha : 1.0f]
-#elif !defined (COCOAPODS_POD_AVAILABLE_CocoaLumberjack_CLI)
-  #define OSColor               NSColor
-  #define MakeColor(r, g, b)    [NSColor colorWithCalibratedRed : (r / 255.0f)green : (g / 255.0f)blue : (b / 255.0f)alpha : 1.0f]
-#else
-  #define OSColor               CLIColor
-  #define MakeColor(r, g, b)    [CLIColor colorWithCalibratedRed : (r / 255.0f)green : (g / 255.0f)blue : (b / 255.0f)alpha : 1.0f]
-#endif
-
 // If running in a shell, not all RGB colors will be supported.
 // In this case we automatically map to the closest available color.
 // In order to provide this mapping, we have a hard-coded set of the standard RGB values available in the shell.
