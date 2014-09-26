@@ -113,6 +113,35 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
     [DDLog log:async message:logMessage];
 }
 
+static aslmsg priv_ASLNext(aslresponse response)
+{
+#if defined(__IPHONE_8_0) || defined(__MAC_10_10)
+#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_8_0
+    if (asl_next)
+#endif
+        return asl_next(response);
+#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_8_0
+    else
+#endif
+#endif
+        return aslresponse_next(response);
+
+}
+
+static void priv_ASLRelease(aslresponse response)
+{
+#if defined(__IPHONE_8_0) || defined(__MAC_10_10)
+#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_8_0
+    if (asl_release)
+#endif
+        asl_release(response);
+#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_8_0
+    else
+#endif
+#endif
+        aslresponse_free(response);
+}
+
 + (void)captureAslLogs {
     @autoreleasepool
     {
@@ -161,24 +190,14 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
                 // Iterate over new messages.
                 aslmsg msg;
                 aslresponse response = asl_search(NULL, query);
-#if defined(__IPHONE_8_0) || defined(__MAC_10_10)
-
-                while ((msg = asl_next(response)))
-#else
-
-                while ((msg = aslresponse_next(response)))
-#endif
+                while ((msg = priv_ASLNext(response)))
                 {
                     [DDASLLogCapture aslMessageRecieved:msg];
 
                     // Keep track of which messages we've seen.
                     lastSeenID = atoll(asl_get(msg, ASL_KEY_MSG_ID));
                 }
-#if defined(__IPHONE_8_0) || defined(__MAC_10_10)
-                asl_release(response);
-#else
-                aslresponse_free(response);
-#endif
+                priv_ASLRelease(response);
 
                 if (_cancel) {
                     notify_cancel(notifyToken);
