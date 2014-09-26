@@ -61,7 +61,7 @@
  * Standard init method.
  * Configure using properties as desired.
  **/
-- (id)init;
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
 
 /**
  * The minQueueLength restricts the minimum size of the [detail box].

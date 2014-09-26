@@ -130,8 +130,8 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  **/
 @interface DDLogFileManagerDefault : NSObject <DDLogFileManager>
 
-- (id)init;
-- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory;
+- (instancetype)init;
+- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory NS_DESIGNATED_INITIALIZER;
 #if TARGET_OS_IPHONE
 /*
  * Calling this constructor you can override the default "automagically" chosen NSFileProtection level.
@@ -172,7 +172,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  * - newLogFileName again returns "com.organization.myapp 2013-12-03.log",
  *   file "com.organization.myapp 2013-12-03 3.log" would be created.
  **/
-- (NSString *)newLogFileName;
+@property (readonly, copy) NSString *newLogFileName;
 - (BOOL)isLogFile:(NSString *)fileName;
 
 /* Inherited from DDLogFileManager protocol:
@@ -210,8 +210,8 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  **/
 @interface DDLogFileFormatterDefault : NSObject <DDLogFormatter>
 
-- (id)init;
-- (instancetype)initWithDateFormatter:(NSDateFormatter *)dateFormatter;
+- (instancetype)init;
+- (instancetype)initWithDateFormatter:(NSDateFormatter *)dateFormatter NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -221,8 +221,8 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 @interface DDFileLogger : DDAbstractLogger <DDLogger>
 
-- (id)init;
-- (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager;
+- (instancetype)init;
+- (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager NS_DESIGNATED_INITIALIZER;
 
 /**
  * Log File Rolling:
@@ -327,7 +327,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 + (instancetype)logFileWithPath:(NSString *)filePath;
 
-- (instancetype)initWithFilePath:(NSString *)filePath;
+- (instancetype)initWithFilePath:(NSString *)filePath NS_DESIGNATED_INITIALIZER;
 
 - (void)reset;
 - (void)renameFile:(NSString *)newFileName;

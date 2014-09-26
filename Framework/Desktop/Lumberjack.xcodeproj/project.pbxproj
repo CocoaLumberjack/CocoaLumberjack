@@ -64,7 +64,7 @@
 
 /* Begin PBXFileReference section */
 		5505CF6519BA58320028CF57 /* DDLogDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLogDeprecated.h; sourceTree = "<group>"; };
-		55BCB5C619D4BB6E0096E784 /* SwiftHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftHelpers.swift; sourceTree = "<group>"; };
+		55BCB5C619D4BB6E0096E784 /* SwiftHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftHelpers.swift; path = ../SwiftHelpers.swift; sourceTree = "<group>"; };
 		55CCBEFF19BA679200957A39 /* SwiftTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CCBF0219BA679200957A39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55CCBF0319BA679200957A39 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -159,6 +159,7 @@
 		DA9C20CA192A0E0000AB7171 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				55BCB5C619D4BB6E0096E784 /* SwiftHelpers.swift */,
 				DA9C20CB192A0E0000AB7171 /* DDContextFilterLogFormatter.h */,
 				DA9C20CC192A0E0000AB7171 /* DDContextFilterLogFormatter.m */,
 				DA9C20CD192A0E0000AB7171 /* DDDispatchQueueLogFormatter.h */,
@@ -228,7 +229,6 @@
 				5505CF6519BA58320028CF57 /* DDLogDeprecated.h */,
 				DA9C20C8192A0E0000AB7171 /* DDTTYLogger.h */,
 				DA9C20C9192A0E0000AB7171 /* DDTTYLogger.m */,
-				55BCB5C619D4BB6E0096E784 /* SwiftHelpers.swift */,
 				DA9C20CA192A0E0000AB7171 /* Extensions */,
 			);
 			name = Lumberjack;
@@ -640,12 +640,12 @@
 				INFOPLIST_FILE = "Lumberjack/Lumberjack-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -665,11 +665,11 @@
 				INFOPLIST_FILE = "Lumberjack/Lumberjack-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;

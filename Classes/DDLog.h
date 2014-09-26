@@ -578,24 +578,24 @@ typedef NS_OPTIONS(int, DDLogMessageOptions) {
                           line:(int)line
                            tag:(id)tag
                        options:(DDLogMessageOptions)optionsMask
-                     timestamp:(NSDate *)aTimestamp;
+                     timestamp:(NSDate *)aTimestamp NS_DESIGNATED_INITIALIZER;
 
 /**
  * Returns the threadID as it appears in NSLog.
  * That is, it is a hexadecimal value which is calculated from the machThreadID.
  **/
-- (NSString *)threadID;
+@property (readonly, copy) NSString *threadID;
 
 /**
  * Convenience property to get just the file name, as the file variable is generally the full file path.
  * This method does not include the file extension, which is generally unwanted for logging purposes.
  **/
-- (NSString *)fileName;
+@property (readonly, copy) NSString *fileName;
 
 /**
  * Returns the function variable in NSString form.
  **/
-- (NSString *)methodName;
+@property (readonly, copy) NSString *methodName;
 
 @end
 
@@ -629,7 +629,7 @@ typedef NS_OPTIONS(int, DDLogMessageOptions) {
 @property (nonatomic, strong) id <DDLogFormatter> logFormatter;
 
 // For thread-safety assertions
-- (BOOL)isOnGlobalLoggingQueue;
-- (BOOL)isOnInternalLoggerQueue;
+@property (getter=isOnGlobalLoggingQueue, readonly) BOOL onGlobalLoggingQueue;
+@property (getter=isOnInternalLoggerQueue, readonly) BOOL onInternalLoggerQueue;
 
 @end
