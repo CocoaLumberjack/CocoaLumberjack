@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5505CF6619BA58320028CF57 /* DDLogDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 5505CF6519BA58320028CF57 /* DDLogDeprecated.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55BCB5C719D4BB6E0096E784 /* SwiftHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BCB5C619D4BB6E0096E784 /* SwiftHelpers.swift */; };
-		55CCBF0419BA679200957A39 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CCBF0319BA679200957A39 /* main.swift */; };
 		55CCBF0619BA679200957A39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CCBF0519BA679200957A39 /* AppDelegate.swift */; };
 		55CCBF0819BA679200957A39 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55CCBF0719BA679200957A39 /* Images.xcassets */; };
 		55CCBF0B19BA679200957A39 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CCBF0919BA679200957A39 /* MainMenu.xib */; };
@@ -67,7 +66,6 @@
 		55BCB5C619D4BB6E0096E784 /* SwiftHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftHelpers.swift; path = ../SwiftHelpers.swift; sourceTree = "<group>"; };
 		55CCBEFF19BA679200957A39 /* SwiftTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CCBF0219BA679200957A39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		55CCBF0319BA679200957A39 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		55CCBF0519BA679200957A39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55CCBF0719BA679200957A39 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		55CCBF0A19BA679200957A39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -151,7 +149,6 @@
 			isa = PBXGroup;
 			children = (
 				55CCBF0219BA679200957A39 /* Info.plist */,
-				55CCBF0319BA679200957A39 /* main.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -419,7 +416,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55CCBF0619BA679200957A39 /* AppDelegate.swift in Sources */,
-				55CCBF0419BA679200957A39 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

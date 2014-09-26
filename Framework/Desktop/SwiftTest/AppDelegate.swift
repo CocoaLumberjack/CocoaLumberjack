@@ -11,6 +11,7 @@ import CocoaLumberjack
 
 let ourLogLevel = DDLogLevel.Verbose
 
+@NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet weak var window: NSWindow!
     
