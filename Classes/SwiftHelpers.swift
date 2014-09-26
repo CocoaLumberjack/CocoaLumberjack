@@ -23,23 +23,23 @@ public func SwiftLogMacro(isAsynchronous: Bool, level lvl: DDLogLevel, flag flg:
     DDLog.log(isAsynchronous, message: logMessage)
 }
 
-public func DDLogDebug(logText: String, level: DDLogLevel = debugLevel, file: String = __FILE__, function: String = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true, args: CVarArgType...) {
+public func DDLogDebug(logText: String, level: DDLogLevel = debugLevel, file: String = __FILE__, function: String = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true, #args: CVarArgType...) {
     SwiftLogMacro(async, level: level, flag: .Debug, file: file, function: function, line: line, format: logText, args: getVaList(args))
 }
 
-public func DDLogInfo(logText: String, level: DDLogLevel = debugLevel, file: String = __FILE__, function: String = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true, args: CVarArgType...) {
+public func DDLogInfo(logText: String, level: DDLogLevel = debugLevel, file: String = __FILE__, function: String = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true, #args: CVarArgType...) {
     SwiftLogMacro(async, level: level, flag: .Info, file: file, function: function, line: line, format: logText, args: getVaList(args))
 }
 
-public func DDLogWarn(logText: String, level: DDLogLevel = debugLevel, file: String = __FILE__, function: String = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true, args: CVarArgType...) {
+public func DDLogWarn(logText: String, level: DDLogLevel = debugLevel, file: String = __FILE__, function: String = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true, #args: CVarArgType...) {
     SwiftLogMacro(async, level: level, flag: .Warning, file: file, function: function, line: line, format: logText, args: getVaList(args))
 }
 
-public func DDLogVerbose(logText: String, level: DDLogLevel = debugLevel, file: String = __FILE__, function: String = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true, args: CVarArgType...) {
+public func DDLogVerbose(logText: String, level: DDLogLevel = debugLevel, file: String = __FILE__, function: String = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true, #args: CVarArgType...) {
     SwiftLogMacro(async, level: level, flag: .Verbose, file: file, function: function, line: line, format: logText, args: getVaList(args))
 }
 
-public func DDLogError(logText: String, level: DDLogLevel = debugLevel, file: String = __FILE__, function: String = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = false, args: CVarArgType...) {
+public func DDLogError(logText: String, level: DDLogLevel = debugLevel, file: String = __FILE__, function: String = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = false, #args: CVarArgType...) {
     SwiftLogMacro(async, level: level, flag: .Error, file: file, function: function, line: line, format: logText, args: getVaList(args))
 }
 
