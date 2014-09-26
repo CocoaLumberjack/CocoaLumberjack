@@ -12,7 +12,7 @@ CocoaLumberjack
 
 **CocoaLumberjack** is a fast & simple, yet powerful & flexible logging framework for Mac and iOS.
 
-### CocoaLumberjac 2 pre-release notes
+### CocoaLumberjack 2 pre-release notes
 
 #### Migrating to 2.x-beta
 
