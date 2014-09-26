@@ -67,19 +67,19 @@ static void *const GlobalLoggingQueueIdentityKey = (void *)&GlobalLoggingQueueId
     @public
     id <DDLogger> logger;
     dispatch_queue_t loggerQueue;
-    int logLevel;
+    DDLogLevel logLevel;
 }
 
-@property (nonatomic, assign, readonly) int logLevel;
+@property (nonatomic, assign, readonly) DDLogLevel logLevel;
 
-+ (DDLoggerNode *)nodeWithLogger:(id <DDLogger>)logger loggerQueue:(dispatch_queue_t)loggerQueue logLevel:(int)logLevel;
++ (DDLoggerNode *)nodeWithLogger:(id <DDLogger>)logger loggerQueue:(dispatch_queue_t)loggerQueue logLevel:(DDLogLevel)logLevel;
 
 @end
 
 
 @interface DDLog (PrivateAPI)
 
-+ (void)lt_addLogger:(id <DDLogger>)logger logLevel:(int)logLevel;
++ (void)lt_addLogger:(id <DDLogger>)logger logLevel:(DDLogLevel)logLevel;
 + (void)lt_removeLogger:(id <DDLogger>)logger;
 + (void)lt_removeAllLoggers;
 + (NSArray *)lt_allLoggers;
@@ -508,7 +508,7 @@ static unsigned int numProcessors;
     return result;
 }
 
-+ (int)logLevelForClass:(Class)aClass {
++ (DDLogLevel)logLevelForClass:(Class)aClass {
     if ([self isRegisteredClass:aClass]) {
         return [aClass ddLogLevel];
     }
@@ -516,7 +516,7 @@ static unsigned int numProcessors;
     return -1;
 }
 
-+ (int)logLevelForClassWithName:(NSString *)aClassName {
++ (DDLogLevel)logLevelForClassWithName:(NSString *)aClassName {
     Class aClass = NSClassFromString(aClassName);
 
     return [self logLevelForClass:aClass];
@@ -538,7 +538,7 @@ static unsigned int numProcessors;
 #pragma mark Logging Thread
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-+ (void)lt_addLogger:(id <DDLogger>)logger logLevel:(int)logLevel {
++ (void)lt_addLogger:(id <DDLogger>)logger logLevel:(DDLogLevel)logLevel {
     // Add to loggers array.
     // Need to create loggerQueue if loggerNode doesn't provide one.
 
@@ -796,7 +796,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
 
 @synthesize logLevel;
 
-- (instancetype)initWithLogger:(id <DDLogger>)aLogger loggerQueue:(dispatch_queue_t)aLoggerQueue logLevel:(int)aLogLevel {
+- (instancetype)initWithLogger:(id <DDLogger>)aLogger loggerQueue:(dispatch_queue_t)aLoggerQueue logLevel:(DDLogLevel)aLogLevel {
     if ((self = [super init])) {
         logger = aLogger;
 
@@ -813,7 +813,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
     return self;
 }
 
-+ (DDLoggerNode *)nodeWithLogger:(id <DDLogger>)logger loggerQueue:(dispatch_queue_t)loggerQueue logLevel:(int)logLevel {
++ (DDLoggerNode *)nodeWithLogger:(id <DDLogger>)logger loggerQueue:(dispatch_queue_t)loggerQueue logLevel:(DDLogLevel)logLevel {
     return [[DDLoggerNode alloc] initWithLogger:logger loggerQueue:loggerQueue logLevel:logLevel];
 }
 

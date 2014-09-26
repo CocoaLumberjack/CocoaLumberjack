@@ -43,11 +43,11 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
     _cancel = YES;
 }
 
-+ (int)captureLogLevel {
++ (DDLogLevel)captureLogLevel {
     return _captureLogLevel;
 }
 
-+ (void)setCaptureLogLevel:(int)LOG_LEVEL_XXX {
++ (void)setCaptureLogLevel:(DDLogLevel)LOG_LEVEL_XXX {
     _captureLogLevel = LOG_LEVEL_XXX;
 }
 
