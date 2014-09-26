@@ -9,6 +9,8 @@
 import Cocoa
 import CocoaLumberjack
 
+let ourLogLevel = DDLogLevel.Verbose
+
 class AppDelegate: NSObject, NSApplicationDelegate {
                             
 	@IBOutlet weak var window: NSWindow!
@@ -16,12 +18,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 	func applicationDidFinishLaunching(aNotification: NSNotification?) {
         DDLog.addLogger(DDTTYLogger.sharedInstance())
+		
+        SwiftLogMacro(false, level: ourLogLevel, flag: DDLogFlag.Debug, "Hello")
+        DDLogVerbose("Verbose");
+        DDLogInfo("Info");
+        DDLogWarn("Warn");
+        DDLogError("Error");
         
-        // These don't work
-        //DDLogVerbose("Verbose");
-        //DDLogInfo("Info");
-        //DDLogWarn("Warn");
-        //DDLogError("Error");
+        DDLogVerbose("Verbose", level: ourLogLevel);
+        DDLogInfo("Info", level: ourLogLevel);
+        DDLogWarn("Warn", level: ourLogLevel);
+        DDLogError("Error", level: ourLogLevel);
 	}
 
 	func applicationWillTerminate(aNotification: NSNotification?) {

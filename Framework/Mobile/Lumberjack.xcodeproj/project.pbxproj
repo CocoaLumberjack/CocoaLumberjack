@@ -18,11 +18,12 @@
 		2A37F9F318E37536009FAAA7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F9F218E37536009FAAA7 /* ViewController.m */; };
 		2A37F9F518E37536009FAAA7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F9F418E37536009FAAA7 /* Images.xcassets */; };
 		2A37FA0F18E375D8009FAAA7 /* libCocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A37F97718E37270009FAAA7 /* libCocoaLumberjack.a */; };
+		55BCB5CC19D4EFE90096E784 /* SwiftHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BCB5CB19D4EFE90096E784 /* SwiftHelpers.swift */; };
 		55CCBE9D19BA5E2B00957A39 /* DDLogDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 55CCBE9C19BA5E2B00957A39 /* DDLogDeprecated.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55CCBEC219BA604E00957A39 /* CocoaLumberjack.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BAA199474A900C180CF /* CocoaLumberjack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55CCBEC319BA604E00957A39 /* DDLogMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BAC199474A900C180CF /* DDLogMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55CCBEC419BA604E00957A39 /* DDAssertMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BAB199474A900C180CF /* DDAssertMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55CCBEC519BA604E00957A39 /* DDLog+LOGV.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20A6192A0CB500AB7171 /* DDLog+LOGV.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55CCBEC519BA604E00957A39 /* DDLog+LOGV.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20A6192A0CB500AB7171 /* DDLog+LOGV.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		55CCBEC619BA604E00957A39 /* DDAbstractDatabaseLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C209C192A0CB500AB7171 /* DDAbstractDatabaseLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55CCBEC719BA604E00957A39 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C209D192A0CB500AB7171 /* DDAbstractDatabaseLogger.m */; };
 		55CCBEC819BA604E00957A39 /* DDASLLogCapture.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C209E192A0CB500AB7171 /* DDASLLogCapture.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -69,7 +70,7 @@
 		E5CEB3721994971500EDC36E /* CocoaLumberjack.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BAA199474A900C180CF /* CocoaLumberjack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5CEB3731994971500EDC36E /* DDLogMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BAC199474A900C180CF /* DDLogMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5CEB3741994971500EDC36E /* DDAssertMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BAB199474A900C180CF /* DDAssertMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E5CEB3751994971500EDC36E /* DDLog+LOGV.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20A6192A0CB500AB7171 /* DDLog+LOGV.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E5CEB3751994971500EDC36E /* DDLog+LOGV.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20A6192A0CB500AB7171 /* DDLog+LOGV.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		E5CEB3761994971500EDC36E /* DDAbstractDatabaseLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C209C192A0CB500AB7171 /* DDAbstractDatabaseLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5CEB3771994971500EDC36E /* DDASLLogCapture.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C209E192A0CB500AB7171 /* DDASLLogCapture.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5CEB3781994971500EDC36E /* DDASLLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20A0192A0CB500AB7171 /* DDASLLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -131,6 +132,7 @@
 		2A37F9F218E37536009FAAA7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		2A37F9F418E37536009FAAA7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2A37F9FB18E37536009FAAA7 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		55BCB5CB19D4EFE90096E784 /* SwiftHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftHelpers.swift; path = ../SwiftHelpers.swift; sourceTree = "<group>"; };
 		55CCBE9C19BA5E2B00957A39 /* DDLogDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLogDeprecated.h; sourceTree = "<group>"; };
 		55CCBEA319BA5E5A00957A39 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CCBEEC19BA630700957A39 /* FramTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FramTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -304,6 +306,7 @@
 		DA9C20A9192A0CB500AB7171 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				55BCB5CB19D4EFE90096E784 /* SwiftHelpers.swift */,
 				DA9C20AA192A0CB500AB7171 /* DDContextFilterLogFormatter.h */,
 				DA9C20AB192A0CB500AB7171 /* DDContextFilterLogFormatter.m */,
 				DA9C20AC192A0CB500AB7171 /* DDDispatchQueueLogFormatter.h */,
@@ -541,6 +544,7 @@
 				55CCBED819BA605700957A39 /* DDMultiFormatter.m in Sources */,
 				55CCBEC719BA604E00957A39 /* DDAbstractDatabaseLogger.m in Sources */,
 				55CCBECB19BA604E00957A39 /* DDASLLogger.m in Sources */,
+				55BCB5CC19D4EFE90096E784 /* SwiftHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -754,6 +758,7 @@
 		55CCBEBC19BA5E5B00957A39 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -770,6 +775,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = CocoaLumberjack;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -779,6 +785,7 @@
 		55CCBEBD19BA5E5B00957A39 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -886,6 +893,7 @@
 				55CCBEBD19BA5E5B00957A39 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		55CCBEE919BA630700957A39 /* Build configuration list for PBXNativeTarget "FramTest" */ = {
 			isa = XCConfigurationList;

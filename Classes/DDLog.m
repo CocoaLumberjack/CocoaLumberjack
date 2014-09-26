@@ -345,6 +345,19 @@ static unsigned int numProcessors;
    function:(const char *)function
        line:(int)line
         tag:(id)tag
+     string:(NSString *)string
+{
+    [self log:asynchronous level:level flag:flag context:context file:file function:function line:line tag:tag format:@"%@", string];
+}
+
++ (void)log:(BOOL)asynchronous
+      level:(DDLogLevel)level
+       flag:(DDLogFlag)flag
+    context:(int)context
+       file:(const char *)file
+   function:(const char *)function
+       line:(int)line
+        tag:(id)tag
      format:(NSString *)format
        args:(va_list)args {
     if (format) {

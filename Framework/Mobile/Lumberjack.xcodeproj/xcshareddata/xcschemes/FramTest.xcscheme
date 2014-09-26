@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "55CCBED919BA630700957A39"
-               BuildableName = "LibTest copy.app"
+               BuildableName = "FramTest.app"
                BlueprintName = "FramTest"
                ReferencedContainer = "container:Lumberjack.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "55CCBED919BA630700957A39"
-            BuildableName = "LibTest copy.app"
+            BuildableName = "FramTest.app"
             BlueprintName = "FramTest"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
@@ -52,7 +52,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "55CCBED919BA630700957A39"
-            BuildableName = "LibTest copy.app"
+            BuildableName = "FramTest.app"
             BlueprintName = "FramTest"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "55CCBED919BA630700957A39"
-            BuildableName = "LibTest copy.app"
+            BuildableName = "FramTest.app"
             BlueprintName = "FramTest"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>

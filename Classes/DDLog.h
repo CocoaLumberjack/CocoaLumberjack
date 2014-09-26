@@ -271,6 +271,19 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 
 /**
  * Logging Primitive.
+ **/
++ (void)log:(BOOL)asynchronous
+      level:(DDLogLevel)level
+       flag:(DDLogFlag)flag
+    context:(int)context
+       file:(const char *)file
+   function:(const char *)function
+       line:(int)line
+        tag:(id)tag
+     string:(NSString *)string;
+
+/**
+ * Logging Primitive.
  *
  * This method can be used if you manualy prepared DDLogMessage.
  **/
@@ -377,8 +390,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * If no formatter is set, the logger simply logs the message as it is given in logMessage,
  * or it may use its own built in formatting style.
  **/
-- (id <DDLogFormatter>)logFormatter;
-- (void)setLogFormatter:(id <DDLogFormatter>)formatter;
+@property (nonatomic, readwrite) id <DDLogFormatter> logFormatter;
 
 @optional
 
@@ -503,11 +515,10 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * If you write custom loggers or formatters, you will be dealing with objects of this class.
  **/
 
-enum {
+typedef NS_OPTIONS(int, DDLogMessageOptions) {
     DDLogMessageCopyFile     = 1 << 0,
     DDLogMessageCopyFunction = 1 << 1
 };
-typedef int   DDLogMessageOptions;
 
 @interface DDLogMessage : NSObject <NSCopying>
 {
@@ -615,7 +626,7 @@ typedef int   DDLogMessageOptions;
 
     dispatch_queue_t loggerQueue;
 }
-@property (strong) id <DDLogFormatter> logFormatter;
+@property (nonatomic, strong) id <DDLogFormatter> logFormatter;
 
 // For thread-safety assertions
 - (BOOL)isOnGlobalLoggingQueue;
