@@ -17,7 +17,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	func applicationDidFinishLaunching(aNotification: NSNotification?) {
         DDLog.addLogger(DDTTYLogger.sharedInstance())
 		
-        SwiftLogMacro(false, level: ourLogLevel, flag: DDLogFlag.Debug, "Hello")
         DDLogVerbose("Verbose");
         DDLogInfo("Info");
         DDLogWarn("Warn");

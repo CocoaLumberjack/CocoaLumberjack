@@ -168,28 +168,28 @@
  **/
 
 typedef NS_OPTIONS(NSUInteger, DDLogFlag) {
-	DDLogFlagError      = (1 << 0),  // 0...00001
-	DDLogFlagWarning    = (1 << 1),  // 0...00010
-	DDLogFlagInfo       = (1 << 2),  // 0...00100
-	DDLogFlagDebug      = (1 << 3),  // 0...01000
+    DDLogFlagError      = (1 << 0),  // 0...00001
+    DDLogFlagWarning    = (1 << 1),  // 0...00010
+    DDLogFlagInfo       = (1 << 2),  // 0...00100
+    DDLogFlagDebug      = (1 << 3),  // 0...01000
     DDLogFlagVerbose    = (1 << 4)   // 0...10000
 };
 
 typedef NS_ENUM(NSUInteger, DDLogLevel) {
-	DDLogLevelOff       = 0,
-	DDLogLevelError     = (DDLogFlagError),                             // 0...00001
-	DDLogLevelWarning   = (DDLogLevelError | DDLogFlagWarning),         // 0...00011
-	DDLogLevelInfo      = (DDLogLevelWarning | DDLogFlagInfo),          // 0...00111
-    DDLogLevelDebug     = (DDLogLevelInfo | DDLogFlagDebug),            // 0...01111
-	DDLogLevelVerbose   = (DDLogLevelDebug | DDLogFlagVerbose),         // 0...11111
-    DDLogLevelAll       = NSUIntegerMax                                 // 1111....11111 (LOG_LEVEL_VERBOSE plus any other flags)
+    DDLogLevelOff       = 0,
+    DDLogLevelError     = (DDLogFlagError),                     // 0...00001
+    DDLogLevelWarning   = (DDLogLevelError | DDLogFlagWarning), // 0...00011
+    DDLogLevelInfo      = (DDLogLevelWarning | DDLogFlagInfo),  // 0...00111
+    DDLogLevelDebug     = (DDLogLevelInfo | DDLogFlagDebug),    // 0...01111
+    DDLogLevelVerbose   = (DDLogLevelDebug | DDLogFlagVerbose), // 0...11111
+    DDLogLevelAll       = NSUIntegerMax                         // 1111....11111 (LOG_LEVEL_VERBOSE plus any other flags)
 };
 
-#define LOG_ERROR         (LOG_LEVEL_DEF & DDLogFlagError)
-#define LOG_WARN          (LOG_LEVEL_DEF & DDLogFlagWarning)
-#define LOG_INFO          (LOG_LEVEL_DEF & DDLogFlagInfo)
-#define LOG_DEBUG         (LOG_LEVEL_DEF & DDLogFlagDebug)
-#define LOG_VERBOSE       (LOG_LEVEL_DEF & DDLogFlagVerbose)
+#define LOG_ERROR   (LOG_LEVEL_DEF & DDLogFlagError)
+#define LOG_WARN    (LOG_LEVEL_DEF & DDLogFlagWarning)
+#define LOG_INFO    (LOG_LEVEL_DEF & DDLogFlagInfo)
+#define LOG_DEBUG   (LOG_LEVEL_DEF & DDLogFlagDebug)
+#define LOG_VERBOSE (LOG_LEVEL_DEF & DDLogFlagVerbose)
 
 #define LOG_ASYNC_ENABLED YES
 
