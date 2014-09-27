@@ -8,6 +8,30 @@
 
 import Foundation
 
+extension DDLogFlag {
+    public static func fromLogLevel(logLevel: DDLogLevel) -> DDLogFlag {
+        return DDLogFlag(logLevel.rawValue)
+    }
+    
+    public func toLogLevel() -> DDLogLevel? {
+        return DDLogLevel(rawValue: self.rawValue)
+    }
+}
+
+extension DDLog {
+    public class var registeredClassesArray: [AnyClass] {
+        get {
+            return registeredClasses() as [AnyClass]
+        }
+    }
+    
+    public class var registeredClassNamesArray: [String] {
+        get {
+            return registeredClassNames() as [String]
+        }
+    }
+}
+
 private var debugLevel = DDLogLevel.Warning
 
 public func setDefaultDebugLevel(level: DDLogLevel) {

@@ -69,11 +69,18 @@ FOUNDATION_EXPORT const unsigned char CocoaLumberjackVersionString[];
 #import "DDLogMacros.h"
 #import "DDAssertMacros.h"
 
+#import "DDASLLogCapture.h"
+
 // Loggers
 #import "DDTTYLogger.h"
 #import "DDASLLogger.h"
 #import "DDFileLogger.h"
+#import "DDAbstractDatabaseLogger.h"
+
+// Log Formatters
 #import "DDDispatchQueueLogFormatter.h"
+#import "DDContextFilterLogFormatter.h"
+#import "DDMultiFormatter.h"
 
 // Deprecated
 #import "DDLogDeprecated.h"
