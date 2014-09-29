@@ -6,4 +6,4 @@ CocoaLumberjack works by default in AppCode, but colours are not supported out o
 4. Add TERM=color to the 'Environment variables' (edit them by clicking on the ellipsis)
 5. `[[DDTTYLogger sharedInstance] setColorsEnabled:YES];`
 
-Kudos to @davidlawson for this wiki info.
+Kudos to @davidlawson for this documentation.

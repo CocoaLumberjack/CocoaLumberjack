@@ -64,22 +64,22 @@ Configure your logging however you want. Change log levels per file (perfect for
 platform :ios, '6.1'
 pod 'CocoaLumberjack'
 ```
-- read the [Getting started](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/GettingStarted) guide, check out the [FAQ](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/FAQ) section or the other [docs](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki)
+- read the [Getting started](Documentation/GettingStarted.md) guide, check out the [FAQ](Documentation/FAQ.md) section or the other [docs](Documentation/)
 - if you find issues or want to suggest improvements, create an issue or a pull request
 - for all kinds of questions involving CocoaLumberjack, use the [Google group](http://groups.google.com/group/cocoalumberjack) or StackOverflow (use [#lumberjack](http://stackoverflow.com/questions/tagged/lumberjack)).
 
 ### Documentation
 
-- **[Get started using Lumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/GettingStarted)**<br/>
-- [Different log levels for Debug and Release builds](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/XcodeTricks)<br/>
-- [Different log levels for each logger](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/PerLoggerLogLevels)<br/>
-- [Use colors in the Xcode debugging console](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/XcodeColors)<br/>
-- [Write your own custom formatters](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomFormatters)<br/>
-- [FAQ](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/FAQ)<br/>
-- [Analysis of performance with benchmarks](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/Performance)<br/>
-- [Common issues you may encounter and their solutions](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/ProblemSolution)<br/>
-- [AppCode support](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/AppCode-support)
-- **[full Lumberjack wiki](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki)**<br/>
+- **[Get started using Lumberjack](Documentation/GettingStarted.md)**<br/>
+- [Different log levels for Debug and Release builds](Documentation/XcodeTricks.md)<br/>
+- [Different log levels for each logger](Documentation/PerLoggerLogLevels.md)<br/>
+- [Use colors in the Xcode debugging console](Documentation/XcodeColors.md)<br/>
+- [Write your own custom formatters](Documentation/CustomFormatters.md)<br/>
+- [FAQ](Documentation/FAQ.md)<br/>
+- [Analysis of performance with benchmarks](Documentation/Performance.md)<br/>
+- [Common issues you may encounter and their solutions](Documentation/ProblemSolution.md)<br/>
+- [AppCode support](Documentation/AppCode-support.md)
+- **[Full Lumberjack documentation](Documentation/)**<br/>
 
 ### Requirements 
 - Xcode 4.4 or later is required

@@ -52,7 +52,7 @@
  * or it may use its own built in formatting style.
  *
  * More information about formatters can be found here:
- * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomFormatters
+ * Documentation/CustomFormatters.md
  *
  * The actual implementation of these methods is inherited from DDAbstractLogger.
 
@@ -123,7 +123,7 @@
  * Use LOG_CONTEXT_ALL to set the deafult color for all contexts that have no specific color set defined.
  *
  * Logging context's are explained in further detail here:
- * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomContext
+ * Documentation/CustomContext.md
  **/
 #if TARGET_OS_IPHONE
 - (void)setForegroundColor:(UIColor *)txtColor backgroundColor:(UIColor *)bgColor forFlag:(int)mask context:(int)ctxt;

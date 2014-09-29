@@ -21,10 +21,10 @@
  *
  * A log formatter can be added to any logger to format and/or filter its output.
  * You can learn more about log formatters here:
- * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomFormatters
+ * Documentation/CustomFormatters.md
  *
  * You can learn more about logging context's here:
- * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomContext
+ * Documentation/CustomContext.md
  *
  * But here's a quick overview / refresher:
  *
