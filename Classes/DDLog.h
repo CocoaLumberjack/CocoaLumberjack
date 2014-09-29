@@ -111,11 +111,11 @@
  *
  * More advanced users may choose to completely customize the levels (and level names) to suite their needs.
  * For more information on this see the "Custom Log Levels" page:
- * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomLogLevels
+ * Documentation/CustomLogLevels.md
  *
  * Advanced users may also notice that we're using a bitmask.
  * This is to allow for custom fine grained logging:
- * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/FineGrainedLogging
+ * Documentation/FineGrainedLogging.md
  *
  * -- Flags --
  *
@@ -164,7 +164,7 @@
  * Instead, create your own MyLogging.h or ApplicationNameLogging.h or CompanyLogging.h
  *
  * For an example of customizing your logging experience, see the "Custom Log Levels" page:
- * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomLogLevels
+ * Documentation/CustomLogLevels.md
  **/
 
 #define LOG_FLAG_ERROR    (1 << 0)  // 0...00001
@@ -434,7 +434,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * For example, log messages for log files may be formatted differently than log messages for the console.
  *
  * For more information about formatters, see the "Custom Formatters" page:
- * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomFormatters
+ * Documentation/CustomFormatters.md
  *
  * The formatter may also optionally filter the log message by returning nil,
  * in which case the logger will not log the message.
