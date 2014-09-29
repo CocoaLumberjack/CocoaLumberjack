@@ -67,19 +67,6 @@
 #define XCODE_COLORS_RESET_BG   XCODE_COLORS_ESCAPE_SEQ "bg;" // Clear any background color
 #define XCODE_COLORS_RESET      XCODE_COLORS_ESCAPE_SEQ ";"  // Clear any foreground or background color
 
-// Some simple defines to make life easier on ourself
-
-#if TARGET_OS_IPHONE
-  #define OSColor               UIColor
-  #define MakeColor(r, g, b)    [UIColor colorWithRed : (r / 255.0f)green : (g / 255.0f)blue : (b / 255.0f)alpha : 1.0f]
-#elif !defined (COCOAPODS_POD_AVAILABLE_CocoaLumberjack_CLI)
-  #define OSColor               NSColor
-  #define MakeColor(r, g, b)    [NSColor colorWithCalibratedRed : (r / 255.0f)green : (g / 255.0f)blue : (b / 255.0f)alpha : 1.0f]
-#else
-  #define OSColor               CLIColor
-  #define MakeColor(r, g, b)    [CLIColor colorWithCalibratedRed : (r / 255.0f)green : (g / 255.0f)blue : (b / 255.0f)alpha : 1.0f]
-#endif
-
 // If running in a shell, not all RGB colors will be supported.
 // In this case we automatically map to the closest available color.
 // In order to provide this mapping, we have a hard-coded set of the standard RGB values available in the shell.
@@ -120,7 +107,7 @@
     size_t resetCodeLen;
 }
 
-- (instancetype)initWithForegroundColor:(OSColor *)fgColor backgroundColor:(OSColor *)bgColor flag:(int)mask context:(int)ctxt;
+- (instancetype)initWithForegroundColor:(DDColor *)fgColor backgroundColor:(DDColor *)bgColor flag:(int)mask context:(int)ctxt;
 
 @end
 
@@ -219,22 +206,22 @@ static DDTTYLogger *sharedInstance;
     //
     // These are the default colors used by Apple's Terminal.app.
 
-    [m_colors addObject:MakeColor(  0,   0,   0)]; // normal - black
-    [m_colors addObject:MakeColor(194,  54,  33)]; // normal - red
-    [m_colors addObject:MakeColor( 37, 188,  36)]; // normal - green
-    [m_colors addObject:MakeColor(173, 173,  39)]; // normal - yellow
-    [m_colors addObject:MakeColor( 73,  46, 225)]; // normal - blue
-    [m_colors addObject:MakeColor(211,  56, 211)]; // normal - magenta
-    [m_colors addObject:MakeColor( 51, 187, 200)]; // normal - cyan
-    [m_colors addObject:MakeColor(203, 204, 205)]; // normal - gray
-    [m_colors addObject:MakeColor(129, 131, 131)]; // bright - darkgray
-    [m_colors addObject:MakeColor(252,  57,  31)]; // bright - red
-    [m_colors addObject:MakeColor( 49, 231,  34)]; // bright - green
-    [m_colors addObject:MakeColor(234, 236,  35)]; // bright - yellow
-    [m_colors addObject:MakeColor( 88,  51, 255)]; // bright - blue
-    [m_colors addObject:MakeColor(249,  53, 248)]; // bright - magenta
-    [m_colors addObject:MakeColor( 20, 240, 240)]; // bright - cyan
-    [m_colors addObject:MakeColor(233, 235, 235)]; // bright - white
+    [m_colors addObject:DDMakeColor(  0,   0,   0)]; // normal - black
+    [m_colors addObject:DDMakeColor(194,  54,  33)]; // normal - red
+    [m_colors addObject:DDMakeColor( 37, 188,  36)]; // normal - green
+    [m_colors addObject:DDMakeColor(173, 173,  39)]; // normal - yellow
+    [m_colors addObject:DDMakeColor( 73,  46, 225)]; // normal - blue
+    [m_colors addObject:DDMakeColor(211,  56, 211)]; // normal - magenta
+    [m_colors addObject:DDMakeColor( 51, 187, 200)]; // normal - cyan
+    [m_colors addObject:DDMakeColor(203, 204, 205)]; // normal - gray
+    [m_colors addObject:DDMakeColor(129, 131, 131)]; // bright - darkgray
+    [m_colors addObject:DDMakeColor(252,  57,  31)]; // bright - red
+    [m_colors addObject:DDMakeColor( 49, 231,  34)]; // bright - green
+    [m_colors addObject:DDMakeColor(234, 236,  35)]; // bright - yellow
+    [m_colors addObject:DDMakeColor( 88,  51, 255)]; // bright - blue
+    [m_colors addObject:DDMakeColor(249,  53, 248)]; // bright - magenta
+    [m_colors addObject:DDMakeColor( 20, 240, 240)]; // bright - cyan
+    [m_colors addObject:DDMakeColor(233, 235, 235)]; // bright - white
 
 #else /* if MAP_TO_TERMINAL_APP_COLORS */
 
@@ -242,22 +229,22 @@ static DDTTYLogger *sharedInstance;
     //
     // These are the default colors used by most xterm shells.
 
-    [m_colors addObject:MakeColor(  0,   0,   0)]; // normal - black
-    [m_colors addObject:MakeColor(205,   0,   0)]; // normal - red
-    [m_colors addObject:MakeColor(  0, 205,   0)]; // normal - green
-    [m_colors addObject:MakeColor(205, 205,   0)]; // normal - yellow
-    [m_colors addObject:MakeColor(  0,   0, 238)]; // normal - blue
-    [m_colors addObject:MakeColor(205,   0, 205)]; // normal - magenta
-    [m_colors addObject:MakeColor(  0, 205, 205)]; // normal - cyan
-    [m_colors addObject:MakeColor(229, 229, 229)]; // normal - gray
-    [m_colors addObject:MakeColor(127, 127, 127)]; // bright - darkgray
-    [m_colors addObject:MakeColor(255,   0,   0)]; // bright - red
-    [m_colors addObject:MakeColor(  0, 255,   0)]; // bright - green
-    [m_colors addObject:MakeColor(255, 255,   0)]; // bright - yellow
-    [m_colors addObject:MakeColor( 92,  92, 255)]; // bright - blue
-    [m_colors addObject:MakeColor(255,   0, 255)]; // bright - magenta
-    [m_colors addObject:MakeColor(  0, 255, 255)]; // bright - cyan
-    [m_colors addObject:MakeColor(255, 255, 255)]; // bright - white
+    [m_colors addObject:DDMakeColor(  0,   0,   0)]; // normal - black
+    [m_colors addObject:DDMakeColor(205,   0,   0)]; // normal - red
+    [m_colors addObject:DDMakeColor(  0, 205,   0)]; // normal - green
+    [m_colors addObject:DDMakeColor(205, 205,   0)]; // normal - yellow
+    [m_colors addObject:DDMakeColor(  0,   0, 238)]; // normal - blue
+    [m_colors addObject:DDMakeColor(205,   0, 205)]; // normal - magenta
+    [m_colors addObject:DDMakeColor(  0, 205, 205)]; // normal - cyan
+    [m_colors addObject:DDMakeColor(229, 229, 229)]; // normal - gray
+    [m_colors addObject:DDMakeColor(127, 127, 127)]; // bright - darkgray
+    [m_colors addObject:DDMakeColor(255,   0,   0)]; // bright - red
+    [m_colors addObject:DDMakeColor(  0, 255,   0)]; // bright - green
+    [m_colors addObject:DDMakeColor(255, 255,   0)]; // bright - yellow
+    [m_colors addObject:DDMakeColor( 92,  92, 255)]; // bright - blue
+    [m_colors addObject:DDMakeColor(255,   0, 255)]; // bright - magenta
+    [m_colors addObject:DDMakeColor(  0, 255, 255)]; // bright - cyan
+    [m_colors addObject:DDMakeColor(255, 255, 255)]; // bright - white
 
 #endif /* if MAP_TO_TERMINAL_APP_COLORS */
 
@@ -312,287 +299,287 @@ static DDTTYLogger *sharedInstance;
 
     // Colors
 
-    [m_colors addObject:MakeColor( 47,  49,  49)];
-    [m_colors addObject:MakeColor( 60,  42, 144)];
-    [m_colors addObject:MakeColor( 66,  44, 183)];
-    [m_colors addObject:MakeColor( 73,  46, 222)];
-    [m_colors addObject:MakeColor( 81,  50, 253)];
-    [m_colors addObject:MakeColor( 88,  51, 255)];
+    [m_colors addObject:DDMakeColor( 47,  49,  49)];
+    [m_colors addObject:DDMakeColor( 60,  42, 144)];
+    [m_colors addObject:DDMakeColor( 66,  44, 183)];
+    [m_colors addObject:DDMakeColor( 73,  46, 222)];
+    [m_colors addObject:DDMakeColor( 81,  50, 253)];
+    [m_colors addObject:DDMakeColor( 88,  51, 255)];
     
-    [m_colors addObject:MakeColor( 42, 128,  37)];
-    [m_colors addObject:MakeColor( 42, 127, 128)];
-    [m_colors addObject:MakeColor( 44, 126, 169)];
-    [m_colors addObject:MakeColor( 56, 125, 209)];
-    [m_colors addObject:MakeColor( 59, 124, 245)];
-    [m_colors addObject:MakeColor( 66, 123, 255)];
+    [m_colors addObject:DDMakeColor( 42, 128,  37)];
+    [m_colors addObject:DDMakeColor( 42, 127, 128)];
+    [m_colors addObject:DDMakeColor( 44, 126, 169)];
+    [m_colors addObject:DDMakeColor( 56, 125, 209)];
+    [m_colors addObject:DDMakeColor( 59, 124, 245)];
+    [m_colors addObject:DDMakeColor( 66, 123, 255)];
     
-    [m_colors addObject:MakeColor( 51, 163,  41)];
-    [m_colors addObject:MakeColor( 39, 162, 121)];
-    [m_colors addObject:MakeColor( 42, 161, 162)];
-    [m_colors addObject:MakeColor( 53, 160, 202)];
-    [m_colors addObject:MakeColor( 45, 159, 240)];
-    [m_colors addObject:MakeColor( 58, 158, 255)];
+    [m_colors addObject:DDMakeColor( 51, 163,  41)];
+    [m_colors addObject:DDMakeColor( 39, 162, 121)];
+    [m_colors addObject:DDMakeColor( 42, 161, 162)];
+    [m_colors addObject:DDMakeColor( 53, 160, 202)];
+    [m_colors addObject:DDMakeColor( 45, 159, 240)];
+    [m_colors addObject:DDMakeColor( 58, 158, 255)];
     
-    [m_colors addObject:MakeColor( 31, 196,  37)];
-    [m_colors addObject:MakeColor( 48, 196, 115)];
-    [m_colors addObject:MakeColor( 39, 195, 155)];
-    [m_colors addObject:MakeColor( 49, 195, 195)];
-    [m_colors addObject:MakeColor( 32, 194, 235)];
-    [m_colors addObject:MakeColor( 53, 193, 255)];
+    [m_colors addObject:DDMakeColor( 31, 196,  37)];
+    [m_colors addObject:DDMakeColor( 48, 196, 115)];
+    [m_colors addObject:DDMakeColor( 39, 195, 155)];
+    [m_colors addObject:DDMakeColor( 49, 195, 195)];
+    [m_colors addObject:DDMakeColor( 32, 194, 235)];
+    [m_colors addObject:DDMakeColor( 53, 193, 255)];
     
-    [m_colors addObject:MakeColor( 50, 229,  35)];
-    [m_colors addObject:MakeColor( 40, 229, 109)];
-    [m_colors addObject:MakeColor( 27, 229, 149)];
-    [m_colors addObject:MakeColor( 49, 228, 189)];
-    [m_colors addObject:MakeColor( 33, 228, 228)];
-    [m_colors addObject:MakeColor( 53, 227, 255)];
+    [m_colors addObject:DDMakeColor( 50, 229,  35)];
+    [m_colors addObject:DDMakeColor( 40, 229, 109)];
+    [m_colors addObject:DDMakeColor( 27, 229, 149)];
+    [m_colors addObject:DDMakeColor( 49, 228, 189)];
+    [m_colors addObject:DDMakeColor( 33, 228, 228)];
+    [m_colors addObject:DDMakeColor( 53, 227, 255)];
     
-    [m_colors addObject:MakeColor( 27, 254,  30)];
-    [m_colors addObject:MakeColor( 30, 254, 103)];
-    [m_colors addObject:MakeColor( 45, 254, 143)];
-    [m_colors addObject:MakeColor( 38, 253, 182)];
-    [m_colors addObject:MakeColor( 38, 253, 222)];
-    [m_colors addObject:MakeColor( 42, 253, 252)];
+    [m_colors addObject:DDMakeColor( 27, 254,  30)];
+    [m_colors addObject:DDMakeColor( 30, 254, 103)];
+    [m_colors addObject:DDMakeColor( 45, 254, 143)];
+    [m_colors addObject:DDMakeColor( 38, 253, 182)];
+    [m_colors addObject:DDMakeColor( 38, 253, 222)];
+    [m_colors addObject:DDMakeColor( 42, 253, 252)];
     
-    [m_colors addObject:MakeColor(140,  48,  40)];
-    [m_colors addObject:MakeColor(136,  51, 136)];
-    [m_colors addObject:MakeColor(135,  52, 177)];
-    [m_colors addObject:MakeColor(134,  52, 217)];
-    [m_colors addObject:MakeColor(135,  56, 248)];
-    [m_colors addObject:MakeColor(134,  53, 255)];
+    [m_colors addObject:DDMakeColor(140,  48,  40)];
+    [m_colors addObject:DDMakeColor(136,  51, 136)];
+    [m_colors addObject:DDMakeColor(135,  52, 177)];
+    [m_colors addObject:DDMakeColor(134,  52, 217)];
+    [m_colors addObject:DDMakeColor(135,  56, 248)];
+    [m_colors addObject:DDMakeColor(134,  53, 255)];
     
-    [m_colors addObject:MakeColor(125, 125,  38)];
-    [m_colors addObject:MakeColor(124, 125, 125)];
-    [m_colors addObject:MakeColor(122, 124, 166)];
-    [m_colors addObject:MakeColor(123, 124, 207)];
-    [m_colors addObject:MakeColor(123, 122, 247)];
-    [m_colors addObject:MakeColor(124, 121, 255)];
+    [m_colors addObject:DDMakeColor(125, 125,  38)];
+    [m_colors addObject:DDMakeColor(124, 125, 125)];
+    [m_colors addObject:DDMakeColor(122, 124, 166)];
+    [m_colors addObject:DDMakeColor(123, 124, 207)];
+    [m_colors addObject:DDMakeColor(123, 122, 247)];
+    [m_colors addObject:DDMakeColor(124, 121, 255)];
     
-    [m_colors addObject:MakeColor(119, 160,  35)];
-    [m_colors addObject:MakeColor(117, 160, 120)];
-    [m_colors addObject:MakeColor(117, 160, 160)];
-    [m_colors addObject:MakeColor(115, 159, 201)];
-    [m_colors addObject:MakeColor(116, 158, 240)];
-    [m_colors addObject:MakeColor(117, 157, 255)];
+    [m_colors addObject:DDMakeColor(119, 160,  35)];
+    [m_colors addObject:DDMakeColor(117, 160, 120)];
+    [m_colors addObject:DDMakeColor(117, 160, 160)];
+    [m_colors addObject:DDMakeColor(115, 159, 201)];
+    [m_colors addObject:DDMakeColor(116, 158, 240)];
+    [m_colors addObject:DDMakeColor(117, 157, 255)];
     
-    [m_colors addObject:MakeColor(113, 195,  39)];
-    [m_colors addObject:MakeColor(110, 194, 114)];
-    [m_colors addObject:MakeColor(111, 194, 154)];
-    [m_colors addObject:MakeColor(108, 194, 194)];
-    [m_colors addObject:MakeColor(109, 193, 234)];
-    [m_colors addObject:MakeColor(108, 192, 255)];
+    [m_colors addObject:DDMakeColor(113, 195,  39)];
+    [m_colors addObject:DDMakeColor(110, 194, 114)];
+    [m_colors addObject:DDMakeColor(111, 194, 154)];
+    [m_colors addObject:DDMakeColor(108, 194, 194)];
+    [m_colors addObject:DDMakeColor(109, 193, 234)];
+    [m_colors addObject:DDMakeColor(108, 192, 255)];
     
-    [m_colors addObject:MakeColor(105, 228,  30)];
-    [m_colors addObject:MakeColor(103, 228, 109)];
-    [m_colors addObject:MakeColor(105, 228, 148)];
-    [m_colors addObject:MakeColor(100, 227, 188)];
-    [m_colors addObject:MakeColor( 99, 227, 227)];
-    [m_colors addObject:MakeColor( 99, 226, 253)];
+    [m_colors addObject:DDMakeColor(105, 228,  30)];
+    [m_colors addObject:DDMakeColor(103, 228, 109)];
+    [m_colors addObject:DDMakeColor(105, 228, 148)];
+    [m_colors addObject:DDMakeColor(100, 227, 188)];
+    [m_colors addObject:DDMakeColor( 99, 227, 227)];
+    [m_colors addObject:DDMakeColor( 99, 226, 253)];
     
-    [m_colors addObject:MakeColor( 92, 253,  34)];
-    [m_colors addObject:MakeColor( 96, 253, 103)];
-    [m_colors addObject:MakeColor( 97, 253, 142)];
-    [m_colors addObject:MakeColor( 88, 253, 182)];
-    [m_colors addObject:MakeColor( 93, 253, 221)];
-    [m_colors addObject:MakeColor( 88, 254, 251)];
+    [m_colors addObject:DDMakeColor( 92, 253,  34)];
+    [m_colors addObject:DDMakeColor( 96, 253, 103)];
+    [m_colors addObject:DDMakeColor( 97, 253, 142)];
+    [m_colors addObject:DDMakeColor( 88, 253, 182)];
+    [m_colors addObject:DDMakeColor( 93, 253, 221)];
+    [m_colors addObject:DDMakeColor( 88, 254, 251)];
     
-    [m_colors addObject:MakeColor(177,  53,  34)];
-    [m_colors addObject:MakeColor(174,  54, 131)];
-    [m_colors addObject:MakeColor(172,  55, 172)];
-    [m_colors addObject:MakeColor(171,  57, 213)];
-    [m_colors addObject:MakeColor(170,  55, 249)];
-    [m_colors addObject:MakeColor(170,  57, 255)];
+    [m_colors addObject:DDMakeColor(177,  53,  34)];
+    [m_colors addObject:DDMakeColor(174,  54, 131)];
+    [m_colors addObject:DDMakeColor(172,  55, 172)];
+    [m_colors addObject:DDMakeColor(171,  57, 213)];
+    [m_colors addObject:DDMakeColor(170,  55, 249)];
+    [m_colors addObject:DDMakeColor(170,  57, 255)];
     
-    [m_colors addObject:MakeColor(165, 123,  37)];
-    [m_colors addObject:MakeColor(163, 123, 123)];
-    [m_colors addObject:MakeColor(162, 123, 164)];
-    [m_colors addObject:MakeColor(161, 122, 205)];
-    [m_colors addObject:MakeColor(161, 121, 241)];
-    [m_colors addObject:MakeColor(161, 121, 255)];
+    [m_colors addObject:DDMakeColor(165, 123,  37)];
+    [m_colors addObject:DDMakeColor(163, 123, 123)];
+    [m_colors addObject:DDMakeColor(162, 123, 164)];
+    [m_colors addObject:DDMakeColor(161, 122, 205)];
+    [m_colors addObject:DDMakeColor(161, 121, 241)];
+    [m_colors addObject:DDMakeColor(161, 121, 255)];
     
-    [m_colors addObject:MakeColor(158, 159,  33)];
-    [m_colors addObject:MakeColor(157, 158, 118)];
-    [m_colors addObject:MakeColor(157, 158, 159)];
-    [m_colors addObject:MakeColor(155, 157, 199)];
-    [m_colors addObject:MakeColor(155, 157, 239)];
-    [m_colors addObject:MakeColor(154, 156, 255)];
+    [m_colors addObject:DDMakeColor(158, 159,  33)];
+    [m_colors addObject:DDMakeColor(157, 158, 118)];
+    [m_colors addObject:DDMakeColor(157, 158, 159)];
+    [m_colors addObject:DDMakeColor(155, 157, 199)];
+    [m_colors addObject:DDMakeColor(155, 157, 239)];
+    [m_colors addObject:DDMakeColor(154, 156, 255)];
     
-    [m_colors addObject:MakeColor(152, 193,  40)];
-    [m_colors addObject:MakeColor(151, 193, 113)];
-    [m_colors addObject:MakeColor(150, 193, 153)];
-    [m_colors addObject:MakeColor(150, 192, 193)];
-    [m_colors addObject:MakeColor(148, 192, 232)];
-    [m_colors addObject:MakeColor(149, 191, 253)];
+    [m_colors addObject:DDMakeColor(152, 193,  40)];
+    [m_colors addObject:DDMakeColor(151, 193, 113)];
+    [m_colors addObject:DDMakeColor(150, 193, 153)];
+    [m_colors addObject:DDMakeColor(150, 192, 193)];
+    [m_colors addObject:DDMakeColor(148, 192, 232)];
+    [m_colors addObject:DDMakeColor(149, 191, 253)];
     
-    [m_colors addObject:MakeColor(146, 227,  28)];
-    [m_colors addObject:MakeColor(144, 227, 108)];
-    [m_colors addObject:MakeColor(144, 227, 147)];
-    [m_colors addObject:MakeColor(144, 227, 187)];
-    [m_colors addObject:MakeColor(142, 226, 227)];
-    [m_colors addObject:MakeColor(142, 225, 252)];
+    [m_colors addObject:DDMakeColor(146, 227,  28)];
+    [m_colors addObject:DDMakeColor(144, 227, 108)];
+    [m_colors addObject:DDMakeColor(144, 227, 147)];
+    [m_colors addObject:DDMakeColor(144, 227, 187)];
+    [m_colors addObject:DDMakeColor(142, 226, 227)];
+    [m_colors addObject:DDMakeColor(142, 225, 252)];
     
-    [m_colors addObject:MakeColor(138, 253,  36)];
-    [m_colors addObject:MakeColor(137, 253, 102)];
-    [m_colors addObject:MakeColor(136, 253, 141)];
-    [m_colors addObject:MakeColor(138, 254, 181)];
-    [m_colors addObject:MakeColor(135, 255, 220)];
-    [m_colors addObject:MakeColor(133, 255, 250)];
+    [m_colors addObject:DDMakeColor(138, 253,  36)];
+    [m_colors addObject:DDMakeColor(137, 253, 102)];
+    [m_colors addObject:DDMakeColor(136, 253, 141)];
+    [m_colors addObject:DDMakeColor(138, 254, 181)];
+    [m_colors addObject:DDMakeColor(135, 255, 220)];
+    [m_colors addObject:DDMakeColor(133, 255, 250)];
     
-    [m_colors addObject:MakeColor(214,  57,  30)];
-    [m_colors addObject:MakeColor(211,  59, 126)];
-    [m_colors addObject:MakeColor(209,  57, 168)];
-    [m_colors addObject:MakeColor(208,  55, 208)];
-    [m_colors addObject:MakeColor(207,  58, 247)];
-    [m_colors addObject:MakeColor(206,  61, 255)];
+    [m_colors addObject:DDMakeColor(214,  57,  30)];
+    [m_colors addObject:DDMakeColor(211,  59, 126)];
+    [m_colors addObject:DDMakeColor(209,  57, 168)];
+    [m_colors addObject:DDMakeColor(208,  55, 208)];
+    [m_colors addObject:DDMakeColor(207,  58, 247)];
+    [m_colors addObject:DDMakeColor(206,  61, 255)];
     
-    [m_colors addObject:MakeColor(204, 121,  32)];
-    [m_colors addObject:MakeColor(202, 121, 121)];
-    [m_colors addObject:MakeColor(201, 121, 161)];
-    [m_colors addObject:MakeColor(200, 120, 202)];
-    [m_colors addObject:MakeColor(200, 120, 241)];
-    [m_colors addObject:MakeColor(198, 119, 255)];
+    [m_colors addObject:DDMakeColor(204, 121,  32)];
+    [m_colors addObject:DDMakeColor(202, 121, 121)];
+    [m_colors addObject:DDMakeColor(201, 121, 161)];
+    [m_colors addObject:DDMakeColor(200, 120, 202)];
+    [m_colors addObject:DDMakeColor(200, 120, 241)];
+    [m_colors addObject:DDMakeColor(198, 119, 255)];
     
-    [m_colors addObject:MakeColor(198, 157,  37)];
-    [m_colors addObject:MakeColor(196, 157, 116)];
-    [m_colors addObject:MakeColor(195, 156, 157)];
-    [m_colors addObject:MakeColor(195, 156, 197)];
-    [m_colors addObject:MakeColor(194, 155, 236)];
-    [m_colors addObject:MakeColor(193, 155, 255)];
+    [m_colors addObject:DDMakeColor(198, 157,  37)];
+    [m_colors addObject:DDMakeColor(196, 157, 116)];
+    [m_colors addObject:DDMakeColor(195, 156, 157)];
+    [m_colors addObject:DDMakeColor(195, 156, 197)];
+    [m_colors addObject:DDMakeColor(194, 155, 236)];
+    [m_colors addObject:DDMakeColor(193, 155, 255)];
     
-    [m_colors addObject:MakeColor(191, 192,  36)];
-    [m_colors addObject:MakeColor(190, 191, 112)];
-    [m_colors addObject:MakeColor(189, 191, 152)];
-    [m_colors addObject:MakeColor(189, 191, 191)];
-    [m_colors addObject:MakeColor(188, 190, 230)];
-    [m_colors addObject:MakeColor(187, 190, 253)];
+    [m_colors addObject:DDMakeColor(191, 192,  36)];
+    [m_colors addObject:DDMakeColor(190, 191, 112)];
+    [m_colors addObject:DDMakeColor(189, 191, 152)];
+    [m_colors addObject:DDMakeColor(189, 191, 191)];
+    [m_colors addObject:DDMakeColor(188, 190, 230)];
+    [m_colors addObject:DDMakeColor(187, 190, 253)];
     
-    [m_colors addObject:MakeColor(185, 226,  28)];
-    [m_colors addObject:MakeColor(184, 226, 106)];
-    [m_colors addObject:MakeColor(183, 225, 146)];
-    [m_colors addObject:MakeColor(183, 225, 186)];
-    [m_colors addObject:MakeColor(182, 225, 225)];
-    [m_colors addObject:MakeColor(181, 224, 252)];
+    [m_colors addObject:DDMakeColor(185, 226,  28)];
+    [m_colors addObject:DDMakeColor(184, 226, 106)];
+    [m_colors addObject:DDMakeColor(183, 225, 146)];
+    [m_colors addObject:DDMakeColor(183, 225, 186)];
+    [m_colors addObject:DDMakeColor(182, 225, 225)];
+    [m_colors addObject:DDMakeColor(181, 224, 252)];
     
-    [m_colors addObject:MakeColor(178, 255,  35)];
-    [m_colors addObject:MakeColor(178, 255, 101)];
-    [m_colors addObject:MakeColor(177, 254, 141)];
-    [m_colors addObject:MakeColor(176, 254, 180)];
-    [m_colors addObject:MakeColor(176, 254, 220)];
-    [m_colors addObject:MakeColor(175, 253, 249)];
+    [m_colors addObject:DDMakeColor(178, 255,  35)];
+    [m_colors addObject:DDMakeColor(178, 255, 101)];
+    [m_colors addObject:DDMakeColor(177, 254, 141)];
+    [m_colors addObject:DDMakeColor(176, 254, 180)];
+    [m_colors addObject:DDMakeColor(176, 254, 220)];
+    [m_colors addObject:DDMakeColor(175, 253, 249)];
     
-    [m_colors addObject:MakeColor(247,  56,  30)];
-    [m_colors addObject:MakeColor(245,  57, 122)];
-    [m_colors addObject:MakeColor(243,  59, 163)];
-    [m_colors addObject:MakeColor(244,  60, 204)];
-    [m_colors addObject:MakeColor(242,  59, 241)];
-    [m_colors addObject:MakeColor(240,  55, 255)];
+    [m_colors addObject:DDMakeColor(247,  56,  30)];
+    [m_colors addObject:DDMakeColor(245,  57, 122)];
+    [m_colors addObject:DDMakeColor(243,  59, 163)];
+    [m_colors addObject:DDMakeColor(244,  60, 204)];
+    [m_colors addObject:DDMakeColor(242,  59, 241)];
+    [m_colors addObject:DDMakeColor(240,  55, 255)];
     
-    [m_colors addObject:MakeColor(241, 119,  36)];
-    [m_colors addObject:MakeColor(240, 120, 118)];
-    [m_colors addObject:MakeColor(238, 119, 158)];
-    [m_colors addObject:MakeColor(237, 119, 199)];
-    [m_colors addObject:MakeColor(237, 118, 238)];
-    [m_colors addObject:MakeColor(236, 118, 255)];
+    [m_colors addObject:DDMakeColor(241, 119,  36)];
+    [m_colors addObject:DDMakeColor(240, 120, 118)];
+    [m_colors addObject:DDMakeColor(238, 119, 158)];
+    [m_colors addObject:DDMakeColor(237, 119, 199)];
+    [m_colors addObject:DDMakeColor(237, 118, 238)];
+    [m_colors addObject:DDMakeColor(236, 118, 255)];
     
-    [m_colors addObject:MakeColor(235, 154,  36)];
-    [m_colors addObject:MakeColor(235, 154, 114)];
-    [m_colors addObject:MakeColor(234, 154, 154)];
-    [m_colors addObject:MakeColor(232, 154, 194)];
-    [m_colors addObject:MakeColor(232, 153, 234)];
-    [m_colors addObject:MakeColor(232, 153, 255)];
+    [m_colors addObject:DDMakeColor(235, 154,  36)];
+    [m_colors addObject:DDMakeColor(235, 154, 114)];
+    [m_colors addObject:DDMakeColor(234, 154, 154)];
+    [m_colors addObject:DDMakeColor(232, 154, 194)];
+    [m_colors addObject:DDMakeColor(232, 153, 234)];
+    [m_colors addObject:DDMakeColor(232, 153, 255)];
     
-    [m_colors addObject:MakeColor(230, 190,  30)];
-    [m_colors addObject:MakeColor(229, 189, 110)];
-    [m_colors addObject:MakeColor(228, 189, 150)];
-    [m_colors addObject:MakeColor(227, 189, 190)];
-    [m_colors addObject:MakeColor(227, 189, 229)];
-    [m_colors addObject:MakeColor(226, 188, 255)];
+    [m_colors addObject:DDMakeColor(230, 190,  30)];
+    [m_colors addObject:DDMakeColor(229, 189, 110)];
+    [m_colors addObject:DDMakeColor(228, 189, 150)];
+    [m_colors addObject:DDMakeColor(227, 189, 190)];
+    [m_colors addObject:DDMakeColor(227, 189, 229)];
+    [m_colors addObject:DDMakeColor(226, 188, 255)];
     
-    [m_colors addObject:MakeColor(224, 224,  35)];
-    [m_colors addObject:MakeColor(223, 224, 105)];
-    [m_colors addObject:MakeColor(222, 224, 144)];
-    [m_colors addObject:MakeColor(222, 223, 184)];
-    [m_colors addObject:MakeColor(222, 223, 224)];
-    [m_colors addObject:MakeColor(220, 223, 253)];
+    [m_colors addObject:DDMakeColor(224, 224,  35)];
+    [m_colors addObject:DDMakeColor(223, 224, 105)];
+    [m_colors addObject:DDMakeColor(222, 224, 144)];
+    [m_colors addObject:DDMakeColor(222, 223, 184)];
+    [m_colors addObject:DDMakeColor(222, 223, 224)];
+    [m_colors addObject:DDMakeColor(220, 223, 253)];
     
-    [m_colors addObject:MakeColor(217, 253,  28)];
-    [m_colors addObject:MakeColor(217, 253,  99)];
-    [m_colors addObject:MakeColor(216, 252, 139)];
-    [m_colors addObject:MakeColor(216, 252, 179)];
-    [m_colors addObject:MakeColor(215, 252, 218)];
-    [m_colors addObject:MakeColor(215, 251, 250)];
+    [m_colors addObject:DDMakeColor(217, 253,  28)];
+    [m_colors addObject:DDMakeColor(217, 253,  99)];
+    [m_colors addObject:DDMakeColor(216, 252, 139)];
+    [m_colors addObject:DDMakeColor(216, 252, 179)];
+    [m_colors addObject:DDMakeColor(215, 252, 218)];
+    [m_colors addObject:DDMakeColor(215, 251, 250)];
     
-    [m_colors addObject:MakeColor(255,  61,  30)];
-    [m_colors addObject:MakeColor(255,  60, 118)];
-    [m_colors addObject:MakeColor(255,  58, 159)];
-    [m_colors addObject:MakeColor(255,  56, 199)];
-    [m_colors addObject:MakeColor(255,  55, 238)];
-    [m_colors addObject:MakeColor(255,  59, 255)];
+    [m_colors addObject:DDMakeColor(255,  61,  30)];
+    [m_colors addObject:DDMakeColor(255,  60, 118)];
+    [m_colors addObject:DDMakeColor(255,  58, 159)];
+    [m_colors addObject:DDMakeColor(255,  56, 199)];
+    [m_colors addObject:DDMakeColor(255,  55, 238)];
+    [m_colors addObject:DDMakeColor(255,  59, 255)];
     
-    [m_colors addObject:MakeColor(255, 117,  29)];
-    [m_colors addObject:MakeColor(255, 117, 115)];
-    [m_colors addObject:MakeColor(255, 117, 155)];
-    [m_colors addObject:MakeColor(255, 117, 195)];
-    [m_colors addObject:MakeColor(255, 116, 235)];
-    [m_colors addObject:MakeColor(254, 116, 255)];
+    [m_colors addObject:DDMakeColor(255, 117,  29)];
+    [m_colors addObject:DDMakeColor(255, 117, 115)];
+    [m_colors addObject:DDMakeColor(255, 117, 155)];
+    [m_colors addObject:DDMakeColor(255, 117, 195)];
+    [m_colors addObject:DDMakeColor(255, 116, 235)];
+    [m_colors addObject:DDMakeColor(254, 116, 255)];
     
-    [m_colors addObject:MakeColor(255, 152,  27)];
-    [m_colors addObject:MakeColor(255, 152, 111)];
-    [m_colors addObject:MakeColor(254, 152, 152)];
-    [m_colors addObject:MakeColor(255, 152, 192)];
-    [m_colors addObject:MakeColor(254, 151, 231)];
-    [m_colors addObject:MakeColor(253, 151, 253)];
+    [m_colors addObject:DDMakeColor(255, 152,  27)];
+    [m_colors addObject:DDMakeColor(255, 152, 111)];
+    [m_colors addObject:DDMakeColor(254, 152, 152)];
+    [m_colors addObject:DDMakeColor(255, 152, 192)];
+    [m_colors addObject:DDMakeColor(254, 151, 231)];
+    [m_colors addObject:DDMakeColor(253, 151, 253)];
     
-    [m_colors addObject:MakeColor(255, 187,  33)];
-    [m_colors addObject:MakeColor(253, 187, 107)];
-    [m_colors addObject:MakeColor(252, 187, 148)];
-    [m_colors addObject:MakeColor(253, 187, 187)];
-    [m_colors addObject:MakeColor(254, 187, 227)];
-    [m_colors addObject:MakeColor(252, 186, 252)];
+    [m_colors addObject:DDMakeColor(255, 187,  33)];
+    [m_colors addObject:DDMakeColor(253, 187, 107)];
+    [m_colors addObject:DDMakeColor(252, 187, 148)];
+    [m_colors addObject:DDMakeColor(253, 187, 187)];
+    [m_colors addObject:DDMakeColor(254, 187, 227)];
+    [m_colors addObject:DDMakeColor(252, 186, 252)];
     
-    [m_colors addObject:MakeColor(252, 222,  34)];
-    [m_colors addObject:MakeColor(251, 222, 103)];
-    [m_colors addObject:MakeColor(251, 222, 143)];
-    [m_colors addObject:MakeColor(250, 222, 182)];
-    [m_colors addObject:MakeColor(251, 221, 222)];
-    [m_colors addObject:MakeColor(252, 221, 252)];
+    [m_colors addObject:DDMakeColor(252, 222,  34)];
+    [m_colors addObject:DDMakeColor(251, 222, 103)];
+    [m_colors addObject:DDMakeColor(251, 222, 143)];
+    [m_colors addObject:DDMakeColor(250, 222, 182)];
+    [m_colors addObject:DDMakeColor(251, 221, 222)];
+    [m_colors addObject:DDMakeColor(252, 221, 252)];
     
-    [m_colors addObject:MakeColor(251, 252,  15)];
-    [m_colors addObject:MakeColor(251, 252,  97)];
-    [m_colors addObject:MakeColor(249, 252, 137)];
-    [m_colors addObject:MakeColor(247, 252, 177)];
-    [m_colors addObject:MakeColor(247, 253, 217)];
-    [m_colors addObject:MakeColor(254, 255, 255)];
+    [m_colors addObject:DDMakeColor(251, 252,  15)];
+    [m_colors addObject:DDMakeColor(251, 252,  97)];
+    [m_colors addObject:DDMakeColor(249, 252, 137)];
+    [m_colors addObject:DDMakeColor(247, 252, 177)];
+    [m_colors addObject:DDMakeColor(247, 253, 217)];
+    [m_colors addObject:DDMakeColor(254, 255, 255)];
     
     // Grayscale
     
-    [m_colors addObject:MakeColor( 52,  53,  53)];
-    [m_colors addObject:MakeColor( 57,  58,  59)];
-    [m_colors addObject:MakeColor( 66,  67,  67)];
-    [m_colors addObject:MakeColor( 75,  76,  76)];
-    [m_colors addObject:MakeColor( 83,  85,  85)];
-    [m_colors addObject:MakeColor( 92,  93,  94)];
+    [m_colors addObject:DDMakeColor( 52,  53,  53)];
+    [m_colors addObject:DDMakeColor( 57,  58,  59)];
+    [m_colors addObject:DDMakeColor( 66,  67,  67)];
+    [m_colors addObject:DDMakeColor( 75,  76,  76)];
+    [m_colors addObject:DDMakeColor( 83,  85,  85)];
+    [m_colors addObject:DDMakeColor( 92,  93,  94)];
     
-    [m_colors addObject:MakeColor(101, 102, 102)];
-    [m_colors addObject:MakeColor(109, 111, 111)];
-    [m_colors addObject:MakeColor(118, 119, 119)];
-    [m_colors addObject:MakeColor(126, 127, 128)];
-    [m_colors addObject:MakeColor(134, 136, 136)];
-    [m_colors addObject:MakeColor(143, 144, 145)];
+    [m_colors addObject:DDMakeColor(101, 102, 102)];
+    [m_colors addObject:DDMakeColor(109, 111, 111)];
+    [m_colors addObject:DDMakeColor(118, 119, 119)];
+    [m_colors addObject:DDMakeColor(126, 127, 128)];
+    [m_colors addObject:DDMakeColor(134, 136, 136)];
+    [m_colors addObject:DDMakeColor(143, 144, 145)];
     
-    [m_colors addObject:MakeColor(151, 152, 153)];
-    [m_colors addObject:MakeColor(159, 161, 161)];
-    [m_colors addObject:MakeColor(167, 169, 169)];
-    [m_colors addObject:MakeColor(176, 177, 177)];
-    [m_colors addObject:MakeColor(184, 185, 186)];
-    [m_colors addObject:MakeColor(192, 193, 194)];
+    [m_colors addObject:DDMakeColor(151, 152, 153)];
+    [m_colors addObject:DDMakeColor(159, 161, 161)];
+    [m_colors addObject:DDMakeColor(167, 169, 169)];
+    [m_colors addObject:DDMakeColor(176, 177, 177)];
+    [m_colors addObject:DDMakeColor(184, 185, 186)];
+    [m_colors addObject:DDMakeColor(192, 193, 194)];
     
-    [m_colors addObject:MakeColor(200, 201, 202)];
-    [m_colors addObject:MakeColor(208, 209, 210)];
-    [m_colors addObject:MakeColor(216, 218, 218)];
-    [m_colors addObject:MakeColor(224, 226, 226)];
-    [m_colors addObject:MakeColor(232, 234, 234)];
-    [m_colors addObject:MakeColor(240, 242, 242)];
+    [m_colors addObject:DDMakeColor(200, 201, 202)];
+    [m_colors addObject:DDMakeColor(208, 209, 210)];
+    [m_colors addObject:DDMakeColor(216, 218, 218)];
+    [m_colors addObject:DDMakeColor(224, 226, 226)];
+    [m_colors addObject:DDMakeColor(232, 234, 234)];
+    [m_colors addObject:DDMakeColor(240, 242, 242)];
     
     // Color codes
 
@@ -653,7 +640,7 @@ static DDTTYLogger *sharedInstance;
 
                 [m_codes_fg addObject:[NSString stringWithFormat:@"38;5;%dm", index]];
                 [m_codes_bg addObject:[NSString stringWithFormat:@"48;5;%dm", index]];
-                [m_colors addObject:MakeColor(r, g, b)];
+                [m_colors addObject:DDMakeColor(r, g, b)];
 
                 index++;
             }
@@ -669,7 +656,7 @@ static DDTTYLogger *sharedInstance;
     while (index < 256) {
         [m_codes_fg addObject:[NSString stringWithFormat:@"38;5;%dm", index]];
         [m_codes_bg addObject:[NSString stringWithFormat:@"48;5;%dm", index]];
-        [m_colors addObject:MakeColor(r, g, b)];
+        [m_colors addObject:DDMakeColor(r, g, b)];
 
         r += 10;
         g += 10;
@@ -688,7 +675,7 @@ static DDTTYLogger *sharedInstance;
     NSAssert([codes_fg count] == [colors count],   @"Invalid colors/codes array(s)");
 }
 
-+ (void)getRed:(CGFloat *)rPtr green:(CGFloat *)gPtr blue:(CGFloat *)bPtr fromColor:(OSColor *)color {
++ (void)getRed:(CGFloat *)rPtr green:(CGFloat *)gPtr blue:(CGFloat *)bPtr fromColor:(DDColor *)color {
     #if TARGET_OS_IPHONE
 
     // iOS
@@ -752,7 +739,7 @@ static DDTTYLogger *sharedInstance;
  * The array index of that color, within the colors array, is then returned.
  * This array index may also be used as the index within the codes_fg and codes_bg arrays.
  **/
-+ (NSUInteger)codeIndexForColor:(OSColor *)inColor {
++ (NSUInteger)codeIndexForColor:(DDColor *)inColor {
     CGFloat inR, inG, inB;
 
     [self getRed:&inR green:&inG blue:&inB fromColor:inColor];
@@ -762,7 +749,7 @@ static DDTTYLogger *sharedInstance;
 
     NSUInteger i = 0;
 
-    for (OSColor *color in colors) {
+    for (DDColor *color in colors) {
         // Calculate Euclidean distance (lower value means closer to given color)
 
         CGFloat r, g, b;
@@ -893,8 +880,8 @@ static DDTTYLogger *sharedInstance;
 }
 
 - (void)loadDefaultColorProfiles {
-    [self setForegroundColor:MakeColor(214,  57,  30) backgroundColor:nil forFlag:LOG_FLAG_ERROR];
-    [self setForegroundColor:MakeColor(204, 121,  32) backgroundColor:nil forFlag:LOG_FLAG_WARN];
+    [self setForegroundColor:DDMakeColor(214,  57,  30) backgroundColor:nil forFlag:LOG_FLAG_ERROR];
+    [self setForegroundColor:DDMakeColor(204, 121,  32) backgroundColor:nil forFlag:LOG_FLAG_WARN];
 }
 
 - (BOOL)colorsEnabled {
@@ -955,11 +942,11 @@ static DDTTYLogger *sharedInstance;
     });
 }
 
-- (void)setForegroundColor:(OSColor *)txtColor backgroundColor:(OSColor *)bgColor forFlag:(int)mask {
+- (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forFlag:(int)mask {
     [self setForegroundColor:txtColor backgroundColor:bgColor forFlag:mask context:LOG_CONTEXT_ALL];
 }
 
-- (void)setForegroundColor:(OSColor *)txtColor backgroundColor:(OSColor *)bgColor forFlag:(int)mask context:(int)ctxt {
+- (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forFlag:(int)mask context:(int)ctxt {
     dispatch_block_t block = ^{
         @autoreleasepool {
             DDTTYLoggerColorProfile *newColorProfile =
@@ -1003,7 +990,7 @@ static DDTTYLogger *sharedInstance;
     }
 }
 
-- (void)setForegroundColor:(OSColor *)txtColor backgroundColor:(OSColor *)bgColor forTag:(id <NSCopying>)tag {
+- (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forTag:(id <NSCopying>)tag {
     NSAssert([(id < NSObject >) tag conformsToProtocol: @protocol(NSCopying)], @"Invalid tag");
 
     dispatch_block_t block = ^{
@@ -1378,7 +1365,7 @@ static DDTTYLogger *sharedInstance;
 
 @implementation DDTTYLoggerColorProfile
 
-- (instancetype)initWithForegroundColor:(OSColor *)fgColor backgroundColor:(OSColor *)bgColor flag:(int)aMask context:(int)ctxt {
+- (instancetype)initWithForegroundColor:(DDColor *)fgColor backgroundColor:(DDColor *)bgColor flag:(int)aMask context:(int)ctxt {
     if ((self = [super init])) {
         mask = aMask;
         context = ctxt;
