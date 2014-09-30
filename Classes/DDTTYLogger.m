@@ -714,7 +714,7 @@ static DDTTYLogger *sharedInstance;
         CGColorSpaceRelease(rgbColorSpace);
     }
 
-    #elif !defined (COCOAPODS_POD_AVAILABLE_CocoaLumberjack_CLI)
+    #elif __has_include(<AppKit/NSColor.h>)
 
     // OS X with AppKit
 
