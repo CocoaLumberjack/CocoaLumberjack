@@ -41,7 +41,7 @@
     #import <UIKit/UIColor.h>
     #define DDColor UIColor
     #define DDMakeColor(r, g, b) [UIColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f]
-#elif !defined (COCOAPODS_POD_AVAILABLE_CocoaLumberjack_CLI)
+#elif __has_include(<AppKit/NSColor.h>)
     // OS X with AppKit
     #import <AppKit/NSColor.h>
     #define DDColor NSColor
