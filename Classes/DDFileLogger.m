@@ -269,7 +269,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
  * You can change it by overriding newLogFileName and isLogFile: methods.
  **/
 - (BOOL)isLogFile:(NSString *)fileName {
-    NSString *appName = [self applicationName];
+    NSString *appName = [[self applicationName] stringByAppendingString:@" "];
 
     BOOL hasProperPrefix = [fileName hasPrefix:appName];
     BOOL hasProperSuffix = [fileName hasSuffix:@".log"];
