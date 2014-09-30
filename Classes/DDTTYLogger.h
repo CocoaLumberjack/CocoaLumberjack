@@ -13,14 +13,6 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#if TARGET_OS_IPHONE
-#import <UIKit/UIColor.h>   // iOS
-#elif !defined (COCOAPODS_POD_AVAILABLE_CocoaLumberjack_CLI)
-#import <AppKit/NSColor.h>  // OS X with AppKit
-#else
-#import "CLIColor.h"        // OS X without AppKit
-#endif
-
 #import "DDLog.h"
 
 #define LOG_CONTEXT_ALL INT_MAX
