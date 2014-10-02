@@ -20,8 +20,8 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.7'
   
   s.public_header_files = 'Classes/*.h'
-
-  s.source_files = 'Classes/CocoaLumberjack.{h,m}'
+  
+  s.default_subspec = 'Core'
 
   s.subspec 'Core' do |ss|
     ss.source_files = 'Classes/*.{h,m}'
