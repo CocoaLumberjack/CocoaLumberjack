@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DC25B765146A0294000F32F4"
-               BuildableName = "DispatchQueueLogger.app"
-               BlueprintName = "DispatchQueueLogger"
-               ReferencedContainer = "container:DispatchQueueLogger.xcodeproj">
+               BlueprintIdentifier = "DCB3185014EB418E001CFBEE"
+               BuildableName = "CocoaLumberjack.framework"
+               BlueprintName = "CocoaLumberjack"
+               ReferencedContainer = "container:Lumberjack.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,15 +29,6 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DC25B765146A0294000F32F4"
-            BuildableName = "DispatchQueueLogger.app"
-            BlueprintName = "DispatchQueueLogger"
-            ReferencedContainer = "container:DispatchQueueLogger.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -48,15 +39,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DC25B765146A0294000F32F4"
-            BuildableName = "DispatchQueueLogger.app"
-            BlueprintName = "DispatchQueueLogger"
-            ReferencedContainer = "container:DispatchQueueLogger.xcodeproj">
+            BlueprintIdentifier = "DCB3185014EB418E001CFBEE"
+            BuildableName = "CocoaLumberjack.framework"
+            BlueprintName = "CocoaLumberjack"
+            ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -66,15 +57,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DC25B765146A0294000F32F4"
-            BuildableName = "DispatchQueueLogger.app"
-            BlueprintName = "DispatchQueueLogger"
-            ReferencedContainer = "container:DispatchQueueLogger.xcodeproj">
+            BlueprintIdentifier = "DCB3185014EB418E001CFBEE"
+            BuildableName = "CocoaLumberjack.framework"
+            BlueprintName = "CocoaLumberjack"
+            ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

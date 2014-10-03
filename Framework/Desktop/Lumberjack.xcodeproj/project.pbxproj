@@ -27,9 +27,7 @@
 		DA9C20E1192A0E0000AB7171 /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20CE192A0E0000AB7171 /* DDDispatchQueueLogFormatter.m */; };
 		DA9C20E2192A0E0000AB7171 /* DDMultiFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20CF192A0E0000AB7171 /* DDMultiFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA9C20E3192A0E0000AB7171 /* DDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20D0192A0E0000AB7171 /* DDMultiFormatter.m */; };
-		DCB3185514EB418E001CFBEE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCB3185414EB418E001CFBEE /* Cocoa.framework */; };
 		DCB3185F14EB418E001CFBEE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCB3185D14EB418E001CFBEE /* InfoPlist.strings */; };
-		DCB318CC14ED6C3B001CFBEE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCB3185414EB418E001CFBEE /* Cocoa.framework */; };
 		DCB318D214ED6C3B001CFBEE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCB318D014ED6C3B001CFBEE /* InfoPlist.strings */; };
 		DCB318D414ED6C3B001CFBEE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB318D314ED6C3B001CFBEE /* main.m */; };
 		DCB318D814ED6C3B001CFBEE /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DCB318D614ED6C3B001CFBEE /* Credits.rtf */; };
@@ -73,9 +71,6 @@
 		DA9C20CF192A0E0000AB7171 /* DDMultiFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMultiFormatter.h; sourceTree = "<group>"; };
 		DA9C20D0192A0E0000AB7171 /* DDMultiFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMultiFormatter.m; sourceTree = "<group>"; };
 		DCB3185114EB418E001CFBEE /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DCB3185414EB418E001CFBEE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		DCB3185714EB418E001CFBEE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		DCB3185814EB418E001CFBEE /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		DCB3185914EB418E001CFBEE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DCB3185C14EB418E001CFBEE /* Lumberjack-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Lumberjack-Info.plist"; sourceTree = "<group>"; };
 		DCB3185E14EB418E001CFBEE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -99,7 +94,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCB3185514EB418E001CFBEE /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,7 +102,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5D89BAD199494B600C180CF /* CocoaLumberjack.framework in Frameworks */,
-				DCB318CC14ED6C3B001CFBEE /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,7 +145,6 @@
 		DCB3185314EB418E001CFBEE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DCB3185414EB418E001CFBEE /* Cocoa.framework */,
 				DCB3185614EB418E001CFBEE /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -161,8 +153,6 @@
 		DCB3185614EB418E001CFBEE /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DCB3185714EB418E001CFBEE /* AppKit.framework */,
-				DCB3185814EB418E001CFBEE /* CoreData.framework */,
 				DCB3185914EB418E001CFBEE /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
@@ -414,6 +404,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -451,6 +442,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -480,6 +472,7 @@
 		DCB3186714EB418E001CFBEE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -489,6 +482,9 @@
 				GCC_PREFIX_HEADER = "Lumberjack/Lumberjack-Prefix.pch";
 				INFOPLIST_FILE = "Lumberjack/Lumberjack-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -496,6 +492,7 @@
 		DCB3186814EB418E001CFBEE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -505,6 +502,9 @@
 				GCC_PREFIX_HEADER = "Lumberjack/Lumberjack-Prefix.pch";
 				INFOPLIST_FILE = "Lumberjack/Lumberjack-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;

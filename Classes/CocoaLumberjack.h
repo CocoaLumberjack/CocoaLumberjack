@@ -19,8 +19,8 @@
  * The project page has a wealth of documentation if you have any questions.
  * https://github.com/CocoaLumberjack/CocoaLumberjack
  *
- * If you're new to the project you may wish to read the "Getting Started" wiki.
- * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/GettingStarted
+ * If you're new to the project you may wish to read "Getting Started" at:
+ * Documentation/GettingStarted.md
  *
  * Otherwise, here is a quick refresher.
  * There are three steps to using the macros:
