@@ -113,7 +113,7 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
     [DDLog log:async message:logMessage];
 }
 
-static aslmsg priv_ASLNext(aslresponse response)
+static inline aslmsg priv_ASLNext(aslresponse response)
 {
 #if defined(__IPHONE_7_0) || defined(__MAC_10_10)
 #if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_7_0
@@ -128,7 +128,7 @@ static aslmsg priv_ASLNext(aslresponse response)
 
 }
 
-static void priv_ASLRelease(aslresponse response)
+static inline void priv_ASLRelease(aslresponse response)
 {
 #if defined(__IPHONE_7_0) || defined(__MAC_10_10)
 #if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_7_0

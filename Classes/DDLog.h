@@ -613,10 +613,10 @@ typedef NS_OPTIONS(int, DDLogMessageOptions) {
 @property (readonly, copy) NSString *threadName;
 
 // For 3rd party extensions to the framework, where flags and contexts aren't enough.
-@property (readonly, strong) id tag;
+@property (readwrite, strong) id tag;
 
 // For 3rd party extensions that manually create DDLogMessage instances.
-@property (readonly) DDLogMessageOptions options;
+@property (readwrite) DDLogMessageOptions options;
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
