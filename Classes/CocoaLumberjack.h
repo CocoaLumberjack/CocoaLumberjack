@@ -59,12 +59,6 @@
 
 #import <Foundation/Foundation.h>
 
-//! Project version number for CocoaLumberjack.
-FOUNDATION_EXPORT double CocoaLumberjackVersionNumber;
-
-//! Project version string for CocoaLumberjack.
-FOUNDATION_EXPORT const unsigned char CocoaLumberjackVersionString[];
-
 #import "DDLog.h"
 #import "DDLogMacros.h"
 #import "DDAssertMacros.h"
@@ -74,5 +68,5 @@ FOUNDATION_EXPORT const unsigned char CocoaLumberjackVersionString[];
 #import "DDASLLogger.h"
 #import "DDFileLogger.h"
 
-// Deprecated
-#import "DDLogDeprecated.h"
+// Legacy
+#import "DDLegacy.h"

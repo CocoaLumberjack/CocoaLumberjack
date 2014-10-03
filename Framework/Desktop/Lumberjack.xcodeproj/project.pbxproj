@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5505CF6619BA58320028CF57 /* DDLogDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 5505CF6519BA58320028CF57 /* DDLogDeprecated.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5505CF6619BA58320028CF57 /* DDLegacy.h in Headers */ = {isa = PBXBuildFile; fileRef = 5505CF6519BA58320028CF57 /* DDLegacy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA9C20D1192A0E0000AB7171 /* DDAbstractDatabaseLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20BD192A0E0000AB7171 /* DDAbstractDatabaseLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA9C20D2192A0E0000AB7171 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20BE192A0E0000AB7171 /* DDAbstractDatabaseLogger.m */; };
 		DA9C20D3192A0E0000AB7171 /* DDASLLogCapture.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20BF192A0E0000AB7171 /* DDASLLogCapture.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -52,7 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5505CF6519BA58320028CF57 /* DDLogDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLogDeprecated.h; sourceTree = "<group>"; };
+		5505CF6519BA58320028CF57 /* DDLegacy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLegacy.h; sourceTree = "<group>"; };
 		DA9C20BD192A0E0000AB7171 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
 		DA9C20BE192A0E0000AB7171 /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
 		DA9C20BF192A0E0000AB7171 /* DDASLLogCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogCapture.h; sourceTree = "<group>"; };
@@ -185,7 +185,7 @@
 				DA9C20C4192A0E0000AB7171 /* DDFileLogger.m */,
 				DA9C20C5192A0E0000AB7171 /* DDLog.h */,
 				DA9C20C6192A0E0000AB7171 /* DDLog.m */,
-				5505CF6519BA58320028CF57 /* DDLogDeprecated.h */,
+				5505CF6519BA58320028CF57 /* DDLegacy.h */,
 				DA9C20C8192A0E0000AB7171 /* DDTTYLogger.h */,
 				DA9C20C9192A0E0000AB7171 /* DDTTYLogger.m */,
 				DA9C20CA192A0E0000AB7171 /* Extensions */,
@@ -243,7 +243,7 @@
 				DA9C20D1192A0E0000AB7171 /* DDAbstractDatabaseLogger.h in Headers */,
 				E5D89BA91994749300C180CF /* DDLogMacros.h in Headers */,
 				DA9C20DC192A0E0000AB7171 /* DDTTYLogger.h in Headers */,
-				5505CF6619BA58320028CF57 /* DDLogDeprecated.h in Headers */,
+				5505CF6619BA58320028CF57 /* DDLegacy.h in Headers */,
 				DA9C20D9192A0E0000AB7171 /* DDLog.h in Headers */,
 				DA9C20D5192A0E0000AB7171 /* DDASLLogger.h in Headers */,
 				DA9C20E2192A0E0000AB7171 /* DDMultiFormatter.h in Headers */,
@@ -481,7 +481,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -490,8 +489,6 @@
 				GCC_PREFIX_HEADER = "Lumberjack/Lumberjack-Prefix.pch";
 				INFOPLIST_FILE = "Lumberjack/Lumberjack-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -500,7 +497,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -509,8 +505,6 @@
 				GCC_PREFIX_HEADER = "Lumberjack/Lumberjack-Prefix.pch";
 				INFOPLIST_FILE = "Lumberjack/Lumberjack-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
