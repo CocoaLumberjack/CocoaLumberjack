@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   s.source_files = 'Classes/CocoaLumberjack.{h,m}'
 
   s.subspec 'Core' do |ss|
-    ss.source_files = 'Classes/*.{h,m}'
+    ss.source_files = 'Classes/DD*.{h,m}'
   end
 
   s.subspec 'Extensions' do |ss|
