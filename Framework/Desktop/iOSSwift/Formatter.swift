@@ -14,12 +14,13 @@ class Formatter: DDDispatchQueueLogFormatter, DDLogFormatter {
     
     override init() {
         threadUnsafeDateFormatter = NSDateFormatter()
+        threadUnsafeDateFormatter.formatterBehavior = .Behavior10_4
         threadUnsafeDateFormatter.dateFormat = "HH:mm:ss.SSS"
         
         super.init()
     }
     
-    override func formatLogMessage(logMessage: DDLogMessage!) -> String! {
+    override func formatLogMessage(logMessage: DDLogMessage!) -> String {
         let dateAndTime = threadUnsafeDateFormatter.stringFromDate(logMessage.timestamp)
         
         var logLevel: String
@@ -38,7 +39,7 @@ class Formatter: DDDispatchQueueLogFormatter, DDLogFormatter {
             logLevel = "?"
         }
         
-        let formattedLog = "\(dateAndTime) |\(logLevel) [\(logMessage.fileName) \(logMessage.methodName)] #\(logMessage.lineNumber): \(logMessage.logMessage)"
+        let formattedLog = "\(dateAndTime) |\(logLevel)| [\(logMessage.fileName) \(logMessage.methodName)] #\(logMessage.lineNumber): \(logMessage.logMessage)"
         
         return formattedLog;
     }

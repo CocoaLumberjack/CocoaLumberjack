@@ -939,7 +939,7 @@ static char * dd_str_copy(const char *str) {
                        options:(DDLogMessageOptions)optionsMask
                      timestamp:(NSDate *)aTimestamp {
     if ((self = [super init])) {
-        logMsg     = msg;
+        logMsg     = [msg copy];
         logLevel   = level;
         logFlag    = flag;
         logContext = context;
