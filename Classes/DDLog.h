@@ -597,6 +597,26 @@ typedef NS_OPTIONS(int, DDLogMessageOptions) {
  **/
 @property (readonly, copy) NSString *methodName;
 
+/**
+ * For languages that can't access the variables directly (for instance, Swift)
+ **/
+@property (readonly) DDLogLevel logLevel;
+@property (readonly) DDLogFlag logFlag;
+@property (readonly) int logContext;
+@property (readonly, copy) NSString *logMessage;
+@property (readonly, copy) NSDate *timestamp;
+@property (readonly) char *file;
+@property (readonly) char *function;
+@property (readonly) int lineNumber;
+@property (readonly) mach_port_t machThreadID;
+@property (readonly) char *queueLabel;
+@property (readonly, copy) NSString *threadName;
+
+// For 3rd party extensions to the framework, where flags and contexts aren't enough.
+@property (readonly, strong) id tag;
+
+// For 3rd party extensions that manually create DDLogMessage instances.
+@property (readonly) DDLogMessageOptions options;
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

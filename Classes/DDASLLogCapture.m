@@ -115,12 +115,12 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
 
 static aslmsg priv_ASLNext(aslresponse response)
 {
-#if defined(__IPHONE_8_0) || defined(__MAC_10_10)
-#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_8_0
+#if defined(__IPHONE_7_0) || defined(__MAC_10_10)
+#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_7_0
     if (asl_next)
 #endif
         return asl_next(response);
-#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_8_0
+#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_7_0
     else
 #endif
 #endif
@@ -130,12 +130,12 @@ static aslmsg priv_ASLNext(aslresponse response)
 
 static void priv_ASLRelease(aslresponse response)
 {
-#if defined(__IPHONE_8_0) || defined(__MAC_10_10)
-#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_8_0
+#if defined(__IPHONE_7_0) || defined(__MAC_10_10)
+#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_7_0
     if (asl_release)
 #endif
         asl_release(response);
-#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_8_0
+#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_7_0
     else
 #endif
 #endif
