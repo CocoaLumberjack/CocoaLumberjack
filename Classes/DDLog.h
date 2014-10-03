@@ -354,8 +354,8 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 + (NSArray *)registeredClasses;
 + (NSArray *)registeredClassNames;
 
-+ (int)logLevelForClass:(Class)aClass;
-+ (int)logLevelForClassWithName:(NSString *)aClassName;
++ (DDLogLevel)logLevelForClass:(Class)aClass;
++ (DDLogLevel)logLevelForClassWithName:(NSString *)aClassName;
 
 + (void)setLogLevel:(DDLogLevel)logLevel forClass:(Class)aClass;
 + (void)setLogLevel:(DDLogLevel)logLevel forClassWithName:(NSString *)aClassName;
