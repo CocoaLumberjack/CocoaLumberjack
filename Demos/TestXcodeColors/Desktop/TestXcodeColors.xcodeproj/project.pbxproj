@@ -17,8 +17,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		10FA67588BBDB3AEE3480805 /* Pods-TXC_osx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TXC_osx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TXC_osx/Pods-TXC_osx.debug.xcconfig"; sourceTree = "<group>"; };
 		2265B667AAE340188A1A4608 /* libPods-TXC_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TXC_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D966751E33C84BFD80CCE31C /* Pods-TXC_osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TXC_osx.xcconfig"; path = "Pods/Pods-TXC_osx.xcconfig"; sourceTree = "<group>"; };
+		CB55AFAA4623D09E88FEA1F1 /* Pods-TXC_osx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TXC_osx.release.xcconfig"; path = "Pods/Target Support Files/Pods-TXC_osx/Pods-TXC_osx.release.xcconfig"; sourceTree = "<group>"; };
 		DCAACA7E1565CEBD001A5857 /* TestXcodeColors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestXcodeColors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCAACA821565CEBD001A5857 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DCAACA851565CEBD001A5857 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -47,13 +48,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A7444058C5801629B7C3DF6B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				10FA67588BBDB3AEE3480805 /* Pods-TXC_osx.debug.xcconfig */,
+				CB55AFAA4623D09E88FEA1F1 /* Pods-TXC_osx.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		DCAACA731565CEBD001A5857 = {
 			isa = PBXGroup;
 			children = (
 				DCAACA881565CEBD001A5857 /* TestXcodeColors */,
 				DCAACA811565CEBD001A5857 /* Frameworks */,
 				DCAACA7F1565CEBD001A5857 /* Products */,
-				D966751E33C84BFD80CCE31C /* Pods-TXC_osx.xcconfig */,
+				A7444058C5801629B7C3DF6B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -136,7 +146,7 @@
 		DCAACA751565CEBD001A5857 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 			};
 			buildConfigurationList = DCAACA781565CEBD001A5857 /* Build configuration list for PBXProject "TestXcodeColors" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -181,7 +191,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-TXC_osx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TXC_osx/Pods-TXC_osx-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EB464937B0CE488A84F2AADD /* Check Pods Manifest.lock */ = {
@@ -251,8 +261,10 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -285,9 +297,11 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -304,7 +318,7 @@
 		};
 		DCAACA9D1565CEBD001A5857 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D966751E33C84BFD80CCE31C /* Pods-TXC_osx.xcconfig */;
+			baseConfigurationReference = 10FA67588BBDB3AEE3480805 /* Pods-TXC_osx.debug.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -317,7 +331,7 @@
 		};
 		DCAACA9E1565CEBD001A5857 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D966751E33C84BFD80CCE31C /* Pods-TXC_osx.xcconfig */;
+			baseConfigurationReference = CB55AFAA4623D09E88FEA1F1 /* Pods-TXC_osx.release.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

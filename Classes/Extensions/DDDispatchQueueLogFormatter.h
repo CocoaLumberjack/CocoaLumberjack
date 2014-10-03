@@ -23,7 +23,7 @@
  *
  * A log formatter can be added to any logger to format and/or filter its output.
  * You can learn more about log formatters here:
- * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomFormatters
+ * Documentation/CustomFormatters.md
  *
  * A typical NSLog (or DDTTYLogger) prints detailed info as [<process_id>:<thread_id>].
  * For example:
