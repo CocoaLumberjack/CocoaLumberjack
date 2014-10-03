@@ -17,6 +17,7 @@
 #define Lumberjack_DDLog_LOGV_h
 
 #import "DDLog.h"
+#import "DDLegacy.h"
 
 
 #define LOGV_MACRO(isAsynchronous, lvl, flg, ctx, atag, fnct, frmt, avalist) \
