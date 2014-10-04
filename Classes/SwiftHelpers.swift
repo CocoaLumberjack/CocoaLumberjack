@@ -13,8 +13,28 @@ extension DDLogFlag {
         return DDLogFlag(logLevel.rawValue)
     }
     
-    public func toLogLevel() -> DDLogLevel? {
-        return DDLogLevel(rawValue: self.rawValue)
+    /**
+     *  returns the log level, or the lowest equivalant.
+     */
+    public func toLogLevel() -> DDLogLevel {
+        if let ourValid = DDLogLevel(rawValue: self.rawValue) {
+            return ourValid
+        } else {
+            let logFlag = self
+            if logFlag & .Error == .Error {
+                return .Error
+            } else if logFlag & .Warning == .Warning {
+                return .Warning
+            } else if logFlag & .Info == .Info {
+                return .Info
+            } else if logFlag & .Debug == .Debug {
+                return .Debug
+            } else if logFlag & .Verbose == .Verbose {
+                return .Verbose
+            } else {
+                return .Off
+            }
+        }
     }
 }
 
@@ -29,7 +49,7 @@ extension DDLog {
 }
 
 extension DDASLLogCapture {
-    class var captureLogLevels: DDLogLevel {
+    public class var captureLogLevels: DDLogLevel {
         get {
             return captureLogLevel()
         }
@@ -40,7 +60,7 @@ extension DDASLLogCapture {
 }
 
 extension DDContextWhitelistFilterLogFormatter {
-    var whitelistArray: [Int32] {
+    public var whitelistArray: [Int32] {
         let ourWhitelist = self.whitelist as [Int]
         var toRet = [Int32]()
         for i in ourWhitelist {
@@ -51,7 +71,7 @@ extension DDContextWhitelistFilterLogFormatter {
 }
 
 extension DDContextBlacklistFilterLogFormatter {
-    var blacklistArray: [Int32] {
+    public var blacklistArray: [Int32] {
         let ourBlacklist = self.blacklist as [Int]
         var toRet = [Int32]()
         for i in ourBlacklist {
@@ -62,7 +82,7 @@ extension DDContextBlacklistFilterLogFormatter {
 }
 
 extension DDMultiFormatter {
-    var formatterArray: [DDLogFormatter] {
+    public var formatterArray: [DDLogFormatter] {
         return self.formatters as [DDLogFormatter]
     }
 }
