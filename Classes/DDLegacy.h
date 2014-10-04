@@ -8,7 +8,7 @@
 
 #import "DDLog.h"
 
-// Variables here shouldn't be used.
+// Variables here aren't available under Swift.
 
 #define LOG_FLAG_ERROR    DDLogFlagError
 #define LOG_FLAG_WARN     DDLogFlagWarning
