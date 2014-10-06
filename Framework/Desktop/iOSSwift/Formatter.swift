@@ -6,7 +6,7 @@
 //
 //
 
-import UIKit
+import Foundation
 import CocoaLumberjack.DDDispatchQueueLogFormatter
 
 class Formatter: DDDispatchQueueLogFormatter, DDLogFormatter {

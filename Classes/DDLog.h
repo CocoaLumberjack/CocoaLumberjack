@@ -201,11 +201,11 @@ typedef NS_ENUM(NSUInteger, DDLogLevel) {
 #define LOG_LEVEL_VERBOSE DDLogLevelVerbose
 #define LOG_LEVEL_ALL     DDLogLevelAll
 
-#define LOG_ERROR         (LOG_LEVEL_DEF & DDLogFlagError)
-#define LOG_WARN          (LOG_LEVEL_DEF & DDLogFlagWarning)
-#define LOG_INFO          (LOG_LEVEL_DEF & DDLogFlagInfo)
-#define LOG_DEBUG         (LOG_LEVEL_DEF & DDLogFlagDebug)
-#define LOG_VERBOSE       (LOG_LEVEL_DEF & DDLogFlagVerbose)
+#define LOG_ERROR         (LOG_LEVEL_DEF & LOG_FLAG_ERROR)
+#define LOG_WARN          (LOG_LEVEL_DEF & LOG_FLAG_WARN)
+#define LOG_INFO          (LOG_LEVEL_DEF & LOG_FLAG_INFO)
+#define LOG_DEBUG         (LOG_LEVEL_DEF & LOG_FLAG_DEBUG)
+#define LOG_VERBOSE       (LOG_LEVEL_DEF & LOG_FLAG_VERBOSE)
 
 #define LOG_ASYNC_ENABLED YES
 

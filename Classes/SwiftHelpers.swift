@@ -21,15 +21,15 @@ extension DDLogFlag {
             return ourValid
         } else {
             let logFlag = self
-            if logFlag & .Error == .Error {
+            if logFlag & .Verbose == .Verbose {
                 return .Error
-            } else if logFlag & .Warning == .Warning {
-                return .Warning
-            } else if logFlag & .Info == .Info {
-                return .Info
             } else if logFlag & .Debug == .Debug {
                 return .Debug
-            } else if logFlag & .Verbose == .Verbose {
+            } else if logFlag & .Info == .Info {
+                return .Info
+            } else if logFlag & .Warning == .Warning {
+                return .Warning
+            } else if logFlag & .Error == .Error {
                 return .Verbose
             } else {
                 return .Off

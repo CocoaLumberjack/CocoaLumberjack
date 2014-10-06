@@ -23,6 +23,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         DDLogWarn("Warn");
         DDLogError("Error");
         
+        setDefaultDebugLevel(ourLogLevel)
+        
+        DDLogVerbose("Verbose");
+        DDLogInfo("Info");
+        DDLogWarn("Warn");
+        DDLogError("Error");
+        
         DDLogVerbose("Verbose", level: ourLogLevel);
         DDLogInfo("Info", level: ourLogLevel);
         DDLogWarn("Warn", level: ourLogLevel);
