@@ -177,19 +177,35 @@ typedef NS_OPTIONS(NSUInteger, DDLogFlag) {
 
 typedef NS_ENUM(NSUInteger, DDLogLevel) {
     DDLogLevelOff       = 0,
-    DDLogLevelError     = (DDLogFlagError),                     // 0...00001
-    DDLogLevelWarning   = (DDLogLevelError | DDLogFlagWarning), // 0...00011
-    DDLogLevelInfo      = (DDLogLevelWarning | DDLogFlagInfo),  // 0...00111
-    DDLogLevelDebug     = (DDLogLevelInfo | DDLogFlagDebug),    // 0...01111
-    DDLogLevelVerbose   = (DDLogLevelDebug | DDLogFlagVerbose), // 0...11111
-    DDLogLevelAll       = NSUIntegerMax                         // 1111....11111 (LOG_LEVEL_VERBOSE plus any other flags)
+    DDLogLevelError     = (DDLogFlagError),                             // 0...00001
+    DDLogLevelWarning   = (DDLogLevelError | DDLogFlagWarning),         // 0...00011
+    DDLogLevelInfo      = (DDLogLevelWarning | DDLogFlagInfo),          // 0...00111
+    DDLogLevelDebug     = (DDLogLevelInfo | DDLogFlagDebug),            // 0...01111
+    DDLogLevelVerbose   = (DDLogLevelDebug | DDLogFlagVerbose),         // 0...11111
+    DDLogLevelAll       = NSUIntegerMax                                 // 1111....11111 (LOG_LEVEL_VERBOSE plus any other flags)
 };
 
-#define LOG_ERROR   (LOG_LEVEL_DEF & DDLogFlagError)
-#define LOG_WARN    (LOG_LEVEL_DEF & DDLogFlagWarning)
-#define LOG_INFO    (LOG_LEVEL_DEF & DDLogFlagInfo)
-#define LOG_DEBUG   (LOG_LEVEL_DEF & DDLogFlagDebug)
-#define LOG_VERBOSE (LOG_LEVEL_DEF & DDLogFlagVerbose)
+// Most preprocessor variables aren't available under Swift.
+
+#define LOG_FLAG_ERROR    DDLogFlagError
+#define LOG_FLAG_WARN     DDLogFlagWarning
+#define LOG_FLAG_INFO     DDLogFlagInfo
+#define LOG_FLAG_DEBUG    DDLogFlagDebug
+#define LOG_FLAG_VERBOSE  DDLogFlagVerbose
+
+#define LOG_LEVEL_OFF     DDLogLevelOff
+#define LOG_LEVEL_ERROR   DDLogLeveError
+#define LOG_LEVEL_WARN    DDLogLevelWarning
+#define LOG_LEVEL_INFO    DDLogLevelInfo
+#define LOG_LEVEL_DEBUG   DDLogLevelDebug
+#define LOG_LEVEL_VERBOSE DDLogLevelVerbose
+#define LOG_LEVEL_ALL     DDLogLevelAll
+
+#define LOG_ERROR         (LOG_LEVEL_DEF & DDLogFlagError)
+#define LOG_WARN          (LOG_LEVEL_DEF & DDLogFlagWarning)
+#define LOG_INFO          (LOG_LEVEL_DEF & DDLogFlagInfo)
+#define LOG_DEBUG         (LOG_LEVEL_DEF & DDLogFlagDebug)
+#define LOG_VERBOSE       (LOG_LEVEL_DEF & DDLogFlagVerbose)
 
 #define LOG_ASYNC_ENABLED YES
 

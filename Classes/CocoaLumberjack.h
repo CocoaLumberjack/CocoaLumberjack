@@ -76,6 +76,3 @@
 #import "DDDispatchQueueLogFormatter.h"
 #import "DDContextFilterLogFormatter.h"
 #import "DDMultiFormatter.h"
-
-// Deprecated
-#import "DDLegacy.h"

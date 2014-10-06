@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5505CF6619BA58320028CF57 /* DDLegacy.h in Headers */ = {isa = PBXBuildFile; fileRef = 5505CF6519BA58320028CF57 /* DDLegacy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55BCB5C719D4BB6E0096E784 /* SwiftHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BCB5C619D4BB6E0096E784 /* SwiftHelpers.swift */; };
 		55BE8BD619DF190200979D7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BE8BD519DF190200979D7F /* AppDelegate.swift */; };
 		55BE8BD819DF190200979D7F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BE8BD719DF190200979D7F /* ViewController.swift */; };
@@ -99,7 +98,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5505CF6519BA58320028CF57 /* DDLegacy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLegacy.h; sourceTree = "<group>"; };
 		55BCB5C619D4BB6E0096E784 /* SwiftHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftHelpers.swift; path = ../SwiftHelpers.swift; sourceTree = "<group>"; };
 		55BE8BD119DF190200979D7F /* iOSSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55BE8BD419DF190200979D7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -329,7 +327,6 @@
 				DA9C20C4192A0E0000AB7171 /* DDFileLogger.m */,
 				DA9C20C5192A0E0000AB7171 /* DDLog.h */,
 				DA9C20C6192A0E0000AB7171 /* DDLog.m */,
-				5505CF6519BA58320028CF57 /* DDLegacy.h */,
 				DA9C20C8192A0E0000AB7171 /* DDTTYLogger.h */,
 				DA9C20C9192A0E0000AB7171 /* DDTTYLogger.m */,
 				DA9C20CA192A0E0000AB7171 /* Extensions */,
@@ -387,7 +384,6 @@
 				DA9C20D1192A0E0000AB7171 /* DDAbstractDatabaseLogger.h in Headers */,
 				E5D89BA91994749300C180CF /* DDLogMacros.h in Headers */,
 				DA9C20DC192A0E0000AB7171 /* DDTTYLogger.h in Headers */,
-				5505CF6619BA58320028CF57 /* DDLegacy.h in Headers */,
 				DA9C20D9192A0E0000AB7171 /* DDLog.h in Headers */,
 				DA9C20D5192A0E0000AB7171 /* DDASLLogger.h in Headers */,
 				DA9C20E2192A0E0000AB7171 /* DDMultiFormatter.h in Headers */,
