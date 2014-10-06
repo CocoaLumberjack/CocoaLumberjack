@@ -1,6 +1,5 @@
 #import "ThirdPartyFramework.h"
 #import <CocoaLumberjack/DDLogMacros.h>
-#import <CocoaLumberjack/DDLegacy.h>
 
 // Third party frameworks and libraries should define their own custom log definitions.
 // These should use a custom context to allow those who use the framework

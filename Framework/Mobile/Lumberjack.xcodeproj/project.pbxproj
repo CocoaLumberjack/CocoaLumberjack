@@ -18,7 +18,6 @@
 		2A37F9F318E37536009FAAA7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F9F218E37536009FAAA7 /* ViewController.m */; };
 		2A37F9F518E37536009FAAA7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F9F418E37536009FAAA7 /* Images.xcassets */; };
 		2A37FA0F18E375D8009FAAA7 /* libCocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A37F97718E37270009FAAA7 /* libCocoaLumberjack.a */; };
-		55CCBE9D19BA5E2B00957A39 /* DDLegacy.h in Headers */ = {isa = PBXBuildFile; fileRef = 55CCBE9C19BA5E2B00957A39 /* DDLegacy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA9C209B192A04E100AB7171 /* Formatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C209A192A04E100AB7171 /* Formatter.m */; };
 		DA9C20B0192A0CB500AB7171 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C209D192A0CB500AB7171 /* DDAbstractDatabaseLogger.m */; };
 		DA9C20B1192A0CB500AB7171 /* DDASLLogCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C209F192A0CB500AB7171 /* DDASLLogCapture.m */; };
@@ -73,7 +72,6 @@
 		2A37F9F218E37536009FAAA7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		2A37F9F418E37536009FAAA7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2A37F9FB18E37536009FAAA7 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		55CCBE9C19BA5E2B00957A39 /* DDLegacy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLegacy.h; sourceTree = "<group>"; };
 		55CCBEF719BA64B200957A39 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		55CCBEF819BA64B200957A39 /* Lumberjack-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Lumberjack-Info.plist"; path = "../../Desktop/Lumberjack/Lumberjack-Info.plist"; sourceTree = "<group>"; };
 		DA9C2099192A04E100AB7171 /* Formatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Formatter.h; sourceTree = "<group>"; };
@@ -165,7 +163,6 @@
 				DA9C20A3192A0CB500AB7171 /* DDFileLogger.m */,
 				DA9C20A4192A0CB500AB7171 /* DDLog.h */,
 				DA9C20A5192A0CB500AB7171 /* DDLog.m */,
-				55CCBE9C19BA5E2B00957A39 /* DDLegacy.h */,
 				DA9C20A7192A0CB500AB7171 /* DDTTYLogger.h */,
 				DA9C20A8192A0CB500AB7171 /* DDTTYLogger.m */,
 				DA9C20A9192A0CB500AB7171 /* Extensions */,
@@ -249,7 +246,6 @@
 				E5CEB3771994971500EDC36E /* DDASLLogCapture.h in Headers */,
 				E5CEB3781994971500EDC36E /* DDASLLogger.h in Headers */,
 				E5CEB3791994971500EDC36E /* DDFileLogger.h in Headers */,
-				55CCBE9D19BA5E2B00957A39 /* DDLegacy.h in Headers */,
 				E5CEB37A1994971500EDC36E /* DDLog.h in Headers */,
 				E5CEB37B1994971500EDC36E /* DDTTYLogger.h in Headers */,
 				E5CEB37C1994971500EDC36E /* DDContextFilterLogFormatter.h in Headers */,

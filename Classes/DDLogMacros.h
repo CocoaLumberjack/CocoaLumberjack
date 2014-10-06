@@ -14,7 +14,6 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDLog.h"
-#import "DDLegacy.h"
 
 /**
  * Ready to use log macros.

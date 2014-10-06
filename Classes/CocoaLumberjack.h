@@ -67,6 +67,3 @@
 #import "DDTTYLogger.h"
 #import "DDASLLogger.h"
 #import "DDFileLogger.h"
-
-// Legacy
-#import "DDLegacy.h"
