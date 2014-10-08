@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'LogLevelsConfigFile' target in the 'LogLevelsConfigFile' project
+//
+
+#ifdef __OBJC__
+	#import <Cocoa/Cocoa.h>
+#endif
