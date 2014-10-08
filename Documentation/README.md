@@ -1,3 +1,7 @@
+
+CocoaLumberjack Documentation 
+=============================
+
 ## Beginner
 
 * [Getting Started](GettingStarted.md): Get up and running using the Lumberjack Framework.
