@@ -28,3 +28,4 @@ DerivedData
 Pods/
 Podfile.lock
 LumberjackUser*.h
+.DS_Store

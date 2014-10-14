@@ -167,25 +167,45 @@
  * Documentation/CustomLogLevels.md
  **/
 
-#define LOG_FLAG_ERROR    (1 << 0)  // 0...00001
-#define LOG_FLAG_WARN     (1 << 1)  // 0...00010
-#define LOG_FLAG_INFO     (1 << 2)  // 0...00100
-#define LOG_FLAG_DEBUG    (1 << 3)  // 0...01000
-#define LOG_FLAG_VERBOSE  (1 << 4)  // 0...10000
+typedef NS_OPTIONS(NSUInteger, DDLogFlag) {
+    DDLogFlagError      = (1 << 0),  // 0...00001
+    DDLogFlagWarning    = (1 << 1),  // 0...00010
+    DDLogFlagInfo       = (1 << 2),  // 0...00100
+    DDLogFlagDebug      = (1 << 3),  // 0...01000
+    DDLogFlagVerbose    = (1 << 4)   // 0...10000
+};
 
-#define LOG_LEVEL_OFF     0
-#define LOG_LEVEL_ERROR   (LOG_FLAG_ERROR)                                                                      // 0...00001
-#define LOG_LEVEL_WARN    (LOG_FLAG_ERROR | LOG_FLAG_WARN)                                                      // 0...00011
-#define LOG_LEVEL_INFO    (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO)                                      // 0...00111
-#define LOG_LEVEL_DEBUG   (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO | LOG_FLAG_DEBUG)                     // 0...01111
-#define LOG_LEVEL_VERBOSE (LOG_FLAG_ERROR | LOG_FLAG_WARN | LOG_FLAG_INFO | LOG_FLAG_DEBUG | LOG_FLAG_VERBOSE)  // 0...11111
-#define LOG_LEVEL_ALL     0xFFFFFFFF  // 1111....11111 (LOG_LEVEL_VERBOSE plus any other flags)
+typedef NS_ENUM(NSUInteger, DDLogLevel) {
+    DDLogLevelOff       = 0,
+    DDLogLevelError     = (DDLogFlagError),                             // 0...00001
+    DDLogLevelWarning   = (DDLogLevelError | DDLogFlagWarning),         // 0...00011
+    DDLogLevelInfo      = (DDLogLevelWarning | DDLogFlagInfo),          // 0...00111
+    DDLogLevelDebug     = (DDLogLevelInfo | DDLogFlagDebug),            // 0...01111
+    DDLogLevelVerbose   = (DDLogLevelDebug | DDLogFlagVerbose),         // 0...11111
+    DDLogLevelAll       = NSUIntegerMax                                 // 1111....11111 (LOG_LEVEL_VERBOSE plus any other flags)
+};
 
-#define LOG_ERROR         (LOG_LEVEL_DEF & LOG_FLAG_ERROR)
-#define LOG_WARN          (LOG_LEVEL_DEF & LOG_FLAG_WARN)
-#define LOG_INFO          (LOG_LEVEL_DEF & LOG_FLAG_INFO)
-#define LOG_DEBUG         (LOG_LEVEL_DEF & LOG_FLAG_DEBUG)
-#define LOG_VERBOSE       (LOG_LEVEL_DEF & LOG_FLAG_VERBOSE)
+// Most preprocessor variables aren't available under Swift.
+
+#define LOG_FLAG_ERROR    DDLogFlagError
+#define LOG_FLAG_WARN     DDLogFlagWarning
+#define LOG_FLAG_INFO     DDLogFlagInfo
+#define LOG_FLAG_DEBUG    DDLogFlagDebug
+#define LOG_FLAG_VERBOSE  DDLogFlagVerbose
+
+#define LOG_LEVEL_OFF     DDLogLevelOff
+#define LOG_LEVEL_ERROR   DDLogLeveError
+#define LOG_LEVEL_WARN    DDLogLevelWarning
+#define LOG_LEVEL_INFO    DDLogLevelInfo
+#define LOG_LEVEL_DEBUG   DDLogLevelDebug
+#define LOG_LEVEL_VERBOSE DDLogLevelVerbose
+#define LOG_LEVEL_ALL     DDLogLevelAll
+
+#define LOG_ERROR         (LOG_LEVEL_DEF & DDLogFlagError)
+#define LOG_WARN          (LOG_LEVEL_DEF & DDLogFlagWarning)
+#define LOG_INFO          (LOG_LEVEL_DEF & DDLogFlagInfo)
+#define LOG_DEBUG         (LOG_LEVEL_DEF & DDLogFlagDebug)
+#define LOG_VERBOSE       (LOG_LEVEL_DEF & DDLogFlagVerbose)
 
 #define LOG_ASYNC_ENABLED YES
 
@@ -239,8 +259,8 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  **/
 
 + (void)log:(BOOL)synchronous
-      level:(int)level
-       flag:(int)flag
+      level:(DDLogLevel)level
+       flag:(DDLogFlag)flag
     context:(int)context
        file:(const char *)file
    function:(const char *)function
@@ -255,8 +275,8 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  **/
 
 + (void)log:(BOOL)asynchronous
-      level:(int)level
-       flag:(int)flag
+      level:(DDLogLevel)level
+       flag:(DDLogFlag)flag
     context:(int)context
        file:(const char *)file
    function:(const char *)function
@@ -333,7 +353,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  *
  * ((LOG_LEVEL_ALL ^ LOG_LEVEL_VERBOSE) | LOG_LEVEL_INFO)
  **/
-+ (void)addLogger:(id <DDLogger>)logger withLogLevel:(int)logLevel;
++ (void)addLogger:(id <DDLogger>)logger withLogLevel:(DDLogLevel)logLevel;
 
 + (void)removeLogger:(id <DDLogger>)logger;
 + (void)removeAllLoggers;
@@ -350,11 +370,11 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 + (NSArray *)registeredClasses;
 + (NSArray *)registeredClassNames;
 
-+ (int)logLevelForClass:(Class)aClass;
-+ (int)logLevelForClassWithName:(NSString *)aClassName;
++ (DDLogLevel)logLevelForClass:(Class)aClass;
++ (DDLogLevel)logLevelForClassWithName:(NSString *)aClassName;
 
-+ (void)setLogLevel:(int)logLevel forClass:(Class)aClass;
-+ (void)setLogLevel:(int)logLevel forClassWithName:(NSString *)aClassName;
++ (void)setLogLevel:(DDLogLevel)logLevel forClass:(Class)aClass;
++ (void)setLogLevel:(DDLogLevel)logLevel forClassWithName:(NSString *)aClassName;
 
 @end
 
@@ -373,8 +393,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * If no formatter is set, the logger simply logs the message as it is given in logMessage,
  * or it may use its own built in formatting style.
  **/
-- (id <DDLogFormatter>)logFormatter;
-- (void)setLogFormatter:(id <DDLogFormatter>)formatter;
+@property id <DDLogFormatter> logFormatter;
 
 @optional
 
@@ -485,8 +504,8 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * }
  **/
 
-+ (int)ddLogLevel;
-+ (void)ddSetLogLevel:(int)logLevel;
++ (DDLogLevel)ddLogLevel;
++ (void)ddSetLogLevel:(DDLogLevel)logLevel;
 
 @end
 
@@ -511,8 +530,8 @@ typedef int   DDLogMessageOptions;
 // For example: logMessage->logLevel
 
     @public
-    int logLevel;
-    int logFlag;
+    DDLogLevel logLevel;
+    DDLogFlag logFlag;
     int logContext;
     NSString *logMsg;
     NSDate *timestamp;
@@ -546,8 +565,8 @@ typedef int   DDLogMessageOptions;
  * Options is a bitmask which supports DDLogMessageCopyFile and DDLogMessageCopyFunction.
  **/
 - (instancetype)initWithLogMsg:(NSString *)logMsg
-                         level:(int)logLevel
-                          flag:(int)logFlag
+                         level:(DDLogLevel)logLevel
+                          flag:(DDLogFlag)logFlag
                        context:(int)logContext
                           file:(const char *)file
                       function:(const char *)function
@@ -555,8 +574,8 @@ typedef int   DDLogMessageOptions;
                            tag:(id)tag
                        options:(DDLogMessageOptions)optionsMask;
 - (instancetype)initWithLogMsg:(NSString *)logMsg
-                         level:(int)logLevel
-                          flag:(int)logFlag
+                         level:(DDLogLevel)logLevel
+                          flag:(DDLogFlag)logFlag
                        context:(int)logContext
                           file:(const char *)file
                       function:(const char *)function
@@ -611,9 +630,7 @@ typedef int   DDLogMessageOptions;
 
     dispatch_queue_t loggerQueue;
 }
-
-- (id <DDLogFormatter>)logFormatter;
-- (void)setLogFormatter:(id <DDLogFormatter>)formatter;
+@property (strong) id <DDLogFormatter> logFormatter;
 
 // For thread-safety assertions
 - (BOOL)isOnGlobalLoggingQueue;

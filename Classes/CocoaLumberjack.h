@@ -57,6 +57,8 @@
  * This means you can pass it multiple variables just like NSLog.
  **/
 
+#import <Foundation/Foundation.h>
+
 #import "DDLog.h"
 #import "DDLogMacros.h"
 #import "DDAssertMacros.h"

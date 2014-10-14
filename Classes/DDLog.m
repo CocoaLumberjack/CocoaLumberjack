@@ -67,19 +67,19 @@ static void *const GlobalLoggingQueueIdentityKey = (void *)&GlobalLoggingQueueId
     @public
     id <DDLogger> logger;
     dispatch_queue_t loggerQueue;
-    int logLevel;
+    DDLogLevel logLevel;
 }
 
-@property (nonatomic, assign, readonly) int logLevel;
+@property (nonatomic, assign, readonly) DDLogLevel logLevel;
 
-+ (DDLoggerNode *)nodeWithLogger:(id <DDLogger>)logger loggerQueue:(dispatch_queue_t)loggerQueue logLevel:(int)logLevel;
++ (DDLoggerNode *)nodeWithLogger:(id <DDLogger>)logger loggerQueue:(dispatch_queue_t)loggerQueue logLevel:(DDLogLevel)logLevel;
 
 @end
 
 
 @interface DDLog (PrivateAPI)
 
-+ (void)lt_addLogger:(id <DDLogger>)logger logLevel:(int)logLevel;
++ (void)lt_addLogger:(id <DDLogger>)logger logLevel:(DDLogLevel)logLevel;
 + (void)lt_removeLogger:(id <DDLogger>)logger;
 + (void)lt_removeAllLoggers;
 + (NSArray *)lt_allLoggers;
@@ -206,10 +206,10 @@ static unsigned int numProcessors;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 + (void)addLogger:(id <DDLogger>)logger {
-    [self addLogger:logger withLogLevel:LOG_LEVEL_ALL]; // LOG_LEVEL_ALL has all bits set
+    [self addLogger:logger withLogLevel:DDLogLevelAll]; // LOG_LEVEL_ALL has all bits set
 }
 
-+ (void)addLogger:(id <DDLogger>)logger withLogLevel:(int)logLevel {
++ (void)addLogger:(id <DDLogger>)logger withLogLevel:(DDLogLevel)logLevel {
     if (logger == nil) {
         return;
     }
@@ -307,8 +307,8 @@ static unsigned int numProcessors;
 }
 
 + (void)log:(BOOL)asynchronous
-      level:(int)level
-       flag:(int)flag
+      level:(DDLogLevel)level
+       flag:(DDLogFlag)flag
     context:(int)context
        file:(const char *)file
    function:(const char *)function
@@ -338,8 +338,8 @@ static unsigned int numProcessors;
 }
 
 + (void)log:(BOOL)asynchronous
-      level:(int)level
-       flag:(int)flag
+      level:(DDLogLevel)level
+       flag:(DDLogFlag)flag
     context:(int)context
        file:(const char *)file
    function:(const char *)function
@@ -495,7 +495,7 @@ static unsigned int numProcessors;
     return result;
 }
 
-+ (int)logLevelForClass:(Class)aClass {
++ (DDLogLevel)logLevelForClass:(Class)aClass {
     if ([self isRegisteredClass:aClass]) {
         return [aClass ddLogLevel];
     }
@@ -503,19 +503,19 @@ static unsigned int numProcessors;
     return -1;
 }
 
-+ (int)logLevelForClassWithName:(NSString *)aClassName {
++ (DDLogLevel)logLevelForClassWithName:(NSString *)aClassName {
     Class aClass = NSClassFromString(aClassName);
 
     return [self logLevelForClass:aClass];
 }
 
-+ (void)setLogLevel:(int)logLevel forClass:(Class)aClass {
++ (void)setLogLevel:(DDLogLevel)logLevel forClass:(Class)aClass {
     if ([self isRegisteredClass:aClass]) {
         [aClass ddSetLogLevel:logLevel];
     }
 }
 
-+ (void)setLogLevel:(int)logLevel forClassWithName:(NSString *)aClassName {
++ (void)setLogLevel:(DDLogLevel)logLevel forClassWithName:(NSString *)aClassName {
     Class aClass = NSClassFromString(aClassName);
 
     [self setLogLevel:logLevel forClass:aClass];
@@ -525,7 +525,7 @@ static unsigned int numProcessors;
 #pragma mark Logging Thread
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-+ (void)lt_addLogger:(id <DDLogger>)logger logLevel:(int)logLevel {
++ (void)lt_addLogger:(id <DDLogger>)logger logLevel:(DDLogLevel)logLevel {
     // Add to loggers array.
     // Need to create loggerQueue if loggerNode doesn't provide one.
 
@@ -783,7 +783,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
 
 @synthesize logLevel;
 
-- (instancetype)initWithLogger:(id <DDLogger>)aLogger loggerQueue:(dispatch_queue_t)aLoggerQueue logLevel:(int)aLogLevel {
+- (instancetype)initWithLogger:(id <DDLogger>)aLogger loggerQueue:(dispatch_queue_t)aLoggerQueue logLevel:(DDLogLevel)aLogLevel {
     if ((self = [super init])) {
         logger = aLogger;
 
@@ -800,7 +800,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
     return self;
 }
 
-+ (DDLoggerNode *)nodeWithLogger:(id <DDLogger>)logger loggerQueue:(dispatch_queue_t)loggerQueue logLevel:(int)logLevel {
++ (DDLoggerNode *)nodeWithLogger:(id <DDLogger>)logger loggerQueue:(dispatch_queue_t)loggerQueue logLevel:(DDLogLevel)logLevel {
     return [[DDLoggerNode alloc] initWithLogger:logger loggerQueue:loggerQueue logLevel:logLevel];
 }
 
@@ -881,8 +881,8 @@ static char * dd_str_copy(const char *str) {
 #endif /* if TARGET_OS_IPHONE */
 
 - (instancetype)initWithLogMsg:(NSString *)msg
-                         level:(int)level
-                          flag:(int)flag
+                         level:(DDLogLevel)level
+                          flag:(DDLogFlag)flag
                        context:(int)context
                           file:(const char *)aFile
                       function:(const char *)aFunction
@@ -902,8 +902,8 @@ static char * dd_str_copy(const char *str) {
 }
 
 - (instancetype)initWithLogMsg:(NSString *)msg
-                         level:(int)level
-                          flag:(int)flag
+                         level:(DDLogLevel)level
+                          flag:(DDLogFlag)flag
                        context:(int)context
                           file:(const char *)aFile
                       function:(const char *)aFunction
@@ -1024,6 +1024,7 @@ static char * dd_str_copy(const char *str) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation DDAbstractLogger
+@synthesize logFormatter = formatter;
 
 - (id)init {
     if ((self = [super init])) {

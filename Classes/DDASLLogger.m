@@ -75,11 +75,11 @@ static DDASLLogger *sharedInstance;
         switch (logMessage->logFlag) {
             // Note: By default ASL will filter anything above level 5 (Notice).
             // So our mappings shouldn't go above that level.
-            case LOG_FLAG_ERROR     : aslLogLevel = ASL_LEVEL_CRIT;     break;
-            case LOG_FLAG_WARN      : aslLogLevel = ASL_LEVEL_ERR;      break;
-            case LOG_FLAG_INFO      : aslLogLevel = ASL_LEVEL_WARNING;  break; // Regular NSLog's level
-            case LOG_FLAG_DEBUG     :
-            case LOG_FLAG_VERBOSE   :
+            case DDLogFlagError     : aslLogLevel = ASL_LEVEL_CRIT;     break;
+            case DDLogFlagWarning   : aslLogLevel = ASL_LEVEL_ERR;      break;
+            case DDLogFlagInfo      : aslLogLevel = ASL_LEVEL_WARNING;  break; // Regular NSLog's level
+            case DDLogFlagDebug     :
+            case DDLogFlagVerbose   :
             default                 : aslLogLevel = ASL_LEVEL_NOTICE;   break;
         }
 

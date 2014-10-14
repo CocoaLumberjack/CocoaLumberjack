@@ -47,7 +47,7 @@ UIColor *pink = [UIColor colorWithRed:(255/255.0) green:(58/255.0) blue:(159/255
 NSColor *pink = [NSColor colorWithCalibratedRed:(255/255.0) green:(58/255.0) blue:(159/255.0) alpha:1.0];
 #endif
 
-[[DDTTYLogger sharedInstance] setForegroundColor:pink backgroundColor:nil forFlag:LOG_FLAG_INFO];
+[[DDTTYLogger sharedInstance] setForegroundColor:pink backgroundColor:nil forFlag:DDLogFlagInfo];
 
 DDLogInfo(@"Warming up printer"); // Prints in Pink !
 ```
