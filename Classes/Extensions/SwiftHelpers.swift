@@ -38,49 +38,6 @@ extension DDLogFlag {
     }
 }
 
-extension DDLog {
-    public class var registeredClassesArray: [AnyClass] {
-        return registeredClasses() as [AnyClass]
-    }
-    
-    public class var registeredClassNamesArray: [String] {
-        return registeredClassNames() as [String]
-    }
-}
-
-extension DDASLLogCapture {
-    public class var captureLogLevels: DDLogLevel {
-        get {
-            return captureLogLevel()
-        }
-        set {
-            setCaptureLogLevel(newValue)
-        }
-    }
-}
-
-extension DDContextWhitelistFilterLogFormatter {
-    public var whitelistArray: [Int32] {
-        let ourWhitelist = self.whitelist as [Int]
-        var toRet = [Int32]()
-        for i in ourWhitelist {
-            toRet.append(Int32(i))
-        }
-        return toRet
-    }
-}
-
-extension DDContextBlacklistFilterLogFormatter {
-    public var blacklistArray: [Int32] {
-        let ourBlacklist = self.blacklist as [Int]
-        var toRet = [Int32]()
-        for i in ourBlacklist {
-            toRet.append(Int32(i))
-        }
-        return toRet
-    }
-}
-
 extension DDMultiFormatter {
     public var formatterArray: [DDLogFormatter] {
         return self.formatters as [DDLogFormatter]
