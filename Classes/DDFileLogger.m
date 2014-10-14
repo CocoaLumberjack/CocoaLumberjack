@@ -1137,7 +1137,7 @@ static int exception_count = 0;
 
 - (NSDate *)modificationDate {
     if (_modificationDate == nil) {
-        _modificationDate = [self fileAttributes][NSFileModificationDate];
+        _modificationDate = self.fileAttributes[NSFileModificationDate];
     }
 
     return _modificationDate;
@@ -1145,7 +1145,7 @@ static int exception_count = 0;
 
 - (NSDate *)creationDate {
     if (_creationDate == nil) {
-        _creationDate = [self fileAttributes][NSFileCreationDate];
+        _creationDate = self.fileAttributes[NSFileCreationDate];
     }
 
     return _creationDate;
@@ -1153,7 +1153,7 @@ static int exception_count = 0;
 
 - (unsigned long long)fileSize {
     if (_fileSize == 0) {
-        _fileSize = [[self fileAttributes][NSFileSize] unsignedLongLongValue];
+        _fileSize = [self.fileAttributes[NSFileSize] unsignedLongLongValue];
     }
 
     return _fileSize;
