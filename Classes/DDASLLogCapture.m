@@ -67,8 +67,12 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
 }
 
 + (void)aslMessageRecieved:(aslmsg)msg {
+    const char* messageCString = asl_get( msg, ASL_KEY_MSG );
+	if ( messageCString == NULL )
+	    return;
+	
     //  NSString * sender = [NSString stringWithCString:asl_get(msg, ASL_KEY_SENDER) encoding:NSUTF8StringEncoding];
-    NSString *message = [NSString stringWithCString:asl_get(msg, ASL_KEY_MSG) encoding:NSUTF8StringEncoding];
+    NSString *message = [NSString stringWithCString:messageCString encoding:NSUTF8StringEncoding];
     NSString *level = [NSString stringWithCString:asl_get(msg, ASL_KEY_LEVEL) encoding:NSUTF8StringEncoding];
     NSString *secondsStr = [NSString stringWithCString:asl_get(msg, ASL_KEY_TIME) encoding:NSUTF8StringEncoding];
     NSString *nanoStr = [NSString stringWithCString:asl_get(msg, ASL_KEY_TIME_NSEC) encoding:NSUTF8StringEncoding];
