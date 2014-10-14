@@ -1,5 +1,5 @@
 //
-//  SwiftHelpers.swift
+//  CocoaLumberjack.swift
 //  Lumberjack
 //
 //  Created by C.W. Betts on 9/25/14.

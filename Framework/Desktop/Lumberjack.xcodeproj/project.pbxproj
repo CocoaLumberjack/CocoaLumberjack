@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		557DF7C619E24B1D008254F8 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BE8BF319DF196300979D7F /* Formatter.swift */; };
-		55BCB5C719D4BB6E0096E784 /* SwiftHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BCB5C619D4BB6E0096E784 /* SwiftHelpers.swift */; };
+		55BCB5C719D4BB6E0096E784 /* CocoaLumberjack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BCB5C619D4BB6E0096E784 /* CocoaLumberjack.swift */; };
 		55BE8BD619DF190200979D7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BE8BD519DF190200979D7F /* AppDelegate.swift */; };
 		55BE8BD819DF190200979D7F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BE8BD719DF190200979D7F /* ViewController.swift */; };
 		55BE8BDB19DF190200979D7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55BE8BD919DF190200979D7F /* Main.storyboard */; };
@@ -99,7 +99,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		55BCB5C619D4BB6E0096E784 /* SwiftHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftHelpers.swift; sourceTree = "<group>"; };
+		55BCB5C619D4BB6E0096E784 /* CocoaLumberjack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CocoaLumberjack.swift; sourceTree = "<group>"; };
 		55BE8BD119DF190200979D7F /* iOSSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55BE8BD419DF190200979D7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55BE8BD519DF190200979D7F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -257,7 +257,7 @@
 		DA9C20CA192A0E0000AB7171 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				55BCB5C619D4BB6E0096E784 /* SwiftHelpers.swift */,
+				55BCB5C619D4BB6E0096E784 /* CocoaLumberjack.swift */,
 				DA9C20CB192A0E0000AB7171 /* DDContextFilterLogFormatter.h */,
 				DA9C20CC192A0E0000AB7171 /* DDContextFilterLogFormatter.m */,
 				DA9C20CD192A0E0000AB7171 /* DDDispatchQueueLogFormatter.h */,
@@ -617,7 +617,7 @@
 				DA9C20E3192A0E0000AB7171 /* DDMultiFormatter.m in Sources */,
 				DA9C20D2192A0E0000AB7171 /* DDAbstractDatabaseLogger.m in Sources */,
 				DA9C20D6192A0E0000AB7171 /* DDASLLogger.m in Sources */,
-				55BCB5C719D4BB6E0096E784 /* SwiftHelpers.swift in Sources */,
+				55BCB5C719D4BB6E0096E784 /* CocoaLumberjack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
