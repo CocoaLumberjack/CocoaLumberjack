@@ -23,7 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         DDLogWarn("Warn");
         DDLogError("Error");
         
-        setDefaultDebugLevel(ourLogLevel)
+        defaultDebugLevel = ourLogLevel
         
         DDLogVerbose("Verbose");
         DDLogInfo("Info");

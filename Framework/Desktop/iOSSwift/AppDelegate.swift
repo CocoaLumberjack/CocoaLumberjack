@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         printSomething()
         
-        setDefaultDebugLevel(ddloglevel)
+        defaultDebugLevel = ddloglevel
         
         printSomething()
         
