@@ -20,6 +20,10 @@
 @protocol DDLogger;
 @protocol DDLogFormatter;
 
+#ifndef NS_DESIGNATED_INITIALIZER
+#define NS_DESIGNATED_INITIALIZER
+#endif
+
 /**
  * This is the single macro that all other macros below compile into.
  * This big multiline macro makes all the other macros easier to read.
