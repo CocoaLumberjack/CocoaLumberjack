@@ -119,30 +119,44 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
 
 static inline aslmsg priv_ASLNext(aslresponse response)
 {
-#if (defined(__IPHONE_7_0) && IOS_DEPLOYMENT_TARGET >= __IPHONE_7_0) || (defined(__MAC_10_10) && MACOSX_DEPLOYMENT_TARGET >= __MAC_10_10)
-#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_7_0
-    if (asl_next)
-#endif
+#if (defined(__IPHONE_7_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0) || (defined(__MAC_10_10) && __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_10)
+#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IPHONEOS_DEPLOYMENT_TARGET < __IPHONE_7_0
+    // Building on more recent SDKs, targeting less-recent OS
+    if (asl_next) {
         return asl_next(response);
-#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_7_0
-    else
-#endif
-#endif
+    } else {
         return aslresponse_next(response);
+    }
+#else
+    // Building on more recent SDKs, targeting more recent OS
+    return asl_next(response);
+#endif
+    
+#else
+    // Building on old SDKs, targeting less-recent OS
+    return aslresponse_next(response);
+#endif
 }
 
 static inline void priv_ASLRelease(aslresponse response)
 {
-#if (defined(__IPHONE_7_0) && IOS_DEPLOYMENT_TARGET >= __IPHONE_7_0) || (defined(__MAC_10_10) && MACOSX_DEPLOYMENT_TARGET >= __MAC_10_10)
-#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_7_0
-    if (asl_release)
-#endif
+#if (defined(__IPHONE_7_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0) || (defined(__MAC_10_10) && __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_10)
+#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IPHONEOS_DEPLOYMENT_TARGET < __IPHONE_7_0
+    // Building on more recent SDKs, targeting less-recent OS
+    if (asl_release) {
         asl_release(response);
-#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IOS_DEPLOYMENT_TARGET < __IPHONE_7_0
-    else
-#endif
-#endif
+    } else {
         aslresponse_free(response);
+    }
+#else
+    // Building on more recent SDKs, targeting more recent OS
+    asl_release(response);
+#endif
+    
+#else
+    // Building on old SDKs, targeting less-recent OS
+    aslresponse_free(response);
+#endif
 }
 
 + (void)captureAslLogs {
