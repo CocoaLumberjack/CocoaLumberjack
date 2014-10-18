@@ -63,7 +63,14 @@
 #import "DDLogMacros.h"
 #import "DDAssertMacros.h"
 
+#import "DDASLLogCapture.h"
+#import "DDLog+LOGV.h"
+
 // Loggers
 #import "DDTTYLogger.h"
 #import "DDASLLogger.h"
 #import "DDFileLogger.h"
+#import "DDAbstractDatabaseLogger.h"
+#import "DDContextFilterLogFormatter.h"
+#import "DDDispatchQueueLogFormatter.h"
+#import "DDMultiFormatter.h"
