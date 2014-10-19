@@ -194,7 +194,7 @@ typedef NS_ENUM(NSUInteger, DDLogLevel) {
 #define LOG_FLAG_VERBOSE  DDLogFlagVerbose
 
 #define LOG_LEVEL_OFF     DDLogLevelOff
-#define LOG_LEVEL_ERROR   DDLogLeveError
+#define LOG_LEVEL_ERROR   DDLogLevelError
 #define LOG_LEVEL_WARN    DDLogLevelWarning
 #define LOG_LEVEL_INFO    DDLogLevelInfo
 #define LOG_LEVEL_DEBUG   DDLogLevelDebug
