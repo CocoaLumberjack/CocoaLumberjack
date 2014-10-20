@@ -59,11 +59,10 @@
 
 #import <Foundation/Foundation.h>
 
+// Macros
 #import "DDLog.h"
 #import "DDLogMacros.h"
 #import "DDAssertMacros.h"
-
-#import "DDASLLogCapture.h"
 #import "DDLog+LOGV.h"
 
 // Loggers
@@ -71,6 +70,18 @@
 #import "DDASLLogger.h"
 #import "DDFileLogger.h"
 #import "DDAbstractDatabaseLogger.h"
-#import "DDContextFilterLogFormatter.h"
-#import "DDDispatchQueueLogFormatter.h"
-#import "DDMultiFormatter.h"
+
+// Capture
+#import "DDASLLogCapture.h"
+
+// Extensions
+#if __has_include("DDContextFilterLogFormatter.h")
+    #import "DDContextFilterLogFormatter.h"
+#endif
+#if __has_include("DDDispatchQueueLogFormatter.h")
+    #import "DDDispatchQueueLogFormatter.h"
+#endif
+#if __has_include("DDMultiFormatter.h")
+    #import "DDMultiFormatter.h"
+#endif
+
