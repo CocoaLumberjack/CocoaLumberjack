@@ -182,7 +182,7 @@ typedef NS_ENUM(NSUInteger, DDLogLevel) {
     DDLogLevelInfo      = (DDLogLevelWarning | DDLogFlagInfo),          // 0...00111
     DDLogLevelDebug     = (DDLogLevelInfo | DDLogFlagDebug),            // 0...01111
     DDLogLevelVerbose   = (DDLogLevelDebug | DDLogFlagVerbose),         // 0...11111
-    DDLogLevelAll       = NSUIntegerMax                                 // 1111....11111 (LOG_LEVEL_VERBOSE plus any other flags)
+    DDLogLevelAll       = NSUIntegerMax                                 // 1111....11111 (DDLogLevelVerbose plus any other flags)
 };
 
 // Most preprocessor variables aren't available under Swift.
