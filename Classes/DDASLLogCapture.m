@@ -26,6 +26,27 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
 
 @implementation DDASLLogCapture
 
+aslmsg (*dd_asl_next)(asl_object_t);
+void (*dd_asl_release)(asl_object_t);
++(void) initialize
+{
+    #if defined(__IPHONE_8_0) || defined(__MAC_10_10)
+        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+                dd_asl_next    = &aslresponse_next;
+                dd_asl_release = &aslresponse_free;
+            #pragma GCC diagnostic pop
+        } else {
+            dd_asl_next    = &asl_next;
+            dd_asl_release = &asl_release;
+        }
+    #else
+        dd_asl_next    = &aslresponse_next;
+        dd_asl_release = &aslresponse_release;
+    #endif
+}
+
 + (void)start {
     // Ignore subsequent calls
     if (!_cancel) {
@@ -132,25 +153,6 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
         gettimeofday(&timeval, NULL);
         unsigned long long startTime = timeval.tv_sec;
         __block unsigned long long lastSeenID = 0;
-        
-        aslmsg (*dd_asl_next)(asl_object_t);
-        void (*dd_asl_release)(asl_object_t);
-        
-        #if defined(__IPHONE_8_0) || defined(__MAC_10_10)
-            if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
-                #pragma GCC diagnostic push
-                #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-                    dd_asl_next    = &aslresponse_next;
-                    dd_asl_release = &aslresponse_free;
-                #pragma GCC diagnostic pop
-            } else {
-                dd_asl_next    = &asl_next;
-                dd_asl_release = &asl_release;
-            }
-        #else
-            dd_asl_next    = &aslresponse_next;
-            dd_asl_release = &aslresponse_release;
-        #endif
         
         /*
            syslogd posts kNotifyASLDBUpdate (com.apple.system.logger.message)
