@@ -26,14 +26,35 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
 
 @implementation DDASLLogCapture
 
+aslmsg (*dd_asl_next)(asl_object_t);
+void (*dd_asl_release)(asl_object_t);
++(void) initialize
+{
+    #if defined(__IPHONE_8_0) || defined(__MAC_10_10)
+        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+                dd_asl_next    = &aslresponse_next;
+                dd_asl_release = &aslresponse_free;
+            #pragma GCC diagnostic pop
+        } else {
+            dd_asl_next    = &asl_next;
+            dd_asl_release = &asl_release;
+        }
+    #else
+        dd_asl_next    = &aslresponse_next;
+        dd_asl_release = &aslresponse_release;
+    #endif
+}
+
 + (void)start {
     // Ignore subsequent calls
     if (!_cancel) {
         return;
     }
-
+    
     _cancel = NO;
-
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
         [DDASLLogCapture captureAslLogs];
     });
@@ -55,9 +76,9 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
 
 + (void)configureAslQuery:(aslmsg)query {
     const char param[] = "7";  // ASL_LEVEL_DEBUG, which is everything. We'll rely on regular DDlog log level to filter
-
+    
     asl_set_query(query, ASL_KEY_LEVEL, param, ASL_QUERY_OP_LESS_EQUAL | ASL_QUERY_OP_NUMERIC);
-
+    
 #if !TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
     int processId = [[NSProcessInfo processInfo] processIdentifier];
     char pid[16];
@@ -68,9 +89,9 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
 
 + (void)aslMessageRecieved:(aslmsg)msg {
     const char* messageCString = asl_get( msg, ASL_KEY_MSG );
-	if ( messageCString == NULL )
-	    return;
-	
+    if ( messageCString == NULL )
+        return;
+    
     //  NSString * sender = [NSString stringWithCString:asl_get(msg, ASL_KEY_SENDER) encoding:NSUTF8StringEncoding];
     NSString *message = @(messageCString);
     NSString *level = @(asl_get(msg, ASL_KEY_LEVEL));
@@ -80,12 +101,12 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
     NSTimeInterval seconds = [secondsStr doubleValue];
     NSTimeInterval nanoSeconds = [nanoStr doubleValue];
     NSTimeInterval totalSeconds = seconds + (nanoSeconds / 1e9);
-
+    
     NSDate *timeStamp = [NSDate dateWithTimeIntervalSince1970:totalSeconds];
-
+    
     int flag;
     BOOL async;
-
+    
     switch ([level intValue]) {
         // By default all NSLog's with a ASL_LEVEL_WARNING level
         case ASL_LEVEL_EMERG    :
@@ -98,11 +119,11 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
         case ASL_LEVEL_DEBUG    :
         default                 : flag = DDLogFlagVerbose;  async = LOG_ASYNC_VERBOSE;  break;
     }
-
+    
     if (!(_captureLogLevel & flag)) {
         return;
     }
-
+    
     DDLogMessage *logMessage = [[DDLogMessage alloc]initWithLogMsg:message
                                                              level:_captureLogLevel
                                                               flag:flag
@@ -113,50 +134,8 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
                                                                tag:nil
                                                            options:0
                                                          timestamp:timeStamp];
-
+    
     [DDLog log:async message:logMessage];
-}
-
-static inline aslmsg priv_ASLNext(aslresponse response)
-{
-#if (defined(__IPHONE_7_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0) || (defined(__MAC_10_10) && __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_10)
-#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IPHONEOS_DEPLOYMENT_TARGET < __IPHONE_7_0
-    // Building on more recent SDKs, targeting less-recent OS
-    if (asl_next) {
-        return asl_next(response);
-    } else {
-        return aslresponse_next(response);
-    }
-#else
-    // Building on more recent SDKs, targeting more recent OS
-    return asl_next(response);
-#endif
-    
-#else
-    // Building on old SDKs, targeting less-recent OS
-    return aslresponse_next(response);
-#endif
-}
-
-static inline void priv_ASLRelease(aslresponse response)
-{
-#if (defined(__IPHONE_7_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0) || (defined(__MAC_10_10) && __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_10)
-#if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IPHONEOS_DEPLOYMENT_TARGET < __IPHONE_7_0
-    // Building on more recent SDKs, targeting less-recent OS
-    if (asl_release) {
-        asl_release(response);
-    } else {
-        aslresponse_free(response);
-    }
-#else
-    // Building on more recent SDKs, targeting more recent OS
-    asl_release(response);
-#endif
-    
-#else
-    // Building on old SDKs, targeting less-recent OS
-    aslresponse_free(response);
-#endif
 }
 
 + (void)captureAslLogs {
@@ -174,14 +153,14 @@ static inline void priv_ASLRelease(aslresponse response)
         gettimeofday(&timeval, NULL);
         unsigned long long startTime = timeval.tv_sec;
         __block unsigned long long lastSeenID = 0;
-
+        
         /*
            syslogd posts kNotifyASLDBUpdate (com.apple.system.logger.message)
            through the notify API when it saves messages to the ASL database.
            There is some coalescing - currently it is sent at most twice per
            second - but there is no documented guarantee about this. In any
            case, there may be multiple messages per notification.
-
+         
            Notify notifications don't carry any payload, so we need to search
            for the messages.
          */
@@ -193,7 +172,7 @@ static inline void priv_ASLRelease(aslresponse response)
             {
                 aslmsg query = asl_new(ASL_TYPE_QUERY);
                 char stringValue[64];
-
+                
                 if (lastSeenID > 0) {
                     snprintf(stringValue, sizeof stringValue, "%llu", lastSeenID);
                     asl_set_query(query, ASL_KEY_MSG_ID, stringValue, ASL_QUERY_OP_GREATER | ASL_QUERY_OP_NUMERIC);
@@ -201,26 +180,26 @@ static inline void priv_ASLRelease(aslresponse response)
                     snprintf(stringValue, sizeof stringValue, "%llu", startTime);
                     asl_set_query(query, ASL_KEY_TIME, stringValue, ASL_QUERY_OP_GREATER_EQUAL | ASL_QUERY_OP_NUMERIC);
                 }
-
+                
                 [DDASLLogCapture configureAslQuery:query];
-
+                
                 // Iterate over new messages.
                 aslmsg msg;
                 aslresponse response = asl_search(NULL, query);
-                while ((msg = priv_ASLNext(response)))
+                while ((msg = dd_asl_next(response)))
                 {
                     [DDASLLogCapture aslMessageRecieved:msg];
-
+                    
                     // Keep track of which messages we've seen.
                     lastSeenID = atoll(asl_get(msg, ASL_KEY_MSG_ID));
                 }
-                priv_ASLRelease(response);
-
+                dd_asl_release(response);
+                
                 if (_cancel) {
                     notify_cancel(notifyToken);
                     return;
                 }
-
+                
                 free(query);
             }
         });
