@@ -26,24 +26,30 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
 
 @implementation DDASLLogCapture
 
-aslmsg (*dd_asl_next)(asl_object_t);
-void (*dd_asl_release)(asl_object_t);
+aslmsg (*dd_asl_next)(aslresponse obj);
+void (*dd_asl_release)(aslresponse obj);
+
 +(void) initialize
 {
-    #if defined(__IPHONE_8_0) || defined(__MAC_10_10)
-        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
-            #pragma GCC diagnostic push
-            #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    #if (defined(__IPHONE_7_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0) || (defined(__MAC_10_10) && __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_10)
+        #if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IPHONEOS_DEPLOYMENT_TARGET < __IPHONE_7_0
+            // Building on more recent SDKs, targeting less-recent OS
+            if (asl_next) {
+                dd_asl_next    = &asl_next;
+                dd_asl_release = &asl_release;
+            } else {
                 dd_asl_next    = &aslresponse_next;
                 dd_asl_release = &aslresponse_free;
-            #pragma GCC diagnostic pop
-        } else {
+            }
+        #else
+            // Building on more recent SDKs, targeting more recent OS
             dd_asl_next    = &asl_next;
             dd_asl_release = &asl_release;
-        }
+        #endif
     #else
+        // Building on old SDKs, targeting less-recent OS
         dd_asl_next    = &aslresponse_next;
-        dd_asl_release = &aslresponse_release;
+        dd_asl_release = &aslresponse_free;
     #endif
 }
 
