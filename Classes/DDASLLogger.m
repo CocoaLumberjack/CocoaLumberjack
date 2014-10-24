@@ -89,7 +89,11 @@ static DDASLLogger *sharedInstance;
         uid_t const readUID = geteuid();
 
         char readUIDString[16];
+#ifndef NS_BLOCK_ASSERTIONS
         int l = snprintf(readUIDString, sizeof(readUIDString), "%d", readUID);
+#else
+        snprintf(readUIDString, sizeof(readUIDString), "%d", readUID);
+#endif
 
         NSAssert(l < sizeof(readUIDString),
                  @"Formatted euid is too long.");
