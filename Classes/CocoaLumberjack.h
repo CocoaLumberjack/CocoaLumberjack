@@ -69,19 +69,3 @@
 #import "DDTTYLogger.h"
 #import "DDASLLogger.h"
 #import "DDFileLogger.h"
-#import "DDAbstractDatabaseLogger.h"
-
-// Capture
-#import "DDASLLogCapture.h"
-
-// Extensions
-#if __has_include("DDContextFilterLogFormatter.h")
-    #import "DDContextFilterLogFormatter.h"
-#endif
-#if __has_include("DDDispatchQueueLogFormatter.h")
-    #import "DDDispatchQueueLogFormatter.h"
-#endif
-#if __has_include("DDMultiFormatter.h")
-    #import "DDMultiFormatter.h"
-#endif
-
