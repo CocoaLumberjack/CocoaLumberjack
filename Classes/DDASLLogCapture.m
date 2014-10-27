@@ -31,23 +31,28 @@ void (*dd_asl_release)(aslresponse obj);
 
 +(void) initialize
 {
-    #if (defined(__IPHONE_7_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0) || (defined(__MAC_10_10) && __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_10)
-        #if MACOSX_DEPLOYMENT_TARGET < __MAC_10_10 || IPHONEOS_DEPLOYMENT_TARGET < __IPHONE_7_0
-            // Building on more recent SDKs, targeting less-recent OS
-            if (asl_next) {
-                dd_asl_next    = &asl_next;
-                dd_asl_release = &asl_release;
-            } else {
+    #ifdef __IPHONE_8_0
+        #define DDASL_IOS_PIVOT_VERSION __IPHONE_8_0
+    #endif
+    #ifdef __MAC_10_10
+        #define DDASL_OSX_PIVOT_VERSION __MAC_10_10
+    #endif
+    
+    #if (defined(DDASL_IOS_PIVOT_VERSION) && __IPHONE_OS_VERSION_MAX_ALLOWED >= DDASL_IOS_PIVOT_VERSION) || (defined(DDASL_OSX_PIVOT_VERSION) && __MAC_OS_X_VERSION_MAX_ALLOWED >= DDASL_OSX_PIVOT_VERSION)
+        #if __IPHONE_OS_VERSION_MIN_REQUIRED < DDASL_IOS_PIVOT_VERSION || __MAC_OS_X_VERSION_MIN_REQUIRED < DDASL_OSX_PIVOT_VERSION
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+                // Building on falsely advertised SDK, targeting deprecated API
                 dd_asl_next    = &aslresponse_next;
                 dd_asl_release = &aslresponse_free;
-            }
+            #pragma GCC diagnostic pop
         #else
-            // Building on more recent SDKs, targeting more recent OS
+            // Building on lastest, correct SDK, targeting latest API
             dd_asl_next    = &asl_next;
             dd_asl_release = &asl_release;
         #endif
     #else
-        // Building on old SDKs, targeting less-recent OS
+        // Building on old SDKs, targeting deprecated API
         dd_asl_next    = &aslresponse_next;
         dd_asl_release = &aslresponse_free;
     #endif
