@@ -483,6 +483,7 @@
 				GCC_PREFIX_HEADER = "Lumberjack/Lumberjack-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = include/CocoaLumberjack;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -495,6 +496,7 @@
 				GCC_PREFIX_HEADER = "Lumberjack/Lumberjack-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = include/CocoaLumberjack;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
