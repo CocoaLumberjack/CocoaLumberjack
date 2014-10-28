@@ -24,20 +24,20 @@
 static BOOL _cancel = YES;
 static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
 
+#ifdef __IPHONE_8_0
+    #define DDASL_IOS_PIVOT_VERSION __IPHONE_8_0
+#endif
+#ifdef __MAC_10_10
+    #define DDASL_OSX_PIVOT_VERSION __MAC_10_10
+#endif
+
 @implementation DDASLLogCapture
 
 aslmsg (*dd_asl_next)(aslresponse obj);
 void (*dd_asl_release)(aslresponse obj);
 
-+(void) initialize
++ (void)initialize
 {
-    #ifdef __IPHONE_8_0
-        #define DDASL_IOS_PIVOT_VERSION __IPHONE_8_0
-    #endif
-    #ifdef __MAC_10_10
-        #define DDASL_OSX_PIVOT_VERSION __MAC_10_10
-    #endif
-    
     #if (defined(DDASL_IOS_PIVOT_VERSION) && __IPHONE_OS_VERSION_MAX_ALLOWED >= DDASL_IOS_PIVOT_VERSION) || (defined(DDASL_OSX_PIVOT_VERSION) && __MAC_OS_X_VERSION_MAX_ALLOWED >= DDASL_OSX_PIVOT_VERSION)
         #if __IPHONE_OS_VERSION_MIN_REQUIRED < DDASL_IOS_PIVOT_VERSION || __MAC_OS_X_VERSION_MIN_REQUIRED < DDASL_OSX_PIVOT_VERSION
             #pragma GCC diagnostic push
@@ -83,7 +83,7 @@ void (*dd_asl_release)(aslresponse obj);
     _captureLogLevel = LOG_LEVEL_XXX;
 }
 
-# pragma mark - Private methods
+#pragma mark - Private methods
 
 + (void)configureAslQuery:(aslmsg)query {
     const char param[] = "7";  // ASL_LEVEL_DEBUG, which is everything. We'll rely on regular DDlog log level to filter
