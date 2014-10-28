@@ -393,7 +393,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * If no formatter is set, the logger simply logs the message as it is given in logMessage,
  * or it may use its own built in formatting style.
  **/
-@property id <DDLogFormatter> logFormatter;
+@property (strong) id <DDLogFormatter> logFormatter;
 
 @optional
 
