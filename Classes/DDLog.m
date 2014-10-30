@@ -1091,8 +1091,8 @@ static char * dd_str_copy(const char *str) {
 - (void)dealloc {
     #if !OS_OBJECT_USE_OBJC
 
-    if (loggerQueue) {
-        dispatch_release(loggerQueue);
+    if (_loggerQueue) {
+        dispatch_release(_loggerQueue);
     }
 
     #endif
