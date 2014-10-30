@@ -1052,9 +1052,6 @@ static char * dd_str_copy(const char *str) {
 
 @implementation DDAbstractLogger
 
-@synthesize logFormatter = _logFormatter;
-@synthesize loggerQueue = _loggerQueue;
-
 - (instancetype)init {
     if ((self = [super init])) {
         const char *loggerQueueName = NULL;
