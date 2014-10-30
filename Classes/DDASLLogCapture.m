@@ -33,8 +33,8 @@ static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
 
 @implementation DDASLLogCapture
 
-aslmsg (*dd_asl_next)(aslresponse obj);
-void (*dd_asl_release)(aslresponse obj);
+static aslmsg (*dd_asl_next)(aslresponse obj);
+static void (*dd_asl_release)(aslresponse obj);
 
 + (void)initialize
 {
@@ -104,20 +104,20 @@ void (*dd_asl_release)(aslresponse obj);
         return;
     
     //  NSString * sender = [NSString stringWithCString:asl_get(msg, ASL_KEY_SENDER) encoding:NSUTF8StringEncoding];
-    NSString *message = [NSString stringWithCString:messageCString encoding:NSUTF8StringEncoding];
-    NSString *level = [NSString stringWithCString:asl_get(msg, ASL_KEY_LEVEL) encoding:NSUTF8StringEncoding];
-    NSString *secondsStr = [NSString stringWithCString:asl_get(msg, ASL_KEY_TIME) encoding:NSUTF8StringEncoding];
-    NSString *nanoStr = [NSString stringWithCString:asl_get(msg, ASL_KEY_TIME_NSEC) encoding:NSUTF8StringEncoding];
-    
+    NSString *message = @(messageCString);
+    NSString *level = @(asl_get(msg, ASL_KEY_LEVEL));
+    NSString *secondsStr = @(asl_get(msg, ASL_KEY_TIME));
+    NSString *nanoStr = @(asl_get(msg, ASL_KEY_TIME_NSEC));
+
     NSTimeInterval seconds = [secondsStr doubleValue];
     NSTimeInterval nanoSeconds = [nanoStr doubleValue];
     NSTimeInterval totalSeconds = seconds + (nanoSeconds / 1e9);
-    
+
     NSDate *timeStamp = [NSDate dateWithTimeIntervalSince1970:totalSeconds];
-    
+
     int flag;
     BOOL async;
-    
+
     switch ([level intValue]) {
         // By default all NSLog's with a ASL_LEVEL_WARNING level
         case ASL_LEVEL_EMERG    :
@@ -130,11 +130,11 @@ void (*dd_asl_release)(aslresponse obj);
         case ASL_LEVEL_DEBUG    :
         default                 : flag = DDLogFlagVerbose;  async = LOG_ASYNC_VERBOSE;  break;
     }
-    
+
     if (!(_captureLogLevel & flag)) {
         return;
     }
-    
+
     DDLogMessage *logMessage = [[DDLogMessage alloc]initWithLogMsg:message
                                                              level:_captureLogLevel
                                                               flag:flag
@@ -145,7 +145,7 @@ void (*dd_asl_release)(aslresponse obj);
                                                                tag:nil
                                                            options:0
                                                          timestamp:timeStamp];
-    
+
     [DDLog log:async message:logMessage];
 }
 
@@ -164,14 +164,14 @@ void (*dd_asl_release)(aslresponse obj);
         gettimeofday(&timeval, NULL);
         unsigned long long startTime = timeval.tv_sec;
         __block unsigned long long lastSeenID = 0;
-        
+
         /*
            syslogd posts kNotifyASLDBUpdate (com.apple.system.logger.message)
            through the notify API when it saves messages to the ASL database.
            There is some coalescing - currently it is sent at most twice per
            second - but there is no documented guarantee about this. In any
            case, there may be multiple messages per notification.
-         
+
            Notify notifications don't carry any payload, so we need to search
            for the messages.
          */
@@ -183,7 +183,7 @@ void (*dd_asl_release)(aslresponse obj);
             {
                 aslmsg query = asl_new(ASL_TYPE_QUERY);
                 char stringValue[64];
-                
+
                 if (lastSeenID > 0) {
                     snprintf(stringValue, sizeof stringValue, "%llu", lastSeenID);
                     asl_set_query(query, ASL_KEY_MSG_ID, stringValue, ASL_QUERY_OP_GREATER | ASL_QUERY_OP_NUMERIC);
@@ -191,9 +191,9 @@ void (*dd_asl_release)(aslresponse obj);
                     snprintf(stringValue, sizeof stringValue, "%llu", startTime);
                     asl_set_query(query, ASL_KEY_TIME, stringValue, ASL_QUERY_OP_GREATER_EQUAL | ASL_QUERY_OP_NUMERIC);
                 }
-                
+
                 [DDASLLogCapture configureAslQuery:query];
-                
+
                 // Iterate over new messages.
                 aslmsg msg;
                 aslresponse response = asl_search(NULL, query);
@@ -201,7 +201,7 @@ void (*dd_asl_release)(aslresponse obj);
                 while ((msg = dd_asl_next(response)))
                 {
                     [DDASLLogCapture aslMessageRecieved:msg];
-                    
+
                     // Keep track of which messages we've seen.
                     lastSeenID = atoll(asl_get(msg, ASL_KEY_MSG_ID));
                 }
@@ -211,7 +211,7 @@ void (*dd_asl_release)(aslresponse obj);
                     notify_cancel(notifyToken);
                     return;
                 }
-                
+
                 free(query);
             }
         });

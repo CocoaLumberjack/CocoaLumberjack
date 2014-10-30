@@ -20,6 +20,10 @@
 @protocol DDLogger;
 @protocol DDLogFormatter;
 
+#ifndef NS_DESIGNATED_INITIALIZER
+#define NS_DESIGNATED_INITIALIZER
+#endif
+
 /**
  * This is the single macro that all other macros below compile into.
  * This big multiline macro makes all the other macros easier to read.
@@ -201,11 +205,11 @@ typedef NS_ENUM(NSUInteger, DDLogLevel) {
 #define LOG_LEVEL_VERBOSE DDLogLevelVerbose
 #define LOG_LEVEL_ALL     DDLogLevelAll
 
-#define LOG_ERROR         (LOG_LEVEL_DEF & DDLogFlagError)
-#define LOG_WARN          (LOG_LEVEL_DEF & DDLogFlagWarning)
-#define LOG_INFO          (LOG_LEVEL_DEF & DDLogFlagInfo)
-#define LOG_DEBUG         (LOG_LEVEL_DEF & DDLogFlagDebug)
-#define LOG_VERBOSE       (LOG_LEVEL_DEF & DDLogFlagVerbose)
+#define LOG_ERROR         (LOG_LEVEL_DEF & LOG_FLAG_ERROR)
+#define LOG_WARN          (LOG_LEVEL_DEF & LOG_FLAG_WARN)
+#define LOG_INFO          (LOG_LEVEL_DEF & LOG_FLAG_INFO)
+#define LOG_DEBUG         (LOG_LEVEL_DEF & LOG_FLAG_DEBUG)
+#define LOG_VERBOSE       (LOG_LEVEL_DEF & LOG_FLAG_VERBOSE)
 
 #define LOG_ASYNC_ENABLED YES
 
@@ -284,6 +288,19 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
         tag:(id)tag
      format:(NSString *)format
        args:(va_list)argList;
+
+/**
+ * Logging Primitive.
+ **/
++ (void)log:(BOOL)asynchronous
+      level:(DDLogLevel)level
+       flag:(DDLogFlag)flag
+    context:(int)context
+       file:(const char *)file
+   function:(const char *)function
+       line:(int)line
+        tag:(id)tag
+     string:(NSString *)string;
 
 /**
  * Logging Primitive.
@@ -393,7 +410,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * If no formatter is set, the logger simply logs the message as it is given in logMessage,
  * or it may use its own built in formatting style.
  **/
-@property id <DDLogFormatter> logFormatter;
+@property (nonatomic, readwrite) id <DDLogFormatter> logFormatter;
 
 @optional
 
@@ -428,7 +445,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * Thus, a dedicated dispatch queue is used for each logger.
  * Logger implementations may optionally choose to provide their own dispatch queue.
  **/
-- (dispatch_queue_t)loggerQueue;
+@property (readonly) dispatch_queue_t loggerQueue;
 
 /**
  * If the logger implementation does not choose to provide its own queue,
@@ -436,7 +453,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * The created queue will receive its name from this method.
  * This may be helpful for debugging or profiling reasons.
  **/
-- (NSString *)loggerName;
+@property (readonly) NSString *loggerName;
 
 @end
 
@@ -518,11 +535,10 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * If you write custom loggers or formatters, you will be dealing with objects of this class.
  **/
 
-enum {
+typedef NS_OPTIONS(NSInteger, DDLogMessageOptions) {
     DDLogMessageCopyFile     = 1 << 0,
     DDLogMessageCopyFunction = 1 << 1
 };
-typedef int   DDLogMessageOptions;
 
 @interface DDLogMessage : NSObject <NSCopying>
 {
@@ -582,25 +598,45 @@ typedef int   DDLogMessageOptions;
                           line:(int)line
                            tag:(id)tag
                        options:(DDLogMessageOptions)optionsMask
-                     timestamp:(NSDate *)aTimestamp;
+                     timestamp:(NSDate *)aTimestamp NS_DESIGNATED_INITIALIZER;
 
 /**
  * Returns the threadID as it appears in NSLog.
  * That is, it is a hexadecimal value which is calculated from the machThreadID.
  **/
-- (NSString *)threadID;
+@property (readonly, copy) NSString *threadID;
 
 /**
  * Convenience property to get just the file name, as the file variable is generally the full file path.
  * This method does not include the file extension, which is generally unwanted for logging purposes.
  **/
-- (NSString *)fileName;
+@property (readonly, copy) NSString *fileName;
 
 /**
  * Returns the function variable in NSString form.
  **/
-- (NSString *)methodName;
+@property (readonly, copy) NSString *methodName;
 
+/**
+ * For languages that can't access the variables directly (for instance, Swift)
+ **/
+@property (readonly) DDLogLevel logLevel;
+@property (readonly) DDLogFlag logFlag;
+@property (readonly) int logContext;
+@property (readonly, copy) NSString *logMessage;
+@property (readonly, copy) NSDate *timestamp;
+@property (readonly) char *file;
+@property (readonly) char *function;
+@property (readonly) int lineNumber;
+@property (readonly) mach_port_t machThreadID;
+@property (readonly) char *queueLabel;
+@property (readonly, copy) NSString *threadName;
+
+// For 3rd party extensions to the framework, where flags and contexts aren't enough.
+@property (readwrite, strong) id tag;
+
+// For 3rd party extensions that manually create DDLogMessage instances.
+@property (readwrite) DDLogMessageOptions options;
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -630,10 +666,10 @@ typedef int   DDLogMessageOptions;
 
     dispatch_queue_t loggerQueue;
 }
-@property (strong) id <DDLogFormatter> logFormatter;
+@property (nonatomic, strong) id <DDLogFormatter> logFormatter;
 
 // For thread-safety assertions
-- (BOOL)isOnGlobalLoggingQueue;
-- (BOOL)isOnInternalLoggerQueue;
+@property (getter=isOnGlobalLoggingQueue, readonly) BOOL onGlobalLoggingQueue;
+@property (getter=isOnInternalLoggerQueue, readonly) BOOL onInternalLoggerQueue;
 
 @end

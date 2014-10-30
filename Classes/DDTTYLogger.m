@@ -814,7 +814,7 @@ static DDTTYLogger *sharedInstance;
     return sharedInstance;
 }
 
-- (id)init {
+- (instancetype)init {
     if (sharedInstance != nil) {
         return nil;
     }
@@ -968,7 +968,7 @@ static DDTTYLogger *sharedInstance;
             }
 
             if (i < [_colorProfilesArray count]) {
-                [_colorProfilesArray replaceObjectAtIndex:i withObject:newColorProfile];
+                _colorProfilesArray[i] = newColorProfile;
             } else {
                 [_colorProfilesArray addObject:newColorProfile];
             }
@@ -1003,7 +1003,7 @@ static DDTTYLogger *sharedInstance;
 
             NSLogInfo(@"DDTTYLogger: newColorProfile: %@", newColorProfile);
 
-            [_colorProfilesDict setObject:newColorProfile forKey:tag];
+            _colorProfilesDict[tag] = newColorProfile;
         }
     };
 
@@ -1167,7 +1167,7 @@ static DDTTYLogger *sharedInstance;
 
         if (_colorsEnabled) {
             if (logMessage->tag) {
-                colorProfile = [_colorProfilesDict objectForKey:logMessage->tag];
+                colorProfile = _colorProfilesDict[logMessage->tag];
             }
 
             if (colorProfile == nil) {
@@ -1392,7 +1392,7 @@ static DDTTYLogger *sharedInstance;
             // Map foreground color to closest available shell color
 
             fgCodeIndex = [DDTTYLogger codeIndexForColor:fgColor];
-            fgCodeRaw   = [codes_fg objectAtIndex:fgCodeIndex];
+            fgCodeRaw   = codes_fg[fgCodeIndex];
 
             NSString *escapeSeq = @"\033[";
 
@@ -1425,7 +1425,7 @@ static DDTTYLogger *sharedInstance;
             // Map background color to closest available shell color
 
             bgCodeIndex = [DDTTYLogger codeIndexForColor:bgColor];
-            bgCodeRaw   = [codes_bg objectAtIndex:bgCodeIndex];
+            bgCodeRaw   = codes_bg[bgCodeIndex];
 
             NSString *escapeSeq = @"\033[";
 

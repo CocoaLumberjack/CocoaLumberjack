@@ -2,15 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../README.md">
-   </FileRef>
-   <FileRef
-      location = "group:../LICENSE.txt">
-   </FileRef>
-   <FileRef
-      location = "group:../Documentation">
-   </FileRef>
-   <FileRef
       location = "group:../Classes">
    </FileRef>
    <FileRef

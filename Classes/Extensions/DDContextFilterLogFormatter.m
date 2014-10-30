@@ -25,7 +25,7 @@
 - (void)addToSet:(int)loggingContext;
 - (void)removeFromSet:(int)loggingContext;
 
-- (NSArray *)currentSet;
+@property (readonly, copy) NSArray *currentSet;
 
 - (BOOL)isInSet:(int)loggingContext;
 
@@ -44,7 +44,7 @@
 
 @implementation DDContextWhitelistFilterLogFormatter
 
-- (id)init {
+- (instancetype)init {
     if ((self = [super init])) {
         _contextSet = [[DDLoggingContextSet alloc] init];
     }
@@ -91,7 +91,7 @@
 
 @implementation DDContextBlacklistFilterLogFormatter
 
-- (id)init {
+- (instancetype)init {
     if ((self = [super init])) {
         _contextSet = [[DDLoggingContextSet alloc] init];
     }
@@ -140,7 +140,7 @@
 
 @implementation DDLoggingContextSet
 
-- (id)init {
+- (instancetype)init {
     if ((self = [super init])) {
         _set = [[NSMutableSet alloc] init];
     }

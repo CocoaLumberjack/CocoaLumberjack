@@ -345,6 +345,19 @@ static unsigned int numProcessors;
    function:(const char *)function
        line:(int)line
         tag:(id)tag
+     string:(NSString *)string
+{
+    [self log:asynchronous level:level flag:flag context:context file:file function:function line:line tag:tag format:@"%@", string];
+}
+
++ (void)log:(BOOL)asynchronous
+      level:(DDLogLevel)level
+       flag:(DDLogFlag)flag
+    context:(int)context
+       file:(const char *)file
+   function:(const char *)function
+       line:(int)line
+        tag:(id)tag
      format:(NSString *)format
        args:(va_list)args {
     if (format) {
@@ -821,6 +834,20 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation DDLogMessage
+@synthesize lineNumber;
+@synthesize options;
+@synthesize queueLabel;
+@synthesize timestamp;
+@synthesize logFlag;
+@synthesize tag;
+@synthesize threadName;
+@synthesize threadID;
+@synthesize logContext;
+@synthesize logLevel;
+@synthesize logMessage = logMsg;
+@synthesize file;
+@synthesize function;
+@synthesize machThreadID;
 
 static char * dd_str_copy(const char *str) {
     if (str == NULL) {
@@ -912,7 +939,7 @@ static char * dd_str_copy(const char *str) {
                        options:(DDLogMessageOptions)optionsMask
                      timestamp:(NSDate *)aTimestamp {
     if ((self = [super init])) {
-        logMsg     = msg;
+        logMsg     = [msg copy];
         logLevel   = level;
         logFlag    = flag;
         logContext = context;
@@ -1026,7 +1053,7 @@ static char * dd_str_copy(const char *str) {
 @implementation DDAbstractLogger
 @synthesize logFormatter = formatter;
 
-- (id)init {
+- (instancetype)init {
     if ((self = [super init])) {
         const char *loggerQueueName = NULL;
 

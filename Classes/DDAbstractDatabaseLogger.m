@@ -32,7 +32,7 @@
 
 @implementation DDAbstractDatabaseLogger
 
-- (id)init {
+- (instancetype)init {
     if ((self = [super init])) {
         _saveThreshold = 500;
         _saveInterval = 60;           // 60 seconds
