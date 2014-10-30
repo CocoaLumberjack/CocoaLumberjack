@@ -400,7 +400,6 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @protocol DDLogger <NSObject>
-@required
 
 - (void)logMessage:(DDLogMessage *)logMessage;
 
@@ -410,7 +409,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * If no formatter is set, the logger simply logs the message as it is given in logMessage,
  * or it may use its own built in formatting style.
  **/
-@property (nonatomic, readwrite) id <DDLogFormatter> logFormatter;
+@property (nonatomic, strong) id <DDLogFormatter> logFormatter;
 
 @optional
 
@@ -445,7 +444,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * Thus, a dedicated dispatch queue is used for each logger.
  * Logger implementations may optionally choose to provide their own dispatch queue.
  **/
-@property (readonly) dispatch_queue_t loggerQueue;
+@property (nonatomic, readonly) dispatch_queue_t loggerQueue;
 
 /**
  * If the logger implementation does not choose to provide its own queue,
@@ -453,7 +452,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * The created queue will receive its name from this method.
  * This may be helpful for debugging or profiling reasons.
  **/
-@property (readonly) NSString *loggerName;
+@property (nonatomic, readonly) NSString *loggerName;
 
 @end
 
@@ -662,14 +661,17 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions) {
 
 @interface DDAbstractLogger : NSObject <DDLogger>
 {
-    id <DDLogFormatter> formatter;
-
-    dispatch_queue_t loggerQueue;
+    // Direct accessors to be used only for performance purposes
+    id <DDLogFormatter> _logFormatter;
+    dispatch_queue_t _loggerQueue;
 }
+
 @property (nonatomic, strong) id <DDLogFormatter> logFormatter;
+@property (nonatomic, readwrite) dispatch_queue_t loggerQueue;
 
 // For thread-safety assertions
 @property (getter=isOnGlobalLoggingQueue, readonly) BOOL onGlobalLoggingQueue;
 @property (getter=isOnInternalLoggerQueue, readonly) BOOL onInternalLoggerQueue;
 
 @end
+

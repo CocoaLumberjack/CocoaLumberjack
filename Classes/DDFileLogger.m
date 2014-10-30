@@ -617,7 +617,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
         logFileManager = aLogFileManager;
 
-        formatter = [[DDLogFileFormatterDefault alloc] init];
+        self.logFormatter = [DDLogFileFormatterDefault new];
     }
 
     return self;
@@ -667,7 +667,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
 
     dispatch_sync(globalLoggingQueue, ^{
-        dispatch_sync(loggerQueue, block);
+        dispatch_sync(self.loggerQueue, block);
     });
 
     return result;
@@ -697,7 +697,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
 
     dispatch_async(globalLoggingQueue, ^{
-        dispatch_async(loggerQueue, block);
+        dispatch_async(self.loggerQueue, block);
     });
 }
 
@@ -724,7 +724,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
 
     dispatch_sync(globalLoggingQueue, ^{
-        dispatch_sync(loggerQueue, block);
+        dispatch_sync(self.loggerQueue, block);
     });
 
     return result;
@@ -754,7 +754,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
 
     dispatch_async(globalLoggingQueue, ^{
-        dispatch_async(loggerQueue, block);
+        dispatch_async(self.loggerQueue, block);
     });
 }
 
@@ -784,7 +784,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     NSLogVerbose(@"DDFileLogger: logFileCreationDate: %@", logFileCreationDate);
     NSLogVerbose(@"DDFileLogger: logFileRollingDate : %@", logFileRollingDate);
 
-    _rollingTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, loggerQueue);
+    _rollingTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.loggerQueue);
 
     dispatch_source_set_event_handler(_rollingTimer, ^{ @autoreleasepool {
                                                            [self maybeRollLogFileDueToAge];
@@ -834,7 +834,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -988,7 +988,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
                     DISPATCH_SOURCE_TYPE_VNODE,
                     [_currentLogFileHandle fileDescriptor],
                     DISPATCH_VNODE_DELETE | DISPATCH_VNODE_RENAME,
-                    loggerQueue
+                    self.loggerQueue
                     );
 
             dispatch_source_set_event_handler(_currentLogFileVnode, ^{ @autoreleasepool {
@@ -1019,8 +1019,8 @@ static int exception_count = 0;
     NSString *logMsg = logMessage->logMsg;
     BOOL isFormatted = NO;
 
-    if (formatter) {
-        logMsg = [formatter formatLogMessage:logMessage];
+    if (_logFormatter) {
+        logMsg = [_logFormatter formatLogMessage:logMessage];
         isFormatted = logMsg != logMessage->logMsg;
     }
 

@@ -903,7 +903,7 @@ static DDTTYLogger *sharedInstance;
     __block BOOL result;
 
     dispatch_sync(globalLoggingQueue, ^{
-        dispatch_sync(loggerQueue, ^{
+        dispatch_sync(self.loggerQueue, ^{
             result = _colorsEnabled;
         });
     });
@@ -938,7 +938,7 @@ static DDTTYLogger *sharedInstance;
     dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
 
     dispatch_async(globalLoggingQueue, ^{
-        dispatch_async(loggerQueue, block);
+        dispatch_async(self.loggerQueue, block);
     });
 }
 
@@ -985,7 +985,7 @@ static DDTTYLogger *sharedInstance;
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -1017,7 +1017,7 @@ static DDTTYLogger *sharedInstance;
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -1055,7 +1055,7 @@ static DDTTYLogger *sharedInstance;
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -1079,7 +1079,7 @@ static DDTTYLogger *sharedInstance;
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -1101,7 +1101,7 @@ static DDTTYLogger *sharedInstance;
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -1123,7 +1123,7 @@ static DDTTYLogger *sharedInstance;
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -1146,7 +1146,7 @@ static DDTTYLogger *sharedInstance;
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -1155,8 +1155,8 @@ static DDTTYLogger *sharedInstance;
     NSString *logMsg = logMessage->logMsg;
     BOOL isFormatted = NO;
 
-    if (formatter) {
-        logMsg = [formatter formatLogMessage:logMessage];
+    if (_logFormatter) {
+        logMsg = [_logFormatter formatLogMessage:logMessage];
         isFormatted = logMsg != logMessage->logMsg;
     }
 
