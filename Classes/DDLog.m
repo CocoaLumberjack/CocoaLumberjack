@@ -1051,7 +1051,9 @@ static char * dd_str_copy(const char *str) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation DDAbstractLogger
-@synthesize logFormatter = formatter;
+
+@synthesize logFormatter = _logFormatter;
+@synthesize loggerQueue = _loggerQueue;
 
 - (instancetype)init {
     if ((self = [super init])) {
@@ -1061,7 +1063,7 @@ static char * dd_str_copy(const char *str) {
             loggerQueueName = [[self loggerName] UTF8String];
         }
 
-        loggerQueue = dispatch_queue_create(loggerQueueName, NULL);
+        _loggerQueue = dispatch_queue_create(loggerQueueName, NULL);
 
         // We're going to use dispatch_queue_set_specific() to "mark" our loggerQueue.
         // Later we can use dispatch_get_specific() to determine if we're executing on our loggerQueue.
@@ -1080,7 +1082,7 @@ static char * dd_str_copy(const char *str) {
         void *key = (__bridge void *)self;
         void *nonNullValue = (__bridge void *)self;
 
-        dispatch_queue_set_specific(loggerQueue, key, nonNullValue, NULL);
+        dispatch_queue_set_specific(_loggerQueue, key, nonNullValue, NULL);
     }
 
     return self;
@@ -1158,8 +1160,8 @@ static char * dd_str_copy(const char *str) {
     __block id <DDLogFormatter> result;
 
     dispatch_sync(globalLoggingQueue, ^{
-        dispatch_sync(loggerQueue, ^{
-            result = formatter;
+        dispatch_sync(_loggerQueue, ^{
+            result = _logFormatter;
         });
     });
 
@@ -1174,15 +1176,15 @@ static char * dd_str_copy(const char *str) {
 
     dispatch_block_t block = ^{
         @autoreleasepool {
-            if (formatter != logFormatter) {
-                if ([formatter respondsToSelector:@selector(willRemoveFromLogger:)]) {
-                    [formatter willRemoveFromLogger:self];
+            if (_logFormatter != logFormatter) {
+                if ([_logFormatter respondsToSelector:@selector(willRemoveFromLogger:)]) {
+                    [_logFormatter willRemoveFromLogger:self];
                 }
 
-                formatter = logFormatter;
+                _logFormatter = logFormatter;
 
-                if ([formatter respondsToSelector:@selector(didAddToLogger:)]) {
-                    [formatter didAddToLogger:self];
+                if ([_logFormatter respondsToSelector:@selector(didAddToLogger:)]) {
+                    [_logFormatter didAddToLogger:self];
                 }
             }
         }
@@ -1191,12 +1193,12 @@ static char * dd_str_copy(const char *str) {
     dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
 
     dispatch_async(globalLoggingQueue, ^{
-        dispatch_async(loggerQueue, block);
+        dispatch_async(_loggerQueue, block);
     });
 }
 
 - (dispatch_queue_t)loggerQueue {
-    return loggerQueue;
+    return _loggerQueue;
 }
 
 - (NSString *)loggerName {

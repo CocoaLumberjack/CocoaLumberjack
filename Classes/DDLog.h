@@ -661,14 +661,17 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions) {
 
 @interface DDAbstractLogger : NSObject <DDLogger>
 {
-    id <DDLogFormatter> formatter;
-
-    dispatch_queue_t loggerQueue;
+    // Direct accessors to be used only for performance purposes
+    id <DDLogFormatter> _logFormatter;
+    dispatch_queue_t _loggerQueue;
 }
+
 @property (nonatomic, strong) id <DDLogFormatter> logFormatter;
+@property (nonatomic, readwrite) dispatch_queue_t loggerQueue;
 
 // For thread-safety assertions
 @property (getter=isOnGlobalLoggingQueue, readonly) BOOL onGlobalLoggingQueue;
 @property (getter=isOnInternalLoggerQueue, readonly) BOOL onInternalLoggerQueue;
 
 @end
+
