@@ -59,6 +59,11 @@
 
 #import <Foundation/Foundation.h>
 
+// Legacy
+#ifndef DDLEGACY
+    #define DDLEGACY NO
+#endif
+
 // Macros
 #import "DDLog.h"
 #import "DDLogMacros.h"
