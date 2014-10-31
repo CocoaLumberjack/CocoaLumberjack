@@ -20,13 +20,8 @@
 #endif
 
 @class DDLogMessage;
-
 @protocol DDLogger;
 @protocol DDLogFormatter;
-
-#ifndef NS_DESIGNATED_INITIALIZER
-#define NS_DESIGNATED_INITIALIZER
-#endif
 
 /**
  * Define the standard options.
@@ -93,21 +88,21 @@
  **/
 
 typedef NS_OPTIONS(NSUInteger, DDLogFlag) {
-    DDLogFlagError      = (1 << 0),  // 0...00001
-    DDLogFlagWarning    = (1 << 1),  // 0...00010
-    DDLogFlagInfo       = (1 << 2),  // 0...00100
-    DDLogFlagDebug      = (1 << 3),  // 0...01000
-    DDLogFlagVerbose    = (1 << 4)   // 0...10000
+    DDLogFlagError      = (1 << 0), // 0...00001
+    DDLogFlagWarning    = (1 << 1), // 0...00010
+    DDLogFlagInfo       = (1 << 2), // 0...00100
+    DDLogFlagDebug      = (1 << 3), // 0...01000
+    DDLogFlagVerbose    = (1 << 4)  // 0...10000
 };
 
 typedef NS_ENUM(NSUInteger, DDLogLevel) {
     DDLogLevelOff       = 0,
-    DDLogLevelError     = (DDLogFlagError),                             // 0...00001
-    DDLogLevelWarning   = (DDLogLevelError | DDLogFlagWarning),         // 0...00011
-    DDLogLevelInfo      = (DDLogLevelWarning | DDLogFlagInfo),          // 0...00111
-    DDLogLevelDebug     = (DDLogLevelInfo | DDLogFlagDebug),            // 0...01111
-    DDLogLevelVerbose   = (DDLogLevelDebug | DDLogFlagVerbose),         // 0...11111
-    DDLogLevelAll       = NSUIntegerMax                                 // 1111....11111 (DDLogLevelVerbose plus any other flags)
+    DDLogLevelError     = (DDLogFlagError),                       // 0...00001
+    DDLogLevelWarning   = (DDLogLevelError   | DDLogFlagWarning), // 0...00011
+    DDLogLevelInfo      = (DDLogLevelWarning | DDLogFlagInfo),    // 0...00111
+    DDLogLevelDebug     = (DDLogLevelInfo    | DDLogFlagDebug),   // 0...01111
+    DDLogLevelVerbose   = (DDLogLevelDebug   | DDLogFlagVerbose), // 0...11111
+    DDLogLevelAll       = NSUIntegerMax                           // 1111....11111 (DDLogLevelVerbose plus any other flags)
 };
 
 /**
@@ -419,6 +414,10 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#ifndef NS_DESIGNATED_INITIALIZER
+    #define NS_DESIGNATED_INITIALIZER
+#endif
 
 /**
  * The DDLogMessage class encapsulates information about the log message.
