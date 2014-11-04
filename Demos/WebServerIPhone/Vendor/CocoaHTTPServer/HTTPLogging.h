@@ -30,12 +30,12 @@
  * Define your logging level in your implementation file:
  * 
  * // Log levels: off, error, warn, info, verbose
- * static const int httpLogLevel = HTTP_DDLogLevelVerbose;
+ * static const DDLogLevel httpLogLevel = DDLogLevelVerbose;
  * 
  * If you wish to enable tracing, you could do something like this:
  * 
  * // Debug levels: off, error, warn, info, verbose
- * static const int httpLogLevel = HTTP_DDLogLevelInfo | HTTP_LOG_FLAG_TRACE;
+ * static const DDLogLevel httpLogLevel = DDLogLevelInfo | HTTP_LOG_FLAG_TRACE;
  * 
  * Step 3:
  * Replace your NSLog statements with HTTPLog statements according to the severity of the message.
@@ -54,19 +54,6 @@
 
 #define HTTP_LOG_CONTEXT 80
 
-// Configure log levels.
-
-#define HTTP_DDLogFlagError   (1 << 0) // 0...00001
-#define HTTP_DDLogFlagWarning (1 << 1) // 0...00010
-#define HTTP_DDLogFlagInfo    (1 << 2) // 0...00100
-#define HTTP_DDLogFlagVerbose (1 << 3) // 0...01000
-
-#define HTTP_DDLogLevelOff     0                                                // 0...00000
-#define HTTP_DDLogLevelError   (HTTP_DDLogLevelOff     | HTTP_DDLogFlagError)   // 0...00001
-#define HTTP_DDLogLevelWarning (HTTP_DDLogLevelError   | HTTP_DDLogFlagWarning) // 0...00011
-#define HTTP_DDLogLevelInfo    (HTTP_DDLogLevelWarning | HTTP_DDLogFlagInfo)    // 0...00111
-#define HTTP_DDLogLevelVerbose (HTTP_DDLogLevelInfo    | HTTP_DDLogFlagVerbose) // 0...01111
-
 // Setup fine grained logging.
 // The first 4 bits are being used by the standard log levels (0 - 3)
 // 
@@ -82,21 +69,15 @@
 #define HTTP_LOG_ASYNC_ENABLED   YES
 
 // Define logging primitives.
-#define HTTPLogError(frmt, ...)    LOG_MAYBE(NO,                        httpLogLevel, HTTP_DDLogFlagError,   \
-                                                  HTTP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define HTTPLogError(frmt, ...)    LOG_MAYBE(NO,                     httpLogLevel, DDLogFlagError,      HTTP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 
-#define HTTPLogWarn(frmt, ...)     LOG_MAYBE(HTTP_LOG_ASYNC_ENABLED,    httpLogLevel, HTTP_DDLogFlagWarning, \
-                                                  HTTP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define HTTPLogWarn(frmt, ...)     LOG_MAYBE(HTTP_LOG_ASYNC_ENABLED, httpLogLevel, DDLogFlagWarning,    HTTP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 
-#define HTTPLogInfo(frmt, ...)     LOG_MAYBE(HTTP_LOG_ASYNC_ENABLED,    httpLogLevel, HTTP_DDLogFlagInfo,    \
-                                                  HTTP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define HTTPLogInfo(frmt, ...)     LOG_MAYBE(HTTP_LOG_ASYNC_ENABLED, httpLogLevel, DDLogFlagInfo,       HTTP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 
-#define HTTPLogVerbose(frmt, ...)  LOG_MAYBE(HTTP_LOG_ASYNC_ENABLED, httpLogLevel, HTTP_DDLogFlagVerbose,    \
-                                                  HTTP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define HTTPLogVerbose(frmt, ...)  LOG_MAYBE(HTTP_LOG_ASYNC_ENABLED, httpLogLevel, DDLogFlagVerbose,    HTTP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 
-#define HTTPLogTrace()             LOG_MAYBE(HTTP_LOG_ASYNC_ENABLED, nil, __PRETTY_FUNCTION__,   httpLogLevel, HTTP_LOG_FLAG_TRACE,    \
-                                                  HTTP_LOG_CONTEXT, @"%@[%p]: %@", THIS_FILE, self, THIS_METHOD)
+#define HTTPLogTrace()             LOG_MAYBE(HTTP_LOG_ASYNC_ENABLED, httpLogLevel, HTTP_LOG_FLAG_TRACE, HTTP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, @"%@[%p]: %@", THIS_FILE, self, THIS_METHOD)
 
-#define HTTPLogTrace2(frmt, ...)   LOG_MAYBE(HTTP_LOG_ASYNC_ENABLED,   httpLogLevel, HTTP_LOG_FLAG_TRACE,    \
-                                                  HTTP_LOG_CONTEXT, frmt, ##__VA_ARGS__)
+#define HTTPLogTrace2(frmt, ...)   LOG_MAYBE(HTTP_LOG_ASYNC_ENABLED, httpLogLevel, HTTP_LOG_FLAG_TRACE, HTTP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 
