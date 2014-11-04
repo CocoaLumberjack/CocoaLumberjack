@@ -64,13 +64,18 @@
     #define DDLEGACY NO
 #endif
 
-// Macros
+// Core
 #import "DDLog.h"
+
+// Main macros
 #import "DDLogMacros.h"
 #import "DDAssertMacros.h"
-#import "DDLog+LOGV.h"
+
+// Capture ASL
+#import "DDASLLogCapture.h"
 
 // Loggers
 #import "DDTTYLogger.h"
 #import "DDASLLogger.h"
 #import "DDFileLogger.h"
+
