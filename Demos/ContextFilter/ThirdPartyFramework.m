@@ -10,11 +10,11 @@
 
 #define TP_LOG_CONTEXT 1044
 
-#define TPLogError(frmt, ...)   LOG_MAYBE(NO,                LOG_LEVEL_DEF, DDLogFlagError,   TP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-#define TPLogWarn(frmt, ...)    LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagWarning, TP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-#define TPLogInfo(frmt, ...)    LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagInfo,    TP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-#define TPLogDebug(frmt, ...)   LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagDebug,   TP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-#define TPLogVerbose(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagVerbose, TP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define TPLogError(frmt, ...)   LOG_MAYBE(NO,                tpLogLevel, DDLogFlagError,   TP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define TPLogWarn(frmt, ...)    LOG_MAYBE(LOG_ASYNC_ENABLED, tpLogLevel, DDLogFlagWarning, TP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define TPLogInfo(frmt, ...)    LOG_MAYBE(LOG_ASYNC_ENABLED, tpLogLevel, DDLogFlagInfo,    TP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define TPLogDebug(frmt, ...)   LOG_MAYBE(LOG_ASYNC_ENABLED, tpLogLevel, DDLogFlagDebug,   TP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define TPLogVerbose(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, tpLogLevel, DDLogFlagVerbose, TP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 
 // Log levels: off, error, warn, info, verbose
 static const int tpLogLevel = DDLogLevelVerbose;

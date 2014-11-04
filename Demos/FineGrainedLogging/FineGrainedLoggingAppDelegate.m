@@ -8,7 +8,6 @@
 // Debug levels: off, error, warn, info, verbose
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
-
 @implementation FineGrainedLoggingAppDelegate
 
 @synthesize window;

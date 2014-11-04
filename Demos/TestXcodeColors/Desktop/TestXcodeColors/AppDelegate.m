@@ -74,7 +74,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 static NSString *const PurpleTag = @"PurpleTag";
 
-#define DDLogPurple(frmt, ...) LOG_OBJC_TAG_MACRO(NO, 0, 0, 0, PurpleTag, frmt, ##__VA_ARGS__)
+#define DDLogPurple(frmt, ...) LOG_MACRO(NO, 1, 1, 0, PurpleTag, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 
 
 - (void)demoColorTags
