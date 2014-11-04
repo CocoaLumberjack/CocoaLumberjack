@@ -2,7 +2,7 @@
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
 // Log levels: off, error, warn, info, verbose
-static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 @interface AppDelegate ()
 - (void)demoColorTags;
@@ -42,7 +42,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     NSColor *pink = [NSColor colorWithCalibratedRed:(255/255.0) green:(58/255.0) blue:(159/255.0) alpha:1.0];
   #endif
     
-    [[DDTTYLogger sharedInstance] setForegroundColor:pink backgroundColor:nil forFlag:LOG_FLAG_INFO];
+    [[DDTTYLogger sharedInstance] setForegroundColor:pink backgroundColor:nil forFlag:DDLogFlagInfo];
     
     DDLogInfo(@"Warming up printer (post-customization)");
     
@@ -54,7 +54,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     NSColor *gray = [NSColor grayColor];
   #endif
     
-    [[DDTTYLogger sharedInstance] setForegroundColor:gray backgroundColor:nil forFlag:LOG_FLAG_VERBOSE];
+    [[DDTTYLogger sharedInstance] setForegroundColor:gray backgroundColor:nil forFlag:DDLogFlagVerbose];
     
     DDLogVerbose(@"Intializing protcol x26 (post-customization)");
     

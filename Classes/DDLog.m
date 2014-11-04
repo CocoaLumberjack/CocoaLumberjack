@@ -206,7 +206,7 @@ static unsigned int numProcessors;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 + (void)addLogger:(id <DDLogger>)logger {
-    [self addLogger:logger withLogLevel:DDLogLevelAll]; // LOG_LEVEL_ALL has all bits set
+    [self addLogger:logger withLogLevel:DDLogLevelAll]; // DDLogLevelAll has all bits set
 }
 
 + (void)addLogger:(id <DDLogger>)logger withLogLevel:(DDLogLevel)logLevel {

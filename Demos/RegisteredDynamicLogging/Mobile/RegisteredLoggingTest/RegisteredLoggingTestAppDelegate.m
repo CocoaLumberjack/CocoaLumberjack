@@ -5,7 +5,7 @@
 #import "Tigers.h"
 
 // Log levels: off, error, warn, info, verbose
-static int ddLogLevel = LOG_LEVEL_VERBOSE;
+static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 
 @implementation RegisteredLoggingTestAppDelegate
@@ -26,7 +26,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
     NSArray *registeredClasses = [DDLog registeredClasses];
     for (Class class in registeredClasses)
     {
-        [class ddSetLogLevel:LOG_LEVEL_VERBOSE];
+        [class ddSetLogLevel:DDLogLevelVerbose];
     }
     
     [Lions logStuff];

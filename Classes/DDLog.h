@@ -44,7 +44,7 @@
  * However, you still needed to see your error and info log messages.
  * You could accomplish that with the following:
  *
- * static const int ddLogLevel = LOG_FLAG_ERROR | LOG_FLAG_INFO;
+ * static const DDLogLevel ddLogLevel = DDLogFlagError | DDLogFlagInfo;
  *
  * When LOG_LEVEL_DEF is defined as ddLogLevel.
  *
@@ -217,7 +217,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 /**
  * Adds the logger to the system.
  *
- * This is equivalent to invoking [DDLog addLogger:logger withLogLevel:LOG_LEVEL_ALL].
+ * This is equivalent to invoking [DDLog addLogger:logger withLogLevel:DDLogLevelAll].
  **/
 + (void)addLogger:(id <DDLogger>)logger;
 
@@ -234,8 +234,9 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * This check is done using the logLevel parameter passed to this method.
  *
  * For example:
- * [DDLog addLogger:consoleLogger withLogLevel:LOG_LEVEL_VERBOSE];
- * [DDLog addLogger:fileLogger    withLogLevel:LOG_LEVEL_WARN];
+ *
+ * [DDLog addLogger:consoleLogger withLogLevel:DDLogLevelVerbose];
+ * [DDLog addLogger:fileLogger    withLogLevel:DDLogLevelWarning];
  *
  * DDLogError(@"oh no"); => gets forwarded to consoleLogger & fileLogger
  * DDLogInfo(@"hi");     => gets forwarded to consoleLogger only
@@ -246,15 +247,15 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  *
  * #define SOME_FRAMEWORK_LOG_FLAG_TRACE (1 << 6) // 0...1000000
  *
- * So if you specify LOG_LEVEL_VERBOSE to this method, you won't see the framework's trace messages.
+ * So if you specify DDLogLevelVerbose to this method, you won't see the framework's trace messages.
  *
- * (SOME_FRAMEWORK_LOG_FLAG_TRACE & LOG_LEVEL_VERBOSE) => (01000000 & 00011111) => NO
+ * (SOME_FRAMEWORK_LOG_FLAG_TRACE & DDLogLevelVerbose) => (01000000 & 00011111) => NO
  *
- * Consider passing LOG_LEVEL_ALL to this method, which has all bits set.
+ * Consider passing DDLogLevelAll to this method, which has all bits set.
  * You can also use the exclusive-or bitwise operator to get a bitmask that has all flags set,
  * except the ones you explicitly don't want. For example, if you wanted everything except verbose & debug:
  *
- * ((LOG_LEVEL_ALL ^ LOG_LEVEL_VERBOSE) | LOG_LEVEL_INFO)
+ * ((DDLogLevelAll ^ DDLogLevelVerbose) | DDLogLevelInfo)
  **/
 + (void)addLogger:(id <DDLogger>)logger withLogLevel:(DDLogLevel)logLevel;
 

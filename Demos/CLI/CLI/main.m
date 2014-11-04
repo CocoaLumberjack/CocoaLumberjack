@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
-static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 int main(int argc, const char * argv[])
 {
@@ -22,7 +22,7 @@ int main(int argc, const char * argv[])
                                                                blue:4.0/255.0
                                                               alpha:1.0]
                    backgroundColor:nil
-                           forFlag:LOG_FLAG_INFO];
+                           forFlag:DDLogFlagInfo];
         [DDLog addLogger:logger];
         DDLogInfo(@"Hello, World!");
     }

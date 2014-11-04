@@ -2,7 +2,7 @@
 #import "Stuff.h"
 #import "MyLogging.h"
 
-int ddLogLevel;
+DDLogLevel ddLogLevel;
 
 @implementation GlobalLogLevelAppDelegate
 
@@ -18,7 +18,7 @@ void someFunction()
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    ddLogLevel = LOG_LEVEL_VERBOSE;
+    ddLogLevel = DDLogLevelVerbose;
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     
     DDLogError(@"%@: Error", THIS_FILE);
@@ -28,7 +28,7 @@ void someFunction()
     
     someFunction();
     
-    ddLogLevel = LOG_LEVEL_WARN;
+    ddLogLevel = DDLogLevelWarning;
     
     [Stuff doStuff];
 }

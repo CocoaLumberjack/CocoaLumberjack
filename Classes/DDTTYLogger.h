@@ -100,17 +100,17 @@
 /**
  * The default color set (foregroundColor, backgroundColor) is:
  *
- * - LOG_FLAG_ERROR = (red, nil)
- * - LOG_FLAG_WARN  = (orange, nil)
+ * - DDLogFlagError   = (red, nil)
+ * - DDLogFlagWarning = (orange, nil)
  *
  * You can customize the colors however you see fit.
  * Please note that you are passing a flag, NOT a level.
  *
- * GOOD : [ttyLogger setForegroundColor:pink backgroundColor:nil forFlag:LOG_FLAG_INFO];  // <- Good :)
- *  BAD : [ttyLogger setForegroundColor:pink backgroundColor:nil forFlag:LOG_LEVEL_INFO]; // <- BAD! :(
+ * GOOD : [ttyLogger setForegroundColor:pink backgroundColor:nil forFlag:DDLogFlagInfo];  // <- Good :)
+ *  BAD : [ttyLogger setForegroundColor:pink backgroundColor:nil forFlag:DDLogLevelInfo]; // <- BAD! :(
  *
- * LOG_FLAG_INFO  = 0...00100
- * LOG_LEVEL_INFO = 0...00111 <- Would match LOG_FLAG_INFO and LOG_FLAG_WARN and LOG_FLAG_ERROR
+ * DDLogFlagInfo  = 0...00100
+ * DDLogLevelInfo = 0...00111 <- Would match DDLogFlagInfo and DDLogFlagWarning and DDLogFlagError
  *
  * If you run the application within Xcode, then the XcodeColors plugin is required.
  *

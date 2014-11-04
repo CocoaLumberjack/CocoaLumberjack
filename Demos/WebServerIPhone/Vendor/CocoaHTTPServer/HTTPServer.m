@@ -35,7 +35,7 @@
 
 // Log levels: off, error, warn, info, verbose
 // Other flags: trace
-static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
+static const int httpLogLevel = HTTP_DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
 
 @interface HTTPServer (PrivateAPI)
 

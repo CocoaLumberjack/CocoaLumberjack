@@ -79,8 +79,8 @@ static void (*dd_asl_release)(aslresponse obj);
     return _captureLogLevel;
 }
 
-+ (void)setCaptureLogLevel:(DDLogLevel)LOG_LEVEL_XXX {
-    _captureLogLevel = LOG_LEVEL_XXX;
++ (void)setCaptureLogLevel:(DDLogLevel)logLevel {
+    _captureLogLevel = logLevel;
 }
 
 #pragma mark - Private methods
