@@ -13,95 +13,67 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#ifndef Lumberjack_DDLog_LOGV_h
-#define Lumberjack_DDLog_LOGV_h
 
 #import "DDLog.h"
 
+/**
+ * The constant/variable/method responsible for controlling the current log level.
+ **/
+#ifndef LOG_LEVEL_DEF
+    #define LOG_LEVEL_DEF ddLogLevel
+#endif
 
-#define LOGV_MACRO(isAsynchronous, lvl, flg, ctx, atag, fnct, frmt, avalist) \
-    [DDLog log:isAsynchronous                                                \
-         level:lvl                                                           \
-          flag:flg                                                           \
-       context:ctx                                                           \
-          file:__FILE__                                                      \
-      function:fnct                                                          \
-          line:__LINE__                                                      \
-           tag:atag                                                          \
-        format:frmt                                                          \
-          args:avalist]
+/**
+ * Whether async should be used by log messages, excluding error messages that are always sent sync.
+ **/
+#ifndef LOG_ASYNC_ENABLED
+    #define LOG_ASYNC_ENABLED YES
+#endif
 
-#define LOGV_OBJC_MACRO(async, lvl, flg, ctx, frmt, avalist) \
-             LOGV_MACRO(async, lvl, flg, ctx, nil, sel_getName(_cmd), frmt, avalist)
+/**
+ * This is the single macro that all other macros below compile into.
+ * This big multiline macro makes all the other macros easier to read.
+ **/
+#define LOGV_MACRO(isAsynchronous, lvl, flg, ctx, atag, fnct, frmt, ...) \
+        [DDLog log : isAsynchronous                                     \
+             level : lvl                                                \
+              flag : flg                                                \
+           context : ctx                                                \
+              file : __FILE__                                           \
+          function : fnct                                               \
+              line : __LINE__                                           \
+               tag : atag                                               \
+            format : frmt                                               \
+              args : avalist]
 
-#define LOGV_C_MACRO(async, lvl, flg, ctx, frmt, avalist) \
-          LOGV_MACRO(async, lvl, flg, ctx, nil, __FUNCTION__, frmt, avalist)
+/**
+ * Define version of the macro that only execute if the logLevel is above the threshold.
+ * The compiled versions essentially look like this:
+ *
+ * if (logFlagForThisLogMsg & ddLogLevel) { execute log message }
+ *
+ * When LOG_LEVEL_DEF is defined as ddLogLevel.
+ *
+ * As shown further below, Lumberjack actually uses a bitmask as opposed to primitive log levels.
+ * This allows for a great amount of flexibility and some pretty advanced fine grained logging techniques.
+ *
+ * Note that when compiler optimizations are enabled (as they are for your release builds),
+ * the log messages above your logging threshold will automatically be compiled out.
+ *
+ * (If the compiler sees LOG_LEVEL_DEF/ddLogLevel declared as a constant, the compiler simply checks to see
+ *  if the 'if' statement would execute, and if not it strips it from the binary.)
+ *
+ * We also define shorthand versions for asynchronous and synchronous logging.
+ **/
+#define LOGV_MAYBE(async, lvl, flg, ctx, tag, fnct, frmt, avalist) \
+        do { if(lvl & flg) LOGV_MACRO(async, lvl, flg, ctx, tag, fnct, frmt, avalist); } while(0)
 
+/**
+ * Ready to use log macros with no context or tag.
+ **/
+#define DDLogVError(frmt, ...)   LOGV_MAYBE(NO,                LOG_LEVEL_DEF, DDLogFlagError,   0, nil, __PRETTY_FUNCTION__, frmt, avalist)
+#define DDLogVWarn(frmt, ...)    LOGV_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagWarning, 0, nil, __PRETTY_FUNCTION__, frmt, avalist)
+#define DDLogVInfo(frmt, ...)    LOGV_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagInfo,    0, nil, __PRETTY_FUNCTION__, frmt, avalist)
+#define DDLogVDebug(frmt, ...)   LOGV_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagDebug,   0, nil, __PRETTY_FUNCTION__, frmt, avalist)
+#define DDLogVVerbose(frmt, ...) LOGV_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagVerbose, 0, nil, __PRETTY_FUNCTION__, frmt, avalist)
 
-
-#define  SYNC_LOGV_OBJC_MACRO(lvl, flg, ctx, frmt, avalist) \
-          LOGV_OBJC_MACRO(NO, lvl, flg, ctx, frmt, avalist)
-
-#define ASYNC_LOGV_OBJC_MACRO(lvl, flg, ctx, frmt, avalist) \
-         LOGV_OBJC_MACRO(YES, lvl, flg, ctx, frmt, avalist)
-
-#define  SYNC_LOGV_C_MACRO(lvl, flg, ctx, frmt, avalist) \
-          LOGV_C_MACRO(NO, lvl, flg, ctx, frmt, avalist)
-
-#define ASYNC_LOGV_C_MACRO(lvl, flg, ctx, frmt, avalist) \
-         LOGV_C_MACRO(YES, lvl, flg, ctx, frmt, avalist)
-
-
-
-#define LOGV_MAYBE(async, lvl, flg, ctx, fnct, frmt, avalist) \
-    do { if(lvl & flg) LOGV_MACRO(async, lvl, flg, ctx, nil, fnct, frmt, avalist); } while(0)
-
-
-#define LOGV_OBJC_MAYBE(async, lvl, flg, ctx, frmt, avalist) \
-             LOGV_MAYBE(async, lvl, flg, ctx, sel_getName(_cmd), frmt, avalist)
-
-#define LOGV_C_MAYBE(async, lvl, flg, ctx, frmt, avalist) \
-          LOGV_MAYBE(async, lvl, flg, ctx, __FUNCTION__, frmt, avalist)
-
-#define  SYNC_LOGV_OBJC_MAYBE(lvl, flg, ctx, frmt, avalist) \
-          LOGV_OBJC_MAYBE(NO, lvl, flg, ctx, frmt, avalist)
-
-#define ASYNC_LOGV_OBJC_MAYBE(lvl, flg, ctx, frmt, avalist) \
-         LOGV_OBJC_MAYBE(YES, lvl, flg, ctx, frmt, avalist)
-
-#define  SYNC_LOGV_C_MAYBE(lvl, flg, ctx, frmt, avalist) \
-          LOGV_C_MAYBE(NO, lvl, flg, ctx, frmt, avalist)
-
-#define ASYNC_LOGV_C_MAYBE(lvl, flg, ctx, frmt, avalist) \
-         LOGV_C_MAYBE(YES, lvl, flg, ctx, frmt, avalist)
-
-
-
-#define LOGV_OBJC_TAG_MACRO(async, lvl, flg, ctx, tag, frmt, avalist) \
-                 LOGV_MACRO(async, lvl, flg, ctx, tag, sel_getName(_cmd), frmt, avalist)
-
-#define LOGV_C_TAG_MACRO(async, lvl, flg, ctx, tag, frmt, avalist) \
-              LOGV_MACRO(async, lvl, flg, ctx, tag, __FUNCTION__, frmt, avalist)
-
-#define LOGV_TAG_MAYBE(async, lvl, flg, ctx, tag, fnct, frmt, avalist) \
-    do { if(lvl & flg) LOGV_MACRO(async, lvl, flg, ctx, tag, fnct, frmt, avalist); } while(0)
-
-#define LOGV_OBJC_TAG_MAYBE(async, lvl, flg, ctx, tag, frmt, avalist) \
-             LOGV_TAG_MAYBE(async, lvl, flg, ctx, tag, sel_getName(_cmd), frmt, avalist)
-
-#define LOGV_C_TAG_MAYBE(async, lvl, flg, ctx, tag, frmt, avalist) \
-          LOGV_TAG_MAYBE(async, lvl, flg, ctx, tag, __FUNCTION__, frmt, avalist)
-
-
-
-#define DDLogvError(frmt, avalist)    LOGV_OBJC_MAYBE(LOG_ASYNC_ERROR,   ddLogLevel, LOG_FLAG_ERROR,   0, frmt, avalist)
-#define DDLogvWarn(frmt, avalist)     LOGV_OBJC_MAYBE(LOG_ASYNC_WARN,    ddLogLevel, LOG_FLAG_WARN,    0, frmt, avalist)
-#define DDLogvInfo(frmt, avalist)     LOGV_OBJC_MAYBE(LOG_ASYNC_INFO,    ddLogLevel, LOG_FLAG_INFO,    0, frmt, avalist)
-#define DDLogvVerbose(frmt, avalist)  LOGV_OBJC_MAYBE(LOG_ASYNC_VERBOSE, ddLogLevel, LOG_FLAG_VERBOSE, 0, frmt, avalist)
-
-#define DDLogvCError(frmt, avalist)   LOGV_C_MAYBE(LOG_ASYNC_ERROR,   ddLogLevel, LOG_FLAG_ERROR,   0, frmt, avalist)
-#define DDLogvCWarn(frmt, avalist)    LOGV_C_MAYBE(LOG_ASYNC_WARN,    ddLogLevel, LOG_FLAG_WARN,    0, frmt, avalist)
-#define DDLogvCInfo(frmt, avalist)    LOGV_C_MAYBE(LOG_ASYNC_INFO,    ddLogLevel, LOG_FLAG_INFO,    0, frmt, avalist)
-#define DDLogvCVerbose(frmt, avalist) LOGV_C_MAYBE(LOG_ASYNC_VERBOSE, ddLogLevel, LOG_FLAG_VERBOSE, 0, frmt, avalist)
-
-#endif /* ifndef Lumberjack_DDLog_LOGV_h */
