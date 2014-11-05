@@ -130,22 +130,22 @@ static void (*dd_asl_release)(aslresponse obj);
         case ASL_LEVEL_DEBUG    :
         default                 : flag = DDLogFlagVerbose;  async = YES;  break;
     }
-
+    
     if (!(_captureLogLevel & flag)) {
         return;
     }
-
-    DDLogMessage *logMessage = [[DDLogMessage alloc]initWithLogMsg:message
-                                                             level:_captureLogLevel
-                                                              flag:flag
-                                                           context:0
-                                                              file:"DDASLLogCapture"
-                                                          function:0
-                                                              line:0
-                                                               tag:nil
-                                                           options:0
-                                                         timestamp:timeStamp];
-
+    
+    DDLogMessage *logMessage = [[DDLogMessage alloc]initWithMessage:message
+                                                              level:_captureLogLevel
+                                                               flag:flag
+                                                            context:0
+                                                               file:@"DDASLLogCapture"
+                                                           function:0
+                                                               line:0
+                                                                tag:nil
+                                                            options:0
+                                                          timestamp:timeStamp];
+    
     [DDLog log:async message:logMessage];
 }
 

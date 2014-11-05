@@ -571,9 +571,9 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 }
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
-    NSString *dateAndTime = [_dateFormatter stringFromDate:(logMessage->timestamp)];
+    NSString *dateAndTime = [_dateFormatter stringFromDate:(logMessage->_timestamp)];
 
-    return [NSString stringWithFormat:@"%@  %@", dateAndTime, logMessage->logMsg];
+    return [NSString stringWithFormat:@"%@  %@", dateAndTime, logMessage->_message];
 }
 
 @end
@@ -1016,21 +1016,21 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
 static int exception_count = 0;
 - (void)logMessage:(DDLogMessage *)logMessage {
-    NSString *logMsg = logMessage->logMsg;
+    NSString *message = logMessage->_message;
     BOOL isFormatted = NO;
 
     if (_logFormatter) {
-        logMsg = [_logFormatter formatLogMessage:logMessage];
-        isFormatted = logMsg != logMessage->logMsg;
+        message = [_logFormatter formatLogMessage:logMessage];
+        isFormatted = message != logMessage->_message;
     }
 
-    if (logMsg) {
+    if (message) {
         if ((!isFormatted || _automaticallyAppendNewlineForCustomFormatters) &&
-            (![logMsg hasSuffix:@"\n"])) {
-            logMsg = [logMsg stringByAppendingString:@"\n"];
+            (![message hasSuffix:@"\n"])) {
+            message = [message stringByAppendingString:@"\n"];
         }
 
-        NSData *logData = [logMsg dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *logData = [message dataUsingEncoding:NSUTF8StringEncoding];
 
         @try {
             [[self currentLogFileHandle] writeData:logData];

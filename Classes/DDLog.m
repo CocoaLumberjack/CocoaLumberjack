@@ -657,7 +657,7 @@ static unsigned int numProcessors;
         for (DDLoggerNode *loggerNode in loggers) {
             // skip the loggers that shouldn't write this message based on the logLevel
 
-            if (!(logMessage->logFlag & loggerNode.logLevel)) {
+            if (!(logMessage->_flag & loggerNode->logLevel)) {
                 continue;
             }
 
@@ -673,7 +673,7 @@ static unsigned int numProcessors;
         for (DDLoggerNode *loggerNode in loggers) {
             // skip the loggers that shouldn't write this message based on the logLevel
 
-            if (!(logMessage->logFlag & loggerNode.logLevel)) {
+            if (!(logMessage->_flag & loggerNode->logLevel)) {
                 continue;
             }
 
@@ -833,38 +833,6 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation DDLogMessage
-@synthesize lineNumber;
-@synthesize options;
-@synthesize queueLabel;
-@synthesize timestamp;
-@synthesize logFlag;
-@synthesize tag;
-@synthesize threadName;
-@synthesize threadID;
-@synthesize logContext;
-@synthesize logLevel;
-@synthesize logMessage = logMsg;
-@synthesize file;
-@synthesize function;
-@synthesize machThreadID;
-
-static char * dd_str_copy(const char *str) {
-    if (str == NULL) {
-        return NULL;
-    }
-
-    size_t length = strlen(str);
-    char *result = malloc(length + 1);
-
-    if (result == NULL) {
-        return NULL;
-    }
-
-    strncpy(result, str, length);
-    result[length] = 0;
-
-    return result;
-}
 
 // Can we use DISPATCH_CURRENT_QUEUE_LABEL ?
 // Can we use dispatch_get_current_queue (without it crashing) ?
@@ -906,144 +874,78 @@ static char * dd_str_copy(const char *str) {
 
 #endif /* if TARGET_OS_IPHONE */
 
-- (instancetype)initWithLogMsg:(NSString *)msg
-                         level:(DDLogLevel)level
-                          flag:(DDLogFlag)flag
-                       context:(int)context
-                          file:(const char *)aFile
-                      function:(const char *)aFunction
-                          line:(int)line
-                           tag:(id)aTag
-                       options:(DDLogMessageOptions)optionsMask {
-    return [self initWithLogMsg:msg
-                          level:level
-                           flag:flag
-                        context:context
-                           file:aFile
-                       function:aFunction
-                           line:line
-                            tag:aTag
-                        options:optionsMask
-                      timestamp:nil];
-}
-
-- (instancetype)initWithLogMsg:(NSString *)msg
-                         level:(DDLogLevel)level
-                          flag:(DDLogFlag)flag
-                       context:(int)context
-                          file:(const char *)aFile
-                      function:(const char *)aFunction
-                          line:(int)line
-                           tag:(id)aTag
-                       options:(DDLogMessageOptions)optionsMask
-                     timestamp:(NSDate *)aTimestamp {
+- (instancetype)initWithMessage:(NSString *)message
+                          level:(DDLogLevel)level
+                           flag:(DDLogFlag)flag
+                        context:(NSUInteger)context
+                           file:(NSString *)file
+                       function:(NSString *)function
+                           line:(NSUInteger)line
+                            tag:(id)tag
+                        options:(DDLogMessageOptions)options
+                      timestamp:(NSDate *)timestamp {
     if ((self = [super init])) {
-        logMsg     = [msg copy];
-        logLevel   = level;
-        logFlag    = flag;
-        logContext = context;
-        lineNumber = line;
-        tag        = aTag;
-        options    = optionsMask;
+        _message      = message;
+        _level        = level;
+        _flag         = flag;
+        _context      = context;
+        _file         = file;
+        _function     = function;
+        _line         = line;
+        _tag          = tag;
+        _options      = options;
+        _timestamp    = timestamp ?: [NSDate new];
+        
+        _threadID     = [[NSString alloc] initWithFormat:@"%x", pthread_mach_thread_np(pthread_self())];
+        _threadName   = NSThread.currentThread.name;
 
-        if (options & DDLogMessageCopyFile) {
-            file = dd_str_copy(aFile);
-        } else {
-            file = (char *)aFile;
+        // Get the file name without extension
+        _fileName = [_file lastPathComponent];
+        NSUInteger dotLocation = [_fileName rangeOfString:@"." options:NSBackwardsSearch].location;
+        if (dotLocation != NSNotFound)
+        {
+            _fileName = [_fileName substringToIndex:dotLocation];
         }
-
-        if (options & DDLogMessageCopyFunction) {
-            function = dd_str_copy(aFunction);
-        } else {
-            function = (char *)aFunction;
-        }
-
-        timestamp = aTimestamp;
-
-        if (timestamp == nil) {
-            timestamp = [[NSDate alloc] init];
-        }
-
-        machThreadID = pthread_mach_thread_np(pthread_self());
-
+        
         // Try to get the current queue's label
-
         if (USE_DISPATCH_CURRENT_QUEUE_LABEL) {
-            queueLabel = dd_str_copy(dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL));
+            _queueLabel = [[NSString alloc] initWithFormat:@"%s", dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL)];
         } else if (USE_DISPATCH_GET_CURRENT_QUEUE) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+            #pragma clang diagnostic push
+            #pragma clang diagnostic ignored "-Wdeprecated-declarations"
             dispatch_queue_t currentQueue = dispatch_get_current_queue();
-#pragma clang diagnostic pop
-
-            queueLabel = dd_str_copy(dispatch_queue_get_label(currentQueue));
+            #pragma clang diagnostic pop
+            _queueLabel = [[NSString alloc] initWithFormat:@"%s", dispatch_queue_get_label(currentQueue)];
         } else {
-            queueLabel = dd_str_copy("");     // iOS 6.x only
+            _queueLabel = @""; // iOS 6.x only
         }
-
-        threadName = [[NSThread currentThread] name];
     }
-
     return self;
 }
 
-- (NSString *)threadID {
-    return [[NSString alloc] initWithFormat:@"%x", machThreadID];
-}
-
-- (NSString *)fileName {
-    return DDExtractFileNameWithoutExtension(file, NO);
-}
-
-- (NSString *)methodName {
-    if (function == NULL) {
-        return nil;
-    } else {
-        return [[NSString alloc] initWithUTF8String:function];
-    }
-}
-
-- (void)dealloc {
-    if (file && (options & DDLogMessageCopyFile)) {
-        free(file);
-    }
-
-    if (function && (options & DDLogMessageCopyFunction)) {
-        free(function);
-    }
-
-    free(queueLabel);
-}
-
 - (id)copyWithZone:(NSZone *)zone {
-    DDLogMessage *newMessage = [[DDLogMessage alloc] init];
-
-    newMessage->logLevel = self->logLevel;
-    newMessage->logFlag = self->logFlag;
-    newMessage->logContext = self->logContext;
-    newMessage->logMsg = self->logMsg;
-    newMessage->timestamp = self->timestamp;
-
-    if (self->options & DDLogMessageCopyFile) {
-        newMessage->file = dd_str_copy(self->file);
-        newMessage->function = dd_str_copy(self->function);
-    } else {
-        newMessage->file = self->file;
-        newMessage->function = self->function;
-    }
-
-    newMessage->lineNumber = self->lineNumber;
-
-    newMessage->machThreadID = self->machThreadID;
-    newMessage->queueLabel = dd_str_copy(self->queueLabel);
-    newMessage->threadName = self->threadName;
-    newMessage->tag = self->tag;
-    newMessage->options = self->options;
+    DDLogMessage *newMessage = [DDLogMessage new];
+    
+    newMessage->_message = _message;
+    newMessage->_level = _level;
+    newMessage->_flag = _flag;
+    newMessage->_context = _context;
+    newMessage->_file = _file;
+    newMessage->_fileName = _fileName;
+    newMessage->_function = _function;
+    newMessage->_line = _line;
+    newMessage->_tag = _tag;
+    newMessage->_options = _options;
+    newMessage->_timestamp = _timestamp;
+    newMessage->_threadID = _threadID;
+    newMessage->_threadName = _threadName;
+    newMessage->_queueLabel = _queueLabel;
 
     return newMessage;
 }
 
 @end
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
