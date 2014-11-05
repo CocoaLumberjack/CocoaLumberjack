@@ -316,22 +316,20 @@ static unsigned int numProcessors;
         tag:(id)tag
      format:(NSString *)format, ... {
     va_list args;
-
+    
     if (format) {
         va_start(args, format);
-
-        NSString *logMsg = [[NSString alloc] initWithFormat:format arguments:args];
-        DDLogMessage *logMessage = [[DDLogMessage alloc] initWithLogMsg:logMsg
-                                                                  level:level
-                                                                   flag:flag
-                                                                context:context
-                                                                   file:file
-                                                               function:function
-                                                                   line:line
-                                                                    tag:tag
-                                                                options:0];
-
-        [self queueLogMessage:logMessage asynchronously:asynchronous];
+        
+        NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
+        [self log:asynchronous
+          message:message
+            level:level
+             flag:flag
+          context:context
+             file:file
+         function:function
+             line:line
+              tag:tag];
 
         va_end(args);
     }
@@ -345,34 +343,45 @@ static unsigned int numProcessors;
    function:(const char *)function
        line:(int)line
         tag:(id)tag
-     string:(NSString *)string {
-    [self log:asynchronous level:level flag:flag context:context file:file function:function line:line tag:tag format:@"%@", string];
+     format:(NSString *)format
+       args:(va_list)args {
+    
+    if (format) {
+        NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
+        [self log:asynchronous
+          message:message
+            level:level
+             flag:flag
+          context:context
+             file:file
+         function:function
+             line:line
+              tag:tag];
+    }
 }
 
 + (void)log:(BOOL)asynchronous
+    message:(NSString *)message
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
     context:(int)context
        file:(const char *)file
    function:(const char *)function
        line:(int)line
-        tag:(id)tag
-     format:(NSString *)format
-       args:(va_list)args {
-    if (format) {
-        NSString *logMsg = [[NSString alloc] initWithFormat:format arguments:args];
-        DDLogMessage *logMessage = [[DDLogMessage alloc] initWithLogMsg:logMsg
-                                                                  level:level
-                                                                   flag:flag
-                                                                context:context
-                                                                   file:file
-                                                               function:function
-                                                                   line:line
-                                                                    tag:tag
-                                                                options:0];
-
-        [self queueLogMessage:logMessage asynchronously:asynchronous];
-    }
+        tag:(id)tag {
+    
+    DDLogMessage *logMessage = [[DDLogMessage alloc] initWithMessage:message
+                                                               level:level
+                                                                flag:flag
+                                                             context:context
+                                                                file:[NSString stringWithFormat:@"%s", file]
+                                                            function:[NSString stringWithFormat:@"%s", function]
+                                                                line:line
+                                                                 tag:tag
+                                                             options:0
+                                                           timestamp:nil];
+    
+    [self queueLogMessage:logMessage asynchronously:asynchronous];
 }
 
 + (void)log:(BOOL)asynchronous

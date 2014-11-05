@@ -179,14 +179,14 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * Logging Primitive.
  **/
 + (void)log:(BOOL)asynchronous
+    message:(NSString *)message
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
     context:(int)context
        file:(const char *)file
    function:(const char *)function
        line:(int)line
-        tag:(id)tag
-     string:(NSString *)string;
+        tag:(id)tag;
 
 /**
  * Logging Primitive.
