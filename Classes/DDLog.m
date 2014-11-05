@@ -512,34 +512,31 @@ static unsigned int numProcessors;
     for (Class class in registeredClasses) {
         [result addObject:NSStringFromClass(class)];
     }
-
     return result;
 }
 
-+ (DDLogLevel)logLevelForClass:(Class)aClass {
++ (DDLogLevel)levelForClass:(Class)aClass {
     if ([self isRegisteredClass:aClass]) {
         return [aClass ddLogLevel];
     }
-
     return -1;
 }
 
-+ (DDLogLevel)logLevelForClassWithName:(NSString *)aClassName {
++ (DDLogLevel)levelForClassWithName:(NSString *)aClassName {
     Class aClass = NSClassFromString(aClassName);
 
-    return [self logLevelForClass:aClass];
+    return [self levelForClass:aClass];
 }
 
-+ (void)setLogLevel:(DDLogLevel)logLevel forClass:(Class)aClass {
++ (void)setLevel:(DDLogLevel)level forClass:(Class)aClass {
     if ([self isRegisteredClass:aClass]) {
-        [aClass ddSetLogLevel:logLevel];
+        [aClass ddSetLogLevel:level];
     }
 }
 
-+ (void)setLogLevel:(DDLogLevel)logLevel forClassWithName:(NSString *)aClassName {
++ (void)setLevel:(DDLogLevel)level forClassWithName:(NSString *)aClassName {
     Class aClass = NSClassFromString(aClassName);
-
-    [self setLogLevel:logLevel forClass:aClass];
+    [self setLevel:level forClass:aClass];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

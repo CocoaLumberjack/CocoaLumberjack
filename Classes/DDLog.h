@@ -257,7 +257,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  *
  * ((DDLogLevelAll ^ DDLogLevelVerbose) | DDLogLevelInfo)
  **/
-+ (void)addLogger:(id <DDLogger>)logger withLogLevel:(DDLogLevel)logLevel;
++ (void)addLogger:(id <DDLogger>)logger withLogLevel:(DDLogLevel)level;
 
 + (void)removeLogger:(id <DDLogger>)logger;
 + (void)removeAllLoggers;
@@ -274,11 +274,11 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 + (NSArray *)registeredClasses;
 + (NSArray *)registeredClassNames;
 
-+ (DDLogLevel)logLevelForClass:(Class)aClass;
-+ (DDLogLevel)logLevelForClassWithName:(NSString *)aClassName;
++ (DDLogLevel)levelForClass:(Class)aClass;
++ (DDLogLevel)levelForClassWithName:(NSString *)aClassName;
 
-+ (void)setLogLevel:(DDLogLevel)logLevel forClass:(Class)aClass;
-+ (void)setLogLevel:(DDLogLevel)logLevel forClassWithName:(NSString *)aClassName;
++ (void)setLevel:(DDLogLevel)level forClass:(Class)aClass;
++ (void)setLevel:(DDLogLevel)level forClassWithName:(NSString *)aClassName;
 
 @end
 
@@ -401,14 +401,14 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  *     return ddLogLevel;
  * }
  *
- * + (void)ddSetLogLevel:(int)logLevel
+ * + (void)ddSetLogLevel:(DDLogLevel)level
  * {
- *     ddLogLevel = logLevel;
+ *     ddLogLevel = level;
  * }
  **/
 
 + (DDLogLevel)ddLogLevel;
-+ (void)ddSetLogLevel:(DDLogLevel)logLevel;
++ (void)ddSetLogLevel:(DDLogLevel)level;
 
 @end
 
@@ -519,17 +519,18 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions) {
 
 @interface DDAbstractLogger : NSObject <DDLogger>
 {
-    // Direct accessors to be used only for performance purposes
+    // Direct accessors to be used only for performance
+    @public
     id <DDLogFormatter> _logFormatter;
     dispatch_queue_t _loggerQueue;
 }
 
-@property (nonatomic, strong) id <DDLogFormatter> logFormatter;
+@property (nonatomic, strong)    id <DDLogFormatter> logFormatter;
 @property (nonatomic, readwrite) dispatch_queue_t loggerQueue;
 
 // For thread-safety assertions
-@property (getter=isOnGlobalLoggingQueue, readonly) BOOL onGlobalLoggingQueue;
-@property (getter=isOnInternalLoggerQueue, readonly) BOOL onInternalLoggerQueue;
+@property (nonatomic, readonly, getter=isOnGlobalLoggingQueue)  BOOL onGlobalLoggingQueue;
+@property (nonatomic, readonly, getter=isOnInternalLoggerQueue) BOOL onInternalLoggerQueue;
 
 @end
 
