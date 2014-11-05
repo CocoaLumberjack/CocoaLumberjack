@@ -100,17 +100,17 @@
 /**
  * The default color set (foregroundColor, backgroundColor) is:
  *
- * - LOG_FLAG_ERROR = (red, nil)
- * - LOG_FLAG_WARN  = (orange, nil)
+ * - DDLogFlagError   = (red, nil)
+ * - DDLogFlagWarning = (orange, nil)
  *
  * You can customize the colors however you see fit.
  * Please note that you are passing a flag, NOT a level.
  *
- * GOOD : [ttyLogger setForegroundColor:pink backgroundColor:nil forFlag:LOG_FLAG_INFO];  // <- Good :)
- *  BAD : [ttyLogger setForegroundColor:pink backgroundColor:nil forFlag:LOG_LEVEL_INFO]; // <- BAD! :(
+ * GOOD : [ttyLogger setForegroundColor:pink backgroundColor:nil forFlag:DDLogFlagInfo];  // <- Good :)
+ *  BAD : [ttyLogger setForegroundColor:pink backgroundColor:nil forFlag:DDLogLevelInfo]; // <- BAD! :(
  *
- * LOG_FLAG_INFO  = 0...00100
- * LOG_LEVEL_INFO = 0...00111 <- Would match LOG_FLAG_INFO and LOG_FLAG_WARN and LOG_FLAG_ERROR
+ * DDLogFlagInfo  = 0...00100
+ * DDLogLevelInfo = 0...00111 <- Would match DDLogFlagInfo and DDLogFlagWarning and DDLogFlagError
  *
  * If you run the application within Xcode, then the XcodeColors plugin is required.
  *
@@ -119,7 +119,7 @@
  *
  * This method invokes setForegroundColor:backgroundColor:forFlag:context: and applies it to `LOG_CONTEXT_ALL`.
  **/
-- (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forFlag:(int)mask;
+- (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forFlag:(DDLogFlag)mask;
 
 /**
  * Just like setForegroundColor:backgroundColor:flag, but allows you to specify a particular logging context.
@@ -132,7 +132,7 @@
  * Logging context's are explained in further detail here:
  * Documentation/CustomContext.md
  **/
-- (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forFlag:(int)mask context:(int)ctxt;
+- (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forFlag:(DDLogFlag)mask context:(int)ctxt;
 
 /**
  * Similar to the methods above, but allows you to map DDLogMessage->tag to a particular color profile.
@@ -162,8 +162,8 @@
 /**
  * Clearing color profiles.
  **/
-- (void)clearColorsForFlag:(int)mask;
-- (void)clearColorsForFlag:(int)mask context:(int)context;
+- (void)clearColorsForFlag:(DDLogFlag)mask;
+- (void)clearColorsForFlag:(DDLogFlag)mask context:(int)context;
 - (void)clearColorsForTag:(id <NSCopying>)tag;
 - (void)clearColorsForAllFlags;
 - (void)clearColorsForAllTags;

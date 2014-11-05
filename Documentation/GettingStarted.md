@@ -60,7 +60,7 @@ DDLogVerbose(@"User selected file:%@ withSize:%u", filePath, fileSize);
 
 As you can see, the **DDLog macros have the exact same syntax as NSLog**.
 
-So all you need to do is decide which log level each NSLog statement belongs to. By default, there are 4 options available:
+So all you need to do is decide which log level each NSLog statement belongs to. By default, there are 5 options available:
 
 -   DDLogError
 -   DDLogWarn

@@ -11,7 +11,7 @@
         websocket = ws;
         websocket.delegate = self;
         
-        formatter = [[WebSocketFormatter alloc] init];
+        self.logFormatter = [[WebSocketFormatter alloc] init];
     }
     return self;
 }
@@ -64,9 +64,9 @@
     
     NSString *logMsg = logMessage->logMsg;
     
-    if (formatter)
+    if (_logFormatter)
     {
-        logMsg = [formatter formatLogMessage:logMessage];
+        logMsg = [_logFormatter formatLogMessage:logMessage];
     }
     
     if (logMsg)

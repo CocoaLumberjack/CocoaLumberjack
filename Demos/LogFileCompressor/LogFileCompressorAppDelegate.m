@@ -4,7 +4,7 @@
 #import "CompressingLogFileManager.h"
 
 // Debug levels: off, error, warn, info, verbose
-static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

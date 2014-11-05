@@ -32,7 +32,7 @@
 
 @implementation DDAbstractDatabaseLogger
 
-- (id)init {
+- (instancetype)init {
     if ((self = [super init])) {
         _saveThreshold = 500;
         _saveInterval = 60;           // 60 seconds
@@ -140,7 +140,7 @@
 
 - (void)createSuspendedSaveTimer {
     if ((_saveTimer == NULL) && (_saveInterval > 0.0)) {
-        _saveTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, loggerQueue);
+        _saveTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.loggerQueue);
 
         dispatch_source_set_event_handler(_saveTimer, ^{ @autoreleasepool {
                                                             [self performSaveAndSuspendSaveTimer];
@@ -177,7 +177,7 @@
 
 - (void)createAndStartDeleteTimer {
     if ((_deleteTimer == NULL) && (_deleteInterval > 0.0) && (_maxAge > 0.0)) {
-        _deleteTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, loggerQueue);
+        _deleteTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.loggerQueue);
 
         if (_deleteTimer != NULL) {
             dispatch_source_set_event_handler(_deleteTimer, ^{ @autoreleasepool {
@@ -216,7 +216,7 @@
     __block NSUInteger result;
 
     dispatch_sync(globalLoggingQueue, ^{
-        dispatch_sync(loggerQueue, ^{
+        dispatch_sync(self.loggerQueue, ^{
             result = _saveThreshold;
         });
     });
@@ -252,7 +252,7 @@
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -276,7 +276,7 @@
     __block NSTimeInterval result;
 
     dispatch_sync(globalLoggingQueue, ^{
-        dispatch_sync(loggerQueue, ^{
+        dispatch_sync(self.loggerQueue, ^{
             result = _saveInterval;
         });
     });
@@ -343,7 +343,7 @@
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -367,7 +367,7 @@
     __block NSTimeInterval result;
 
     dispatch_sync(globalLoggingQueue, ^{
-        dispatch_sync(loggerQueue, ^{
+        dispatch_sync(self.loggerQueue, ^{
             result = _maxAge;
         });
     });
@@ -440,7 +440,7 @@
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -464,7 +464,7 @@
     __block NSTimeInterval result;
 
     dispatch_sync(globalLoggingQueue, ^{
-        dispatch_sync(loggerQueue, ^{
+        dispatch_sync(self.loggerQueue, ^{
             result = _deleteInterval;
         });
     });
@@ -530,7 +530,7 @@
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -554,7 +554,7 @@
     __block BOOL result;
 
     dispatch_sync(globalLoggingQueue, ^{
-        dispatch_sync(loggerQueue, ^{
+        dispatch_sync(self.loggerQueue, ^{
             result = _deleteOnEverySave;
         });
     });
@@ -577,7 +577,7 @@
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -596,7 +596,7 @@
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        dispatch_async(loggerQueue, block);
+        dispatch_async(self.loggerQueue, block);
     }
 }
 
@@ -610,7 +610,7 @@
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        dispatch_async(loggerQueue, block);
+        dispatch_async(self.loggerQueue, block);
     }
 }
 

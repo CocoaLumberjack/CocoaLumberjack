@@ -24,11 +24,11 @@
     
     NSString *logLevel = nil;
     switch (logMessage->logFlag) {
-        case LOG_FLAG_ERROR     : logLevel = @"E"; break;
-        case LOG_FLAG_WARN      : logLevel = @"W"; break;
-        case LOG_FLAG_INFO      : logLevel = @"I"; break;
-        case LOG_FLAG_DEBUG     : logLevel = @"D"; break;
-		case LOG_FLAG_VERBOSE   : logLevel = @"V"; break;
+        case DDLogFlagError     : logLevel = @"E"; break;
+        case DDLogFlagWarning   : logLevel = @"W"; break;
+        case DDLogFlagInfo      : logLevel = @"I"; break;
+        case DDLogFlagDebug     : logLevel = @"D"; break;
+		case DDLogFlagVerbose   : logLevel = @"V"; break;
         default                 : logLevel = @"?"; break;
     }
     

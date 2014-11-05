@@ -205,10 +205,10 @@
         }
     };
     
-    if (dispatch_get_current_queue() == loggerQueue)
+    if (dispatch_get_current_queue() == self.loggerQueue)
         block();
     else
-        dispatch_async(loggerQueue, block);
+        dispatch_async(self.loggerQueue, block);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -39,7 +39,7 @@
 
 @implementation DDDispatchQueueLogFormatter
 
-- (id)init {
+- (instancetype)init {
     if ((self = [super init])) {
         _dateFormatString = @"yyyy-MM-dd HH:mm:ss:SSS";
 

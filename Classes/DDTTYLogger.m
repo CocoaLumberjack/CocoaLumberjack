@@ -80,7 +80,7 @@
 
 @interface DDTTYLoggerColorProfile : NSObject {
     @public
-    int mask;
+    DDLogFlag mask;
     int context;
 
     uint8_t fg_r;
@@ -107,7 +107,7 @@
     size_t resetCodeLen;
 }
 
-- (instancetype)initWithForegroundColor:(DDColor *)fgColor backgroundColor:(DDColor *)bgColor flag:(int)mask context:(int)ctxt;
+- (instancetype)initWithForegroundColor:(DDColor *)fgColor backgroundColor:(DDColor *)bgColor flag:(DDLogFlag)mask context:(int)ctxt;
 
 @end
 
@@ -814,7 +814,7 @@ static DDTTYLogger *sharedInstance;
     return sharedInstance;
 }
 
-- (id)init {
+- (instancetype)init {
     if (sharedInstance != nil) {
         return nil;
     }
@@ -880,8 +880,8 @@ static DDTTYLogger *sharedInstance;
 }
 
 - (void)loadDefaultColorProfiles {
-    [self setForegroundColor:DDMakeColor(214,  57,  30) backgroundColor:nil forFlag:LOG_FLAG_ERROR];
-    [self setForegroundColor:DDMakeColor(204, 121,  32) backgroundColor:nil forFlag:LOG_FLAG_WARN];
+    [self setForegroundColor:DDMakeColor(214,  57,  30) backgroundColor:nil forFlag:DDLogFlagError];
+    [self setForegroundColor:DDMakeColor(204, 121,  32) backgroundColor:nil forFlag:DDLogFlagWarning];
 }
 
 - (BOOL)colorsEnabled {
@@ -903,7 +903,7 @@ static DDTTYLogger *sharedInstance;
     __block BOOL result;
 
     dispatch_sync(globalLoggingQueue, ^{
-        dispatch_sync(loggerQueue, ^{
+        dispatch_sync(self.loggerQueue, ^{
             result = _colorsEnabled;
         });
     });
@@ -938,15 +938,15 @@ static DDTTYLogger *sharedInstance;
     dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
 
     dispatch_async(globalLoggingQueue, ^{
-        dispatch_async(loggerQueue, block);
+        dispatch_async(self.loggerQueue, block);
     });
 }
 
-- (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forFlag:(int)mask {
+- (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forFlag:(DDLogFlag)mask {
     [self setForegroundColor:txtColor backgroundColor:bgColor forFlag:mask context:LOG_CONTEXT_ALL];
 }
 
-- (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forFlag:(int)mask context:(int)ctxt {
+- (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forFlag:(DDLogFlag)mask context:(int)ctxt {
     dispatch_block_t block = ^{
         @autoreleasepool {
             DDTTYLoggerColorProfile *newColorProfile =
@@ -968,7 +968,7 @@ static DDTTYLogger *sharedInstance;
             }
 
             if (i < [_colorProfilesArray count]) {
-                [_colorProfilesArray replaceObjectAtIndex:i withObject:newColorProfile];
+                _colorProfilesArray[i] = newColorProfile;
             } else {
                 [_colorProfilesArray addObject:newColorProfile];
             }
@@ -985,7 +985,7 @@ static DDTTYLogger *sharedInstance;
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -1003,7 +1003,7 @@ static DDTTYLogger *sharedInstance;
 
             NSLogInfo(@"DDTTYLogger: newColorProfile: %@", newColorProfile);
 
-            [_colorProfilesDict setObject:newColorProfile forKey:tag];
+            _colorProfilesDict[tag] = newColorProfile;
         }
     };
 
@@ -1017,16 +1017,16 @@ static DDTTYLogger *sharedInstance;
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
 
-- (void)clearColorsForFlag:(int)mask {
+- (void)clearColorsForFlag:(DDLogFlag)mask {
     [self clearColorsForFlag:mask context:0];
 }
 
-- (void)clearColorsForFlag:(int)mask context:(int)context {
+- (void)clearColorsForFlag:(DDLogFlag)mask context:(int)context {
     dispatch_block_t block = ^{
         @autoreleasepool {
             NSUInteger i = 0;
@@ -1055,7 +1055,7 @@ static DDTTYLogger *sharedInstance;
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -1079,7 +1079,7 @@ static DDTTYLogger *sharedInstance;
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -1101,7 +1101,7 @@ static DDTTYLogger *sharedInstance;
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -1123,7 +1123,7 @@ static DDTTYLogger *sharedInstance;
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -1146,7 +1146,7 @@ static DDTTYLogger *sharedInstance;
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_async(globalLoggingQueue, ^{
-            dispatch_async(loggerQueue, block);
+            dispatch_async(self.loggerQueue, block);
         });
     }
 }
@@ -1155,8 +1155,8 @@ static DDTTYLogger *sharedInstance;
     NSString *logMsg = logMessage->logMsg;
     BOOL isFormatted = NO;
 
-    if (formatter) {
-        logMsg = [formatter formatLogMessage:logMessage];
+    if (_logFormatter) {
+        logMsg = [_logFormatter formatLogMessage:logMessage];
         isFormatted = logMsg != logMessage->logMsg;
     }
 
@@ -1167,7 +1167,7 @@ static DDTTYLogger *sharedInstance;
 
         if (_colorsEnabled) {
             if (logMessage->tag) {
-                colorProfile = [_colorProfilesDict objectForKey:logMessage->tag];
+                colorProfile = _colorProfilesDict[logMessage->tag];
             }
 
             if (colorProfile == nil) {
@@ -1365,7 +1365,7 @@ static DDTTYLogger *sharedInstance;
 
 @implementation DDTTYLoggerColorProfile
 
-- (instancetype)initWithForegroundColor:(DDColor *)fgColor backgroundColor:(DDColor *)bgColor flag:(int)aMask context:(int)ctxt {
+- (instancetype)initWithForegroundColor:(DDColor *)fgColor backgroundColor:(DDColor *)bgColor flag:(DDLogFlag)aMask context:(int)ctxt {
     if ((self = [super init])) {
         mask = aMask;
         context = ctxt;
@@ -1392,7 +1392,7 @@ static DDTTYLogger *sharedInstance;
             // Map foreground color to closest available shell color
 
             fgCodeIndex = [DDTTYLogger codeIndexForColor:fgColor];
-            fgCodeRaw   = [codes_fg objectAtIndex:fgCodeIndex];
+            fgCodeRaw   = codes_fg[fgCodeIndex];
 
             NSString *escapeSeq = @"\033[";
 
@@ -1425,7 +1425,7 @@ static DDTTYLogger *sharedInstance;
             // Map background color to closest available shell color
 
             bgCodeIndex = [DDTTYLogger codeIndexForColor:bgColor];
-            bgCodeRaw   = [codes_bg objectAtIndex:bgCodeIndex];
+            bgCodeRaw   = codes_bg[bgCodeIndex];
 
             NSString *escapeSeq = @"\033[";
 
@@ -1470,7 +1470,7 @@ static DDTTYLogger *sharedInstance;
 - (NSString *)description {
     return [NSString stringWithFormat:
             @"<DDTTYLoggerColorProfile: %p mask:%i ctxt:%i fg:%u,%u,%u bg:%u,%u,%u fgCode:%@ bgCode:%@>",
-            self, mask, context, fg_r, fg_g, fg_b, bg_r, bg_g, bg_b, fgCodeRaw, bgCodeRaw];
+            self, (int)mask, context, fg_r, fg_g, fg_b, bg_r, bg_g, bg_b, fgCodeRaw, bgCodeRaw];
 }
 
 @end
