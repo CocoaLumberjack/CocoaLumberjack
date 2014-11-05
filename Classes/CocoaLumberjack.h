@@ -34,7 +34,7 @@
  * Define your logging level in your implementation file:
  *
  * // Log levels: off, error, warn, info, verbose
- * static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+ * static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
  *
  * Step 2 [3rd party frameworks]:
  *
@@ -46,7 +46,7 @@
  * Define your logging level in your implementation file:
  *
  * // Log levels: off, error, warn, info, verbose
- * static const int myLibLogLevel = LOG_LEVEL_VERBOSE;
+ * static const DDLogLevel myLibLogLevel = DDLogLevelVerbose;
  *
  * Step 3:
  * Replace your NSLog statements with DDLog statements according to the severity of the message.
@@ -59,13 +59,23 @@
 
 #import <Foundation/Foundation.h>
 
-// Macros
+// Legacy
+#ifndef DDLEGACY
+    #define DDLEGACY NO
+#endif
+
+// Core
 #import "DDLog.h"
+
+// Main macros
 #import "DDLogMacros.h"
 #import "DDAssertMacros.h"
-#import "DDLog+LOGV.h"
+
+// Capture ASL
+#import "DDASLLogCapture.h"
 
 // Loggers
 #import "DDTTYLogger.h"
 #import "DDASLLogger.h"
 #import "DDFileLogger.h"
+

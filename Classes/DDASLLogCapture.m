@@ -79,8 +79,8 @@ static void (*dd_asl_release)(aslresponse obj);
     return _captureLogLevel;
 }
 
-+ (void)setCaptureLogLevel:(DDLogLevel)LOG_LEVEL_XXX {
-    _captureLogLevel = LOG_LEVEL_XXX;
++ (void)setCaptureLogLevel:(DDLogLevel)logLevel {
+    _captureLogLevel = logLevel;
 }
 
 #pragma mark - Private methods
@@ -122,13 +122,13 @@ static void (*dd_asl_release)(aslresponse obj);
         // By default all NSLog's with a ASL_LEVEL_WARNING level
         case ASL_LEVEL_EMERG    :
         case ASL_LEVEL_ALERT    :
-        case ASL_LEVEL_CRIT     : flag = DDLogFlagError;    async = LOG_ASYNC_ERROR;    break;
-        case ASL_LEVEL_ERR      : flag = DDLogFlagWarning;  async = LOG_ASYNC_WARN;     break;
-        case ASL_LEVEL_WARNING  : flag = DDLogFlagInfo;     async = LOG_ASYNC_INFO;     break;
-        case ASL_LEVEL_NOTICE   : flag = DDLogFlagDebug;    async = LOG_ASYNC_DEBUG;    break;
+        case ASL_LEVEL_CRIT     : flag = DDLogFlagError;    async = NO;  break;
+        case ASL_LEVEL_ERR      : flag = DDLogFlagWarning;  async = YES; break;
+        case ASL_LEVEL_WARNING  : flag = DDLogFlagInfo;     async = YES; break;
+        case ASL_LEVEL_NOTICE   : flag = DDLogFlagDebug;    async = YES; break;
         case ASL_LEVEL_INFO     :
         case ASL_LEVEL_DEBUG    :
-        default                 : flag = DDLogFlagVerbose;  async = LOG_ASYNC_VERBOSE;  break;
+        default                 : flag = DDLogFlagVerbose;  async = YES;  break;
     }
 
     if (!(_captureLogLevel & flag)) {

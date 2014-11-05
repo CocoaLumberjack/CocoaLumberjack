@@ -5,7 +5,7 @@
 #define FILENAME @"DynamicLogging"
 
 // Debug levels: off, error, warn, info, verbose
-static int ddLogLevel = LOG_LEVEL_WARN; // NOT CONST
+static DDLogLevel ddLogLevel = DDLogLevelWarning; // NOT CONST
 
 
 @implementation DynamicLogging

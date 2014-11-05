@@ -7,7 +7,7 @@
 #import "MyHTTPConnection.h"
 
 // Log levels: off, error, warn, info, verbose
-static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 
 @implementation WebServerIPhoneAppDelegate
@@ -110,7 +110,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     // Log a message in verbose mode.
     // 
     // Want to disable this log message?
-    // Try setting the log level (at the top of this file) to LOG_LEVEL_WARN.
+    // Try setting the log level (at the top of this file) to DDLogLevelWarning.
     // After doing this you can leave the log statement below.
     // It will automatically be compiled out (when compiling in release mode where compiler optimizations are enabled).
     

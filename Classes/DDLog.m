@@ -206,7 +206,7 @@ static unsigned int numProcessors;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 + (void)addLogger:(id <DDLogger>)logger {
-    [self addLogger:logger withLogLevel:DDLogLevelAll]; // LOG_LEVEL_ALL has all bits set
+    [self addLogger:logger withLogLevel:DDLogLevelAll]; // DDLogLevelAll has all bits set
 }
 
 + (void)addLogger:(id <DDLogger>)logger withLogLevel:(DDLogLevel)logLevel {
@@ -345,8 +345,7 @@ static unsigned int numProcessors;
    function:(const char *)function
        line:(int)line
         tag:(id)tag
-     string:(NSString *)string
-{
+     string:(NSString *)string {
     [self log:asynchronous level:level flag:flag context:context file:file function:function line:line tag:tag format:@"%@", string];
 }
 

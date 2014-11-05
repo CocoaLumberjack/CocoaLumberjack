@@ -25,8 +25,8 @@
 + (void)start;
 + (void)stop;
 
-// Default log level: LOG_LEVEL_VERBOSE (i.e. capture all ASL messages).
+// Default log level: DDLogLevelVerbose (i.e. capture all ASL messages).
 + (DDLogLevel)captureLogLevel;
-+ (void)setCaptureLogLevel:(DDLogLevel)LOG_LEVEL_XXX;
++ (void)setCaptureLogLevel:(DDLogLevel)logLevel;
 
 @end

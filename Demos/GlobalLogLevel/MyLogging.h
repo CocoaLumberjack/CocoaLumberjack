@@ -1,3 +1,3 @@
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
-extern int ddLogLevel;
+extern DDLogLevel ddLogLevel;
