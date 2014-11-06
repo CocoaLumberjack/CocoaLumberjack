@@ -14,8 +14,8 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    [DDLog addLogger:[DDASLLogger sharedInstance] withLogLevel:DDLogLevelVerbose | LOG_FLAG_TIMERS];
-    [DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:DDLogLevelVerbose | LOG_FLAG_TIMERS];
+    [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:DDLogLevelVerbose | LOG_FLAG_TIMERS];
+    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:DDLogLevelVerbose | LOG_FLAG_TIMERS];
     
     timerOne = [[TimerOne alloc] init];
     timerTwo = [[TimerTwo alloc] init];

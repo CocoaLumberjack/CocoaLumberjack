@@ -225,10 +225,10 @@
     LogEntry *logEntry = (LogEntry *)[[NSManagedObject alloc] initWithEntity:logEntryEntity
                                               insertIntoManagedObjectContext:managedObjectContext];
     
-    logEntry.context   = [NSNumber numberWithInt:logMessage->logContext];
-    logEntry.level     = [NSNumber numberWithInt:logMessage->logFlag];
-    logEntry.message   = logMessage->logMsg;
-    logEntry.timestamp = logMessage->timestamp;
+    logEntry.context   = @(logMessage->_context);
+    logEntry.level     = @(logMessage->_flag);
+    logEntry.message   = logMessage->_message;
+    logEntry.timestamp = logMessage->_timestamp;
     
     
     return YES;

@@ -17,7 +17,7 @@
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage
 {
-    return [NSString stringWithFormat:@"  Captured: %@", logMessage->logMsg];
+    return [NSString stringWithFormat:@"  Captured: %@", logMessage->_message];
 }
 
 @end

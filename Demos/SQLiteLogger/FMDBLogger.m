@@ -33,10 +33,10 @@
 {
     if ((self = [super init]))
     {
-        context   = [[NSNumber alloc] initWithInt:logMessage->logContext];
-        level     = [[NSNumber alloc] initWithInt:logMessage->logFlag];
-        message   = logMessage->logMsg;
-        timestamp = logMessage->timestamp;
+        context   = @(logMessage->_context);
+        level     = @(logMessage->_flag);
+        message   = logMessage->_message;
+        timestamp = logMessage->_timestamp;
     }
     return self;
 }
