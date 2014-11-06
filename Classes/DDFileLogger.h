@@ -289,6 +289,15 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 // - (id <DDLogFormatter>)logFormatter;
 // - (void)setLogFormatter:(id <DDLogFormatter>)formatter;
 
+/**
+ * Returns the log file that should be used.
+ * If there is an existing log file that is suitable,
+ * within the constraints of maximumFileSize and rollingFrequency, then it is returned.
+ *
+ * Otherwise a new file is created and returned.
+ **/
+- (DDLogFileInfo *)currentLogFileInfo;
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
