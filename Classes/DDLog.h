@@ -179,14 +179,14 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * Logging Primitive.
  **/
 + (void)log:(BOOL)asynchronous
+    message:(NSString *)message
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
     context:(int)context
        file:(const char *)file
    function:(const char *)function
        line:(int)line
-        tag:(id)tag
-     string:(NSString *)string;
+        tag:(id)tag;
 
 /**
  * Logging Primitive.
@@ -224,14 +224,14 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 /**
  * Adds the logger to the system.
  *
- * The logLevel that you provide here is a preemptive filter (for performance).
- * That is, the logLevel specified here will be used to filter out logMessages so that
+ * The level that you provide here is a preemptive filter (for performance).
+ * That is, the level specified here will be used to filter out logMessages so that
  * the logger is never even invoked for the messages.
  *
  * More information:
  * When you issue a log statement, the logging framework iterates over each logger,
  * and checks to see if it should forward the logMessage to the logger.
- * This check is done using the logLevel parameter passed to this method.
+ * This check is done using the level parameter passed to this method.
  *
  * For example:
  *
@@ -257,7 +257,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  *
  * ((DDLogLevelAll ^ DDLogLevelVerbose) | DDLogLevelInfo)
  **/
-+ (void)addLogger:(id <DDLogger>)logger withLogLevel:(DDLogLevel)logLevel;
++ (void)addLogger:(id <DDLogger>)logger withLevel:(DDLogLevel)level;
 
 + (void)removeLogger:(id <DDLogger>)logger;
 + (void)removeAllLoggers;
@@ -274,11 +274,11 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 + (NSArray *)registeredClasses;
 + (NSArray *)registeredClassNames;
 
-+ (DDLogLevel)logLevelForClass:(Class)aClass;
-+ (DDLogLevel)logLevelForClassWithName:(NSString *)aClassName;
++ (DDLogLevel)levelForClass:(Class)aClass;
++ (DDLogLevel)levelForClassWithName:(NSString *)aClassName;
 
-+ (void)setLogLevel:(DDLogLevel)logLevel forClass:(Class)aClass;
-+ (void)setLogLevel:(DDLogLevel)logLevel forClassWithName:(NSString *)aClassName;
++ (void)setLevel:(DDLogLevel)level forClass:(Class)aClass;
++ (void)setLevel:(DDLogLevel)level forClassWithName:(NSString *)aClassName;
 
 @end
 
@@ -401,14 +401,14 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  *     return ddLogLevel;
  * }
  *
- * + (void)ddSetLogLevel:(int)logLevel
+ * + (void)ddSetLogLevel:(DDLogLevel)level
  * {
- *     ddLogLevel = logLevel;
+ *     ddLogLevel = level;
  * }
  **/
 
 + (DDLogLevel)ddLogLevel;
-+ (void)ddSetLogLevel:(DDLogLevel)logLevel;
++ (void)ddSetLogLevel:(DDLogLevel)level;
 
 @end
 
@@ -432,27 +432,22 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions) {
 
 @interface DDLogMessage : NSObject <NSCopying>
 {
-// The public variables below can be accessed directly (for speed).
-// For example: logMessage->logLevel
-
+    // Direct accessors to be used only for performance
     @public
-    DDLogLevel logLevel;
-    DDLogFlag logFlag;
-    int logContext;
-    NSString *logMsg;
-    NSDate *timestamp;
-    char *file;
-    char *function;
-    int lineNumber;
-    mach_port_t machThreadID;
-    char *queueLabel;
-    NSString *threadName;
-
-    // For 3rd party extensions to the framework, where flags and contexts aren't enough.
-    id tag;
-
-    // For 3rd party extensions that manually create DDLogMessage instances.
-    DDLogMessageOptions options;
+    NSString *_message;
+    DDLogLevel _level;
+    DDLogFlag _flag;
+    NSUInteger _context;
+    NSString *_file;
+    NSString *_fileName;
+    NSString *_function;
+    NSUInteger _line;
+    id _tag;
+    DDLogMessageOptions _options;
+    NSDate *_timestamp;
+    NSString *_threadID;
+    NSString *_threadName;
+    NSString *_queueLabel;
 }
 
 /**
@@ -470,63 +465,35 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions) {
  * However, if you need them to be copied you may use the options parameter to specify this.
  * Options is a bitmask which supports DDLogMessageCopyFile and DDLogMessageCopyFunction.
  **/
-- (instancetype)initWithLogMsg:(NSString *)logMsg
-                         level:(DDLogLevel)logLevel
-                          flag:(DDLogFlag)logFlag
-                       context:(int)logContext
-                          file:(const char *)file
-                      function:(const char *)function
-                          line:(int)line
-                           tag:(id)tag
-                       options:(DDLogMessageOptions)optionsMask;
-- (instancetype)initWithLogMsg:(NSString *)logMsg
-                         level:(DDLogLevel)logLevel
-                          flag:(DDLogFlag)logFlag
-                       context:(int)logContext
-                          file:(const char *)file
-                      function:(const char *)function
-                          line:(int)line
-                           tag:(id)tag
-                       options:(DDLogMessageOptions)optionsMask
-                     timestamp:(NSDate *)aTimestamp NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithMessage:(NSString *)message
+                          level:(DDLogLevel)level
+                           flag:(DDLogFlag)flag
+                        context:(NSUInteger)context
+                           file:(NSString *)file
+                       function:(NSString *)function
+                           line:(NSUInteger)line
+                            tag:(id)tag
+                        options:(DDLogMessageOptions)options
+                      timestamp:(NSDate *)timestamp NS_DESIGNATED_INITIALIZER;
 
 /**
- * Returns the threadID as it appears in NSLog.
- * That is, it is a hexadecimal value which is calculated from the machThreadID.
+ * Read-only properties
  **/
-@property (readonly, copy) NSString *threadID;
+@property (readonly, nonatomic) NSString *message;
+@property (readonly, nonatomic) DDLogLevel level;
+@property (readonly, nonatomic) DDLogFlag flag;
+@property (readonly, nonatomic) NSUInteger context;
+@property (readonly, nonatomic) NSString *file;
+@property (readonly, nonatomic) NSString *fileName;
+@property (readonly, nonatomic) NSString *function;
+@property (readonly, nonatomic) NSUInteger line;
+@property (readonly, nonatomic) id tag;
+@property (readonly, nonatomic) DDLogMessageOptions options;
+@property (readonly, nonatomic) NSDate *timestamp;
+@property (readonly, nonatomic) NSString *threadID; // ID as it appears in NSLog calculated from the machThreadID
+@property (readonly, nonatomic) NSString *threadName;
+@property (readonly, nonatomic) NSString *queueLabel;
 
-/**
- * Convenience property to get just the file name, as the file variable is generally the full file path.
- * This method does not include the file extension, which is generally unwanted for logging purposes.
- **/
-@property (readonly, copy) NSString *fileName;
-
-/**
- * Returns the function variable in NSString form.
- **/
-@property (readonly, copy) NSString *methodName;
-
-/**
- * For languages that can't access the variables directly (for instance, Swift)
- **/
-@property (readonly) DDLogLevel logLevel;
-@property (readonly) DDLogFlag logFlag;
-@property (readonly) int logContext;
-@property (readonly, copy) NSString *logMessage;
-@property (readonly, copy) NSDate *timestamp;
-@property (readonly) char *file;
-@property (readonly) char *function;
-@property (readonly) int lineNumber;
-@property (readonly) mach_port_t machThreadID;
-@property (readonly) char *queueLabel;
-@property (readonly, copy) NSString *threadName;
-
-// For 3rd party extensions to the framework, where flags and contexts aren't enough.
-@property (readwrite, strong) id tag;
-
-// For 3rd party extensions that manually create DDLogMessage instances.
-@property (readwrite) DDLogMessageOptions options;
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -552,17 +519,18 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions) {
 
 @interface DDAbstractLogger : NSObject <DDLogger>
 {
-    // Direct accessors to be used only for performance purposes
+    // Direct accessors to be used only for performance
+    @public
     id <DDLogFormatter> _logFormatter;
     dispatch_queue_t _loggerQueue;
 }
 
-@property (nonatomic, strong) id <DDLogFormatter> logFormatter;
+@property (nonatomic, strong)    id <DDLogFormatter> logFormatter;
 @property (nonatomic, readwrite) dispatch_queue_t loggerQueue;
 
 // For thread-safety assertions
-@property (getter=isOnGlobalLoggingQueue, readonly) BOOL onGlobalLoggingQueue;
-@property (getter=isOnInternalLoggerQueue, readonly) BOOL onInternalLoggerQueue;
+@property (nonatomic, readonly, getter=isOnGlobalLoggingQueue)  BOOL onGlobalLoggingQueue;
+@property (nonatomic, readonly, getter=isOnInternalLoggerQueue) BOOL onInternalLoggerQueue;
 
 @end
 

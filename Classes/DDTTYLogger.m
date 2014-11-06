@@ -1152,12 +1152,12 @@ static DDTTYLogger *sharedInstance;
 }
 
 - (void)logMessage:(DDLogMessage *)logMessage {
-    NSString *logMsg = logMessage->logMsg;
+    NSString *logMsg = logMessage->_message;
     BOOL isFormatted = NO;
 
     if (_logFormatter) {
         logMsg = [_logFormatter formatLogMessage:logMessage];
-        isFormatted = logMsg != logMessage->logMsg;
+        isFormatted = logMsg != logMessage->_message;
     }
 
     if (logMsg) {
@@ -1166,15 +1166,15 @@ static DDTTYLogger *sharedInstance;
         DDTTYLoggerColorProfile *colorProfile = nil;
 
         if (_colorsEnabled) {
-            if (logMessage->tag) {
-                colorProfile = _colorProfilesDict[logMessage->tag];
+            if (logMessage->_tag) {
+                colorProfile = _colorProfilesDict[logMessage->_tag];
             }
 
             if (colorProfile == nil) {
                 for (DDTTYLoggerColorProfile *cp in _colorProfilesArray) {
-                    if (logMessage->logFlag & cp->mask) {
+                    if (logMessage->_flag & cp->mask) {
                         // Color profile set for this context?
-                        if (logMessage->logContext == cp->context) {
+                        if (logMessage->_context == cp->context) {
                             colorProfile = cp;
 
                             // Stop searching
@@ -1262,10 +1262,10 @@ static DDTTYLogger *sharedInstance;
 
             // Calculate timestamp.
             // The technique below is faster than using NSDateFormatter.
-            if (logMessage->timestamp) {
-                NSDateComponents *components = [[NSCalendar autoupdatingCurrentCalendar] components:_calendarUnitFlags fromDate:logMessage->timestamp];
+            if (logMessage->_timestamp) {
+                NSDateComponents *components = [[NSCalendar autoupdatingCurrentCalendar] components:_calendarUnitFlags fromDate:logMessage->_timestamp];
 
-                NSTimeInterval epoch = [logMessage->timestamp timeIntervalSinceReferenceDate];
+                NSTimeInterval epoch = [logMessage->_timestamp timeIntervalSinceReferenceDate];
                 int milliseconds = (int)((epoch - floor(epoch)) * 1000);
 
                 len = snprintf(ts, 24, "%04ld-%02ld-%02ld %02ld:%02ld:%02ld:%03d", // yyyy-MM-dd HH:mm:ss:SSS
@@ -1288,7 +1288,7 @@ static DDTTYLogger *sharedInstance;
             // 8 hex chars for 32 bit, plus ending '\0' = 9
 
             char tid[9];
-            len = snprintf(tid, 9, "%x", logMessage->machThreadID);
+            len = snprintf(tid, 9, "%s", [logMessage->_threadID cStringUsingEncoding:NSUTF8StringEncoding]);
 
             size_t tidLen = (NSUInteger)MAX(MIN(9 - 1, len), 0);
 

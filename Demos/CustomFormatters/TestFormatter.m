@@ -9,8 +9,8 @@
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage
 {
-    return [NSString stringWithFormat:@"%@ | %s @ %i | %@",
-            [logMessage fileName], logMessage->function, logMessage->lineNumber, logMessage->logMsg];
+    return [NSString stringWithFormat:@"%@ | %@ @ %@ | %@",
+            [logMessage fileName], logMessage->_function, @(logMessage->_line), logMessage->_message];
 }
 
 @end

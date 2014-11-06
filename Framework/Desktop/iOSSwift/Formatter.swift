@@ -24,7 +24,7 @@ class Formatter: DDDispatchQueueLogFormatter, DDLogFormatter {
         let dateAndTime = threadUnsafeDateFormatter.stringFromDate(logMessage.timestamp)
         
         var logLevel: String
-        let logFlag = logMessage.logFlag
+        let logFlag = logMessage.flag
         if logFlag & .Error == .Error {
             logLevel = "E"
         } else if logFlag & .Warning == .Warning {
@@ -39,7 +39,7 @@ class Formatter: DDDispatchQueueLogFormatter, DDLogFormatter {
             logLevel = "?"
         }
         
-        let formattedLog = "\(dateAndTime) |\(logLevel)| [\(logMessage.fileName) \(logMessage.methodName)] #\(logMessage.lineNumber): \(logMessage.logMessage)"
+        let formattedLog = "\(dateAndTime) |\(logLevel)| [\(logMessage.fileName) \(logMessage.function)] #\(logMessage.line): \(logMessage.message)"
         
         return formattedLog;
     }

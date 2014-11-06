@@ -47,7 +47,7 @@
               args : avalist]
 
 /**
- * Define version of the macro that only execute if the logLevel is above the threshold.
+ * Define version of the macro that only execute if the log level is above the threshold.
  * The compiled versions essentially look like this:
  *
  * if (logFlagForThisLogMsg & ddLogLevel) { execute log message }

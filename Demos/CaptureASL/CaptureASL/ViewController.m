@@ -33,14 +33,14 @@
     char *level = NULL;
     switch (sender.tag)
     {
-        case 0  : level = "ASL_LEVEL_EMERG";    break;
-        case 1  : level = "ASL_LEVEL_ALERT";    break;
-        case 2  : level = "ASL_LEVEL_CRIT";     break;
-        case 3  : level = "ASL_LEVEL_ERR";      break;
-        case 4  : level = "ASL_LEVEL_WARNING";  break;
-        case 5  : level = "ASL_LEVEL_NOTICE";   break;
-        case 6  : level = "ASL_LEVEL_INFO";     break;
-        case 7  : level = "ASL_LEVEL_DEBUG";    break;
+        case ASL_LEVEL_EMERG   : level = "ASL_LEVEL_EMERG";   break;
+        case ASL_LEVEL_ALERT   : level = "ASL_LEVEL_ALERT";   break;
+        case ASL_LEVEL_CRIT    : level = "ASL_LEVEL_CRIT";    break;
+        case ASL_LEVEL_ERR     : level = "ASL_LEVEL_ERR";     break;
+        case ASL_LEVEL_WARNING : level = "ASL_LEVEL_WARNING"; break;
+        case ASL_LEVEL_NOTICE  : level = "ASL_LEVEL_NOTICE";  break;
+        case ASL_LEVEL_INFO    : level = "ASL_LEVEL_INFO";    break;
+        case ASL_LEVEL_DEBUG   : level = "ASL_LEVEL_DEBUG";   break;
     }
     asl_log(client, NULL, (int)sender.tag, "%s test message %d", level, count++);
 }
