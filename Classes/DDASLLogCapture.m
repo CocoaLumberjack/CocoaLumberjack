@@ -22,7 +22,7 @@
 #include <sys/time.h>
 
 static BOOL _cancel = YES;
-static DDLogLevel _captureLogLevel = DDLogLevelVerbose;
+static DDLogLevel _captureLevel = DDLogLevelVerbose;
 
 #ifdef __IPHONE_8_0
     #define DDASL_IOS_PIVOT_VERSION __IPHONE_8_0
@@ -75,12 +75,12 @@ static void (*dd_asl_release)(aslresponse obj);
     _cancel = YES;
 }
 
-+ (DDLogLevel)captureLogLevel {
-    return _captureLogLevel;
++ (DDLogLevel)captureLevel {
+    return _captureLevel;
 }
 
-+ (void)setCaptureLogLevel:(DDLogLevel)logLevel {
-    _captureLogLevel = logLevel;
++ (void)setCaptureLevel:(DDLogLevel)level {
+    _captureLevel = level;
 }
 
 #pragma mark - Private methods
@@ -131,12 +131,12 @@ static void (*dd_asl_release)(aslresponse obj);
         default                 : flag = DDLogFlagVerbose;  async = YES;  break;
     }
     
-    if (!(_captureLogLevel & flag)) {
+    if (!(_captureLevel & flag)) {
         return;
     }
     
     DDLogMessage *logMessage = [[DDLogMessage alloc]initWithMessage:message
-                                                              level:_captureLogLevel
+                                                              level:_captureLevel
                                                                flag:flag
                                                             context:0
                                                                file:@"DDASLLogCapture"
