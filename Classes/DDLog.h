@@ -257,7 +257,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  *
  * ((DDLogLevelAll ^ DDLogLevelVerbose) | DDLogLevelInfo)
  **/
-+ (void)addLogger:(id <DDLogger>)logger withLogLevel:(DDLogLevel)level;
++ (void)addLogger:(id <DDLogger>)logger withLevel:(DDLogLevel)level;
 
 + (void)removeLogger:(id <DDLogger>)logger;
 + (void)removeAllLoggers;
