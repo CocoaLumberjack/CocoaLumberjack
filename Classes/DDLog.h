@@ -525,8 +525,8 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions) {
     dispatch_queue_t _loggerQueue;
 }
 
-@property (nonatomic, strong)    id <DDLogFormatter> logFormatter;
-@property (nonatomic, readwrite) dispatch_queue_t loggerQueue;
+@property (nonatomic, strong)            id <DDLogFormatter> logFormatter;
+@property (nonatomic, readwrite, assign) dispatch_queue_t loggerQueue;
 
 // For thread-safety assertions
 @property (nonatomic, readonly, getter=isOnGlobalLoggingQueue)  BOOL onGlobalLoggingQueue;
