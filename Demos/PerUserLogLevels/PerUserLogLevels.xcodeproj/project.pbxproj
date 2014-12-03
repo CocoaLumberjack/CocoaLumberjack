@@ -18,7 +18,8 @@
 
 /* Begin PBXFileReference section */
 		0962D31C804C41988B625DA3 /* libPods-PULL_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PULL_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		94B8B090BDCD4340AE8F9DEC /* Pods-PULL_osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PULL_osx.xcconfig"; path = "Pods/Pods-PULL_osx.xcconfig"; sourceTree = "<group>"; };
+		B513ABCA15C2902F8B3390BC /* Pods-PULL_osx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PULL_osx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PULL_osx/Pods-PULL_osx.debug.xcconfig"; sourceTree = "<group>"; };
+		D8E6A730A03A926AAD72CC7A /* Pods-PULL_osx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PULL_osx.release.xcconfig"; path = "Pods/Target Support Files/Pods-PULL_osx/Pods-PULL_osx.release.xcconfig"; sourceTree = "<group>"; };
 		DC28B92D15263ED00043126F /* LumberjackUser.bash */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = LumberjackUser.bash; path = Scripts/LumberjackUser.bash; sourceTree = SOURCE_ROOT; };
 		DC87A6F41525AEA3005A09B0 /* PerUserLogLevels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerUserLogLevels.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC87A6F81525AEA3005A09B0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -49,6 +50,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3CEFE886C93FBC963106267F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B513ABCA15C2902F8B3390BC /* Pods-PULL_osx.debug.xcconfig */,
+				D8E6A730A03A926AAD72CC7A /* Pods-PULL_osx.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		DC87A6E91525AEA2005A09B0 = {
 			isa = PBXGroup;
 			children = (
@@ -56,7 +66,7 @@
 				DC87A6FE1525AEA3005A09B0 /* PerUserLogLevels */,
 				DC87A6F71525AEA3005A09B0 /* Frameworks */,
 				DC87A6F51525AEA3005A09B0 /* Products */,
-				94B8B090BDCD4340AE8F9DEC /* Pods-PULL_osx.xcconfig */,
+				3CEFE886C93FBC963106267F /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -210,7 +220,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-PULL_osx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PULL_osx/Pods-PULL_osx-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DC87A7341525B41D005A09B0 /* ShellScript */ = {
@@ -331,7 +341,7 @@
 		};
 		DC87A7131525AEA3005A09B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 94B8B090BDCD4340AE8F9DEC /* Pods-PULL_osx.xcconfig */;
+			baseConfigurationReference = B513ABCA15C2902F8B3390BC /* Pods-PULL_osx.debug.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -344,7 +354,7 @@
 		};
 		DC87A7141525AEA3005A09B0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 94B8B090BDCD4340AE8F9DEC /* Pods-PULL_osx.xcconfig */;
+			baseConfigurationReference = D8E6A730A03A926AAD72CC7A /* Pods-PULL_osx.release.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

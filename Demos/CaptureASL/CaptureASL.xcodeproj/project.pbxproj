@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		67FD3EE1A75049F3A4D222F9 /* libPods-CASL_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCB8815FC484C38B9524337 /* libPods-CASL_ios.a */; };
+		E50619821A2EF295000F835A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E50619811A2EF295000F835A /* Main.storyboard */; };
 		E5AE803B18DA83A400E0501F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803A18DA83A400E0501F /* Foundation.framework */; };
 		E5AE803D18DA83A400E0501F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803C18DA83A400E0501F /* CoreGraphics.framework */; };
 		E5AE803F18DA83A400E0501F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803E18DA83A400E0501F /* UIKit.framework */; };
 		E5AE804518DA83A400E0501F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E5AE804318DA83A400E0501F /* InfoPlist.strings */; };
 		E5AE804718DA83A400E0501F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AE804618DA83A400E0501F /* main.m */; };
 		E5AE804B18DA83A400E0501F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AE804A18DA83A400E0501F /* AppDelegate.m */; };
-		E5AE804E18DA83A400E0501F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5AE804C18DA83A400E0501F /* Main.storyboard */; };
 		E5AE805118DA83A400E0501F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AE805018DA83A400E0501F /* ViewController.m */; };
 		E5AE805318DA83A400E0501F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5AE805218DA83A400E0501F /* Images.xcassets */; };
 /* End PBXBuildFile section */
@@ -23,6 +23,7 @@
 		4CCB8815FC484C38B9524337 /* libPods-CASL_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CASL_ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ED6F02A728626894B1B3E54 /* Pods-CASL_ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CASL_ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-CASL_ios/Pods-CASL_ios.release.xcconfig"; sourceTree = "<group>"; };
 		96422D55A69049EE226D5569 /* Pods-CASL_ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CASL_ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CASL_ios/Pods-CASL_ios.debug.xcconfig"; sourceTree = "<group>"; };
+		E50619811A2EF295000F835A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E5AE803718DA83A400E0501F /* CaptureASL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptureASL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AE803A18DA83A400E0501F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E5AE803C18DA83A400E0501F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -33,7 +34,6 @@
 		E5AE804818DA83A400E0501F /* CaptureASL-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CaptureASL-Prefix.pch"; sourceTree = "<group>"; };
 		E5AE804918DA83A400E0501F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E5AE804A18DA83A400E0501F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		E5AE804D18DA83A400E0501F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E5AE804F18DA83A400E0501F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		E5AE805018DA83A400E0501F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		E5AE805218DA83A400E0501F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -99,9 +99,9 @@
 			children = (
 				E5AE804918DA83A400E0501F /* AppDelegate.h */,
 				E5AE804A18DA83A400E0501F /* AppDelegate.m */,
-				E5AE804C18DA83A400E0501F /* Main.storyboard */,
 				E5AE804F18DA83A400E0501F /* ViewController.h */,
 				E5AE805018DA83A400E0501F /* ViewController.m */,
+				E50619811A2EF295000F835A /* Main.storyboard */,
 				E5AE805218DA83A400E0501F /* Images.xcassets */,
 				E5AE804118DA83A400E0501F /* Supporting Files */,
 			);
@@ -155,7 +155,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = E5AE802E18DA83A400E0501F;
 			productRefGroup = E5AE803818DA83A400E0501F /* Products */;
@@ -172,9 +171,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E50619821A2EF295000F835A /* Main.storyboard in Resources */,
 				E5AE805318DA83A400E0501F /* Images.xcassets in Resources */,
 				E5AE804518DA83A400E0501F /* InfoPlist.strings in Resources */,
-				E5AE804E18DA83A400E0501F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,14 +234,6 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		E5AE804C18DA83A400E0501F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E5AE804D18DA83A400E0501F /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -278,7 +269,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -310,7 +301,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -325,7 +316,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CaptureASL/CaptureASL-Prefix.pch";
 				INFOPLIST_FILE = "CaptureASL/CaptureASL-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -340,7 +330,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CaptureASL/CaptureASL-Prefix.pch";
 				INFOPLIST_FILE = "CaptureASL/CaptureASL-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

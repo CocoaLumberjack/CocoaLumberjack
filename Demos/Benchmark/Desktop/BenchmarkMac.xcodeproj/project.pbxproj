@@ -22,7 +22,8 @@
 
 /* Begin PBXFileReference section */
 		3B87C32CF2EF4298BD9B0199 /* libPods-BM_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BM_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BC16164457D94A7F848A8FF8 /* Pods-BM_osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BM_osx.xcconfig"; path = "Pods/Pods-BM_osx.xcconfig"; sourceTree = "<group>"; };
+		5EE3DC55E808453403A4E009 /* Pods-BM_osx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BM_osx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BM_osx/Pods-BM_osx.debug.xcconfig"; sourceTree = "<group>"; };
+		A4CB8540E4C50155D1D220D9 /* Pods-BM_osx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BM_osx.release.xcconfig"; path = "Pods/Target Support Files/Pods-BM_osx/Pods-BM_osx.release.xcconfig"; sourceTree = "<group>"; };
 		DCC29DDC14730AA9005E8FD4 /* BenchmarkMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BenchmarkMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCC29DE014730AA9005E8FD4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DCC29DE314730AA9005E8FD4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -59,6 +60,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8B2D89AB0547F7D910983389 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5EE3DC55E808453403A4E009 /* Pods-BM_osx.debug.xcconfig */,
+				A4CB8540E4C50155D1D220D9 /* Pods-BM_osx.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		DCC29DD114730AA9005E8FD4 = {
 			isa = PBXGroup;
 			children = (
@@ -66,7 +76,7 @@
 				DCC29DE614730AA9005E8FD4 /* BenchmarkMac */,
 				DCC29DDF14730AA9005E8FD4 /* Frameworks */,
 				DCC29DDD14730AA9005E8FD4 /* Products */,
-				BC16164457D94A7F848A8FF8 /* Pods-BM_osx.xcconfig */,
+				8B2D89AB0547F7D910983389 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -165,7 +175,7 @@
 		DCC29DD314730AA9005E8FD4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = DCC29DD614730AA9005E8FD4 /* Build configuration list for PBXProject "BenchmarkMac" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -210,7 +220,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-BM_osx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BM_osx/Pods-BM_osx-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CCC3BE78F0DF486A86ECB56A /* Check Pods Manifest.lock */ = {
@@ -284,8 +294,10 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -303,7 +315,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -319,9 +331,11 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -332,14 +346,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 		DCC29DFB14730AA9005E8FD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BC16164457D94A7F848A8FF8 /* Pods-BM_osx.xcconfig */;
+			baseConfigurationReference = 5EE3DC55E808453403A4E009 /* Pods-BM_osx.debug.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -352,7 +366,7 @@
 		};
 		DCC29DFC14730AA9005E8FD4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BC16164457D94A7F848A8FF8 /* Pods-BM_osx.xcconfig */;
+			baseConfigurationReference = A4CB8540E4C50155D1D220D9 /* Pods-BM_osx.release.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
