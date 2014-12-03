@@ -10,12 +10,12 @@ static DDLogLevel ddLogLevel = DDLogLevelWarning; // NOT CONST
 
 @implementation DynamicLogging
 
-+ (int)ddLogLevel
++ (DDLogLevel)ddLogLevel
 {
 	return ddLogLevel;
 }
 
-+ (void)ddSetLogLevel:(int)logLevel
++ (void)ddSetLogLevel:(DDLogLevel)logLevel
 {
 	ddLogLevel = logLevel;
 }
