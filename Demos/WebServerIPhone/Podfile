@@ -1,15 +1,10 @@
-source 'https://github.com/CocoaPods/Specs.git'
 
 xcodeproj 'WebServerIPhone'
 workspace '../Demos'
 
-def import_pods
-  pod 'CocoaLumberjack', :path => '../../'
-end
-
 target :WSIP_ios do
   platform :ios, '5.0'
   link_with 'WebServerIPhone'
-  import_pods
+  pod 'CocoaLumberjack', :path => '../../'
 end
 

@@ -1,15 +1,10 @@
-source 'https://github.com/CocoaPods/Specs.git'
 
 xcodeproj 'LogFileCompressor'
 workspace '../Demos'
 
-def import_pods
-  pod 'CocoaLumberjack', :path => '../../'
-end
-
 target :LFC_osx do
   platform :osx, '10.7'
   link_with 'LogFileCompressor'
-  import_pods
+  pod 'CocoaLumberjack', :path => '../../'
 end
 

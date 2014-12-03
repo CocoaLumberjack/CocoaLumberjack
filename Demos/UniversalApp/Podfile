@@ -1,15 +1,10 @@
-source 'https://github.com/CocoaPods/Specs.git'
 
 xcodeproj 'UniversalApp'
 workspace '../Demos'
 
-def import_pods
-  pod 'CocoaLumberjack', :path => '../../'
-end
-
 target :UA_ios do
   platform :ios, '5.0'
   link_with 'UniversalApp'
-  import_pods
+  pod 'CocoaLumberjack', :path => '../../'
 end
 

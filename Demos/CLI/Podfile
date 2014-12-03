@@ -1,15 +1,10 @@
-source 'https://github.com/CocoaPods/Specs.git'
 
 xcodeproj 'CLI'
 workspace '../Demos'
 
-def import_pods
-  pod 'CocoaLumberjack/CLI', :path => '../../'
-end
-
 target :CLI_osx do
 platform :osx, '10.7'
   link_with 'CLI'
-  import_pods
+  pod 'CocoaLumberjack/CLI', :path => '../../'
 end
 

@@ -1,15 +1,10 @@
-source 'https://github.com/CocoaPods/Specs.git'
 
 xcodeproj 'RollingTestMac'
 workspace '../Demos'
 
-def import_pods
-  pod 'CocoaLumberjack', :path => '../../'
-end
-
 target :RTM_osx do
   platform :osx, '10.7'
   link_with 'RollingTestMac'
-  import_pods
+  pod 'CocoaLumberjack', :path => '../../'
 end
 
