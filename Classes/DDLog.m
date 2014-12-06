@@ -468,38 +468,37 @@ static NSUInteger _numProcessors;
     // registered class definitions without actually retrieving any class definitions.
     // This allows us to allocate the minimum amount of memory needed for the application.
 
-    int numClasses = 0;
+    NSUInteger numClasses = 0;
     Class *classes = NULL;
 
-    while (numClasses <= 0) {
+    while (numClasses == 0) {
 
-        numClasses = objc_getClassList(NULL, 0);
-        if (numClasses <= 0) return nil;  //something very wrong
+        numClasses = (NSUInteger)MAX(objc_getClassList(NULL, 0), 0);
 
         // numClasses now tells us how many classes we have (but it might change)
         // So we can allocate our buffer, and get pointers to all the class definitions.
 
-        int bufferSize = numClasses;
+        NSUInteger bufferSize = numClasses;
 
-        classes = (Class *)malloc(sizeof(Class) * bufferSize);
-        if (classes == NULL) return nil; //no memory?
+        classes = numClasses ? (Class *)malloc(sizeof(Class) * bufferSize) : NULL;
+        if (classes == NULL) {
+            return nil; //no memory or classes?
+        }
 
-        numClasses = objc_getClassList(classes, bufferSize);
-        if (numClasses <= 0) return nil;  //something very wrong
+        numClasses = (NSUInteger)MAX(objc_getClassList(classes, (int)bufferSize),0);
 
-        if (numClasses > bufferSize) {
-            //apparently more classes added between calls; try again
+        if (numClasses > bufferSize || numClasses == 0) {
+            //apparently more classes added between calls (or a problem); try again
             free(classes);
             numClasses = 0;
         }
     }
 
-
     // We can now loop through the classes, and test each one to see if it is a DDLogging class.
 
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:numClasses];
 
-    for (int i = 0; i < numClasses; i++) {
+    for (NSUInteger i = 0; i < numClasses; i++) {
         Class class = classes[i];
 
         if ([self isRegisteredClass:class]) {
