@@ -1,15 +1,10 @@
-source 'https://github.com/CocoaPods/Specs.git'
 
 xcodeproj 'SQLiteLogger'
 workspace '../Demos'
 
-def import_pods
-  pod 'CocoaLumberjack', :path => '../../'
-end
-
 target :SQLL_osx do
   platform :osx, '10.7'
   link_with 'SQLiteLogger'
-  import_pods
+  pod 'CocoaLumberjack', :path => '../../'
 end
 

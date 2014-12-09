@@ -1,912 +1,412 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>archiveVersion</key>
-	<string>1</string>
-	<key>classes</key>
-	<dict/>
-	<key>objectVersion</key>
-	<string>46</string>
-	<key>objects</key>
-	<dict>
-		<key>029654B0E34E31A09088B9E8</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>EF6DC9F7EE93E86604607432</string>
-				<string>A3C9FD7691469B5A00AA4E31</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Pods</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>1C2EF26CA49246A98E4F5CD7</key>
-		<dict>
-			<key>fileRef</key>
-			<string>6EC7A9B6117D4036860BA066</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>6EC7A9B6117D4036860BA066</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods-CDL_osx.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>8CCA0EBBED064C809FFE26DE</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>9F7D57202A9B442FA2531632</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-CDL_osx/Pods-CDL_osx-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>A3C9FD7691469B5A00AA4E31</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-CDL_osx.release.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods-CDL_osx/Pods-CDL_osx.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86BFE1343C419004FD85F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>DCE86C351343C432004FD85F</string>
-				<string>DCE86C131343C419004FD85F</string>
-				<string>DCE86C0C1343C419004FD85F</string>
-				<string>DCE86C0A1343C419004FD85F</string>
-				<string>029654B0E34E31A09088B9E8</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C001343C419004FD85F</key>
-		<dict>
-			<key>attributes</key>
-			<dict>
-				<key>LastUpgradeCheck</key>
-				<string>0610</string>
-			</dict>
-			<key>buildConfigurationList</key>
-			<string>DCE86C031343C419004FD85F</string>
-			<key>compatibilityVersion</key>
-			<string>Xcode 3.2</string>
-			<key>developmentRegion</key>
-			<string>English</string>
-			<key>hasScannedForEncodings</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXProject</string>
-			<key>knownRegions</key>
-			<array>
-				<string>en</string>
-			</array>
-			<key>mainGroup</key>
-			<string>DCE86BFE1343C419004FD85F</string>
-			<key>productRefGroup</key>
-			<string>DCE86C0A1343C419004FD85F</string>
-			<key>projectDirPath</key>
-			<string></string>
-			<key>projectReferences</key>
-			<array/>
-			<key>projectRoot</key>
-			<string></string>
-			<key>targets</key>
-			<array>
-				<string>DCE86C081343C419004FD85F</string>
-			</array>
-		</dict>
-		<key>DCE86C031343C419004FD85F</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>DCE86C281343C41A004FD85F</string>
-				<string>DCE86C291343C41A004FD85F</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>DCE86C051343C419004FD85F</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>DCE86C1B1343C419004FD85F</string>
-				<string>DCE86C211343C419004FD85F</string>
-				<string>DCE86C551343C64F004FD85F</string>
-				<string>DCE86C561343C64F004FD85F</string>
-				<string>DCE86C571343C64F004FD85F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>DCE86C061343C419004FD85F</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>DCE86C0E1343C419004FD85F</string>
-				<string>1C2EF26CA49246A98E4F5CD7</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>DCE86C071343C419004FD85F</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>DCE86C181343C419004FD85F</string>
-				<string>DCE86C1E1343C419004FD85F</string>
-				<string>DCE86C241343C41A004FD85F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXResourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>DCE86C081343C419004FD85F</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>DCE86C2A1343C41A004FD85F</string>
-			<key>buildPhases</key>
-			<array>
-				<string>8CCA0EBBED064C809FFE26DE</string>
-				<string>DCE86C051343C419004FD85F</string>
-				<string>DCE86C061343C419004FD85F</string>
-				<string>DCE86C071343C419004FD85F</string>
-				<string>9F7D57202A9B442FA2531632</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>CoreDataLogger</string>
-			<key>productName</key>
-			<string>CoreDataLogger</string>
-			<key>productReference</key>
-			<string>DCE86C091343C419004FD85F</string>
-			<key>productType</key>
-			<string>com.apple.product-type.application</string>
-		</dict>
-		<key>DCE86C091343C419004FD85F</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.application</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>CoreDataLogger.app</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>DCE86C0A1343C419004FD85F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>DCE86C091343C419004FD85F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C0C1343C419004FD85F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>DCE86C0D1343C419004FD85F</string>
-				<string>DCE86C0F1343C419004FD85F</string>
-				<string>6EC7A9B6117D4036860BA066</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C0D1343C419004FD85F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>Cocoa.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/Cocoa.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>DCE86C0E1343C419004FD85F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>DCE86C0D1343C419004FD85F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>DCE86C0F1343C419004FD85F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>DCE86C101343C419004FD85F</string>
-				<string>DCE86C111343C419004FD85F</string>
-				<string>DCE86C121343C419004FD85F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Other Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C101343C419004FD85F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>AppKit.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/AppKit.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>DCE86C111343C419004FD85F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>CoreData.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/CoreData.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>DCE86C121343C419004FD85F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>Foundation.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/Foundation.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>DCE86C131343C419004FD85F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>DCE86C1F1343C419004FD85F</string>
-				<string>DCE86C201343C419004FD85F</string>
-				<string>DCE86C221343C41A004FD85F</string>
-				<string>DCE86C141343C419004FD85F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>CoreDataLogger</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C141343C419004FD85F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>DCE86C151343C419004FD85F</string>
-				<string>DCE86C161343C419004FD85F</string>
-				<string>DCE86C191343C419004FD85F</string>
-				<string>DCE86C1A1343C419004FD85F</string>
-				<string>DCE86C1C1343C419004FD85F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Supporting Files</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C151343C419004FD85F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>CoreDataLogger-Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C161343C419004FD85F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>DCE86C171343C419004FD85F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>InfoPlist.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C171343C419004FD85F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.strings</string>
-			<key>name</key>
-			<string>en</string>
-			<key>path</key>
-			<string>en.lproj/InfoPlist.strings</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C181343C419004FD85F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>DCE86C161343C419004FD85F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>DCE86C191343C419004FD85F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>CoreDataLogger-Prefix.pch</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C1A1343C419004FD85F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>main.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C1B1343C419004FD85F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>DCE86C1A1343C419004FD85F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>DCE86C1C1343C419004FD85F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>DCE86C1D1343C419004FD85F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>Credits.rtf</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C1D1343C419004FD85F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.rtf</string>
-			<key>name</key>
-			<string>en</string>
-			<key>path</key>
-			<string>en.lproj/Credits.rtf</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C1E1343C419004FD85F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>DCE86C1C1343C419004FD85F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>DCE86C1F1343C419004FD85F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>CoreDataLoggerAppDelegate.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C201343C419004FD85F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>CoreDataLoggerAppDelegate.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C211343C419004FD85F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>DCE86C201343C419004FD85F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>DCE86C221343C41A004FD85F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>DCE86C231343C41A004FD85F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>MainMenu.xib</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C231343C41A004FD85F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file.xib</string>
-			<key>name</key>
-			<string>en</string>
-			<key>path</key>
-			<string>en.lproj/MainMenu.xib</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C241343C41A004FD85F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>DCE86C221343C41A004FD85F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>DCE86C281343C41A004FD85F</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_UNREACHABLE_CODE</key>
-				<string>YES</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
-				<string>YES</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_OPTIMIZATION_LEVEL</key>
-				<string>0</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<string>DEBUG</string>
-				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
-				<string>NO</string>
-				<key>GCC_VERSION</key>
-				<string>com.apple.compilers.llvm.clang.1_0</string>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>MACOSX_DEPLOYMENT_TARGET</key>
-				<string>10.6</string>
-				<key>ONLY_ACTIVE_ARCH</key>
-				<string>YES</string>
-				<key>SDKROOT</key>
-				<string>macosx</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>DCE86C291343C41A004FD85F</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_UNREACHABLE_CODE</key>
-				<string>YES</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
-				<string>YES</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_VERSION</key>
-				<string>com.apple.compilers.llvm.clang.1_0</string>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>MACOSX_DEPLOYMENT_TARGET</key>
-				<string>10.6</string>
-				<key>SDKROOT</key>
-				<string>macosx</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>DCE86C2A1343C41A004FD85F</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>DCE86C2B1343C41A004FD85F</string>
-				<string>DCE86C2C1343C41A004FD85F</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>DCE86C2B1343C41A004FD85F</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>EF6DC9F7EE93E86604607432</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>COMBINE_HIDPI_IMAGES</key>
-				<string>YES</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
-				<key>GCC_DYNAMIC_NO_PIC</key>
-				<string>NO</string>
-				<key>GCC_ENABLE_OBJC_EXCEPTIONS</key>
-				<string>YES</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>CoreDataLogger/CoreDataLogger-Prefix.pch</string>
-				<key>INFOPLIST_FILE</key>
-				<string>CoreDataLogger/CoreDataLogger-Info.plist</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>WRAPPER_EXTENSION</key>
-				<string>app</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>DCE86C2C1343C41A004FD85F</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>A3C9FD7691469B5A00AA4E31</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>COMBINE_HIDPI_IMAGES</key>
-				<string>YES</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>YES</string>
-				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf-with-dsym</string>
-				<key>GCC_ENABLE_OBJC_EXCEPTIONS</key>
-				<string>YES</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>CoreDataLogger/CoreDataLogger-Prefix.pch</string>
-				<key>INFOPLIST_FILE</key>
-				<string>CoreDataLogger/CoreDataLogger-Info.plist</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>WRAPPER_EXTENSION</key>
-				<string>app</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>DCE86C351343C432004FD85F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>DCE86C361343C43C004FD85F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Logging</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C361343C43C004FD85F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>DCE86C511343C64F004FD85F</string>
-				<string>DCE86C531343C64F004FD85F</string>
-				<string>DCE86C541343C64F004FD85F</string>
-				<string>DCE86C4F1343C64F004FD85F</string>
-				<string>DCE86C501343C64F004FD85F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>CoreData</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C4F1343C64F004FD85F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>CoreDataLogger.h</string>
-			<key>path</key>
-			<string>CoreDataLogger/CoreDataLogger.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C501343C64F004FD85F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>CoreDataLogger.m</string>
-			<key>path</key>
-			<string>CoreDataLogger/CoreDataLogger.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C511343C64F004FD85F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>DCE86C521343C64F004FD85F</string>
-			</array>
-			<key>currentVersion</key>
-			<string>DCE86C521343C64F004FD85F</string>
-			<key>isa</key>
-			<string>XCVersionGroup</string>
-			<key>name</key>
-			<string>Log.xcdatamodeld</string>
-			<key>path</key>
-			<string>CoreDataLogger/Log.xcdatamodeld</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-			<key>versionGroupType</key>
-			<string>wrapper.xcdatamodel</string>
-		</dict>
-		<key>DCE86C521343C64F004FD85F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.xcdatamodel</string>
-			<key>path</key>
-			<string>CocoaBotLog.xcdatamodel</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C531343C64F004FD85F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>LogEntry.h</string>
-			<key>path</key>
-			<string>CoreDataLogger/LogEntry.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C541343C64F004FD85F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>LogEntry.m</string>
-			<key>path</key>
-			<string>CoreDataLogger/LogEntry.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DCE86C551343C64F004FD85F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>DCE86C501343C64F004FD85F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>DCE86C561343C64F004FD85F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>DCE86C511343C64F004FD85F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>DCE86C571343C64F004FD85F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>DCE86C541343C64F004FD85F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>EF6DC9F7EE93E86604607432</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-CDL_osx.debug.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods-CDL_osx/Pods-CDL_osx.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-	</dict>
-	<key>rootObject</key>
-	<string>DCE86C001343C419004FD85F</string>
-</dict>
-</plist>
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1C2EF26CA49246A98E4F5CD7 /* libPods-CDL_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC7A9B6117D4036860BA066 /* libPods-CDL_osx.a */; };
+		DCE86C0E1343C419004FD85F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE86C0D1343C419004FD85F /* Cocoa.framework */; };
+		DCE86C181343C419004FD85F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCE86C161343C419004FD85F /* InfoPlist.strings */; };
+		DCE86C1B1343C419004FD85F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE86C1A1343C419004FD85F /* main.m */; };
+		DCE86C1E1343C419004FD85F /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DCE86C1C1343C419004FD85F /* Credits.rtf */; };
+		DCE86C211343C419004FD85F /* CoreDataLoggerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE86C201343C419004FD85F /* CoreDataLoggerAppDelegate.m */; };
+		DCE86C241343C41A004FD85F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCE86C221343C41A004FD85F /* MainMenu.xib */; };
+		DCE86C551343C64F004FD85F /* CoreDataLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE86C501343C64F004FD85F /* CoreDataLogger.m */; };
+		DCE86C561343C64F004FD85F /* Log.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DCE86C511343C64F004FD85F /* Log.xcdatamodeld */; };
+		DCE86C571343C64F004FD85F /* LogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE86C541343C64F004FD85F /* LogEntry.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6EC7A9B6117D4036860BA066 /* libPods-CDL_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CDL_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3C9FD7691469B5A00AA4E31 /* Pods-CDL_osx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CDL_osx.release.xcconfig"; path = "Pods/Target Support Files/Pods-CDL_osx/Pods-CDL_osx.release.xcconfig"; sourceTree = "<group>"; };
+		DCE86C091343C419004FD85F /* CoreDataLogger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataLogger.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCE86C0D1343C419004FD85F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		DCE86C101343C419004FD85F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		DCE86C111343C419004FD85F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		DCE86C121343C419004FD85F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DCE86C151343C419004FD85F /* CoreDataLogger-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CoreDataLogger-Info.plist"; sourceTree = "<group>"; };
+		DCE86C171343C419004FD85F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DCE86C191343C419004FD85F /* CoreDataLogger-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CoreDataLogger-Prefix.pch"; sourceTree = "<group>"; };
+		DCE86C1A1343C419004FD85F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DCE86C1D1343C419004FD85F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		DCE86C1F1343C419004FD85F /* CoreDataLoggerAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataLoggerAppDelegate.h; sourceTree = "<group>"; };
+		DCE86C201343C419004FD85F /* CoreDataLoggerAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataLoggerAppDelegate.m; sourceTree = "<group>"; };
+		DCE86C231343C41A004FD85F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		DCE86C4F1343C64F004FD85F /* CoreDataLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreDataLogger.h; path = CoreDataLogger/CoreDataLogger.h; sourceTree = "<group>"; };
+		DCE86C501343C64F004FD85F /* CoreDataLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CoreDataLogger.m; path = CoreDataLogger/CoreDataLogger.m; sourceTree = "<group>"; };
+		DCE86C521343C64F004FD85F /* CocoaBotLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CocoaBotLog.xcdatamodel; sourceTree = "<group>"; };
+		DCE86C531343C64F004FD85F /* LogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogEntry.h; path = CoreDataLogger/LogEntry.h; sourceTree = "<group>"; };
+		DCE86C541343C64F004FD85F /* LogEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogEntry.m; path = CoreDataLogger/LogEntry.m; sourceTree = "<group>"; };
+		EF6DC9F7EE93E86604607432 /* Pods-CDL_osx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CDL_osx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CDL_osx/Pods-CDL_osx.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DCE86C061343C419004FD85F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCE86C0E1343C419004FD85F /* Cocoa.framework in Frameworks */,
+				1C2EF26CA49246A98E4F5CD7 /* libPods-CDL_osx.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		029654B0E34E31A09088B9E8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EF6DC9F7EE93E86604607432 /* Pods-CDL_osx.debug.xcconfig */,
+				A3C9FD7691469B5A00AA4E31 /* Pods-CDL_osx.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		DCE86BFE1343C419004FD85F = {
+			isa = PBXGroup;
+			children = (
+				DCE86C351343C432004FD85F /* Logging */,
+				DCE86C131343C419004FD85F /* CoreDataLogger */,
+				DCE86C0C1343C419004FD85F /* Frameworks */,
+				DCE86C0A1343C419004FD85F /* Products */,
+				029654B0E34E31A09088B9E8 /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		DCE86C0A1343C419004FD85F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DCE86C091343C419004FD85F /* CoreDataLogger.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DCE86C0C1343C419004FD85F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DCE86C0D1343C419004FD85F /* Cocoa.framework */,
+				DCE86C0F1343C419004FD85F /* Other Frameworks */,
+				6EC7A9B6117D4036860BA066 /* libPods-CDL_osx.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DCE86C0F1343C419004FD85F /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DCE86C101343C419004FD85F /* AppKit.framework */,
+				DCE86C111343C419004FD85F /* CoreData.framework */,
+				DCE86C121343C419004FD85F /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		DCE86C131343C419004FD85F /* CoreDataLogger */ = {
+			isa = PBXGroup;
+			children = (
+				DCE86C1F1343C419004FD85F /* CoreDataLoggerAppDelegate.h */,
+				DCE86C201343C419004FD85F /* CoreDataLoggerAppDelegate.m */,
+				DCE86C221343C41A004FD85F /* MainMenu.xib */,
+				DCE86C141343C419004FD85F /* Supporting Files */,
+			);
+			path = CoreDataLogger;
+			sourceTree = "<group>";
+		};
+		DCE86C141343C419004FD85F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DCE86C151343C419004FD85F /* CoreDataLogger-Info.plist */,
+				DCE86C161343C419004FD85F /* InfoPlist.strings */,
+				DCE86C191343C419004FD85F /* CoreDataLogger-Prefix.pch */,
+				DCE86C1A1343C419004FD85F /* main.m */,
+				DCE86C1C1343C419004FD85F /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DCE86C351343C432004FD85F /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				DCE86C361343C43C004FD85F /* CoreData */,
+			);
+			name = Logging;
+			sourceTree = "<group>";
+		};
+		DCE86C361343C43C004FD85F /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				DCE86C511343C64F004FD85F /* Log.xcdatamodeld */,
+				DCE86C531343C64F004FD85F /* LogEntry.h */,
+				DCE86C541343C64F004FD85F /* LogEntry.m */,
+				DCE86C4F1343C64F004FD85F /* CoreDataLogger.h */,
+				DCE86C501343C64F004FD85F /* CoreDataLogger.m */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DCE86C081343C419004FD85F /* CoreDataLogger */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DCE86C2A1343C41A004FD85F /* Build configuration list for PBXNativeTarget "CoreDataLogger" */;
+			buildPhases = (
+				8CCA0EBBED064C809FFE26DE /* Check Pods Manifest.lock */,
+				DCE86C051343C419004FD85F /* Sources */,
+				DCE86C061343C419004FD85F /* Frameworks */,
+				DCE86C071343C419004FD85F /* Resources */,
+				9F7D57202A9B442FA2531632 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CoreDataLogger;
+			productName = CoreDataLogger;
+			productReference = DCE86C091343C419004FD85F /* CoreDataLogger.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DCE86C001343C419004FD85F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+			};
+			buildConfigurationList = DCE86C031343C419004FD85F /* Build configuration list for PBXProject "CoreDataLogger" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DCE86BFE1343C419004FD85F;
+			productRefGroup = DCE86C0A1343C419004FD85F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DCE86C081343C419004FD85F /* CoreDataLogger */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DCE86C071343C419004FD85F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCE86C181343C419004FD85F /* InfoPlist.strings in Resources */,
+				DCE86C1E1343C419004FD85F /* Credits.rtf in Resources */,
+				DCE86C241343C41A004FD85F /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8CCA0EBBED064C809FFE26DE /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9F7D57202A9B442FA2531632 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CDL_osx/Pods-CDL_osx-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DCE86C051343C419004FD85F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCE86C1B1343C419004FD85F /* main.m in Sources */,
+				DCE86C211343C419004FD85F /* CoreDataLoggerAppDelegate.m in Sources */,
+				DCE86C551343C64F004FD85F /* CoreDataLogger.m in Sources */,
+				DCE86C561343C64F004FD85F /* Log.xcdatamodeld in Sources */,
+				DCE86C571343C64F004FD85F /* LogEntry.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DCE86C161343C419004FD85F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DCE86C171343C419004FD85F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DCE86C1C1343C419004FD85F /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DCE86C1D1343C419004FD85F /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		DCE86C221343C41A004FD85F /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DCE86C231343C41A004FD85F /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DCE86C281343C41A004FD85F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DCE86C291343C41A004FD85F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DCE86C2B1343C41A004FD85F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EF6DC9F7EE93E86604607432 /* Pods-CDL_osx.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CoreDataLogger/CoreDataLogger-Prefix.pch";
+				INFOPLIST_FILE = "CoreDataLogger/CoreDataLogger-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		DCE86C2C1343C41A004FD85F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3C9FD7691469B5A00AA4E31 /* Pods-CDL_osx.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CoreDataLogger/CoreDataLogger-Prefix.pch";
+				INFOPLIST_FILE = "CoreDataLogger/CoreDataLogger-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DCE86C031343C419004FD85F /* Build configuration list for PBXProject "CoreDataLogger" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCE86C281343C41A004FD85F /* Debug */,
+				DCE86C291343C41A004FD85F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DCE86C2A1343C41A004FD85F /* Build configuration list for PBXNativeTarget "CoreDataLogger" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCE86C2B1343C41A004FD85F /* Debug */,
+				DCE86C2C1343C41A004FD85F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DCE86C511343C64F004FD85F /* Log.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DCE86C521343C64F004FD85F /* CocoaBotLog.xcdatamodel */,
+			);
+			currentVersion = DCE86C521343C64F004FD85F /* CocoaBotLog.xcdatamodel */;
+			name = Log.xcdatamodeld;
+			path = CoreDataLogger/Log.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = DCE86C001343C419004FD85F /* Project object */;
+}

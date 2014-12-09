@@ -1,15 +1,10 @@
-source 'https://github.com/CocoaPods/Specs.git'
 
 xcodeproj 'ContextFilter'
 workspace '../Demos'
 
-def import_pods
-  pod 'CocoaLumberjack', :path => '../../'
-end
-
 target :CFi_osx do
   platform :osx, '10.7'
   link_with 'ContextFilter'
-  import_pods
+  pod 'CocoaLumberjack', :path => '../../'
 end
 

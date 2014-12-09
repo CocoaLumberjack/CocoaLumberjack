@@ -1,15 +1,10 @@
-source 'https://github.com/CocoaPods/Specs.git'
 
 xcodeproj 'NonArcTest'
 workspace '../Demos'
 
-def import_pods
-  pod 'CocoaLumberjack', :path => '../../'
-end
-
 target :NAT_osx do
   platform :osx, '10.7'
   link_with 'NonArcTest'
-  import_pods
+  pod 'CocoaLumberjack', :path => '../../'
 end
 

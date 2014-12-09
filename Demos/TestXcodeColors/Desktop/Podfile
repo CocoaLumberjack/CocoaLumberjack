@@ -1,15 +1,10 @@
-source 'https://github.com/CocoaPods/Specs.git'
 
 xcodeproj 'TestXcodeColors'
 workspace '../../Demos'
 
-def import_pods
-  pod 'CocoaLumberjack', :path => '../../../'
-end
-
 target :TXC_osx do
   platform :osx, '10.7'
   link_with 'TestXcodeColors'
-  import_pods
+  pod 'CocoaLumberjack', :path => '../../../'
 end
 

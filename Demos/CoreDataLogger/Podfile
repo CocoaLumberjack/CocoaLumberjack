@@ -1,15 +1,10 @@
-source 'https://github.com/CocoaPods/Specs.git'
 
 xcodeproj 'CoreDataLogger'
 workspace '../Demos'
 
-def import_pods
-  pod 'CocoaLumberjack', :path => '../../'
-end
-
 target :CDL_osx do
   platform :osx, '10.7'
   link_with 'CoreDataLogger'
-  import_pods
+  pod 'CocoaLumberjack', :path => '../../'
 end
 

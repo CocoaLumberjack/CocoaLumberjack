@@ -38,7 +38,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* BenchmarkIPhone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BenchmarkIPhone_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* BenchmarkIPhone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BenchmarkIPhone-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		D9FF3ED2DE8E42ACA8EF26F1 /* Pods-BIP_ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BIP_ios.xcconfig"; path = "Pods/Pods-BIP_ios.xcconfig"; sourceTree = "<group>"; };
+		96FC2205CF8D1E0435E21A70 /* Pods-BIP_ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BIP_ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-BIP_ios/Pods-BIP_ios.release.xcconfig"; sourceTree = "<group>"; };
+		BDD3CE39625989033FF2E139 /* Pods-BIP_ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BIP_ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BIP_ios/Pods-BIP_ios.debug.xcconfig"; sourceTree = "<group>"; };
 		DC3D2F381674073100DFAFAA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		DC987BD711928FD60020FF52 /* BaseNSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseNSLogging.h; path = ../../../Benchmarking/BaseNSLogging.h; sourceTree = SOURCE_ROOT; };
 		DC987BD811928FD60020FF52 /* BaseNSLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseNSLogging.m; path = ../../../Benchmarking/BaseNSLogging.m; sourceTree = SOURCE_ROOT; };
@@ -93,7 +94,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				D9FF3ED2DE8E42ACA8EF26F1 /* Pods-BIP_ios.xcconfig */,
+				487A446922A543BB121DF430 /* Pods */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -127,6 +128,15 @@
 				1274385BDE284AC08A7BAF4E /* libPods-BIP_ios.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		487A446922A543BB121DF430 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BDD3CE39625989033FF2E139 /* Pods-BIP_ios.debug.xcconfig */,
+				96FC2205CF8D1E0435E21A70 /* Pods-BIP_ios.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		DC987BD611928FB50020FF52 /* Benchmarking */ = {
@@ -220,7 +230,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-BIP_ios-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BIP_ios/Pods-BIP_ios-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D9F7280257FE4C39B02611EA /* Check Pods Manifest.lock */ = {
@@ -260,7 +270,7 @@
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D9FF3ED2DE8E42ACA8EF26F1 /* Pods-BIP_ios.xcconfig */;
+			baseConfigurationReference = BDD3CE39625989033FF2E139 /* Pods-BIP_ios.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -277,7 +287,7 @@
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D9FF3ED2DE8E42ACA8EF26F1 /* Pods-BIP_ios.xcconfig */;
+			baseConfigurationReference = 96FC2205CF8D1E0435E21A70 /* Pods-BIP_ios.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -297,6 +307,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -309,6 +320,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 			};
 			name = Release;
