@@ -456,7 +456,6 @@ static NSUInteger _numProcessors;
 }
 
 + (NSArray *)registeredClasses {
-    NSUInteger numClasses, i;
 
     // We're going to get the list of all registered classes.
     // The Objective-C runtime library automatically registers all the classes defined in your source code.
@@ -469,24 +468,37 @@ static NSUInteger _numProcessors;
     // registered class definitions without actually retrieving any class definitions.
     // This allows us to allocate the minimum amount of memory needed for the application.
 
-    numClasses = (NSUInteger)MAX(objc_getClassList(NULL, 0), 0);
+    NSUInteger numClasses = 0;
+    Class *classes = NULL;
 
-    // The numClasses method now tells us how many classes we have.
-    // So we can allocate our buffer, and get pointers to all the class definitions.
+    while (numClasses == 0) {
 
-    Class *classes = numClasses ? (Class *)malloc(sizeof(Class) * numClasses) : NULL;
+        numClasses = (NSUInteger)MAX(objc_getClassList(NULL, 0), 0);
 
-    if (classes == NULL) {
-        return nil;
+        // numClasses now tells us how many classes we have (but it might change)
+        // So we can allocate our buffer, and get pointers to all the class definitions.
+
+        NSUInteger bufferSize = numClasses;
+
+        classes = numClasses ? (Class *)malloc(sizeof(Class) * bufferSize) : NULL;
+        if (classes == NULL) {
+            return nil; //no memory or classes?
+        }
+
+        numClasses = (NSUInteger)MAX(objc_getClassList(classes, (int)bufferSize),0);
+
+        if (numClasses > bufferSize || numClasses == 0) {
+            //apparently more classes added between calls (or a problem); try again
+            free(classes);
+            numClasses = 0;
+        }
     }
-
-    numClasses = (NSUInteger)MAX(objc_getClassList(classes, (int)numClasses), 0);
 
     // We can now loop through the classes, and test each one to see if it is a DDLogging class.
 
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:numClasses];
 
-    for (i = 0; i < numClasses; i++) {
+    for (NSUInteger i = 0; i < numClasses; i++) {
         Class class = classes[i];
 
         if ([self isRegisteredClass:class]) {
