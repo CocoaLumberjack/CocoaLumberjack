@@ -162,7 +162,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
    function:(const char *)function
        line:(int)line
         tag:(id)tag
-     format:(NSString *)format, ...__attribute__((format(__NSString__, 9, 10)));
+     format:(NSString *)format, ... NS_FORMAT_FUNCTION(9,10);
 
 /**
  * Logging Primitive.
