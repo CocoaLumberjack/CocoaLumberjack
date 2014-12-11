@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
   s.requires_arc   = true
 
-  s.preserve_paths = 'README*'
+  s.preserve_paths = 'README.md', 'Classes/CocoaLumberjack.{swift,modulemap}'
   s.ios.deployment_target = '5.0'
   s.osx.deployment_target = '10.7'
   
