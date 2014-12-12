@@ -303,10 +303,10 @@ static NSUInteger _numProcessors;
 + (void)log:(BOOL)asynchronous
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
-    context:(int)context
+    context:(NSUInteger)context
        file:(const char *)file
    function:(const char *)function
-       line:(int)line
+       line:(NSUInteger)line
         tag:(id)tag
      format:(NSString *)format, ... {
     va_list args;
@@ -332,10 +332,10 @@ static NSUInteger _numProcessors;
 + (void)log:(BOOL)asynchronous
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
-    context:(int)context
+    context:(NSUInteger)context
        file:(const char *)file
    function:(const char *)function
-       line:(int)line
+       line:(NSUInteger)line
         tag:(id)tag
      format:(NSString *)format
        args:(va_list)args {
@@ -358,10 +358,10 @@ static NSUInteger _numProcessors;
     message:(NSString *)message
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
-    context:(int)context
+    context:(NSUInteger)context
        file:(const char *)file
    function:(const char *)function
-       line:(int)line
+       line:(NSUInteger)line
         tag:(id)tag {
     
     DDLogMessage *logMessage = [[DDLogMessage alloc] initWithMessage:message
@@ -372,7 +372,7 @@ static NSUInteger _numProcessors;
                                                             function:[NSString stringWithFormat:@"%s", function]
                                                                 line:line
                                                                  tag:tag
-                                                             options:0
+                                                             options:(DDLogMessageOptions)0
                                                            timestamp:nil];
     
     [self queueLogMessage:logMessage asynchronously:asynchronous];
@@ -525,7 +525,7 @@ static NSUInteger _numProcessors;
     if ([self isRegisteredClass:aClass]) {
         return [aClass ddLogLevel];
     }
-    return -1;
+    return (DDLogLevel)-1;
 }
 
 + (DDLogLevel)levelForClassWithName:(NSString *)aClassName {

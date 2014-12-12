@@ -157,10 +157,10 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 + (void)log:(BOOL)synchronous
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
-    context:(int)context
+    context:(NSUInteger)context
        file:(const char *)file
    function:(const char *)function
-       line:(int)line
+       line:(NSUInteger)line
         tag:(id)tag
      format:(NSString *)format, ... NS_FORMAT_FUNCTION(9,10);
 
@@ -173,10 +173,10 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 + (void)log:(BOOL)asynchronous
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
-    context:(int)context
+    context:(NSUInteger)context
        file:(const char *)file
    function:(const char *)function
-       line:(int)line
+       line:(NSUInteger)line
         tag:(id)tag
      format:(NSString *)format
        args:(va_list)argList;
@@ -188,10 +188,10 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
     message:(NSString *)message
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
-    context:(int)context
+    context:(NSUInteger)context
        file:(const char *)file
    function:(const char *)function
-       line:(int)line
+       line:(NSUInteger)line
         tag:(id)tag;
 
 /**
