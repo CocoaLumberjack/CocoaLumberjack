@@ -303,7 +303,7 @@ static NSUInteger _numProcessors;
 + (void)log:(BOOL)asynchronous
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
-    context:(NSUInteger)context
+    context:(NSInteger)context
        file:(const char *)file
    function:(const char *)function
        line:(NSUInteger)line
@@ -332,7 +332,7 @@ static NSUInteger _numProcessors;
 + (void)log:(BOOL)asynchronous
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
-    context:(NSUInteger)context
+    context:(NSInteger)context
        file:(const char *)file
    function:(const char *)function
        line:(NSUInteger)line
@@ -358,7 +358,7 @@ static NSUInteger _numProcessors;
     message:(NSString *)message
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
-    context:(NSUInteger)context
+    context:(NSInteger)context
        file:(const char *)file
    function:(const char *)function
        line:(NSUInteger)line
@@ -881,7 +881,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
 - (instancetype)initWithMessage:(NSString *)message
                           level:(DDLogLevel)level
                            flag:(DDLogFlag)flag
-                        context:(NSUInteger)context
+                        context:(NSInteger)context
                            file:(NSString *)file
                        function:(NSString *)function
                            line:(NSUInteger)line
