@@ -157,10 +157,10 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 + (void)log:(BOOL)synchronous
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
-    context:(int)context
+    context:(NSInteger)context
        file:(const char *)file
    function:(const char *)function
-       line:(int)line
+       line:(NSUInteger)line
         tag:(id)tag
      format:(NSString *)format, ... NS_FORMAT_FUNCTION(9,10);
 
@@ -173,10 +173,10 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 + (void)log:(BOOL)asynchronous
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
-    context:(int)context
+    context:(NSInteger)context
        file:(const char *)file
    function:(const char *)function
-       line:(int)line
+       line:(NSUInteger)line
         tag:(id)tag
      format:(NSString *)format
        args:(va_list)argList;
@@ -188,10 +188,10 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
     message:(NSString *)message
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
-    context:(int)context
+    context:(NSInteger)context
        file:(const char *)file
    function:(const char *)function
-       line:(int)line
+       line:(NSUInteger)line
         tag:(id)tag;
 
 /**
@@ -443,7 +443,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions) {
     NSString *_message;
     DDLogLevel _level;
     DDLogFlag _flag;
-    NSUInteger _context;
+    NSInteger _context;
     NSString *_file;
     NSString *_fileName;
     NSString *_function;
@@ -474,7 +474,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions) {
 - (instancetype)initWithMessage:(NSString *)message
                           level:(DDLogLevel)level
                            flag:(DDLogFlag)flag
-                        context:(NSUInteger)context
+                        context:(NSInteger)context
                            file:(NSString *)file
                        function:(NSString *)function
                            line:(NSUInteger)line
@@ -488,7 +488,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions) {
 @property (readonly, nonatomic) NSString *message;
 @property (readonly, nonatomic) DDLogLevel level;
 @property (readonly, nonatomic) DDLogFlag flag;
-@property (readonly, nonatomic) NSUInteger context;
+@property (readonly, nonatomic) NSInteger context;
 @property (readonly, nonatomic) NSString *file;
 @property (readonly, nonatomic) NSString *fileName;
 @property (readonly, nonatomic) NSString *function;
