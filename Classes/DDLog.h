@@ -19,7 +19,7 @@
     #import "DDLegacy.h"
 #endif
 
-#if OS_OBJECT_HAVE_OBJC_SUPPORT && !defined(COCOAPODS)
+#if OS_OBJECT_HAVE_OBJC_SUPPORT
     #define DISPATCH_QUEUE_REFERENCE_TYPE strong
 #else
     #define DISPATCH_QUEUE_REFERENCE_TYPE assign
