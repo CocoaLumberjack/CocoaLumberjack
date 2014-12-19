@@ -59,9 +59,9 @@
 
 #import <Foundation/Foundation.h>
 
-// Legacy
-#ifndef DDLEGACY
-    #define DDLEGACY NO
+// Disable legacy macros
+#ifndef DD_LEGACY_MACROS
+    #define DD_LEGACY_MACROS 0
 #endif
 
 // Core

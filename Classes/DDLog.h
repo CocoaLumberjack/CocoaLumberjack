@@ -15,8 +15,12 @@
 
 #import <Foundation/Foundation.h>
 
-#if !defined(DDLEGACY) || DDLEGACY
-    #import "DDLegacy.h"
+// Enable 1.9.x legacy macros if imported directly
+#ifndef DD_LEGACY_MACROS
+    #define DD_LEGACY_MACROS 1
+#endif
+#if DD_LEGACY_MACROS
+    #import "DD_LEGACY_MACROS.h"
 #endif
 
 #if OS_OBJECT_HAVE_OBJC_SUPPORT
