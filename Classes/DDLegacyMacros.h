@@ -14,7 +14,9 @@
 //   prior written permission of Deusty, LLC.
 
 /**
- * Macros used for 1.9.x backwards compatibility.
+ * Legacy macros used for 1.9.x backwards compatibility.
+ *
+ * Imported by default when importing a DDLog.h directly and DD_LEGACY_MACROS is not defnied and set to 0.
  **/
 
 #warning CocoaLumberjack 1.9.x legacy macros enabled. \

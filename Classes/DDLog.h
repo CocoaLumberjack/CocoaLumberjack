@@ -20,7 +20,7 @@
     #define DD_LEGACY_MACROS 1
 #endif
 #if DD_LEGACY_MACROS
-    #import "DD_LEGACY_MACROS.h"
+    #import "DDLegacyMacros.h"
 #endif
 
 #if OS_OBJECT_HAVE_OBJC_SUPPORT
