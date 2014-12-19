@@ -14,6 +14,12 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDASLLogCapture.h"
+
+// Disable legacy macros
+#ifndef DD_LEGACY_MACROS
+    #define DD_LEGACY_MACROS 0
+#endif
+
 #import "DDLog.h"
 
 #include <asl.h>

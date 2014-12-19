@@ -13,10 +13,6 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import "DDLog.h"
-
-#define LOG_CONTEXT_ALL INT_MAX
-
 /**
  * This class provides a logger for Terminal output or Xcode console output,
  * depending on where you are running your code.
@@ -31,6 +27,11 @@
  * However, if you instead choose to use file logging (for faster performance),
  * you may choose to use only a file logger and a tty logger.
  **/
+
+// Disable legacy macros
+#ifndef DD_LEGACY_MACROS
+    #define DD_LEGACY_MACROS 0
+#endif
 
 #import "DDLog.h"
 
