@@ -68,7 +68,7 @@ So all you need to do is decide which log level each NSLog statement belongs to.
 -   DDLogDebug
 -   DDLogVerbose
 
-(You can also [[customize the levels or the level names | CustomLogLevels]]. Or you can [[add fine-grained control on top of or instead of simple levels | FineGrainedLogging]].)
+(You can also [customize the levels or the level names](CustomLogLevels.md). Or you can [add fine-grained control on top of or instead of simple levels](FineGrainedLogging.md).)
 
 Which log level you choose per NSLog statement depends, of course, on the severity of the message.
 
@@ -124,7 +124,7 @@ Notice that the log level is declared as a constant. This means that DDLog state
 
 ### Automatic Reference Counting (ARC)
 
-The latest versions of Lumberjack use ARC. If you're not using ARC in your project, learn how to properly flag the Lumberjack files as ARC in your Xcode project on the [[ARC]] page.
+The latest versions of Lumberjack use ARC. If you're not using ARC in your project, learn how to properly flag the Lumberjack files as ARC in your Xcode project on the [ARC](ARC.md) page.
 
 ### Learn More about Lumberjack
 
@@ -132,9 +132,9 @@ This is just the tip of the iceberg.
 
 Find out how to:
 
--   [[Automatically use different log levels for your debug vs release builds | XcodeTricks]]
--   [[Tailor the log levels to suite your needs | CustomLogLevels]]
--   [[Filter logs based on logger settings | PerLoggerLogLevels]]
--   [[Write your own custom formatters | CustomFormatters]]
--   [[Write your own custom loggers | CustomLoggers]]
--   [[And more... | Home]]
+-   [Automatically use different log levels for your debug vs release builds](XcodeTricks.md)
+-   [Tailor the log levels to suite your needs](CustomLogLevels.md)
+-   [Filter logs based on logger settings](PerLoggerLogLevels.md)
+-   [Write your own custom formatters](CustomFormatters.md)
+-   [Write your own custom loggers](CustomLoggers.md)
+-   [And more...](README.md)
