@@ -108,7 +108,7 @@ Here's all it takes to convert your log statements:
 #import "Sprocket.h"
 #import "DDLog.h"
 
-static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+static const int ddLogLevel = DDLogLevelVerbose;
 
 @implementation Sprocket
 
