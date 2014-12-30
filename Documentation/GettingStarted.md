@@ -106,9 +106,9 @@ Here's all it takes to convert your log statements:
 // TO THIS
 
 #import "Sprocket.h"
-#import "DDLog.h"
+#import "CocoaLumberjack.h"
 
-static const int ddLogLevel = DDLogLevelVerbose;
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 @implementation Sprocket
 
