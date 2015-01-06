@@ -5,6 +5,7 @@ framework module CocoaLumberjack {
 	module * { export * }
 	
 	exclude header "DDLog+LOGV.h"
+	exclude header "DDLegacyMacros.h"
 }
 
 module CocoaLumberjack.DDContextFilterLogFormatter {
