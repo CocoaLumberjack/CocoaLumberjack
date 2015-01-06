@@ -87,7 +87,7 @@ public func DDLogError(logText: @autoclosure () -> String, level: DDLogLevel = d
     SwiftLogMacro(async, level, flag: .Error, file: file, function: function, line: line, format: logText(), args: getVaList(args))
 }
 
-/// Analogous to the C preprocessor macro \c THIS_FILE
+/// Analogous to the C preprocessor macro THIS_FILE
 public func CurrentFileName(fileName: String = __FILE__) -> String {
     return fileName.lastPathComponent.stringByDeletingPathExtension
 }
