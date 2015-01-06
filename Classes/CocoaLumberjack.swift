@@ -88,6 +88,6 @@ public func DDLogError(logText: @autoclosure () -> String, level: DDLogLevel = d
 }
 
 /// Analogous to the C preprocessor macro THIS_FILE
-public func CurrentFileName(fileName: String = __FILE__) -> String {
-    return fileName.lastPathComponent.stringByDeletingPathExtension
+public func CurrentFileName(fileName: StaticString = __FILE__) -> String {
+    return fileName.stringValue.lastPathComponent.stringByDeletingPathExtension
 }
