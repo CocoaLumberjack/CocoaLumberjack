@@ -21,9 +21,7 @@ extension DDLogFlag {
         return DDLogFlag(logLevel.rawValue)
     }
     
-    /**
-     *  returns the log level, or the lowest equivalant.
-     */
+    ///returns the log level, or the lowest equivalant.
     public func toLogLevel() -> DDLogLevel {
         if let ourValid = DDLogLevel(rawValue: self.rawValue) {
             return ourValid
@@ -58,39 +56,38 @@ public func resetDefaultDebugLevel() {
     defaultDebugLevel = DDLogLevel.Warning
 }
 
-public func SwiftLogMacro(async: Bool, level: DDLogLevel, flag flg: DDLogFlag, context: UInt = 0, file: String = __FILE__, function: String = __FUNCTION__, line: UWord = __LINE__, tag: AnyObject? = nil, #format: String, #args: CVaListPointer) {
+public func SwiftLogMacro(async: Bool, level: DDLogLevel, flag flg: DDLogFlag, context: UInt = 0, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__, tag: AnyObject? = nil, #format: String, #args: CVaListPointer) {
     let string = NSString(format: format, arguments: args) as String
-    SwiftLogMacro(async, level, flag: flg, context: context, file: file, function: function, line: line, tag: tag, string)
+    SwiftLogMacro(async, level, flag: flg, context: context, file: file, function: function, line: line, tag: tag, string: string)
 }
-public func SwiftLogMacro(isAsynchronous: Bool, level: DDLogLevel, flag flg: DDLogFlag, context: UInt = 0, file: String = __FILE__, function: String = __FUNCTION__, line: UInt = __LINE__, tag: AnyObject? = nil, string: String) {
+
+public func SwiftLogMacro(isAsynchronous: Bool, level: DDLogLevel, flag flg: DDLogFlag, context: UInt = 0, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UInt = __LINE__, tag: AnyObject? = nil, #string: @autoclosure () -> String) {
     // Tell the DDLogMessage constructor to copy the C strings that get passed to it.
-	let logMessage = DDLogMessage(message: string, level: level, flag: flg, context: context, file: file, function: function, line: line, tag: tag, options: .CopyFile | .CopyFunction, timestamp: nil)
+	let logMessage = DDLogMessage(message: string(), level: level, flag: flg, context: Int(context), file: file.stringValue, function: function.stringValue, line: UInt(line), tag: tag, options: .CopyFile | .CopyFunction, timestamp: nil)
     DDLog.log(isAsynchronous, message: logMessage)
 }
 
-public func DDLogDebug(logText: String, level: DDLogLevel = defaultDebugLevel, file: String = __FILE__, function: String = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true, #args: CVarArgType...) {
-    SwiftLogMacro(async, level, flag: .Debug, file: file, function: function, line: line, format: logText, args: getVaList(args))
+public func DDLogDebug(logText: @autoclosure () -> String, level: DDLogLevel = defaultDebugLevel, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true, #args: CVarArgType...) {
+    SwiftLogMacro(async, level, flag: .Debug, file: file, function: function, line: line, format: logText(), args: getVaList(args))
 }
 
-public func DDLogInfo(logText: String, level: DDLogLevel = defaultDebugLevel, file: String = __FILE__, function: String = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true, #args: CVarArgType...) {
-    SwiftLogMacro(async, level, flag: .Info, file: file, function: function, line: line, format: logText, args: getVaList(args))
+public func DDLogInfo(logText: @autoclosure () -> String, level: DDLogLevel = defaultDebugLevel, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true, #args: CVarArgType...) {
+    SwiftLogMacro(async, level, flag: .Info, file: file, function: function, line: line, format: logText(), args: getVaList(args))
 }
 
-public func DDLogWarn(logText: String, level: DDLogLevel = defaultDebugLevel, file: String = __FILE__, function: String = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true, #args: CVarArgType...) {
-    SwiftLogMacro(async, level, flag: .Warning, file: file, function: function, line: line, format: logText, args: getVaList(args))
+public func DDLogWarn(logText: @autoclosure () -> String, level: DDLogLevel = defaultDebugLevel, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true, #args: CVarArgType...) {
+    SwiftLogMacro(async, level, flag: .Warning, file: file, function: function, line: line, format: logText(), args: getVaList(args))
 }
 
-public func DDLogVerbose(logText: String, level: DDLogLevel = defaultDebugLevel, file: String = __FILE__, function: String = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true, #args: CVarArgType...) {
-    SwiftLogMacro(async, level, flag: .Verbose, file: file, function: function, line: line, format: logText, args: getVaList(args))
+public func DDLogVerbose(logText: @autoclosure () -> String, level: DDLogLevel = defaultDebugLevel, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true, #args: CVarArgType...) {
+    SwiftLogMacro(async, level, flag: .Verbose, file: file, function: function, line: line, format: logText(), args: getVaList(args))
 }
 
-public func DDLogError(logText: String, level: DDLogLevel = defaultDebugLevel, file: String = __FILE__, function: String = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = false, #args: CVarArgType...) {
-    SwiftLogMacro(async, level, flag: .Error, file: file, function: function, line: line, format: logText, args: getVaList(args))
+public func DDLogError(logText: @autoclosure () -> String, level: DDLogLevel = defaultDebugLevel, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = false, #args: CVarArgType...) {
+    SwiftLogMacro(async, level, flag: .Error, file: file, function: function, line: line, format: logText(), args: getVaList(args))
 }
 
-/*!
- * Analogous to the C preprocessor macro \c THIS_FILE
- */
-public func CurrentFileName(fileName: String = __FILE__) -> String {
-    return fileName.lastPathComponent.stringByDeletingPathExtension
+/// Analogous to the C preprocessor macro THIS_FILE
+public func CurrentFileName(fileName: StaticString = __FILE__) -> String {
+    return fileName.stringValue.lastPathComponent.stringByDeletingPathExtension
 }
