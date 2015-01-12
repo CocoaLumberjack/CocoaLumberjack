@@ -56,14 +56,14 @@ public func resetDefaultDebugLevel() {
     defaultDebugLevel = DDLogLevel.Warning
 }
 
-public func SwiftLogMacro(async: Bool, level: DDLogLevel, flag flg: DDLogFlag, context: UInt = 0, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__, tag: AnyObject? = nil, #format: String, #args: CVaListPointer) {
+public func SwiftLogMacro(async: Bool, level: DDLogLevel, flag flg: DDLogFlag, context: Int = 0, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__, tag: AnyObject? = nil, #format: String, #args: CVaListPointer) {
     let string = NSString(format: format, arguments: args) as String
     SwiftLogMacro(async, level, flag: flg, context: context, file: file, function: function, line: line, tag: tag, string: string)
 }
 
-public func SwiftLogMacro(isAsynchronous: Bool, level: DDLogLevel, flag flg: DDLogFlag, context: UInt = 0, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UInt = __LINE__, tag: AnyObject? = nil, #string: @autoclosure () -> String) {
+public func SwiftLogMacro(isAsynchronous: Bool, level: DDLogLevel, flag flg: DDLogFlag, context: Int = 0, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UInt = __LINE__, tag: AnyObject? = nil, #string: @autoclosure () -> String) {
     // Tell the DDLogMessage constructor to copy the C strings that get passed to it.
-	let logMessage = DDLogMessage(message: string(), level: level, flag: flg, context: Int(context), file: file.stringValue, function: function.stringValue, line: UInt(line), tag: tag, options: .CopyFile | .CopyFunction, timestamp: nil)
+	let logMessage = DDLogMessage(message: string(), level: level, flag: flg, context: context, file: file.stringValue, function: function.stringValue, line: UInt(line), tag: tag, options: .CopyFile | .CopyFunction, timestamp: nil)
     DDLog.log(isAsynchronous, message: logMessage)
 }
 
