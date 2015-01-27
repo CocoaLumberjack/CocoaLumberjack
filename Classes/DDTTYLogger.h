@@ -96,7 +96,7 @@
  * custom formatters. Default value is YES.
  **/
 
-@property (readwrite, assign) BOOL automaticallyAppendNewlineForCustomFormatters;
+@property (nonatomic, readwrite, assign) BOOL automaticallyAppendNewlineForCustomFormatters;
 
 /**
  * The default color set (foregroundColor, backgroundColor) is:

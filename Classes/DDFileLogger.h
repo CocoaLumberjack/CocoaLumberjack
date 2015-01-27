@@ -278,7 +278,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  * custom formatters. Default value is YES.
  **/
 
-@property (readwrite, assign) BOOL automaticallyAppendNewlineForCustomFormatters;
+@property (nonatomic, readwrite, assign) BOOL automaticallyAppendNewlineForCustomFormatters;
 
 // You can optionally force the current log file to be rolled with this method.
 // CompletionBlock will be called on main queue.
