@@ -1247,7 +1247,7 @@ static DDTTYLogger *sharedInstance;
             v[2].iov_base = (char *)msg;
             v[2].iov_len = msgLen;
 
-            if (_automaticallyAppendNewlineForCustomFormatters) {
+            if (iovec_len == 5) {
                 v[3].iov_base = "\n";
                 v[3].iov_len = (msg[msgLen] == '\n') ? 0 : 1;
             }
