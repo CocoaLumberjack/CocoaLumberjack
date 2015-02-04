@@ -1522,6 +1522,7 @@
 				18F3BF7D1A81DD2E00692297 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		18F3BFA41A81DF5600692297 /* Build configuration list for PBXNativeTarget "CocoaLumberjack-iOS" */ = {
 			isa = XCConfigurationList;
@@ -1548,6 +1549,7 @@
 				18F3BFEA1A81E06E00692297 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		18F3C0121A81E0C800692297 /* Build configuration list for PBXNativeTarget "iOSLibStaticTest" */ = {
 			isa = XCConfigurationList;
@@ -1556,6 +1558,7 @@
 				18F3C0141A81E0C800692297 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		55CCBF1C19BA679200957A39 /* Build configuration list for PBXNativeTarget "SwiftTest" */ = {
 			isa = XCConfigurationList;
