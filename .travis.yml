@@ -16,9 +16,9 @@ script:
 
     - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'FmwkTest'
     - xctool -project Framework/Mobile/Lumberjack.xcodeproj -scheme 'LibTest' -configuration Release -sdk iphonesimulator -arch i386 build
-    - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'CocoaLumberjack' test -sdk iphonesimulator -arch i386 build
+    - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'CocoaLumberjack' -sdk iphonesimulator -arch i386 test
     - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'CocoaLumberjack' -configuration Release -sdk iphonesimulator -arch i386 build
-    - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'CocoaLumberjack' test -sdk macosx -arch x86_64 build
+    - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'CocoaLumberjack' -sdk macosx -arch x86_64 test
 
     - cd Demos/ContextFilter
     - pod install
