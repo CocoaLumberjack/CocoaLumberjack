@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6EF3FE8A1A83879500C90500"
+               BlueprintIdentifier = "6EF3FE9D1A838A0600C90500"
                BuildableName = "CocoaLumberjackTests.xctest"
                BlueprintName = "CocoaLumberjackTests"
                ReferencedContainer = "container:Lumberjack.xcodeproj">
