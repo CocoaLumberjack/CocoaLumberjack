@@ -28,7 +28,26 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6EF3FE8A1A83879500C90500"
+               BuildableName = "CocoaLumberjackTests.xctest"
+               BlueprintName = "CocoaLumberjackTests"
+               ReferencedContainer = "container:Lumberjack.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "E58078D91A01C92F008819CA"
+            BuildableName = "CocoaLumberjackSwift.framework"
+            BlueprintName = "CocoaLumberjackSwift"
+            ReferencedContainer = "container:Lumberjack.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
