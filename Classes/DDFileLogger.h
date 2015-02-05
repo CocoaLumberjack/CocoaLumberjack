@@ -13,6 +13,11 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
+// Disable legacy macros
+#ifndef DD_LEGACY_MACROS
+    #define DD_LEGACY_MACROS 0
+#endif
+
 #import "DDLog.h"
 
 @class DDLogFileInfo;
@@ -130,8 +135,8 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  **/
 @interface DDLogFileManagerDefault : NSObject <DDLogFileManager>
 
-- (id)init;
-- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory;
+- (instancetype)init;
+- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory NS_DESIGNATED_INITIALIZER;
 #if TARGET_OS_IPHONE
 /*
  * Calling this constructor you can override the default "automagically" chosen NSFileProtection level.
@@ -172,7 +177,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  * - newLogFileName again returns "com.organization.myapp 2013-12-03.log",
  *   file "com.organization.myapp 2013-12-03 3.log" would be created.
  **/
-- (NSString *)newLogFileName;
+@property (readonly, copy) NSString *newLogFileName;
 - (BOOL)isLogFile:(NSString *)fileName;
 
 /* Inherited from DDLogFileManager protocol:
@@ -210,8 +215,8 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  **/
 @interface DDLogFileFormatterDefault : NSObject <DDLogFormatter>
 
-- (id)init;
-- (instancetype)initWithDateFormatter:(NSDateFormatter *)dateFormatter;
+- (instancetype)init;
+- (instancetype)initWithDateFormatter:(NSDateFormatter *)dateFormatter NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -221,8 +226,8 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 @interface DDFileLogger : DDAbstractLogger <DDLogger>
 
-- (id)init;
-- (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager;
+- (instancetype)init;
+- (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager NS_DESIGNATED_INITIALIZER;
 
 /**
  * Log File Rolling:
@@ -273,7 +278,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  * custom formatters. Default value is YES.
  **/
 
-@property (readwrite, assign) BOOL automaticallyAppendNewlineForCustomFormatters;
+@property (nonatomic, readwrite, assign) BOOL automaticallyAppendNewlineForCustomFormatters;
 
 // You can optionally force the current log file to be rolled with this method.
 // CompletionBlock will be called on main queue.
@@ -288,6 +293,15 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 // - (id <DDLogFormatter>)logFormatter;
 // - (void)setLogFormatter:(id <DDLogFormatter>)formatter;
+
+/**
+ * Returns the log file that should be used.
+ * If there is an existing log file that is suitable,
+ * within the constraints of maximumFileSize and rollingFrequency, then it is returned.
+ *
+ * Otherwise a new file is created and returned.
+ **/
+- (DDLogFileInfo *)currentLogFileInfo;
 
 @end
 
@@ -327,7 +341,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 + (instancetype)logFileWithPath:(NSString *)filePath;
 
-- (instancetype)initWithFilePath:(NSString *)filePath;
+- (instancetype)initWithFilePath:(NSString *)filePath NS_DESIGNATED_INITIALIZER;
 
 - (void)reset;
 - (void)renameFile:(NSString *)newFileName;

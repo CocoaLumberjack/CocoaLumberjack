@@ -11,7 +11,7 @@
         websocket = ws;
         websocket.delegate = self;
         
-        formatter = [[WebSocketFormatter alloc] init];
+        self.logFormatter = [[WebSocketFormatter alloc] init];
     }
     return self;
 }
@@ -54,7 +54,7 @@
 
 - (void)logMessage:(DDLogMessage *)logMessage
 {
-    if (logMessage->logContext == HTTP_LOG_CONTEXT)
+    if (logMessage->_context == HTTP_LOG_CONTEXT)
     {
         // Don't relay HTTP log messages.
         // Doing so could essentially cause an endless loop of log messages.
@@ -62,11 +62,11 @@
         return;
     }
     
-    NSString *logMsg = logMessage->logMsg;
+    NSString *logMsg = logMessage->_message;
     
-    if (formatter)
+    if (_logFormatter)
     {
-        logMsg = [formatter formatLogMessage:logMessage];
+        logMsg = [_logFormatter formatLogMessage:logMessage];
     }
     
     if (logMsg)
@@ -103,9 +103,9 @@
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage
 {
-    NSString *dateAndTime = [dateFormatter stringFromDate:(logMessage->timestamp)];
+    NSString *dateAndTime = [dateFormatter stringFromDate:(logMessage->_timestamp)];
     
-    NSMutableString *webMsg = [logMessage->logMsg mutableCopy];
+    NSMutableString *webMsg = [logMessage->_message mutableCopy];
     
     [webMsg replaceOccurrencesOfString:@"<"  withString:@"&lt;"  options:0 range:NSMakeRange(0, [webMsg length])];
     [webMsg replaceOccurrencesOfString:@">"  withString:@"&gt;"  options:0 range:NSMakeRange(0, [webMsg length])];

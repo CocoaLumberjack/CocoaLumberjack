@@ -36,7 +36,7 @@
 
 // Log levels: off, error, warn, info, verbose
 // Other flags : trace
-static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
+static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRACE;
 
 #define TIMEOUT_NONE          -1
 #define TIMEOUT_REQUEST_BODY  10
@@ -191,7 +191,7 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
     
     if ((self = [super init]))
     {
-        if (HTTP_LOG_VERBOSE)
+        if (httpLogLevel & DDLogFlagVerbose)
         {
             NSData *requestHeaders = [aRequest messageData];
             
@@ -434,7 +434,7 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
     NSData *responseHeaders = [wsResponse messageData];
     
     
-    if (HTTP_LOG_VERBOSE)
+    if (httpLogLevel & DDLogFlagVerbose)
     {
         NSString *temp = [[NSString alloc] initWithData:responseHeaders encoding:NSUTF8StringEncoding];
         HTTPLogVerbose(@"%@[%p] Response Headers:\n%@", THIS_FILE, self, temp);
@@ -516,7 +516,7 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
     
     [asyncSocket writeData:responseBody withTimeout:TIMEOUT_NONE tag:TAG_HTTP_RESPONSE_BODY];
     
-    if (HTTP_LOG_VERBOSE)
+    if (httpLogLevel & DDLogFlagVerbose)
     {
         NSString *s1 = [[NSString alloc] initWithData:d1 encoding:NSASCIIStringEncoding];
         NSString *s2 = [[NSString alloc] initWithData:d2 encoding:NSASCIIStringEncoding];

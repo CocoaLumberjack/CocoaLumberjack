@@ -8,35 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		67FD3EE1A75049F3A4D222F9 /* libPods-CASL_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCB8815FC484C38B9524337 /* libPods-CASL_ios.a */; };
+		E50619821A2EF295000F835A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E50619811A2EF295000F835A /* Main.storyboard */; };
 		E5AE803B18DA83A400E0501F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803A18DA83A400E0501F /* Foundation.framework */; };
 		E5AE803D18DA83A400E0501F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803C18DA83A400E0501F /* CoreGraphics.framework */; };
 		E5AE803F18DA83A400E0501F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803E18DA83A400E0501F /* UIKit.framework */; };
 		E5AE804518DA83A400E0501F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E5AE804318DA83A400E0501F /* InfoPlist.strings */; };
 		E5AE804718DA83A400E0501F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AE804618DA83A400E0501F /* main.m */; };
 		E5AE804B18DA83A400E0501F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AE804A18DA83A400E0501F /* AppDelegate.m */; };
-		E5AE804E18DA83A400E0501F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5AE804C18DA83A400E0501F /* Main.storyboard */; };
 		E5AE805118DA83A400E0501F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AE805018DA83A400E0501F /* ViewController.m */; };
 		E5AE805318DA83A400E0501F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5AE805218DA83A400E0501F /* Images.xcassets */; };
-		E5AE805A18DA83A400E0501F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE805918DA83A400E0501F /* XCTest.framework */; };
-		E5AE805B18DA83A500E0501F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803A18DA83A400E0501F /* Foundation.framework */; };
-		E5AE805C18DA83A500E0501F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803E18DA83A400E0501F /* UIKit.framework */; };
-		E5AE806418DA83A500E0501F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E5AE806218DA83A500E0501F /* InfoPlist.strings */; };
-		E5AE806618DA83A500E0501F /* CaptureASLTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AE806518DA83A500E0501F /* CaptureASLTests.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		E5AE805D18DA83A500E0501F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E5AE802F18DA83A400E0501F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E5AE803618DA83A400E0501F;
-			remoteInfo = CaptureASL;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		4A68DD8E797C4F2C941AC646 /* Pods-CASL_ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CASL_ios.xcconfig"; path = "Pods/Pods-CASL_ios.xcconfig"; sourceTree = "<group>"; };
 		4CCB8815FC484C38B9524337 /* libPods-CASL_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CASL_ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5ED6F02A728626894B1B3E54 /* Pods-CASL_ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CASL_ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-CASL_ios/Pods-CASL_ios.release.xcconfig"; sourceTree = "<group>"; };
+		96422D55A69049EE226D5569 /* Pods-CASL_ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CASL_ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CASL_ios/Pods-CASL_ios.debug.xcconfig"; sourceTree = "<group>"; };
+		E50619811A2EF295000F835A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E5AE803718DA83A400E0501F /* CaptureASL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptureASL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AE803A18DA83A400E0501F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E5AE803C18DA83A400E0501F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -47,15 +34,10 @@
 		E5AE804818DA83A400E0501F /* CaptureASL-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CaptureASL-Prefix.pch"; sourceTree = "<group>"; };
 		E5AE804918DA83A400E0501F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E5AE804A18DA83A400E0501F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		E5AE804D18DA83A400E0501F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E5AE804F18DA83A400E0501F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		E5AE805018DA83A400E0501F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		E5AE805218DA83A400E0501F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		E5AE805818DA83A400E0501F /* CaptureASLTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CaptureASLTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AE805918DA83A400E0501F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		E5AE806118DA83A500E0501F /* CaptureASLTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CaptureASLTests-Info.plist"; sourceTree = "<group>"; };
-		E5AE806318DA83A500E0501F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E5AE806518DA83A500E0501F /* CaptureASLTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaptureASLTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,27 +52,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E5AE805518DA83A400E0501F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E5AE805A18DA83A400E0501F /* XCTest.framework in Frameworks */,
-				E5AE805C18DA83A500E0501F /* UIKit.framework in Frameworks */,
-				E5AE805B18DA83A500E0501F /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A0D458FE10FDDAC08B8FA4E3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				96422D55A69049EE226D5569 /* Pods-CASL_ios.debug.xcconfig */,
+				5ED6F02A728626894B1B3E54 /* Pods-CASL_ios.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		E5AE802E18DA83A400E0501F = {
 			isa = PBXGroup;
 			children = (
 				E5AE804018DA83A400E0501F /* CaptureASL */,
-				E5AE805F18DA83A500E0501F /* CaptureASLTests */,
 				E5AE803918DA83A400E0501F /* Frameworks */,
 				E5AE803818DA83A400E0501F /* Products */,
-				4A68DD8E797C4F2C941AC646 /* Pods-CASL_ios.xcconfig */,
+				A0D458FE10FDDAC08B8FA4E3 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,7 +78,6 @@
 			isa = PBXGroup;
 			children = (
 				E5AE803718DA83A400E0501F /* CaptureASL.app */,
-				E5AE805818DA83A400E0501F /* CaptureASLTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -120,9 +99,9 @@
 			children = (
 				E5AE804918DA83A400E0501F /* AppDelegate.h */,
 				E5AE804A18DA83A400E0501F /* AppDelegate.m */,
-				E5AE804C18DA83A400E0501F /* Main.storyboard */,
 				E5AE804F18DA83A400E0501F /* ViewController.h */,
 				E5AE805018DA83A400E0501F /* ViewController.m */,
+				E50619811A2EF295000F835A /* Main.storyboard */,
 				E5AE805218DA83A400E0501F /* Images.xcassets */,
 				E5AE804118DA83A400E0501F /* Supporting Files */,
 			);
@@ -136,24 +115,6 @@
 				E5AE804318DA83A400E0501F /* InfoPlist.strings */,
 				E5AE804618DA83A400E0501F /* main.m */,
 				E5AE804818DA83A400E0501F /* CaptureASL-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		E5AE805F18DA83A500E0501F /* CaptureASLTests */ = {
-			isa = PBXGroup;
-			children = (
-				E5AE806518DA83A500E0501F /* CaptureASLTests.m */,
-				E5AE806018DA83A500E0501F /* Supporting Files */,
-			);
-			path = CaptureASLTests;
-			sourceTree = "<group>";
-		};
-		E5AE806018DA83A500E0501F /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				E5AE806118DA83A500E0501F /* CaptureASLTests-Info.plist */,
-				E5AE806218DA83A500E0501F /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -180,24 +141,6 @@
 			productReference = E5AE803718DA83A400E0501F /* CaptureASL.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E5AE805718DA83A400E0501F /* CaptureASLTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E5AE806C18DA83A500E0501F /* Build configuration list for PBXNativeTarget "CaptureASLTests" */;
-			buildPhases = (
-				E5AE805418DA83A400E0501F /* Sources */,
-				E5AE805518DA83A400E0501F /* Frameworks */,
-				E5AE805618DA83A400E0501F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E5AE805E18DA83A500E0501F /* PBXTargetDependency */,
-			);
-			name = CaptureASLTests;
-			productName = CaptureASLTests;
-			productReference = E5AE805818DA83A400E0501F /* CaptureASLTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -205,11 +148,6 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0510;
-				TargetAttributes = {
-					E5AE805718DA83A400E0501F = {
-						TestTargetID = E5AE803618DA83A400E0501F;
-					};
-				};
 			};
 			buildConfigurationList = E5AE803218DA83A400E0501F /* Build configuration list for PBXProject "CaptureASL" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -217,7 +155,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = E5AE802E18DA83A400E0501F;
 			productRefGroup = E5AE803818DA83A400E0501F /* Products */;
@@ -225,7 +162,6 @@
 			projectRoot = "";
 			targets = (
 				E5AE803618DA83A400E0501F /* CaptureASL */,
-				E5AE805718DA83A400E0501F /* CaptureASLTests */,
 			);
 		};
 /* End PBXProject section */
@@ -235,17 +171,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E50619821A2EF295000F835A /* Main.storyboard in Resources */,
 				E5AE805318DA83A400E0501F /* Images.xcassets in Resources */,
 				E5AE804518DA83A400E0501F /* InfoPlist.strings in Resources */,
-				E5AE804E18DA83A400E0501F /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E5AE805618DA83A400E0501F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E5AE806418DA83A500E0501F /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,7 +192,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-CASL_ios-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CASL_ios/Pods-CASL_ios-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F5E87D2C35224932B7B01D44 /* Check Pods Manifest.lock */ = {
@@ -295,45 +223,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E5AE805418DA83A400E0501F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E5AE806618DA83A500E0501F /* CaptureASLTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		E5AE805E18DA83A500E0501F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E5AE803618DA83A400E0501F /* CaptureASL */;
-			targetProxy = E5AE805D18DA83A500E0501F /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E5AE804318DA83A400E0501F /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				E5AE804418DA83A400E0501F /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		E5AE804C18DA83A400E0501F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E5AE804D18DA83A400E0501F /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		E5AE806218DA83A500E0501F /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E5AE806318DA83A500E0501F /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -373,7 +269,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -405,7 +301,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -413,14 +309,13 @@
 		};
 		E5AE806A18DA83A500E0501F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4A68DD8E797C4F2C941AC646 /* Pods-CASL_ios.xcconfig */;
+			baseConfigurationReference = 96422D55A69049EE226D5569 /* Pods-CASL_ios.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CaptureASL/CaptureASL-Prefix.pch";
 				INFOPLIST_FILE = "CaptureASL/CaptureASL-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -428,56 +323,15 @@
 		};
 		E5AE806B18DA83A500E0501F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4A68DD8E797C4F2C941AC646 /* Pods-CASL_ios.xcconfig */;
+			baseConfigurationReference = 5ED6F02A728626894B1B3E54 /* Pods-CASL_ios.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CaptureASL/CaptureASL-Prefix.pch";
 				INFOPLIST_FILE = "CaptureASL/CaptureASL-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		E5AE806D18DA83A500E0501F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CaptureASL.app/CaptureASL";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CaptureASL/CaptureASL-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "CaptureASLTests/CaptureASLTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		E5AE806E18DA83A500E0501F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CaptureASL.app/CaptureASL";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CaptureASL/CaptureASL-Prefix.pch";
-				INFOPLIST_FILE = "CaptureASLTests/CaptureASLTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
@@ -498,15 +352,6 @@
 			buildConfigurations = (
 				E5AE806A18DA83A500E0501F /* Debug */,
 				E5AE806B18DA83A500E0501F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E5AE806C18DA83A500E0501F /* Build configuration list for PBXNativeTarget "CaptureASLTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E5AE806D18DA83A500E0501F /* Debug */,
-				E5AE806E18DA83A500E0501F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

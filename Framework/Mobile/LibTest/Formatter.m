@@ -20,25 +20,25 @@
 }
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
-    NSString *dateAndTime = [self.threadUnsafeDateFormatter stringFromDate:(logMessage->timestamp)];
+    NSString *dateAndTime = [self.threadUnsafeDateFormatter stringFromDate:(logMessage->_timestamp)];
     
     NSString *logLevel = nil;
-    switch (logMessage->logFlag) {
-        case LOG_FLAG_ERROR     : logLevel = @"E"; break;
-        case LOG_FLAG_WARN      : logLevel = @"W"; break;
-        case LOG_FLAG_INFO      : logLevel = @"I"; break;
-        case LOG_FLAG_DEBUG     : logLevel = @"D"; break;
-		case LOG_FLAG_VERBOSE   : logLevel = @"V"; break;
+    switch (logMessage->_flag) {
+        case DDLogFlagError     : logLevel = @"E"; break;
+        case DDLogFlagWarning   : logLevel = @"W"; break;
+        case DDLogFlagInfo      : logLevel = @"I"; break;
+        case DDLogFlagDebug     : logLevel = @"D"; break;
+		case DDLogFlagVerbose   : logLevel = @"V"; break;
         default                 : logLevel = @"?"; break;
     }
     
-    NSString *formattedLog = [NSString stringWithFormat:@"%@ |%@| [%@ %@] #%d: %@",
+    NSString *formattedLog = [NSString stringWithFormat:@"%@ |%@| [%@ %@] #%@: %@",
                               dateAndTime,
                               logLevel,
-                              logMessage.fileName,
-                              logMessage.methodName,
-                              logMessage->lineNumber,
-                              logMessage->logMsg];
+                              logMessage->_fileName,
+                              logMessage->_function,
+                              @(logMessage->_line),
+                              logMessage->_message];
     
     return formattedLog;
 }

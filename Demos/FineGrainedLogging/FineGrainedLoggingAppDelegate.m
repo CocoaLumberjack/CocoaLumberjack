@@ -6,8 +6,7 @@
 #import "TimerTwo.h"
 
 // Debug levels: off, error, warn, info, verbose
-static const int ddLogLevel = LOG_LEVEL_VERBOSE;
-
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 @implementation FineGrainedLoggingAppDelegate
 
@@ -15,8 +14,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    [DDLog addLogger:[DDASLLogger sharedInstance] withLogLevel:LOG_LEVEL_VERBOSE | LOG_FLAG_TIMERS];
-    [DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:LOG_LEVEL_VERBOSE | LOG_FLAG_TIMERS];
+    [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:DDLogLevelVerbose | LOG_FLAG_TIMERS];
+    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:DDLogLevelVerbose | LOG_FLAG_TIMERS];
     
     timerOne = [[TimerOne alloc] init];
     timerTwo = [[TimerTwo alloc] init];

@@ -72,24 +72,17 @@
 #define LogAsync   YES
 #define LogContext 65535
 
-#define LogObjc(flg, frmt, ...) LOG_OBJC_MAYBE(LogAsync, logLevel, flg, LogContext, frmt, ##__VA_ARGS__)
-#define LogC(flg, frmt, ...)    LOG_C_MAYBE(LogAsync, logLevel, flg, LogContext, frmt, ##__VA_ARGS__)
+#define LogObjc(flg, frmt, ...) LOG_MAYBE(LogAsync, logLevel, flg, LogContext, frmt, ##__VA_ARGS__)
 
-#define LogError(frmt, ...)     LogObjc(LOG_FLAG_ERROR,   (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
-#define LogWarn(frmt, ...)      LogObjc(LOG_FLAG_WARN,    (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
-#define LogInfo(frmt, ...)      LogObjc(LOG_FLAG_INFO,    (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
-#define LogVerbose(frmt, ...)   LogObjc(LOG_FLAG_VERBOSE, (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
+#define LogError(frmt, ...)     LogObjc(DDLogFlagError,   (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
+#define LogWarn(frmt, ...)      LogObjc(DDLogFlagWarning, (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
+#define LogInfo(frmt, ...)      LogObjc(DDLogFlagInfo,    (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
+#define LogVerbose(frmt, ...)   LogObjc(DDLogFlagVerbose, (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
 
-#define LogCError(frmt, ...)    LogC(LOG_FLAG_ERROR,   (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
-#define LogCWarn(frmt, ...)     LogC(LOG_FLAG_WARN,    (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
-#define LogCInfo(frmt, ...)     LogC(LOG_FLAG_INFO,    (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
-#define LogCVerbose(frmt, ...)  LogC(LOG_FLAG_VERBOSE, (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
-
-#define LogTrace()              LogObjc(LOG_FLAG_VERBOSE, @"%@: %@", THIS_FILE, THIS_METHOD)
-#define LogCTrace()             LogC(LOG_FLAG_VERBOSE, @"%@: %s", THIS_FILE, __FUNCTION__)
+#define LogTrace()              LogObjc(DDLogFlagVerbose, @"%@: %@", THIS_FILE, THIS_METHOD)
 
 // Log levels : off, error, warn, info, verbose
-static const int logLevel = LOG_LEVEL_VERBOSE;
+static const int logLevel = DDLogLevelVerbose;
 
 #else
 
@@ -100,13 +93,7 @@ static const int logLevel = LOG_LEVEL_VERBOSE;
 #define LogInfo(frmt, ...)      {}
 #define LogVerbose(frmt, ...)   {}
 
-#define LogCError(frmt, ...)    {}
-#define LogCWarn(frmt, ...)     {}
-#define LogCInfo(frmt, ...)     {}
-#define LogCVerbose(frmt, ...)  {}
-
 #define LogTrace()              {}
-#define LogCTrace(frmt, ...)    {}
 
 #endif
 
@@ -6785,7 +6772,7 @@ static void CFReadStreamCallback (CFReadStreamRef stream, CFStreamEventType type
         {
             dispatch_async(asyncSocket->socketQueue, ^{ @autoreleasepool {
                 
-                LogCVerbose(@"CFReadStreamCallback - HasBytesAvailable");
+                LogVerbose(@"CFReadStreamCallback - HasBytesAvailable");
                 
                 if (asyncSocket->readStream != stream)
                     return_from_block;
@@ -6821,7 +6808,7 @@ static void CFReadStreamCallback (CFReadStreamRef stream, CFStreamEventType type
             
             dispatch_async(asyncSocket->socketQueue, ^{ @autoreleasepool {
                 
-                LogCVerbose(@"CFReadStreamCallback - Other");
+                LogVerbose(@"CFReadStreamCallback - Other");
                 
                 if (asyncSocket->readStream != stream)
                     return_from_block;
@@ -6852,7 +6839,7 @@ static void CFWriteStreamCallback (CFWriteStreamRef stream, CFStreamEventType ty
         {
             dispatch_async(asyncSocket->socketQueue, ^{ @autoreleasepool {
                 
-                LogCVerbose(@"CFWriteStreamCallback - CanAcceptBytes");
+                LogVerbose(@"CFWriteStreamCallback - CanAcceptBytes");
                 
                 if (asyncSocket->writeStream != stream)
                     return_from_block;
@@ -6888,7 +6875,7 @@ static void CFWriteStreamCallback (CFWriteStreamRef stream, CFStreamEventType ty
             
             dispatch_async(asyncSocket->socketQueue, ^{ @autoreleasepool {
                 
-                LogCVerbose(@"CFWriteStreamCallback - Other");
+                LogVerbose(@"CFWriteStreamCallback - Other");
                 
                 if (asyncSocket->writeStream != stream)
                     return_from_block;

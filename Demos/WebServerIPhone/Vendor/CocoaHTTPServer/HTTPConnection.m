@@ -43,7 +43,7 @@
 
 // Log levels: off, error, warn, info, verbose
 // Other flags: trace
-static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
+static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRACE;
 
 // Define chunk size used to read in data for responses
 // This is how much data will be read from disk into RAM at a time
@@ -918,7 +918,7 @@ static NSMutableArray *recentNonces;
 {
     HTTPLogTrace();
     
-    if (HTTP_LOG_VERBOSE)
+    if (httpLogLevel & DDLogFlagVerbose)
     {
         NSData *tempData = [request messageData];
         

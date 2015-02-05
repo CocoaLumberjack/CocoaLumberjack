@@ -22,12 +22,12 @@
 
 @interface DDLoggingContextSet : NSObject
 
-- (void)addToSet:(int)loggingContext;
-- (void)removeFromSet:(int)loggingContext;
+- (void)addToSet:(NSUInteger)loggingContext;
+- (void)removeFromSet:(NSUInteger)loggingContext;
 
-- (NSArray *)currentSet;
+@property (readonly, copy) NSArray *currentSet;
 
-- (BOOL)isInSet:(int)loggingContext;
+- (BOOL)isInSet:(NSUInteger)loggingContext;
 
 @end
 
@@ -44,7 +44,7 @@
 
 @implementation DDContextWhitelistFilterLogFormatter
 
-- (id)init {
+- (instancetype)init {
     if ((self = [super init])) {
         _contextSet = [[DDLoggingContextSet alloc] init];
     }
@@ -52,11 +52,11 @@
     return self;
 }
 
-- (void)addToWhitelist:(int)loggingContext {
+- (void)addToWhitelist:(NSUInteger)loggingContext {
     [_contextSet addToSet:loggingContext];
 }
 
-- (void)removeFromWhitelist:(int)loggingContext {
+- (void)removeFromWhitelist:(NSUInteger)loggingContext {
     [_contextSet removeFromSet:loggingContext];
 }
 
@@ -64,13 +64,13 @@
     return [_contextSet currentSet];
 }
 
-- (BOOL)isOnWhitelist:(int)loggingContext {
+- (BOOL)isOnWhitelist:(NSUInteger)loggingContext {
     return [_contextSet isInSet:loggingContext];
 }
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
-    if ([self isOnWhitelist:logMessage->logContext]) {
-        return logMessage->logMsg;
+    if ([self isOnWhitelist:logMessage->_context]) {
+        return logMessage->_message;
     } else {
         return nil;
     }
@@ -91,7 +91,7 @@
 
 @implementation DDContextBlacklistFilterLogFormatter
 
-- (id)init {
+- (instancetype)init {
     if ((self = [super init])) {
         _contextSet = [[DDLoggingContextSet alloc] init];
     }
@@ -99,11 +99,11 @@
     return self;
 }
 
-- (void)addToBlacklist:(int)loggingContext {
+- (void)addToBlacklist:(NSUInteger)loggingContext {
     [_contextSet addToSet:loggingContext];
 }
 
-- (void)removeFromBlacklist:(int)loggingContext {
+- (void)removeFromBlacklist:(NSUInteger)loggingContext {
     [_contextSet removeFromSet:loggingContext];
 }
 
@@ -111,15 +111,15 @@
     return [_contextSet currentSet];
 }
 
-- (BOOL)isOnBlacklist:(int)loggingContext {
+- (BOOL)isOnBlacklist:(NSUInteger)loggingContext {
     return [_contextSet isInSet:loggingContext];
 }
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
-    if ([self isOnBlacklist:logMessage->logContext]) {
+    if ([self isOnBlacklist:logMessage->_context]) {
         return nil;
     } else {
-        return logMessage->logMsg;
+        return logMessage->_message;
     }
 }
 
@@ -140,7 +140,7 @@
 
 @implementation DDLoggingContextSet
 
-- (id)init {
+- (instancetype)init {
     if ((self = [super init])) {
         _set = [[NSMutableSet alloc] init];
     }
@@ -148,7 +148,7 @@
     return self;
 }
 
-- (void)addToSet:(int)loggingContext {
+- (void)addToSet:(NSUInteger)loggingContext {
     OSSpinLockLock(&_lock);
     {
         [_set addObject:@(loggingContext)];
@@ -156,7 +156,7 @@
     OSSpinLockUnlock(&_lock);
 }
 
-- (void)removeFromSet:(int)loggingContext {
+- (void)removeFromSet:(NSUInteger)loggingContext {
     OSSpinLockLock(&_lock);
     {
         [_set removeObject:@(loggingContext)];
@@ -176,7 +176,7 @@
     return result;
 }
 
-- (BOOL)isInSet:(int)loggingContext {
+- (BOOL)isInSet:(NSUInteger)loggingContext {
     BOOL result = NO;
 
     OSSpinLockLock(&_lock);

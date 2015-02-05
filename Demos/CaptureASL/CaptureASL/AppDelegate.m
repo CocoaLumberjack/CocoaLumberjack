@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
-#import <CocoaLumberjack/DDASLLogCapture.h>
 
 @interface SimpleFormatter : NSObject <DDLogFormatter>
 
@@ -18,7 +17,7 @@
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage
 {
-    return [NSString stringWithFormat:@"  Captured: %@", logMessage->logMsg];
+    return [NSString stringWithFormat:@"  Captured: %@", logMessage->_message];
 }
 
 @end

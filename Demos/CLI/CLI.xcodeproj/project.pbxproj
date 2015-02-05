@@ -27,7 +27,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1E553F17136A41D1B42A8012 /* Pods-CLI_osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLI_osx.xcconfig"; path = "Pods/Pods-CLI_osx.xcconfig"; sourceTree = "<group>"; };
+		09912B312E2DCBFF4C0E8BCD /* Pods-CLI_osx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLI_osx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CLI_osx/Pods-CLI_osx.debug.xcconfig"; sourceTree = "<group>"; };
+		4209435A4497027EF9831FE6 /* Pods-CLI_osx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLI_osx.release.xcconfig"; path = "Pods/Target Support Files/Pods-CLI_osx/Pods-CLI_osx.release.xcconfig"; sourceTree = "<group>"; };
 		E5EDB892186286BC002D0689 /* CLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CLI; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EDB895186286BC002D0689 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E5EDB898186286BC002D0689 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -49,13 +50,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9EEB7AD5BA89C5EB50B2546A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				09912B312E2DCBFF4C0E8BCD /* Pods-CLI_osx.debug.xcconfig */,
+				4209435A4497027EF9831FE6 /* Pods-CLI_osx.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		E5EDB889186286BC002D0689 = {
 			isa = PBXGroup;
 			children = (
 				E5EDB897186286BC002D0689 /* CLI */,
 				E5EDB894186286BC002D0689 /* Frameworks */,
 				E5EDB893186286BC002D0689 /* Products */,
-				1E553F17136A41D1B42A8012 /* Pods-CLI_osx.xcconfig */,
+				9EEB7AD5BA89C5EB50B2546A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,7 +133,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0500;
-				ORGANIZATIONNAME = "CyberAgent Inc.";
+				ORGANIZATIONNAME = "";
 			};
 			buildConfigurationList = E5EDB88D186286BC002D0689 /* Build configuration list for PBXProject "CLI" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -155,7 +165,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-CLI_osx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CLI_osx/Pods-CLI_osx-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FB3FE9C3466C46F28F57491C /* Check Pods Manifest.lock */ = {
@@ -218,7 +228,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -250,14 +260,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 		E5EDB8A1186286BC002D0689 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1E553F17136A41D1B42A8012 /* Pods-CLI_osx.xcconfig */;
+			baseConfigurationReference = 09912B312E2DCBFF4C0E8BCD /* Pods-CLI_osx.debug.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CLI/CLI-Prefix.pch";
@@ -267,7 +277,7 @@
 		};
 		E5EDB8A2186286BC002D0689 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1E553F17136A41D1B42A8012 /* Pods-CLI_osx.xcconfig */;
+			baseConfigurationReference = 4209435A4497027EF9831FE6 /* Pods-CLI_osx.release.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CLI/CLI-Prefix.pch";

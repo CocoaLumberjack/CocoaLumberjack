@@ -1,4 +1,3 @@
-
 language: objective-c
 
 before_install:
@@ -17,8 +16,9 @@ script:
 
     - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'FmwkTest'
     - xctool -project Framework/Mobile/Lumberjack.xcodeproj -scheme 'LibTest' -configuration Release -sdk iphonesimulator -arch i386 build
-    - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'CocoaLumberjack'
+    - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'CocoaLumberjack' -sdk iphonesimulator -arch i386 build
     - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'CocoaLumberjack' -configuration Release -sdk iphonesimulator -arch i386 build
+    - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'CocoaLumberjack' -sdk macosx -arch x86_64 build
 
     - cd Demos/ContextFilter
     - pod install
@@ -134,4 +134,3 @@ script:
     - pod install
     - cd ..
     - xctool -workspace Demos.xcworkspace -scheme 'CaptureASL' -configuration Release -sdk iphonesimulator -arch i386 build
-

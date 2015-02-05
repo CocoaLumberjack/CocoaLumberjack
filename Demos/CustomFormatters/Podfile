@@ -1,13 +1,10 @@
+
 xcodeproj 'CustomFormatters'
 workspace '../Demos'
-
-def import_pods
-  pod 'CocoaLumberjack', :path => '../../'
-end
 
 target :CFo_osx do
   platform :osx, '10.7'
   link_with 'CustomFormatters'
-  import_pods
+  pod 'CocoaLumberjack', :path => '../../'
 end
 

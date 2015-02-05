@@ -2,7 +2,7 @@
 #import "MYLog.h"
 
 // Debug levels: off, error, warn, info, verbose
-static const int ddLogLevel = LOG_LEVEL_VERBOSE | LOG_FLAG_TIMERS;
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose | LOG_FLAG_TIMERS;
 
 
 @implementation TimerTwo

@@ -18,11 +18,11 @@
 
 // Log levels: off, error, warn, info, verbose
 #if DEBUG && robbie_hanson
-  static const int ddLogLevel = LOG_LEVEL_VERBOSE; // Log level for robbie (debug)
+  static const DDLogLevel ddLogLevel = DDLogLevelVerbose; // Log level for robbie (debug)
 #elif DEBUG
-  static const int ddLogLevel = LOG_LEVEL_INFO;    // Log level for other team members (debug)
+  static const DDLogLevel ddLogLevel = DDLogLevelInfo;    // Log level for other team members (debug)
 #else
-  static const int ddLogLevel = LOG_LEVEL_WARN;    // Log level for release build
+  static const DDLogLevel ddLogLevel = DDLogLevelWarning; // Log level for release build
 #endif
 
 

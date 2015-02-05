@@ -21,7 +21,7 @@
 
 /* Begin PBXFileReference section */
 		6EC7A9B6117D4036860BA066 /* libPods-CDL_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CDL_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D6E6293BDB940B59507EAF2 /* Pods-CDL_osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CDL_osx.xcconfig"; path = "Pods/Pods-CDL_osx.xcconfig"; sourceTree = "<group>"; };
+		A3C9FD7691469B5A00AA4E31 /* Pods-CDL_osx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CDL_osx.release.xcconfig"; path = "Pods/Target Support Files/Pods-CDL_osx/Pods-CDL_osx.release.xcconfig"; sourceTree = "<group>"; };
 		DCE86C091343C419004FD85F /* CoreDataLogger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataLogger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCE86C0D1343C419004FD85F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DCE86C101343C419004FD85F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -40,6 +40,7 @@
 		DCE86C521343C64F004FD85F /* CocoaBotLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CocoaBotLog.xcdatamodel; sourceTree = "<group>"; };
 		DCE86C531343C64F004FD85F /* LogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogEntry.h; path = CoreDataLogger/LogEntry.h; sourceTree = "<group>"; };
 		DCE86C541343C64F004FD85F /* LogEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogEntry.m; path = CoreDataLogger/LogEntry.m; sourceTree = "<group>"; };
+		EF6DC9F7EE93E86604607432 /* Pods-CDL_osx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CDL_osx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CDL_osx/Pods-CDL_osx.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +56,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		029654B0E34E31A09088B9E8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EF6DC9F7EE93E86604607432 /* Pods-CDL_osx.debug.xcconfig */,
+				A3C9FD7691469B5A00AA4E31 /* Pods-CDL_osx.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		DCE86BFE1343C419004FD85F = {
 			isa = PBXGroup;
 			children = (
@@ -62,7 +72,7 @@
 				DCE86C131343C419004FD85F /* CoreDataLogger */,
 				DCE86C0C1343C419004FD85F /* Frameworks */,
 				DCE86C0A1343C419004FD85F /* Products */,
-				9D6E6293BDB940B59507EAF2 /* Pods-CDL_osx.xcconfig */,
+				029654B0E34E31A09088B9E8 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -165,7 +175,7 @@
 		DCE86C001343C419004FD85F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = DCE86C031343C419004FD85F /* Build configuration list for PBXProject "CoreDataLogger" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -225,7 +235,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-CDL_osx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CDL_osx/Pods-CDL_osx-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -281,7 +291,9 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
@@ -293,7 +305,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -307,7 +319,9 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -316,14 +330,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 		DCE86C2B1343C41A004FD85F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9D6E6293BDB940B59507EAF2 /* Pods-CDL_osx.xcconfig */;
+			baseConfigurationReference = EF6DC9F7EE93E86604607432 /* Pods-CDL_osx.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -341,7 +355,7 @@
 		};
 		DCE86C2C1343C41A004FD85F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9D6E6293BDB940B59507EAF2 /* Pods-CDL_osx.xcconfig */;
+			baseConfigurationReference = A3C9FD7691469B5A00AA4E31 /* Pods-CDL_osx.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;

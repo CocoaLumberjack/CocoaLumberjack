@@ -28,8 +28,9 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		68DE281CB5694102AE46EA99 /* Pods-FGL_osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FGL_osx.xcconfig"; path = "Pods/Pods-FGL_osx.xcconfig"; sourceTree = "<group>"; };
+		4A3F8DAF6D15347F99637285 /* Pods-FGL_osx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FGL_osx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FGL_osx/Pods-FGL_osx.debug.xcconfig"; sourceTree = "<group>"; };
 		7A94E4D661544393BDD070DF /* libPods-FGL_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FGL_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		83A35555ACBAAC002064FD21 /* Pods-FGL_osx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FGL_osx.release.xcconfig"; path = "Pods/Target Support Files/Pods-FGL_osx/Pods-FGL_osx.release.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* FineGrainedLogging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "FineGrainedLogging-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* FineGrainedLogging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FineGrainedLogging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC6C0E06119DC6C0008094FC /* TimerOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerOne.h; sourceTree = "<group>"; };
@@ -66,6 +67,15 @@
 			name = Classes;
 			sourceTree = "<group>";
 		};
+		0D55DA2817FBFB1BE0E9C235 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4A3F8DAF6D15347F99637285 /* Pods-FGL_osx.debug.xcconfig */,
+				83A35555ACBAAC002064FD21 /* Pods-FGL_osx.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -100,7 +110,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				68DE281CB5694102AE46EA99 /* Pods-FGL_osx.xcconfig */,
+				0D55DA2817FBFB1BE0E9C235 /* Pods */,
 			);
 			name = FineGrainedLogging;
 			sourceTree = "<group>";
@@ -209,7 +219,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-FGL_osx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FGL_osx/Pods-FGL_osx-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A6E741C5168D4170BC5F9930 /* Check Pods Manifest.lock */ = {
@@ -265,7 +275,7 @@
 /* Begin XCBuildConfiguration section */
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 68DE281CB5694102AE46EA99 /* Pods-FGL_osx.xcconfig */;
+			baseConfigurationReference = 4A3F8DAF6D15347F99637285 /* Pods-FGL_osx.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -285,7 +295,7 @@
 		};
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 68DE281CB5694102AE46EA99 /* Pods-FGL_osx.xcconfig */;
+			baseConfigurationReference = 83A35555ACBAAC002064FD21 /* Pods-FGL_osx.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -308,6 +318,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -319,6 +330,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
 			name = Release;

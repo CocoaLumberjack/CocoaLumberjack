@@ -15,6 +15,12 @@
 
 #import <Foundation/Foundation.h>
 #import <libkern/OSAtomic.h>
+
+// Disable legacy macros
+#ifndef DD_LEGACY_MACROS
+    #define DD_LEGACY_MACROS 0
+#endif
+
 #import "DDLog.h"
 
 
@@ -23,7 +29,7 @@
  *
  * A log formatter can be added to any logger to format and/or filter its output.
  * You can learn more about log formatters here:
- * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomFormatters
+ * Documentation/CustomFormatters.md
  *
  * A typical NSLog (or DDTTYLogger) prints detailed info as [<process_id>:<thread_id>].
  * For example:
@@ -61,7 +67,7 @@
  * Standard init method.
  * Configure using properties as desired.
  **/
-- (id)init;
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
 
 /**
  * The minQueueLength restricts the minimum size of the [detail box].

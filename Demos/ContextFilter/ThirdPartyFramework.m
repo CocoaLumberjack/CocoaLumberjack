@@ -7,20 +7,17 @@
 // 
 // The custom context is defined in the header file:
 // 
-// #define TP_LOG_CONTEXT 1044
 
-#define TP_LOG_ERROR   (tpLogLevel & LOG_FLAG_ERROR)
-#define TP_LOG_WARN    (tpLogLevel & LOG_FLAG_WARN)
-#define TP_LOG_INFO    (tpLogLevel & LOG_FLAG_INFO)
-#define TP_LOG_VERBOSE (tpLogLevel & LOG_FLAG_VERBOSE)
+#define TP_LOG_CONTEXT 1044
 
-#define TPLogError(frmt, ...)     SYNC_LOG_OBJC_MAYBE(tpLogLevel, LOG_FLAG_ERROR,   TP_LOG_CONTEXT, frmt, ##__VA_ARGS__)
-#define TPLogWarn(frmt, ...)     ASYNC_LOG_OBJC_MAYBE(tpLogLevel, LOG_FLAG_WARN,    TP_LOG_CONTEXT, frmt, ##__VA_ARGS__)
-#define TPLogInfo(frmt, ...)     ASYNC_LOG_OBJC_MAYBE(tpLogLevel, LOG_FLAG_INFO,    TP_LOG_CONTEXT, frmt, ##__VA_ARGS__)
-#define TPLogVerbose(frmt, ...)  ASYNC_LOG_OBJC_MAYBE(tpLogLevel, LOG_FLAG_VERBOSE, TP_LOG_CONTEXT, frmt, ##__VA_ARGS__)
+#define TPLogError(frmt, ...)   LOG_MAYBE(NO,                tpLogLevel, DDLogFlagError,   TP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define TPLogWarn(frmt, ...)    LOG_MAYBE(LOG_ASYNC_ENABLED, tpLogLevel, DDLogFlagWarning, TP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define TPLogInfo(frmt, ...)    LOG_MAYBE(LOG_ASYNC_ENABLED, tpLogLevel, DDLogFlagInfo,    TP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define TPLogDebug(frmt, ...)   LOG_MAYBE(LOG_ASYNC_ENABLED, tpLogLevel, DDLogFlagDebug,   TP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define TPLogVerbose(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, tpLogLevel, DDLogFlagVerbose, TP_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 
 // Log levels: off, error, warn, info, verbose
-static const int tpLogLevel = LOG_LEVEL_VERBOSE;
+static const int tpLogLevel = DDLogLevelVerbose;
 
 
 @implementation ThirdPartyFramework

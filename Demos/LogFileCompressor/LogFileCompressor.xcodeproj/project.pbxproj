@@ -19,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0EB092856FC27667AB16CF77 /* Pods-LFC_osx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LFC_osx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LFC_osx/Pods-LFC_osx.debug.xcconfig"; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		190EEE667592427885CB9C84 /* libPods-LFC_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LFC_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -29,7 +30,7 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		5B4D79BC1EAA46FDBA384032 /* Pods-LFC_osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LFC_osx.xcconfig"; path = "Pods/Pods-LFC_osx.xcconfig"; sourceTree = "<group>"; };
+		67A98C05E0EBB7E1B8360078 /* Pods-LFC_osx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LFC_osx.release.xcconfig"; path = "Pods/Target Support Files/Pods-LFC_osx/Pods-LFC_osx.release.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* LogFileCompressor-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "LogFileCompressor-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* LogFileCompressor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LogFileCompressor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC9F20D511AB90C80047759A /* CompressingLogFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompressingLogFileManager.h; sourceTree = "<group>"; };
@@ -96,7 +97,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				5B4D79BC1EAA46FDBA384032 /* Pods-LFC_osx.xcconfig */,
+				953D5805401E8EED9DA153D3 /* Pods */,
 			);
 			name = LogFileCompressor;
 			sourceTree = "<group>";
@@ -128,6 +129,15 @@
 				190EEE667592427885CB9C84 /* libPods-LFC_osx.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		953D5805401E8EED9DA153D3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0EB092856FC27667AB16CF77 /* Pods-LFC_osx.debug.xcconfig */,
+				67A98C05E0EBB7E1B8360078 /* Pods-LFC_osx.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		DC9F20D011AB909A0047759A /* Compressor */ = {
@@ -214,7 +224,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-LFC_osx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LFC_osx/Pods-LFC_osx-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		1D7F8D95C849443C9DECA805 /* Check Pods Manifest.lock */ = {
@@ -269,7 +279,7 @@
 /* Begin XCBuildConfiguration section */
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B4D79BC1EAA46FDBA384032 /* Pods-LFC_osx.xcconfig */;
+			baseConfigurationReference = 0EB092856FC27667AB16CF77 /* Pods-LFC_osx.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -289,7 +299,7 @@
 		};
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B4D79BC1EAA46FDBA384032 /* Pods-LFC_osx.xcconfig */;
+			baseConfigurationReference = 67A98C05E0EBB7E1B8360078 /* Pods-LFC_osx.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -312,6 +322,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -323,6 +334,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
 			name = Release;

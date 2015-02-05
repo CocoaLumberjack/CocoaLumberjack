@@ -14,6 +14,7 @@
 //   prior written permission of Deusty, LLC.
 
 #import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 
 /**
  * This class represents an NSColor replacement for CLI projects that don't link with AppKit
