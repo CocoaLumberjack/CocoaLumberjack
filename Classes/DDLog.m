@@ -894,7 +894,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
                         options:(DDLogMessageOptions)options
                       timestamp:(NSDate *)timestamp {
     if ((self = [super init])) {
-        _message      = message;
+        _message      = [message copy];
         _level        = level;
         _flag         = flag;
         _context      = context;
