@@ -23,7 +23,7 @@
     #import "DDLegacyMacros.h"
 #endif
 
-#if OS_OBJECT_HAVE_OBJC_SUPPORT
+#if OS_OBJECT_HAVE_OBJC_SUPPORT || __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000
     #define DISPATCH_QUEUE_REFERENCE_TYPE strong
 #else
     #define DISPATCH_QUEUE_REFERENCE_TYPE assign
