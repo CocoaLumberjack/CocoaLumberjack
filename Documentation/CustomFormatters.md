@@ -159,7 +159,6 @@ MyCustomFormatter.m
     if((self = [super init]))
     {
         threadUnsafeDateFormatter = [[NSDateFormatter alloc] init];
-        [threadUnsafeDateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
         [threadUnsafeDateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss:SSS"];
     }
     return self;
@@ -209,7 +208,6 @@ NSDateFormatter *dateFormatter = [threadDictionary objectForKey:key];
 if (dateFormatter == nil)
 {
     dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
     [dateFormatter setDateFormat:dateFormatString];
     
     [threadDictionary setObject:dateFormatter forKey:key];
@@ -249,7 +247,6 @@ MyCustomFormatter.m
         if (threadUnsafeDateFormatter == nil)
         {
             threadUnsafeDateFormatter = [[NSDateFormatter alloc] init];
-            [threadUnsafeDateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
             [threadUnsafeDateFormatter setDateFormat:dateFormatString];
         }
         
@@ -268,7 +265,6 @@ MyCustomFormatter.m
         if (dateFormatter == nil)
         {
             dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
             [dateFormatter setDateFormat:dateFormatString];
             
             [threadDictionary setObject:dateFormatter forKey:key];
