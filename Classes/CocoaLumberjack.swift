@@ -57,9 +57,11 @@ public func resetDefaultDebugLevel() {
 }
 
 public func SwiftLogMacro(isAsynchronous: Bool, level: DDLogLevel, flag flg: DDLogFlag, context: Int = 0, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UInt = __LINE__, tag: AnyObject? = nil, #string: @autoclosure () -> String) {
-    // Tell the DDLogMessage constructor to copy the C strings that get passed to it.
-	let logMessage = DDLogMessage(message: string(), level: level, flag: flg, context: context, file: file.stringValue, function: function.stringValue, line: line, tag: tag, options: .CopyFile | .CopyFunction, timestamp: nil)
-    DDLog.log(isAsynchronous, message: logMessage)
+    if level.rawValue & flg.rawValue != 0 {
+        // Tell the DDLogMessage constructor to copy the C strings that get passed to it.
+        let logMessage = DDLogMessage(message: string(), level: level, flag: flg, context: context, file: file.stringValue, function: function.stringValue, line: line, tag: tag, options: .CopyFile | .CopyFunction, timestamp: nil)
+        DDLog.log(isAsynchronous, message: logMessage)
+    }
 }
 
 public func DDLogDebug(logText: @autoclosure () -> String, level: DDLogLevel = defaultDebugLevel, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__, asynchronous async: Bool = true) {
