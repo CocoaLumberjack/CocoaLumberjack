@@ -12,9 +12,9 @@ CocoaLumberjack
 
 **CocoaLumberjack** is a fast & simple, yet powerful & flexible logging framework for Mac and iOS.
 
-### CocoaLumberjack 2 pre-release notes
+### CocoaLumberjack 2
 
-#### Migrating to 2.x-beta
+#### Migrating to 2.x
 
 * Replace `DDLog.h` imports by `#import <CocoaLumberjack/CocoaLumberjack.h>`.
 * Replace all `DDLogC` macros for regular `DDLog` macros.
