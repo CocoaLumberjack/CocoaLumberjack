@@ -317,6 +317,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
     if (dateFormatter == nil) {
         dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
         [dateFormatter setDateFormat:dateFormat];
         [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
         dictionary[key] = dateFormatter;
