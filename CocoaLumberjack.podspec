@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Core' do |ss|
-    ss.source_files = 'Classes/DD*.{h,m}'
+    ss.source_files = 'Classes/DD*.{h,m}','Classes/*.swift'
   end
 
   s.subspec 'Extensions' do |ss|
