@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   s.default_subspecs = 'Default', 'Extensions'
 
   s.subspec 'Default' do |ss|
-    ss.source_files = 'Classes/CocoaLumberjack.{h,m}'
+    ss.source_files = 'Classes/CocoaLumberjack.{h,m,swift}'
     ss.dependency 'CocoaLumberjack/Core'
   end
 
