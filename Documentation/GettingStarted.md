@@ -8,16 +8,31 @@ There are 3 steps to getting started with the logging framework:
 2.  Configure the framework.
 3.  Convert your NSLog statements to use the Lumberjack macros
 
-### Add the lumberjack files to your project
+### Add LumberJack to your project
 
-The main files you need to add are:
+#### CocoaPods
 
--   DDLog (Basis of entire framework)
--   DDASLLogger (sends log statements to Apple System Logger, so they show up on Console.app)
--   DDTTYLogger (sends log statements to Xcode console - if available)
--   DDFileLogger (sends log statements to a file)
+```ruby
+platform :ios, '6.1'
+pod 'CocoaLumberjack'
+```
 
-DDLog is mandatory, and the others are optional depending on how you intend to use the framework. For example, if you don't intend to log to a file, you can skip DDFileLogger. Or if you want to skip ASL in favor of faster file logging, you could skip DDASLLogger.
+#### Manual installation
+
+	git submodule add git@github.com:CocoaLumberjack/CocoaLumberjack.git
+
+* Drag CocoaLumberjack/Framework/{Desktop/Mobile}/Lumberjack.xcodeproj into your project
+* In your App target Build Settings
+	* Add to 'User Header Search Paths' `$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include`
+	* Set 'Always Search User Paths' to YES
+* In your App target Build Phases
+	* Add CocoaLumberjack static library target to 'Target Dependencies'
+	* Add `libCocoaLumberjack.a` to 'Link Binary With Libraries'
+* Include the framework in your source files with 
+
+```objective-c
+#import <CocoaLumberjack/CocoaLumberjack.h>
+```
 
 ### Configure the framework
 
