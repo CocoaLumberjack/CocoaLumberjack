@@ -21,7 +21,7 @@ pod 'CocoaLumberjack'
 
 	git submodule add git@github.com:CocoaLumberjack/CocoaLumberjack.git
 
-* Drag CocoaLumberjack/Framework/{Desktop/Mobile}/Lumberjack.xcodeproj into your project
+* Drag `CocoaLumberjack/Framework/{Desktop/Mobile}/Lumberjack.xcodeproj` into your project
 * In your App target Build Settings
 	* Add to 'User Header Search Paths' `$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include`
 	* Set 'Always Search User Paths' to YES

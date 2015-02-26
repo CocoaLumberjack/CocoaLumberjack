@@ -64,7 +64,7 @@ Configure your logging however you want. Change log levels per file (perfect for
 platform :ios, '6.1'
 pod 'CocoaLumberjack'
 ```
-- or [install manually](Documentation/GettingStarted.md#Manual_installation)
+- or [install manually](Documentation/GettingStarted.md#manual-installation)
 - read the [Getting started](Documentation/GettingStarted.md) guide, check out the [FAQ](Documentation/FAQ.md) section or the other [docs](Documentation/)
 - if you find issues or want to suggest improvements, create an issue or a pull request
 - for all kinds of questions involving CocoaLumberjack, use the [Google group](http://groups.google.com/group/cocoalumberjack) or StackOverflow (use [#lumberjack](http://stackoverflow.com/questions/tagged/lumberjack)).
