@@ -100,6 +100,18 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return self;
 }
 
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)theKey
+{
+    BOOL automatic = NO;
+    if ([theKey isEqualToString:@"maximumNumberOfLogFiles"] || [theKey isEqualToString:@"logFilesDiskQuota"]) {
+        automatic = NO;
+    } else {
+        automatic = [super automaticallyNotifiesObserversForKey:theKey];
+    }
+    
+    return automatic;
+}
+
 #if TARGET_OS_IPHONE
 - (instancetype)initWithLogsDirectory:(NSString *)logsDirectory defaultFileProtectionLevel:(NSString *)fileProtectionLevel {
     if ((self = [self initWithLogsDirectory:logsDirectory])) {
