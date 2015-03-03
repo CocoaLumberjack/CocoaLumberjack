@@ -194,12 +194,10 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         }
     }
 
-    if (maxNumLogFiles) {
-        if (firstIndexToDelete == NSNotFound) {
-            firstIndexToDelete = maxNumLogFiles;
-        } else {
-            firstIndexToDelete = MIN(firstIndexToDelete, maxNumLogFiles);
-        }
+    if (firstIndexToDelete == NSNotFound) {
+        firstIndexToDelete = maxNumLogFiles;
+    } else {
+        firstIndexToDelete = MIN(firstIndexToDelete, maxNumLogFiles);
     }
 
     if (firstIndexToDelete == 0) {
