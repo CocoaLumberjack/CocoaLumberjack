@@ -89,12 +89,12 @@ Which log level you choose per NSLog statement depends, of course, on the severi
 
 These tie into the log level just as you would expect
 
--   If you set the log level to LOG\_LEVEL\_ERROR, then you will only see DDLogError statements.
--   If you set the log level to LOG\_LEVEL\_WARN, then you will only see DDLogError and DDLogWarn statements.
--   If you set the log level to LOG\_LEVEL\_INFO, you'll see Error, Warn and Info statements.
--   If you set the log level to LOG\_LEVEL\_DEBUG, you'll see Error, Warn, Info and Debug statements.
--   If you set the log level to LOG\_LEVEL\_VERBOSE, you'll see all DDLog statements.
--   If you set the log level to LOG\_LEVEL\_OFF, you won't see any DDLog statements.
+-   If you set the log level to DDLogLevelError, then you will only see Error statements.
+-   If you set the log level to DDLogLevelWarn, then you will only see Error and Warn statements.
+-   If you set the log level to DDLogLevelInfo, you'll see Error, Warn and Info statements.
+-   If you set the log level to DDLogLevelDebug, you'll see Error, Warn, Info and Debug statements.
+-   If you set the log level to DDLogLevelVerbose, you'll see all DDLog statements.
+-   If you set the log level to DDLogLevelOff, you won't see any DDLog statements.
 
 Where do I set the log level? Do I have to use a single log level for my entire project?
 

@@ -4,11 +4,11 @@ When you need something more advanced than simple log levels.
 
 Most of us are familiar with log levels. They are simple to understand, and they're used in almost every logging framework. However, there are times when something more advanced is desired. Something more fine grained.
 
-Example \#1:
+#### Example \#1:
 
 You have a large source code file that you are debugging. The code is logically separated into 7 different sub-components. One of these sub-components is having issues. So you'd like to enable some extra logging, but you don't want to see all the log statements from the other 6 sub-components. That would be too much junk to filter through. Wouldn't it be nice if your logging framework was tailored to fit the logical separations in your code?
 
-Example \#2:
+#### Example \#2:
 
 You're adding a new feature to your application. The implementation of this feature spans across several different files. Something isn't quite working right and you'd like to enable some extra logging, but you only want to see log statements related to this new feature. The problem is, there are a bunch of other log statements in these files. You don't want to remove them. You just want a little bit extra fine-grained control.
 
@@ -16,7 +16,7 @@ Not a problem. Lumberjack can help!
 
 ### Details
 
-If you look closely at the definitions in the DDLog header file, you'll notice something interesting:
+If you look closely at the definitions in the `DDLogLegacyMacros` header file, you'll notice something interesting:
 ```objective-c
 #define LOG_FLAG_ERROR    (1 << 0)  // 0...00001
 #define LOG_FLAG_WARN     (1 << 1)  // 0...00010
@@ -97,4 +97,4 @@ For example, let's say you wanted to have 30 fine-grained log options. No proble
 
 All we had to do was use a new variable - ddLogLevel2.
 
-You should also note that you aren't restricted to the 4 pre-defined log levels. You can define them however you want. Learn more in the [[Custom Log Levels | CustomLogLevels]] page.
+You should also note that you aren't restricted to the 4 pre-defined log levels. You can define them however you want. Learn more in the [Custom Log Levels](CustomLogLevels.md) page.

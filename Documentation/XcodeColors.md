@@ -1,11 +1,11 @@
 It's sometimes helpful to color-coordinate your log messages. For example, you may want your error messages to print in red so they stick out.  
-This is possible with DDTTYLogger and XcodeColors.
+This is possible with `DDTTYLogger` and **XcodeColors**.
 
 <a href="http://www.flickr.com/photos/100714763@N06/9576120087/" title="Screen Shot 2013-08-23 at 10.30.09 AM by robbiehanson, on Flickr"><img src="http://farm4.staticflickr.com/3755/9576120087_bf2a3cae91_c.jpg" width="800" height="568" alt="Screen Shot 2013-08-23 at 10.30.09 AM"></a>
 
 ## Install XcodeColors
 
-XcodeColors is a simple plugin for Xcode.  
+**XcodeColors** is a simple plugin for Xcode.  
 It allows you to use colors in the Xcode debugging console.
 
 Full installation instructions can be found on the XcodeColors project page:  
@@ -30,8 +30,8 @@ All it takes is one extra line of code to enable colors in Lumberjack:
 
 The **default color scheme** (if you don't customize it) is:
 
-- DDLogError : Prints in red
-- DDLogWarn  : Prints in orange
+- `DDLogError` : Prints in red
+- `DDLogWarn`  : Prints in orange
 
 However, **you can fully customize the color schemes** however you like!  
 In fact, you can customize the foreground and/or background colors.  
