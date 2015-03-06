@@ -5,6 +5,9 @@
       location = "group:../Classes">
    </FileRef>
    <FileRef
+      location = "group:../Documentation">
+   </FileRef>
+   <FileRef
       location = "group:Desktop/Lumberjack.xcodeproj">
    </FileRef>
    <FileRef
