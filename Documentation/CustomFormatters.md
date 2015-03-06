@@ -76,7 +76,7 @@ MyCustomFormatter.m
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     NSString *logLevel;
-    switch (logMessage.flag) {
+    switch (logMessage->_flag) {
         case DDLogFlagError : logLevel = @"E"; break;
         case DDLogFlagWarn  : logLevel = @"W"; break;
         case DDLogFlagInfo  : logLevel = @"I"; break;
@@ -84,7 +84,7 @@ MyCustomFormatter.m
         default             : logLevel = @"V"; break;
     }
     
-    return [NSString stringWithFormat:@"%@ | %@\n", logLevel, logMessage.message];
+    return [NSString stringWithFormat:@"%@ | %@\n", logLevel, logMessage->_message];
 }
 
 @end
@@ -172,7 +172,7 @@ MyCustomFormatter.m
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     NSString *logLevel;
-    switch (logMessage.flag) {
+    switch (logMessage->_flag) {
         case DDLogFlagError : logLevel = @"E"; break;
         case DDLogFlagWarn  : logLevel = @"W"; break;
         case DDLogFlagInfo  : logLevel = @"I"; break;
@@ -180,8 +180,8 @@ MyCustomFormatter.m
         default             : logLevel = @"V"; break;
     }
 
-    NSString *dateAndTime = [threadUnsafeDateFormatter stringFromDate:(logMessage.timestamp)];
-    NSString *logMsg = logMessage.message;
+    NSString *dateAndTime = [threadUnsafeDateFormatter stringFromDate:(logMessage->_timestamp)];
+    NSString *logMsg = logMessage->_message;
     
     return [NSString stringWithFormat:@"%@ %@ | %@\n", logLevel, dateAndTime, logMsg];
 }
@@ -271,7 +271,7 @@ MyCustomFormatter.m
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     NSString *logLevel;
-    switch (logMessage.flag) {
+    switch (logMessage->_flag) {
         case DDLogFlagError : logLevel = @"E"; break;
         case DDLogFlagWarn  : logLevel = @"W"; break;
         case DDLogFlagInfo  : logLevel = @"I"; break;
@@ -280,7 +280,7 @@ MyCustomFormatter.m
     }
 
     NSString *dateAndTime = [self stringFromDate:(logMessage.timestamp)];
-    NSString *logMsg = logMessage.message;
+    NSString *logMsg = logMessage->_message;
     
     return [NSString stringWithFormat:@"%@ %@ | %@\n", logLevel, dateAndTime, logMsg];
 }
