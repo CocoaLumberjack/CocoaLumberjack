@@ -59,7 +59,7 @@ public func resetDefaultDebugLevel() {
 public func SwiftLogMacro(isAsynchronous: Bool, level: DDLogLevel, flag flg: DDLogFlag, context: Int = 0, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UInt = __LINE__, tag: AnyObject? = nil, #string: @autoclosure () -> String) {
     if level.rawValue & flg.rawValue != 0 {
         // Tell the DDLogMessage constructor to copy the C strings that get passed to it.
-        let logMessage = DDLogMessage(message: string(), level: level, flag: flg, context: context, file: file.stringValue, function: function.stringValue, line: line, tag: tag, options: .CopyFile | .CopyFunction, timestamp: nil)
+        let logMessage = DDLogMessage(message: string(), level: level, flag: flg, context: context, file: "\(file)", function: "\(function)", line: line, tag: tag, options: .CopyFile | .CopyFunction, timestamp: nil)
         DDLog.log(isAsynchronous, message: logMessage)
     }
 }
@@ -86,5 +86,5 @@ public func DDLogError(logText: @autoclosure () -> String, level: DDLogLevel = d
 
 /// Analogous to the C preprocessor macro THIS_FILE
 public func CurrentFileName(fileName: StaticString = __FILE__) -> String {
-    return fileName.stringValue.lastPathComponent.stringByDeletingPathExtension
+    return "\(fileName)".lastPathComponent.stringByDeletingPathExtension
 }
