@@ -76,7 +76,7 @@ Configure your logging however you want. Change log levels per file (perfect for
 - install via [CocoaPods](http://cocoapods.org)
 
 ```ruby
-platform :ios, '6.1'
+platform :ios, '5.0'
 pod 'CocoaLumberjack'
 ```
 - or [install manually](Documentation/GettingStarted.md#manual-installation)

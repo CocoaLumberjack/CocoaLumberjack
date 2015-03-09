@@ -13,7 +13,7 @@ There are 3 steps to getting started with the logging framework:
 #### CocoaPods
 
 ```ruby
-platform :ios, '6.1'
+platform :ios, '5.0'
 pod 'CocoaLumberjack'
 ```
 
