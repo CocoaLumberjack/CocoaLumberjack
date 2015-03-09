@@ -8,6 +8,21 @@
       location = "group:../Documentation">
    </FileRef>
    <FileRef
+      location = "group:../CocoaLumberjack.podspec">
+   </FileRef>
+   <FileRef
+      location = "group:../LICENSE.txt">
+   </FileRef>
+   <FileRef
+      location = "group:../LumberjackLogo.png">
+   </FileRef>
+   <FileRef
+      location = "group:../README.md">
+   </FileRef>
+   <FileRef
+      location = "group:../uncrustify.cfg">
+   </FileRef>
+   <FileRef
       location = "group:Desktop/Lumberjack.xcodeproj">
    </FileRef>
    <FileRef
