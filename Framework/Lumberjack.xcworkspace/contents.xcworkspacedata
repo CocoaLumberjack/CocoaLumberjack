@@ -28,4 +28,10 @@
    <FileRef
       location = "group:Mobile/Lumberjack.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:../Tests/CocoaLumberjack Tests.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../Tests/Pods/Pods.xcodeproj">
+   </FileRef>
 </Workspace>
