@@ -1,6 +1,0 @@
-syntax: glob
-
-Xcode/*/build
-*.pbxuser
-*.mode1v3
-*.xcuserdatad
