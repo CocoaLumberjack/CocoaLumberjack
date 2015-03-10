@@ -23,7 +23,7 @@ script:
     - cd Tests
     - pod install
     - cd ..
-    - xctool -workspace Framework/Lumberjack.xcworkspace -scheme 'iOS Tests' test
+    - xctool -workspace Framework/Lumberjack.xcworkspace -scheme 'iOS Tests' -sdk iphonesimulator -arch i386 test
     - xctool -workspace Framework/Lumberjack.xcworkspace -scheme 'OS X Tests' test
 
     - cd Demos
