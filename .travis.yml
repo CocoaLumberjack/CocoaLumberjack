@@ -20,6 +20,9 @@ script:
     - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'CocoaLumberjack'
     - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'CocoaLumberjack' -configuration Release -sdk iphonesimulator -arch i386 build
 
+    - cd Tests
+    - pod install
+    - cd ..
     - xctool -workspace Framework/Lumberjack.xcworkspace -scheme 'iOS Tests' test
     - xctool -workspace Framework/Lumberjack.xcworkspace -scheme 'OS X Tests' test
 
