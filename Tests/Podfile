@@ -6,6 +6,7 @@ inhibit_all_warnings!
 
 def import_pods
   pod 'Expecta'
+  pod 'OCMock'
   pod 'CocoaLumberjack', :path => '../'
 end
 
