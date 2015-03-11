@@ -53,7 +53,7 @@ DDLogLevel ddLogLevel = DDLogLevelVerbose;
             [expectation fulfill];
         }
         return YES;
-    }]]).andForwardToRealObject();
+    }]]);
     
     DDLogError  (@"Error");
     DDLogWarn   (@"Warn");
@@ -61,7 +61,7 @@ DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogDebug  (@"Debug");
     DDLogVerbose(@"Verbose");
     
-    [self waitForExpectationsWithTimeout:3 handler:^(NSError *timeoutError) {
+    [self waitForExpectationsWithTimeout:0.5 handler:^(NSError *timeoutError) {
         expect(timeoutError).to.beNil();
     }];
 }
@@ -88,7 +88,7 @@ DDLogLevel ddLogLevel = DDLogLevelVerbose;
             [expectation fulfill];
         }
         return YES;
-    }]]).andForwardToRealObject();
+    }]]);
     
     DDLogError  (@"Error");
     DDLogWarn   (@"Warn");
@@ -96,7 +96,7 @@ DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogDebug  (@"Debug");
     DDLogVerbose(@"Verbose");
     
-    [self waitForExpectationsWithTimeout:3 handler:^(NSError *timeoutError) {
+    [self waitForExpectationsWithTimeout:0.5 handler:^(NSError *timeoutError) {
         expect(timeoutError).to.beNil();
     }];
 }
@@ -122,7 +122,7 @@ DDLogLevel ddLogLevel = DDLogLevelVerbose;
             [expectation fulfill];
         }
         return YES;
-    }]]).andForwardToRealObject();
+    }]]);
     
     DDLogError  (@"Error");
     DDLogWarn   (@"Warn");
@@ -130,9 +130,11 @@ DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogDebug  (@"Debug");
     DDLogVerbose(@"Verbose");
     
-    [self waitForExpectationsWithTimeout:3 handler:^(NSError *timeoutError) {
+    [self waitForExpectationsWithTimeout:0.5 handler:^(NSError *timeoutError) {
         expect(timeoutError).to.beNil();
     }];
+    
+    ddLogLevel = DDLogLevelVerbose;
 }
 
 @end
