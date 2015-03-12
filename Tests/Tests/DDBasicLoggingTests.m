@@ -19,9 +19,17 @@
 #import <OCMock.h>
 #import <Expecta.h>
 
+
+const NSTimeInterval kAsyncExpectationTimeout = 3.0f;
+
 DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 @interface DDBasicLoggingTests : XCTestCase
+
+@property (nonatomic, strong) NSArray *logs;
+@property (nonatomic, strong) XCTestExpectation *expectation;
+@property (nonatomic, strong) DDAbstractLogger *logger;
+@property (nonatomic, assign) NSUInteger noOfMessagesLogged;
 
 @end
 
@@ -29,31 +37,44 @@ DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 - (void)setUp {
     [super setUp];
+    
+    if (self.logger == nil) {
+        self.logger = OCMPartialMock([[DDAbstractLogger alloc] init]);
+        
+        __weak typeof(self)weakSelf = self;
+        
+        OCMStub([self.logger logMessage:[OCMArg checkWithBlock:^BOOL(id obj) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            
+            DDLogMessage *message = (DDLogMessage *)obj;
+            
+            expect(strongSelf.logs).to.contain(message.message);
+            
+            strongSelf.noOfMessagesLogged++;
+            
+            // NOTE: this method is called twice for every log (the second time if for getting the obj param)
+            if (strongSelf.noOfMessagesLogged == 2 * [strongSelf.logs count]) {
+                [self.expectation fulfill];
+            }
+            
+            return YES;
+        }]]);
+    }
+    
     [DDLog removeAllLoggers];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [DDLog addLogger:self.logger];
+    
     ddLogLevel = DDLogLevelVerbose;
+    
+    self.logs = @[];
+    self.expectation = nil;
+    self.noOfMessagesLogged = 0;
 }
 
 - (void)testAll5DefaultLevelsAsync {
-    XCTestExpectation *expectation = [self expectationWithDescription:@"default log levels"];
-    
-    DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
-    
-    __block int noOfMessagesLogged = 0;
-    NSArray *logs = @[ @"Error", @"Warn", @"Info", @"Debug", @"Verbose" ];
-    
-    DDTTYLogger *ttyLoggerMock = OCMPartialMock(ttyLogger);
-    OCMStub([ttyLoggerMock logMessage:[OCMArg checkWithBlock:^BOOL(id obj) {
-        DDLogMessage *message = (DDLogMessage *)obj;
-        
-        expect(logs).to.contain(message.message);
-        
-        noOfMessagesLogged++;
-        if (noOfMessagesLogged == [logs count]) {
-            [expectation fulfill];
-        }
-        return YES;
-    }]]);
+    self.expectation = [self expectationWithDescription:@"default log levels"];
+    self.logs = @[ @"Error", @"Warn", @"Info", @"Debug", @"Verbose" ];
     
     DDLogError  (@"Error");
     DDLogWarn   (@"Warn");
@@ -61,34 +82,17 @@ DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogDebug  (@"Debug");
     DDLogVerbose(@"Verbose");
     
-    [self waitForExpectationsWithTimeout:0.5 handler:^(NSError *timeoutError) {
+    [self waitForExpectationsWithTimeout:kAsyncExpectationTimeout handler:^(NSError *timeoutError) {
         expect(timeoutError).to.beNil();
     }];
 }
 
 - (void)testLoggerLogLevelAsync {
-    XCTestExpectation *expectation = [self expectationWithDescription:@"logger level"];
+    self.expectation = [self expectationWithDescription:@"logger level"];
+    self.logs = @[ @"Error", @"Warn" ];
     
-    DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
-    
-    [DDLog removeAllLoggers];
-    [DDLog addLogger:ttyLogger withLevel:DDLogLevelWarning];
-    
-    __block int noOfMessagesLogged = 0;
-    NSArray *logs = @[ @"Error", @"Warn" ];
-    
-    DDTTYLogger *ttyLoggerMock = OCMPartialMock(ttyLogger);
-    OCMStub([ttyLoggerMock logMessage:[OCMArg checkWithBlock:^BOOL(id obj) {
-        DDLogMessage *message = (DDLogMessage *)obj;
-        
-        expect(logs).to.contain(message.message);
-        
-        noOfMessagesLogged++;
-        if (noOfMessagesLogged == [logs count]) {
-            [expectation fulfill];
-        }
-        return YES;
-    }]]);
+    [DDLog removeLogger:self.logger];
+    [DDLog addLogger:self.logger withLevel:DDLogLevelWarning];
     
     DDLogError  (@"Error");
     DDLogWarn   (@"Warn");
@@ -96,33 +100,16 @@ DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogDebug  (@"Debug");
     DDLogVerbose(@"Verbose");
     
-    [self waitForExpectationsWithTimeout:0.5 handler:^(NSError *timeoutError) {
+    [self waitForExpectationsWithTimeout:kAsyncExpectationTimeout handler:^(NSError *timeoutError) {
         expect(timeoutError).to.beNil();
     }];
 }
 
-- (void)test_ddLogLevel_async {
-    XCTestExpectation *expectation = [self expectationWithDescription:@"ddLogLevel"];
-    
-    DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
+- (void)testX_ddLogLevel_async {
+    self.expectation = [self expectationWithDescription:@"ddLogLevel"];
+    self.logs = @[ @"Error", @"Warn", @"Info" ];
     
     ddLogLevel = DDLogLevelInfo;
-    
-    __block int noOfMessagesLogged = 0;
-    NSArray *logs = @[ @"Error", @"Warn", @"Info" ];
-    
-    DDTTYLogger *ttyLoggerMock = OCMPartialMock(ttyLogger);
-    OCMStub([ttyLoggerMock logMessage:[OCMArg checkWithBlock:^BOOL(id obj) {
-        DDLogMessage *message = (DDLogMessage *)obj;
-        
-        expect(logs).to.contain(message.message);
-        
-        noOfMessagesLogged++;
-        if (noOfMessagesLogged == [logs count]) {
-            [expectation fulfill];
-        }
-        return YES;
-    }]]);
     
     DDLogError  (@"Error");
     DDLogWarn   (@"Warn");
@@ -130,7 +117,7 @@ DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogDebug  (@"Debug");
     DDLogVerbose(@"Verbose");
     
-    [self waitForExpectationsWithTimeout:0.5 handler:^(NSError *timeoutError) {
+    [self waitForExpectationsWithTimeout:kAsyncExpectationTimeout handler:^(NSError *timeoutError) {
         expect(timeoutError).to.beNil();
     }];
     
