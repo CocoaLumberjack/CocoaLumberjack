@@ -14,7 +14,7 @@ The small number of levels helps those who are new to logging frameworks. (When 
 
 However, this might not be the proper choice for your project. Or perhaps you're familiar with another logging framework, and you'd like to use the same notations.
 
-You're in luck because **you can customise the log levels however you want**! In fact Lumberjack has structured it's macros to make it easy to customise.
+You're in luck because **you can customise the log levels however you want**! In fact Lumberjack has structured its macros to make it easy to customise.
 
 ### Details
 
