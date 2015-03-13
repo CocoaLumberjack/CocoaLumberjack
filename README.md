@@ -12,6 +12,18 @@ CocoaLumberjack
 
 **CocoaLumberjack** is a fast & simple, yet powerful & flexible logging framework for Mac and iOS.
 
+### How to get started
+- install via [CocoaPods](http://cocoapods.org)
+
+```ruby
+platform :ios, '5.0'
+pod 'CocoaLumberjack'
+```
+- or [install manually](Documentation/GettingStarted.md#manual-installation)
+- read the [Getting started](Documentation/GettingStarted.md) guide, check out the [FAQ](Documentation/FAQ.md) section or the other [docs](Documentation/)
+- if you find issues or want to suggest improvements, create an issue or a pull request
+- for all kinds of questions involving CocoaLumberjack, use the [Google group](http://groups.google.com/group/cocoalumberjack) or StackOverflow (use [#lumberjack](http://stackoverflow.com/questions/tagged/lumberjack)).
+
 ### CocoaLumberjack 2
 
 #### Migrating to 2.x
@@ -71,18 +83,6 @@ Configure your logging however you want. Change log levels per file (perfect for
 -   You're frustrated with the super short console log on the iPhone.
 -   You're looking to take your application to the next level in terms of support and stability.
 -   You're looking for an enterprise level logging solution for your application (Mac or iPhone).
-
-### How to get started
-- install via [CocoaPods](http://cocoapods.org)
-
-```ruby
-platform :ios, '5.0'
-pod 'CocoaLumberjack'
-```
-- or [install manually](Documentation/GettingStarted.md#manual-installation)
-- read the [Getting started](Documentation/GettingStarted.md) guide, check out the [FAQ](Documentation/FAQ.md) section or the other [docs](Documentation/)
-- if you find issues or want to suggest improvements, create an issue or a pull request
-- for all kinds of questions involving CocoaLumberjack, use the [Google group](http://groups.google.com/group/cocoalumberjack) or StackOverflow (use [#lumberjack](http://stackoverflow.com/questions/tagged/lumberjack)).
 
 ### Documentation
 
