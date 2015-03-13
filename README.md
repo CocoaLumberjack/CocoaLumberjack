@@ -34,14 +34,14 @@ pod 'CocoaLumberjack'
 * Replace log level (`LOG_LEVEL_*`) macros with `DDLogLevel` enum values
 * Replace log flag (`LOG_FLAG_*`) macros with `DDLogFlag` enum values
 * Replace `DDLogMessage` ivars and method calls to the new ivars and methods
-* `logMsg` with `_message`
-* `logLevel` with `_level`
-* `logFlag` with `_flag`
-* `logContext` with `_context`
-* `lineNumber` with `_line` (type changed from `int` to `NSUInteger`)
-* `file` with `_file` (`filename` contains just the file name, without the extension and the full path)
-* `timestamp` with `_timestamp`
-* `methodName` with `function`
+  * `logMsg` with `_message`
+  * `logLevel` with `_level`
+  * `logFlag` with `_flag`
+  * `logContext` with `_context`
+  * `lineNumber` with `_line` (type changed from `int` to `NSUInteger`)
+  * `file` with `_file` (`filename` contains just the file name, without the extension and the full path)
+  * `timestamp` with `_timestamp`
+  * `methodName` with `function`
 * Replace `DDAbstractLogger` `formatter` to `logFormatter`
 * `YSSingleFileLogger` ivars are no longer accesible, use the methods instead
 * Replace `[DDLog addLogger:withLogLevel:]` with `[DDLog addLogger:withLevel:]`
