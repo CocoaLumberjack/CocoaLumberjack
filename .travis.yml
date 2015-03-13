@@ -20,118 +20,72 @@ script:
     - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'CocoaLumberjack'
 #comment    - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'CocoaLumberjack' -configuration Release -sdk iphonesimulator -arch i386 build
 
-    - cd Demos/ContextFilter
-    - pod install
-    - cd ..
+    - cd Demos
+    - pod install --project-directory=ContextFilter
     - xctool -workspace Demos.xcworkspace -scheme 'ContextFilter'
 
-    - cd CoreDataLogger
-    - pod install
-    - cd ..
+    - pod install --project-directory=CoreDataLogger
     - xctool -workspace Demos.xcworkspace -scheme 'CoreDataLogger'
 
-    - cd CustomFormatters
-    - pod install
-    - cd ..
+    - pod install --project-directory=CustomFormatters
     - xctool -workspace Demos.xcworkspace -scheme 'CustomFormatters'
 
-    - cd CustomLogLevels
-    - pod install
-    - cd ..
+    - pod install --project-directory=CustomLogLevels
     - xctool -workspace Demos.xcworkspace -scheme 'CustomLogLevels'
 
-    - cd DispatchQueueLogger
-    - pod install
-    - cd ..
+    - pod install --project-directory=DispatchQueueLogger
     - xctool -workspace Demos.xcworkspace -scheme 'DispatchQueueLogger'
 
-    - cd FineGrainedLogging
-    - pod install
-    - cd ..
+    - pod install --project-directory=FineGrainedLogging
     - xctool -workspace Demos.xcworkspace -scheme 'FineGrainedLogging'
 
-    - cd GlobalLogLevel
-    - pod install
-    - cd ..
+    - pod install --project-directory=GlobalLogLevel
     - xctool -workspace Demos.xcworkspace -scheme 'GlobalLogLevel'
 
-    - cd LogFileCompressor
-    - pod install
-    - cd ..
+    - pod install --project-directory=LogFileCompressor
     - xctool -workspace Demos.xcworkspace -scheme 'LogFileCompressor'
 
-    - cd NonArcTest
-    - pod install
-    - cd ..
+    - pod install --project-directory=NonArcTest
     - xctool -workspace Demos.xcworkspace -scheme 'NonArcTest'
 
-    - cd OverflowTestMac
-    - pod install
-    - cd ..
+    - pod install --project-directory=OverflowTestMac
     - xctool -workspace Demos.xcworkspace -scheme 'OverflowTestMac'
 
-    - cd PerUserLogLevels
-    - pod install
-    - cd ..
+    - pod install --project-directory=PerUserLogLevels
     - xctool -workspace Demos.xcworkspace -scheme 'PerUserLogLevels'
 
-    - cd RegisteredDynamicLogging/Mobile
-    - pod install
-    - cd ../..
+    - pod install --project-directory=RegisteredDynamicLogging/Mobile
     - xctool -workspace Demos.xcworkspace -scheme 'RegisteredLoggingTest (Mobile)' -configuration Release -sdk iphonesimulator -arch i386 build
 
-    - cd RegisteredDynamicLogging/Desktop
-    - pod install
-    - cd ../..
+    - pod install --project-directory=RegisteredDynamicLogging/Desktop
     - xctool -workspace Demos.xcworkspace -scheme 'RegisteredLoggingTest (Desktop)'
 
-    - cd RollingTestMac
-    - pod install
-    - cd ..
+    - pod install --project-directory=RollingTestMac
     - xctool -workspace Demos.xcworkspace -scheme 'RollingTestMac'
 
-    - cd TestXcodeColors/Desktop
-    - pod install
-    - cd ../..
+    - pod install --project-directory=TestXcodeColors/Desktop
     - xctool -workspace Demos.xcworkspace -scheme 'TestXcodeColors (Desktop)'
 
-    - cd TestXcodeColors/Mobile
-    - pod install
-    - cd ../..
+    - pod install --project-directory=TestXcodeColors/Mobile
     - xctool -workspace Demos.xcworkspace -scheme 'TextXcodeColors (Mobile)' -configuration Release -sdk iphonesimulator -arch i386 build
 
-    - cd WebServerIPhone
-    - pod install
-    - cd ..
+    - pod install --project-directory=WebServerIPhone
     - xctool -workspace Demos.xcworkspace  -scheme 'WebServerIPhone' -configuration Release -sdk iphonesimulator -arch i386 build
 
-    - cd Benchmark/Desktop
-    - pod install
-    - cd ../..
+    - pod install --project-directory=Benchmark/Desktop
     - xctool -workspace Demos.xcworkspace -scheme 'BenchmarkMac'
 
-    - cd Benchmark/Mobile
-    - pod install
-    - cd ../..
+    - pod install --project-directory=Benchmark/Mobile
     - xctool -workspace Demos.xcworkspace -scheme 'BenchmarkIPhone' -configuration Release -sdk iphonesimulator -arch i386 build
 
-    - cd SQLiteLogger
-    - pod install
-    - cd ..
+    - pod install --project-directory=SQLiteLogger
     - xctool -workspace Demos.xcworkspace -scheme 'SQLiteLogger'
 
-    - cd UniversalApp
-    - pod install
-    - cd ..
+    - pod install --project-directory=UniversalApp
     - xctool -workspace Demos.xcworkspace -scheme 'UniversalApp' -configuration Release -sdk iphonesimulator -arch i386 build
 
-    - cd CLI
-    - pod install
-    - cd ..
+    - pod install --project-directory=CLI
     - xctool -workspace Demos.xcworkspace -scheme 'CLI'
 
-    - cd CaptureASL
-    - pod install
-    - cd ..
+    - pod install --project-directory=CaptureASL
     - xctool -workspace Demos.xcworkspace -scheme 'CaptureASL' -configuration Release -sdk iphonesimulator -arch i386 build
-
