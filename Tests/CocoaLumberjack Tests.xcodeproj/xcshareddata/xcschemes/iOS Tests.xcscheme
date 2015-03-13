@@ -8,16 +8,16 @@
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DCB3185014EB418E001CFBEE"
-               BuildableName = "CocoaLumberjack.framework"
-               BlueprintName = "CocoaLumberjack"
-               ReferencedContainer = "container:Lumberjack.xcodeproj">
+               BlueprintIdentifier = "432B533F1AAE425D00843E69"
+               BuildableName = "iOS Tests.xctest"
+               BlueprintName = "iOS Tests"
+               ReferencedContainer = "container:CocoaLumberjack Tests.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,26 +28,36 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "432B533F1AAE425D00843E69"
+               BuildableName = "iOS Tests.xctest"
+               BlueprintName = "iOS Tests"
+               ReferencedContainer = "container:CocoaLumberjack Tests.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "432B533F1AAE425D00843E69"
+            BuildableName = "iOS Tests.xctest"
+            BlueprintName = "iOS Tests"
+            ReferencedContainer = "container:CocoaLumberjack Tests.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DCB3185014EB418E001CFBEE"
-            BuildableName = "CocoaLumberjack.framework"
-            BlueprintName = "CocoaLumberjack"
-            ReferencedContainer = "container:Lumberjack.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -57,15 +67,6 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DCB3185014EB418E001CFBEE"
-            BuildableName = "CocoaLumberjack.framework"
-            BlueprintName = "CocoaLumberjack"
-            ReferencedContainer = "container:Lumberjack.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
