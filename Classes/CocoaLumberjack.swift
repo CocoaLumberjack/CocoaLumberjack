@@ -50,10 +50,10 @@ extension DDMultiFormatter {
     }
 }
 
-public var defaultDebugLevel = DDLogLevel.Warning
+public var defaultDebugLevel = DDLogLevel.Verbose
 
 public func resetDefaultDebugLevel() {
-    defaultDebugLevel = DDLogLevel.Warning
+    defaultDebugLevel = DDLogLevel.Verbose
 }
 
 public func SwiftLogMacro(isAsynchronous: Bool, level: DDLogLevel, flag flg: DDLogFlag, context: Int = 0, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UInt = __LINE__, tag: AnyObject? = nil, #string: @autoclosure () -> String) {
