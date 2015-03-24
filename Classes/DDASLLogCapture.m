@@ -106,24 +106,15 @@ static void (*dd_asl_release)(aslresponse obj);
 
 + (void)aslMessageRecieved:(aslmsg)msg {
     const char* messageCString = asl_get( msg, ASL_KEY_MSG );
-    if ( messageCString == NULL )
+    const char* secondsCString = asl_get( msg, ASL_KEY_TIME );
+    const char* nanoCString = asl_get( msg, ASL_KEY_TIME_NSEC );
+    if ( messageCString == NULL || secondsCString == NULL || nanoCString == NULL )
         return;
-    
-    //  NSString * sender = [NSString stringWithCString:asl_get(msg, ASL_KEY_SENDER) encoding:NSUTF8StringEncoding];
-    NSString *message = @(messageCString);
-    NSString *level = @(asl_get(msg, ASL_KEY_LEVEL));
-    NSString *secondsStr = @(asl_get(msg, ASL_KEY_TIME));
-    NSString *nanoStr = @(asl_get(msg, ASL_KEY_TIME_NSEC));
-
-    NSTimeInterval seconds = [secondsStr doubleValue];
-    NSTimeInterval nanoSeconds = [nanoStr doubleValue];
-    NSTimeInterval totalSeconds = seconds + (nanoSeconds / 1e9);
-
-    NSDate *timeStamp = [NSDate dateWithTimeIntervalSince1970:totalSeconds];
 
     int flag;
     BOOL async;
 
+    NSString *level = @(asl_get(msg, ASL_KEY_LEVEL));
     switch ([level intValue]) {
         // By default all NSLog's with a ASL_LEVEL_WARNING level
         case ASL_LEVEL_EMERG    :
@@ -136,11 +127,22 @@ static void (*dd_asl_release)(aslresponse obj);
         case ASL_LEVEL_DEBUG    :
         default                 : flag = DDLogFlagVerbose;  async = YES;  break;
     }
-    
+
     if (!(_captureLevel & flag)) {
         return;
     }
-    
+
+    //  NSString * sender = [NSString stringWithCString:asl_get(msg, ASL_KEY_SENDER) encoding:NSUTF8StringEncoding];
+    NSString *message = @(messageCString);
+    NSString *secondsStr = @(secondsCString);
+    NSString *nanoStr = @(nanoCString);
+
+    NSTimeInterval seconds = [secondsStr doubleValue];
+    NSTimeInterval nanoSeconds = [nanoStr doubleValue];
+    NSTimeInterval totalSeconds = seconds + (nanoSeconds / 1e9);
+
+    NSDate *timeStamp = [NSDate dateWithTimeIntervalSince1970:totalSeconds];
+
     DDLogMessage *logMessage = [[DDLogMessage alloc]initWithMessage:message
                                                               level:_captureLevel
                                                                flag:flag
