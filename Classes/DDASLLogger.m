@@ -62,7 +62,10 @@ static DDASLLogger *sharedInstance;
         return;
     }
 
-    NSString * message = _logFormatter ? [_logFormatter formatLogMessage:logMessage] : logMessage->_message;
+    if (_logFormatter) {
+        logMessage->_message = [_logFormatter formatLogMessage:logMessage];
+    }
+    NSString * message = logMessage->_message;
 
     if (logMessage) {
         const char *msg = [message UTF8String];

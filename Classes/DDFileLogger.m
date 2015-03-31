@@ -1033,8 +1033,9 @@ static int exception_count = 0;
     BOOL isFormatted = NO;
 
     if (_logFormatter) {
-        message = [_logFormatter formatLogMessage:logMessage];
+        logMessage->_message = [_logFormatter formatLogMessage:logMessage];
         isFormatted = message != logMessage->_message;
+        message = logMessage->_message;
     }
 
     if (message) {
