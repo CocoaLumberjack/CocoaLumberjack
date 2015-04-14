@@ -954,7 +954,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Lumberjack/Lumberjack-Prefix.pch";
+				GCC_PREFIX_HEADER = "Lumberjack/CocoaLumberjack-Prefix.pch";
 				INFOPLIST_FILE = "Lumberjack/CocoaLumberjackSwift-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
@@ -980,7 +980,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Lumberjack/Lumberjack-Prefix.pch";
+				GCC_PREFIX_HEADER = "Lumberjack/CocoaLumberjack-Prefix.pch";
 				INFOPLIST_FILE = "Lumberjack/CocoaLumberjackSwift-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
