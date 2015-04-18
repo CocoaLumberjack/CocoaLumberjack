@@ -25,8 +25,9 @@ static NSString * const kDefaultMessage = @"Log message";
 @interface DDLogMessage (TestHelpers)
 + (DDLogMessage *)test_message;
 + (DDLogMessage *)test_messageWithMessage:(NSString *)message;
-+ (DDLogMessage *)test_messageWithFunction:(NSString *)function;
-+ (DDLogMessage *)test_messageWithFile:(NSString *)file;
++ (DDLogMessage *)test_messageWithFunction:(NSString *)function options:(DDLogMessageOptions)options;
++ (DDLogMessage *)test_messageWithFile:(NSString *)file options:(DDLogMessageOptions)options;
+
 @end
 
 @implementation DDLogMessage (TestHelpers)
@@ -56,7 +57,8 @@ static NSString * const kDefaultMessage = @"Log message";
                                        timestamp:nil];
 }
 
-+ (DDLogMessage *)test_messageWithFunction:(NSString *)function {
++ (DDLogMessage *)test_messageWithFunction:(NSString *)function
+                                   options:(DDLogMessageOptions)options {
     return [[DDLogMessage alloc] initWithMessage:kDefaultMessage
                                            level:DDLogLevelDebug
                                             flag:DDLogFlagError
@@ -69,7 +71,8 @@ static NSString * const kDefaultMessage = @"Log message";
                                        timestamp:nil];
 }
 
-+ (DDLogMessage *)test_messageWithFile:(NSString *)file {
++ (DDLogMessage *)test_messageWithFile:(NSString *)file
+                               options:(DDLogMessageOptions)options {
     return [[DDLogMessage alloc] initWithMessage:kDefaultMessage
                                            level:DDLogLevelDebug
                                             flag:DDLogFlagError
@@ -167,7 +170,7 @@ static NSString * const kDefaultMessage = @"Log message";
 }
 
 - (void)testInitSetsFileNameToFilenameIfItHasNotExtension {
-    self.message = [DDLogMessage test_messageWithFile:@"no-extenstion"];
+    self.message = [DDLogMessage test_messageWithFile:@"no-extenstion" options:(DDLogMessageOptions)0];
     XCTAssertEqualObjects(self.message.fileName, @"no-extenstion");
 }
 
@@ -180,7 +183,7 @@ static NSString * const kDefaultMessage = @"Log message";
 
 - (void)testInitAssignsFileParameterWithoutCopyFileOption {
     NSMutableString *file = [NSMutableString stringWithString:@"file"];
-    self.message = [DDLogMessage test_messageWithFile:file];
+    self.message = [DDLogMessage test_messageWithFile:file options:(DDLogMessageOptions)0];
     XCTAssertEqualObjects(self.message.file, @"file");
     [file appendString:@"file"];
     XCTAssertEqualObjects(self.message.file, @"filefile");
@@ -188,7 +191,7 @@ static NSString * const kDefaultMessage = @"Log message";
 
 - (void)testInitCopyFileParameterWithCopyFileOption {
     NSMutableString *file = [NSMutableString stringWithString:@"file"];
-    self.message = [DDLogMessage test_messageWithFile:file];
+    self.message = [DDLogMessage test_messageWithFile:file options:DDLogMessageCopyFile];
     XCTAssertEqualObjects(self.message.file, @"file");
     [file appendString:@"file"];
     XCTAssertEqualObjects(self.message.file, @"file");
@@ -196,7 +199,7 @@ static NSString * const kDefaultMessage = @"Log message";
 
 - (void)testInitAssignFunctionParameterWithoutCopyFunctionOption {
     NSMutableString *function = [NSMutableString stringWithString:@"function"];
-    self.message = [DDLogMessage test_messageWithFunction:function];
+    self.message = [DDLogMessage test_messageWithFunction:function options:(DDLogMessageOptions)0];
     XCTAssertEqualObjects(self.message.function, @"function");
     [function appendString:@"function"];
     XCTAssertEqualObjects(self.message.function, @"functionfunction");
@@ -204,7 +207,7 @@ static NSString * const kDefaultMessage = @"Log message";
 
 - (void)testInitCopyFunctionParameterWithCopyFunctionOption {
     NSMutableString *function = [NSMutableString stringWithString:@"function"];
-    self.message = [DDLogMessage test_messageWithFunction:function];
+    self.message = [DDLogMessage test_messageWithFunction:function options:DDLogMessageCopyFunction];
     XCTAssertEqualObjects(self.message.function, @"function");
     [function appendString:@"function"];
     XCTAssertEqualObjects(self.message.function, @"function");
