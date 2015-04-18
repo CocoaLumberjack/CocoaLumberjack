@@ -67,7 +67,7 @@ static NSString * const kDefaultMessage = @"Log message";
                                         function:function
                                             line:__LINE__
                                              tag:NULL
-                                         options:(DDLogMessageOptions)0
+                                         options:options
                                        timestamp:nil];
 }
 
@@ -81,7 +81,7 @@ static NSString * const kDefaultMessage = @"Log message";
                                         function:@(__func__)
                                             line:__LINE__
                                              tag:NULL
-                                         options:(DDLogMessageOptions)0
+                                         options:options
                                        timestamp:nil];
 }
 
