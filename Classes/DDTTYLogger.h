@@ -42,16 +42,16 @@
     #import <UIKit/UIColor.h>
     #define DDColor UIColor
     #define DDMakeColor(r, g, b) [UIColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f]
-#elif __has_include(<AppKit/NSColor.h>)
+#elif defined(DD_CLI) || !__has_include(<AppKit/NSColor.h>)
+    // OS X CLI
+    #import "CLI/CLIColor.h"
+    #define DDColor CLIColor
+    #define DDMakeColor(r, g, b) [CLIColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f]
+#else
     // OS X with AppKit
     #import <AppKit/NSColor.h>
     #define DDColor NSColor
     #define DDMakeColor(r, g, b) [NSColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f]
-#else
-    // OS X CLI
-    #import "CLIColor.h"
-    #define DDColor CLIColor
-    #define DDMakeColor(r, g, b) [CLIColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f]
 #endif
 
 @interface DDTTYLogger : DDAbstractLogger <DDLogger>
