@@ -97,23 +97,22 @@
  * Documentation/CustomLogLevels.md
  **/
 
-typedef NS_OPTIONS(NSUInteger, DDLogFlag) {
-    DDLogFlagError      = (1 << 0), // 0...00001
-    DDLogFlagWarning    = (1 << 1), // 0...00010
-    DDLogFlagInfo       = (1 << 2), // 0...00100
-    DDLogFlagDebug      = (1 << 3), // 0...01000
-    DDLogFlagVerbose    = (1 << 4)  // 0...10000
-};
+typedef NSUInteger DDLogFlag;
+typedef NSUInteger DDLogLevel;
 
-typedef NS_ENUM(NSUInteger, DDLogLevel) {
-    DDLogLevelOff       = 0,
-    DDLogLevelError     = (DDLogFlagError),                       // 0...00001
-    DDLogLevelWarning   = (DDLogLevelError   | DDLogFlagWarning), // 0...00011
-    DDLogLevelInfo      = (DDLogLevelWarning | DDLogFlagInfo),    // 0...00111
-    DDLogLevelDebug     = (DDLogLevelInfo    | DDLogFlagDebug),   // 0...01111
-    DDLogLevelVerbose   = (DDLogLevelDebug   | DDLogFlagVerbose), // 0...11111
-    DDLogLevelAll       = NSUIntegerMax                           // 1111....11111 (DDLogLevelVerbose plus any other flags)
-};
+#define DDLogFlagError      (1 << 0)
+#define DDLogFlagWarning    (1 << 1)
+#define DDLogFlagInfo       (1 << 2)
+#define DDLogFlagDebug      (1 << 3)
+#define DDLogFlagVerbose    (1 << 4)
+
+#define DDLogLevelOff       (0)
+#define DDLogLevelError     (DDLogFlagError)                        // 0...00001
+#define DDLogLevelWarning   (DDLogLevelError    | DDLogFlagWarning) // 0...00011
+#define DDLogLevelInfo      (DDLogLevelWarning  | DDLogFlagInfo)    // 0...00111
+#define DDLogLevelDebug     (DDLogLevelInfo     | DDLogFlagDebug)   // 0...01111
+#define DDLogLevelVerbose   (DDLogLevelDebug    | DDLogFlagVerbose) // 0...11111
+#define DDLogLevelAll       (NSUIntegerMax)
 
 /**
  * The THIS_FILE macro gives you an NSString of the file name.
