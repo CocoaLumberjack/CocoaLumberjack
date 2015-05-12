@@ -1,0 +1,6 @@
+module CocoaLumberjack {
+    header "CocoaLumberjack.h"
+    export *
+    exclude "DDLegacyMacros.h"
+    exclude "DDLog+LOGV.h"
+}
