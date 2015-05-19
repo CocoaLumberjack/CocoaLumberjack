@@ -933,7 +933,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
         if (USE_PTHREAD_THREADID_NP) {
             __uint64_t tid;
             pthread_threadid_np(NULL, &tid);
-            _threadID = [[NSString alloc] initWithFormat:@"%u", tid];
+            _threadID = [[NSString alloc] initWithFormat:@"%llu", tid];
         } else {
             _threadID = [[NSString alloc] initWithFormat:@"%x", pthread_mach_thread_np(pthread_self())];
         }
