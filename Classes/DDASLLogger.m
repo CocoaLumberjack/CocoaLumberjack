@@ -20,6 +20,10 @@
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
+const char* const kDDASLKeyDDLog = "DDLog";
+
+const char* const kDDASLDDLogValue = "1";
+
 static DDASLLogger *sharedInstance;
 
 @interface DDASLLogger () {
@@ -100,7 +104,8 @@ static DDASLLogger *sharedInstance;
         if (m != NULL) {
             if (asl_set(m, ASL_KEY_LEVEL, level_strings[aslLogLevel]) == 0 &&
                 asl_set(m, ASL_KEY_MSG, msg) == 0 &&
-                asl_set(m, ASL_KEY_READ_UID, readUIDString) == 0) {
+                asl_set(m, ASL_KEY_READ_UID, readUIDString) == 0 &&
+                asl_set(m, kDDASLKeyDDLog, kDDASLDDLogValue) == 0) {
                 asl_send(_client, m);
             }
             asl_free(m);
