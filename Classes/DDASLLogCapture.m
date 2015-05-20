@@ -73,7 +73,7 @@ static void (*dd_asl_release)(aslresponse obj);
     _cancel = NO;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-        [DDASLLogCapture captureAslLogs];
+        [self captureAslLogs];
     });
 }
 
@@ -104,18 +104,16 @@ static void (*dd_asl_release)(aslresponse obj);
 #endif
 }
 
-+ (void)aslMessageRecieved:(aslmsg)msg {
++ (void)aslMessageReceived:(aslmsg)msg {
     const char* messageCString = asl_get( msg, ASL_KEY_MSG );
-    const char* secondsCString = asl_get( msg, ASL_KEY_TIME );
-    const char* nanoCString = asl_get( msg, ASL_KEY_TIME_NSEC );
-    if ( messageCString == NULL || secondsCString == NULL || nanoCString == NULL )
+    if ( messageCString == NULL )
         return;
 
     int flag;
     BOOL async;
 
-    NSString *level = @(asl_get(msg, ASL_KEY_LEVEL));
-    switch ([level intValue]) {
+    const char* levelCString = asl_get(msg, ASL_KEY_LEVEL);
+    switch (levelCString? atoi(levelCString) : 0) {
         // By default all NSLog's with a ASL_LEVEL_WARNING level
         case ASL_LEVEL_EMERG    :
         case ASL_LEVEL_ALERT    :
@@ -134,11 +132,11 @@ static void (*dd_asl_release)(aslresponse obj);
 
     //  NSString * sender = [NSString stringWithCString:asl_get(msg, ASL_KEY_SENDER) encoding:NSUTF8StringEncoding];
     NSString *message = @(messageCString);
-    NSString *secondsStr = @(secondsCString);
-    NSString *nanoStr = @(nanoCString);
 
-    NSTimeInterval seconds = [secondsStr doubleValue];
-    NSTimeInterval nanoSeconds = [nanoStr doubleValue];
+    const char* secondsCString = asl_get( msg, ASL_KEY_TIME );
+    const char* nanoCString = asl_get( msg, ASL_KEY_TIME_NSEC );
+    NSTimeInterval seconds = secondsCString ? strtod(secondsCString, NULL) : [NSDate timeIntervalSinceReferenceDate] - NSTimeIntervalSince1970;
+    double nanoSeconds = nanoCString? strtod(nanoCString, NULL) : 0;
     NSTimeInterval totalSeconds = seconds + (nanoSeconds / 1e9);
 
     NSDate *timeStamp = [NSDate dateWithTimeIntervalSince1970:totalSeconds];
@@ -200,7 +198,7 @@ static void (*dd_asl_release)(aslresponse obj);
                     asl_set_query(query, ASL_KEY_TIME, stringValue, ASL_QUERY_OP_GREATER_EQUAL | ASL_QUERY_OP_NUMERIC);
                 }
 
-                [DDASLLogCapture configureAslQuery:query];
+                [self configureAslQuery:query];
 
                 // Iterate over new messages.
                 aslmsg msg;
@@ -208,19 +206,19 @@ static void (*dd_asl_release)(aslresponse obj);
                 
                 while ((msg = dd_asl_next(response)))
                 {
-                    [DDASLLogCapture aslMessageRecieved:msg];
+                    [self aslMessageReceived:msg];
 
                     // Keep track of which messages we've seen.
                     lastSeenID = atoll(asl_get(msg, ASL_KEY_MSG_ID));
                 }
                 dd_asl_release(response);
-                
+                asl_free(query);
+
                 if (_cancel) {
-                    notify_cancel(notifyToken);
+                    notify_cancel(token);
                     return;
                 }
 
-                free(query);
             }
         });
     }
