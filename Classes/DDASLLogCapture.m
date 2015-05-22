@@ -95,6 +95,9 @@ static void (*dd_asl_release)(aslresponse obj);
     const char param[] = "7";  // ASL_LEVEL_DEBUG, which is everything. We'll rely on regular DDlog log level to filter
     
     asl_set_query(query, ASL_KEY_LEVEL, param, ASL_QUERY_OP_LESS_EQUAL | ASL_QUERY_OP_NUMERIC);
+
+    // Don't retrieve logs from our own DDASLLogger
+    asl_set_query(query, kDDASLKeyDDLog, kDDASLDDLogValue, ASL_QUERY_OP_NOT_EQUAL);
     
 #if !TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
     int processId = [[NSProcessInfo processInfo] processIdentifier];
