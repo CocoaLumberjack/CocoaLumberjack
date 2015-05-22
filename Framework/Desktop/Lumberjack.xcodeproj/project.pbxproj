@@ -882,7 +882,7 @@
 				INFOPLIST_FILE = "Lumberjack/CocoaLumberjack-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = Lumberjack/CocoaLumberjack.modulemap;
+				MODULEMAP_FILE = "$(PROJECT_DIR)/Lumberjack/CocoaLumberjack.modulemap";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
@@ -908,7 +908,7 @@
 				INFOPLIST_FILE = "Lumberjack/CocoaLumberjack-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = Lumberjack/CocoaLumberjack.modulemap;
+				MODULEMAP_FILE = "$(PROJECT_DIR)/Lumberjack/CocoaLumberjack.modulemap";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
