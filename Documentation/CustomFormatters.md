@@ -77,11 +77,11 @@ MyCustomFormatter.m
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     NSString *logLevel;
     switch (logMessage->_flag) {
-        case DDLogFlagError : logLevel = @"E"; break;
-        case DDLogFlagWarn  : logLevel = @"W"; break;
-        case DDLogFlagInfo  : logLevel = @"I"; break;
-        case DDLogFlagDebug : logLevel = @"D"; break;
-        default             : logLevel = @"V"; break;
+        case DDLogFlagError    : logLevel = @"E"; break;
+        case DDLogFlagWarning  : logLevel = @"W"; break;
+        case DDLogFlagInfo     : logLevel = @"I"; break;
+        case DDLogFlagDebug    : logLevel = @"D"; break;
+        default                : logLevel = @"V"; break;
     }
     
     return [NSString stringWithFormat:@"%@ | %@\n", logLevel, logMessage->_message];
@@ -173,11 +173,11 @@ MyCustomFormatter.m
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     NSString *logLevel;
     switch (logMessage->_flag) {
-        case DDLogFlagError : logLevel = @"E"; break;
-        case DDLogFlagWarn  : logLevel = @"W"; break;
-        case DDLogFlagInfo  : logLevel = @"I"; break;
-        case DDLogFlagDebug : logLevel = @"D"; break;
-        default             : logLevel = @"V"; break;
+        case DDLogFlagError    : logLevel = @"E"; break;
+        case DDLogFlagWarning  : logLevel = @"W"; break;
+        case DDLogFlagInfo     : logLevel = @"I"; break;
+        case DDLogFlagDebug    : logLevel = @"D"; break;
+        default                : logLevel = @"V"; break;
     }
 
     NSString *dateAndTime = [threadUnsafeDateFormatter stringFromDate:(logMessage->_timestamp)];
@@ -272,11 +272,11 @@ MyCustomFormatter.m
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     NSString *logLevel;
     switch (logMessage->_flag) {
-        case DDLogFlagError : logLevel = @"E"; break;
-        case DDLogFlagWarn  : logLevel = @"W"; break;
-        case DDLogFlagInfo  : logLevel = @"I"; break;
-        case DDLogFlagDebug : logLevel = @"D"; break;
-        default             : logLevel = @"V"; break;
+        case DDLogFlagError    : logLevel = @"E"; break;
+        case DDLogFlagWarning  : logLevel = @"W"; break;
+        case DDLogFlagInfo     : logLevel = @"I"; break;
+        case DDLogFlagDebug    : logLevel = @"D"; break;
+        default                : logLevel = @"V"; break;
     }
 
     NSString *dateAndTime = [self stringFromDate:(logMessage.timestamp)];
