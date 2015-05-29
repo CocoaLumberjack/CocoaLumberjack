@@ -10,7 +10,7 @@ And remember that **formatters are applied individually to loggers**. So you can
 
 # Details
 
-It is incredibly simple to create your own custom formatter. The protocol for DDLogFormatter is defined in DDLog.h, and there is only a single required method:
+It is incredibly simple to create your own custom formatter. The protocol for `DDLogFormatter` is defined in `DDLog.h`, and there is only a single required method:
 ```objective-c
 @protocol DDLogFormatter <NSObject>
 @required
@@ -19,26 +19,32 @@ It is incredibly simple to create your own custom formatter. The protocol for DD
  * Formatters may optionally be added to any logger.
  * This allows for increased flexibility in the logging environment.
  * For example, log messages for log files may be formatted differently than log messages for the console.
- * 
- * The formatter may also optionally filter the log message by returning nil.
-**/
+ *
+ * For more information about formatters, see the "Custom Formatters" page:
+ * Documentation/CustomFormatters.md
+ *
+ * The formatter may also optionally filter the log message by returning nil,
+ * in which case the logger will not log the message.
+ **/
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage;
 
+@optional
 // ...
 @end
 ```
 
-It's pretty straight-forward. The single method takes, as a parameter, an instance of DDLogMessage which contains all the information related to the log message including:
+It's pretty straight-forward. The single method takes, as a parameter, an instance of `DDLogMessage` which contains all the information related to the log message including:
 
--   LogMsg - original log message
--   File - name of the file the log message came from
--   Function - method the log message came from
--   LineNumber - line number in file where the log message came from
--   Timestamp - when the log message was executed
--   LogLevel - log level of message (bitmask of flags, e.g. 0111)
--   LogFlag - log flag of message (individual flag that allowed log message to fire, e.g. 0010)
--   ThreadID - which thread issued the log message
--   QueueLabel - name of gcd queue (if applicable)
+-  `message` - original log message
+-  `file` - full path to the file the log message came from
+-  `filename` - name of the file the log message came from (without extension)
+-  `function` - method the log message came from
+-  `line` - line number in file where the log message came from
+-  `timestamp` - when the log message was executed
+-  `level` - log level of message (bitmask of flags, e.g. 0111)
+-  `flag` - log flag of message (individual flag that allowed log message to fire, e.g. 0010)
+-  `threadID` - which thread issued the log message
+-  `queueLabel` - name of gcd queue (if applicable)
 
 Let's write a simple formatter that automatically simply prepends the log level before every log message.  
 
@@ -68,19 +74,17 @@ MyCustomFormatter.m
 
 @implementation MyCustomFormatter
 
-- (NSString *)formatLogMessage:(DDLogMessage *)logMessage
-{
+- (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     NSString *logLevel;
-    switch (logMessage->logFlag)
-    {
-        case LOG_FLAG_ERROR : logLevel = @"E"; break;
-        case LOG_FLAG_WARN  : logLevel = @"W"; break;
-        case LOG_FLAG_INFO  : logLevel = @"I"; break;
-        case LOG_FLAG_DEBUG : logLevel = @"D"; break;
-        default             : logLevel = @"V"; break;
+    switch (logMessage->_flag) {
+        case DDLogFlagError    : logLevel = @"E"; break;
+        case DDLogFlagWarning  : logLevel = @"W"; break;
+        case DDLogFlagInfo     : logLevel = @"I"; break;
+        case DDLogFlagDebug    : logLevel = @"D"; break;
+        default                : logLevel = @"V"; break;
     }
     
-    return [NSString stringWithFormat:@"%@ | %@\n", logLevel, logMessage->logMsg];
+    return [NSString stringWithFormat:@"%@ | %@\n", logLevel, logMessage->_message];
 }
 
 @end
@@ -88,7 +92,7 @@ MyCustomFormatter.m
 
 # Thread-safety (simple)
 
-Let's update our example formatter to also include the timestamp. To do this we'll use NSDateFormatter. But... NSDateFormatter is NOT thread-safe. Does this pose any problems for us?
+Let's update our example formatter to also include the timestamp. To do this we'll use `NSDateFormatter`. But... `NSDateFormatter` is NOT thread-safe. Does this pose any problems for us?
 
 Log formatters are applied individually to loggers. If you instantiate a log formatter instance, **and apply it to a single logger**, then you don't have to worry about thread-safety. All log messages are sent to the logger (and thus to its log formatter) via the serial dispatch queue of the logger. Thus, in this scenario, the formatLogMessage method is guaranteed to run on only a single thread at a time.
 
@@ -102,9 +106,13 @@ It is very often the case that developers write custom formatters specifically f
  * Formatters may optionally be added to any logger.
  * This allows for increased flexibility in the logging environment.
  * For example, log messages for log files may be formatted differently than log messages for the console.
- * 
- * The formatter may also optionally filter the log message by returning nil.
-**/
+ *
+ * For more information about formatters, see the "Custom Formatters" page:
+ * Documentation/CustomFormatters.md
+ *
+ * The formatter may also optionally filter the log message by returning nil,
+ * in which case the logger will not log the message.
+ **/
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage;
 
 @optional
@@ -117,9 +125,10 @@ It is very often the case that developers write custom formatters specifically f
  * If a formatter is explicitly not thread-safe, it may wish to throw an exception if added to multiple loggers.
  * Or if a formatter has potentially thread-unsafe code (e.g. NSDateFormatter),
  * it could possibly use these hooks to switch to thread-safe versions of the code.
-**/
+ **/
 - (void)didAddToLogger:(id <DDLogger>)logger;
 - (void)willRemoveFromLogger:(id <DDLogger>)logger;
+
 @end
 ```
 
@@ -140,8 +149,7 @@ MyCustomFormatter.h
 #import <Foundation/Foundation.h>
 #import "DDLog.h"
 
-@interface MyCustomFormatter : NSObject <DDLogFormatter>
-{
+@interface MyCustomFormatter : NSObject <DDLogFormatter> {
     int loggerCount;
     NSDateFormatter *threadUnsafeDateFormatter;
 }
@@ -154,42 +162,36 @@ MyCustomFormatter.m
 
 @implementation MyCustomFormatter
 
-- (id)init
-{
-    if((self = [super init]))
-    {
+- (id)init {
+    if((self = [super init])) {
         threadUnsafeDateFormatter = [[NSDateFormatter alloc] init];
-        [threadUnsafeDateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
         [threadUnsafeDateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss:SSS"];
     }
     return self;
 }
 
-- (NSString *)formatLogMessage:(DDLogMessage *)logMessage
-{
+- (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     NSString *logLevel;
-    switch (logMessage->logFlag)
-    {
-        case LOG_FLAG_ERROR : logLevel = @"E"; break;
-        case LOG_FLAG_WARN  : logLevel = @"W"; break;
-        case LOG_FLAG_INFO  : logLevel = @"I"; break;
-        case LOG_FLAG_DEBUG : logLevel = @"D"; break;
-        default             : logLevel = @"V"; break;
+    switch (logMessage->_flag) {
+        case DDLogFlagError    : logLevel = @"E"; break;
+        case DDLogFlagWarning  : logLevel = @"W"; break;
+        case DDLogFlagInfo     : logLevel = @"I"; break;
+        case DDLogFlagDebug    : logLevel = @"D"; break;
+        default                : logLevel = @"V"; break;
     }
-    
-    NSString *dateAndTime = [threadUnsafeDateFormatter stringFromDate:(logMessage->timestamp)];
-    NSString *logMsg = logMessage->logMsg;
+
+    NSString *dateAndTime = [threadUnsafeDateFormatter stringFromDate:(logMessage->_timestamp)];
+    NSString *logMsg = logMessage->_message;
     
     return [NSString stringWithFormat:@"%@ %@ | %@\n", logLevel, dateAndTime, logMsg];
 }
 
-- (void)didAddToLogger:(id <DDLogger>)logger
-{
+- (void)didAddToLogger:(id <DDLogger>)logger {
     loggerCount++;
     NSAssert(loggerCount <= 1, @"This logger isn't thread-safe");
 }
-- (void)willRemoveFromLogger:(id <DDLogger>)logger
-{
+
+- (void)willRemoveFromLogger:(id <DDLogger>)logger {
     loggerCount--;
 }
 
@@ -206,10 +208,8 @@ However, it's typically not that difficult to support multi-threading. The most 
 NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
 NSDateFormatter *dateFormatter = [threadDictionary objectForKey:key];
 
-if (dateFormatter == nil)
-{
+if (dateFormatter == nil) {
     dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
     [dateFormatter setDateFormat:dateFormatString];
     
     [threadDictionary setObject:dateFormatter forKey:key];
@@ -223,8 +223,7 @@ MyCustomFormatter.h
 #import <Foundation/Foundation.h>
 #import "DDLog.h"
 
-@interface MyCustomFormatter : NSObject <DDLogFormatter>
-{
+@interface MyCustomFormatter : NSObject <DDLogFormatter> {
     int atomicLoggerCount;
     NSDateFormatter *threadUnsafeDateFormatter;
 }
@@ -238,25 +237,19 @@ MyCustomFormatter.m
 
 @implementation MyCustomFormatter
 
-- (NSString *)stringFromDate:(NSDate *)date
-{
+- (NSString *)stringFromDate:(NSDate *)date {
     int32_t loggerCount = OSAtomicAdd32(0, &atomicLoggerCount);
     
-    if (loggerCount <= 1)
-    {
+    if (loggerCount <= 1) {
         // Single-threaded mode.
         
-        if (threadUnsafeDateFormatter == nil)
-        {
+        if (threadUnsafeDateFormatter == nil) {
             threadUnsafeDateFormatter = [[NSDateFormatter alloc] init];
-            [threadUnsafeDateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
             [threadUnsafeDateFormatter setDateFormat:dateFormatString];
         }
         
         return [threadUnsafeDateFormatter stringFromDate:date];
-    }
-    else
-    {
+    } else {
         // Multi-threaded mode.
         // NSDateFormatter is NOT thread-safe.
         
@@ -265,10 +258,8 @@ MyCustomFormatter.m
         NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
         NSDateFormatter *dateFormatter = [threadDictionary objectForKey:key];
         
-        if (dateFormatter == nil)
-        {
+        if (dateFormatter == nil) {
             dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
             [dateFormatter setDateFormat:dateFormatString];
             
             [threadDictionary setObject:dateFormatter forKey:key];
@@ -278,30 +269,27 @@ MyCustomFormatter.m
     }
 }
 
-- (NSString *)formatLogMessage:(DDLogMessage *)logMessage
-{
+- (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     NSString *logLevel;
-    switch (logMessage->logFlag)
-    {
-        case LOG_FLAG_ERROR : logLevel = @"E"; break;
-        case LOG_FLAG_WARN  : logLevel = @"W"; break;
-        case LOG_FLAG_INFO  : logLevel = @"I"; break;
-        case LOG_FLAG_DEBUG : logLevel = @"D"; break;
-        default             : logLevel = @"V"; break;
+    switch (logMessage->_flag) {
+        case DDLogFlagError    : logLevel = @"E"; break;
+        case DDLogFlagWarning  : logLevel = @"W"; break;
+        case DDLogFlagInfo     : logLevel = @"I"; break;
+        case DDLogFlagDebug    : logLevel = @"D"; break;
+        default                : logLevel = @"V"; break;
     }
-    
-    NSString *dateAndTime = [self stringFromDate:(logMessage->timestamp)];
-    NSString *logMsg = logMessage->logMsg;
+
+    NSString *dateAndTime = [self stringFromDate:(logMessage.timestamp)];
+    NSString *logMsg = logMessage->_message;
     
     return [NSString stringWithFormat:@"%@ %@ | %@\n", logLevel, dateAndTime, logMsg];
 }
 
-- (void)didAddToLogger:(id <DDLogger>)logger
-{
+- (void)didAddToLogger:(id <DDLogger>)logger {
     OSAtomicIncrement32(&atomicLoggerCount);
 }
-- (void)willRemoveFromLogger:(id <DDLogger>)logger
-{
+
+- (void)willRemoveFromLogger:(id <DDLogger>)logger {
     OSAtomicDecrement32(&atomicLoggerCount);
 }
 

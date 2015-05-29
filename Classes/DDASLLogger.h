@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2014, Deusty, LLC
+// Copyright (c) 2010-2015, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -21,6 +21,12 @@
 #endif
 
 #import "DDLog.h"
+
+// Custom key set on messages sent to ASL
+extern const char* const kDDASLKeyDDLog;
+
+// Value set for kDDASLKeyDDLog
+extern const char* const kDDASLDDLogValue;
 
 /**
  * This class provides a logger for the Apple System Log facility.

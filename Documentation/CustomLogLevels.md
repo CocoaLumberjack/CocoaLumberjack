@@ -4,21 +4,21 @@ How to add or customise log levels
 
 By default, Lumberjack comes with 5 pre-defined log levels:
 
--   Error
--   Warn
--   Info
--   Debug
--   Verbose
+- Error
+- Warn
+- Info
+- Debug
+- Verbose
 
 The small number of levels helps those who are new to logging frameworks. (When there are 16 different log levels, it can be become difficult to choose...)
 
 However, this might not be the proper choice for your project. Or perhaps you're familiar with another logging framework, and you'd like to use the same notations.
 
-You're in luck because **you can customise the log levels however you want**! In fact Lumberjack has structured it's macros to make it easy to customise.
+You're in luck because **you can customise the log levels however you want**! In fact Lumberjack has structured its macros to make it easy to customise.
 
 ### Details
 
-The log levels are all defined in DDLog.h. All you have to do is create your own header (e.g. MYLog.h). Your project files will then import MYLog.h instead of DDLog.h.
+The log levels are all defined in `DDLog.h`. All you have to do is create your own header (e.g. `MYLog.h`). Your project files will then import `MYLog.h` instead of `DDLog.h`.
 
 Within MYLog.h you simply undefine the pre-defined stuff, and then set everything up however you want.
 
@@ -26,7 +26,7 @@ There is a sample Xcode project that comes with Lumberjack that does exactly thi
 
 > **Warning**  
 Some internal methods, such as `addLogger:`, ignore custom log levels/flags.  
-To avoid unexpected behaviors use more specific methods such as `addLogger:withLogLevel:`.
+To avoid unexpected behaviors use more specific methods such as `addLogger:withLevel:`.
 
 MYLog.h:
 ```objective-c

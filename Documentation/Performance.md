@@ -61,19 +61,19 @@ There are 4 main tests. The base case for each test is a standard NSLog statemen
 -   logging to a file only
 -   logging to the console & file at the same time
 
-Test \# 1:
+#### Test \# 1:
 
 > Asynchronous logging test. Execute 1,000 log statements. All lumberjack log statements are queued onto a background logging thread.
 
-Test \#2:
+#### Test \#2:
 
 > Synchronous logging test. Execute 1,000 log statements. All lumberjack log statements are executed synchronously. They may still be executed on a background logging thread, but the original log statement does not return until the logging has completed.
 
-Test \#3:
+#### Test \#3:
 
 > Real life simulation with an even spread of log statements across various levels. Execute 1,000 log statements. 25% will be above the log level and will be filtered out. 50% will be executed asynchronously. 25% will be executed synchronously.
 
-Test \#4:
+#### Test \#4:
 
 > Real life simulation with an abundance of debug log statements. Execute 1,000 log statements. 90% will be filtered out. 10% will be error messages, executed synchronously.
 

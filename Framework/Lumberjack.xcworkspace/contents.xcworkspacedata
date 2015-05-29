@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:../Classes">
+   </FileRef>
+   <FileRef
+      location = "group:../Documentation">
+   </FileRef>
+   <FileRef
+      location = "group:../CocoaLumberjack.podspec">
+   </FileRef>
+   <FileRef
+      location = "group:../LICENSE.txt">
+   </FileRef>
+   <FileRef
+      location = "group:../LumberjackLogo.png">
+   </FileRef>
+   <FileRef
+      location = "group:../README.md">
+   </FileRef>
+   <FileRef
+      location = "group:../uncrustify.cfg">
+   </FileRef>
+   <FileRef
+      location = "group:Desktop/Lumberjack.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Mobile/Lumberjack.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../Tests/CocoaLumberjack Tests.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../Tests/Pods/Pods.xcodeproj">
+   </FileRef>
+</Workspace>
