@@ -20,6 +20,10 @@ extension DDLogFlag {
     public static func fromLogLevel(logLevel: DDLogLevel) -> DDLogFlag {
         return DDLogFlag(logLevel.rawValue)
     }
+	
+	public init(_ logLevel: DDLogLevel) {
+		self = DDLogFlag(logLevel.rawValue)
+	}
     
     ///returns the log level, or the lowest equivalant.
     public func toLogLevel() -> DDLogLevel {
