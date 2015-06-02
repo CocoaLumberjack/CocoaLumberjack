@@ -883,6 +883,31 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
 
 #endif /* if TARGET_OS_IPHONE */
 
+// Should we use pthread_threadid_np ?
+// With iOS 8+/OSX 10.10+ NSLog uses pthread_threadid_np instead of pthread_mach_thread_np
+
+#if TARGET_OS_IPHONE
+
+// Compiling for iOS
+
+  #ifndef kCFCoreFoundationVersionNumber_iOS_8_0
+    #define kCFCoreFoundationVersionNumber_iOS_8_0 1140.10
+  #endif
+
+    #define USE_PTHREAD_THREADID_NP                (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0)
+
+#else
+
+// Compiling for Mac OS X
+
+  #ifndef kCFCoreFoundationVersionNumber10_10
+    #define kCFCoreFoundationVersionNumber10_10    1151.16
+  #endif
+
+    #define USE_PTHREAD_THREADID_NP                (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber10_10)
+
+#endif /* if TARGET_OS_IPHONE */
+
 - (instancetype)initWithMessage:(NSString *)message
                           level:(DDLogLevel)level
                            flag:(DDLogFlag)flag
@@ -904,8 +929,14 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
         _tag          = tag;
         _options      = options;
         _timestamp    = timestamp ?: [NSDate new];
-        
-        _threadID     = [[NSString alloc] initWithFormat:@"%x", pthread_mach_thread_np(pthread_self())];
+
+        if (USE_PTHREAD_THREADID_NP) {
+            __uint64_t tid;
+            pthread_threadid_np(NULL, &tid);
+            _threadID = [[NSString alloc] initWithFormat:@"%llu", tid];
+        } else {
+            _threadID = [[NSString alloc] initWithFormat:@"%x", pthread_mach_thread_np(pthread_self())];
+        }
         _threadName   = NSThread.currentThread.name;
 
         // Get the file name without extension
