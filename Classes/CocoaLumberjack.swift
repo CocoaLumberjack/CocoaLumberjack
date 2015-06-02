@@ -78,7 +78,7 @@ public func DDLogError(@autoclosure(escaping) logText: () -> String, level: DDLo
     SwiftLogMacro(async, level, flag: .Error, context: context, file: file, function: function, line: line, tag: tag, string: logText)
 }
 
-/// Analogous to the C preprocessor macro THIS_FILE
+/// Analogous to the C preprocessor macro `THIS_FILE`.
 public func CurrentFileName(fileName: StaticString = __FILE__) -> String {
     // Using string interpolation to prevent integer overflow warning when using StaticString.stringValue
     return "\(fileName)".lastPathComponent.stringByDeletingPathExtension
