@@ -456,7 +456,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				DSTROOT = /tmp/Lumberjack.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Lumberjack/CocoaLumberjack-Prefix.pch";
+				GCC_PREFIX_HEADER = "../Lumberjack/CocoaLumberjack-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRIVATE_HEADERS_FOLDER_PATH = private/CocoaLumberjack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -472,7 +472,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				DSTROOT = /tmp/Lumberjack.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Lumberjack/CocoaLumberjack-Prefix.pch";
+				GCC_PREFIX_HEADER = "../Lumberjack/CocoaLumberjack-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRIVATE_HEADERS_FOLDER_PATH = private/CocoaLumberjack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
