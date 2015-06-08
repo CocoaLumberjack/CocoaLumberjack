@@ -453,28 +453,32 @@
 		2A37F99B18E37270009FAAA7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				DSTROOT = /tmp/Lumberjack.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Lumberjack/Lumberjack-Prefix.pch";
+				GCC_PREFIX_HEADER = "../Lumberjack/CocoaLumberjack-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRIVATE_HEADERS_FOLDER_PATH = private/CocoaLumberjack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = include/CocoaLumberjack;
 				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = CocoaLumberjack/Framework/Mobile/Lumberjack.xcodeproj;
 			};
 			name = Debug;
 		};
 		2A37F99C18E37270009FAAA7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				DSTROOT = /tmp/Lumberjack.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Lumberjack/Lumberjack-Prefix.pch";
+				GCC_PREFIX_HEADER = "../Lumberjack/CocoaLumberjack-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRIVATE_HEADERS_FOLDER_PATH = private/CocoaLumberjack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = include/CocoaLumberjack;
 				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = CocoaLumberjack/Framework/Mobile/Lumberjack.xcodeproj;
 			};
 			name = Release;
 		};
