@@ -19,9 +19,8 @@
 #ifndef DD_LEGACY_MACROS
     #define DD_LEGACY_MACROS 1
 #endif
-#if DD_LEGACY_MACROS
-    #import "DDLegacyMacros.h"
-#endif
+// DD_LEGACY_MACROS is checked in the file itself
+#import "DDLegacyMacros.h"
 
 #if OS_OBJECT_USE_OBJC
     #define DISPATCH_QUEUE_REFERENCE_TYPE strong
