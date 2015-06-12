@@ -23,6 +23,7 @@ Pod::Spec.new do |s|
   
   s.public_header_files = 'Classes/*.h'
   
+  s.module_map = 'Classes/CocoaLumberjack.modulemap'
   s.default_subspecs = 'Default', 'Extensions'
 
   s.subspec 'Default' do |ss|

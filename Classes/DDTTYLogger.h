@@ -40,18 +40,18 @@
 #if TARGET_OS_IPHONE
     // iOS
     #import <UIKit/UIColor.h>
-    #define DDColor UIColor
-    #define DDMakeColor(r, g, b) [UIColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f]
+    typedef UIColor DDColor;
+    static  DDColor* DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {return [DDColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f];}
 #elif __has_include(<AppKit/NSColor.h>)
     // OS X with AppKit
     #import <AppKit/NSColor.h>
-    #define DDColor NSColor
-    #define DDMakeColor(r, g, b) [NSColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f]
+    typedef NSColor DDColor;
+    static DDColor* DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {return [DDColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f];}
 #else
     // OS X CLI
     #import "CLIColor.h"
-    #define DDColor CLIColor
-    #define DDMakeColor(r, g, b) [CLIColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f]
+    typedef CLIColor DDColor;
+    static  DDColor* DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {return [DDColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f];}
 #endif
 
 @interface DDTTYLogger : DDAbstractLogger <DDLogger>

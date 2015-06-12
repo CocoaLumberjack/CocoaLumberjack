@@ -15,10 +15,10 @@ script:
 
     - pod lib lint
 
-    - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'FmwkTest'
-    - xctool -project Framework/Mobile/Lumberjack.xcodeproj -scheme 'LibTest' -configuration Release -sdk iphonesimulator -arch i386 build
-    - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'CocoaLumberjack'
-    - xctool -project Framework/Desktop/Lumberjack.xcodeproj -scheme 'CocoaLumberjack' -configuration Release -sdk iphonesimulator -arch i386 build
+    - xctool -project Lumberjack.xcodeproj -scheme 'CocoaLumberjack'
+    - xctool -project Lumberjack.xcodeproj -scheme 'CocoaLumberjack-iOS' -configuration Release -sdk iphonesimulator -arch i386 build
+    - xctool -project Lumberjack.xcodeproj -scheme 'FmwkTest'
+    - xctool -project Lumberjack.xcodeproj -scheme 'iOSLibStaticTest' -configuration Release -sdk iphonesimulator -arch i386 build
 
     - pod install --project-directory=Tests
     - xctool -workspace Framework/Lumberjack.xcworkspace -scheme 'iOS Tests' -sdk iphonesimulator -arch i386 test
