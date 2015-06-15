@@ -923,8 +923,13 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
         _level        = level;
         _flag         = flag;
         _context      = context;
-        _file         = file;
-        _function     = function;
+
+        BOOL copyFile = (options & DDLogMessageCopyFile) == DDLogMessageCopyFile;
+        _file = copyFile ? [file copy] : file;
+
+        BOOL copyFunction = (options & DDLogMessageCopyFunction) == DDLogMessageCopyFunction;
+        _function = copyFunction ? [function copy] : function;
+
         _line         = line;
         _tag          = tag;
         _options      = options;
