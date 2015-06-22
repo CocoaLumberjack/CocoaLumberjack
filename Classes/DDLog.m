@@ -1103,8 +1103,8 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
     __block id <DDLogFormatter> result;
 
     dispatch_sync(globalLoggingQueue, ^{
-        dispatch_sync(self->_loggerQueue, ^{
-            result = self->_logFormatter;
+        dispatch_sync(_loggerQueue, ^{
+            result = _logFormatter;
         });
     });
 
@@ -1119,15 +1119,15 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
 
     dispatch_block_t block = ^{
         @autoreleasepool {
-            if (self->_logFormatter != logFormatter) {
-                if ([self->_logFormatter respondsToSelector:@selector(willRemoveFromLogger:)]) {
-                    [self->_logFormatter willRemoveFromLogger:self];
+            if (_logFormatter != logFormatter) {
+                if ([_logFormatter respondsToSelector:@selector(willRemoveFromLogger:)]) {
+                    [_logFormatter willRemoveFromLogger:self];
                 }
 
-                self->_logFormatter = logFormatter;
+                _logFormatter = logFormatter;
 
-                if ([self->_logFormatter respondsToSelector:@selector(didAddToLogger:)]) {
-                    [self->_logFormatter didAddToLogger:self];
+                if ([_logFormatter respondsToSelector:@selector(didAddToLogger:)]) {
+                    [_logFormatter didAddToLogger:self];
                 }
             }
         }
@@ -1136,7 +1136,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
     dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
 
     dispatch_async(globalLoggingQueue, ^{
-        dispatch_async(self->_loggerQueue, block);
+        dispatch_async(_loggerQueue, block);
     });
 }
 

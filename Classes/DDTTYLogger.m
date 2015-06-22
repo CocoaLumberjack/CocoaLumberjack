@@ -908,7 +908,7 @@ static DDTTYLogger *sharedInstance;
 
     dispatch_sync(globalLoggingQueue, ^{
         dispatch_sync(self.loggerQueue, ^{
-            result = self->_colorsEnabled;
+            result = _colorsEnabled;
         });
     });
 
@@ -918,9 +918,9 @@ static DDTTYLogger *sharedInstance;
 - (void)setColorsEnabled:(BOOL)newColorsEnabled {
     dispatch_block_t block = ^{
         @autoreleasepool {
-            self->_colorsEnabled = newColorsEnabled;
+            _colorsEnabled = newColorsEnabled;
 
-            if ([self->_colorProfilesArray count] == 0) {
+            if ([_colorProfilesArray count] == 0) {
                 [self loadDefaultColorProfiles];
             }
         }
@@ -963,7 +963,7 @@ static DDTTYLogger *sharedInstance;
 
             NSUInteger i = 0;
 
-            for (DDTTYLoggerColorProfile *colorProfile in self->_colorProfilesArray) {
+            for (DDTTYLoggerColorProfile *colorProfile in _colorProfilesArray) {
                 if ((colorProfile->mask == mask) && (colorProfile->context == ctxt)) {
                     break;
                 }
@@ -971,10 +971,10 @@ static DDTTYLogger *sharedInstance;
                 i++;
             }
 
-            if (i < [self->_colorProfilesArray count]) {
-                self->_colorProfilesArray[i] = newColorProfile;
+            if (i < [_colorProfilesArray count]) {
+                _colorProfilesArray[i] = newColorProfile;
             } else {
-                [self->_colorProfilesArray addObject:newColorProfile];
+                [_colorProfilesArray addObject:newColorProfile];
             }
         }
     };
@@ -1007,7 +1007,7 @@ static DDTTYLogger *sharedInstance;
 
             NSLogInfo(@"DDTTYLogger: newColorProfile: %@", newColorProfile);
 
-            self->_colorProfilesDict[tag] = newColorProfile;
+            _colorProfilesDict[tag] = newColorProfile;
         }
     };
 
@@ -1035,7 +1035,7 @@ static DDTTYLogger *sharedInstance;
         @autoreleasepool {
             NSUInteger i = 0;
 
-            for (DDTTYLoggerColorProfile *colorProfile in self->_colorProfilesArray) {
+            for (DDTTYLoggerColorProfile *colorProfile in _colorProfilesArray) {
                 if ((colorProfile->mask == mask) && (colorProfile->context == context)) {
                     break;
                 }
@@ -1043,8 +1043,8 @@ static DDTTYLogger *sharedInstance;
                 i++;
             }
 
-            if (i < [self->_colorProfilesArray count]) {
-                [self->_colorProfilesArray removeObjectAtIndex:i];
+            if (i < [_colorProfilesArray count]) {
+                [_colorProfilesArray removeObjectAtIndex:i];
             }
         }
     };
@@ -1069,7 +1069,7 @@ static DDTTYLogger *sharedInstance;
 
     dispatch_block_t block = ^{
         @autoreleasepool {
-            [self->_colorProfilesDict removeObjectForKey:tag];
+            [_colorProfilesDict removeObjectForKey:tag];
         }
     };
 
@@ -1091,7 +1091,7 @@ static DDTTYLogger *sharedInstance;
 - (void)clearColorsForAllFlags {
     dispatch_block_t block = ^{
         @autoreleasepool {
-            [self->_colorProfilesArray removeAllObjects];
+            [_colorProfilesArray removeAllObjects];
         }
     };
 
@@ -1113,7 +1113,7 @@ static DDTTYLogger *sharedInstance;
 - (void)clearColorsForAllTags {
     dispatch_block_t block = ^{
         @autoreleasepool {
-            [self->_colorProfilesDict removeAllObjects];
+            [_colorProfilesDict removeAllObjects];
         }
     };
 
@@ -1135,8 +1135,8 @@ static DDTTYLogger *sharedInstance;
 - (void)clearAllColors {
     dispatch_block_t block = ^{
         @autoreleasepool {
-            [self->_colorProfilesArray removeAllObjects];
-            [self->_colorProfilesDict removeAllObjects];
+            [_colorProfilesArray removeAllObjects];
+            [_colorProfilesDict removeAllObjects];
         }
     };
 
