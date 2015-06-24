@@ -29,7 +29,6 @@ pod 'CocoaLumberjack'
 #### Migrating to 2.x
 
 * Replace `DDLog.h` imports by `#import <CocoaLumberjack/CocoaLumberjack.h>`.
-* Using `ddLogLevel` to start using the library is now optional. If you define it add `#define LOG_LEVEL_DEF ddLogLevel` before `#import <CocoaLumberjack/CocoaLumberjack.h>` and make change its type to `DDLogLevel`
 
 Advanced users, third party libraries:
 
