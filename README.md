@@ -4,8 +4,9 @@
 
 CocoaLumberjack
 ===============
-[![Build Status](http://img.shields.io/travis/CocoaLumberjack/CocoaLumberjack/master.svg?style=flat)](https://travis-ci.org/CocoaLumberjack/CocoaLumberjack)
+[![Build Status](https://travis-ci.org/CocoaLumberjack/CocoaLumberjack.svg)](https://travis-ci.org/CocoaLumberjack/CocoaLumberjack)
 [![Pod Version](http://img.shields.io/cocoapods/v/CocoaLumberjack.svg?style=flat)](http://cocoadocs.org/docsets/CocoaLumberjack/)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Pod Platform](http://img.shields.io/cocoapods/p/CocoaLumberjack.svg?style=flat)](http://cocoadocs.org/docsets/CocoaLumberjack/)
 [![Pod License](http://img.shields.io/cocoapods/l/CocoaLumberjack.svg?style=flat)](http://opensource.org/licenses/BSD-3-Clause)
 [![Reference Status](https://www.versioneye.com/objective-c/cocoalumberjack/reference_badge.svg?style=flat)](https://www.versioneye.com/objective-c/cocoalumberjack/references)
