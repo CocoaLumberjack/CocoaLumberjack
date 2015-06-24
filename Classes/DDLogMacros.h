@@ -24,11 +24,7 @@
  * The constant/variable/method responsible for controlling the current log level.
  **/
 #ifndef LOG_LEVEL_DEF
-    #ifdef ddLogLevel
-        #define LOG_LEVEL_DEF ddLogLevel
-    #else
-        #define LOG_LEVEL_DEF DDLogLevelVerbose
-    #endif
+    #define LOG_LEVEL_DEF ddLogLevel
 #endif
 
 /**
