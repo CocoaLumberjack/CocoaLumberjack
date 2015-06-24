@@ -13,6 +13,8 @@
 		E36E283FA66CB42E5B441755 /* libPods-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 359D6F3033BA9595543EAB1C /* libPods-osx.a */; };
 		E982AAF21AE2C25800088365 /* DDLogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E982AAF11AE2C25800088365 /* DDLogTests.m */; };
 		E982AAF31AE2C25800088365 /* DDLogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E982AAF11AE2C25800088365 /* DDLogTests.m */; };
+		E9D3C9E31AE28AF400E795C5 /* DDLogMessageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E9D3C9E21AE28AF400E795C5 /* DDLogMessageTests.m */; };
+		E9D3C9E41AE28AF400E795C5 /* DDLogMessageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E9D3C9E21AE28AF400E795C5 /* DDLogMessageTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,7 @@
 		ABA969AD38E11503DDCF9624 /* Pods-osx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-osx.release.xcconfig"; path = "Pods/Target Support Files/Pods-osx/Pods-osx.release.xcconfig"; sourceTree = "<group>"; };
 		DA1B17371AB067EF004705E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E982AAF11AE2C25800088365 /* DDLogTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLogTests.m; sourceTree = "<group>"; };
+		E9D3C9E21AE28AF400E795C5 /* DDLogMessageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLogMessageTests.m; sourceTree = "<group>"; };
 		F04FA52AE01B89E56599B55E /* Pods-osx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-osx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-osx/Pods-osx.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -74,6 +77,7 @@
 			children = (
 				432B534C1AAE43A200843E69 /* DDBasicLoggingTests.m */,
 				E982AAF11AE2C25800088365 /* DDLogTests.m */,
+				E9D3C9E21AE28AF400E795C5 /* DDLogMessageTests.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -260,6 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E982AAF21AE2C25800088365 /* DDLogTests.m in Sources */,
+				E9D3C9E31AE28AF400E795C5 /* DDLogMessageTests.m in Sources */,
 				432B534D1AAE43A200843E69 /* DDBasicLoggingTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E982AAF31AE2C25800088365 /* DDLogTests.m in Sources */,
+				E9D3C9E41AE28AF400E795C5 /* DDLogMessageTests.m in Sources */,
 				432B534E1AAE43A200843E69 /* DDBasicLoggingTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
