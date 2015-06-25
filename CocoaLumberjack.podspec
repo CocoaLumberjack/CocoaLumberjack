@@ -17,13 +17,13 @@ Pod::Spec.new do |s|
 
   s.requires_arc   = true
 
-  s.preserve_paths = 'README.md', 'Classes/CocoaLumberjack.{swift,modulemap}'
+  s.preserve_paths = 'README.md', 'Classes/CocoaLumberjack.swift', 'Framework/Lumberjack/CocoaLumberjack.modulemap'
   s.ios.deployment_target = '5.0'
   s.osx.deployment_target = '10.7'
   
   s.public_header_files = 'Classes/*.h'
   
-  s.module_map = 'Classes/CocoaLumberjack.modulemap'
+  s.module_map = 'Framework/Lumberjack/CocoaLumberjack.modulemap'
   s.default_subspecs = 'Default', 'Extensions'
 
   s.subspec 'Default' do |ss|
@@ -44,6 +44,12 @@ Pod::Spec.new do |s|
       ss.source_files = 'Classes/CLI/*.{h,m}'
       ss.dependency 'CocoaLumberjack/Default'
   end
+
+  s.subspec 'Swift' do |ss|
+      ss.ios.deployment_target = '8.0'
+      ss.osx.deployment_target = '10.10'
+      ss.source_files = 'Classes/CocoaLumberjack.swift'
+      ss.dependency 'CocoaLumberjack/Extensions'
+  end
   
 end
-
