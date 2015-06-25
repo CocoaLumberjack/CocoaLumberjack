@@ -429,15 +429,15 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
     #define NS_DESIGNATED_INITIALIZER
 #endif
 
-/**
- * The DDLogMessage class encapsulates information about the log message.
- * If you write custom loggers or formatters, you will be dealing with objects of this class.
- **/
-
 typedef NS_OPTIONS(NSInteger, DDLogMessageOptions) {
     DDLogMessageCopyFile     = 1 << 0,
     DDLogMessageCopyFunction = 1 << 1
 };
+
+/**
+ * The DDLogMessage class encapsulates information about the log message.
+ * If you write custom loggers or formatters, you will be dealing with objects of this class.
+ **/
 
 @interface DDLogMessage : NSObject <NSCopying>
 {

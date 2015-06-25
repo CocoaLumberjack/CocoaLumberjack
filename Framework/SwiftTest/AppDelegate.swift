@@ -19,6 +19,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	func applicationDidFinishLaunching(aNotification: NSNotification) {
         DDLog.addLogger(DDTTYLogger.sharedInstance())
 		
+        defaultDebugLevel = .Warning
+
         DDLogVerbose("Verbose");
         DDLogInfo("Info");
         DDLogWarn("Warn");
@@ -30,6 +32,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         DDLogInfo("Info");
         DDLogWarn("Warn");
         DDLogError("Error");
+        
+        defaultDebugLevel = .Off
         
         DDLogVerbose("Verbose", level: ourLogLevel);
         DDLogInfo("Info", level: ourLogLevel);
