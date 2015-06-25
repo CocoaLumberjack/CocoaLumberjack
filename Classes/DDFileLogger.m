@@ -1080,9 +1080,9 @@ static int exception_count = 0;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #if TARGET_IPHONE_SIMULATOR
-    NSString * const kDDXAttrArchivedName = @"archived";
+    static NSString * const kDDXAttrArchivedName = @"archived";
 #else
-    NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
+    static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
 #endif
 
 @interface DDLogFileInfo () {

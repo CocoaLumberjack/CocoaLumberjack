@@ -847,6 +847,7 @@ static DDTTYLogger *sharedInstance;
         BOOL processedAppName = [_appName getCString:_app maxLength:(_appLen + 1) encoding:NSUTF8StringEncoding];
 
         if (NO == processedAppName) {
+            free(_app);
             return nil;
         }
 
@@ -858,12 +859,15 @@ static DDTTYLogger *sharedInstance;
         _pid = (char *)malloc(_pidLen + 1);
 
         if (_pid == NULL) {
+            free(_app);
             return nil;
         }
 
         BOOL processedID = [_processID getCString:_pid maxLength:(_pidLen + 1) encoding:NSUTF8StringEncoding];
 
         if (NO == processedID) {
+            free(_app);
+            free(_pid);
             return nil;
         }
 
