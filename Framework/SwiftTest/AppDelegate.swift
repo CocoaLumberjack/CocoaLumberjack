@@ -16,9 +16,11 @@ let ourLogLevel = DDLogLevel.Verbose
 class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet weak var window: NSWindow!
     
-	func applicationDidFinishLaunching(aNotification: NSNotification?) {
+	func applicationDidFinishLaunching(aNotification: NSNotification) {
         DDLog.addLogger(DDTTYLogger.sharedInstance())
 		
+        defaultDebugLevel = .Warning
+
         DDLogVerbose("Verbose");
         DDLogInfo("Info");
         DDLogWarn("Warn");
@@ -31,15 +33,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         DDLogWarn("Warn");
         DDLogError("Error");
         
+        defaultDebugLevel = .Off
+        
         DDLogVerbose("Verbose", level: ourLogLevel);
         DDLogInfo("Info", level: ourLogLevel);
         DDLogWarn("Warn", level: ourLogLevel);
         DDLogError("Error", level: ourLogLevel);
         
-        DDLogError("Error %i", level: ourLogLevel, args: 5);
+        DDLogError("Error \(5)", level: ourLogLevel);
     }
 
-	func applicationWillTerminate(aNotification: NSNotification?) {
+	func applicationWillTerminate(aNotification: NSNotification) {
 		// Insert code here to tear down your application
 	}
 }
