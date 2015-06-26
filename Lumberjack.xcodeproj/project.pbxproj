@@ -7,22 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		18F3BEFA1A81D8B700692297 /* DDContextFilterLogFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20CB192A0E0000AB7171 /* DDContextFilterLogFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BEFB1A81D8B700692297 /* DDAssertMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BA51994749300C180CF /* DDAssertMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BEFC1A81D8B700692297 /* DDASLLogCapture.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20BF192A0E0000AB7171 /* DDASLLogCapture.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BEFD1A81D8B700692297 /* DDDispatchQueueLogFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20CD192A0E0000AB7171 /* DDDispatchQueueLogFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BEFE1A81D8B700692297 /* DDLog+LOGV.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20C7192A0E0000AB7171 /* DDLog+LOGV.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BEFF1A81D8B700692297 /* DDAbstractDatabaseLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20BD192A0E0000AB7171 /* DDAbstractDatabaseLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BF001A81D8B700692297 /* DDLogMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BA61994749300C180CF /* DDLogMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BF011A81D8B700692297 /* DDTTYLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20C8192A0E0000AB7171 /* DDTTYLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BF021A81D8B700692297 /* DDLog.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20C5192A0E0000AB7171 /* DDLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BF031A81D8B700692297 /* DDASLLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20C1192A0E0000AB7171 /* DDASLLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BF041A81D8B700692297 /* DDMultiFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20CF192A0E0000AB7171 /* DDMultiFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BF061A81D8B700692297 /* DDFileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20C3192A0E0000AB7171 /* DDFileLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18F3BF081A81D8B700692297 /* CocoaLumberjack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BCB5C619D4BB6E0096E784 /* CocoaLumberjack.swift */; };
 		18F3BF0A1A81D8B700692297 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCB3185114EB418E001CFBEE /* CocoaLumberjack.framework */; };
 		18F3BF161A81D9A400692297 /* CocoaLumberjack.h in Headers */ = {isa = PBXBuildFile; fileRef = 18F3BF151A81D9A400692297 /* CocoaLumberjack.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BF181A81D9A400692297 /* CocoaLumberjack.h in Headers */ = {isa = PBXBuildFile; fileRef = 18F3BF151A81D9A400692297 /* CocoaLumberjack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18F3BF641A81DD2E00692297 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F3BF631A81DD2E00692297 /* AppDelegate.swift */; };
 		18F3BF661A81DD2E00692297 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F3BF651A81DD2E00692297 /* ViewController.swift */; };
 		18F3BF6B1A81DD2E00692297 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18F3BF6A1A81DD2E00692297 /* Images.xcassets */; };
@@ -32,7 +19,7 @@
 		18F3BF8C1A81DF5600692297 /* DDASLLogCapture.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20BF192A0E0000AB7171 /* DDASLLogCapture.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18F3BF8D1A81DF5600692297 /* DDDispatchQueueLogFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20CD192A0E0000AB7171 /* DDDispatchQueueLogFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18F3BF8E1A81DF5600692297 /* DDLog+LOGV.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20C7192A0E0000AB7171 /* DDLog+LOGV.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BF8F1A81DF5600692297 /* DDLegacyMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E58079621A032F92008819CA /* DDLegacyMacros.h */; };
+		18F3BF8F1A81DF5600692297 /* DDLegacyMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E58079621A032F92008819CA /* DDLegacyMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18F3BF901A81DF5600692297 /* DDAbstractDatabaseLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20BD192A0E0000AB7171 /* DDAbstractDatabaseLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18F3BF911A81DF5600692297 /* DDLogMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BA61994749300C180CF /* DDLogMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18F3BF921A81DF5600692297 /* DDTTYLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20C8192A0E0000AB7171 /* DDTTYLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -50,19 +37,6 @@
 		18F3BF9F1A81DF5600692297 /* DDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20D0192A0E0000AB7171 /* DDMultiFormatter.m */; };
 		18F3BFA01A81DF5600692297 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20BE192A0E0000AB7171 /* DDAbstractDatabaseLogger.m */; };
 		18F3BFA11A81DF5600692297 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20C2192A0E0000AB7171 /* DDASLLogger.m */; };
-		18F3BFAD1A81DFA200692297 /* DDContextFilterLogFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20CB192A0E0000AB7171 /* DDContextFilterLogFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BFAE1A81DFA200692297 /* CocoaLumberjack.h in Headers */ = {isa = PBXBuildFile; fileRef = 18F3BF151A81D9A400692297 /* CocoaLumberjack.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BFAF1A81DFA200692297 /* DDAssertMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BA51994749300C180CF /* DDAssertMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BFB01A81DFA200692297 /* DDASLLogCapture.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20BF192A0E0000AB7171 /* DDASLLogCapture.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BFB11A81DFA200692297 /* DDDispatchQueueLogFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20CD192A0E0000AB7171 /* DDDispatchQueueLogFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BFB21A81DFA200692297 /* DDLog+LOGV.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20C7192A0E0000AB7171 /* DDLog+LOGV.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BFB31A81DFA200692297 /* DDAbstractDatabaseLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20BD192A0E0000AB7171 /* DDAbstractDatabaseLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BFB41A81DFA200692297 /* DDLogMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BA61994749300C180CF /* DDLogMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BFB51A81DFA200692297 /* DDTTYLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20C8192A0E0000AB7171 /* DDTTYLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BFB61A81DFA200692297 /* DDLog.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20C5192A0E0000AB7171 /* DDLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BFB71A81DFA200692297 /* DDASLLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20C1192A0E0000AB7171 /* DDASLLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BFB81A81DFA200692297 /* DDMultiFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20CF192A0E0000AB7171 /* DDMultiFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18F3BFB91A81DFA200692297 /* DDFileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20C3192A0E0000AB7171 /* DDFileLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18F3BFBB1A81DFA200692297 /* CocoaLumberjack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BCB5C619D4BB6E0096E784 /* CocoaLumberjack.swift */; };
 		18F3BFBD1A81DFA200692297 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCB3185114EB418E001CFBEE /* CocoaLumberjack.framework */; };
 		18F3BFCE1A81DFEB00692297 /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18F3BFC21A81DFA200692297 /* CocoaLumberjackSwift.framework */; };
@@ -86,9 +60,13 @@
 		5541B4161A5B5B9200A374A9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5541B4151A5B5B9200A374A9 /* InfoPlist.strings */; };
 		5541B4181A5B5C9A00A374A9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5541B4171A5B5C9A00A374A9 /* MainMenu.xib */; };
 		5541B41E1A5B62FD00A374A9 /* CocoaLumberjack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DCB3185114EB418E001CFBEE /* CocoaLumberjack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		55C5F2891B1E39A700EBC776 /* CocoaLumberjackSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18F3BF0F1A81D8B700692297 /* CocoaLumberjackSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		55C5F28A1B1E39EB00EBC776 /* CocoaLumberjack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18F3BFA71A81DF5600692297 /* CocoaLumberjack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		55CCBF0619BA679200957A39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CCBF0519BA679200957A39 /* AppDelegate.swift */; };
 		55CCBF0819BA679200957A39 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55CCBF0719BA679200957A39 /* Images.xcassets */; };
 		55CCBF2019BA67CB00957A39 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCB3185114EB418E001CFBEE /* CocoaLumberjack.framework */; };
+		55F88BF81B3CB15C00E31255 /* CocoaLumberjackSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F88BF71B3CB15C00E31255 /* CocoaLumberjackSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55F88BF91B3CB15C00E31255 /* CocoaLumberjackSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F88BF71B3CB15C00E31255 /* CocoaLumberjackSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA9C20D1192A0E0000AB7171 /* DDAbstractDatabaseLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20BD192A0E0000AB7171 /* DDAbstractDatabaseLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA9C20D2192A0E0000AB7171 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20BE192A0E0000AB7171 /* DDAbstractDatabaseLogger.m */; };
 		DA9C20D3192A0E0000AB7171 /* DDASLLogCapture.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20BF192A0E0000AB7171 /* DDASLLogCapture.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -113,7 +91,7 @@
 		DCB318D814ED6C3B001CFBEE /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DCB318D614ED6C3B001CFBEE /* Credits.rtf */; };
 		DCB318DB14ED6C3B001CFBEE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB318DA14ED6C3B001CFBEE /* AppDelegate.m */; };
 		DCB318DE14ED6C3B001CFBEE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCB318DC14ED6C3B001CFBEE /* MainMenu.xib */; };
-		E58079631A032F92008819CA /* DDLegacyMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E58079621A032F92008819CA /* DDLegacyMacros.h */; };
+		E58079631A032F92008819CA /* DDLegacyMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E58079621A032F92008819CA /* DDLegacyMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5D89BA81994749300C180CF /* DDAssertMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BA51994749300C180CF /* DDAssertMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5D89BA91994749300C180CF /* DDLogMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BA61994749300C180CF /* DDLogMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5D89BAD199494B600C180CF /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCB3185114EB418E001CFBEE /* CocoaLumberjack.framework */; };
@@ -141,6 +119,13 @@
 			remoteGlobalIDString = 18F3BFA91A81DFA200692297;
 			remoteInfo = "CocoaLumberjackSwift-iOS";
 		};
+		55C5F2871B1E399100EBC776 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 18F3BEF61A81D8B700692297;
+			remoteInfo = CocoaLumberjackSwift;
+		};
 		DCB318E214ED6C43001CFBEE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
@@ -157,6 +142,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				55C5F28A1B1E39EB00EBC776 /* CocoaLumberjack.framework in Embed Frameworks */,
 				18F3BFCF1A81DFEB00692297 /* CocoaLumberjackSwift.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -177,6 +163,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				55C5F2891B1E39A700EBC776 /* CocoaLumberjackSwift.framework in Embed Frameworks */,
 				5541B41E1A5B62FD00A374A9 /* CocoaLumberjack.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -214,6 +201,7 @@
 		55CCBF0219BA679200957A39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55CCBF0519BA679200957A39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55CCBF0719BA679200957A39 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		55F88BF71B3CB15C00E31255 /* CocoaLumberjackSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaLumberjackSwift.h; sourceTree = "<group>"; };
 		DA9C20BD192A0E0000AB7171 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
 		DA9C20BE192A0E0000AB7171 /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
 		DA9C20BF192A0E0000AB7171 /* DDASLLogCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogCapture.h; sourceTree = "<group>"; };
@@ -488,6 +476,7 @@
 				555E014A19FACB600063F058 /* CocoaLumberjack.modulemap */,
 				DCB3186014EB418E001CFBEE /* CocoaLumberjack-Prefix.pch */,
 				E58078F91A01C92F008819CA /* CocoaLumberjackSwift-Info.plist */,
+				55F88BF71B3CB15C00E31255 /* CocoaLumberjackSwift.h */,
 			);
 			name = "Supporting Files";
 			path = Framework/Lumberjack;
@@ -524,19 +513,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18F3BEFA1A81D8B700692297 /* DDContextFilterLogFormatter.h in Headers */,
-				18F3BF181A81D9A400692297 /* CocoaLumberjack.h in Headers */,
-				18F3BEFB1A81D8B700692297 /* DDAssertMacros.h in Headers */,
-				18F3BEFC1A81D8B700692297 /* DDASLLogCapture.h in Headers */,
-				18F3BEFD1A81D8B700692297 /* DDDispatchQueueLogFormatter.h in Headers */,
-				18F3BEFE1A81D8B700692297 /* DDLog+LOGV.h in Headers */,
-				18F3BEFF1A81D8B700692297 /* DDAbstractDatabaseLogger.h in Headers */,
-				18F3BF001A81D8B700692297 /* DDLogMacros.h in Headers */,
-				18F3BF011A81D8B700692297 /* DDTTYLogger.h in Headers */,
-				18F3BF021A81D8B700692297 /* DDLog.h in Headers */,
-				18F3BF031A81D8B700692297 /* DDASLLogger.h in Headers */,
-				18F3BF041A81D8B700692297 /* DDMultiFormatter.h in Headers */,
-				18F3BF061A81D8B700692297 /* DDFileLogger.h in Headers */,
+				55F88BF81B3CB15C00E31255 /* CocoaLumberjackSwift.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,19 +542,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18F3BFAD1A81DFA200692297 /* DDContextFilterLogFormatter.h in Headers */,
-				18F3BFAE1A81DFA200692297 /* CocoaLumberjack.h in Headers */,
-				18F3BFAF1A81DFA200692297 /* DDAssertMacros.h in Headers */,
-				18F3BFB01A81DFA200692297 /* DDASLLogCapture.h in Headers */,
-				18F3BFB11A81DFA200692297 /* DDDispatchQueueLogFormatter.h in Headers */,
-				18F3BFB21A81DFA200692297 /* DDLog+LOGV.h in Headers */,
-				18F3BFB31A81DFA200692297 /* DDAbstractDatabaseLogger.h in Headers */,
-				18F3BFB41A81DFA200692297 /* DDLogMacros.h in Headers */,
-				18F3BFB51A81DFA200692297 /* DDTTYLogger.h in Headers */,
-				18F3BFB61A81DFA200692297 /* DDLog.h in Headers */,
-				18F3BFB71A81DFA200692297 /* DDASLLogger.h in Headers */,
-				18F3BFB81A81DFA200692297 /* DDMultiFormatter.h in Headers */,
-				18F3BFB91A81DFA200692297 /* DDFileLogger.h in Headers */,
+				55F88BF91B3CB15C00E31255 /* CocoaLumberjackSwift.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -726,6 +691,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55C5F2881B1E399100EBC776 /* PBXTargetDependency */,
 			);
 			name = SwiftTest;
 			productName = SwiftTest;
@@ -774,7 +740,7 @@
 		DCB3184714EB418D001CFBEE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0630;
 				TargetAttributes = {
 					18F3BF5E1A81DD2E00692297 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -1005,6 +971,11 @@
 			target = 18F3BFA91A81DFA200692297 /* CocoaLumberjackSwift-iOS */;
 			targetProxy = 18F3BFD01A81DFEC00692297 /* PBXContainerItemProxy */;
 		};
+		55C5F2881B1E399100EBC776 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 18F3BEF61A81D8B700692297 /* CocoaLumberjackSwift */;
+			targetProxy = 55C5F2871B1E399100EBC776 /* PBXContainerItemProxy */;
+		};
 		DCB318E314ED6C43001CFBEE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DCB3185014EB418E001CFBEE /* CocoaLumberjack */;
@@ -1156,10 +1127,10 @@
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Framework/Lumberjack/CocoaLumberjack-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/Framework/Lumberjack/CocoaLumberjack-Info.plist";
+				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjack-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "$(SRCROOT)/Framework/Lumberjack/CocoaLumberjack.modulemap";
+				MODULEMAP_FILE = Framework/Lumberjack/CocoaLumberjack.modulemap;
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1183,10 +1154,10 @@
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Framework/Lumberjack/CocoaLumberjack-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/Framework/Lumberjack/CocoaLumberjack-Info.plist";
+				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjack-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "$(SRCROOT)/Framework/Lumberjack/CocoaLumberjack.modulemap";
+				MODULEMAP_FILE = Framework/Lumberjack/CocoaLumberjack.modulemap;
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1382,6 +1353,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1427,6 +1399,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
@@ -1455,10 +1428,10 @@
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Framework/Lumberjack/CocoaLumberjack-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/Framework/Lumberjack/CocoaLumberjack-Info.plist";
+				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjack-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "$(SRCROOT)/Framework/Lumberjack/CocoaLumberjack.modulemap";
+				MODULEMAP_FILE = Framework/Lumberjack/CocoaLumberjack.modulemap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -1482,10 +1455,10 @@
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Framework/Lumberjack/CocoaLumberjack-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/Framework/Lumberjack/CocoaLumberjack-Info.plist";
+				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjack-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "$(SRCROOT)/Framework/Lumberjack/CocoaLumberjack.modulemap";
+				MODULEMAP_FILE = Framework/Lumberjack/CocoaLumberjack.modulemap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
