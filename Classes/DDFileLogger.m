@@ -1428,7 +1428,7 @@ static int exception_count = 0;
     if (result < 0) {
         NSLogError(@"DDLogFileInfo: setxattr(%@, %@): error = %s",
                    attrName,
-                   self.fileName,
+                   filePath,
                    strerror(errno));
     }
 }
