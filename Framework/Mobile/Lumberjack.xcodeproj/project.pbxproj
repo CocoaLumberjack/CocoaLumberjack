@@ -26,6 +26,7 @@
 		DA9C20B6192A0CB500AB7171 /* DDContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20AB192A0CB500AB7171 /* DDContextFilterLogFormatter.m */; };
 		DA9C20B7192A0CB500AB7171 /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20AD192A0CB500AB7171 /* DDDispatchQueueLogFormatter.m */; };
 		DA9C20B8192A0CB500AB7171 /* DDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20AF192A0CB500AB7171 /* DDMultiFormatter.m */; };
+		DF2CD19D1B4C336D00D7F66B /* DDLegacyMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = DF2CD19C1B4C336D00D7F66B /* DDLegacyMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5CEB3721994971500EDC36E /* CocoaLumberjack.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BAA199474A900C180CF /* CocoaLumberjack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5CEB3731994971500EDC36E /* DDLogMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BAC199474A900C180CF /* DDLogMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5CEB3741994971500EDC36E /* DDAssertMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BAB199474A900C180CF /* DDAssertMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -91,6 +92,7 @@
 		DA9C20AD192A0CB500AB7171 /* DDDispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDispatchQueueLogFormatter.m; sourceTree = "<group>"; };
 		DA9C20AE192A0CB500AB7171 /* DDMultiFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMultiFormatter.h; sourceTree = "<group>"; };
 		DA9C20AF192A0CB500AB7171 /* DDMultiFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMultiFormatter.m; sourceTree = "<group>"; };
+		DF2CD19C1B4C336D00D7F66B /* DDLegacyMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLegacyMacros.h; sourceTree = "<group>"; };
 		E5D89BAA199474A900C180CF /* CocoaLumberjack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaLumberjack.h; sourceTree = "<group>"; };
 		E5D89BAB199474A900C180CF /* DDAssertMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAssertMacros.h; sourceTree = "<group>"; };
 		E5D89BAC199474A900C180CF /* DDLogMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLogMacros.h; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				E5D89BAA199474A900C180CF /* CocoaLumberjack.h */,
+				DF2CD19C1B4C336D00D7F66B /* DDLegacyMacros.h */,
 				E5D89BAC199474A900C180CF /* DDLogMacros.h */,
 				E5D89BAB199474A900C180CF /* DDAssertMacros.h */,
 				DA9C20A6192A0CB500AB7171 /* DDLog+LOGV.h */,
@@ -240,8 +243,9 @@
 				E5CEB3771994971500EDC36E /* DDASLLogCapture.h in Headers */,
 				E5CEB3781994971500EDC36E /* DDASLLogger.h in Headers */,
 				E5CEB3791994971500EDC36E /* DDFileLogger.h in Headers */,
-				E5CEB37A1994971500EDC36E /* DDLog.h in Headers */,
 				E5CEB37B1994971500EDC36E /* DDTTYLogger.h in Headers */,
+				E5CEB37A1994971500EDC36E /* DDLog.h in Headers */,
+				DF2CD19D1B4C336D00D7F66B /* DDLegacyMacros.h in Headers */,
 				E5CEB37C1994971500EDC36E /* DDContextFilterLogFormatter.h in Headers */,
 				E5CEB37D1994971500EDC36E /* DDDispatchQueueLogFormatter.h in Headers */,
 				E5CEB37E1994971500EDC36E /* DDMultiFormatter.h in Headers */,
