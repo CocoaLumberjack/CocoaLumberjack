@@ -14,7 +14,6 @@
 //   prior written permission of Deusty, LLC.
 
 import Foundation
-import CocoaLumberjack
 
 extension DDLogFlag {
     public static func fromLogLevel(logLevel: DDLogLevel) -> DDLogFlag {
