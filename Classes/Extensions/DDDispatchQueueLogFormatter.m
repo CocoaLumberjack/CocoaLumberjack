@@ -236,11 +236,11 @@
     return [NSString stringWithFormat:@"%@ [%@] %@", timestamp, queueThreadLabel, logMessage->_message];
 }
 
-- (void)didAddToLogger:(id <DDLogger>)logger {
+- (void)didAddToLogger:(id <DDLogger>  __attribute__((unused)))logger {
     OSAtomicIncrement32(&_atomicLoggerCount);
 }
 
-- (void)willRemoveFromLogger:(id <DDLogger>)logger {
+- (void)willRemoveFromLogger:(id <DDLogger> __attribute__((unused)))logger {
     OSAtomicDecrement32(&_atomicLoggerCount);
 }
 
