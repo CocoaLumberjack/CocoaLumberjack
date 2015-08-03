@@ -32,7 +32,7 @@ extern const char* const kDDASLDDLogValue;
  * This class provides a logger for the Apple System Log facility.
  *
  * As described in the "Getting Started" page,
- * the traditional NSLog() function directs it's output to two places:
+ * the traditional NSLog() function directs its output to two places:
  *
  * - Apple System Log
  * - StdErr (if stderr is a TTY) so log statements show up in Xcode console
