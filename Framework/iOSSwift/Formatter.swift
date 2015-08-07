@@ -9,7 +9,7 @@
 import Foundation
 import CocoaLumberjack.DDDispatchQueueLogFormatter
 
-class Formatter: DDDispatchQueueLogFormatter, DDLogFormatter {
+class Formatter: DDDispatchQueueLogFormatter {
     let threadUnsafeDateFormatter: NSDateFormatter
     
     override init() {
@@ -25,15 +25,15 @@ class Formatter: DDDispatchQueueLogFormatter, DDLogFormatter {
         
         var logLevel: String
         let logFlag = logMessage.flag
-        if logFlag & .Error == .Error {
+        if logFlag.contains(.Error) {
             logLevel = "E"
-        } else if logFlag & .Warning == .Warning {
+        } else if logFlag.contains(.Warning){
             logLevel = "W"
-        } else if logFlag & .Info == .Info {
+        } else if logFlag.contains(.Info) {
             logLevel = "I"
-        } else if logFlag & .Debug == .Debug {
+        } else if logFlag.contains(.Debug) {
             logLevel = "D"
-        } else if logFlag & .Verbose == .Verbose {
+        } else if logFlag.contains(.Verbose) {
             logLevel = "V"
         } else {
             logLevel = "?"
