@@ -105,19 +105,19 @@
 			remoteGlobalIDString = DCB3185014EB418E001CFBEE;
 			remoteInfo = CocoaLumberjack;
 		};
-		18F3BFAB1A81DFA200692297 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DCB3185014EB418E001CFBEE;
-			remoteInfo = CocoaLumberjack;
-		};
 		18F3BFD01A81DFEC00692297 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 18F3BFA91A81DFA200692297;
 			remoteInfo = "CocoaLumberjackSwift-iOS";
+		};
+		191DB3821B7E002E009BFE19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 18F3BF881A81DF5600692297;
+			remoteInfo = "CocoaLumberjack-iOS";
 		};
 		55C5F2871B1E399100EBC776 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -638,7 +638,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				18F3BFAA1A81DFA200692297 /* PBXTargetDependency */,
+				191DB3831B7E002E009BFE19 /* PBXTargetDependency */,
 			);
 			name = "CocoaLumberjackSwift-iOS";
 			productName = Lumberjack;
@@ -961,15 +961,15 @@
 			target = DCB3185014EB418E001CFBEE /* CocoaLumberjack */;
 			targetProxy = 18F3BEF81A81D8B700692297 /* PBXContainerItemProxy */;
 		};
-		18F3BFAA1A81DFA200692297 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DCB3185014EB418E001CFBEE /* CocoaLumberjack */;
-			targetProxy = 18F3BFAB1A81DFA200692297 /* PBXContainerItemProxy */;
-		};
 		18F3BFD11A81DFEC00692297 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 18F3BFA91A81DFA200692297 /* CocoaLumberjackSwift-iOS */;
 			targetProxy = 18F3BFD01A81DFEC00692297 /* PBXContainerItemProxy */;
+		};
+		191DB3831B7E002E009BFE19 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 18F3BF881A81DF5600692297 /* CocoaLumberjack-iOS */;
+			targetProxy = 191DB3821B7E002E009BFE19 /* PBXContainerItemProxy */;
 		};
 		55C5F2881B1E399100EBC776 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
