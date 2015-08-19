@@ -1,4 +1,5 @@
 
+osx_image: beta-xcode6.3
 language: objective-c
 
 before_install:
