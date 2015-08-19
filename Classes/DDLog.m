@@ -409,7 +409,7 @@ static NSUInteger _numProcessors;
     SEL getterSel = @selector(ddLogLevel);
     SEL setterSel = @selector(ddSetLogLevel:);
 
-#if TARGET_OS_IOS && !TARGET_IPHONE_SIMULATOR
+#if TARGET_OS_IPHONE && !TARGET_OS_SIMULATOR
 
     // Issue #6 (GoogleCode) - Crashes on iOS 4.2.1 and iPhone 4
     //
@@ -448,7 +448,7 @@ static NSUInteger _numProcessors;
 
     return result;
 
-#else /* if TARGET_OS_IOS && !TARGET_IPHONE_SIMULATOR */
+#else /* if TARGET_OS_IPHONE && !TARGET_OS_SIMULATOR */
 
     // Issue #24 (GitHub) - Crashing in in ARC+Simulator
     //
@@ -464,7 +464,7 @@ static NSUInteger _numProcessors;
 
     return NO;
 
-#endif /* if TARGET_OS_IOS && !TARGET_IPHONE_SIMULATOR */
+#endif /* if TARGET_OS_IPHONE && !TARGET_OS_SIMULATOR */
 }
 
 + (NSArray *)registeredClasses {
@@ -868,6 +868,13 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
     #define USE_DISPATCH_CURRENT_QUEUE_LABEL ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
     #define USE_DISPATCH_GET_CURRENT_QUEUE   ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.1)
 
+#elif TARGET_OS_WATCH
+
+// Compiling for watchOS
+
+#define USE_DISPATCH_CURRENT_QUEUE_LABEL YES
+#define USE_DISPATCH_GET_CURRENT_QUEUE   YES
+
 #else
 
 // Compiling for Mac OS X
@@ -902,6 +909,12 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
   #endif
 
     #define USE_PTHREAD_THREADID_NP                (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0)
+
+#elif TARGET_OS_WATCH
+
+// Compiling for watchOS
+
+#define USE_PTHREAD_THREADID_NP                    YES
 
 #else
 
