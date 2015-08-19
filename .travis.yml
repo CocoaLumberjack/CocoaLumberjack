@@ -1,4 +1,5 @@
 
+osx_image: xcode6.4
 language: objective-c
 
 before_install:
