@@ -14,7 +14,6 @@
 		2A37F9E618E37536009FAAA7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F9E518E37536009FAAA7 /* main.m */; };
 		2A37F9EA18E37536009FAAA7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F9E918E37536009FAAA7 /* AppDelegate.m */; };
 		2A37F9F318E37536009FAAA7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F9F218E37536009FAAA7 /* ViewController.m */; };
-		2A37F9F518E37536009FAAA7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F9F418E37536009FAAA7 /* Images.xcassets */; };
 		2A37FA0F18E375D8009FAAA7 /* libCocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A37F97718E37270009FAAA7 /* libCocoaLumberjack.a */; };
 		DA9C209B192A04E100AB7171 /* Formatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C209A192A04E100AB7171 /* Formatter.m */; };
 		DA9C20B0192A0CB500AB7171 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C209D192A0CB500AB7171 /* DDAbstractDatabaseLogger.m */; };
@@ -67,7 +66,6 @@
 		2A37F9E918E37536009FAAA7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		2A37F9F118E37536009FAAA7 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		2A37F9F218E37536009FAAA7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		2A37F9F418E37536009FAAA7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2A37F9FB18E37536009FAAA7 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		55CCBEF719BA64B200957A39 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		55CCBEF819BA64B200957A39 /* Lumberjack-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Lumberjack-Info.plist"; path = "../../Desktop/Lumberjack/Lumberjack-Info.plist"; sourceTree = "<group>"; };
@@ -191,7 +189,6 @@
 				2A37F9E918E37536009FAAA7 /* AppDelegate.m */,
 				2A37F9F118E37536009FAAA7 /* ViewController.h */,
 				2A37F9F218E37536009FAAA7 /* ViewController.m */,
-				2A37F9F418E37536009FAAA7 /* Images.xcassets */,
 				2A37F9E018E37536009FAAA7 /* Supporting Files */,
 			);
 			path = LibTest;
@@ -320,7 +317,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A37F9F518E37536009FAAA7 /* Images.xcassets in Resources */,
 				2A37F9E418E37536009FAAA7 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
