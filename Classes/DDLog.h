@@ -157,7 +157,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * It is suggested you stick with the macros as they're easier to use.
  **/
 
-+ (void)log:(BOOL)synchronous
++ (void)log:(BOOL)asynchronous
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
     context:(NSInteger)context
