@@ -1408,6 +1408,7 @@
 		19190EE41B84D812008D059E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1432,6 +1433,7 @@
 		19190EE51B84D812008D059E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1456,6 +1458,7 @@
 		19190EF11B84D826008D059E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1479,6 +1482,7 @@
 		19190EF21B84D826008D059E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1831,6 +1835,7 @@
 				19190EE51B84D812008D059E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		19190EF01B84D826008D059E /* Build configuration list for PBXNativeTarget "CocoaLumberjackSwift-watchOS" */ = {
 			isa = XCConfigurationList;
@@ -1839,6 +1844,7 @@
 				19190EF21B84D826008D059E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		19EC14861B84D135000EC2E7 /* Build configuration list for PBXNativeTarget "watchOSSwiftTest Extension" */ = {
 			isa = XCConfigurationList;
