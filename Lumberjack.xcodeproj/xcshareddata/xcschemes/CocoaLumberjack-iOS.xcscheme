@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0610"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "18F3BF5E1A81DD2E00692297"
-               BuildableName = "iOSSwiftTest.app"
-               BlueprintName = "iOSSwiftTest"
+               BlueprintIdentifier = "19FF46011B8B4CF400B43179"
+               BuildableName = "CocoaLumberjack.framework"
+               BlueprintName = "CocoaLumberjack-iOS"
                ReferencedContainer = "container:Lumberjack.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,15 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "18F3BF5E1A81DD2E00692297"
-            BuildableName = "iOSSwiftTest.app"
-            BlueprintName = "iOSSwiftTest"
-            ReferencedContainer = "container:Lumberjack.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -51,16 +42,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "18F3BF5E1A81DD2E00692297"
-            BuildableName = "iOSSwiftTest.app"
-            BlueprintName = "iOSSwiftTest"
+            BlueprintIdentifier = "19FF46011B8B4CF400B43179"
+            BuildableName = "CocoaLumberjack.framework"
+            BlueprintName = "CocoaLumberjack-iOS"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -70,16 +60,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "18F3BF5E1A81DD2E00692297"
-            BuildableName = "iOSSwiftTest.app"
-            BlueprintName = "iOSSwiftTest"
+            BlueprintIdentifier = "19FF46011B8B4CF400B43179"
+            BuildableName = "CocoaLumberjack.framework"
+            BlueprintName = "CocoaLumberjack-iOS"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
