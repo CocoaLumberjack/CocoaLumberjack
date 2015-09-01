@@ -94,7 +94,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (NSString *)stringFromDate:(NSDate *)date {
-    int32_t loggerCount = OSAtomicAdd32(0, &_atomicLoggerCount);
+    int32_t loggerCount = OSAtomicAdd32(1, &_atomicLoggerCount);
 
     NSString *calendarIdentifier = nil;
 
