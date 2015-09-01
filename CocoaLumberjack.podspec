@@ -42,16 +42,17 @@ Pod::Spec.new do |s|
   end
   
   s.subspec 'CLI' do |ss|
-      ss.source_files = 'Classes/CLI/*.{h,m}'
-      ss.dependency 'CocoaLumberjack/Default'
+    ss.osx.deployment_target = '10.7'
+    ss.source_files = 'Classes/CLI/*.{h,m}'
+    ss.dependency 'CocoaLumberjack/Default'
   end
 
   s.subspec 'Swift' do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.osx.deployment_target = '10.10'
-      ss.watchos.deployment_target = '2.0'
-      ss.source_files = 'Classes/CocoaLumberjack.swift'
-      ss.dependency 'CocoaLumberjack/Extensions'
+    ss.ios.deployment_target = '8.0'
+    ss.osx.deployment_target = '10.10'
+    ss.watchos.deployment_target = '2.0'
+    ss.source_files = 'Classes/CocoaLumberjack.swift'
+    ss.dependency 'CocoaLumberjack/Extensions'
   end
   
 end
