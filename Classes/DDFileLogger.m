@@ -832,7 +832,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
             [self rollLogFileNow];
 
             if (completionBlock) {
-                dispatch_async(dispatch_get_main_queue(), ^{
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     completionBlock();
                 });
             }
