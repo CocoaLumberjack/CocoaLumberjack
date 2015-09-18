@@ -144,15 +144,20 @@ static NSUInteger _numProcessors;
         // Figure out how many processors are available.
         // This may be used later for an optimization on uniprocessor machines.
 
+        NSUInteger one    = (NSUInteger)1;
+        NSUInteger result = one;
+#if TARGET_OS_TV
+        if ([NSProcessInfo class]) {
+            result = [[NSProcessInfo processInfo] activeProcessorCount];
+        }
+#else
         host_basic_info_data_t hostInfo;
         mach_msg_type_number_t infoCount;
 
         infoCount = HOST_BASIC_INFO_COUNT;
         host_info(mach_host_self(), HOST_BASIC_INFO, (host_info_t)&hostInfo, &infoCount);
-
-        NSUInteger result = (NSUInteger)hostInfo.max_cpus;
-        NSUInteger one    = (NSUInteger)1;
-
+        result = (NSUInteger)hostInfo.max_cpus;
+#endif
         _numProcessors = MAX(result, one);
 #endif
 
