@@ -142,10 +142,8 @@ static NSUInteger _numProcessors;
 
         NSUInteger one    = (NSUInteger)1;
         NSUInteger result = one;
-#if TARGET_OS_TV
-        if ([NSProcessInfo class]) {
-            result = [[NSProcessInfo processInfo] activeProcessorCount];
-        }
+#if TARGET_OS_IPHONE || TARGET_OS_TV
+        result = [[NSProcessInfo processInfo] activeProcessorCount];
 #else
         host_basic_info_data_t hostInfo;
         mach_msg_type_number_t infoCount;
