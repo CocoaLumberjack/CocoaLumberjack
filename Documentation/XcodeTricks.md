@@ -52,7 +52,7 @@ Your project settings should look like this:
 
 <a href="http://www.flickr.com/photos/100714763@N06/9575920131/" title="CocoaLumberjack_xcode2 by robbiehanson, on Flickr"><img src="http://farm4.staticflickr.com/3808/9575920131_52625d8f01_o.png" width="653" height="673" alt="CocoaLumberjack_xcode2"></a>
 
-And that's all there is to it. You're done!\
+And that's all there is to it. You're done!
 
 And this isn't limited to just logging.
 You can use the `#ifdef CONFIGURATION_DEBUG` anywhere you want in your project if you feel the need to differentiate something between your debug and release builds.
