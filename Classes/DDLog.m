@@ -916,7 +916,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
 
 #elif TARGET_OS_TV
 
-// Compiling for watchOS
+// Compiling for tvOS
 
 #define USE_PTHREAD_THREADID_NP                    YES
 
