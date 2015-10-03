@@ -84,7 +84,7 @@
 		19D90B201BBFA9DB00947169 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20C2192A0E0000AB7171 /* DDASLLogger.m */; };
 		19D90B2C1BBFAA7500947169 /* CocoaLumberjackSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F88BF71B3CB15C00E31255 /* CocoaLumberjackSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		19D90B2E1BBFAA7500947169 /* CocoaLumberjack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BCB5C619D4BB6E0096E784 /* CocoaLumberjack.swift */; };
-		19D90B301BBFAA7500947169 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FF46021B8B4CF400B43179 /* CocoaLumberjack.framework */; };
+		19D90B391BBFB16F00947169 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19D90B261BBFA9DB00947169 /* CocoaLumberjack.framework */; };
 		19EC146B1B84D134000EC2E7 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19EC14691B84D134000EC2E7 /* Interface.storyboard */; };
 		19EC146D1B84D134000EC2E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19EC146C1B84D134000EC2E7 /* Assets.xcassets */; };
 		19EC14741B84D135000EC2E7 /* watchOSSwiftTest Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 19EC14731B84D134000EC2E7 /* watchOSSwiftTest Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -182,12 +182,12 @@
 			remoteGlobalIDString = 19190EDD1B84D812008D059E;
 			remoteInfo = "CocoaLumberjack-watchOS";
 		};
-		19D90B2A1BBFAA7500947169 /* PBXContainerItemProxy */ = {
+		19D90B371BBFB13300947169 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 19FF46011B8B4CF400B43179;
-			remoteInfo = "CocoaLumberjack-iOS";
+			remoteGlobalIDString = 19D90B071BBFA9DB00947169;
+			remoteInfo = "CocoaLumberjack-tvOS";
 		};
 		19EC14751B84D135000EC2E7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -445,7 +445,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19D90B301BBFAA7500947169 /* CocoaLumberjack.framework in Frameworks */,
+				19D90B391BBFB16F00947169 /* CocoaLumberjack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -985,7 +985,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				19D90B291BBFAA7500947169 /* PBXTargetDependency */,
+				19D90B381BBFB13300947169 /* PBXTargetDependency */,
 			);
 			name = "CocoaLumberjackSwift-tvOS";
 			productName = "CocoaLumberjackSwift-iOS";
@@ -1485,10 +1485,10 @@
 			target = 19190EDD1B84D812008D059E /* CocoaLumberjack-watchOS */;
 			targetProxy = 19190F161B84DBE2008D059E /* PBXContainerItemProxy */;
 		};
-		19D90B291BBFAA7500947169 /* PBXTargetDependency */ = {
+		19D90B381BBFB13300947169 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 19FF46011B8B4CF400B43179 /* CocoaLumberjack-iOS */;
-			targetProxy = 19D90B2A1BBFAA7500947169 /* PBXContainerItemProxy */;
+			target = 19D90B071BBFA9DB00947169 /* CocoaLumberjack-tvOS */;
+			targetProxy = 19D90B371BBFB13300947169 /* PBXContainerItemProxy */;
 		};
 		19EC14761B84D135000EC2E7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
