@@ -135,12 +135,6 @@ static NSUInteger _numProcessors;
 
         _queueSemaphore = dispatch_semaphore_create(LOG_MAX_QUEUE_SIZE);
 
-#if TARGET_OS_WATCH
-        // host_info not avilable in watchOS
-        // Using prefixed value for workaround
-        
-        _numProcessors = 2;
-#else
         // Figure out how many processors are available.
         // This may be used later for an optimization on uniprocessor machines.
         
@@ -152,7 +146,6 @@ static NSUInteger _numProcessors;
             result = processInfo.processorCount;
         }
         _numProcessors = MAX(result, one);
-#endif
 
         NSLogDebug(@"DDLog: numProcessors = %@", @(_numProcessors));
 
