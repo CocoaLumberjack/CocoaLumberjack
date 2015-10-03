@@ -26,6 +26,9 @@
 #elif TARGET_OS_WATCH
 // Compiling for watchOS
 #define NEEDS_DISPATCH_RETAIN_RELEASE 0
+#elif TARGET_OS_TV
+// Compiling for tvOS
+#define NEEDS_DISPATCH_RETAIN_RELEASE 0
 #else
 // Compiling for Mac OS X
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1080     // Mac OS X 10.8 or later
