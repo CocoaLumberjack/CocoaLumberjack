@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "19D90B071BBFA9DB00947169"
-               BuildableName = "CocoaLumberjack-tvOS.framework"
+               BuildableName = "CocoaLumberjack.framework"
                BlueprintName = "CocoaLumberjack-tvOS"
                ReferencedContainer = "container:Lumberjack.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "19D90B071BBFA9DB00947169"
-            BuildableName = "CocoaLumberjack-tvOS.framework"
+            BuildableName = "CocoaLumberjack.framework"
             BlueprintName = "CocoaLumberjack-tvOS"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "19D90B071BBFA9DB00947169"
-            BuildableName = "CocoaLumberjack-tvOS.framework"
+            BuildableName = "CocoaLumberjack.framework"
             BlueprintName = "CocoaLumberjack-tvOS"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
