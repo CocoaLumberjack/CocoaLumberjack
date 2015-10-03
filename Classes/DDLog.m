@@ -866,6 +866,13 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
 #define USE_DISPATCH_CURRENT_QUEUE_LABEL YES
 #define USE_DISPATCH_GET_CURRENT_QUEUE   YES
 
+#elif TARGET_OS_TV
+
+// Compiling for tvOS
+
+#define USE_DISPATCH_CURRENT_QUEUE_LABEL YES
+#define USE_DISPATCH_GET_CURRENT_QUEUE   YES
+
 #else
 
 // Compiling for Mac OS X
@@ -902,6 +909,12 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
     #define USE_PTHREAD_THREADID_NP                (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0)
 
 #elif TARGET_OS_WATCH
+
+// Compiling for watchOS
+
+#define USE_PTHREAD_THREADID_NP                    YES
+
+#elif TARGET_OS_TV
 
 // Compiling for watchOS
 
