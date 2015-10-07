@@ -135,17 +135,26 @@ static NSUInteger _numProcessors;
 
         _queueSemaphore = dispatch_semaphore_create(LOG_MAX_QUEUE_SIZE);
 
+#if TARGET_OS_WATCH
+        // host_info not avilable in watchOS
+        // Using prefixed value for workaround
+        
+        _numProcessors = 2;
+#else
         // Figure out how many processors are available.
         // This may be used later for an optimization on uniprocessor machines.
-        
+
+        host_basic_info_data_t hostInfo;
+        mach_msg_type_number_t infoCount;
+
+        infoCount = HOST_BASIC_INFO_COUNT;
+        host_info(mach_host_self(), HOST_BASIC_INFO, (host_info_t)&hostInfo, &infoCount);
+
+        NSUInteger result = (NSUInteger)hostInfo.max_cpus;
         NSUInteger one    = (NSUInteger)1;
-        NSUInteger result = one;
-        
-        NSProcessInfo *processInfo = [NSProcessInfo processInfo];
-        if ([processInfo respondsToSelector:@selector(processorCount)]) {
-            result = processInfo.processorCount;
-        }
+
         _numProcessors = MAX(result, one);
+#endif
 
         NSLogDebug(@"DDLog: numProcessors = %@", @(_numProcessors));
 
@@ -859,9 +868,9 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
     #define USE_DISPATCH_CURRENT_QUEUE_LABEL ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
     #define USE_DISPATCH_GET_CURRENT_QUEUE   ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.1)
 
-#elif TARGET_OS_WATCH || TARGET_OS_TV
+#elif TARGET_OS_WATCH
 
-// Compiling for watchOS, tvOS
+// Compiling for watchOS
 
 #define USE_DISPATCH_CURRENT_QUEUE_LABEL YES
 #define USE_DISPATCH_GET_CURRENT_QUEUE   YES
@@ -901,9 +910,9 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
 
     #define USE_PTHREAD_THREADID_NP                (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0)
 
-#elif TARGET_OS_WATCH || TARGET_OS_TV
+#elif TARGET_OS_WATCH
 
-// Compiling for watchOS, tvOS
+// Compiling for watchOS
 
 #define USE_PTHREAD_THREADID_NP                    YES
 
