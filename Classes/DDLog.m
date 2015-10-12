@@ -146,14 +146,7 @@ static NSUInteger _numProcessors;
         // Figure out how many processors are available.
         // This may be used later for an optimization on uniprocessor machines.
         
-        NSUInteger one    = (NSUInteger)1;
-        NSUInteger result = one;
-        
-        NSProcessInfo *processInfo = [NSProcessInfo processInfo];
-        if ([processInfo respondsToSelector:@selector(processorCount)]) {
-            result = processInfo.processorCount;
-        }
-        _numProcessors = MAX(result, one);
+        _numProcessors = MAX([NSProcessInfo processInfo].processorCount, 1);
 #endif
 
         NSLogDebug(@"DDLog: numProcessors = %@", @(_numProcessors));
