@@ -59,6 +59,16 @@ fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
 
 The above code tells the application to keep a week's worth of log files on the system.
 
+You will also need to set a global log level for your application. This can be modified in different manners later (see the bottom of this document for more information).
+
+To do this, simply define the `ddLogLevel` constant. One example of this may be in your .pch file like so:
+
+```objective-c
+static const int ddLogLevel = DDLogLevelDebug;
+```
+
+This global log level will be used as a default unless stated otherwise. See below for possible levels you can set this to.
+
 ### Convert your NSLog statements to DDLog
 
 The DDLog header file defines the macros that you will use to replace your NSLog statements. Essentially they look like this:
