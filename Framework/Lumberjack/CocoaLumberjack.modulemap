@@ -1,39 +1,36 @@
 framework module CocoaLumberjack {
 	umbrella header "CocoaLumberjack.h"
-
+	
 	export *
 	module * { export * }
 	
-	//Until Xcode adds support for textual headers
-	//textual header "DDLogMacros.h"
-	//We have to use config_macros and define ddLogLevel on the command line
-	config_macros ddLogLevel
+	textual header "DDLogMacros.h"
 	
 	exclude header "DDLog+LOGV.h"
 	exclude header "DDLegacyMacros.h"
-}
-
-explicit module CocoaLumberjack.DDContextFilterLogFormatter {
-	header "DDContextFilterLogFormatter.h"
-	export *
-}
-
-explicit module CocoaLumberjack.DDDispatchQueueLogFormatter {
-	header "DDDispatchQueueLogFormatter.h"
-	export *
-}
-
-explicit module CocoaLumberjack.DDMultiFormatter {
-	header "DDMultiFormatter.h"
-	export *
-}
-
-explicit module CocoaLumberjack.DDASLLogCapture {
-	header "DDASLLogCapture.h"
-	export *
-}
-
-explicit module CocoaLumberjack.DDAbstractDatabaseLogger {
-	header "DDAbstractDatabaseLogger.h"
-	export *
+	
+	explicit module DDContextFilterLogFormatter {
+		header "DDContextFilterLogFormatter.h"
+		export *
+	}
+	
+	explicit module DDDispatchQueueLogFormatter {
+		header "DDDispatchQueueLogFormatter.h"
+		export *
+	}
+	
+	explicit module DDMultiFormatter {
+		header "DDMultiFormatter.h"
+		export *
+	}
+	
+	explicit module DDASLLogCapture {
+		header "DDASLLogCapture.h"
+		export *
+	}
+	
+	explicit module DDAbstractDatabaseLogger {
+		header "DDAbstractDatabaseLogger.h"
+		export *
+	}
 }

@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "19FF460E1B8B4D1400B43179"
+               BlueprintIdentifier = "19190EEA1B84D826008D059E"
                BuildableName = "CocoaLumberjackSwift.framework"
-               BlueprintName = "CocoaLumberjackSwift-iOS"
+               BlueprintName = "CocoaLumberjackSwift-watchOS"
                ReferencedContainer = "container:Lumberjack.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "19FF460E1B8B4D1400B43179"
+            BlueprintIdentifier = "19190EEA1B84D826008D059E"
             BuildableName = "CocoaLumberjackSwift.framework"
-            BlueprintName = "CocoaLumberjackSwift-iOS"
+            BlueprintName = "CocoaLumberjackSwift-watchOS"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "19FF460E1B8B4D1400B43179"
+            BlueprintIdentifier = "19190EEA1B84D826008D059E"
             BuildableName = "CocoaLumberjackSwift.framework"
-            BlueprintName = "CocoaLumberjackSwift-iOS"
+            BlueprintName = "CocoaLumberjackSwift-watchOS"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
