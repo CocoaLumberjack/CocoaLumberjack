@@ -20,7 +20,7 @@
     #define DD_LEGACY_MACROS 1
 #endif
 // DD_LEGACY_MACROS is checked in the file itself
-#import <CocoaLumberjack/DDLegacyMacros.h>
+#import "DDLegacyMacros.h"
 
 #if OS_OBJECT_USE_OBJC
     #define DISPATCH_QUEUE_REFERENCE_TYPE strong
@@ -157,7 +157,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * It is suggested you stick with the macros as they're easier to use.
  **/
 
-+ (void)log:(BOOL)synchronous
++ (void)log:(BOOL)asynchronous
       level:(DDLogLevel)level
        flag:(DDLogFlag)flag
     context:(NSInteger)context
@@ -484,7 +484,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions) {
                            line:(NSUInteger)line
                             tag:(id)tag
                         options:(DDLogMessageOptions)options
-                      timestamp:(NSDate *)timestamp NS_DESIGNATED_INITIALIZER;
+                      timestamp:(NSDate *)timestamp;
 
 /**
  * Read-only properties

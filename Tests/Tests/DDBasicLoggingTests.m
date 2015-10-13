@@ -52,8 +52,7 @@ DDLogLevel ddLogLevel = DDLogLevelVerbose;
             
             strongSelf.noOfMessagesLogged++;
             
-            // NOTE: this method is called twice for every log (the second time if for getting the obj param)
-            if (strongSelf.noOfMessagesLogged == 2 * [strongSelf.logs count]) {
+            if (strongSelf.noOfMessagesLogged == [strongSelf.logs count]) {
                 [self.expectation fulfill];
             }
             

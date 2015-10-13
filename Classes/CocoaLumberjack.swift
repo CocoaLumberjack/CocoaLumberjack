@@ -56,7 +56,7 @@ public func resetDefaultDebugLevel() {
 
 public func SwiftLogMacro(isAsynchronous: Bool, level: DDLogLevel, flag flg: DDLogFlag, context: Int = 0, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UInt = __LINE__, tag: AnyObject? = nil, @autoclosure(escaping) string: () -> String) {
     if level.rawValue & flg.rawValue != 0 {
-        // Tell the DDLogMessage constructor to copy the C strings that get passed to it. 
+        // Tell the DDLogMessage constructor to copy the C strings that get passed to it.
         // Using string interpolation to prevent integer overflow warning when using StaticString.stringValue
         let logMessage = DDLogMessage(message: string(), level: level, flag: flg, context: context, file: "\(file)", function: "\(function)", line: line, tag: tag, options: [.CopyFile, .CopyFunction], timestamp: nil)
         DDLog.log(isAsynchronous, message: logMessage)
