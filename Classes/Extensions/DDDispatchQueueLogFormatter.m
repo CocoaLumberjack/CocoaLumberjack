@@ -22,7 +22,7 @@
 #endif
 
 @interface DDDispatchQueueLogFormatter () {
-    NSString *_dateFormatString;
+    DDDispatchQueueLogFormatterOptions _options;
     
     int32_t _atomicLoggerCount;
     NSDateFormatter *_threadUnsafeDateFormatter; // Use [self stringFromDate]
@@ -41,7 +41,7 @@
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _dateFormatString = @"yyyy-MM-dd HH:mm:ss:SSS";
+        _options = DDDispatchQueueLogFormatterShareable;
 
         _atomicLoggerCount = 0;
         _threadUnsafeDateFormatter = nil;
@@ -55,6 +55,13 @@
         _replacements[@"com.apple.main-thread"] = @"main";
     }
 
+    return self;
+}
+
+- (instancetype)initWithOptions:(DDDispatchQueueLogFormatterOptions)options {
+    if ((self = [self init])) {
+        _options = options;
+    }
     return self;
 }
 
@@ -93,8 +100,15 @@
 #pragma mark DDLogFormatter
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+- (NSDateFormatter *)createDateFormatter {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss:SSS"];
+
+    return formatter;
+}
+
 - (NSString *)stringFromDate:(NSDate *)date {
-    int32_t loggerCount = OSAtomicAdd32(1, &_atomicLoggerCount);
 
     NSString *calendarIdentifier = nil;
 
@@ -104,17 +118,17 @@
     calendarIdentifier = NSGregorianCalendar;
 #endif
 
-    if (loggerCount <= 1) {
+
+    NSDateFormatter *dateFormatter = nil;
+    if ((_options & DDDispatchQueueLogFormatterShareable) == 0) {
         // Single-threaded mode.
 
-        if (_threadUnsafeDateFormatter == nil) {
-            _threadUnsafeDateFormatter = [[NSDateFormatter alloc] init];
-            [_threadUnsafeDateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-            [_threadUnsafeDateFormatter setDateFormat:_dateFormatString];
+        dateFormatter = _threadUnsafeDateFormatter;
+        if (dateFormatter == nil) {
+            dateFormatter = [self createDateFormatter];
+            _threadUnsafeDateFormatter = dateFormatter;
         }
-
-        [_threadUnsafeDateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:calendarIdentifier]];
-        return [_threadUnsafeDateFormatter stringFromDate:date];
+        [dateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:calendarIdentifier]];
     } else {
         // Multi-threaded mode.
         // NSDateFormatter is NOT thread-safe.
@@ -122,19 +136,16 @@
         NSString *key = @"DispatchQueueLogFormatter_NSDateFormatter";
 
         NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
-        NSDateFormatter *dateFormatter = threadDictionary[key];
+        dateFormatter = threadDictionary[key];
 
         if (dateFormatter == nil) {
-            dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-            [dateFormatter setDateFormat:_dateFormatString];
-
+            dateFormatter = [self createDateFormatter];
             threadDictionary[key] = dateFormatter;
         }
-
         [dateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:calendarIdentifier]];
-        return [dateFormatter stringFromDate:date];
     }
+
+    return [dateFormatter stringFromDate:date];
 }
 
 - (NSString *)queueThreadLabelForLogMessage:(DDLogMessage *)logMessage {
@@ -237,7 +248,8 @@
 }
 
 - (void)didAddToLogger:(id <DDLogger>  __attribute__((unused)))logger {
-    OSAtomicIncrement32(&_atomicLoggerCount);
+    int32_t count = OSAtomicIncrement32(&_atomicLoggerCount);
+    NSAssert(count <= 1 || (_options & DDDispatchQueueLogFormatterShareable) != 0, @"Can't reuse formatter with multiple loggers in single-threaded mode.");
 }
 
 - (void)willRemoveFromLogger:(id <DDLogger> __attribute__((unused)))logger {

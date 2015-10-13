@@ -24,6 +24,11 @@
 #import "DDLog.h"
 
 
+typedef NS_OPTIONS(NSUInteger, DDDispatchQueueLogFormatterOptions) {
+    DDDispatchQueueLogFormatterShareable = 1 << 0,
+};
+
+
 /**
  * This class provides a log formatter that prints the dispatch_queue label instead of the mach_thread_id.
  *
@@ -68,6 +73,8 @@
  * Configure using properties as desired.
  **/
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithOptions:(DDDispatchQueueLogFormatterOptions)options;
 
 /**
  * The minQueueLength restricts the minimum size of the [detail box].
