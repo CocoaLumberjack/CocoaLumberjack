@@ -135,6 +135,7 @@ typedef NS_OPTIONS(NSUInteger, DDDispatchQueueLogFormatterOptions) {
  **/
 @interface DDDispatchQueueLogFormatter (OverridableMethods)
 
+- (void)configureDateFormatter:(NSDateFormatter *)dateFormatter;
 - (NSString *)stringFromDate:(NSDate *)date;
 - (NSString *)queueThreadLabelForLogMessage:(DDLogMessage *)logMessage;
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage;
