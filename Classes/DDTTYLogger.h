@@ -37,22 +37,25 @@
 
 #define LOG_CONTEXT_ALL INT_MAX
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-function"
 #if TARGET_OS_IPHONE
     // iOS
     #import <UIKit/UIColor.h>
     typedef UIColor DDColor;
-    static  DDColor* DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {return [DDColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f];}
+    static inline DDColor* DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {return [DDColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f];}
 #elif __has_include(<AppKit/NSColor.h>)
     // OS X with AppKit
     #import <AppKit/NSColor.h>
     typedef NSColor DDColor;
-    static DDColor* DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {return [DDColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f];}
+    static inline DDColor* DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {return [DDColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f];}
 #else
     // OS X CLI
     #import "CLIColor.h"
     typedef CLIColor DDColor;
-    static  DDColor* DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {return [DDColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f];}
+    static inline DDColor* DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {return [DDColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f];}
 #endif
+#pragma clang diagnostic pop
 
 @interface DDTTYLogger : DDAbstractLogger <DDLogger>
 
