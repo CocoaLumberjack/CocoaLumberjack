@@ -265,7 +265,8 @@
 }
 
 - (void)didAddToLogger:(id <DDLogger>  __attribute__((unused)))logger {
-    int32_t count = OSAtomicIncrement32(&_atomicLoggerCount);
+    int32_t count = 0;
+    count = OSAtomicIncrement32(&_atomicLoggerCount);
     NSAssert(count <= 1 || _mode == DDDispatchQueueLogFormatterModeShareble, @"Can't reuse formatter with multiple loggers in non-shareable mode.");
 }
 
