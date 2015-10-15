@@ -48,14 +48,12 @@
         // We need to carefully pick the name for storing in thread dictionary to not
         // use a formatter configured by subclass and avoid surprises.
         Class cls = [self class];
+        Class superClass = class_getSuperclass(cls);
         SEL configMethodName = @selector(configureDateFormatter:);
         Method configMethod = class_getInstanceMethod(cls, configMethodName);
-        for (;;) {
-            Class superCls = class_getSuperclass(cls);
-            Method m = class_getInstanceMethod(superCls, configMethodName);
-            if (configMethod != m)
-                break;
-            cls = superCls;
+        while (class_getInstanceMethod(superClass, configMethodName) == configMethod) {
+            cls = superClass;
+            superClass = class_getSuperclass(cls);
         }
         // now `cls` is the class that provides implementation for `configureDateFormatter:`
         _dateFormatterKey = [NSString stringWithFormat:@"%s_NSDateFormatter", class_getName(cls)];
