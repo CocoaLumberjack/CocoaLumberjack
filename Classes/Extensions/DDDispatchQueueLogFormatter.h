@@ -24,8 +24,9 @@
 #import "DDLog.h"
 
 
-typedef NS_OPTIONS(NSUInteger, DDDispatchQueueLogFormatterOptions) {
-    DDDispatchQueueLogFormatterShareable = 1 << 0,
+typedef NS_ENUM(NSUInteger, DDDispatchQueueLogFormatterMode) {
+    DDDispatchQueueLogFormatterModeShareble = 0,
+    DDDispatchQueueLogFormatterModeNonShareble,
 };
 
 
@@ -74,7 +75,7 @@ typedef NS_OPTIONS(NSUInteger, DDDispatchQueueLogFormatterOptions) {
  **/
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
-- (instancetype)initWithOptions:(DDDispatchQueueLogFormatterOptions)options;
+- (instancetype)initWithMode:(DDDispatchQueueLogFormatterMode)mode;
 
 /**
  * The minQueueLength restricts the minimum size of the [detail box].
