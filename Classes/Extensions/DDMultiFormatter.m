@@ -23,8 +23,8 @@
 #else                                         // iOS 5.X or earlier
 #define NEEDS_DISPATCH_RETAIN_RELEASE 1
 #endif
-#elif TARGET_OS_WATCH
-// Compiling for watchOS
+#elif TARGET_OS_WATCH || TARGET_OS_TV
+// Compiling for watchOS, tvOS
 #define NEEDS_DISPATCH_RETAIN_RELEASE 0
 #else
 // Compiling for Mac OS X
