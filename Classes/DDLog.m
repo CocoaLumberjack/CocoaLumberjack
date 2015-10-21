@@ -137,17 +137,10 @@ static NSUInteger _numProcessors;
 
         _queueSemaphore = dispatch_semaphore_create(LOG_MAX_QUEUE_SIZE);
 
-#if TARGET_OS_WATCH
-        // host_info not avilable in watchOS
-        // Using prefixed value for workaround
-        
-        _numProcessors = 2;
-#else
         // Figure out how many processors are available.
         // This may be used later for an optimization on uniprocessor machines.
         
         _numProcessors = MAX([NSProcessInfo processInfo].processorCount, 1);
-#endif
 
         NSLogDebug(@"DDLog: numProcessors = %@", @(_numProcessors));
 
@@ -861,9 +854,9 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
     #define USE_DISPATCH_CURRENT_QUEUE_LABEL ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
     #define USE_DISPATCH_GET_CURRENT_QUEUE   ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.1)
 
-#elif TARGET_OS_WATCH
+#elif TARGET_OS_WATCH || TARGET_OS_TV
 
-// Compiling for watchOS
+// Compiling for watchOS, tvOS
 
 #define USE_DISPATCH_CURRENT_QUEUE_LABEL YES
 #define USE_DISPATCH_GET_CURRENT_QUEUE   YES
@@ -903,9 +896,9 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
 
     #define USE_PTHREAD_THREADID_NP                (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0)
 
-#elif TARGET_OS_WATCH
+#elif TARGET_OS_WATCH || TARGET_OS_TV
 
-// Compiling for watchOS
+// Compiling for watchOS, tvOS
 
 #define USE_PTHREAD_THREADID_NP                    YES
 
