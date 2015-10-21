@@ -28,20 +28,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "18F3BF5E1A81DD2E00692297"
-               BuildableName = "iOSSwiftTest.app"
-               BlueprintName = "iOSSwiftTest"
-               ReferencedContainer = "container:Lumberjack.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "19EC14721B84D134000EC2E7"
                BuildableName = "watchOSSwiftTest Extension.appex"
                BlueprintName = "watchOSSwiftTest Extension"
