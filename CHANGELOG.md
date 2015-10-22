@@ -1,4 +1,6 @@
 ## [2.1.0 Beta - Swift 2.0 on Oct 12th, 2015](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.1.0-beta)
+- Updated the library to use Swift 2.0 and Xcode 7 [#617](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/617) [#545](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/545) [#534](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/534)
+- WatchOS support (2.0) [#583](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/583) [#581](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/581) [#579](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/579) 
 
 ## [2.0.3 Patch for 2.0.0 on Oct 13th, 2015](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.0.3)
 
