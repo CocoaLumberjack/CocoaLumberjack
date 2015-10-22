@@ -1,4 +1,9 @@
-## [2.1.0 Beta - Swift 2.0 on Oct 12th, 2015](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.1.0-beta)
+## [2.1.0 RC - Swift 2.0, WatchOS, Xcode7 on Oct 22nd, 2015](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.1.0-rc)
+- Refactored the `NSDateFormatter` related code to fix a bunch of issues: [#621](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/621)
+- Fix Issue [#488](https://github.com/CocoaLumberjack/CocoaLumberjack/issues/488): Support `DDLog` without `AppKit Dependency` (`#define DD_CLI`): [#627](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/627)
+- Re-add `NS_DESIGNATED_INITIALIZER` [#619](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/619)
+
+## [2.1.0 Beta - Swift 2.0, WatchOS, Xcode7 on Oct 12th, 2015](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.1.0-beta)
 - Updated the library to use Swift 2.0 and Xcode 7 [#617](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/617) [#545](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/545) [#534](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/534)
 - WatchOS support (2.0) [#583](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/583) [#581](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/581) [#579](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/579) 
 
