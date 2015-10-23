@@ -4,7 +4,7 @@
 
 CocoaLumberjack
 ===============
-[![Build Status](https://travis-ci.org/CocoaLumberjack/CocoaLumberjack.svg)](https://travis-ci.org/CocoaLumberjack/CocoaLumberjack)
+[![Build Status](https://travis-ci.org/CocoaLumberjack/CocoaLumberjack.svg?branch=master)](https://travis-ci.org/CocoaLumberjack/CocoaLumberjack)
 [![Pod Version](http://img.shields.io/cocoapods/v/CocoaLumberjack.svg?style=flat)](http://cocoadocs.org/docsets/CocoaLumberjack/)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Pod Platform](http://img.shields.io/cocoapods/p/CocoaLumberjack.svg?style=flat)](http://cocoadocs.org/docsets/CocoaLumberjack/)
@@ -101,10 +101,16 @@ Configure your logging however you want. Change log levels per file (perfect for
 - **[Full Lumberjack documentation](Documentation/)**<br/>
 
 ### Requirements 
-- Xcode 4.4 or later is required
+The current version of Lumberjack requires:
+- Xcode 7 or later
 - iOS 5 or later
 - OS X 10.7 or later
+- WatchOS 2 or later
+
+#### Backwards compability
+- for Xcode 6 or earlier, use the 2.0.x version
 - for OS X < 10.7 support, use the 1.6.0 version
+- for tvOS support which requires Xcode 7.1, use the [tvOS_Xcode_7.1 branch](https://github.com/CocoaLumberjack/CocoaLumberjack/tree/tvOS_Xcode_7.1)
 
 ### Author
 - [Robbie Hanson](https://github.com/robbiehanson)

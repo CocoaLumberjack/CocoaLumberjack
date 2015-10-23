@@ -24,6 +24,12 @@
 #import "DDLog.h"
 
 
+typedef NS_ENUM(NSUInteger, DDDispatchQueueLogFormatterMode) {
+    DDDispatchQueueLogFormatterModeShareble = 0,
+    DDDispatchQueueLogFormatterModeNonShareble,
+};
+
+
 /**
  * This class provides a log formatter that prints the dispatch_queue label instead of the mach_thread_id.
  *
@@ -68,6 +74,8 @@
  * Configure using properties as desired.
  **/
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithMode:(DDDispatchQueueLogFormatterMode)mode;
 
 /**
  * The minQueueLength restricts the minimum size of the [detail box].
@@ -128,6 +136,7 @@
  **/
 @interface DDDispatchQueueLogFormatter (OverridableMethods)
 
+- (void)configureDateFormatter:(NSDateFormatter *)dateFormatter;
 - (NSString *)stringFromDate:(NSDate *)date;
 - (NSString *)queueThreadLabelForLogMessage:(DDLogMessage *)logMessage;
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage;
