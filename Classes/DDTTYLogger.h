@@ -13,21 +13,6 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-/**
- * This class provides a logger for Terminal output or Xcode console output,
- * depending on where you are running your code.
- *
- * As described in the "Getting Started" page,
- * the traditional NSLog() function directs it's output to two places:
- *
- * - Apple System Log (so it shows up in Console.app)
- * - StdErr (if stderr is a TTY, so log statements show up in Xcode console)
- *
- * To duplicate NSLog() functionality you can simply add this logger and an asl logger.
- * However, if you instead choose to use file logging (for faster performance),
- * you may choose to use only a file logger and a tty logger.
- **/
-
 // Disable legacy macros
 #ifndef DD_LEGACY_MACROS
     #define DD_LEGACY_MACROS 0
@@ -57,8 +42,26 @@
 #endif
 #pragma clang diagnostic pop
 
+
+/**
+ * This class provides a logger for Terminal output or Xcode console output,
+ * depending on where you are running your code.
+ *
+ * As described in the "Getting Started" page,
+ * the traditional NSLog() function directs it's output to two places:
+ *
+ * - Apple System Log (so it shows up in Console.app)
+ * - StdErr (if stderr is a TTY, so log statements show up in Xcode console)
+ *
+ * To duplicate NSLog() functionality you can simply add this logger and an asl logger.
+ * However, if you instead choose to use file logging (for faster performance),
+ * you may choose to use only a file logger and a tty logger.
+ **/
 @interface DDTTYLogger : DDAbstractLogger <DDLogger>
 
+/**
+ *  Singleton method
+ */
 + (instancetype)sharedInstance;
 
 /* Inherited from the DDLogger protocol:
@@ -94,11 +97,10 @@
 @property (readwrite, assign) BOOL colorsEnabled;
 
 /**
- * When using a custom formatter you can set the logMessage method not to append
- * '\n' character after each output. This allows for some greater flexibility with
+ * When using a custom formatter you can set the `logMessage` method not to append
+ * `\n` character after each output. This allows for some greater flexibility with
  * custom formatters. Default value is YES.
  **/
-
 @property (nonatomic, readwrite, assign) BOOL automaticallyAppendNewlineForCustomFormatters;
 
 /**

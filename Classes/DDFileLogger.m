@@ -276,12 +276,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return _logsDirectory;
 }
 
-/**
- * Default log file name is "<bundle identifier> <date> <time>.log".
- * Example: MobileSafari 2013-12-03 17-14.log
- *
- * You can change it by overriding newLogFileName and isLogFile: methods.
- **/
 - (BOOL)isLogFile:(NSString *)fileName {
     NSString *appName = [self applicationName];
 
@@ -340,10 +334,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return dateFormatter;
 }
 
-/**
- * Returns an array of NSString objects,
- * each of which is the filePath to an existing log file on disk.
- **/
 - (NSArray *)unsortedLogFilePaths {
     NSString *logsDirectory = [self logsDirectory];
     NSArray *fileNames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:logsDirectory error:nil];
@@ -376,10 +366,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return unsortedLogFilePaths;
 }
 
-/**
- * Returns an array of NSString objects,
- * each of which is the fileName of an existing log file on disk.
- **/
 - (NSArray *)unsortedLogFileNames {
     NSArray *unsortedLogFilePaths = [self unsortedLogFilePaths];
 
@@ -392,11 +378,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return unsortedLogFileNames;
 }
 
-/**
- * Returns an array of DDLogFileInfo objects,
- * each representing an existing log file on disk,
- * and containing important information about the log file such as it's modification date and size.
- **/
 - (NSArray *)unsortedLogFileInfos {
     NSArray *unsortedLogFilePaths = [self unsortedLogFilePaths];
 
@@ -411,11 +392,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return unsortedLogFileInfos;
 }
 
-/**
- * Just like the unsortedLogFilePaths method, but sorts the array.
- * The items in the array are sorted by creation date.
- * The first item in the array will be the most recently created log file.
- **/
 - (NSArray *)sortedLogFilePaths {
     NSArray *sortedLogFileInfos = [self sortedLogFileInfos];
 
@@ -428,11 +404,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return sortedLogFilePaths;
 }
 
-/**
- * Just like the unsortedLogFileNames method, but sorts the array.
- * The items in the array are sorted by creation date.
- * The first item in the array will be the most recently created log file.
- **/
 - (NSArray *)sortedLogFileNames {
     NSArray *sortedLogFileInfos = [self sortedLogFileInfos];
 
@@ -445,11 +416,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return sortedLogFileNames;
 }
 
-/**
- * Just like the unsortedLogFileInfos method, but sorts the array.
- * The items in the array are sorted by creation date.
- * The first item in the array will be the most recently created log file.
- **/
 - (NSArray *)sortedLogFileInfos {
     return [[self unsortedLogFileInfos] sortedArrayUsingSelector:@selector(reverseCompareByCreationDate:)];
 }
@@ -458,12 +424,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 #pragma mark Creation
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/**
- * Generates log file name with default format "<bundle identifier> <date> <time>.log"
- * Example: MobileSafari 2013-12-03 17-14.log
- *
- * You can change it by overriding newLogFileName and isLogFile: methods.
- **/
 - (NSString *)newLogFileName {
     NSString *appName = [self applicationName];
 
@@ -473,9 +433,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return [NSString stringWithFormat:@"%@ %@.log", appName, formattedDate];
 }
 
-/**
- * Generates a new unique log file path, and creates the corresponding log file.
- **/
 - (NSString *)createNewLogFile {
     NSString *fileName = [self newLogFileName];
     NSString *logsDirectory = [self logsDirectory];
