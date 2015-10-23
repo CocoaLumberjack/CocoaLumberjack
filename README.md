@@ -16,10 +16,81 @@ CocoaLumberjack
 ### How to get started
 - install via [CocoaPods](http://cocoapods.org)
 
+##### Swift version via CocoaPods
 ```ruby
-platform :ios, '5.0'
+platform :ios, '8.0'
+pod 'CocoaLumberjack/Swift'
+use_frameworks!
+```
+Note: `Swift` is a subspec which will include all the Obj-C code plus the Swift one, so this is sufficient. 
+For more details about how to use Swift with Lumberjack, see [this converation](https://github.com/CocoaLumberjack/CocoaLumberjack/issues/405).
+
+##### Swift Usage
+
+If you installed using CocoaPods or manually:
+```swift
+import CocoaLumberjack
+```
+
+```swift
+DDLog.addLogger(DDTTYLogger.sharedInstance()) // TTY = Xcode console
+DDLog.addLogger(DDASLLogger.sharedInstance()) // ASL = Apple System Logs
+
+let fileLogger: DDFileLogger = DDFileLogger() // File Logger
+fileLogger.rollingFrequency = 60*60*24  // 24 hours
+fileLogger.logFileManager.maximumNumberOfLogFiles = 7
+DDLog.addLogger(fileLogger)
+
+...
+
+DDLogVerbose("Verbose");
+DDLogDebug("Debug");
+DDLogInfo("Info");
+DDLogWarn("Warn");
+DDLogError("Error");
+```
+
+##### Obj-C version via CocoaPods
+
+```ruby
+platform :ios, '7.0'
 pod 'CocoaLumberjack'
 ```
+
+##### Objc-C usage
+If you're using Lumberjack as a framework, you can `@import CocoaLumberjack`.
+
+Otherwise, `#import <CocoaLumberjack/CocoaLumberjack.h>`
+
+```objc
+[DDLog addLogger:[DDTTYLogger sharedInstance]]; // TTY = Xcode console
+[DDLog addLogger:[DDASLLogger sharedInstance]]; // ASL = Apple System Logs
+
+DDFileLogger *fileLogger = [[DDFileLogger alloc] init]; // File Logger
+fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+[DDLog addLogger:fileLogger];
+
+...
+
+DDLogVerbose(@"Verbose");
+DDLogDebug(@"Debug");
+DDLogInfo(@"Info");
+DDLogWarn(@"Warn");
+DDLogError(@"Error");
+```
+
+##### Installation with Carthage (iOS 8+)
+
+[Carthage](https://github.com/Carthage/Carthage) is a lightweight dependency manager for Swift and Objective-C. It leverages CocoaTouch modules and is less invasive than CocoaPods.
+
+To install with Carthage, follow the instruction on [Carthage](https://github.com/Carthage/Carthage)
+
+Cartfile
+```
+github "CocoaLumberjack/CocoaLumberjack"
+```
+
 - or [install manually](Documentation/GettingStarted.md#manual-installation)
 - read the [Getting started](Documentation/GettingStarted.md) guide, check out the [FAQ](Documentation/FAQ.md) section or the other [docs](Documentation/)
 - if you find issues or want to suggest improvements, create an issue or a pull request

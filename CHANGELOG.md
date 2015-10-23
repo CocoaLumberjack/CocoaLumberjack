@@ -1,3 +1,7 @@
+## [2.1.0 - Swift 2.0, WatchOS, Xcode7 on Oct 23rd, 2015](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.1.0)
+- Fixed the version for the Carthage builds - see [#633](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/633)
+- Improved documentation
+
 ## [2.1.0 RC - Swift 2.0, WatchOS, Xcode7 on Oct 22nd, 2015](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.1.0-rc)
 - Refactored the `NSDateFormatter` related code to fix a bunch of issues: [#621](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/621)
 - Fix Issue [#488](https://github.com/CocoaLumberjack/CocoaLumberjack/issues/488): Support `DDLog` without `AppKit Dependency` (`#define DD_CLI`): [#627](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/627)

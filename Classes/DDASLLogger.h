@@ -41,9 +41,13 @@ extern const char* const kDDASLDDLogValue;
  * However, if you instead choose to use file logging (for faster performance),
  * you may choose to use a file logger and a tty logger.
  **/
-
 @interface DDASLLogger : DDAbstractLogger <DDLogger>
 
+/**
+ *  Singleton method
+ *
+ *  @return the shared instance
+ */
 + (instancetype)sharedInstance;
 
 // Inherited from DDAbstractLogger
