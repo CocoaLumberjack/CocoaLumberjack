@@ -1,3 +1,7 @@
+## [2.2.0 - TVOS, Xcode7.1 on Oct 28th, 2015](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.2.0)
+- added `tvOS` support (thanks [@sinoru](https://github.com/sinoru)) - [#634](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/634) [#640](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/640) [#630](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/630) [#628](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/628) [#618](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/618) [#611](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/611)
+- Remove `(escaping)` from the Swift `@autoclosure` parameters - [#642](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/642)
+
 ## [2.1.0 - Swift 2.0, WatchOS, Xcode7 on Oct 23rd, 2015](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.1.0)
 - Fixed the version for the Carthage builds - see [#633](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/633)
 - Improved documentation
