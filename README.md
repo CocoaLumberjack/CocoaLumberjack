@@ -173,15 +173,16 @@ Configure your logging however you want. Change log levels per file (perfect for
 
 ### Requirements 
 The current version of Lumberjack requires:
-- Xcode 7 or later
+- Xcode 7.1 or later
 - iOS 5 or later
 - OS X 10.7 or later
 - WatchOS 2 or later
+- TVOS 9 or later
 
 #### Backwards compability
+- for Xcode 7.0 or earlier, use the 2.1.0 version
 - for Xcode 6 or earlier, use the 2.0.x version
 - for OS X < 10.7 support, use the 1.6.0 version
-- for tvOS support which requires Xcode 7.1, use the [tvOS_Xcode_7.1 branch](https://github.com/CocoaLumberjack/CocoaLumberjack/tree/tvOS_Xcode_7.1)
 
 ### Author
 - [Robbie Hanson](https://github.com/robbiehanson)
