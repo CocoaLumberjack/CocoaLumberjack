@@ -38,9 +38,10 @@ _Please note, installation via CocoaPods or Carthage is much simpler and recomme
 * In your application target Build Phases
 	* Add the framework you need
 		* `CocoaLumberjack` or `CocoaLumberjackSwift` for OS X
-		* `CocoaLumberjack-iOS` or `CocoaLumberjackSwift-iOS` for iOS
-		* `CocoaLumberjack-watchOS` or `CocoaLumberjackSwift-watchOS` for watchOS
-		* `CocoaLumberjack-tvOS` or `CocoaLumberjackSwift-tvOS` for tvOS
+			* Swift on OS X requires a minimum deployment target of 10.9 or later. Because CocoaLumberjack requires 10.7, the Swift support is provided in a separate framework called `CocoaLumberjackSwift.framework`. On all other platforms the Swift support is provided in `CocoaLumberjack.framework`.
+		* `CocoaLumberjack-iOS` for iOS
+		* `CocoaLumberjack-watchOS` for watchOS
+		* `CocoaLumberjack-tvOS` for tvOS
 * Make this CocoaLumberjack framework a dependency for your application target
 * Add a Copy Files phase to the application bundle 
 	* This needs to specify the _Frameworks_ sub-folder

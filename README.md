@@ -14,7 +14,7 @@ CocoaLumberjack
 **CocoaLumberjack** is a fast & simple, yet powerful & flexible logging framework for Mac and iOS.
 
 ### How to get started
-- install via [CocoaPods](http://cocoapods.org)
+- install via [CocoaPods](http://cocoapods.org) or [Carthage][]
 
 ##### Swift version via CocoaPods
 ```ruby
@@ -82,9 +82,11 @@ DDLogError(@"Error");
 
 ##### Installation with Carthage (iOS 8+)
 
-[Carthage](https://github.com/Carthage/Carthage) is a lightweight dependency manager for Swift and Objective-C. It leverages CocoaTouch modules and is less invasive than CocoaPods.
+[Carthage]: https://github.com/Carthage/Carthage
 
-To install with Carthage, follow the instruction on [Carthage](https://github.com/Carthage/Carthage)
+[Carthage][] is a lightweight dependency manager for Swift and Objective-C. It leverages CocoaTouch modules and is less invasive than CocoaPods.
+
+To install with Carthage, follow the instruction on [Carthage][]
 
 Cartfile
 ```
