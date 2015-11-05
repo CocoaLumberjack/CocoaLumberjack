@@ -8,7 +8,6 @@
 
 import WatchKit
 import CocoaLumberjack
-import CocoaLumberjackSwift
 
 let ddloglevel = DDLogLevel.Verbose
 
@@ -40,6 +39,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         defaultDebugLevel = ddloglevel
         
         printSomething()
+        
+        sharedLogTest()
     }
 
     func applicationDidBecomeActive() {

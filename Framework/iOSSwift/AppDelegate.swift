@@ -8,7 +8,6 @@
 
 import UIKit
 import CocoaLumberjack
-import CocoaLumberjackSwift
 
 let ddloglevel = DDLogLevel.Verbose
 
@@ -41,6 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         defaultDebugLevel = ddloglevel
         
         printSomething()
+        
+        sharedLogTest()
         
 		return true
 	}
