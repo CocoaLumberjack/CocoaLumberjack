@@ -90,6 +90,10 @@ MyCustomFormatter.m
 @end
 ```
 
+Now, just add the custom formatter to your logger:
+```
+[DDTTYLogger sharedInstance].logFormatter = [[MyCustomFormatter alloc] init];
+```
 # Thread-safety (simple)
 
 Let's update our example formatter to also include the timestamp. To do this we'll use `NSDateFormatter`. But... `NSDateFormatter` is NOT thread-safe (unless you're targeting iOS 7+, or OSX 10.9+ with modern behavior on 64-bit architecture, see [NSDateFormatter](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSDateFormatter_Class/])). Does this pose any problems for us?
