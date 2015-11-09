@@ -63,6 +63,7 @@
 
         _minQueueLength = 0;
         _maxQueueLength = 0;
+        _lock = OS_SPINLOCK_INIT;
         _replacements = [[NSMutableDictionary alloc] init];
 
         // Set default replacements:

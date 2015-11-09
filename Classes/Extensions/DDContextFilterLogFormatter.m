@@ -143,6 +143,7 @@
 - (instancetype)init {
     if ((self = [super init])) {
         _set = [[NSMutableSet alloc] init];
+        _lock = OS_SPINLOCK_INIT;
     }
 
     return self;
