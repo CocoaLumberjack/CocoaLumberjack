@@ -107,15 +107,15 @@ Now take a look at the registered dynamic logging section of DDLog:
 + (NSArray *)registeredClasses;
 + (NSArray *)registeredClassNames;
 
-+ (int)logLevelForClass:(Class)aClass;
-+ (int)logLevelForClassWithName:(NSString *)aClassName;
++ (DDLogLevel)levelForClass:(Class)aClass;
++ (DDLogLevel)levelForClassWithName:(NSString *)aClassName;
 
-+ (void)setLogLevel:(int)logLevel forClass:(Class)aClass;
-+ (void)setLogLevel:(int)logLevel forClassWithName:(NSString *)aClassName;
++ (void)setLevel:(DDLogLevel)level forClass:(Class)aClass;
++ (void)setLevel:(DDLogLevel)level forClassWithName:(NSString *)aClassName;
 ```
 
 So if you call ` [DDLog registeredClasses] `, it would return an array that contains the Sprocket class.
 
-And if you call ` [DDLog logLevelForClass:[Sprocket class]] `, it will invoke and return ` [Sprocket ddLogLevel] `.
+And if you call ` [DDLog levelForClass:[Sprocket class]] `, it will invoke and return ` [Sprocket ddLogLevel] `.
 
 What this means is that you can easily enumerate through all the classes (or class names) that use registered dynamic logging. You don't have to keep a big list somewhere. Or even import all the header files. You can just enumerate a list, and the lumberjack framework takes care of the rest.
