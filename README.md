@@ -23,7 +23,7 @@ pod 'CocoaLumberjack/Swift'
 use_frameworks!
 ```
 Note: `Swift` is a subspec which will include all the Obj-C code plus the Swift one, so this is sufficient. 
-For more details about how to use Swift with Lumberjack, see [this converation](https://github.com/CocoaLumberjack/CocoaLumberjack/issues/405).
+For more details about how to use Swift with Lumberjack, see [this conversation](https://github.com/CocoaLumberjack/CocoaLumberjack/issues/405).
 
 ##### Swift Usage
 
