@@ -48,9 +48,24 @@ _Please note, installation via CocoaPods or Carthage is much simpler and recomme
 	* Drag in the CocoaLumberjack.framework from the Lumberjack.xcodeproj products group
 	* _Note: be careful to include only your relevant platform product_
 
+#### Manual installation (iOS static library)
+
+Consider this method if you favour static libraries over frameworks or have to use the static library.
+
+* Add in the CocoaLumberjack files to your project using git submodules
+
+```
+	git submodule add https://git@github.com/CocoaLumberjack/CocoaLumberjack.git
+```
+
+* Drag `CocoaLumberjack/Lumberjack.xcodeproj` into your project
+* Make the `CocoaLumberjack-iOS-Static` a dependency for your application target
+* Add the `CocoaLumberjack-iOS-Static` to the `Link Binary` phase
+* Add `"$(BUILT_PRODUCTS_DIR)/include"` to the `Header Search Paths`
+
 #### Even more manual installation
 
-Consider this method if you favour static libraries over frameworks, want to more easily modify target build settings, have other complex needs or simply prefer to do things by hand.
+Consider this method if you want to more easily modify target build settings, have other complex needs or simply prefer to do things by hand.
 
 * Download the CocoaLumberjack files using git clone
 

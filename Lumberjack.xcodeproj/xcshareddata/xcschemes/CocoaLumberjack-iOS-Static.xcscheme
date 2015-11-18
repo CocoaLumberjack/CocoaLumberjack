@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "18F3BFD61A81E06E00692297"
-               BuildableName = "libCocoaLumberjack-iOS-Static.a"
+               BuildableName = "libCocoaLumberjack.a"
                BlueprintName = "CocoaLumberjack-iOS-Static"
                ReferencedContainer = "container:Lumberjack.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "18F3BFD61A81E06E00692297"
-            BuildableName = "libCocoaLumberjack-iOS-Static.a"
+            BuildableName = "libCocoaLumberjack.a"
             BlueprintName = "CocoaLumberjack-iOS-Static"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
@@ -61,7 +61,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "18F3BFD61A81E06E00692297"
-            BuildableName = "libCocoaLumberjack-iOS-Static.a"
+            BuildableName = "libCocoaLumberjack.a"
             BlueprintName = "CocoaLumberjack-iOS-Static"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
