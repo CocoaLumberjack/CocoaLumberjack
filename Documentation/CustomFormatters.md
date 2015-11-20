@@ -37,7 +37,7 @@ It's pretty straight-forward. The single method takes, as a parameter, an instan
 
 -  `message` - original log message
 -  `file` - full path to the file the log message came from
--  `filename` - name of the file the log message came from (without extension)
+-  `fileName` - name of the file the log message came from (without extension)
 -  `function` - method the log message came from
 -  `line` - line number in file where the log message came from
 -  `timestamp` - when the log message was executed
