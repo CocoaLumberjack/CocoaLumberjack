@@ -1240,7 +1240,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0710;
 				TargetAttributes = {
 					18F3BF5E1A81DD2E00692297 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -2558,6 +2558,7 @@
 				19406BEE1BDBABFF001194DC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		19D90B231BBFA9DB00947169 /* Build configuration list for PBXNativeTarget "CocoaLumberjack-tvOS" */ = {
 			isa = XCConfigurationList;
