@@ -41,8 +41,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         DDLogError("Error", level: ourLogLevel);
         
         DDLogError("Error \(5)", level: ourLogLevel);
-        
-        sharedLogTest()
     }
 
 	func applicationWillTerminate(aNotification: NSNotification) {
