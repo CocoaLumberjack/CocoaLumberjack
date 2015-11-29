@@ -101,27 +101,27 @@
  */
 typedef NS_OPTIONS(NSUInteger, DDLogFlag){
     /**
-     *  0...00000 DDLogFlagError
+     *  0...00001 DDLogFlagError
      */
     DDLogFlagError      = (1 << 0),
     
     /**
-     *  0...00001 DDLogFlagWarning
+     *  0...00010 DDLogFlagWarning
      */
     DDLogFlagWarning    = (1 << 1),
     
     /**
-     *  0...00010 DDLogFlagInfo
+     *  0...00100 DDLogFlagInfo
      */
     DDLogFlagInfo       = (1 << 2),
     
     /**
-     *  0...00100 DDLogFlagDebug
+     *  0...01000 DDLogFlagDebug
      */
     DDLogFlagDebug      = (1 << 3),
     
     /**
-     *  0...01000 DDLogFlagVerbose
+     *  0...10000 DDLogFlagVerbose
      */
     DDLogFlagVerbose    = (1 << 4)
 };
