@@ -104,7 +104,7 @@ This will add a pair of "loggers" to the logging framework. In other words, your
 Part of the power of the logging framework is its flexibility. If you also wanted your log statements to be written to a file, then you could add and configure a file logger:
 
 ```objective-c
-fileLogger = [[DDFileLogger alloc] init];
+DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
 fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
 fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
 
