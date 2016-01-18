@@ -18,6 +18,14 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogInfo(@"Info");
     DDLogWarn(@"Warn");
     DDLogError(@"Error");
+    
+    DDLog *aDDLogInstance = [DDLog new];
+    [aDDLogInstance addLogger:[DDTTYLogger sharedInstance]];
+    
+    DDLogVerboseToDDLog(aDDLogInstance, @"Verbose from aDDLogInstance");
+    DDLogInfoToDDLog(aDDLogInstance, @"Info from aDDLogInstance");
+    DDLogWarnToDDLog(aDDLogInstance, @"Warn from aDDLogInstance");
+    DDLogErrorToDDLog(aDDLogInstance, @"Error from aDDLogInstance");
 }
 
 @end
