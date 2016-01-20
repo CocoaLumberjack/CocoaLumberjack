@@ -666,6 +666,14 @@ static NSUInteger _numProcessors;
     // Add to loggers array.
     // Need to create loggerQueue if loggerNode doesn't provide one.
 
+    for (DDLoggerNode* node in self._loggers) {
+        if (node->_logger == logger
+            && node->_level == level) {
+            // Exactly same logger already added, exit
+            return;
+        }
+    }
+
     NSAssert(dispatch_get_specific(GlobalLoggingQueueIdentityKey),
              @"This method should only be run on the logging thread/queue");
 
