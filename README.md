@@ -57,7 +57,7 @@ platform :ios, '7.0'
 pod 'CocoaLumberjack'
 ```
 
-##### Objc-C usage
+##### Obj-C usage
 If you're using Lumberjack as a framework, you can `@import CocoaLumberjack`.
 
 Otherwise, `#import <CocoaLumberjack/CocoaLumberjack.h>`
