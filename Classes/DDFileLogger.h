@@ -327,6 +327,9 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *   The frequency is given as an `NSTimeInterval`, which is a double that specifies the interval in seconds.
  *   Once the log file gets to be this old, it is rolled.
  *
+ * `doNotReuseLogFiles`
+ *   When set, will always create a new log file at application launch.
+ *
  * Both the `maximumFileSize` and the `rollingFrequency` are used to manage rolling.
  * Whichever occurs first will cause the log file to be rolled.
  *
