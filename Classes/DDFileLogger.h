@@ -318,7 +318,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  * Log File Rolling:
  *
  * `maximumFileSize`:
- *   The approximate maximum size to allow log files to grow.
+ *   The approximate maximum size (in bytes) to allow log files to grow.
  *   If a log file is larger than this value after a log statement is appended,
  *   then the log file is rolled.
  *
