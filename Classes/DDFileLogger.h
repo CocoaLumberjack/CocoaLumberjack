@@ -330,6 +330,9 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  * `doNotReuseLogFiles`
  *   When set, will always create a new log file at application launch.
  *
+ * `rollEveryDay`
+ *   When set, will create new log file every day.
+ *
  * Both the `maximumFileSize` and the `rollingFrequency` are used to manage rolling.
  * Whichever occurs first will cause the log file to be rolled.
  *
@@ -359,6 +362,11 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *  See description for `maximumFileSize`
  */
 @property (readwrite, assign, atomic) BOOL doNotReuseLogFiles;
+
+/**
+ *  See description for `maximumFileSize`
+ */
+@property (readwrite, assign, atomic) BOOL rollEveryDay;
 
 /**
  * The DDLogFileManager instance can be used to retrieve the list of log files,
