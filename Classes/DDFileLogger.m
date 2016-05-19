@@ -742,7 +742,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         _rollingTimer = NULL;
     }
 
-    if (_currentLogFileInfo == nil || _rollingFrequency <= 0.0 || (_rollEveryDay && _rollingFrequency >= kDDOneDayTimeInterval)) {
+    if (_currentLogFileInfo == nil || _rollingFrequency <= 0.0 || [self canNotRollLogFileDueToAgeSettings]) {
         return;
     }
 
@@ -844,7 +844,10 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 }
 
 - (void)maybeRollLogFileDueToAge {
-    if ((_rollingFrequency > 0.0 || (_rollEveryDay && _rollingFrequency >= kDDOneDayTimeInterval)) && _currentLogFileInfo.age >= _rollingFrequency) {
+	if ([self canNotRollLogFileDueToAgeSettings]) {
+		return;
+	}
+    if (_rollingFrequency > 0.0 && _currentLogFileInfo.age >= _rollingFrequency) {
         NSLogVerbose(@"DDFileLogger: Rolling log file due to age...");
 
         [self rollLogFileNow];
@@ -887,6 +890,14 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 	[[NSCalendar currentCalendar] rangeOfUnit:NSCalendarUnitDay startDate:&today interval:nil forDate:today];
 	
 	return [logFileCreationDate isEqualToDate:today];
+}
+
+/**
+ * If rollEveryDay enabled and rollingFrequency more or equal 24 hours, 
+ * rolling by rollingFrequency will never happen.
+ **/
+- (BOOL)canNotRollLogFileDueToAgeSettings {
+	return _rollEveryDay && _rollingFrequency >= kDDOneDayTimeInterval;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
