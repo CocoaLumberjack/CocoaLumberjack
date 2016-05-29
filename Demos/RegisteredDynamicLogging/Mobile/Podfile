@@ -2,9 +2,8 @@
 xcodeproj 'RegisteredLoggingTest'
 workspace '../../Demos'
 
-target :RLT_ios do
+target :'RegisteredLoggingTest' do
   platform :ios, '5.0'
-  link_with 'RegisteredLoggingTest'
   pod 'CocoaLumberjack', :path => '../../../'
 end
 

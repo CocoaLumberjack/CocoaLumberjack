@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		269E3D521B4E4D6485207687 /* libPods-NAT_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51FE4112442C455DB92C0523 /* libPods-NAT_osx.a */; };
+		2138820E7EA5E279A3154364 /* libPods-NonArcTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CAFDC3C5C69E9479A1A6422 /* libPods-NonArcTest.a */; };
 		DCA67DEF146B531D003411EE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCA67DEE146B531D003411EE /* Cocoa.framework */; };
 		DCA67DF9146B531D003411EE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCA67DF7146B531D003411EE /* InfoPlist.strings */; };
 		DCA67DFB146B531D003411EE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DFA146B531D003411EE /* main.m */; };
@@ -17,8 +17,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		51FE4112442C455DB92C0523 /* libPods-NAT_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NAT_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		984FF9590639445E946AC15C /* Pods-NAT_osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NAT_osx.xcconfig"; path = "Pods/Pods-NAT_osx.xcconfig"; sourceTree = "<group>"; };
+		73588C7819855AE94477DBD1 /* Pods-NonArcTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NonArcTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NonArcTest/Pods-NonArcTest.debug.xcconfig"; sourceTree = "<group>"; };
+		9CAFDC3C5C69E9479A1A6422 /* libPods-NonArcTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NonArcTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D435F5F11D7862454A848E55 /* Pods-NonArcTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NonArcTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-NonArcTest/Pods-NonArcTest.release.xcconfig"; sourceTree = "<group>"; };
 		DCA67DEA146B531D003411EE /* NonArcTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NonArcTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCA67DEE146B531D003411EE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DCA67DF1146B531D003411EE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -40,7 +41,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCA67DEF146B531D003411EE /* Cocoa.framework in Frameworks */,
-				269E3D521B4E4D6485207687 /* libPods-NAT_osx.a in Frameworks */,
+				2138820E7EA5E279A3154364 /* libPods-NonArcTest.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,7 +54,7 @@
 				DCA67DF4146B531D003411EE /* NonArcTest */,
 				DCA67DED146B531D003411EE /* Frameworks */,
 				DCA67DEB146B531D003411EE /* Products */,
-				984FF9590639445E946AC15C /* Pods-NAT_osx.xcconfig */,
+				EE2B820735CD3D5313EBAA71 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -70,7 +71,7 @@
 			children = (
 				DCA67DEE146B531D003411EE /* Cocoa.framework */,
 				DCA67DF0146B531D003411EE /* Other Frameworks */,
-				51FE4112442C455DB92C0523 /* libPods-NAT_osx.a */,
+				9CAFDC3C5C69E9479A1A6422 /* libPods-NonArcTest.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -108,6 +109,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		EE2B820735CD3D5313EBAA71 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				73588C7819855AE94477DBD1 /* Pods-NonArcTest.debug.xcconfig */,
+				D435F5F11D7862454A848E55 /* Pods-NonArcTest.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -115,11 +125,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCA67E08146B531E003411EE /* Build configuration list for PBXNativeTarget "NonArcTest" */;
 			buildPhases = (
-				57AAB2FE9257497AB04E31B6 /* Check Pods Manifest.lock */,
+				57AAB2FE9257497AB04E31B6 /* 📦 Check Pods Manifest.lock */,
 				DCA67DE6146B531D003411EE /* Sources */,
 				DCA67DE7146B531D003411EE /* Frameworks */,
 				DCA67DE8146B531D003411EE /* Resources */,
-				8241FE795A7C4F108AED0BFC /* Copy Pods Resources */,
+				8241FE795A7C4F108AED0BFC /* 📦 Copy Pods Resources */,
+				044326A82041199E29581CED /* 📦 Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -169,14 +180,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		57AAB2FE9257497AB04E31B6 /* Check Pods Manifest.lock */ = {
+		044326A82041199E29581CED /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NonArcTest/Pods-NonArcTest-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		57AAB2FE9257497AB04E31B6 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -184,19 +210,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		8241FE795A7C4F108AED0BFC /* Copy Pods Resources */ = {
+		8241FE795A7C4F108AED0BFC /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-NAT_osx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NonArcTest/Pods-NonArcTest-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -304,7 +330,7 @@
 		};
 		DCA67E09146B531E003411EE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 984FF9590639445E946AC15C /* Pods-NAT_osx.xcconfig */;
+			baseConfigurationReference = 73588C7819855AE94477DBD1 /* Pods-NonArcTest.debug.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -317,7 +343,7 @@
 		};
 		DCA67E0A146B531E003411EE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 984FF9590639445E946AC15C /* Pods-NAT_osx.xcconfig */;
+			baseConfigurationReference = D435F5F11D7862454A848E55 /* Pods-NonArcTest.release.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

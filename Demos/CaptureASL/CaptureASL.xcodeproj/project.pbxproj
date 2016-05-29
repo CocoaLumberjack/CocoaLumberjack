@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		67FD3EE1A75049F3A4D222F9 /* libPods-CASL_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCB8815FC484C38B9524337 /* libPods-CASL_ios.a */; };
+		518D82590E336D9F9BFE0A7E /* libPods-CaptureASL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1BC17EBE138CC685264544F /* libPods-CaptureASL.a */; };
 		E50619821A2EF295000F835A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E50619811A2EF295000F835A /* Main.storyboard */; };
 		E5AE803B18DA83A400E0501F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803A18DA83A400E0501F /* Foundation.framework */; };
 		E5AE803D18DA83A400E0501F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803C18DA83A400E0501F /* CoreGraphics.framework */; };
@@ -20,9 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4CCB8815FC484C38B9524337 /* libPods-CASL_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CASL_ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5ED6F02A728626894B1B3E54 /* Pods-CASL_ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CASL_ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-CASL_ios/Pods-CASL_ios.release.xcconfig"; sourceTree = "<group>"; };
-		96422D55A69049EE226D5569 /* Pods-CASL_ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CASL_ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CASL_ios/Pods-CASL_ios.debug.xcconfig"; sourceTree = "<group>"; };
+		2B14D3038267666EE0AC2330 /* Pods-CaptureASL.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaptureASL.release.xcconfig"; path = "Pods/Target Support Files/Pods-CaptureASL/Pods-CaptureASL.release.xcconfig"; sourceTree = "<group>"; };
+		7B384ACDCD40E28D8AE989BA /* Pods-CaptureASL.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaptureASL.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CaptureASL/Pods-CaptureASL.debug.xcconfig"; sourceTree = "<group>"; };
+		B1BC17EBE138CC685264544F /* libPods-CaptureASL.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CaptureASL.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E50619811A2EF295000F835A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E5AE803718DA83A400E0501F /* CaptureASL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptureASL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AE803A18DA83A400E0501F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -48,7 +48,7 @@
 				E5AE803D18DA83A400E0501F /* CoreGraphics.framework in Frameworks */,
 				E5AE803F18DA83A400E0501F /* UIKit.framework in Frameworks */,
 				E5AE803B18DA83A400E0501F /* Foundation.framework in Frameworks */,
-				67FD3EE1A75049F3A4D222F9 /* libPods-CASL_ios.a in Frameworks */,
+				518D82590E336D9F9BFE0A7E /* libPods-CaptureASL.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,8 +58,8 @@
 		A0D458FE10FDDAC08B8FA4E3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				96422D55A69049EE226D5569 /* Pods-CASL_ios.debug.xcconfig */,
-				5ED6F02A728626894B1B3E54 /* Pods-CASL_ios.release.xcconfig */,
+				7B384ACDCD40E28D8AE989BA /* Pods-CaptureASL.debug.xcconfig */,
+				2B14D3038267666EE0AC2330 /* Pods-CaptureASL.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -89,7 +89,7 @@
 				E5AE803C18DA83A400E0501F /* CoreGraphics.framework */,
 				E5AE803E18DA83A400E0501F /* UIKit.framework */,
 				E5AE805918DA83A400E0501F /* XCTest.framework */,
-				4CCB8815FC484C38B9524337 /* libPods-CASL_ios.a */,
+				B1BC17EBE138CC685264544F /* libPods-CaptureASL.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -126,11 +126,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5AE806918DA83A500E0501F /* Build configuration list for PBXNativeTarget "CaptureASL" */;
 			buildPhases = (
-				F5E87D2C35224932B7B01D44 /* Check Pods Manifest.lock */,
+				F5E87D2C35224932B7B01D44 /* 📦 Check Pods Manifest.lock */,
 				E5AE803318DA83A400E0501F /* Sources */,
 				E5AE803418DA83A400E0501F /* Frameworks */,
 				E5AE803518DA83A400E0501F /* Resources */,
-				3C38B447E7BD4E5EA6361538 /* Copy Pods Resources */,
+				3C38B447E7BD4E5EA6361538 /* 📦 Copy Pods Resources */,
+				95BBA35CC38C544916A1262B /* 📦 Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -180,29 +181,44 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3C38B447E7BD4E5EA6361538 /* Copy Pods Resources */ = {
+		3C38B447E7BD4E5EA6361538 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CASL_ios/Pods-CASL_ios-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CaptureASL/Pods-CaptureASL-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F5E87D2C35224932B7B01D44 /* Check Pods Manifest.lock */ = {
+		95BBA35CC38C544916A1262B /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CaptureASL/Pods-CaptureASL-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F5E87D2C35224932B7B01D44 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,7 +325,7 @@
 		};
 		E5AE806A18DA83A500E0501F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 96422D55A69049EE226D5569 /* Pods-CASL_ios.debug.xcconfig */;
+			baseConfigurationReference = 7B384ACDCD40E28D8AE989BA /* Pods-CaptureASL.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -323,7 +339,7 @@
 		};
 		E5AE806B18DA83A500E0501F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5ED6F02A728626894B1B3E54 /* Pods-CASL_ios.release.xcconfig */;
+			baseConfigurationReference = 2B14D3038267666EE0AC2330 /* Pods-CaptureASL.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

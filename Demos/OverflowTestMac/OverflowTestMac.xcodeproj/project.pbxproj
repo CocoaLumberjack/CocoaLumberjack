@@ -9,20 +9,20 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* OverflowTestMacAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* OverflowTestMacAppDelegate.m */; };
+		6B14F4BD2B8449ADE12C39D1 /* libPods-OverflowTestMac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1AB3D93C6C1AFAD910D17FA /* libPods-OverflowTestMac.a */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		D3205C5C811D4AC2AB001692 /* libPods-OTM_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F63E519C8C7477E9A90FE09 /* libPods-OTM_osx.a */; };
 		DC01C2131199F39800B91CBD /* SlowLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01C2121199F39800B91CBD /* SlowLogger.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		018B87D76A580328CF6F898C /* Pods-OverflowTestMac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OverflowTestMac.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OverflowTestMac/Pods-OverflowTestMac.debug.xcconfig"; sourceTree = "<group>"; };
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0EE4629C0CC26583DC5C42EE /* Pods-OverflowTestMac.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OverflowTestMac.release.xcconfig"; path = "Pods/Target Support Files/Pods-OverflowTestMac/Pods-OverflowTestMac.release.xcconfig"; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		1F63E519C8C7477E9A90FE09 /* libPods-OTM_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OTM_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2127317EFB94C344C5B4B716 /* Pods-OTM_osx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OTM_osx.release.xcconfig"; path = "Pods/Target Support Files/Pods-OTM_osx/Pods-OTM_osx.release.xcconfig"; sourceTree = "<group>"; };
 		256AC3D80F4B6AC300CF3369 /* OverflowTestMacAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverflowTestMacAppDelegate.h; sourceTree = "<group>"; };
 		256AC3D90F4B6AC300CF3369 /* OverflowTestMacAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverflowTestMacAppDelegate.m; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* OverflowTestMac_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverflowTestMac_Prefix.pch; sourceTree = "<group>"; };
@@ -31,9 +31,9 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* OverflowTestMac-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "OverflowTestMac-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* OverflowTestMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OverflowTestMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1AB3D93C6C1AFAD910D17FA /* libPods-OverflowTestMac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OverflowTestMac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC01C2111199F39800B91CBD /* SlowLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlowLogger.h; sourceTree = "<group>"; };
 		DC01C2121199F39800B91CBD /* SlowLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlowLogger.m; sourceTree = "<group>"; };
-		E373F5EF64A8350638686616 /* Pods-OTM_osx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OTM_osx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OTM_osx/Pods-OTM_osx.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +42,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				D3205C5C811D4AC2AB001692 /* libPods-OTM_osx.a in Frameworks */,
+				6B14F4BD2B8449ADE12C39D1 /* libPods-OverflowTestMac.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,7 +123,7 @@
 			children = (
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
-				1F63E519C8C7477E9A90FE09 /* libPods-OTM_osx.a */,
+				D1AB3D93C6C1AFAD910D17FA /* libPods-OverflowTestMac.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -131,8 +131,8 @@
 		882C7A044F7137EAD29E3D93 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				E373F5EF64A8350638686616 /* Pods-OTM_osx.debug.xcconfig */,
-				2127317EFB94C344C5B4B716 /* Pods-OTM_osx.release.xcconfig */,
+				018B87D76A580328CF6F898C /* Pods-OverflowTestMac.debug.xcconfig */,
+				0EE4629C0CC26583DC5C42EE /* Pods-OverflowTestMac.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -144,11 +144,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "OverflowTestMac" */;
 			buildPhases = (
-				EA844D40087B4639BFF7D47B /* Check Pods Manifest.lock */,
+				EA844D40087B4639BFF7D47B /* 📦 Check Pods Manifest.lock */,
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
-				D135E3DF319649DEB921161F /* Copy Pods Resources */,
+				D135E3DF319649DEB921161F /* 📦 Copy Pods Resources */,
+				A42EF0E34B646D45C1B56162 /* 📦 Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -200,29 +201,44 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		D135E3DF319649DEB921161F /* Copy Pods Resources */ = {
+		A42EF0E34B646D45C1B56162 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OTM_osx/Pods-OTM_osx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OverflowTestMac/Pods-OverflowTestMac-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EA844D40087B4639BFF7D47B /* Check Pods Manifest.lock */ = {
+		D135E3DF319649DEB921161F /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OverflowTestMac/Pods-OverflowTestMac-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EA844D40087B4639BFF7D47B /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,7 +283,7 @@
 /* Begin XCBuildConfiguration section */
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E373F5EF64A8350638686616 /* Pods-OTM_osx.debug.xcconfig */;
+			baseConfigurationReference = 018B87D76A580328CF6F898C /* Pods-OverflowTestMac.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -287,7 +303,7 @@
 		};
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2127317EFB94C344C5B4B716 /* Pods-OTM_osx.release.xcconfig */;
+			baseConfigurationReference = 0EE4629C0CC26583DC5C42EE /* Pods-OverflowTestMac.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;

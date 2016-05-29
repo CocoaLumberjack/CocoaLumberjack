@@ -2,9 +2,8 @@
 xcodeproj 'SQLiteLogger'
 workspace '../Demos'
 
-target :SQLL_osx do
+target :'SQLiteLogger' do
   platform :osx, '10.7'
-  link_with 'SQLiteLogger'
   pod 'CocoaLumberjack', :path => '../../'
 end
 

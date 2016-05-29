@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1C2EF26CA49246A98E4F5CD7 /* libPods-CDL_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC7A9B6117D4036860BA066 /* libPods-CDL_osx.a */; };
+		2A07D753B25C0BB221C69A71 /* libPods-CoreDataLogger.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1C4BDF29E907B44839B17AC /* libPods-CoreDataLogger.a */; };
 		DCE86C0E1343C419004FD85F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE86C0D1343C419004FD85F /* Cocoa.framework */; };
 		DCE86C181343C419004FD85F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCE86C161343C419004FD85F /* InfoPlist.strings */; };
 		DCE86C1B1343C419004FD85F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE86C1A1343C419004FD85F /* main.m */; };
@@ -20,8 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6EC7A9B6117D4036860BA066 /* libPods-CDL_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CDL_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A3C9FD7691469B5A00AA4E31 /* Pods-CDL_osx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CDL_osx.release.xcconfig"; path = "Pods/Target Support Files/Pods-CDL_osx/Pods-CDL_osx.release.xcconfig"; sourceTree = "<group>"; };
+		14537C8B30AF95E18BCEA654 /* Pods-CoreDataLogger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreDataLogger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoreDataLogger/Pods-CoreDataLogger.debug.xcconfig"; sourceTree = "<group>"; };
+		460BF95AC1FE68D1CE0626A5 /* Pods-CoreDataLogger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreDataLogger.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoreDataLogger/Pods-CoreDataLogger.release.xcconfig"; sourceTree = "<group>"; };
 		DCE86C091343C419004FD85F /* CoreDataLogger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataLogger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCE86C0D1343C419004FD85F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DCE86C101343C419004FD85F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -40,7 +40,7 @@
 		DCE86C521343C64F004FD85F /* CocoaBotLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CocoaBotLog.xcdatamodel; sourceTree = "<group>"; };
 		DCE86C531343C64F004FD85F /* LogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogEntry.h; path = CoreDataLogger/LogEntry.h; sourceTree = "<group>"; };
 		DCE86C541343C64F004FD85F /* LogEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogEntry.m; path = CoreDataLogger/LogEntry.m; sourceTree = "<group>"; };
-		EF6DC9F7EE93E86604607432 /* Pods-CDL_osx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CDL_osx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CDL_osx/Pods-CDL_osx.debug.xcconfig"; sourceTree = "<group>"; };
+		F1C4BDF29E907B44839B17AC /* libPods-CoreDataLogger.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CoreDataLogger.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,7 +49,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCE86C0E1343C419004FD85F /* Cocoa.framework in Frameworks */,
-				1C2EF26CA49246A98E4F5CD7 /* libPods-CDL_osx.a in Frameworks */,
+				2A07D753B25C0BB221C69A71 /* libPods-CoreDataLogger.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,8 +59,8 @@
 		029654B0E34E31A09088B9E8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EF6DC9F7EE93E86604607432 /* Pods-CDL_osx.debug.xcconfig */,
-				A3C9FD7691469B5A00AA4E31 /* Pods-CDL_osx.release.xcconfig */,
+				14537C8B30AF95E18BCEA654 /* Pods-CoreDataLogger.debug.xcconfig */,
+				460BF95AC1FE68D1CE0626A5 /* Pods-CoreDataLogger.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -89,7 +89,7 @@
 			children = (
 				DCE86C0D1343C419004FD85F /* Cocoa.framework */,
 				DCE86C0F1343C419004FD85F /* Other Frameworks */,
-				6EC7A9B6117D4036860BA066 /* libPods-CDL_osx.a */,
+				F1C4BDF29E907B44839B17AC /* libPods-CoreDataLogger.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -154,11 +154,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCE86C2A1343C41A004FD85F /* Build configuration list for PBXNativeTarget "CoreDataLogger" */;
 			buildPhases = (
-				8CCA0EBBED064C809FFE26DE /* Check Pods Manifest.lock */,
+				8CCA0EBBED064C809FFE26DE /* 📦 Check Pods Manifest.lock */,
 				DCE86C051343C419004FD85F /* Sources */,
 				DCE86C061343C419004FD85F /* Frameworks */,
 				DCE86C071343C419004FD85F /* Resources */,
-				9F7D57202A9B442FA2531632 /* Copy Pods Resources */,
+				9F7D57202A9B442FA2531632 /* 📦 Copy Pods Resources */,
+				FDE181D6DC62955D85D834F7 /* 📦 Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -208,14 +209,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8CCA0EBBED064C809FFE26DE /* Check Pods Manifest.lock */ = {
+		8CCA0EBBED064C809FFE26DE /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -223,19 +224,34 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		9F7D57202A9B442FA2531632 /* Copy Pods Resources */ = {
+		9F7D57202A9B442FA2531632 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CDL_osx/Pods-CDL_osx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CoreDataLogger/Pods-CoreDataLogger-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FDE181D6DC62955D85D834F7 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CoreDataLogger/Pods-CoreDataLogger-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -337,7 +353,7 @@
 		};
 		DCE86C2B1343C41A004FD85F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EF6DC9F7EE93E86604607432 /* Pods-CDL_osx.debug.xcconfig */;
+			baseConfigurationReference = 14537C8B30AF95E18BCEA654 /* Pods-CoreDataLogger.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -355,7 +371,7 @@
 		};
 		DCE86C2C1343C41A004FD85F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A3C9FD7691469B5A00AA4E31 /* Pods-CDL_osx.release.xcconfig */;
+			baseConfigurationReference = 460BF95AC1FE68D1CE0626A5 /* Pods-CoreDataLogger.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;

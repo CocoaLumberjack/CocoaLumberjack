@@ -2,9 +2,8 @@
 xcodeproj 'WebServerIPhone'
 workspace '../Demos'
 
-target :WSIP_ios do
+target :'WebServerIPhone' do
   platform :ios, '5.0'
-  link_with 'WebServerIPhone'
   pod 'CocoaLumberjack', :path => '../../'
 end
 

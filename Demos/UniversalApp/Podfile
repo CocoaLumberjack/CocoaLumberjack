@@ -2,9 +2,8 @@
 xcodeproj 'UniversalApp'
 workspace '../Demos'
 
-target :UA_ios do
+target :'UniversalApp' do
   platform :ios, '5.0'
-  link_with 'UniversalApp'
   pod 'CocoaLumberjack', :path => '../../'
 end
 
