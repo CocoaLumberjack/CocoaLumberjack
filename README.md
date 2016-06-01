@@ -204,3 +204,9 @@ The current version of Lumberjack requires:
 
 ### License
 - CocoaLumberjack is available under the BSD license. See the [LICENSE file](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/LICENSE.txt).
+
+### Architecture
+
+<p align="center" >
+    <img src="Documentation/CocoaLumberjackClassDiagram.png" title="CocoaLumberjack class diagram">
+</p>
