@@ -8,3 +8,5 @@ If you need a different log level for every logger (i.e. if you have a custom lo
 ```
 
 You can still use the old method `+addLogger:`, this one uses the `DDLogLevelVerbose` as default, so no log is excluded.
+
+You can retrieve the list of every logger and level associated to DDLog via the `[DDLog allLoggersWithLevel]` method.
