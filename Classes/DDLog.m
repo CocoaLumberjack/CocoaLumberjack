@@ -291,6 +291,20 @@ static NSUInteger _numProcessors;
     return theLoggers;
 }
 
++ (NSArray *)allLoggersWithLevel {
+    return [self.sharedInstance allLoggersWithLevel];
+}
+
+- (NSArray *)allLoggersWithLevel {
+    __block NSArray *theLoggersWithLevel;
+    
+    dispatch_sync(_loggingQueue, ^{ @autoreleasepool {
+        theLoggersWithLevel = [self lt_allLoggersWithLevel];
+    } });
+    
+    return theLoggersWithLevel;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Master Logging
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -768,6 +782,20 @@ static NSUInteger _numProcessors;
     }
 
     return [theLoggers copy];
+}
+
+- (NSArray *)lt_allLoggersWithLevel {
+    NSAssert(dispatch_get_specific(GlobalLoggingQueueIdentityKey),
+             @"This method should only be run on the logging thread/queue");
+    
+    NSMutableArray *theLoggersWithLevel = [NSMutableArray new];
+    
+    for (DDLoggerNode *loggerNode in self._loggers) {
+        [theLoggersWithLevel addObject:[DDLoggerInformation informationWithLogger:loggerNode->_logger
+                                                                         andLevel:loggerNode->_level]];
+    }
+    
+    return [theLoggersWithLevel copy];
 }
 
 - (void)lt_log:(DDLogMessage *)logMessage {
@@ -1285,6 +1313,36 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
     void *key = (__bridge void *)self;
 
     return (dispatch_get_specific(key) != NULL);
+}
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@interface DDLoggerInformation()
+{
+    // Direct accessors to be used only for performance
+    @public
+    id <DDLogger> _logger;
+    DDLogLevel _level;
+}
+
+@end
+
+@implementation DDLoggerInformation
+
+- (instancetype)initWithLogger:(id <DDLogger>)logger andLevel:(DDLogLevel)level {
+    if ((self = [super init])) {
+        _logger = logger;
+        _level = level;
+    }
+    return self;
+}
+
++ (DDLoggerInformation *)informationWithLogger:(id <DDLogger>)logger andLevel:(DDLogLevel)level {
+    return [[DDLoggerInformation alloc] initWithLogger:logger andLevel:level];
 }
 
 @end
