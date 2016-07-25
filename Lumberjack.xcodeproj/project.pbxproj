@@ -1749,7 +1749,7 @@
 				PRODUCT_NAME = CocoaLumberjackSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvos appletvsimulator";
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
@@ -1778,7 +1778,7 @@
 				PRODUCT_NAME = CocoaLumberjackSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvos appletvsimulator";
+				SUPPORTED_PLATFORMS = macosx;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 				WRAPPER_EXTENSION = framework;
@@ -1913,7 +1913,7 @@
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SUPPORTED_PLATFORMS = watchos;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 				WRAPPER_EXTENSION = framework;
@@ -1938,7 +1938,7 @@
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SUPPORTED_PLATFORMS = watchos;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 				WRAPPER_EXTENSION = framework;
@@ -1962,7 +1962,7 @@
 				PRODUCT_NAME = CocoaLumberjackSwift;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SUPPORTED_PLATFORMS = watchos;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 				WRAPPER_EXTENSION = framework;
@@ -1986,7 +1986,7 @@
 				PRODUCT_NAME = CocoaLumberjackSwift;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SUPPORTED_PLATFORMS = watchos;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 				WRAPPER_EXTENSION = framework;
@@ -2049,7 +2049,7 @@
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				SUPPORTED_PLATFORMS = appletvos;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
@@ -2072,7 +2072,7 @@
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				SUPPORTED_PLATFORMS = appletvos;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
@@ -2094,7 +2094,7 @@
 				PRODUCT_NAME = CocoaLumberjackSwift;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				SUPPORTED_PLATFORMS = appletvos;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
@@ -2116,7 +2116,7 @@
 				PRODUCT_NAME = CocoaLumberjackSwift;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				SUPPORTED_PLATFORMS = appletvos;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
@@ -2444,7 +2444,7 @@
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvsimulator appletvos";
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
@@ -2473,7 +2473,7 @@
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvsimulator appletvos";
+				SUPPORTED_PLATFORMS = macosx;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 				WRAPPER_EXTENSION = framework;
