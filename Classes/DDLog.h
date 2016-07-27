@@ -492,6 +492,16 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 - (NSArray *)allLoggers;
 
 /**
+ *  Return all the current loggers with their level (aka DDLoggerInformation).
+ */
++ (NSArray *)allLoggersWithLevel;
+
+/**
+ *  Return all the current loggers with their level (aka DDLoggerInformation).
+ */
+- (NSArray *)allLoggersWithLevel;
+
+/**
  * Registered Dynamic Logging
  *
  * These methods allow you to obtain a list of classes that are using registered dynamic logging,
@@ -857,3 +867,16 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
 
 @end
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@interface DDLoggerInformation : NSObject
+
+@property (nonatomic, readonly) id <DDLogger> logger;
+@property (nonatomic, readonly) DDLogLevel level;
+
++ (DDLoggerInformation *)informationWithLogger:(id <DDLogger>)logger
+                           andLevel:(DDLogLevel)level;
+
+@end
