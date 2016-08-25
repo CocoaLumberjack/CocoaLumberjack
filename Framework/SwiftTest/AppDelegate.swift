@@ -16,7 +16,7 @@ let ourLogLevel = DDLogLevel.Verbose
 class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet weak var window: NSWindow!
     
-	func applicationDidFinishLaunching(aNotification: NSNotification) {
+	func applicationDidFinishLaunching(_ aNotification: Notification) {
         DDLog.addLogger(DDTTYLogger.sharedInstance())
 		
         defaultDebugLevel = .Warning
@@ -53,7 +53,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         DDLogError("Error from aDDLogInstance", ddlog: aDDLogInstance)
     }
 
-	func applicationWillTerminate(aNotification: NSNotification) {
+	func applicationWillTerminate(_ aNotification: Notification) {
 		// Insert code here to tear down your application
 	}
 }
