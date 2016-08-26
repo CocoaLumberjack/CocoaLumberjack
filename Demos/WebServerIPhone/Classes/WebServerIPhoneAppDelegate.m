@@ -100,7 +100,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
                                    userInfo:nil
                                     repeats:YES];
     
-    [window addSubview:viewController.view];
+    [window setRootViewController:viewController];
     [window makeKeyAndVisible];
 }
 
