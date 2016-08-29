@@ -100,3 +100,30 @@ public func CurrentFileName(fileName: StaticString = #file) -> String {
     }
     return str
 }
+
+///To adapted swift
+public func DLogDebug(items: Any..., separator: String = " ", level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: AnyObject? = nil, asynchronous async: Bool = true, ddlog: DDLog = DDLog.sharedInstance()) {
+    _DLogMessage(items, separator: separator, level: level, flag: .Info, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
+}
+
+public func DLogInfo(items: Any..., separator: String = " ", level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: AnyObject? = nil, asynchronous async: Bool = true, ddlog: DDLog = DDLog.sharedInstance()) {
+    _DLogMessage(items, separator: separator, level: level, flag: .Info, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
+}
+
+public func DLogWarn(items: Any..., separator: String = " ", level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: AnyObject? = nil, asynchronous async: Bool = true, ddlog: DDLog = DDLog.sharedInstance()) {
+    _DLogMessage(items, separator: separator, level: level, flag: .Info, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
+}
+
+public func DLogVerbose(items: Any..., separator: String = " ", level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: AnyObject? = nil, asynchronous async: Bool = true, ddlog: DDLog = DDLog.sharedInstance()) {
+    _DLogMessage(items, separator: separator, level: level, flag: .Info, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
+}
+
+public func DLogError(items: Any..., separator: String = " ", level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: AnyObject? = nil, asynchronous async: Bool = false, ddlog: DDLog = DDLog.sharedInstance()) {
+    _DLogMessage(items, separator: separator, level: level, flag: .Info, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
+}
+
+public func _DLogMessage(items: [Any], separator: String, level: DDLogLevel, flag: DDLogFlag, context: Int, file: StaticString, function: StaticString, line: UInt, tag: AnyObject?, asynchronous: Bool, ddlog: DDLog) {
+    let str = items.reduce("") { return $0 + "\($1)" + separator }
+    _DDLogMessage(str, level: level, flag: .Info, context: context, file: file, function: function, line: line, tag: tag, asynchronous: asynchronous, ddlog: ddlog)
+}
+
