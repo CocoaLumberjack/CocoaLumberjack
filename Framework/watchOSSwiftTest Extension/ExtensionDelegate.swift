@@ -10,7 +10,7 @@ import WatchKit
 import CocoaLumberjack
 import CocoaLumberjackSwift
 
-let ddloglevel = DDLogLevel.Verbose
+let ddloglevel = DDLogLevel.verbose
 
 private func printSomething() {
     DDLogVerbose("Verbose");
@@ -27,7 +27,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         
         let formatter = Formatter()
         DDTTYLogger.sharedInstance().logFormatter = formatter
-        DDLog.addLogger(DDTTYLogger.sharedInstance())
+        DDLog.add(DDTTYLogger.sharedInstance())
         
         DDLogVerbose("Verbose");
         DDLogDebug("Debug");
@@ -41,14 +41,4 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         
         printSomething()
     }
-
-    func applicationDidBecomeActive() {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-
-    func applicationWillResignActive() {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, etc.
-    }
-
 }
