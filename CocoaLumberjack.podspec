@@ -50,6 +50,7 @@ Pod::Spec.new do |s|
     ss.osx.deployment_target = '10.10'
     ss.watchos.deployment_target = '2.0'
     ss.tvos.deployment_target = '9.0'
+	ss.xcconfig = { 'SWIFT_VERSION' => '3.0' }
     ss.source_files = 'Classes/CocoaLumberjack.swift'
     ss.dependency 'CocoaLumberjack/Extensions'
   end
