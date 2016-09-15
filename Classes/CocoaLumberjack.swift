@@ -16,7 +16,7 @@
 import Foundation
 
 extension DDLogFlag {
-    public static func fromLogLevel(_ logLevel: DDLogLevel) -> DDLogFlag {
+    public static func from(_ logLevel: DDLogLevel) -> DDLogFlag {
         return DDLogFlag(rawValue: logLevel.rawValue)
     }
 	
@@ -26,20 +26,18 @@ extension DDLogFlag {
     
     ///returns the log level, or the lowest equivalant.
     public func toLogLevel() -> DDLogLevel {
-        if let ourValid = DDLogLevel(rawValue: self.rawValue) {
+        if let ourValid = DDLogLevel(rawValue: rawValue) {
             return ourValid
         } else {
-            let logFlag:DDLogFlag = self
-            
-            if logFlag.contains(.verbose) {
+            if contains(.verbose) {
                 return .verbose
-            } else if logFlag.contains(.debug) {
+            } else if contains(.debug) {
                 return .debug
-            } else if logFlag.contains(.info) {
+            } else if contains(.info) {
                 return .info
-            } else if logFlag.contains(.warning) {
+            } else if contains(.warning) {
                 return .warning
-            } else if logFlag.contains(.error) {
+            } else if contains(.error) {
                 return .error
             } else {
                 return .off
@@ -63,7 +61,7 @@ public func _DDLogMessage(_ message: @autoclosure () -> String, level: DDLogLeve
     if level.rawValue & flag.rawValue != 0 {
         // Tell the DDLogMessage constructor to copy the C strings that get passed to it.
         let logMessage = DDLogMessage(message: message(), level: level, flag: flag, context: context, file: String(describing: file), function: String(describing: function), line: line, tag: tag, options: [.copyFile, .copyFunction], timestamp: nil)
-        ddlog.log(asynchronous, message: logMessage)
+        ddlog.log(asynchronous: asynchronous, message: logMessage)
     }
 }
 
