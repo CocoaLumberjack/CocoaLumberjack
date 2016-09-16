@@ -52,11 +52,6 @@ public func resetDefaultDebugLevel() {
     defaultDebugLevel = DDLogLevel.verbose
 }
 
-@available(*, deprecated, message: "Use one of the DDLog*() functions if appropriate or call _DDLogMessage()")
-public func SwiftLogMacro(_ isAsynchronous: Bool, level: DDLogLevel, flag flg: DDLogFlag, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, string: @autoclosure () -> String, ddlog: DDLog = DDLog.sharedInstance()) {
-    _DDLogMessage(string, level: level, flag: flg, context: context, file: file, function: function, line: line, tag: tag, asynchronous: isAsynchronous, ddlog: ddlog)
-}
-
 public func _DDLogMessage(_ message: @autoclosure () -> String, level: DDLogLevel, flag: DDLogFlag, context: Int, file: StaticString, function: StaticString, line: UInt, tag: Any?, asynchronous: Bool, ddlog: DDLog) {
     if level.rawValue & flag.rawValue != 0 {
         // Tell the DDLogMessage constructor to copy the C strings that get passed to it.
