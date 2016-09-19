@@ -52,6 +52,10 @@ Pod::Spec.new do |s|
     ss.tvos.deployment_target = '9.0'
     ss.source_files = 'Classes/CocoaLumberjack.swift'
     ss.dependency 'CocoaLumberjack/Extensions'
+
+    ss.xcconfig = {
+      'SWIFT_VERSION' => '2.3'
+    }
   end
   
 end
