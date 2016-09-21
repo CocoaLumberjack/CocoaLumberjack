@@ -1,3 +1,6 @@
+## [3.0.0 - Swift 3.0, Xcode 8 on Sep 21st, 2016](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.0.0)
+- Swift 3.0 and Xcode 8 support via #769, fixes #771 and #772. Many thanks to @ffried @max-potapov @chrisdoc @BarakRL @devxoul and the others who contributed
+
 ## [2.4.0 - Swift 2.3 on Sep 19th, 2016](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.4.0)
 - Swift 2.3 explicit so that the project compiles on Xcode 8 - #747 #773 fix #762 #763 #766
 - CocoaPods 1.0.0 fully adopted - 0f5a793 637dfc1 70439fe #729
