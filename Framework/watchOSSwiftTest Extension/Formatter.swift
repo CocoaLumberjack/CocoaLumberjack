@@ -10,30 +10,30 @@ import Foundation
 import CocoaLumberjack.DDDispatchQueueLogFormatter
 
 class Formatter: DDDispatchQueueLogFormatter {
-    let threadUnsafeDateFormatter: NSDateFormatter
+    let threadUnsafeDateFormatter: DateFormatter
     
     override init() {
-        threadUnsafeDateFormatter = NSDateFormatter()
-        threadUnsafeDateFormatter.formatterBehavior = .Behavior10_4
+        threadUnsafeDateFormatter = DateFormatter()
+        threadUnsafeDateFormatter.formatterBehavior = .behavior10_4
         threadUnsafeDateFormatter.dateFormat = "HH:mm:ss.SSS"
         
         super.init()
     }
     
-    override func formatLogMessage(logMessage: DDLogMessage!) -> String {
-        let dateAndTime = threadUnsafeDateFormatter.stringFromDate(logMessage.timestamp)
+    override func format(message logMessage: DDLogMessage!) -> String {
+        let dateAndTime = threadUnsafeDateFormatter.string(from: logMessage.timestamp)
         
         var logLevel: String
         let logFlag = logMessage.flag
-        if logFlag.contains(.Error) {
+        if logFlag.contains(.error) {
             logLevel = "E"
-        } else if logFlag.contains(.Warning){
+        } else if logFlag.contains(.warning){
             logLevel = "W"
-        } else if logFlag.contains(.Info) {
+        } else if logFlag.contains(.info) {
             logLevel = "I"
-        } else if logFlag.contains(.Debug) {
+        } else if logFlag.contains(.debug) {
             logLevel = "D"
-        } else if logFlag.contains(.Verbose) {
+        } else if logFlag.contains(.verbose) {
             logLevel = "V"
         } else {
             logLevel = "?"

@@ -1,6 +1,6 @@
 
 language: objective-c
-osx_image: xcode7.3
+osx_image: xcode8
 
 env:
   global:
@@ -11,7 +11,7 @@ env:
 before_install:
     - env
     - locale
-    - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
+    - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
     - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
     - pod --version
     - pod setup --silent > /dev/null
@@ -25,41 +25,41 @@ script:
 
     - echo Check if the library described by the podspec can be built
     - pod lib lint
-    
+
     - echo Build as static library
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-iOS-Static' -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration Release | xcpretty -c
-    
+
     - echo Build test app using the static library
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'iOSLibStaticTest' -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration Release | xcpretty -c
-    
-    
+
+
     - echo "Build as dynamic framework (ObjectiveC), each platform (osx, ios, watchos, tvos)"
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack' -configuration Release -sdk macosx | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-iOS' -configuration Release -sdk iphonesimulator | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-watchOS' -configuration Release -sdk watchsimulator | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-tvOS' -configuration Release -sdk appletvsimulator | xcpretty -c
-    
-    
+
+
     - echo "Build as dynamic framework (Swift), each platform (osx, ios, watchos, tvos)"
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift' -configuration Release -sdk macosx | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift-iOS' -configuration Release -sdk iphonesimulator | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift-watchOS' -configuration Release -sdk watchsimulator | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift-tvOS' -configuration Release -sdk appletvsimulator | xcpretty -c
-    
-    
+
+
     - echo "Build test apps using the dynamic framework, each platform (osx, ios, watchos, tvos)"
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'FmwkTest' -configuration Release -sdk macosx | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'SwiftTest' -configuration Release -sdk macosx | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'watchOSSwiftTest' -configuration Release -sdk watchsimulator | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'tvOSSwiftTest' -configuration Release -sdk appletvsimulator | xcpretty -c
-    
-    
+
+
     - echo Run the tests
     - pod install --project-directory=Tests
     - xcodebuild test -workspace Framework/Lumberjack.xcworkspace -scheme 'OS X Tests' -sdk macosx | xcpretty -c
     - xcodebuild test -workspace Framework/Lumberjack.xcworkspace -scheme 'iOS Tests' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest' | xcpretty -c
-    
-    
+
+
     - echo Building the Demos
     - cd Demos
     - pod install --project-directory=ContextFilter
