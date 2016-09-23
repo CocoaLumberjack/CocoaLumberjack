@@ -62,7 +62,7 @@
 /**
  *  Singleton method
  */
-+ (instancetype)sharedInstance;
+@property (class, readonly, strong) DDTTYLogger *sharedInstance;
 
 /* Inherited from the DDLogger protocol:
  *
