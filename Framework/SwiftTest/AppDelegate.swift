@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet weak var window: NSWindow!
     
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
-        DDLog.add(DDTTYLogger.sharedInstance())
+        DDLog.add(DDTTYLogger.sharedInstance)
 		
         defaultDebugLevel = .warning
 
@@ -45,7 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         defaultDebugLevel = .verbose
         
         let aDDLogInstance = DDLog()
-        aDDLogInstance.add(DDTTYLogger.sharedInstance())
+        aDDLogInstance.add(DDTTYLogger.sharedInstance)
         
         DDLogVerbose("Verbose from aDDLogInstance", ddlog: aDDLogInstance)
         DDLogInfo("Info from aDDLogInstance", ddlog: aDDLogInstance)
