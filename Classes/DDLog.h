@@ -853,7 +853,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
     dispatch_queue_t _loggerQueue;
 }
 
-@property (nonatomic, strong) id <DDLogFormatter> logFormatter;
+@property (nonatomic, strong, nullable) id <DDLogFormatter> logFormatter;
 @property (nonatomic, DISPATCH_QUEUE_REFERENCE_TYPE) dispatch_queue_t loggerQueue;
 
 // For thread-safety assertions
