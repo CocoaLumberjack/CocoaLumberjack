@@ -1033,7 +1033,7 @@ static int exception_count = 0;
     [self maybeRollLogFileDueToSize];
 }
 
-- (BOOL)shouldArchiveRecentLogFileInfo:(DDLogFileInfo *)resentLogFileInfo {
+- (BOOL)shouldArchiveRecentLogFileInfo:(DDLogFileInfo *)recentLogFileInfo {
     return NO;
 }
 

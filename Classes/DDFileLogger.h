@@ -330,7 +330,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *  Called when the logger checks archive or not current log file. 
  *  Override this method to exdend standart behavior. By default returns NO.
  */
-- (BOOL)shouldArchiveRecentLogFileInfo:(DDLogFileInfo *)resentLogFileInfo;
+- (BOOL)shouldArchiveRecentLogFileInfo:(DDLogFileInfo *)recentLogFileInfo;
 
 /**
  * Log File Rolling:
