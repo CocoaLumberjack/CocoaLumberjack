@@ -302,7 +302,9 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 /**
  *  The standard implementation for a file logger
  */
-@interface DDFileLogger : DDAbstractLogger <DDLogger>
+@interface DDFileLogger : DDAbstractLogger <DDLogger> {
+	DDLogFileInfo *_currentLogFileInfo;
+}
 
 /**
  *  Default initializer
@@ -313,6 +315,22 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *  Designated initializer, requires a `DDLogFileManager` instance
  */
 - (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager NS_DESIGNATED_INITIALIZER;
+
+/**
+ *  Called when the logger is about to write message. Call super before your implementation.
+ */
+- (void)willLogMessage NS_REQUIRES_SUPER;
+
+/**
+ *  Called when the logger wrote message. Call super after your implementation.
+ */
+- (void)didLogMessage NS_REQUIRES_SUPER;
+
+/**
+ *  Called when the logger checks archive or not current log file. 
+ *  Override this method to exdend standart behavior. By default returns NO.
+ */
+- (BOOL)shouldArchiveRecentLogFileInfo:(DDLogFileInfo *)resentLogFileInfo;
 
 /**
  * Log File Rolling:
@@ -329,9 +347,6 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *
  * `doNotReuseLogFiles`
  *   When set, will always create a new log file at application launch.
- *
- * `rollEveryDay`
- *   When set, will create new log file every day.
  *
  * Both the `maximumFileSize` and the `rollingFrequency` are used to manage rolling.
  * Whichever occurs first will cause the log file to be rolled.
@@ -362,11 +377,6 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *  See description for `maximumFileSize`
  */
 @property (readwrite, assign, atomic) BOOL doNotReuseLogFiles;
-
-/**
- *  See description for `maximumFileSize`
- */
-@property (readwrite, assign, atomic) BOOL rollEveryDay;
 
 /**
  * The DDLogFileManager instance can be used to retrieve the list of log files,

@@ -47,8 +47,7 @@ BOOL doesAppRunInBackground(void);
 #endif
 
 unsigned long long const kDDDefaultLogMaxFileSize      = 1024 * 1024;      // 1 MB
-NSTimeInterval     const kDDOneDayTimeInterval         = 60 * 60 * 24;	   // 24 Hours
-NSTimeInterval     const kDDDefaultLogRollingFrequency = kDDOneDayTimeInterval;
+NSTimeInterval     const kDDDefaultLogRollingFrequency = 60 * 60 * 24;     // 24 Hours
 NSUInteger         const kDDDefaultLogMaxNumLogFiles   = 5;                // 5 Files
 unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20 MB
 
@@ -558,7 +557,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 @interface DDFileLogger () {
     __strong id <DDLogFileManager> _logFileManager;
     
-    DDLogFileInfo *_currentLogFileInfo;
     NSFileHandle *_currentLogFileHandle;
     
     dispatch_source_t _currentLogFileVnode;
@@ -571,7 +569,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 - (void)rollLogFileNow;
 - (void)maybeRollLogFileDueToAge;
 - (void)maybeRollLogFileDueToSize;
-- (void)maybeRollLogFileDueToDate;
 
 @end
 
@@ -742,7 +739,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         _rollingTimer = NULL;
     }
 
-    if (_currentLogFileInfo == nil || _rollingFrequency <= 0.0 || [self canNotRollLogFileDueToAgeSettings]) {
+    if (_currentLogFileInfo == nil || _rollingFrequency <= 0.0) {
         return;
     }
 
@@ -844,9 +841,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 }
 
 - (void)maybeRollLogFileDueToAge {
-	if ([self canNotRollLogFileDueToAgeSettings]) {
-		return;
-	}
     if (_rollingFrequency > 0.0 && _currentLogFileInfo.age >= _rollingFrequency) {
         NSLogVerbose(@"DDFileLogger: Rolling log file due to age...");
 
@@ -874,32 +868,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     }
 }
 
-- (void)maybeRollLogFileDueToDate {
-	if (_rollEveryDay && _currentLogFileInfo && ![self isLogFileCreatedToday:_currentLogFileInfo]) {
-		NSLogVerbose(@"DDFileLogger: Rolling log file due to date...");
-		
-		[self rollLogFileNow];
-	}
-}
-
-- (BOOL)isLogFileCreatedToday:(DDLogFileInfo *)aLogFile {
-	NSDate *logFileCreationDate = aLogFile.creationDate;
-	NSDate *today = [NSDate date];
-	
-	[[NSCalendar currentCalendar] rangeOfUnit:NSCalendarUnitDay startDate:&logFileCreationDate interval:nil forDate:logFileCreationDate];
-	[[NSCalendar currentCalendar] rangeOfUnit:NSCalendarUnitDay startDate:&today interval:nil forDate:today];
-	
-	return [logFileCreationDate isEqualToDate:today];
-}
-
-/**
- * If rollEveryDay enabled and rollingFrequency more or equal 24 hours, 
- * rolling by rollingFrequency will never happen.
- **/
-- (BOOL)canNotRollLogFileDueToAgeSettings {
-	return _rollEveryDay && _rollingFrequency >= kDDOneDayTimeInterval;
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark File Logging
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -922,7 +890,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
             if (mostRecentLogFileInfo.isArchived) {
                 shouldArchiveMostRecent = NO;
-			} else if (_rollEveryDay && ![self isLogFileCreatedToday:mostRecentLogFileInfo]) {
+			} else if ([self shouldArchiveRecentLogFileInfo:mostRecentLogFileInfo]) {
 				shouldArchiveMostRecent = YES;
 			} else if (_maximumFileSize > 0 && mostRecentLogFileInfo.fileSize >= _maximumFileSize) {
                 shouldArchiveMostRecent = YES;
@@ -1038,11 +1006,11 @@ static int exception_count = 0;
         NSData *logData = [message dataUsingEncoding:NSUTF8StringEncoding];
 
         @try {
-			[self maybeRollLogFileDueToDate];
+            [self willLogMessage];
 			
             [[self currentLogFileHandle] writeData:logData];
 
-            [self maybeRollLogFileDueToSize];
+            [self didLogMessage];
         } @catch (NSException *exception) {
             exception_count++;
 
@@ -1055,6 +1023,18 @@ static int exception_count = 0;
             }
         }
     }
+}
+
+- (void)willLogMessage {
+	
+}
+
+- (void)didLogMessage {
+    [self maybeRollLogFileDueToSize];
+}
+
+- (BOOL)shouldArchiveRecentLogFileInfo:(DDLogFileInfo *)resentLogFileInfo {
+    return NO;
 }
 
 - (void)willRemoveLogger {
