@@ -2,9 +2,8 @@
 xcodeproj 'CLI'
 workspace '../Demos'
 
-target :CLI_osx do
+target :'CLI' do
 platform :osx, '10.7'
-  link_with 'CLI'
   pod 'CocoaLumberjack/CLI', :path => '../../'
 end
 

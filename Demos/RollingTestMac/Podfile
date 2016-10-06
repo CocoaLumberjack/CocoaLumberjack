@@ -2,9 +2,8 @@
 xcodeproj 'RollingTestMac'
 workspace '../Demos'
 
-target :RTM_osx do
+target :'RollingTestMac' do
   platform :osx, '10.7'
-  link_with 'RollingTestMac'
   pod 'CocoaLumberjack', :path => '../../'
 end
 

@@ -29,6 +29,7 @@
 #endif
 
 @class DDLogMessage;
+@class DDLoggerInformation;
 @protocol DDLogger;
 @protocol DDLogFormatter;
 
@@ -297,7 +298,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
        line:(NSUInteger)line
         tag:(id)tag
      format:(NSString *)format
-       args:(va_list)argList;
+       args:(va_list)argList NS_SWIFT_NAME(log(asynchronous:level:flag:context:file:function:line:tag:format:arguments:));
 
 /**
  * Logging Primitive.
@@ -325,7 +326,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
        line:(NSUInteger)line
         tag:(id)tag
      format:(NSString *)format
-       args:(va_list)argList;
+       args:(va_list)argList NS_SWIFT_NAME(log(asynchronous:level:flag:context:file:function:line:tag:format:arguments:));
 
 /**
  * Logging Primitive.
@@ -336,7 +337,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  *  @param logMessage   the log message stored in a `DDLogMessage` model object
  */
 + (void)log:(BOOL)asynchronous
-    message:(DDLogMessage *)logMessage;
+    message:(DDLogMessage *)logMessage NS_SWIFT_NAME(log(asynchronous:message:));
 
 /**
  * Logging Primitive.
@@ -347,7 +348,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  *  @param logMessage   the log message stored in a `DDLogMessage` model object
  */
 - (void)log:(BOOL)asynchronous
-    message:(DDLogMessage *)logMessage;
+    message:(DDLogMessage *)logMessage NS_SWIFT_NAME(log(asynchronous:message:));
 
 /**
  * Since logging can be asynchronous, there may be times when you want to flush the logs.
@@ -484,12 +485,22 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 /**
  *  Return all the current loggers
  */
-+ (NSArray *)allLoggers;
++ (NSArray<id<DDLogger>> *)allLoggers;
 
 /**
  *  Return all the current loggers
  */
-- (NSArray *)allLoggers;
+- (NSArray<id<DDLogger>> *)allLoggers;
+
+/**
+ *  Return all the current loggers with their level (aka DDLoggerInformation).
+ */
++ (NSArray<DDLoggerInformation *> *)allLoggersWithLevel;
+
+/**
+ *  Return all the current loggers with their level (aka DDLoggerInformation).
+ */
+- (NSArray<DDLoggerInformation *> *)allLoggersWithLevel;
 
 /**
  * Registered Dynamic Logging
@@ -501,12 +512,12 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 /**
  *  Returns an array with the classes that are using registered dynamic logging
  */
-+ (NSArray *)registeredClasses;
++ (NSArray<Class> *)registeredClasses;
 
 /**
  *  Returns an array with the classes names that are using registered dynamic logging
  */
-+ (NSArray *)registeredClassNames;
++ (NSArray<NSString *> *)registeredClassNames;
 
 /**
  *  Returns the current log level for a certain class
@@ -556,7 +567,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  *
  *  @param logMessage the message (model)
  */
-- (void)logMessage:(DDLogMessage *)logMessage;
+- (void)logMessage:(DDLogMessage *)logMessage NS_SWIFT_NAME(log(message:));
 
 /**
  * Formatters may optionally be added to any logger.
@@ -636,7 +647,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * The formatter may also optionally filter the log message by returning nil,
  * in which case the logger will not log the message.
  **/
-- (NSString *)formatLogMessage:(DDLogMessage *)logMessage;
+- (NSString *)formatLogMessage:(DDLogMessage *)logMessage NS_SWIFT_NAME(format(message:));
 
 @optional
 
@@ -857,3 +868,16 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
 
 @end
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@interface DDLoggerInformation : NSObject
+
+@property (nonatomic, readonly) id <DDLogger> logger;
+@property (nonatomic, readonly) DDLogLevel level;
+
++ (DDLoggerInformation *)informationWithLogger:(id <DDLogger>)logger
+                           andLevel:(DDLogLevel)level;
+
+@end

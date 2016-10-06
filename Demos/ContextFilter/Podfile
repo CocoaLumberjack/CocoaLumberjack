@@ -2,9 +2,8 @@
 xcodeproj 'ContextFilter'
 workspace '../Demos'
 
-target :CFi_osx do
+target :'ContextFilter' do
   platform :osx, '10.7'
-  link_with 'ContextFilter'
   pod 'CocoaLumberjack', :path => '../../'
 end
 

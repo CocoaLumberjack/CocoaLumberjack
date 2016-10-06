@@ -2,9 +2,8 @@
 xcodeproj 'FineGrainedLogging'
 workspace '../Demos'
 
-target :FGL_osx do
+target :'FineGrainedLogging' do
   platform :osx, '10.7'
-  link_with 'FineGrainedLogging'
   pod 'CocoaLumberjack', :path => '../../'
 end
 

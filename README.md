@@ -96,38 +96,11 @@ github "CocoaLumberjack/CocoaLumberjack"
 - if you find issues or want to suggest improvements, create an issue or a pull request
 - for all kinds of questions involving CocoaLumberjack, use the [Google group](http://groups.google.com/group/cocoalumberjack) or StackOverflow (use [#lumberjack](http://stackoverflow.com/questions/tagged/lumberjack)).
 
-### CocoaLumberjack 2
+### CocoaLumberjack 3
 
-#### Migrating to 2.x
+#### Migrating to 3.x
 
-* Replace `DDLog.h` imports by `#import <CocoaLumberjack/CocoaLumberjack.h>`.
-
-Advanced users, third party libraries:
-
-* Replace all `DDLogC` macros for regular `DDLog` macros.
-* Replace log level (`LOG_LEVEL_*`) macros with `DDLogLevel` enum values
-* Replace log flag (`LOG_FLAG_*`) macros with `DDLogFlag` enum values
-* Replace `DDLogMessage` ivars and method calls to the new ivars and methods
-  * `logMsg` with `_message`
-  * `logLevel` with `_level`
-  * `logFlag` with `_flag`
-  * `logContext` with `_context`
-  * `lineNumber` with `_line` (type changed from `int` to `NSUInteger`)
-  * `file` with `_file` (`filename` contains just the file name, without the extension and the full path)
-  * `timestamp` with `_timestamp`
-  * `methodName` with `function`
-* Replace `DDAbstractLogger` `formatter` to `logFormatter`
-* `YSSingleFileLogger` ivars are no longer accesible, use the methods instead
-* Replace `[DDLog addLogger:withLogLevel:]` with `[DDLog addLogger:withLevel:]`
-
-#### Forcing 1.x
-
-If an included library requires it, you can force CocoaLumberjack 1.x by setting the version before the conflicting library:
-
-```ruby
-pod 'CocoaLumberjack', '~> 1.9'
-pod 'ConflictingLibrary'
-```
+* To be determined
 
 ### Features
 
@@ -173,17 +146,28 @@ Configure your logging however you want. Change log levels per file (perfect for
 
 ### Requirements 
 The current version of Lumberjack requires:
-- Xcode 7.3 or later
+- Xcode 8 or later
+- Swift 3.0 or later
 - iOS 5 or later
 - OS X 10.7 or later
 - WatchOS 2 or later
 - TVOS 9 or later
 
 #### Backwards compability
+- for Xcode 7.3 and Swift 2.3, use the 2.4.0 version
+- for Xcode 7.3 and Swift 2.2, use the 2.3.0 version
 - for Xcode 7.2 and 7.1, use the 2.2.0 version
 - for Xcode 7.0 or earlier, use the 2.1.0 version
 - for Xcode 6 or earlier, use the 2.0.x version
 - for OS X < 10.7 support, use the 1.6.0 version
+
+### Communication
+
+- If you **need help**, use [Stack Overflow](http://stackoverflow.com/questions/tagged/lumberjack). (Tag 'lumberjack')
+- If you'd like to **ask a general question**, use [Stack Overflow](http://stackoverflow.com/questions/tagged/lumberjack).
+- If you **found a bug**, open an issue.
+- If you **have a feature request**, open an issue.
+- If you **want to contribute**, submit a pull request.
 
 ### Author
 - [Robbie Hanson](https://github.com/robbiehanson)
@@ -193,6 +177,13 @@ The current version of Lumberjack requires:
 - [Ernesto Rivera](https://github.com/rivera-ernesto)
 - [Dmitry Vorobyov](https://github.com/dvor)
 - [Bogdan Poplauschi](https://github.com/bpoplauschi)
+- [C.W. Betts](https://github.com/MaddTheSane)
 
 ### License
 - CocoaLumberjack is available under the BSD license. See the [LICENSE file](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/LICENSE.txt).
+
+### Architecture
+
+<p align="center" >
+    <img src="Documentation/CocoaLumberjackClassDiagram.png" title="CocoaLumberjack class diagram">
+</p>

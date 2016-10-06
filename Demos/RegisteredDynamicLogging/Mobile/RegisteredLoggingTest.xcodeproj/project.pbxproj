@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		17B2853D03084AC2AD83B19B /* libPods-RLT_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E861734E8DC64B5C89A03AA1 /* libPods-RLT_ios.a */; };
+		B63C4D6D31363A2B2A1F05B4 /* libPods-RegisteredLoggingTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C8B99E3EEC6123A11FCE7E9 /* libPods-RegisteredLoggingTest.a */; };
 		DC7DC5301415523E00601B40 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7DC52F1415523E00601B40 /* UIKit.framework */; };
 		DC7DC5321415523E00601B40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7DC5311415523E00601B40 /* Foundation.framework */; };
 		DC7DC5341415523E00601B40 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7DC5331415523E00601B40 /* CoreGraphics.framework */; };
@@ -23,6 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3441577751E32EA192860BE9 /* Pods-RegisteredLoggingTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RegisteredLoggingTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-RegisteredLoggingTest/Pods-RegisteredLoggingTest.release.xcconfig"; sourceTree = "<group>"; };
+		510FDDC1E603974721634C29 /* Pods-RegisteredLoggingTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RegisteredLoggingTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RegisteredLoggingTest/Pods-RegisteredLoggingTest.debug.xcconfig"; sourceTree = "<group>"; };
+		9C8B99E3EEC6123A11FCE7E9 /* libPods-RegisteredLoggingTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RegisteredLoggingTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC7DC52B1415523E00601B40 /* RegisteredLoggingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RegisteredLoggingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC7DC52F1415523E00601B40 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DC7DC5311415523E00601B40 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -42,8 +45,6 @@
 		DC7DC5651415538700601B40 /* Tigers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tigers.h; sourceTree = "<group>"; };
 		DC7DC5661415538700601B40 /* Tigers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tigers.m; sourceTree = "<group>"; };
 		DCD6EAC916FFC34C00710668 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		E861734E8DC64B5C89A03AA1 /* libPods-RLT_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RLT_ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		FEB4FABF56594AD1AC90F66B /* Pods-RLT_ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RLT_ios.xcconfig"; path = "Pods/Pods-RLT_ios.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,13 +55,22 @@
 				DC7DC5301415523E00601B40 /* UIKit.framework in Frameworks */,
 				DC7DC5321415523E00601B40 /* Foundation.framework in Frameworks */,
 				DC7DC5341415523E00601B40 /* CoreGraphics.framework in Frameworks */,
-				17B2853D03084AC2AD83B19B /* libPods-RLT_ios.a in Frameworks */,
+				B63C4D6D31363A2B2A1F05B4 /* libPods-RegisteredLoggingTest.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6D7B528557A33DCAF5C93B95 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				510FDDC1E603974721634C29 /* Pods-RegisteredLoggingTest.debug.xcconfig */,
+				3441577751E32EA192860BE9 /* Pods-RegisteredLoggingTest.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		DC7DC5201415523E00601B40 = {
 			isa = PBXGroup;
 			children = (
@@ -68,7 +78,7 @@
 				DC7DC5351415523E00601B40 /* RegisteredLoggingTest */,
 				DC7DC52E1415523E00601B40 /* Frameworks */,
 				DC7DC52C1415523E00601B40 /* Products */,
-				FEB4FABF56594AD1AC90F66B /* Pods-RLT_ios.xcconfig */,
+				6D7B528557A33DCAF5C93B95 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -86,7 +96,7 @@
 				DC7DC52F1415523E00601B40 /* UIKit.framework */,
 				DC7DC5311415523E00601B40 /* Foundation.framework */,
 				DC7DC5331415523E00601B40 /* CoreGraphics.framework */,
-				E861734E8DC64B5C89A03AA1 /* libPods-RLT_ios.a */,
+				9C8B99E3EEC6123A11FCE7E9 /* libPods-RegisteredLoggingTest.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -127,11 +137,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC7DC54C1415523F00601B40 /* Build configuration list for PBXNativeTarget "RegisteredLoggingTest" */;
 			buildPhases = (
-				FA12C30316144F6E95AE179B /* Check Pods Manifest.lock */,
+				FA12C30316144F6E95AE179B /* 📦 Check Pods Manifest.lock */,
 				DC7DC5271415523E00601B40 /* Sources */,
 				DC7DC5281415523E00601B40 /* Frameworks */,
 				DC7DC5291415523E00601B40 /* Resources */,
-				7063814F578A4C06A5BD9EBE /* Copy Pods Resources */,
+				7063814F578A4C06A5BD9EBE /* 📦 Copy Pods Resources */,
+				FA988705AA33BC3014454B1C /* 📦 Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -182,34 +193,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7063814F578A4C06A5BD9EBE /* Copy Pods Resources */ = {
+		7063814F578A4C06A5BD9EBE /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-RLT_ios-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RegisteredLoggingTest/Pods-RegisteredLoggingTest-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FA12C30316144F6E95AE179B /* Check Pods Manifest.lock */ = {
+		FA12C30316144F6E95AE179B /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FA988705AA33BC3014454B1C /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RegisteredLoggingTest/Pods-RegisteredLoggingTest-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -301,7 +327,7 @@
 		};
 		DC7DC54D1415523F00601B40 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FEB4FABF56594AD1AC90F66B /* Pods-RLT_ios.xcconfig */;
+			baseConfigurationReference = 510FDDC1E603974721634C29 /* Pods-RegisteredLoggingTest.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -315,7 +341,7 @@
 		};
 		DC7DC54E1415523F00601B40 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FEB4FABF56594AD1AC90F66B /* Pods-RLT_ios.xcconfig */;
+			baseConfigurationReference = 3441577751E32EA192860BE9 /* Pods-RegisteredLoggingTest.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

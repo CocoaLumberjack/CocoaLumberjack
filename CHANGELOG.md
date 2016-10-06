@@ -1,3 +1,29 @@
+## [3.0.0 - Swift 3.0, Xcode 8 on Sep 21st, 2016](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.0.0)
+- Swift 3.0 and Xcode 8 support via #769, fixes #771 and #772. Many thanks to @ffried @max-potapov @chrisdoc @BarakRL @devxoul and the others who contributed
+
+## [2.4.0 - Swift 2.3 on Sep 19th, 2016](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.4.0)
+- Swift 2.3 explicit so that the project compiles on Xcode 8 - #747 #773 fix #762 #763 #766
+- CocoaPods 1.0.0 fully adopted - 0f5a793 637dfc1 70439fe #729
+- Fix CLIColor.h not found for non-AppKit binaries w/o clang modules #745
+- Retrieve the `DDLogLevel` of each logger associated to `DDLog` #753 
+- updated doc: #727 a9f54c9 #741, diagrams in 8bd128d
+- Added CONTRIBUTING, ISSUE and PULL_REQUEST TEMPLATE and added a small Communication section to the Readme
+- Fixed an issue with one demo #760
+
+## [2.3.0 - Swift 2.2, Xcode7.3 on May 2nd, 2016](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.3.0)
+- Updated to Swift 2.2 - #704 
+- replaced deprecated `__FUNCTION__`, `__FILE__`, `__LINE__` with newly added to Swift 2.2: `#function`, `#file`, `#line`
+- Xcode 7.3 update - #692 #662 
+- simplify usage and integration of the static library target - #657 
+- DDLog usable via instances - #679 
+- Swift cleanup - #649 
+- Enable Application extension API only for tvOS - #701 
+- Added `appletvos` and `appletvsimulator` to `SUPPORTED_PLATFORMS` and set  `TVOS_DEPLOYMENT_TARGET` - #707 
+- fixed `OSSpinLock` init issue - #653 
+- Added check to prevent duplicate loggers - #682 
+- fixed typo in import - #693 
+- updated the docs - #646 #650 #656 #655 #661 #664 #667 #684 #724 
+
 ## [2.2.0 - TVOS, Xcode7.1 on Oct 28th, 2015](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.2.0)
 - added `tvOS` support (thanks [@sinoru](https://github.com/sinoru)) - [#634](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/634) [#640](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/640) [#630](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/630) [#628](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/628) [#618](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/618) [#611](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/611)
 - Remove `(escaping)` from the Swift `@autoclosure` parameters - [#642](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/642)

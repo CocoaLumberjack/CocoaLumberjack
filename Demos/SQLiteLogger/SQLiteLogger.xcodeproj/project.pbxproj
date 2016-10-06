@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5766DA65D2514C43AD5C8F2F /* libPods-SQLL_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C61A40091F0B43FCAEE09F46 /* libPods-SQLL_osx.a */; };
+		93E0616E9A65E78E41132E83 /* libPods-SQLiteLogger.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 66BE6173828C879AA3125487 /* libPods-SQLiteLogger.a */; };
 		DCE86BF213439AF6004FD85F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE86BF113439AF6004FD85F /* libsqlite3.dylib */; };
 		DCFF742713427FF600F53777 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFF742613427FF600F53777 /* Cocoa.framework */; };
 		DCFF743113427FF600F53777 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCFF742F13427FF600F53777 /* InfoPlist.strings */; };
@@ -22,8 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8755A219DE8B2CD1D96B388C /* Pods-SQLL_osx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQLL_osx.release.xcconfig"; path = "Pods/Target Support Files/Pods-SQLL_osx/Pods-SQLL_osx.release.xcconfig"; sourceTree = "<group>"; };
-		C61A40091F0B43FCAEE09F46 /* libPods-SQLL_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SQLL_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		07EA9F020536593350267B92 /* Pods-SQLiteLogger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQLiteLogger.release.xcconfig"; path = "Pods/Target Support Files/Pods-SQLiteLogger/Pods-SQLiteLogger.release.xcconfig"; sourceTree = "<group>"; };
+		0A65C3606FC7F999ED17A675 /* Pods-SQLiteLogger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQLiteLogger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SQLiteLogger/Pods-SQLiteLogger.debug.xcconfig"; sourceTree = "<group>"; };
+		66BE6173828C879AA3125487 /* libPods-SQLiteLogger.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SQLiteLogger.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCE86BF113439AF6004FD85F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		DCFF742213427FF600F53777 /* SQLiteLogger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SQLiteLogger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCFF742613427FF600F53777 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -46,7 +47,6 @@
 		DCFF7458134280CF00F53777 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabaseAdditions.m; path = FMDB/FMDatabaseAdditions.m; sourceTree = "<group>"; };
 		DCFF7459134280CF00F53777 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMResultSet.h; path = FMDB/FMResultSet.h; sourceTree = "<group>"; };
 		DCFF745A134280CF00F53777 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMResultSet.m; path = FMDB/FMResultSet.m; sourceTree = "<group>"; };
-		FB693E8D7796443A340630A9 /* Pods-SQLL_osx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQLL_osx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SQLL_osx/Pods-SQLL_osx.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +56,7 @@
 			files = (
 				DCE86BF213439AF6004FD85F /* libsqlite3.dylib in Frameworks */,
 				DCFF742713427FF600F53777 /* Cocoa.framework in Frameworks */,
-				5766DA65D2514C43AD5C8F2F /* libPods-SQLL_osx.a in Frameworks */,
+				93E0616E9A65E78E41132E83 /* libPods-SQLiteLogger.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,8 +66,8 @@
 		AE39D04BE73E47D02EA1025E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FB693E8D7796443A340630A9 /* Pods-SQLL_osx.debug.xcconfig */,
-				8755A219DE8B2CD1D96B388C /* Pods-SQLL_osx.release.xcconfig */,
+				0A65C3606FC7F999ED17A675 /* Pods-SQLiteLogger.debug.xcconfig */,
+				07EA9F020536593350267B92 /* Pods-SQLiteLogger.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -97,7 +97,7 @@
 				DCFF742613427FF600F53777 /* Cocoa.framework */,
 				DCE86BF113439AF6004FD85F /* libsqlite3.dylib */,
 				DCFF742813427FF600F53777 /* Other Frameworks */,
-				C61A40091F0B43FCAEE09F46 /* libPods-SQLL_osx.a */,
+				66BE6173828C879AA3125487 /* libPods-SQLiteLogger.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -173,11 +173,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCFF744013427FF600F53777 /* Build configuration list for PBXNativeTarget "SQLiteLogger" */;
 			buildPhases = (
-				2552E1A3D7634E28ADC4145D /* Check Pods Manifest.lock */,
+				2552E1A3D7634E28ADC4145D /* 📦 Check Pods Manifest.lock */,
 				DCFF741E13427FF600F53777 /* Sources */,
 				DCFF741F13427FF600F53777 /* Frameworks */,
 				DCFF742013427FF600F53777 /* Resources */,
-				484BB7107DE44253B505D3D6 /* Copy Pods Resources */,
+				484BB7107DE44253B505D3D6 /* 📦 Copy Pods Resources */,
+				0421A5DBA1E85BA9EE2E5A4F /* 📦 Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -228,14 +229,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2552E1A3D7634E28ADC4145D /* Check Pods Manifest.lock */ = {
+		0421A5DBA1E85BA9EE2E5A4F /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SQLiteLogger/Pods-SQLiteLogger-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2552E1A3D7634E28ADC4145D /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -243,19 +259,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		484BB7107DE44253B505D3D6 /* Copy Pods Resources */ = {
+		484BB7107DE44253B505D3D6 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SQLL_osx/Pods-SQLL_osx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SQLiteLogger/Pods-SQLiteLogger-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -358,7 +374,7 @@
 		};
 		DCFF744113427FF600F53777 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FB693E8D7796443A340630A9 /* Pods-SQLL_osx.debug.xcconfig */;
+			baseConfigurationReference = 0A65C3606FC7F999ED17A675 /* Pods-SQLiteLogger.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -376,7 +392,7 @@
 		};
 		DCFF744213427FF600F53777 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8755A219DE8B2CD1D96B388C /* Pods-SQLL_osx.release.xcconfig */;
+			baseConfigurationReference = 07EA9F020536593350267B92 /* Pods-SQLiteLogger.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;

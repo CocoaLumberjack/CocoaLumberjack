@@ -7,19 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CABB915BADD24007BB34A46D /* libPods-TXC_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2265B667AAE340188A1A4608 /* libPods-TXC_osx.a */; };
 		DCAACA831565CEBD001A5857 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCAACA821565CEBD001A5857 /* Cocoa.framework */; };
 		DCAACA8D1565CEBD001A5857 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCAACA8B1565CEBD001A5857 /* InfoPlist.strings */; };
 		DCAACA8F1565CEBD001A5857 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCAACA8E1565CEBD001A5857 /* main.m */; };
 		DCAACA931565CEBD001A5857 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DCAACA911565CEBD001A5857 /* Credits.rtf */; };
 		DCAACA961565CEBD001A5857 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCAACA951565CEBD001A5857 /* AppDelegate.m */; };
 		DCAACA991565CEBD001A5857 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCAACA971565CEBD001A5857 /* MainMenu.xib */; };
+		E7940872AC0BE430D12876D3 /* libPods-TestXcodeColors.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F74B530DB710571FE5B80E /* libPods-TestXcodeColors.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		10FA67588BBDB3AEE3480805 /* Pods-TXC_osx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TXC_osx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TXC_osx/Pods-TXC_osx.debug.xcconfig"; sourceTree = "<group>"; };
-		2265B667AAE340188A1A4608 /* libPods-TXC_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TXC_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CB55AFAA4623D09E88FEA1F1 /* Pods-TXC_osx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TXC_osx.release.xcconfig"; path = "Pods/Target Support Files/Pods-TXC_osx/Pods-TXC_osx.release.xcconfig"; sourceTree = "<group>"; };
+		0E67F36E8E943AD82F600FAD /* Pods-TestXcodeColors.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestXcodeColors.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TestXcodeColors/Pods-TestXcodeColors.debug.xcconfig"; sourceTree = "<group>"; };
+		C7F74B530DB710571FE5B80E /* libPods-TestXcodeColors.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TestXcodeColors.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCAACA7E1565CEBD001A5857 /* TestXcodeColors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestXcodeColors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCAACA821565CEBD001A5857 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DCAACA851565CEBD001A5857 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -33,6 +32,7 @@
 		DCAACA941565CEBD001A5857 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DCAACA951565CEBD001A5857 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DCAACA981565CEBD001A5857 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		F4C4E1B9A797EEAFB26839FC /* Pods-TestXcodeColors.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestXcodeColors.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestXcodeColors/Pods-TestXcodeColors.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +41,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCAACA831565CEBD001A5857 /* Cocoa.framework in Frameworks */,
-				CABB915BADD24007BB34A46D /* libPods-TXC_osx.a in Frameworks */,
+				E7940872AC0BE430D12876D3 /* libPods-TestXcodeColors.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,8 +51,8 @@
 		A7444058C5801629B7C3DF6B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				10FA67588BBDB3AEE3480805 /* Pods-TXC_osx.debug.xcconfig */,
-				CB55AFAA4623D09E88FEA1F1 /* Pods-TXC_osx.release.xcconfig */,
+				0E67F36E8E943AD82F600FAD /* Pods-TestXcodeColors.debug.xcconfig */,
+				F4C4E1B9A797EEAFB26839FC /* Pods-TestXcodeColors.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -80,7 +80,7 @@
 			children = (
 				DCAACA821565CEBD001A5857 /* Cocoa.framework */,
 				DCAACA841565CEBD001A5857 /* Other Frameworks */,
-				2265B667AAE340188A1A4608 /* libPods-TXC_osx.a */,
+				C7F74B530DB710571FE5B80E /* libPods-TestXcodeColors.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -125,11 +125,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCAACA9C1565CEBD001A5857 /* Build configuration list for PBXNativeTarget "TestXcodeColors" */;
 			buildPhases = (
-				EB464937B0CE488A84F2AADD /* Check Pods Manifest.lock */,
+				EB464937B0CE488A84F2AADD /* 📦 Check Pods Manifest.lock */,
 				DCAACA7A1565CEBD001A5857 /* Sources */,
 				DCAACA7B1565CEBD001A5857 /* Frameworks */,
 				DCAACA7C1565CEBD001A5857 /* Resources */,
-				8B1455570C474FE39D9FBE8E /* Copy Pods Resources */,
+				8B1455570C474FE39D9FBE8E /* 📦 Copy Pods Resources */,
+				32972ACF228A19E2FE2DA834 /* 📦 Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -179,29 +180,44 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8B1455570C474FE39D9FBE8E /* Copy Pods Resources */ = {
+		32972ACF228A19E2FE2DA834 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TXC_osx/Pods-TXC_osx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TestXcodeColors/Pods-TestXcodeColors-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EB464937B0CE488A84F2AADD /* Check Pods Manifest.lock */ = {
+		8B1455570C474FE39D9FBE8E /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TestXcodeColors/Pods-TestXcodeColors-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EB464937B0CE488A84F2AADD /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,7 +334,7 @@
 		};
 		DCAACA9D1565CEBD001A5857 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 10FA67588BBDB3AEE3480805 /* Pods-TXC_osx.debug.xcconfig */;
+			baseConfigurationReference = 0E67F36E8E943AD82F600FAD /* Pods-TestXcodeColors.debug.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -331,7 +347,7 @@
 		};
 		DCAACA9E1565CEBD001A5857 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB55AFAA4623D09E88FEA1F1 /* Pods-TXC_osx.release.xcconfig */;
+			baseConfigurationReference = F4C4E1B9A797EEAFB26839FC /* Pods-TestXcodeColors.release.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

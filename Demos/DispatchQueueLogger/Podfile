@@ -2,9 +2,8 @@
 xcodeproj 'DispatchQueueLogger'
 workspace '../Demos'
 
-target :DQL_osx do
+target :'DispatchQueueLogger' do
   platform :osx, '10.7'
-  link_with 'DispatchQueueLogger'
   pod 'CocoaLumberjack', :path => '../../'
 end
 
