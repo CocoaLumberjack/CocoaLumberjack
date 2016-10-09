@@ -17,7 +17,7 @@
 //
 
 @import XCTest;
-#import <Expecta.h>
+#import <Expecta/Expecta.h>
 #import "DDLog.h"
 
 @interface DDTestLogger : NSObject <DDLogger>
