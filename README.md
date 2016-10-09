@@ -10,6 +10,7 @@ CocoaLumberjack
 [![Pod Platform](http://img.shields.io/cocoapods/p/CocoaLumberjack.svg?style=flat)](http://cocoadocs.org/docsets/CocoaLumberjack/)
 [![Pod License](http://img.shields.io/cocoapods/l/CocoaLumberjack.svg?style=flat)](http://opensource.org/licenses/BSD-3-Clause)
 [![Reference Status](https://www.versioneye.com/objective-c/cocoalumberjack/reference_badge.svg?style=flat)](https://www.versioneye.com/objective-c/cocoalumberjack/references)
+[![codecov](https://codecov.io/gh/CocoaLumberjack/CocoaLumberjack/branch/master/graph/badge.svg)](https://codecov.io/gh/CocoaLumberjack/CocoaLumberjack)
 
 **CocoaLumberjack** is a fast & simple, yet powerful & flexible logging framework for Mac and iOS.
 
