@@ -209,16 +209,14 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 /**
  *  Returns the singleton `DDLog`.
  *  The instance is used by `DDLog` class methods.
- *
- *  @return The singleton `DDLog`.
  */
-+ (instancetype)sharedInstance;
+@property (class, nonatomic, strong, readonly) DDLog *sharedInstance;
 
 /**
  * Provides access to the underlying logging queue.
  * This may be helpful to Logger classes for things like thread synchronization.
  **/
-+ (dispatch_queue_t)loggingQueue;
+@property (class, nonatomic, DISPATCH_QUEUE_REFERENCE_TYPE, readonly) dispatch_queue_t loggingQueue;
 
 /**
  * Logging Primitive.
@@ -485,22 +483,22 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 /**
  *  Return all the current loggers
  */
-+ (NSArray<id<DDLogger>> *)allLoggers;
+@property (class, nonatomic, copy, readonly) NSArray<id<DDLogger>> *allLoggers;
 
 /**
  *  Return all the current loggers
  */
-- (NSArray<id<DDLogger>> *)allLoggers;
+@property (nonatomic, copy, readonly) NSArray<id<DDLogger>> *allLoggers;
 
 /**
  *  Return all the current loggers with their level (aka DDLoggerInformation).
  */
-+ (NSArray<DDLoggerInformation *> *)allLoggersWithLevel;
+@property (class, nonatomic, copy, readonly) NSArray<DDLoggerInformation *> *allLoggersWithLevel;
 
 /**
  *  Return all the current loggers with their level (aka DDLoggerInformation).
  */
-- (NSArray<DDLoggerInformation *> *)allLoggersWithLevel;
+@property (nonatomic, copy, readonly) NSArray<DDLoggerInformation *> *allLoggersWithLevel;
 
 /**
  * Registered Dynamic Logging
@@ -512,12 +510,12 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 /**
  *  Returns an array with the classes that are using registered dynamic logging
  */
-+ (NSArray<Class> *)registeredClasses;
+@property (class, nonatomic, copy, readonly) NSArray<Class> *registeredClasses;
 
 /**
  *  Returns an array with the classes names that are using registered dynamic logging
  */
-+ (NSArray<NSString *> *)registeredClassNames;
+@property (class, nonatomic, copy, readonly) NSArray<NSString*> *registeredClassNames;
 
 /**
  *  Returns the current log level for a certain class
@@ -701,12 +699,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * }
  * ```
  **/
-+ (DDLogLevel)ddLogLevel;
-
-/**
- *  See the above description for `ddLogLevel`
- */
-+ (void)ddSetLogLevel:(DDLogLevel)level;
+@property (class, nonatomic, readwrite, setter=ddSetLogLevel:) DDLogLevel ddLogLevel;
 
 @end
 
