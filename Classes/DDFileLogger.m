@@ -557,7 +557,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 @interface DDFileLogger () {
     __strong id <DDLogFileManager> _logFileManager;
     
-    DDLogFileInfo *_currentLogFileInfo;
     NSFileHandle *_currentLogFileHandle;
     
     dispatch_source_t _currentLogFileVnode;
@@ -891,7 +890,9 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
             if (mostRecentLogFileInfo.isArchived) {
                 shouldArchiveMostRecent = NO;
-            } else if (_maximumFileSize > 0 && mostRecentLogFileInfo.fileSize >= _maximumFileSize) {
+			} else if ([self shouldArchiveRecentLogFileInfo:mostRecentLogFileInfo]) {
+				shouldArchiveMostRecent = YES;
+			} else if (_maximumFileSize > 0 && mostRecentLogFileInfo.fileSize >= _maximumFileSize) {
                 shouldArchiveMostRecent = YES;
             } else if (_rollingFrequency > 0.0 && mostRecentLogFileInfo.age >= _rollingFrequency) {
                 shouldArchiveMostRecent = YES;
@@ -1005,9 +1006,11 @@ static int exception_count = 0;
         NSData *logData = [message dataUsingEncoding:NSUTF8StringEncoding];
 
         @try {
+            [self willLogMessage];
+			
             [[self currentLogFileHandle] writeData:logData];
 
-            [self maybeRollLogFileDueToSize];
+            [self didLogMessage];
         } @catch (NSException *exception) {
             exception_count++;
 
@@ -1020,6 +1023,18 @@ static int exception_count = 0;
             }
         }
     }
+}
+
+- (void)willLogMessage {
+	
+}
+
+- (void)didLogMessage {
+    [self maybeRollLogFileDueToSize];
+}
+
+- (BOOL)shouldArchiveRecentLogFileInfo:(DDLogFileInfo *)recentLogFileInfo {
+    return NO;
 }
 
 - (void)willRemoveLogger {
