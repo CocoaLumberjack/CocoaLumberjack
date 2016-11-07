@@ -34,13 +34,13 @@ import CocoaLumberjack
 ```
 
 ```swift
-DDLog.addLogger(DDTTYLogger.sharedInstance()) // TTY = Xcode console
-DDLog.addLogger(DDASLLogger.sharedInstance()) // ASL = Apple System Logs
+DDLog.add(DDTTYLogger.sharedInstance()) // TTY = Xcode console
+DDLog.add(DDASLLogger.sharedInstance()) // ASL = Apple System Logs
 
 let fileLogger: DDFileLogger = DDFileLogger() // File Logger
-fileLogger.rollingFrequency = 60*60*24  // 24 hours
+fileLogger.rollingFrequency = TimeInterval(60*60*24)  // 24 hours
 fileLogger.logFileManager.maximumNumberOfLogFiles = 7
-DDLog.addLogger(fileLogger)
+DDLog.add(fileLogger)
 
 ...
 
