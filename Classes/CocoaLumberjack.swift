@@ -19,77 +19,73 @@ extension DDLogFlag {
     public static func from(_ logLevel: DDLogLevel) -> DDLogFlag {
         return DDLogFlag(rawValue: logLevel.rawValue)
     }
-	
-	public init(_ logLevel: DDLogLevel) {
+    
+    public init(_ logLevel: DDLogLevel) {
         self = DDLogFlag(rawValue: logLevel.rawValue)
-	}
+    }
     
     ///returns the log level, or the lowest equivalant.
     public func toLogLevel() -> DDLogLevel {
         if let ourValid = DDLogLevel(rawValue: rawValue) {
             return ourValid
         } else {
-            if contains(.verbose) {
-                return .verbose
-            } else if contains(.debug) {
-                return .debug
-            } else if contains(.info) {
-                return .info
-            } else if contains(.warning) {
-                return .warning
-            } else if contains(.error) {
-                return .error
+            if contains(.Verbose) {
+                return DDLogLevel.Verbose
+            } else if contains(.Debug) {
+                return DDLogLevel.Debug
+            } else if contains(.Info) {
+                return DDLogLevel.Info
+            } else if contains(.Warning) {
+                return DDLogLevel.Warning
+            } else if contains(.Error) {
+                return DDLogLevel.Error
             } else {
-                return .off
+                return DDLogLevel.Off
             }
         }
     }
 }
 
-public var defaultDebugLevel = DDLogLevel.verbose
+public var defaultDebugLevel = DDLogLevel.Verbose
 
 public func resetDefaultDebugLevel() {
-    defaultDebugLevel = DDLogLevel.verbose
+    defaultDebugLevel = DDLogLevel.Verbose
 }
 
-public func _DDLogMessage(_ message: @autoclosure () -> String, level: DDLogLevel, flag: DDLogFlag, context: Int, file: StaticString, function: StaticString, line: UInt, tag: Any?, asynchronous: Bool, ddlog: DDLog) {
+public func _DDLogMessage(_ message: () -> String, level: DDLogLevel, flag: DDLogFlag, context: Int, file: StaticString, function: StaticString, line: UInt, tag: AnyObject?, asynchronous: Bool, ddlog: DDLog) {
     if level.rawValue & flag.rawValue != 0 {
         // Tell the DDLogMessage constructor to copy the C strings that get passed to it.
-        let logMessage = DDLogMessage(message: message(), level: level, flag: flag, context: context, file: String(describing: file), function: String(describing: function), line: line, tag: tag, options: [.copyFile, .copyFunction], timestamp: nil)
+        let logMessage = DDLogMessage(message: message(), level: level, flag: flag, context: context, file: String(file), function: String(function), line: line, tag: tag, options: [.CopyFile, .CopyFunction], timestamp: nil)
         ddlog.log(asynchronous: asynchronous, message: logMessage)
     }
 }
 
-public func DDLogDebug(_ message: @autoclosure () -> String, level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = true, ddlog: DDLog = DDLog.sharedInstance) {
-    _DDLogMessage(message, level: level, flag: .debug, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
+public func DDLogDebug(_ message: () -> String, level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: AnyObject? = nil, asynchronous async: Bool = true, ddlog: DDLog = DDLog.sharedInstance()) {
+    _DDLogMessage(message, level: level, flag: DDLogFlag.Debug, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
 }
 
-public func DDLogInfo(_ message: @autoclosure () -> String, level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = true, ddlog: DDLog = DDLog.sharedInstance) {
-    _DDLogMessage(message, level: level, flag: .info, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
+public func DDLogInfo(_ message: () -> String, level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: AnyObject? = nil, asynchronous async: Bool = true, ddlog: DDLog = DDLog.sharedInstance()) {
+    _DDLogMessage(message, level: level, flag: DDLogFlag.Info, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
 }
 
-public func DDLogWarn(_ message: @autoclosure () -> String, level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = true, ddlog: DDLog = DDLog.sharedInstance) {
-    _DDLogMessage(message, level: level, flag: .warning, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
+public func DDLogWarn(_ message: () -> String, level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: AnyObject? = nil, asynchronous async: Bool = true, ddlog: DDLog = DDLog.sharedInstance()) {
+    _DDLogMessage(message, level: level, flag: DDLogFlag.Warning, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
 }
 
-public func DDLogVerbose(_ message: @autoclosure () -> String, level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = true, ddlog: DDLog = DDLog.sharedInstance) {
-    _DDLogMessage(message, level: level, flag: .verbose, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
+public func DDLogVerbose(_ message: () -> String, level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: AnyObject? = nil, asynchronous async: Bool = true, ddlog: DDLog = DDLog.sharedInstance()) {
+    _DDLogMessage(message, level: level, flag: DDLogFlag.Verbose, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
 }
 
-public func DDLogError(_ message: @autoclosure () -> String, level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = false, ddlog: DDLog = DDLog.sharedInstance) {
-    _DDLogMessage(message, level: level, flag: .error, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
+public func DDLogError(_ message: () -> String, level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: AnyObject? = nil, asynchronous async: Bool = false, ddlog: DDLog = DDLog.sharedInstance()) {
+    _DDLogMessage(message, level: level, flag: DDLogFlag.Error, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
 }
 
 /// Returns a String of the current filename, without full path or extension.
 ///
 /// Analogous to the C preprocessor macro `THIS_FILE`.
 public func CurrentFileName(_ fileName: StaticString = #file) -> String {
-    var str = String(describing: fileName)
-    if let idx = str.range(of: "/", options: .backwards)?.upperBound {
-        str = str.substring(from: idx)
-    }
-    if let idx = str.range(of: ".", options: .backwards)?.lowerBound {
-        str = str.substring(to: idx)
-    }
-    return str
+    var str = NSString(string: String(fileName))
+    var path = str.lastPathComponent
+    
+    return String(path)
 }
