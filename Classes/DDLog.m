@@ -117,6 +117,49 @@ static dispatch_semaphore_t _queueSemaphore;
 // Minor optimization for uniprocessor machines
 static NSUInteger _numProcessors;
 
+// log prefixs buffer
+static NSString* _prefixs[] = {@"[Error]", @"[Warning]", @"[Info]", @"[Debug]", @"[Verbose]"};
+
++(void)setPrefix:(NSString*)prefix forFlag:(DDLogFlag)flag {
+    switch (flag) {
+        case DDLogFlagError:
+            _prefixs[0] = prefix;
+            break;
+        case DDLogFlagWarning:
+            _prefixs[1] = prefix;
+            break;
+        case DDLogFlagInfo:
+            _prefixs[2] = prefix;
+            break;
+        case DDLogFlagDebug:
+            _prefixs[3] = prefix;
+            break;
+        case DDLogFlagVerbose:
+            _prefixs[4] = prefix;
+            break;
+            
+        default:
+            break;
+    }
+}
+
++(NSString*)getPrefixWithFlag:(DDLogFlag)flag {
+    switch (flag) {
+        case DDLogFlagError:
+            return _prefixs[0];
+        case DDLogFlagWarning:
+            return _prefixs[1];
+        case DDLogFlagInfo:
+            return _prefixs[2];
+        case DDLogFlagDebug:
+            return _prefixs[3];
+        case DDLogFlagVerbose:
+            return _prefixs[4];
+        default:
+            return @"";
+    }
+}
+
 /**
  *  Returns the singleton `DDLog`.
  *  The instance is used by `DDLog` class methods.
