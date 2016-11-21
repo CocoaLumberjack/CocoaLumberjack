@@ -37,27 +37,27 @@ script:
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack' -configuration Release -sdk macosx | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-iOS' -configuration Release -sdk iphonesimulator | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-watchOS' -configuration Release -sdk watchsimulator | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-tvOS' -configuration Release -sdk appletvsimulator | xcpretty -c
+    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-tvOS' -destination 'platform=tvOS Simulator,name=Apple TV 1080p' -configuration Release -sdk appletvsimulator | xcpretty -c
 
 
     - echo "Build as dynamic framework (Swift), each platform (osx, ios, watchos, tvos)"
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift' -configuration Release -sdk macosx | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift-iOS' -configuration Release -sdk iphonesimulator | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift-watchOS' -configuration Release -sdk watchsimulator | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift-tvOS' -configuration Release -sdk appletvsimulator | xcpretty -c
+    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift-tvOS' -destination 'platform=tvOS Simulator,name=Apple TV 1080p' -configuration Release -sdk appletvsimulator | xcpretty -c
 
 
     - echo "Build test apps using the dynamic framework, each platform (osx, ios, watchos, tvos)"
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'FmwkTest' -configuration Release -sdk macosx | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'SwiftTest' -configuration Release -sdk macosx | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'watchOSSwiftTest' -configuration Release -sdk watchsimulator | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'tvOSSwiftTest' -configuration Release -sdk appletvsimulator | xcpretty -c
+    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'tvOSSwiftTest' -destination 'platform=tvOS Simulator,name=Apple TV 1080p' -configuration Release -sdk appletvsimulator | xcpretty -c
 
 
     - echo Run the tests
     - pod install --project-directory=Tests
-    - xcodebuild test -workspace Framework/Lumberjack.xcworkspace -scheme 'OS X Tests' -sdk macosx | xcpretty -c
-    - xcodebuild test -workspace Framework/Lumberjack.xcworkspace -scheme 'iOS Tests' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest' | xcpretty -c
+    - xcodebuild test -workspace Framework/Lumberjack.xcworkspace -scheme 'iOS Tests' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest' GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
+    - xcodebuild test -workspace Framework/Lumberjack.xcworkspace -scheme 'OS X Tests' -sdk macosx GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
 
 
     - echo Building the Demos
