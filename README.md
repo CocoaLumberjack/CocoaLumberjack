@@ -19,24 +19,12 @@ CocoaLumberjack
 
 ##### Swift version via CocoaPods
 ```ruby
-source 'https://github.com/CocoaPods/Specs.git'
-
 platform :ios, '8.0'
-use_frameworks!
-inhibit_all_warnings!
 
+# You need to set target when you use CocoaPods 1.0.0 or later.
 target 'SampleTarget' do 
+  use_frameworks!
   pod 'CocoaLumberjack/Swift'
-end
-
-# In general you need to set `SWIFT_VERSION` with Xcode 8.0 or later.  
-# Here is the case you use Swift 3.0.
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |configuration|
-      configuration.build_settings['SWIFT_VERSION'] = '3.0'
-    end
-  end
 end
 ```
 Note: `Swift` is a subspec which will include all the Obj-C code plus the Swift one, so this is sufficient. 
