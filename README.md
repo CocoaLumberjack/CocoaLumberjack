@@ -20,8 +20,12 @@ CocoaLumberjack
 ##### Swift version via CocoaPods
 ```ruby
 platform :ios, '8.0'
-pod 'CocoaLumberjack/Swift'
-use_frameworks!
+
+# You need to set target when you use CocoaPods 1.0.0 or later.
+target 'SampleTarget' do 
+  use_frameworks!
+  pod 'CocoaLumberjack/Swift'
+end
 ```
 Note: `Swift` is a subspec which will include all the Obj-C code plus the Swift one, so this is sufficient. 
 For more details about how to use Swift with Lumberjack, see [this conversation](https://github.com/CocoaLumberjack/CocoaLumberjack/issues/405).
