@@ -84,7 +84,7 @@ MyCustomFormatter.m
         default                : logLevel = @"V"; break;
     }
     
-    return [NSString stringWithFormat:@"%@ | %@\n", logLevel, logMessage->_message];
+    return [NSString stringWithFormat:@"%@ | %@", logLevel, logMessage->_message];
 }
 
 @end
@@ -187,7 +187,7 @@ MyCustomFormatter.m
     NSString *dateAndTime = [threadUnsafeDateFormatter stringFromDate:(logMessage->_timestamp)];
     NSString *logMsg = logMessage->_message;
     
-    return [NSString stringWithFormat:@"%@ %@ | %@\n", logLevel, dateAndTime, logMsg];
+    return [NSString stringWithFormat:@"%@ %@ | %@", logLevel, dateAndTime, logMsg];
 }
 
 - (void)didAddToLogger:(id <DDLogger>)logger {
@@ -286,7 +286,7 @@ MyCustomFormatter.m
     NSString *dateAndTime = [self stringFromDate:(logMessage.timestamp)];
     NSString *logMsg = logMessage->_message;
     
-    return [NSString stringWithFormat:@"%@ %@ | %@\n", logLevel, dateAndTime, logMsg];
+    return [NSString stringWithFormat:@"%@ %@ | %@", logLevel, dateAndTime, logMsg];
 }
 
 - (void)didAddToLogger:(id <DDLogger>)logger {
