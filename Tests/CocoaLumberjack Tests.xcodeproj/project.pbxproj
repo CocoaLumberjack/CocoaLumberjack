@@ -156,9 +156,11 @@
 				TargetAttributes = {
 					432B53321AAE423E00843E69 = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0810;
 					};
 					432B533F1AAE425D00843E69 = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
