@@ -13,6 +13,12 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
+
+/**
+ *  This means `NOT(iOS | tvOS | watchOS)`.
+ */
+#if !(TARGET_OS_IPHONE)
+
 #import "CLIColor.h"
 
 @interface CLIColor () {
@@ -53,3 +59,5 @@
 }
 
 @end
+
+#endif
