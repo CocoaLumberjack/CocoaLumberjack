@@ -1326,12 +1326,12 @@
 				DCB3185014EB418E001CFBEE /* CocoaLumberjack */,
 				19FF46011B8B4CF400B43179 /* CocoaLumberjack-iOS */,
 				18F3BFD61A81E06E00692297 /* CocoaLumberjack-iOS-Static */,
-				19190EDD1B84D812008D059E /* CocoaLumberjack-watchOS */,
 				19D90B071BBFA9DB00947169 /* CocoaLumberjack-tvOS */,
+				19190EDD1B84D812008D059E /* CocoaLumberjack-watchOS */,
 				18F3BEF61A81D8B700692297 /* CocoaLumberjackSwift */,
 				19FF460E1B8B4D1400B43179 /* CocoaLumberjackSwift-iOS */,
-				19190EEA1B84D826008D059E /* CocoaLumberjackSwift-watchOS */,
 				19D90B281BBFAA7500947169 /* CocoaLumberjackSwift-tvOS */,
+				19190EEA1B84D826008D059E /* CocoaLumberjackSwift-watchOS */,
 				DCB318C914ED6C3B001CFBEE /* FmwkTest */,
 				18F3BFF11A81E0C700692297 /* iOSLibStaticTest */,
 				55CCBEFE19BA679200957A39 /* SwiftTest */,
@@ -1778,7 +1778,7 @@
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjackSwift-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.swift;
 				PRODUCT_NAME = CocoaLumberjackSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -1805,7 +1805,7 @@
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjackSwift-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.swift;
 				PRODUCT_NAME = CocoaLumberjackSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -1864,6 +1864,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRIVATE_HEADERS_FOLDER_PATH = "$(BUILT_PRODUCTS_DIR)/private";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.ios;
 				PRODUCT_NAME = CocoaLumberjack;
 				PUBLIC_HEADERS_FOLDER_PATH = "$(BUILT_PRODUCTS_DIR)/include";
 				SDKROOT = iphoneos;
@@ -1879,6 +1880,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRIVATE_HEADERS_FOLDER_PATH = "$(BUILT_PRODUCTS_DIR)/private";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.ios;
 				PRODUCT_NAME = CocoaLumberjack;
 				PUBLIC_HEADERS_FOLDER_PATH = "$(BUILT_PRODUCTS_DIR)/include";
 				SDKROOT = iphoneos;
@@ -1938,7 +1940,7 @@
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjack-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = Framework/Lumberjack/CocoaLumberjack.modulemap;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.watchos;
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1963,7 +1965,7 @@
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjack-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = Framework/Lumberjack/CocoaLumberjack.modulemap;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.watchos;
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1987,7 +1989,7 @@
 				GCC_PREFIX_HEADER = "Framework/Lumberjack/Lumberjack-Prefix.pch";
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjackSwift-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.swift.watchos;
 				PRODUCT_NAME = CocoaLumberjackSwift;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -2011,7 +2013,7 @@
 				GCC_PREFIX_HEADER = "Framework/Lumberjack/Lumberjack-Prefix.pch";
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjackSwift-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.swift.watchos;
 				PRODUCT_NAME = CocoaLumberjackSwift;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -2074,7 +2076,7 @@
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjack-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = Framework/Lumberjack/CocoaLumberjack.modulemap;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.CocoaLumberjack-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.tvos;
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -2097,7 +2099,7 @@
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjack-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = Framework/Lumberjack/CocoaLumberjack.modulemap;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.CocoaLumberjack-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.tvos;
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -2119,7 +2121,7 @@
 				GCC_PREFIX_HEADER = "Framework/Lumberjack/Lumberjack-Prefix.pch";
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjackSwift-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.CocoaLumberjackSwift-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.swift.tvos;
 				PRODUCT_NAME = CocoaLumberjackSwift;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -2141,7 +2143,7 @@
 				GCC_PREFIX_HEADER = "Framework/Lumberjack/Lumberjack-Prefix.pch";
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjackSwift-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.CocoaLumberjackSwift-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.swift.tvos;
 				PRODUCT_NAME = CocoaLumberjackSwift;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -2244,7 +2246,7 @@
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjack-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = Framework/Lumberjack/CocoaLumberjack.modulemap;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.CocoaLumberjack-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.ios;
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -2268,7 +2270,7 @@
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjack-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = Framework/Lumberjack/CocoaLumberjack.modulemap;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.CocoaLumberjack-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.ios;
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -2291,7 +2293,7 @@
 				GCC_PREFIX_HEADER = "Framework/Lumberjack/Lumberjack-Prefix.pch";
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjackSwift-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.CocoaLumberjackSwift-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.swift.ios;
 				PRODUCT_NAME = CocoaLumberjackSwift;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -2314,7 +2316,7 @@
 				GCC_PREFIX_HEADER = "Framework/Lumberjack/Lumberjack-Prefix.pch";
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjackSwift-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.CocoaLumberjackSwift-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.swift.ios;
 				PRODUCT_NAME = CocoaLumberjackSwift;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -2478,7 +2480,7 @@
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjack-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = Framework/Lumberjack/CocoaLumberjack.modulemap;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack;
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -2505,7 +2507,7 @@
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjack-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = Framework/Lumberjack/CocoaLumberjack.modulemap;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack;
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
