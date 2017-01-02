@@ -24,7 +24,7 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-function"
-#if TARGET_OS_IPHONE
+#if !(TARGET_OS_OSX)
     // iOS or tvOS or watchOS
     #import <UIKit/UIColor.h>
     typedef UIColor DDColor;

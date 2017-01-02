@@ -18,39 +18,44 @@ Pod::Spec.new do |s|
   s.requires_arc   = true
 
   s.preserve_paths = 'README.md', 'Classes/CocoaLumberjack.swift', 'Framework/Lumberjack/CocoaLumberjack.modulemap'
-  s.ios.deployment_target = '5.0'
-  s.osx.deployment_target = '10.7'
+  
+  s.ios.deployment_target     = '5.0'
+  s.osx.deployment_target     = '10.7'
   s.watchos.deployment_target = '2.0'
-  s.tvos.deployment_target = '9.0'
+  s.tvos.deployment_target    = '9.0'
 
   s.default_subspecs = 'Default', 'Extensions'
 
   s.subspec 'Default' do |ss|
-    ss.source_files = 'Classes/CocoaLumberjack.{h,m}', 'Classes/DD*.{h,m}'
+    ss.source_files         = 'Classes/CocoaLumberjack.h', 'Classes/DD*.{h,m}'
+    ss.public_header_files  = 'Classes/CocoaLumberjack.h', 'Classes/DD*.h'
   end
 
   s.subspec 'Core' do |ss|
-    ss.source_files = 'Classes/DD*.{h,m}'
+    ss.source_files         = 'Classes/DD*.{h,m}'
+    ss.public_header_files  = 'Classes/DD*.h'
   end
 
   s.subspec 'Extensions' do |ss|
-    ss.source_files = 'Classes/Extensions/*.{h,m}'
     ss.dependency 'CocoaLumberjack/Default'
+    ss.source_files         = 'Classes/Extensions/*.{h,m}'
+    ss.public_header_files  = 'Classes/Extensions/*.h'
   end
   
   s.subspec 'CLI' do |ss|
-    ss.osx.deployment_target = '10.7'
-    ss.source_files = 'Classes/CLI/*.{h,m}'
-    ss.dependency 'CocoaLumberjack/Default'
+    ss.osx.deployment_target    = '10.7'
+    ss.osx.dependency 'CocoaLumberjack/Default'
+    ss.osx.source_files         = 'Classes/CLI/*.{h,m}'
+    ss.osx.public_header_files  = 'Classes/CLI/*.h'
   end
 
   s.subspec 'Swift' do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.osx.deployment_target = '10.10'
-    ss.watchos.deployment_target = '2.0'
-    ss.tvos.deployment_target = '9.0'
-    ss.source_files = 'Classes/CocoaLumberjack.swift'
-    ss.dependency 'CocoaLumberjack/Extensions'
+    ss.ios.deployment_target      = '8.0'
+    ss.osx.deployment_target      = '10.10'
+    ss.watchos.deployment_target  = '2.0'
+    ss.tvos.deployment_target     = '9.0'
+    ss.dependency 'CocoaLumberjack/Default'
+    ss.source_files               = 'Classes/CocoaLumberjack.swift'
   end
   
 end
