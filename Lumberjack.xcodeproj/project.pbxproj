@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		18F3BF081A81D8B700692297 /* CocoaLumberjack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BCB5C619D4BB6E0096E784 /* CocoaLumberjack.swift */; };
-		18F3BF0A1A81D8B700692297 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCB3185114EB418E001CFBEE /* CocoaLumberjack.framework */; };
-		18F3BF161A81D9A400692297 /* CocoaLumberjack.h in Headers */ = {isa = PBXBuildFile; fileRef = 18F3BF151A81D9A400692297 /* CocoaLumberjack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18F3BF641A81DD2E00692297 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F3BF631A81DD2E00692297 /* AppDelegate.swift */; };
 		18F3BF661A81DD2E00692297 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F3BF651A81DD2E00692297 /* ViewController.swift */; };
 		18F3BF6B1A81DD2E00692297 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18F3BF6A1A81DD2E00692297 /* Images.xcassets */; };
@@ -55,7 +53,6 @@
 		19190F091B84DB72008D059E /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20C2192A0E0000AB7171 /* DDASLLogger.m */; };
 		19190F0A1B84DB97008D059E /* CocoaLumberjackSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F88BF71B3CB15C00E31255 /* CocoaLumberjackSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		19190F0B1B84DB9F008D059E /* CocoaLumberjack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BCB5C619D4BB6E0096E784 /* CocoaLumberjack.swift */; };
-		19190F0C1B84DBAA008D059E /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19190EDE1B84D812008D059E /* CocoaLumberjack.framework */; };
 		19190F0E1B84DBCE008D059E /* CocoaLumberjack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 19190EDE1B84D812008D059E /* CocoaLumberjack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		19190F121B84DBCE008D059E /* CocoaLumberjackSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 19190EEB1B84D826008D059E /* CocoaLumberjackSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		19190F181B84DF5B008D059E /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19190EEB1B84D826008D059E /* CocoaLumberjackSwift.framework */; };
@@ -92,7 +89,6 @@
 		19D90B201BBFA9DB00947169 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20C2192A0E0000AB7171 /* DDASLLogger.m */; };
 		19D90B2C1BBFAA7500947169 /* CocoaLumberjackSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F88BF71B3CB15C00E31255 /* CocoaLumberjackSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		19D90B2E1BBFAA7500947169 /* CocoaLumberjack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BCB5C619D4BB6E0096E784 /* CocoaLumberjack.swift */; };
-		19D90B391BBFB16F00947169 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19D90B261BBFA9DB00947169 /* CocoaLumberjack.framework */; };
 		19EC146B1B84D134000EC2E7 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19EC14691B84D134000EC2E7 /* Interface.storyboard */; };
 		19EC146D1B84D134000EC2E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19EC146C1B84D134000EC2E7 /* Assets.xcassets */; };
 		19EC14741B84D135000EC2E7 /* watchOSSwiftTest Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 19EC14731B84D134000EC2E7 /* watchOSSwiftTest Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -126,7 +122,6 @@
 		19FF46331B8B4EE800B43179 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20C6192A0E0000AB7171 /* DDLog.m */; };
 		19FF46341B8B4EF800B43179 /* CocoaLumberjackSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F88BF71B3CB15C00E31255 /* CocoaLumberjackSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		19FF46351B8B4F0700B43179 /* CocoaLumberjack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BCB5C619D4BB6E0096E784 /* CocoaLumberjack.swift */; };
-		19FF46361B8B4F0D00B43179 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FF46021B8B4CF400B43179 /* CocoaLumberjack.framework */; };
 		19FF463D1B8B4F5100B43179 /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FF460F1B8B4D1400B43179 /* CocoaLumberjackSwift.framework */; };
 		19FF463E1B8B4F5900B43179 /* CocoaLumberjack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 19FF46021B8B4CF400B43179 /* CocoaLumberjack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		19FF463F1B8B4F5900B43179 /* CocoaLumberjackSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 19FF460F1B8B4D1400B43179 /* CocoaLumberjackSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -154,6 +149,7 @@
 		620EEE811BFA65CE00D1B9CB /* DDMultiFormatter.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DA9C20CF192A0E0000AB7171 /* DDMultiFormatter.h */; };
 		93483CFC1D09E39000AD40D6 /* CLIColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 93483CFA1D09E39000AD40D6 /* CLIColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		93483CFD1D09E39000AD40D6 /* CLIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 93483CFB1D09E39000AD40D6 /* CLIColor.m */; };
+		C7D056731E1A58EA000E6591 /* CocoaLumberjack.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BA41994749300C180CF /* CocoaLumberjack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA9C20D1192A0E0000AB7171 /* DDAbstractDatabaseLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20BD192A0E0000AB7171 /* DDAbstractDatabaseLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA9C20D2192A0E0000AB7171 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20BE192A0E0000AB7171 /* DDAbstractDatabaseLogger.m */; };
 		DA9C20D3192A0E0000AB7171 /* DDASLLogCapture.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9C20BF192A0E0000AB7171 /* DDASLLogCapture.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -185,26 +181,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		18F3BEF81A81D8B700692297 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DCB3185014EB418E001CFBEE;
-			remoteInfo = CocoaLumberjack;
-		};
 		19190F131B84DBCE008D059E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 19190EEA1B84D826008D059E;
 			remoteInfo = "CocoaLumberjackSwift-watchOS";
-		};
-		19190F161B84DBE2008D059E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 19190EDD1B84D812008D059E;
-			remoteInfo = "CocoaLumberjack-watchOS";
 		};
 		19406BF31BDBACFD001194DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -214,13 +196,6 @@
 			remoteInfo = "CocoaLumberjackSwift-tvOS";
 		};
 		19406BF81BDBAD17001194DC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 19D90B071BBFA9DB00947169;
-			remoteInfo = "CocoaLumberjack-tvOS";
-		};
-		19D90B371BBFB13300947169 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
 			proxyType = 1;
@@ -241,13 +216,6 @@
 			remoteGlobalIDString = 19EC14661B84D134000EC2E7;
 			remoteInfo = watchOSSwiftTest;
 		};
-		19FF46371B8B4F1100B43179 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 19FF46011B8B4CF400B43179;
-			remoteInfo = "CocoaLumberjack-iOS";
-		};
 		19FF463B1B8B4F4100B43179 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
@@ -261,6 +229,34 @@
 			proxyType = 1;
 			remoteGlobalIDString = 18F3BEF61A81D8B700692297;
 			remoteInfo = CocoaLumberjackSwift;
+		};
+		C7D056741E1A5A2C000E6591 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 19FF46011B8B4CF400B43179;
+			remoteInfo = "CocoaLumberjack-iOS";
+		};
+		C7D056761E1A5A3A000E6591 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DCB3185014EB418E001CFBEE;
+			remoteInfo = "CocoaLumberjack-macOS";
+		};
+		C7D056781E1A5A4D000E6591 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 19D90B071BBFA9DB00947169;
+			remoteInfo = "CocoaLumberjack-tvOS";
+		};
+		C7D0567A1E1A5A54000E6591 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCB3184714EB418D001CFBEE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 19190EDD1B84D812008D059E;
+			remoteInfo = "CocoaLumberjack-watchOS";
 		};
 		DCB318E214ED6C43001CFBEE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -465,7 +461,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18F3BF0A1A81D8B700692297 /* CocoaLumberjack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,7 +498,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19190F0C1B84DBAA008D059E /* CocoaLumberjack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,7 +520,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19D90B391BBFB16F00947169 /* CocoaLumberjack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,7 +542,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19FF46361B8B4F0D00B43179 /* CocoaLumberjack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -935,7 +927,7 @@
 				DA9C20D9192A0E0000AB7171 /* DDLog.h in Headers */,
 				DA9C20D5192A0E0000AB7171 /* DDASLLogger.h in Headers */,
 				DA9C20E2192A0E0000AB7171 /* DDMultiFormatter.h in Headers */,
-				18F3BF161A81D9A400692297 /* CocoaLumberjack.h in Headers */,
+				C7D056731E1A58EA000E6591 /* CocoaLumberjack.h in Headers */,
 				93483CFC1D09E39000AD40D6 /* CLIColor.h in Headers */,
 				DA9C20D7192A0E0000AB7171 /* DDFileLogger.h in Headers */,
 			);
@@ -956,7 +948,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				18F3BEF71A81D8B700692297 /* PBXTargetDependency */,
+				C7D056771E1A5A3A000E6591 /* PBXTargetDependency */,
 			);
 			name = "CocoaLumberjackSwift-macOS";
 			productName = Lumberjack;
@@ -1048,7 +1040,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				19190F171B84DBE2008D059E /* PBXTargetDependency */,
+				C7D0567B1E1A5A54000E6591 /* PBXTargetDependency */,
 			);
 			name = "CocoaLumberjackSwift-watchOS";
 			productName = "CocoaLumberjackSwift-watchOS";
@@ -1105,7 +1097,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				19D90B381BBFB13300947169 /* PBXTargetDependency */,
+				C7D056791E1A5A4D000E6591 /* PBXTargetDependency */,
 			);
 			name = "CocoaLumberjackSwift-tvOS";
 			productName = "CocoaLumberjackSwift-iOS";
@@ -1178,7 +1170,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				19FF46381B8B4F1100B43179 /* PBXTargetDependency */,
+				C7D056751E1A5A2C000E6591 /* PBXTargetDependency */,
 			);
 			name = "CocoaLumberjackSwift-iOS";
 			productName = "CocoaLumberjackSwift-iOS";
@@ -1640,20 +1632,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		18F3BEF71A81D8B700692297 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DCB3185014EB418E001CFBEE /* CocoaLumberjack-macOS */;
-			targetProxy = 18F3BEF81A81D8B700692297 /* PBXContainerItemProxy */;
-		};
 		19190F141B84DBCE008D059E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 19190EEA1B84D826008D059E /* CocoaLumberjackSwift-watchOS */;
 			targetProxy = 19190F131B84DBCE008D059E /* PBXContainerItemProxy */;
-		};
-		19190F171B84DBE2008D059E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 19190EDD1B84D812008D059E /* CocoaLumberjack-watchOS */;
-			targetProxy = 19190F161B84DBE2008D059E /* PBXContainerItemProxy */;
 		};
 		19406BF41BDBACFD001194DC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1665,11 +1647,6 @@
 			target = 19D90B071BBFA9DB00947169 /* CocoaLumberjack-tvOS */;
 			targetProxy = 19406BF81BDBAD17001194DC /* PBXContainerItemProxy */;
 		};
-		19D90B381BBFB13300947169 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 19D90B071BBFA9DB00947169 /* CocoaLumberjack-tvOS */;
-			targetProxy = 19D90B371BBFB13300947169 /* PBXContainerItemProxy */;
-		};
 		19EC14761B84D135000EC2E7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 19EC14721B84D134000EC2E7 /* watchOSSwiftTest Extension */;
@@ -1680,11 +1657,6 @@
 			target = 19EC14661B84D134000EC2E7 /* watchOSSwiftTest */;
 			targetProxy = 19EC147F1B84D135000EC2E7 /* PBXContainerItemProxy */;
 		};
-		19FF46381B8B4F1100B43179 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 19FF46011B8B4CF400B43179 /* CocoaLumberjack-iOS */;
-			targetProxy = 19FF46371B8B4F1100B43179 /* PBXContainerItemProxy */;
-		};
 		19FF463C1B8B4F4100B43179 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 19FF460E1B8B4D1400B43179 /* CocoaLumberjackSwift-iOS */;
@@ -1694,6 +1666,26 @@
 			isa = PBXTargetDependency;
 			target = 18F3BEF61A81D8B700692297 /* CocoaLumberjackSwift-macOS */;
 			targetProxy = 55C5F2871B1E399100EBC776 /* PBXContainerItemProxy */;
+		};
+		C7D056751E1A5A2C000E6591 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 19FF46011B8B4CF400B43179 /* CocoaLumberjack-iOS */;
+			targetProxy = C7D056741E1A5A2C000E6591 /* PBXContainerItemProxy */;
+		};
+		C7D056771E1A5A3A000E6591 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DCB3185014EB418E001CFBEE /* CocoaLumberjack-macOS */;
+			targetProxy = C7D056761E1A5A3A000E6591 /* PBXContainerItemProxy */;
+		};
+		C7D056791E1A5A4D000E6591 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 19D90B071BBFA9DB00947169 /* CocoaLumberjack-tvOS */;
+			targetProxy = C7D056781E1A5A4D000E6591 /* PBXContainerItemProxy */;
+		};
+		C7D0567B1E1A5A54000E6591 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 19190EDD1B84D812008D059E /* CocoaLumberjack-watchOS */;
+			targetProxy = C7D0567A1E1A5A54000E6591 /* PBXContainerItemProxy */;
 		};
 		DCB318E314ED6C43001CFBEE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
