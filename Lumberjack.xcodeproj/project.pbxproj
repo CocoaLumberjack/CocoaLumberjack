@@ -1204,9 +1204,9 @@
 			productReference = 55CCBEFF19BA679200957A39 /* SwiftTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		DCB3185014EB418E001CFBEE /* CocoaLumberjack */ = {
+		DCB3185014EB418E001CFBEE /* CocoaLumberjack-macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DCB3186614EB418E001CFBEE /* Build configuration list for PBXNativeTarget "CocoaLumberjack" */;
+			buildConfigurationList = DCB3186614EB418E001CFBEE /* Build configuration list for PBXNativeTarget "CocoaLumberjack-macOS" */;
 			buildPhases = (
 				DCB3184E14EB418E001CFBEE /* Headers */,
 				DCB3184C14EB418E001CFBEE /* Sources */,
@@ -1217,7 +1217,7 @@
 			);
 			dependencies = (
 			);
-			name = CocoaLumberjack;
+			name = "CocoaLumberjack-macOS";
 			productName = Lumberjack;
 			productReference = DCB3185114EB418E001CFBEE /* CocoaLumberjack.framework */;
 			productType = "com.apple.product-type.framework";
@@ -1323,9 +1323,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DCB3185014EB418E001CFBEE /* CocoaLumberjack */,
-				19FF46011B8B4CF400B43179 /* CocoaLumberjack-iOS */,
 				18F3BFD61A81E06E00692297 /* CocoaLumberjack-iOS-Static */,
+				19FF46011B8B4CF400B43179 /* CocoaLumberjack-iOS */,
+				DCB3185014EB418E001CFBEE /* CocoaLumberjack-macOS */,
 				19D90B071BBFA9DB00947169 /* CocoaLumberjack-tvOS */,
 				19190EDD1B84D812008D059E /* CocoaLumberjack-watchOS */,
 				18F3BEF61A81D8B700692297 /* CocoaLumberjackSwift */,
@@ -1642,7 +1642,7 @@
 /* Begin PBXTargetDependency section */
 		18F3BEF71A81D8B700692297 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DCB3185014EB418E001CFBEE /* CocoaLumberjack */;
+			target = DCB3185014EB418E001CFBEE /* CocoaLumberjack-macOS */;
 			targetProxy = 18F3BEF81A81D8B700692297 /* PBXContainerItemProxy */;
 		};
 		19190F141B84DBCE008D059E /* PBXTargetDependency */ = {
@@ -1697,7 +1697,7 @@
 		};
 		DCB318E314ED6C43001CFBEE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DCB3185014EB418E001CFBEE /* CocoaLumberjack */;
+			target = DCB3185014EB418E001CFBEE /* CocoaLumberjack-macOS */;
 			targetProxy = DCB318E214ED6C43001CFBEE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -2470,11 +2470,11 @@
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjack-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = Framework/Lumberjack/CocoaLumberjack.modulemap;
-				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack;
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.macos;
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvsimulator appletvos watchsimulator watchos";
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 				WRAPPER_EXTENSION = framework;
@@ -2497,11 +2497,11 @@
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjack-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = Framework/Lumberjack/CocoaLumberjack.modulemap;
-				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack;
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.macos;
 				PRODUCT_NAME = CocoaLumberjack;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvsimulator appletvos watchsimulator watchos";
+				SUPPORTED_PLATFORMS = macosx;
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -2671,7 +2671,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DCB3186614EB418E001CFBEE /* Build configuration list for PBXNativeTarget "CocoaLumberjack" */ = {
+		DCB3186614EB418E001CFBEE /* Build configuration list for PBXNativeTarget "CocoaLumberjack-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DCB3186714EB418E001CFBEE /* Debug */,

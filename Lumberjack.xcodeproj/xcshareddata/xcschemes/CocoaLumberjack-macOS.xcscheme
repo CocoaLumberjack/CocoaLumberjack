@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DCB3185014EB418E001CFBEE"
                BuildableName = "CocoaLumberjack.framework"
-               BlueprintName = "CocoaLumberjack"
+               BlueprintName = "CocoaLumberjack-macOS"
                ReferencedContainer = "container:Lumberjack.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,7 +47,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DCB3185014EB418E001CFBEE"
             BuildableName = "CocoaLumberjack.framework"
-            BlueprintName = "CocoaLumberjack"
+            BlueprintName = "CocoaLumberjack-macOS"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -65,7 +65,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DCB3185014EB418E001CFBEE"
             BuildableName = "CocoaLumberjack.framework"
-            BlueprintName = "CocoaLumberjack"
+            BlueprintName = "CocoaLumberjack-macOS"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
