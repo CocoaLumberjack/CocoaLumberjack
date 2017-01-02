@@ -944,9 +944,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		18F3BEF61A81D8B700692297 /* CocoaLumberjackSwift */ = {
+		18F3BEF61A81D8B700692297 /* CocoaLumberjackSwift-macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 18F3BF0C1A81D8B700692297 /* Build configuration list for PBXNativeTarget "CocoaLumberjackSwift" */;
+			buildConfigurationList = 18F3BF0C1A81D8B700692297 /* Build configuration list for PBXNativeTarget "CocoaLumberjackSwift-macOS" */;
 			buildPhases = (
 				18F3BEF91A81D8B700692297 /* Headers */,
 				18F3BF071A81D8B700692297 /* Sources */,
@@ -958,7 +958,7 @@
 			dependencies = (
 				18F3BEF71A81D8B700692297 /* PBXTargetDependency */,
 			);
-			name = CocoaLumberjackSwift;
+			name = "CocoaLumberjackSwift-macOS";
 			productName = Lumberjack;
 			productReference = 18F3BF0F1A81D8B700692297 /* CocoaLumberjackSwift.framework */;
 			productType = "com.apple.product-type.framework";
@@ -1328,17 +1328,17 @@
 				DCB3185014EB418E001CFBEE /* CocoaLumberjack-macOS */,
 				19D90B071BBFA9DB00947169 /* CocoaLumberjack-tvOS */,
 				19190EDD1B84D812008D059E /* CocoaLumberjack-watchOS */,
-				18F3BEF61A81D8B700692297 /* CocoaLumberjackSwift */,
 				19FF460E1B8B4D1400B43179 /* CocoaLumberjackSwift-iOS */,
+				18F3BEF61A81D8B700692297 /* CocoaLumberjackSwift-macOS */,
 				19D90B281BBFAA7500947169 /* CocoaLumberjackSwift-tvOS */,
 				19190EEA1B84D826008D059E /* CocoaLumberjackSwift-watchOS */,
-				DCB318C914ED6C3B001CFBEE /* FmwkTest */,
 				18F3BFF11A81E0C700692297 /* iOSLibStaticTest */,
-				55CCBEFE19BA679200957A39 /* SwiftTest */,
+				DCB318C914ED6C3B001CFBEE /* FmwkTest */,
 				18F3BF5E1A81DD2E00692297 /* iOSSwiftTest */,
+				55CCBEFE19BA679200957A39 /* SwiftTest */,
+				19406BE01BDBABFF001194DC /* tvOSSwiftTest */,
 				19EC14661B84D134000EC2E7 /* watchOSSwiftTest */,
 				19EC14721B84D134000EC2E7 /* watchOSSwiftTest Extension */,
-				19406BE01BDBABFF001194DC /* tvOSSwiftTest */,
 			);
 		};
 /* End PBXProject section */
@@ -1692,7 +1692,7 @@
 		};
 		55C5F2881B1E399100EBC776 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 18F3BEF61A81D8B700692297 /* CocoaLumberjackSwift */;
+			target = 18F3BEF61A81D8B700692297 /* CocoaLumberjackSwift-macOS */;
 			targetProxy = 55C5F2871B1E399100EBC776 /* PBXContainerItemProxy */;
 		};
 		DCB318E314ED6C43001CFBEE /* PBXTargetDependency */ = {
@@ -1778,11 +1778,11 @@
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjackSwift-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.swift;
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.swift.macos;
 				PRODUCT_NAME = CocoaLumberjackSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvos appletvsimulator watchsimulator watchos";
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 				WRAPPER_EXTENSION = framework;
@@ -1805,11 +1805,11 @@
 				INFOPLIST_FILE = "Framework/Lumberjack/CocoaLumberjackSwift-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.swift;
+				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.cocoalumberjack.swift.macos;
 				PRODUCT_NAME = CocoaLumberjackSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvos appletvsimulator watchsimulator watchos";
+				SUPPORTED_PLATFORMS = macosx;
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -2536,7 +2536,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		18F3BF0C1A81D8B700692297 /* Build configuration list for PBXNativeTarget "CocoaLumberjackSwift" */ = {
+		18F3BF0C1A81D8B700692297 /* Build configuration list for PBXNativeTarget "CocoaLumberjackSwift-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				18F3BF0D1A81D8B700692297 /* Debug */,
