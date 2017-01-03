@@ -1,5 +1,19 @@
 Common issues you may encounter and their solutions.
 
+### Logging behavior is inconsistent in iOS Share/Other Extensions
+
+When using logging to evaluate issues in iOS Extensions, logging sometimes works, but some messages are not logged, particularly if the extension crashes or otherwise encounters an error. This is very frustrating when trying to use logging to track down the problem.
+
+iOS Extensions are sandboxed environments hosted within the sending application. If you double-Home to view the app list, you will see for instance that a Share Extension is not listed as an application - it is just a UIViewController presented within the host application itself. For security reasons, issue handling is especially rigid in this environment, and threading/async task handling has some odd side effects.
+
+By default, for maximum performance, CocoaLumberjack logs messages asynchronously. This can cause problems in Extensions with reliable logging of the final messages before an exception is handled. To work around this, enable this compile-time setting either at the top of your Extension's entry code file or as a Preprocessor Macro:
+
+```objective-c
+#define LOG_ASYNC_ENABLED NO
+```
+
+This will disable asynchronous logging just for the extension, improving its reliability there.
+
 ### NSConcreteStackBlock
 
 Your application fails to launch, and you see a crash message that looks something like
