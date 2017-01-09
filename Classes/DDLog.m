@@ -609,7 +609,7 @@ static NSUInteger _numProcessors;
 
         classes = numClasses ? (Class *)malloc(sizeof(Class) * bufferSize) : NULL;
         if (classes == NULL) {
-            return nil; //no memory or classes?
+            return @[]; //no memory or classes?
         }
 
         numClasses = (NSUInteger)MAX(objc_getClassList(classes, (int)bufferSize),0);
