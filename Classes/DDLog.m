@@ -159,7 +159,7 @@ static NSUInteger _numProcessors;
         // Figure out how many processors are available.
         // This may be used later for an optimization on uniprocessor machines.
         
-        _numProcessors = MAX([NSProcessInfo processInfo].processorCount, 1);
+        _numProcessors = MAX([NSProcessInfo processInfo].processorCount, (NSUInteger) 1);
         
         NSLogDebug(@"DDLog: numProcessors = %@", @(_numProcessors));
     });
@@ -277,11 +277,11 @@ static NSUInteger _numProcessors;
     } });
 }
 
-+ (NSArray *)allLoggers {
++ (NSArray<id<DDLogger>> *)allLoggers {
     return [self.sharedInstance allLoggers];
 }
 
-- (NSArray *)allLoggers {
+- (NSArray<id<DDLogger>> *)allLoggers {
     __block NSArray *theLoggers;
     
     dispatch_sync(_loggingQueue, ^{ @autoreleasepool {
@@ -291,11 +291,11 @@ static NSUInteger _numProcessors;
     return theLoggers;
 }
 
-+ (NSArray *)allLoggersWithLevel {
++ (NSArray<DDLoggerInformation *> *)allLoggersWithLevel {
     return [self.sharedInstance allLoggersWithLevel];
 }
 
-- (NSArray *)allLoggersWithLevel {
+- (NSArray<DDLoggerInformation *> *)allLoggersWithLevel {
     __block NSArray *theLoggersWithLevel;
     
     dispatch_sync(_loggingQueue, ^{ @autoreleasepool {
