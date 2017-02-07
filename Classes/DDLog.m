@@ -21,6 +21,7 @@
 #import "DDLog.h"
 
 #import <pthread.h>
+#import <dispatch/dispatch.h>
 #import <objc/runtime.h>
 #import <mach/mach_host.h>
 #import <mach/host_info.h>
@@ -1002,15 +1003,30 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
 
 // Compiling for iOS
 
-    #define USE_DISPATCH_CURRENT_QUEUE_LABEL ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
-    #define USE_DISPATCH_GET_CURRENT_QUEUE   ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.1)
+static BOOL _use_dispatch_current_queue_label;
+static BOOL _use_dispatch_get_current_queue;
+
+static void _dispatch_queue_label_init_once(void * __attribute__((unused)) context)
+{
+    _use_dispatch_current_queue_label = (UIDevice.currentDevice.systemVersion.floatValue >= 7.0f);
+    _use_dispatch_get_current_queue = (!_use_dispatch_current_queue_label && UIDevice.currentDevice.systemVersion.floatValue >= 6.1f);
+}
+
+static __inline__ __attribute__((__always_inline__)) void _dispatch_queue_label_init()
+{
+    static dispatch_once_t onceToken;
+    dispatch_once_f(&onceToken, NULL, _dispatch_queue_label_init_once);
+}
+
+  #define USE_DISPATCH_CURRENT_QUEUE_LABEL (_dispatch_queue_label_init(), _use_dispatch_current_queue_label)
+  #define USE_DISPATCH_GET_CURRENT_QUEUE   (_dispatch_queue_label_init(), _use_dispatch_get_current_queue)
 
 #elif TARGET_OS_WATCH || TARGET_OS_TV
 
 // Compiling for watchOS, tvOS
 
-#define USE_DISPATCH_CURRENT_QUEUE_LABEL YES
-#define USE_DISPATCH_GET_CURRENT_QUEUE   YES
+  #define USE_DISPATCH_CURRENT_QUEUE_LABEL YES
+  #define USE_DISPATCH_GET_CURRENT_QUEUE   NO
 
 #else
 
@@ -1027,8 +1043,23 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
 
   #else
 
-    #define USE_DISPATCH_CURRENT_QUEUE_LABEL ([NSTimer instancesRespondToSelector : @selector(tolerance)]) // OS X 10.9+
-    #define USE_DISPATCH_GET_CURRENT_QUEUE   (![NSTimer instancesRespondToSelector : @selector(tolerance)]) // < OS X 10.9
+static BOOL _use_dispatch_current_queue_label;
+static BOOL _use_dispatch_get_current_queue;
+
+static void _dispatch_queue_label_init_once(void * __attribute__((unused)) context)
+{
+    _use_dispatch_current_queue_label = [NSTimer instancesRespondToSelector : @selector(tolerance)]; // OS X 10.9+
+    _use_dispatch_get_current_queue = !_use_dispatch_current_queue_label;                            // < OS X 10.9
+}
+
+static __inline__ __attribute__((__always_inline__)) void _dispatch_queue_label_init()
+{
+    static dispatch_once_t onceToken;
+    dispatch_once_f(&onceToken, NULL, _dispatch_queue_label_init_once);
+}
+
+    #define USE_DISPATCH_CURRENT_QUEUE_LABEL (_dispatch_queue_label_init(), _use_dispatch_current_queue_label)
+    #define USE_DISPATCH_GET_CURRENT_QUEUE   (_dispatch_queue_label_init(), _use_dispatch_get_current_queue)
 
   #endif
 
@@ -1045,13 +1076,13 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
     #define kCFCoreFoundationVersionNumber_iOS_8_0 1140.10
   #endif
 
-    #define USE_PTHREAD_THREADID_NP                (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0)
+  #define USE_PTHREAD_THREADID_NP                (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0)
 
 #elif TARGET_OS_WATCH || TARGET_OS_TV
 
 // Compiling for watchOS, tvOS
 
-#define USE_PTHREAD_THREADID_NP                    YES
+  #define USE_PTHREAD_THREADID_NP                YES
 
 #else
 
@@ -1061,7 +1092,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
     #define kCFCoreFoundationVersionNumber10_10    1151.16
   #endif
 
-    #define USE_PTHREAD_THREADID_NP                (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber10_10)
+  #define USE_PTHREAD_THREADID_NP                (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber10_10)
 
 #endif /* if TARGET_OS_IOS */
 
