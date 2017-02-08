@@ -381,6 +381,11 @@ static NSUInteger _numProcessors;
         va_start(args, format);
         
         NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
+        
+        va_end(args);
+        
+        va_start(args, format);
+        
         [self log:asynchronous
           message:message
             level:level
@@ -410,6 +415,11 @@ static NSUInteger _numProcessors;
         va_start(args, format);
         
         NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
+        
+        va_end(args);
+        
+        va_start(args, format);
+        
         [self log:asynchronous
           message:message
             level:level
