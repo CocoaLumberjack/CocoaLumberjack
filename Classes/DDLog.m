@@ -1107,15 +1107,16 @@ static __inline__ __attribute__((__always_inline__)) void _dispatch_queue_label_
                         options:(DDLogMessageOptions)options
                       timestamp:(NSDate *)timestamp {
     if ((self = [super init])) {
-        _message      = [message copy];
+        BOOL copyMessage = (options & DDLogMessageDontCopyMessage) == 0;
+        _message      = copyMessage ? [message copy] : message;
         _level        = level;
         _flag         = flag;
         _context      = context;
 
-        BOOL copyFile = (options & DDLogMessageCopyFile) == DDLogMessageCopyFile;
+        BOOL copyFile = (options & DDLogMessageCopyFile) != 0;
         _file = copyFile ? [file copy] : file;
 
-        BOOL copyFunction = (options & DDLogMessageCopyFunction) == DDLogMessageCopyFunction;
+        BOOL copyFunction = (options & DDLogMessageCopyFunction) != 0;
         _function = copyFunction ? [function copy] : function;
 
         _line         = line;
