@@ -720,11 +720,15 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
     /**
      *  Use this to use a copy of the file path
      */
-    DDLogMessageCopyFile     = 1 << 0,
+    DDLogMessageCopyFile        = 1 << 0,
     /**
      *  Use this to use a copy of the function name
      */
-    DDLogMessageCopyFunction = 1 << 1
+    DDLogMessageCopyFunction    = 1 << 1,
+    /**
+     *  Use this to use avoid a copy of the message
+     */
+    DDLogMessageDontCopyMessage = 1 << 2
 };
 
 /**
