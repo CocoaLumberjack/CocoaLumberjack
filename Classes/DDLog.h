@@ -593,6 +593,19 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 - (void)didAddLogger;
 
 /**
+ * Since logging is asynchronous, adding and removing loggers is also asynchronous.
+ * In other words, the loggers are added and removed at appropriate times with regards to log messages.
+ *
+ * - Loggers will not receive log messages that were executed prior to when they were added.
+ * - Loggers will not receive log messages that were executed after they were removed.
+ *
+ * These methods are executed in the logging thread/queue given in parameter.
+ * This is the same thread/queue that will execute every logMessage: invocation.
+ * Loggers may use the queue parameter to set specific values on the queue with dispatch_set_specific() function.
+ **/
+- (void)didAddLoggerInQueue:(dispatch_queue_t)queue;
+
+/**
  *  See the above description for `didAddLoger`
  */
 - (void)willRemoveLogger;
@@ -661,6 +674,18 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * it could possibly use these hooks to switch to thread-safe versions of the code.
  **/
 - (void)didAddToLogger:(id <DDLogger>)logger;
+
+/**
+ * A single formatter instance can be added to multiple loggers.
+ * These methods provides hooks to notify the formatter of when it's added/removed.
+ *
+ * This is primarily for thread-safety.
+ * If a formatter is explicitly not thread-safe, it may wish to throw an exception if added to multiple loggers.
+ * Or if a formatter has potentially thread-unsafe code (e.g. NSDateFormatter),
+ * it could possibly use these hooks to switch to thread-safe versions of the code or use dispatch_set_specific()
+.* to add its own specific values.
+ **/
+- (void)didAddToLogger:(id <DDLogger>)logger inQueue:(dispatch_queue_t)queue;
 
 /**
  *  See the above description for `didAddToLogger:`
