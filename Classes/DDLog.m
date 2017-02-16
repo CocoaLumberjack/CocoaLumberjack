@@ -726,7 +726,11 @@ static NSUInteger _numProcessors;
     DDLoggerNode *loggerNode = [DDLoggerNode nodeWithLogger:logger loggerQueue:loggerQueue level:level];
     [self._loggers addObject:loggerNode];
 
-    if ([logger respondsToSelector:@selector(didAddLogger)]) {
+    if ([logger respondsToSelector:@selector(didAddLoggerInQueue:)]) {
+        dispatch_async(loggerNode->_loggerQueue, ^{ @autoreleasepool {
+            [logger didAddLoggerInQueue:loggerNode->_loggerQueue];
+        } });
+    } else if ([logger respondsToSelector:@selector(didAddLogger)]) {
         dispatch_async(loggerNode->_loggerQueue, ^{ @autoreleasepool {
             [logger didAddLogger];
         } });
@@ -1324,8 +1328,10 @@ static __inline__ __attribute__((__always_inline__)) void _dispatch_queue_label_
                 }
 
                 _logFormatter = logFormatter;
-
-                if ([_logFormatter respondsToSelector:@selector(didAddToLogger:)]) {
+ 
+                if ([_logFormatter respondsToSelector:@selector(didAddToLogger:inQueue:)]) {
+                    [_logFormatter didAddToLogger:self inQueue:_loggerQueue];
+                } else if ([_logFormatter respondsToSelector:@selector(didAddToLogger:)]) {
                     [_logFormatter didAddToLogger:self];
                 }
             }
