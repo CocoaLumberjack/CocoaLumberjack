@@ -79,6 +79,8 @@
 
 #define MAP_TO_TERMINAL_APP_COLORS 1
 
+static void *const CalendarSpecificKey = (void *)&CalendarSpecificKey;
+
 
 @interface DDTTYLoggerColorProfile : NSObject {
     @public
@@ -822,11 +824,14 @@ static DDTTYLogger *sharedInstance;
 
     if ((self = [super init])) {
         _calendarUnitFlags = (NSCalendarUnitYear     |
-                             NSCalendarUnitMonth    |
-                             NSCalendarUnitDay      |
-                             NSCalendarUnitHour     |
-                             NSCalendarUnitMinute   |
-                             NSCalendarUnitSecond);
+                              NSCalendarUnitMonth    |
+                              NSCalendarUnitDay      |
+                              NSCalendarUnitHour     |
+                              NSCalendarUnitMinute   |
+                              NSCalendarUnitSecond);
+
+        NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
+        dispatch_queue_set_specific(self.loggerQueue, CalendarSpecificKey, (__bridge_retained void*) calendar, (dispatch_function_t) CFRelease);
 
         // Initialze 'app' variable (char *)
 
@@ -1268,7 +1273,9 @@ static DDTTYLogger *sharedInstance;
             // Calculate timestamp.
             // The technique below is faster than using NSDateFormatter.
             if (logMessage->_timestamp) {
-                NSDateComponents *components = [[NSCalendar autoupdatingCurrentCalendar] components:_calendarUnitFlags fromDate:logMessage->_timestamp];
+                NSCalendar* calendar = (__bridge NSCalendar*) dispatch_get_specific(CalendarSpecificKey);
+                NSAssert(calendar != nil, @"Core architecture requirement failure");
+                NSDateComponents *components = [calendar components:_calendarUnitFlags fromDate:logMessage->_timestamp];
 
                 NSTimeInterval epoch = [logMessage->_timestamp timeIntervalSinceReferenceDate];
                 int milliseconds = (int)((epoch - floor(epoch)) * 1000);
