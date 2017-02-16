@@ -781,9 +781,9 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
 }
 
 /**
- *  Default `init` is not available
+ *  Default `init` for empty messages.
  */
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
 
 /**
  * Standard init method for a log message object.
