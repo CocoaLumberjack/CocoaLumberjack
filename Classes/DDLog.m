@@ -1100,6 +1100,11 @@ static __inline__ __attribute__((__always_inline__)) void _dispatch_queue_label_
 
 #endif /* if TARGET_OS_IOS */
 
+- (instancetype)init {
+    self = [super init];
+    return self;
+}
+
 - (instancetype)initWithMessage:(NSString *)message
                           level:(DDLogLevel)level
                            flag:(DDLogFlag)flag
