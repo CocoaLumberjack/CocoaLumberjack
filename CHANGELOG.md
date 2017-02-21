@@ -1,3 +1,8 @@
+## [3.1.0 - Swift 3.0.1, Xcode 8.1 on Feb 21st, 2017](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.1.0)
+- Swift 3.0.1 and Xcode 8.1 support via #816
+- Fix Carthage build #819 #818
+
+
 ## [3.0.0 - Swift 3.0, Xcode 8 on Sep 21st, 2016](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.0.0)
 - Swift 3.0 and Xcode 8 support via #769, fixes #771 and #772. Many thanks to @ffried @max-potapov @chrisdoc @BarakRL @devxoul and the others who contributed
 
