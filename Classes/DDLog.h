@@ -177,7 +177,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return the file name
  */
-NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
+NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
 
 /**
  * The THIS_FILE macro gives you an NSString of the file name.
