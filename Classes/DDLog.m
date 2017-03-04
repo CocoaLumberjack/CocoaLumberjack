@@ -60,7 +60,9 @@
 // If a thread attempts to issue a log statement when the queue is already maxed out,
 // the issuing thread will block until the queue size drops below the max again.
 
-#define LOG_MAX_QUEUE_SIZE 1000 // Should not exceed INT32_MAX
+#ifndef DDLOG_MAX_QUEUE_SIZE
+    #define DDLOG_MAX_QUEUE_SIZE 1000 // Should not exceed INT32_MAX
+#endif
 
 // The "global logging queue" refers to [DDLog loggingQueue].
 // It is the queue that all log statements go through.
@@ -112,7 +114,7 @@ static dispatch_queue_t _loggingQueue;
 static dispatch_group_t _loggingGroup;
 
 // In order to prevent to queue from growing infinitely large,
-// a maximum size is enforced (LOG_MAX_QUEUE_SIZE).
+// a maximum size is enforced (DDLOG_MAX_QUEUE_SIZE).
 static dispatch_semaphore_t _queueSemaphore;
 
 // Minor optimization for uniprocessor machines
@@ -155,7 +157,7 @@ static NSUInteger _numProcessors;
         void *nonNullValue = GlobalLoggingQueueIdentityKey; // Whatever, just not null
         dispatch_queue_set_specific(_loggingQueue, GlobalLoggingQueueIdentityKey, nonNullValue, NULL);
         
-        _queueSemaphore = dispatch_semaphore_create(LOG_MAX_QUEUE_SIZE);
+        _queueSemaphore = dispatch_semaphore_create(DDLOG_MAX_QUEUE_SIZE);
         
         // Figure out how many processors are available.
         // This may be used later for an optimization on uniprocessor machines.
@@ -340,7 +342,7 @@ static NSUInteger _numProcessors;
 
 
     // We are using a counting semaphore provided by GCD.
-    // The semaphore is initialized with our LOG_MAX_QUEUE_SIZE value.
+    // The semaphore is initialized with our DDLOG_MAX_QUEUE_SIZE value.
     // Everytime we want to queue a log message we decrement this value.
     // If the resulting value is less than zero,
     // the semaphore function waits in FIFO order for a signal to occur before returning.
@@ -860,7 +862,7 @@ static NSUInteger _numProcessors;
     // Since we've now dequeued an item from the log, we may need to unblock the next thread.
 
     // We are using a counting semaphore provided by GCD.
-    // The semaphore is initialized with our LOG_MAX_QUEUE_SIZE value.
+    // The semaphore is initialized with our DDLOG_MAX_QUEUE_SIZE value.
     // When a log message is queued this value is decremented.
     // When a log message is dequeued this value is incremented.
     // If the value ever drops below zero,
@@ -897,7 +899,7 @@ static NSUInteger _numProcessors;
 #pragma mark Utilities
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
+NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
     if (filePath == NULL) {
         return nil;
     }
