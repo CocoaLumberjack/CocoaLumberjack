@@ -37,6 +37,7 @@ FOUNDATION_EXPORT const unsigned char CocoaLumberjackVersionString[];
 #import <CocoaLumberjack/DDTTYLogger.h>
 #import <CocoaLumberjack/DDASLLogger.h>
 #import <CocoaLumberjack/DDFileLogger.h>
+#import <CocoaLumberjack/DDOSLogger.h>
 
 // CLI
 #if __has_include(<CocoaLumberjack/CLIColor.h>) && TARGET_OS_OSX

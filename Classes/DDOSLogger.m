@@ -13,32 +13,17 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import "DDASLLogger.h"
-#import <asl.h>
+#import "DDOSLogger.h"
+@import os.log;
 
-#if !__has_feature(objc_arc)
-#error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
-#endif
+static DDOSLogger *sharedInstance;
 
-const char* const kDDASLKeyDDLog = "DDLog";
-
-const char* const kDDASLDDLogValue = "1";
-
-static DDASLLogger *sharedInstance;
-
-@interface DDASLLogger () {
-    aslclient _client;
-}
-
-@end
-
-
-@implementation DDASLLogger
+@implementation DDOSLogger
 
 + (instancetype)sharedInstance {
-    static dispatch_once_t DDASLLoggerOnceToken;
+    static dispatch_once_t DDOSLoggerOnceToken;
 
-    dispatch_once(&DDASLLoggerOnceToken, ^{
+    dispatch_once(&DDOSLoggerOnceToken, ^{
         sharedInstance = [[[self class] alloc] init];
     });
 
@@ -50,14 +35,11 @@ static DDASLLogger *sharedInstance;
         return nil;
     }
 
-    if ((self = [super init])) {
-        // A default asl client is provided for the main thread,
-        // but background threads need to create their own client.
-
-        _client = asl_open(NULL, "com.apple.console", 0);
+    if (self = [super init]) {
+        return self;
     }
 
-    return self;
+    return nil;
 }
 
 - (void)logMessage:(DDLogMessage *)logMessage {
@@ -65,57 +47,31 @@ static DDASLLogger *sharedInstance;
     if ([logMessage->_fileName isEqualToString:@"DDASLLogCapture"]) {
         return;
     }
-
+    
     NSString * message = _logFormatter ? [_logFormatter formatLogMessage:logMessage] : logMessage->_message;
-
+    
     if (message) {
         const char *msg = [message UTF8String];
-
-        size_t aslLogLevel;
+        
         switch (logMessage->_flag) {
-            // Note: By default ASL will filter anything above level 5 (Notice).
-            // So our mappings shouldn't go above that level.
-            case DDLogFlagError     : aslLogLevel = ASL_LEVEL_CRIT;     break;
-            case DDLogFlagWarning   : aslLogLevel = ASL_LEVEL_ERR;      break;
-            case DDLogFlagInfo      : aslLogLevel = ASL_LEVEL_WARNING;  break; // Regular NSLog's level
+            case DDLogFlagError     :
+                os_log_error(OS_LOG_DEFAULT, msg);
+                break;
+            case DDLogFlagWarning   :
+            case DDLogFlagInfo      :
+                os_log_info(OS_LOG_DEFAULT, msg);
+                break;
             case DDLogFlagDebug     :
             case DDLogFlagVerbose   :
-            default                 : aslLogLevel = ASL_LEVEL_NOTICE;   break;
+            default                 :
+                os_log_debug(OS_LOG_DEFAULT, msg);
+                break;
         }
-
-        static char const *const level_strings[] = { "0", "1", "2", "3", "4", "5", "6", "7" };
-
-        // NSLog uses the current euid to set the ASL_KEY_READ_UID.
-        uid_t const readUID = geteuid();
-
-        char readUIDString[16];
-#ifndef NS_BLOCK_ASSERTIONS
-        size_t l = snprintf(readUIDString, sizeof(readUIDString), "%d", readUID);
-#else
-        snprintf(readUIDString, sizeof(readUIDString), "%d", readUID);
-#endif
-
-        NSAssert(l < sizeof(readUIDString),
-                 @"Formatted euid is too long.");
-        NSAssert(aslLogLevel < (sizeof(level_strings) / sizeof(level_strings[0])),
-                 @"Unhandled ASL log level.");
-
-        aslmsg m = asl_new(ASL_TYPE_MSG);
-        if (m != NULL) {
-            if (asl_set(m, ASL_KEY_LEVEL, level_strings[aslLogLevel]) == 0 &&
-                asl_set(m, ASL_KEY_MSG, msg) == 0 &&
-                asl_set(m, ASL_KEY_READ_UID, readUIDString) == 0 &&
-                asl_set(m, kDDASLKeyDDLog, kDDASLDDLogValue) == 0) {
-                asl_send(_client, m);
-            }
-            asl_free(m);
-        }
-        //TODO handle asl_* failures non-silently?
     }
 }
 
 - (NSString *)loggerName {
-    return @"cocoa.lumberjack.aslLogger";
+    return @"cocoa.lumberjack.osLogger";
 }
 
 @end
