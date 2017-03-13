@@ -174,6 +174,12 @@
 		DCB318D814ED6C3B001CFBEE /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DCB318D614ED6C3B001CFBEE /* Credits.rtf */; };
 		DCB318DB14ED6C3B001CFBEE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB318DA14ED6C3B001CFBEE /* AppDelegate.m */; };
 		DCB318DE14ED6C3B001CFBEE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCB318DC14ED6C3B001CFBEE /* MainMenu.xib */; };
+		DD4738841E7168A400F1A4F5 /* DDOSLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DD4738831E7168A400F1A4F5 /* DDOSLogger.m */; };
+		DD4738851E71A14400F1A4F5 /* DDOSLogger.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DD4738821E7168A400F1A4F5 /* DDOSLogger.h */; };
+		DDBE6E861E73ED10003F093F /* DDOSLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DD4738821E7168A400F1A4F5 /* DDOSLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DDBE6E871E73ED11003F093F /* DDOSLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DD4738821E7168A400F1A4F5 /* DDOSLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DDBE6E881E73ED12003F093F /* DDOSLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DD4738821E7168A400F1A4F5 /* DDOSLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DDBE6E891E73ED12003F093F /* DDOSLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DD4738821E7168A400F1A4F5 /* DDOSLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E58079631A032F92008819CA /* DDLegacyMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E58079621A032F92008819CA /* DDLegacyMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5D89BA81994749300C180CF /* DDAssertMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BA51994749300C180CF /* DDAssertMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5D89BA91994749300C180CF /* DDLogMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BA61994749300C180CF /* DDLogMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -286,6 +292,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				DD4738851E71A14400F1A4F5 /* DDOSLogger.h in CopyFiles */,
 				620EEE741BFA65CE00D1B9CB /* CocoaLumberjack.h in CopyFiles */,
 				620EEE751BFA65CE00D1B9CB /* DDLogMacros.h in CopyFiles */,
 				620EEE761BFA65CE00D1B9CB /* DDAssertMacros.h in CopyFiles */,
@@ -449,6 +456,8 @@
 		DCB318D914ED6C3B001CFBEE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DCB318DA14ED6C3B001CFBEE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DCB318DD14ED6C3B001CFBEE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		DD4738821E7168A400F1A4F5 /* DDOSLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDOSLogger.h; sourceTree = "<group>"; };
+		DD4738831E7168A400F1A4F5 /* DDOSLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDOSLogger.m; sourceTree = "<group>"; };
 		E58078F91A01C92F008819CA /* CocoaLumberjackSwift-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CocoaLumberjackSwift-Info.plist"; sourceTree = "<group>"; };
 		E58079621A032F92008819CA /* DDLegacyMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLegacyMacros.h; sourceTree = "<group>"; };
 		E5D89BA41994749300C180CF /* CocoaLumberjack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaLumberjack.h; sourceTree = "<group>"; };
@@ -765,6 +774,8 @@
 				DA9C20C4192A0E0000AB7171 /* DDFileLogger.m */,
 				DA9C20C5192A0E0000AB7171 /* DDLog.h */,
 				DA9C20C6192A0E0000AB7171 /* DDLog.m */,
+				DD4738821E7168A400F1A4F5 /* DDOSLogger.h */,
+				DD4738831E7168A400F1A4F5 /* DDOSLogger.m */,
 				DA9C20C8192A0E0000AB7171 /* DDTTYLogger.h */,
 				DA9C20C9192A0E0000AB7171 /* DDTTYLogger.m */,
 				93483CFA1D09E39000AD40D6 /* CLIColor.h */,
@@ -840,6 +851,7 @@
 				19190EFC1B84DB21008D059E /* DDLog.h in Headers */,
 				19190EFD1B84DB26008D059E /* DDASLLogger.h in Headers */,
 				19190EFE1B84DB2C008D059E /* DDMultiFormatter.h in Headers */,
+				DDBE6E891E73ED12003F093F /* DDOSLogger.h in Headers */,
 				19190EFF1B84DB31008D059E /* CocoaLumberjack.h in Headers */,
 				19190F001B84DB36008D059E /* DDFileLogger.h in Headers */,
 			);
@@ -869,6 +881,7 @@
 				19D90B121BBFA9DB00947169 /* DDLog.h in Headers */,
 				19D90B131BBFA9DB00947169 /* DDASLLogger.h in Headers */,
 				19D90B141BBFA9DB00947169 /* DDMultiFormatter.h in Headers */,
+				DDBE6E881E73ED12003F093F /* DDOSLogger.h in Headers */,
 				19D90B151BBFA9DB00947169 /* CocoaLumberjack.h in Headers */,
 				19D90B161BBFA9DB00947169 /* DDFileLogger.h in Headers */,
 			);
@@ -898,6 +911,7 @@
 				19FF46211B8B4E9200B43179 /* DDLog.h in Headers */,
 				19FF46201B8B4E8D00B43179 /* DDASLLogger.h in Headers */,
 				19FF461F1B8B4E8800B43179 /* DDMultiFormatter.h in Headers */,
+				DDBE6E861E73ED10003F093F /* DDOSLogger.h in Headers */,
 				19FF461E1B8B4E8400B43179 /* CocoaLumberjack.h in Headers */,
 				19FF461D1B8B4E8200B43179 /* DDFileLogger.h in Headers */,
 			);
@@ -927,6 +941,7 @@
 				DA9C20D9192A0E0000AB7171 /* DDLog.h in Headers */,
 				DA9C20D5192A0E0000AB7171 /* DDASLLogger.h in Headers */,
 				DA9C20E2192A0E0000AB7171 /* DDMultiFormatter.h in Headers */,
+				DDBE6E871E73ED11003F093F /* DDOSLogger.h in Headers */,
 				C7D056731E1A58EA000E6591 /* CocoaLumberjack.h in Headers */,
 				93483CFC1D09E39000AD40D6 /* CLIColor.h in Headers */,
 				DA9C20D7192A0E0000AB7171 /* DDFileLogger.h in Headers */,
@@ -1488,6 +1503,7 @@
 				18F3C01E1A81E14E00692297 /* DDFileLogger.m in Sources */,
 				18F3C01F1A81E14E00692297 /* DDLog.m in Sources */,
 				18F3C01B1A81E14E00692297 /* DDAbstractDatabaseLogger.m in Sources */,
+				DD4738841E7168A400F1A4F5 /* DDOSLogger.m in Sources */,
 				18F3C0191A81E14000692297 /* DDDispatchQueueLogFormatter.m in Sources */,
 				18F3C01C1A81E14E00692297 /* DDASLLogCapture.m in Sources */,
 			);
