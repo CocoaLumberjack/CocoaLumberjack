@@ -1,6 +1,6 @@
 
 language: objective-c
-osx_image: xcode8.1
+osx_image: xcode8.2
 
 env:
   global:
@@ -56,7 +56,7 @@ script:
 
     - echo Run the tests
     - pod install --project-directory=Tests
-    - xcodebuild test -workspace Framework/Lumberjack.xcworkspace -scheme 'iOS Tests' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest' GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
+    - xcodebuild test -workspace Framework/Lumberjack.xcworkspace -scheme 'iOS Tests' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPad Pro (9.7 inch),OS=latest' GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
     - xcodebuild test -workspace Framework/Lumberjack.xcworkspace -scheme 'OS X Tests' -sdk macosx GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
 
 
