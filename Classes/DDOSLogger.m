@@ -14,7 +14,7 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDOSLogger.h"
-@import os.log;
+#import <os/log.h>
 
 static DDOSLogger *sharedInstance;
 
