@@ -1,5 +1,7 @@
 source 'https://github.com/CocoaPods/Specs'
 
+use_frameworks!
+
 xcodeproj 'CocoaLumberjack Tests'
 workspace '../Framework/Lumberjack'
 inhibit_all_warnings!
@@ -10,14 +12,12 @@ def import_pods
   pod 'CocoaLumberjack', :path => '../'
 end
 
-target :ios do
+target :'iOS Tests' do
   platform :ios, '5.1.1'
-  link_with 'iOS Tests'
   import_pods
 end
 
-target :osx do
+target :'OS X Tests' do
   platform :osx, '10.7'
-  link_with 'OS X Tests'
   import_pods
 end

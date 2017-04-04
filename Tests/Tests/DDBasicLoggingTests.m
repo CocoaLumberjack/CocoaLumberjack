@@ -15,9 +15,9 @@
 
 
 @import XCTest;
-#import <CocoaLumberjack.h>
-#import <OCMock.h>
-#import <Expecta.h>
+#import "CocoaLumberjack.h"
+#import <OCMock/OCMock.h>
+#import <Expecta/Expecta.h>
 
 
 const NSTimeInterval kAsyncExpectationTimeout = 3.0f;

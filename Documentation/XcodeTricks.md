@@ -8,7 +8,7 @@ Starting with Xcode 4, the `DEBUG` preprocessor macro is automatically set when 
 #ifdef DEBUG
   static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 #else
-  static const DDLogLevel ddLogLevel = DDLogLevelWarn;
+  static const DDLogLevel ddLogLevel = DDLogLevelWarning;
 #endif
 ```
 
@@ -24,7 +24,7 @@ When we're done we'll be able to have code like this:
 #ifdef CONFIGURATION_DEBUG
   static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 #else
-  static const DDLogLevel ddLogLevel = DDLogLevelWarn;
+  static const DDLogLevel ddLogLevel = DDLogLevelWarning;
 #endif
 ```
 

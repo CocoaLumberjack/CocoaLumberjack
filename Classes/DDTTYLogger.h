@@ -24,8 +24,8 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-function"
-#if TARGET_OS_IPHONE
-    // iOS
+#if !(TARGET_OS_OSX)
+    // iOS or tvOS or watchOS
     #import <UIKit/UIColor.h>
     typedef UIColor DDColor;
     static inline DDColor* DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {return [DDColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f];}
@@ -62,7 +62,7 @@
 /**
  *  Singleton method
  */
-+ (instancetype)sharedInstance;
+@property (class, readonly, strong) DDTTYLogger *sharedInstance;
 
 /* Inherited from the DDLogger protocol:
  *

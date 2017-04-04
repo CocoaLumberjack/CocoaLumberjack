@@ -17,7 +17,7 @@
 //
 
 @import XCTest;
-#import <Expecta.h>
+#import <Expecta/Expecta.h>
 #import "DDLog.h"
 
 @interface DDTestLogger : NSObject <DDLogger>
@@ -80,6 +80,16 @@
     [DDLog addLogger:[DDTestLogger new]];
     [DDLog addLogger:[DDTestLogger new]];
     expect([DDLog allLoggers]).haveACountOf(2);
+}
+
+- (void)testAllLoggersWithLevelReturnsAllLoggersWithLevel {
+    [DDLog addLogger:[DDTestLogger new]];
+    [DDLog addLogger:[DDTestLogger new] withLevel:DDLogLevelDebug];
+    [DDLog addLogger:[DDTestLogger new] withLevel:DDLogLevelInfo];
+    expect([DDLog allLoggersWithLevel]).haveACountOf(3);
+    expect([[[DDLog allLoggersWithLevel] firstObject] level]).to.equal(DDLogLevelAll);
+    expect([[DDLog allLoggersWithLevel][1] level]).to.equal(DDLogLevelDebug);
+    expect([[DDLog allLoggersWithLevel][2] level]).to.equal(DDLogLevelInfo);
 }
 
 @end

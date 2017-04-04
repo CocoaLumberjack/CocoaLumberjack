@@ -2,9 +2,8 @@
 xcodeproj 'NonArcTest'
 workspace '../Demos'
 
-target :NAT_osx do
+target :'NonArcTest' do
   platform :osx, '10.7'
-  link_with 'NonArcTest'
   pod 'CocoaLumberjack', :path => '../../'
 end
 

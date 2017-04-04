@@ -37,10 +37,10 @@ _Please note, installation via CocoaPods or Carthage is much simpler and recomme
 * Drag `CocoaLumberjack/Lumberjack.xcodeproj` into your project
 * In your application target Build Phases
 	* Add the framework you need
-		* `CocoaLumberjack` or `CocoaLumberjackSwift` for OS X
+		* `CocoaLumberjack-macOS` or `CocoaLumberjackSwift-macOS` for macOS
 		* `CocoaLumberjack-iOS` or `CocoaLumberjackSwift-iOS` for iOS
-		* `CocoaLumberjack-watchOS` or `CocoaLumberjackSwift-watchOS` for watchOS
 		* `CocoaLumberjack-tvOS` or `CocoaLumberjackSwift-tvOS` for tvOS
+		* `CocoaLumberjack-watchOS` or `CocoaLumberjackSwift-watchOS` for watchOS
 * Make this CocoaLumberjack framework a dependency for your application target
 * Add a Copy Files phase to the application bundle 
 	* This needs to specify the _Frameworks_ sub-folder

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1496327041984BEFB782BB22 /* libPods-BIP_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1274385BDE284AC08A7BAF4E /* libPods-BIP_ios.a */; };
 		1D3623260D0F684500981E51 /* BenchmarkIPhoneAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* BenchmarkIPhoneAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -16,6 +15,7 @@
 		2899E5220DE3E06400AC0155 /* BenchmarkIPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* BenchmarkIPhoneViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* BenchmarkIPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* BenchmarkIPhoneViewController.m */; };
+		9999BBCAB91182C69B9ECF9E /* libPods-BenchmarkIPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13E1CDE34B064A1A2843A4B9 /* libPods-BenchmarkIPhone.a */; };
 		DC3D2F391674073100DFAFAA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC3D2F381674073100DFAFAA /* Default-568h@2x.png */; };
 		DC987BDF11928FD60020FF52 /* BaseNSLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987BD811928FD60020FF52 /* BaseNSLogging.m */; };
 		DC987BE011928FD60020FF52 /* DynamicLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987BDA11928FD60020FF52 /* DynamicLogging.m */; };
@@ -24,7 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1274385BDE284AC08A7BAF4E /* libPods-BIP_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BIP_ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13E1CDE34B064A1A2843A4B9 /* libPods-BenchmarkIPhone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BenchmarkIPhone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* BenchmarkIPhoneAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BenchmarkIPhoneAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* BenchmarkIPhoneAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BenchmarkIPhoneAppDelegate.m; sourceTree = "<group>"; };
@@ -37,9 +37,9 @@
 		28D7ACF70DDB3853001CB0EB /* BenchmarkIPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BenchmarkIPhoneViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* BenchmarkIPhone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BenchmarkIPhone_Prefix.pch; sourceTree = "<group>"; };
+		75091D129222381D5275B34D /* Pods-BenchmarkIPhone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BenchmarkIPhone.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BenchmarkIPhone/Pods-BenchmarkIPhone.debug.xcconfig"; sourceTree = "<group>"; };
+		8B680B8A09209901EA7C81AF /* Pods-BenchmarkIPhone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BenchmarkIPhone.release.xcconfig"; path = "Pods/Target Support Files/Pods-BenchmarkIPhone/Pods-BenchmarkIPhone.release.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* BenchmarkIPhone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BenchmarkIPhone-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		96FC2205CF8D1E0435E21A70 /* Pods-BIP_ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BIP_ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-BIP_ios/Pods-BIP_ios.release.xcconfig"; sourceTree = "<group>"; };
-		BDD3CE39625989033FF2E139 /* Pods-BIP_ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BIP_ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BIP_ios/Pods-BIP_ios.debug.xcconfig"; sourceTree = "<group>"; };
 		DC3D2F381674073100DFAFAA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		DC987BD711928FD60020FF52 /* BaseNSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseNSLogging.h; path = ../../../Benchmarking/BaseNSLogging.h; sourceTree = SOURCE_ROOT; };
 		DC987BD811928FD60020FF52 /* BaseNSLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseNSLogging.m; path = ../../../Benchmarking/BaseNSLogging.m; sourceTree = SOURCE_ROOT; };
@@ -59,7 +59,7 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
-				1496327041984BEFB782BB22 /* libPods-BIP_ios.a in Frameworks */,
+				9999BBCAB91182C69B9ECF9E /* libPods-BenchmarkIPhone.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +125,7 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
-				1274385BDE284AC08A7BAF4E /* libPods-BIP_ios.a */,
+				13E1CDE34B064A1A2843A4B9 /* libPods-BenchmarkIPhone.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -133,8 +133,8 @@
 		487A446922A543BB121DF430 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				BDD3CE39625989033FF2E139 /* Pods-BIP_ios.debug.xcconfig */,
-				96FC2205CF8D1E0435E21A70 /* Pods-BIP_ios.release.xcconfig */,
+				75091D129222381D5275B34D /* Pods-BenchmarkIPhone.debug.xcconfig */,
+				8B680B8A09209901EA7C81AF /* Pods-BenchmarkIPhone.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -162,11 +162,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "BenchmarkIPhone" */;
 			buildPhases = (
-				D9F7280257FE4C39B02611EA /* Check Pods Manifest.lock */,
+				D9F7280257FE4C39B02611EA /* 📦 Check Pods Manifest.lock */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
-				6902F45A7AF641EBBE4C81C2 /* Copy Pods Resources */,
+				6902F45A7AF641EBBE4C81C2 /* 📦 Copy Pods Resources */,
+				7151604B0713645B142046B9 /* 📦 Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -218,29 +219,44 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6902F45A7AF641EBBE4C81C2 /* Copy Pods Resources */ = {
+		6902F45A7AF641EBBE4C81C2 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BIP_ios/Pods-BIP_ios-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BenchmarkIPhone/Pods-BenchmarkIPhone-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D9F7280257FE4C39B02611EA /* Check Pods Manifest.lock */ = {
+		7151604B0713645B142046B9 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BenchmarkIPhone/Pods-BenchmarkIPhone-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D9F7280257FE4C39B02611EA /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -270,7 +286,7 @@
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BDD3CE39625989033FF2E139 /* Pods-BIP_ios.debug.xcconfig */;
+			baseConfigurationReference = 75091D129222381D5275B34D /* Pods-BenchmarkIPhone.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -287,7 +303,7 @@
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 96FC2205CF8D1E0435E21A70 /* Pods-BIP_ios.release.xcconfig */;
+			baseConfigurationReference = 8B680B8A09209901EA7C81AF /* Pods-BenchmarkIPhone.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;

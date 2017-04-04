@@ -17,7 +17,7 @@
 //
 
 @import XCTest;
-#import <Expecta.h>
+#import <Expecta/Expecta.h>
 #import "DDLog.h"
 
 static NSString * const kDefaultMessage = @"Log message";

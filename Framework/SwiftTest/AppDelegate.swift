@@ -10,16 +10,16 @@ import Cocoa
 import CocoaLumberjack
 import CocoaLumberjackSwift
 
-let ourLogLevel = DDLogLevel.Verbose
+let ourLogLevel = DDLogLevel.verbose
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet weak var window: NSWindow!
     
-	func applicationDidFinishLaunching(aNotification: NSNotification) {
-        DDLog.addLogger(DDTTYLogger.sharedInstance())
+	func applicationDidFinishLaunching(_ aNotification: Notification) {
+        DDLog.add(DDTTYLogger.sharedInstance)
 		
-        defaultDebugLevel = .Warning
+        defaultDebugLevel = .warning
 
         DDLogVerbose("Verbose");
         DDLogInfo("Info");
@@ -33,7 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         DDLogWarn("Warn");
         DDLogError("Error");
         
-        defaultDebugLevel = .Off
+        defaultDebugLevel = .off
         
         DDLogVerbose("Verbose", level: ourLogLevel);
         DDLogInfo("Info", level: ourLogLevel);
@@ -42,10 +42,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         DDLogError("Error \(5)", level: ourLogLevel);
         
-        defaultDebugLevel = .Verbose
+        defaultDebugLevel = .verbose
         
         let aDDLogInstance = DDLog()
-        aDDLogInstance.addLogger(DDTTYLogger.sharedInstance())
+        aDDLogInstance.add(DDTTYLogger.sharedInstance)
         
         DDLogVerbose("Verbose from aDDLogInstance", ddlog: aDDLogInstance)
         DDLogInfo("Info from aDDLogInstance", ddlog: aDDLogInstance)
@@ -53,7 +53,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         DDLogError("Error from aDDLogInstance", ddlog: aDDLogInstance)
     }
 
-	func applicationWillTerminate(aNotification: NSNotification) {
+	func applicationWillTerminate(_ aNotification: Notification) {
 		// Insert code here to tear down your application
 	}
 }

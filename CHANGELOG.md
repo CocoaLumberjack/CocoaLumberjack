@@ -1,3 +1,51 @@
+## [3.1.0 - Swift 3.0.1, Xcode 8.1 on Feb 22nd, 2017](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.1.0)
+- Swift 3.0.1 and Xcode 8.1 support via #816
+- Fix Carthage build and updated the podspec structure #819 #818 #784 #790 #782 #778 #815
+- Fix CLIColor.h not included in umbrella header #781 #796 #813 #783
+- Fix crash in `[DDLog log:level:flag:context:file:function:line:tag:format:]` #831 #830
+- Code improvements: 
+  - using class properties #779
+  - nullability #803 #809 #776
+  - fix static analyzer issues #822 #828
+  - optimized `USE_DISPATCH_CURRENT_QUEUE_LABEL` and `USE_DISPATCH_GET_CURRENT_QUEUE` macros #829
+  - fixed dispatch_source_set_timer() usage #834
+  - fixed misuse of non null parameter in `DDFileLogger fileAttributes` #835
+  - store calendar in logger queue specifics for multi-thread safety #837
+  - reenable default `init` method for `DDLogMessage` class #838
+- Added option to not copy messages #832
+- Added new hooks when adding loggers and formatters #836
+- Ability to create new log files every day #736
+- Skip messages in ASL logger which are filtered out by the formatter #786 #742
+- Fixed #823 by adding a `hash` implementation for `DDFileLogger` - same as `isEqual`, it only considers the `filePath` 7ceed08
+- Fix Travis CI build #807
+- Updated docs #798 #808 #811 #810 #820
+
+## [3.0.0 - Swift 3.0, Xcode 8 on Sep 21st, 2016](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.0.0)
+- Swift 3.0 and Xcode 8 support via #769, fixes #771 and #772. Many thanks to @ffried @max-potapov @chrisdoc @BarakRL @devxoul and the others who contributed
+
+## [2.4.0 - Swift 2.3 on Sep 19th, 2016](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.4.0)
+- Swift 2.3 explicit so that the project compiles on Xcode 8 - #747 #773 fix #762 #763 #766
+- CocoaPods 1.0.0 fully adopted - 0f5a793 637dfc1 70439fe #729
+- Fix CLIColor.h not found for non-AppKit binaries w/o clang modules #745
+- Retrieve the `DDLogLevel` of each logger associated to `DDLog` #753 
+- updated doc: #727 a9f54c9 #741, diagrams in 8bd128d
+- Added CONTRIBUTING, ISSUE and PULL_REQUEST TEMPLATE and added a small Communication section to the Readme
+- Fixed an issue with one demo #760
+
+## [2.3.0 - Swift 2.2, Xcode7.3 on May 2nd, 2016](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.3.0)
+- Updated to Swift 2.2 - #704 
+- replaced deprecated `__FUNCTION__`, `__FILE__`, `__LINE__` with newly added to Swift 2.2: `#function`, `#file`, `#line`
+- Xcode 7.3 update - #692 #662 
+- simplify usage and integration of the static library target - #657 
+- DDLog usable via instances - #679 
+- Swift cleanup - #649 
+- Enable Application extension API only for tvOS - #701 
+- Added `appletvos` and `appletvsimulator` to `SUPPORTED_PLATFORMS` and set  `TVOS_DEPLOYMENT_TARGET` - #707 
+- fixed `OSSpinLock` init issue - #653 
+- Added check to prevent duplicate loggers - #682 
+- fixed typo in import - #693 
+- updated the docs - #646 #650 #656 #655 #661 #664 #667 #684 #724 
+
 ## [2.2.0 - TVOS, Xcode7.1 on Oct 28th, 2015](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.2.0)
 - added `tvOS` support (thanks [@sinoru](https://github.com/sinoru)) - [#634](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/634) [#640](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/640) [#630](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/630) [#628](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/628) [#618](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/618) [#611](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/611)
 - Remove `(escaping)` from the Swift `@autoclosure` parameters - [#642](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/642)

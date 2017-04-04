@@ -2,9 +2,8 @@
 xcodeproj 'TestXcodeColors'
 workspace '../../Demos'
 
-target :TXC_osx do
+target :'TestXcodeColors' do
   platform :osx, '10.7'
-  link_with 'TestXcodeColors'
   pod 'CocoaLumberjack', :path => '../../../'
 end
 

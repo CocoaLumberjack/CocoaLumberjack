@@ -2,9 +2,8 @@
 xcodeproj 'PerUserLogLevels'
 workspace '../Demos'
 
-target :PULL_osx do
+target :'PerUserLogLevels' do
   platform :osx, '10.7'
-  link_with 'PerUserLogLevels'
   pod 'CocoaLumberjack', :path => '../../'
 end
 

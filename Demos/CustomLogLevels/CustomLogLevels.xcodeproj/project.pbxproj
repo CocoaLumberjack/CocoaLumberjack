@@ -7,17 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		14375AB505BA464CAB51C5BE /* libPods-CLL_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4988234CE446411AA9339C72 /* libPods-CLL_osx.a */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* CustomLogLevelsAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* CustomLogLevelsAppDelegate.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		FB14E2456DA6DFC2FB6CC2EA /* libPods-CustomLogLevels.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D612AAC0207B40E38C8C2B28 /* libPods-CustomLogLevels.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		048F3221B6C4F29E16D81682 /* Pods-CustomLogLevels.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomLogLevels.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CustomLogLevels/Pods-CustomLogLevels.debug.xcconfig"; sourceTree = "<group>"; };
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		0F177E8DE4EE7127C2D6CA11 /* Pods-CLL_osx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLL_osx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CLL_osx/Pods-CLL_osx.debug.xcconfig"; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -27,11 +27,11 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		4988234CE446411AA9339C72 /* libPods-CLL_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CLL_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		315F2F78A4A4CB8B58EE2E0B /* Pods-CustomLogLevels.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomLogLevels.release.xcconfig"; path = "Pods/Target Support Files/Pods-CustomLogLevels/Pods-CustomLogLevels.release.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* CustomLogLevels-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CustomLogLevels-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* CustomLogLevels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomLogLevels.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D612AAC0207B40E38C8C2B28 /* libPods-CustomLogLevels.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CustomLogLevels.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC399B18119CA5EA00C50939 /* MYLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYLog.h; sourceTree = "<group>"; };
-		E6F58299B09C43EB5834D6AA /* Pods-CLL_osx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLL_osx.release.xcconfig"; path = "Pods/Target Support Files/Pods-CLL_osx/Pods-CLL_osx.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,7 +40,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				14375AB505BA464CAB51C5BE /* libPods-CLL_osx.a in Frameworks */,
+				FB14E2456DA6DFC2FB6CC2EA /* libPods-CustomLogLevels.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,7 +120,7 @@
 			children = (
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
-				4988234CE446411AA9339C72 /* libPods-CLL_osx.a */,
+				D612AAC0207B40E38C8C2B28 /* libPods-CustomLogLevels.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -128,8 +128,8 @@
 		46D22C05C0203F091A6A3F9B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0F177E8DE4EE7127C2D6CA11 /* Pods-CLL_osx.debug.xcconfig */,
-				E6F58299B09C43EB5834D6AA /* Pods-CLL_osx.release.xcconfig */,
+				048F3221B6C4F29E16D81682 /* Pods-CustomLogLevels.debug.xcconfig */,
+				315F2F78A4A4CB8B58EE2E0B /* Pods-CustomLogLevels.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -141,11 +141,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "CustomLogLevels" */;
 			buildPhases = (
-				27F560926DE34BD2A15AFEF6 /* Check Pods Manifest.lock */,
+				27F560926DE34BD2A15AFEF6 /* 📦 Check Pods Manifest.lock */,
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
-				A6ED1F025A774A3AA1F93A83 /* Copy Pods Resources */,
+				A6ED1F025A774A3AA1F93A83 /* 📦 Copy Pods Resources */,
+				B6799A29B3B4399A7EFDEFBD /* 📦 Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -197,14 +198,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		27F560926DE34BD2A15AFEF6 /* Check Pods Manifest.lock */ = {
+		27F560926DE34BD2A15AFEF6 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,19 +213,34 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		A6ED1F025A774A3AA1F93A83 /* Copy Pods Resources */ = {
+		A6ED1F025A774A3AA1F93A83 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CLL_osx/Pods-CLL_osx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CustomLogLevels/Pods-CustomLogLevels-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B6799A29B3B4399A7EFDEFBD /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CustomLogLevels/Pods-CustomLogLevels-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -263,7 +279,7 @@
 /* Begin XCBuildConfiguration section */
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0F177E8DE4EE7127C2D6CA11 /* Pods-CLL_osx.debug.xcconfig */;
+			baseConfigurationReference = 048F3221B6C4F29E16D81682 /* Pods-CustomLogLevels.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -283,7 +299,7 @@
 		};
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E6F58299B09C43EB5834D6AA /* Pods-CLL_osx.release.xcconfig */;
+			baseConfigurationReference = 315F2F78A4A4CB8B58EE2E0B /* Pods-CustomLogLevels.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;

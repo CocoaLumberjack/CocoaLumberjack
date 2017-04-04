@@ -21,6 +21,7 @@
 #import "DDLog.h"
 
 #import <pthread.h>
+#import <dispatch/dispatch.h>
 #import <objc/runtime.h>
 #import <mach/mach_host.h>
 #import <mach/host_info.h>
@@ -59,7 +60,9 @@
 // If a thread attempts to issue a log statement when the queue is already maxed out,
 // the issuing thread will block until the queue size drops below the max again.
 
-#define LOG_MAX_QUEUE_SIZE 1000 // Should not exceed INT32_MAX
+#ifndef DDLOG_MAX_QUEUE_SIZE
+    #define DDLOG_MAX_QUEUE_SIZE 1000 // Should not exceed INT32_MAX
+#endif
 
 // The "global logging queue" refers to [DDLog loggingQueue].
 // It is the queue that all log statements go through.
@@ -111,7 +114,7 @@ static dispatch_queue_t _loggingQueue;
 static dispatch_group_t _loggingGroup;
 
 // In order to prevent to queue from growing infinitely large,
-// a maximum size is enforced (LOG_MAX_QUEUE_SIZE).
+// a maximum size is enforced (DDLOG_MAX_QUEUE_SIZE).
 static dispatch_semaphore_t _queueSemaphore;
 
 // Minor optimization for uniprocessor machines
@@ -154,12 +157,12 @@ static NSUInteger _numProcessors;
         void *nonNullValue = GlobalLoggingQueueIdentityKey; // Whatever, just not null
         dispatch_queue_set_specific(_loggingQueue, GlobalLoggingQueueIdentityKey, nonNullValue, NULL);
         
-        _queueSemaphore = dispatch_semaphore_create(LOG_MAX_QUEUE_SIZE);
+        _queueSemaphore = dispatch_semaphore_create(DDLOG_MAX_QUEUE_SIZE);
         
         // Figure out how many processors are available.
         // This may be used later for an optimization on uniprocessor machines.
         
-        _numProcessors = MAX([NSProcessInfo processInfo].processorCount, 1);
+        _numProcessors = MAX([NSProcessInfo processInfo].processorCount, (NSUInteger) 1);
         
         NSLogDebug(@"DDLog: numProcessors = %@", @(_numProcessors));
     });
@@ -277,11 +280,11 @@ static NSUInteger _numProcessors;
     } });
 }
 
-+ (NSArray *)allLoggers {
++ (NSArray<id<DDLogger>> *)allLoggers {
     return [self.sharedInstance allLoggers];
 }
 
-- (NSArray *)allLoggers {
+- (NSArray<id<DDLogger>> *)allLoggers {
     __block NSArray *theLoggers;
     
     dispatch_sync(_loggingQueue, ^{ @autoreleasepool {
@@ -289,6 +292,20 @@ static NSUInteger _numProcessors;
     } });
     
     return theLoggers;
+}
+
++ (NSArray<DDLoggerInformation *> *)allLoggersWithLevel {
+    return [self.sharedInstance allLoggersWithLevel];
+}
+
+- (NSArray<DDLoggerInformation *> *)allLoggersWithLevel {
+    __block NSArray *theLoggersWithLevel;
+    
+    dispatch_sync(_loggingQueue, ^{ @autoreleasepool {
+        theLoggersWithLevel = [self lt_allLoggersWithLevel];
+    } });
+    
+    return theLoggersWithLevel;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -325,7 +342,7 @@ static NSUInteger _numProcessors;
 
 
     // We are using a counting semaphore provided by GCD.
-    // The semaphore is initialized with our LOG_MAX_QUEUE_SIZE value.
+    // The semaphore is initialized with our DDLOG_MAX_QUEUE_SIZE value.
     // Everytime we want to queue a log message we decrement this value.
     // If the resulting value is less than zero,
     // the semaphore function waits in FIFO order for a signal to occur before returning.
@@ -367,6 +384,11 @@ static NSUInteger _numProcessors;
         va_start(args, format);
         
         NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
+        
+        va_end(args);
+        
+        va_start(args, format);
+        
         [self log:asynchronous
           message:message
             level:level
@@ -396,6 +418,11 @@ static NSUInteger _numProcessors;
         va_start(args, format);
         
         NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
+        
+        va_end(args);
+        
+        va_start(args, format);
+        
         [self log:asynchronous
           message:message
             level:level
@@ -595,7 +622,7 @@ static NSUInteger _numProcessors;
 
         classes = numClasses ? (Class *)malloc(sizeof(Class) * bufferSize) : NULL;
         if (classes == NULL) {
-            return nil; //no memory or classes?
+            return @[]; //no memory or classes?
         }
 
         numClasses = (NSUInteger)MAX(objc_getClassList(classes, (int)bufferSize),0);
@@ -701,7 +728,11 @@ static NSUInteger _numProcessors;
     DDLoggerNode *loggerNode = [DDLoggerNode nodeWithLogger:logger loggerQueue:loggerQueue level:level];
     [self._loggers addObject:loggerNode];
 
-    if ([logger respondsToSelector:@selector(didAddLogger)]) {
+    if ([logger respondsToSelector:@selector(didAddLoggerInQueue:)]) {
+        dispatch_async(loggerNode->_loggerQueue, ^{ @autoreleasepool {
+            [logger didAddLoggerInQueue:loggerNode->_loggerQueue];
+        } });
+    } else if ([logger respondsToSelector:@selector(didAddLogger)]) {
         dispatch_async(loggerNode->_loggerQueue, ^{ @autoreleasepool {
             [logger didAddLogger];
         } });
@@ -770,6 +801,20 @@ static NSUInteger _numProcessors;
     return [theLoggers copy];
 }
 
+- (NSArray *)lt_allLoggersWithLevel {
+    NSAssert(dispatch_get_specific(GlobalLoggingQueueIdentityKey),
+             @"This method should only be run on the logging thread/queue");
+    
+    NSMutableArray *theLoggersWithLevel = [NSMutableArray new];
+    
+    for (DDLoggerNode *loggerNode in self._loggers) {
+        [theLoggersWithLevel addObject:[DDLoggerInformation informationWithLogger:loggerNode->_logger
+                                                                         andLevel:loggerNode->_level]];
+    }
+    
+    return [theLoggersWithLevel copy];
+}
+
 - (void)lt_log:(DDLogMessage *)logMessage {
     // Execute the given log message on each of our loggers.
 
@@ -817,7 +862,7 @@ static NSUInteger _numProcessors;
     // Since we've now dequeued an item from the log, we may need to unblock the next thread.
 
     // We are using a counting semaphore provided by GCD.
-    // The semaphore is initialized with our LOG_MAX_QUEUE_SIZE value.
+    // The semaphore is initialized with our DDLOG_MAX_QUEUE_SIZE value.
     // When a log message is queued this value is decremented.
     // When a log message is dequeued this value is incremented.
     // If the value ever drops below zero,
@@ -854,7 +899,7 @@ static NSUInteger _numProcessors;
 #pragma mark Utilities
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
+NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
     if (filePath == NULL) {
         return nil;
     }
@@ -974,15 +1019,30 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
 
 // Compiling for iOS
 
-    #define USE_DISPATCH_CURRENT_QUEUE_LABEL ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
-    #define USE_DISPATCH_GET_CURRENT_QUEUE   ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.1)
+static BOOL _use_dispatch_current_queue_label;
+static BOOL _use_dispatch_get_current_queue;
+
+static void _dispatch_queue_label_init_once(void * __attribute__((unused)) context)
+{
+    _use_dispatch_current_queue_label = (UIDevice.currentDevice.systemVersion.floatValue >= 7.0f);
+    _use_dispatch_get_current_queue = (!_use_dispatch_current_queue_label && UIDevice.currentDevice.systemVersion.floatValue >= 6.1f);
+}
+
+static __inline__ __attribute__((__always_inline__)) void _dispatch_queue_label_init()
+{
+    static dispatch_once_t onceToken;
+    dispatch_once_f(&onceToken, NULL, _dispatch_queue_label_init_once);
+}
+
+  #define USE_DISPATCH_CURRENT_QUEUE_LABEL (_dispatch_queue_label_init(), _use_dispatch_current_queue_label)
+  #define USE_DISPATCH_GET_CURRENT_QUEUE   (_dispatch_queue_label_init(), _use_dispatch_get_current_queue)
 
 #elif TARGET_OS_WATCH || TARGET_OS_TV
 
 // Compiling for watchOS, tvOS
 
-#define USE_DISPATCH_CURRENT_QUEUE_LABEL YES
-#define USE_DISPATCH_GET_CURRENT_QUEUE   YES
+  #define USE_DISPATCH_CURRENT_QUEUE_LABEL YES
+  #define USE_DISPATCH_GET_CURRENT_QUEUE   NO
 
 #else
 
@@ -999,8 +1059,23 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
 
   #else
 
-    #define USE_DISPATCH_CURRENT_QUEUE_LABEL ([NSTimer instancesRespondToSelector : @selector(tolerance)]) // OS X 10.9+
-    #define USE_DISPATCH_GET_CURRENT_QUEUE   (![NSTimer instancesRespondToSelector : @selector(tolerance)]) // < OS X 10.9
+static BOOL _use_dispatch_current_queue_label;
+static BOOL _use_dispatch_get_current_queue;
+
+static void _dispatch_queue_label_init_once(void * __attribute__((unused)) context)
+{
+    _use_dispatch_current_queue_label = [NSTimer instancesRespondToSelector : @selector(tolerance)]; // OS X 10.9+
+    _use_dispatch_get_current_queue = !_use_dispatch_current_queue_label;                            // < OS X 10.9
+}
+
+static __inline__ __attribute__((__always_inline__)) void _dispatch_queue_label_init()
+{
+    static dispatch_once_t onceToken;
+    dispatch_once_f(&onceToken, NULL, _dispatch_queue_label_init_once);
+}
+
+    #define USE_DISPATCH_CURRENT_QUEUE_LABEL (_dispatch_queue_label_init(), _use_dispatch_current_queue_label)
+    #define USE_DISPATCH_GET_CURRENT_QUEUE   (_dispatch_queue_label_init(), _use_dispatch_get_current_queue)
 
   #endif
 
@@ -1017,13 +1092,13 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
     #define kCFCoreFoundationVersionNumber_iOS_8_0 1140.10
   #endif
 
-    #define USE_PTHREAD_THREADID_NP                (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0)
+  #define USE_PTHREAD_THREADID_NP                (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0)
 
 #elif TARGET_OS_WATCH || TARGET_OS_TV
 
 // Compiling for watchOS, tvOS
 
-#define USE_PTHREAD_THREADID_NP                    YES
+  #define USE_PTHREAD_THREADID_NP                YES
 
 #else
 
@@ -1033,9 +1108,14 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
     #define kCFCoreFoundationVersionNumber10_10    1151.16
   #endif
 
-    #define USE_PTHREAD_THREADID_NP                (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber10_10)
+  #define USE_PTHREAD_THREADID_NP                (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber10_10)
 
 #endif /* if TARGET_OS_IOS */
+
+- (instancetype)init {
+    self = [super init];
+    return self;
+}
 
 - (instancetype)initWithMessage:(NSString *)message
                           level:(DDLogLevel)level
@@ -1048,15 +1128,16 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
                         options:(DDLogMessageOptions)options
                       timestamp:(NSDate *)timestamp {
     if ((self = [super init])) {
-        _message      = [message copy];
+        BOOL copyMessage = (options & DDLogMessageDontCopyMessage) == 0;
+        _message      = copyMessage ? [message copy] : message;
         _level        = level;
         _flag         = flag;
         _context      = context;
 
-        BOOL copyFile = (options & DDLogMessageCopyFile) == DDLogMessageCopyFile;
+        BOOL copyFile = (options & DDLogMessageCopyFile) != 0;
         _file = copyFile ? [file copy] : file;
 
-        BOOL copyFunction = (options & DDLogMessageCopyFunction) == DDLogMessageCopyFunction;
+        BOOL copyFunction = (options & DDLogMessageCopyFunction) != 0;
         _function = copyFunction ? [function copy] : function;
 
         _line         = line;
@@ -1254,8 +1335,10 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
                 }
 
                 _logFormatter = logFormatter;
-
-                if ([_logFormatter respondsToSelector:@selector(didAddToLogger:)]) {
+ 
+                if ([_logFormatter respondsToSelector:@selector(didAddToLogger:inQueue:)]) {
+                    [_logFormatter didAddToLogger:self inQueue:_loggerQueue];
+                } else if ([_logFormatter respondsToSelector:@selector(didAddToLogger:)]) {
                     [_logFormatter didAddToLogger:self];
                 }
             }
@@ -1285,6 +1368,36 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy) {
     void *key = (__bridge void *)self;
 
     return (dispatch_get_specific(key) != NULL);
+}
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@interface DDLoggerInformation()
+{
+    // Direct accessors to be used only for performance
+    @public
+    id <DDLogger> _logger;
+    DDLogLevel _level;
+}
+
+@end
+
+@implementation DDLoggerInformation
+
+- (instancetype)initWithLogger:(id <DDLogger>)logger andLevel:(DDLogLevel)level {
+    if ((self = [super init])) {
+        _logger = logger;
+        _level = level;
+    }
+    return self;
+}
+
++ (DDLoggerInformation *)informationWithLogger:(id <DDLogger>)logger andLevel:(DDLogLevel)level {
+    return [[DDLoggerInformation alloc] initWithLogger:logger andLevel:level];
 }
 
 @end

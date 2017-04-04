@@ -5,10 +5,14 @@
 // Log levels: off, error, warn, info, verbose
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
+@interface AppDelegate ()
+
+@property (weak) IBOutlet NSWindow *window;
+
+@end
+
 
 @implementation AppDelegate
-
-@synthesize window = _window;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -26,6 +30,11 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogInfoToDDLog(aDDLogInstance, @"Info from aDDLogInstance");
     DDLogWarnToDDLog(aDDLogInstance, @"Warn from aDDLogInstance");
     DDLogErrorToDDLog(aDDLogInstance, @"Error from aDDLogInstance");
+}
+
+- (void)applicationWillTerminate:(NSNotification *)aNotification
+{
+
 }
 
 @end

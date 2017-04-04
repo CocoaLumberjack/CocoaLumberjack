@@ -7,18 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		517CC2393FC74DCBB2D1BB22 /* libPods-DQL_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99BE457625A64E0EB8943E4A /* libPods-DQL_osx.a */; };
 		DC25B76B146A0294000F32F4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC25B76A146A0294000F32F4 /* Cocoa.framework */; };
 		DC25B775146A0294000F32F4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DC25B773146A0294000F32F4 /* InfoPlist.strings */; };
 		DC25B777146A0294000F32F4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC25B776146A0294000F32F4 /* main.m */; };
 		DC25B77B146A0294000F32F4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DC25B779146A0294000F32F4 /* Credits.rtf */; };
 		DC25B77E146A0294000F32F4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC25B77D146A0294000F32F4 /* AppDelegate.m */; };
 		DC25B781146A0295000F32F4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC25B77F146A0295000F32F4 /* MainMenu.xib */; };
+		F7A7AA7365ADB4AAB01A51DA /* libPods-DispatchQueueLogger.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1E02A1DA6F6866DEB728E8 /* libPods-DispatchQueueLogger.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		105556B9930A2365AAC20067 /* Pods-DQL_osx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DQL_osx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DQL_osx/Pods-DQL_osx.debug.xcconfig"; sourceTree = "<group>"; };
-		99BE457625A64E0EB8943E4A /* libPods-DQL_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DQL_osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E1E02A1DA6F6866DEB728E8 /* libPods-DispatchQueueLogger.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DispatchQueueLogger.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		51D61C8163D9C3EEE6E65B5D /* Pods-DispatchQueueLogger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DispatchQueueLogger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DispatchQueueLogger/Pods-DispatchQueueLogger.debug.xcconfig"; sourceTree = "<group>"; };
+		AC351034D34455BFC6DE47FA /* Pods-DispatchQueueLogger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DispatchQueueLogger.release.xcconfig"; path = "Pods/Target Support Files/Pods-DispatchQueueLogger/Pods-DispatchQueueLogger.release.xcconfig"; sourceTree = "<group>"; };
 		DC25B766146A0294000F32F4 /* DispatchQueueLogger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DispatchQueueLogger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC25B76A146A0294000F32F4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DC25B76D146A0294000F32F4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -32,7 +33,6 @@
 		DC25B77C146A0294000F32F4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DC25B77D146A0294000F32F4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DC25B780146A0295000F32F4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		FD2DFD99428FB6BB9EFCF657 /* Pods-DQL_osx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DQL_osx.release.xcconfig"; path = "Pods/Target Support Files/Pods-DQL_osx/Pods-DQL_osx.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +41,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC25B76B146A0294000F32F4 /* Cocoa.framework in Frameworks */,
-				517CC2393FC74DCBB2D1BB22 /* libPods-DQL_osx.a in Frameworks */,
+				F7A7AA7365ADB4AAB01A51DA /* libPods-DispatchQueueLogger.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,8 +51,8 @@
 		C391BC96BDD419AEF5EBD1BC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				105556B9930A2365AAC20067 /* Pods-DQL_osx.debug.xcconfig */,
-				FD2DFD99428FB6BB9EFCF657 /* Pods-DQL_osx.release.xcconfig */,
+				51D61C8163D9C3EEE6E65B5D /* Pods-DispatchQueueLogger.debug.xcconfig */,
+				AC351034D34455BFC6DE47FA /* Pods-DispatchQueueLogger.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -80,7 +80,7 @@
 			children = (
 				DC25B76A146A0294000F32F4 /* Cocoa.framework */,
 				DC25B76C146A0294000F32F4 /* Other Frameworks */,
-				99BE457625A64E0EB8943E4A /* libPods-DQL_osx.a */,
+				3E1E02A1DA6F6866DEB728E8 /* libPods-DispatchQueueLogger.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -125,11 +125,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC25B784146A0295000F32F4 /* Build configuration list for PBXNativeTarget "DispatchQueueLogger" */;
 			buildPhases = (
-				F0AFBE38FEBB42B39C1F4340 /* Check Pods Manifest.lock */,
+				F0AFBE38FEBB42B39C1F4340 /* 📦 Check Pods Manifest.lock */,
 				DC25B762146A0294000F32F4 /* Sources */,
 				DC25B763146A0294000F32F4 /* Frameworks */,
 				DC25B764146A0294000F32F4 /* Resources */,
-				2669770F816F418BA7A68AA1 /* Copy Pods Resources */,
+				2669770F816F418BA7A68AA1 /* 📦 Copy Pods Resources */,
+				D906ACB71564E9768CB2F7EC /* 📦 Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -179,29 +180,44 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2669770F816F418BA7A68AA1 /* Copy Pods Resources */ = {
+		2669770F816F418BA7A68AA1 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DQL_osx/Pods-DQL_osx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DispatchQueueLogger/Pods-DispatchQueueLogger-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F0AFBE38FEBB42B39C1F4340 /* Check Pods Manifest.lock */ = {
+		D906ACB71564E9768CB2F7EC /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DispatchQueueLogger/Pods-DispatchQueueLogger-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F0AFBE38FEBB42B39C1F4340 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,7 +334,7 @@
 		};
 		DC25B785146A0295000F32F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 105556B9930A2365AAC20067 /* Pods-DQL_osx.debug.xcconfig */;
+			baseConfigurationReference = 51D61C8163D9C3EEE6E65B5D /* Pods-DispatchQueueLogger.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -332,7 +348,7 @@
 		};
 		DC25B786146A0295000F32F4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FD2DFD99428FB6BB9EFCF657 /* Pods-DQL_osx.release.xcconfig */;
+			baseConfigurationReference = AC351034D34455BFC6DE47FA /* Pods-DispatchQueueLogger.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;

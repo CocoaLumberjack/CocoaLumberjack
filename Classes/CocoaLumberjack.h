@@ -78,4 +78,9 @@
 #import "DDTTYLogger.h"
 #import "DDASLLogger.h"
 #import "DDFileLogger.h"
+#import "DDOSLogger.h"
 
+// CLI
+#if __has_include("CLIColor.h") && TARGET_OS_OSX
+#import "CLIColor.h"
+#endif

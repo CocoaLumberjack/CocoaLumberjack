@@ -10,7 +10,7 @@ import WatchKit
 import CocoaLumberjack
 import CocoaLumberjackSwift
 
-let ddloglevel = DDLogLevel.Verbose
+let ddloglevel = DDLogLevel.verbose
 
 private func printSomething() {
     DDLogVerbose("Verbose");
@@ -26,8 +26,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         // Perform any final initialization of your application.
         
         let formatter = Formatter()
-        DDTTYLogger.sharedInstance().logFormatter = formatter
-        DDLog.addLogger(DDTTYLogger.sharedInstance())
+        DDTTYLogger.sharedInstance.logFormatter = formatter
+        DDLog.add(DDTTYLogger.sharedInstance)
         
         DDLogVerbose("Verbose");
         DDLogDebug("Debug");

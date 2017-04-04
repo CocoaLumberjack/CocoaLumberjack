@@ -2,9 +2,8 @@
 xcodeproj 'BenchmarkIPhone'
 workspace '../../Demos'
 
-target :BIP_ios do
+target :'BenchmarkIPhone' do
   platform :ios, '5.0'
-  link_with 'BenchmarkIPhone'
   pod 'CocoaLumberjack', :path => '../../../'
 end
 

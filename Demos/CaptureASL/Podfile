@@ -2,9 +2,8 @@
 xcodeproj 'CaptureASL'
 workspace '../Demos'
 
-target :CASL_ios do
+target :'CaptureASL' do
   platform :ios, '5.0'
-  link_with 'CaptureASL'
   pod 'CocoaLumberjack', :path => '../../'
 end
 
