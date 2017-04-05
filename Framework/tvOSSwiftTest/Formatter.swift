@@ -39,7 +39,7 @@ class Formatter: DDDispatchQueueLogFormatter {
             logLevel = "?"
         }
         
-        let formattedLog = "\(dateAndTime) |\(logLevel)| [\(logMessage.fileName) \(logMessage.function)] #\(logMessage.line): \(logMessage.message)"
+        let formattedLog = "\(dateAndTime) |\(logLevel)| [\(logMessage.fileName) \(logMessage.function ?? "nil")] #\(logMessage.line): \(logMessage.message)"
         
         return formattedLog;
     }
