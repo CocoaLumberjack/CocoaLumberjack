@@ -1117,6 +1117,10 @@ static __inline__ __attribute__((__always_inline__)) void _dispatch_queue_label_
     return self;
 }
 
+- (instancetype)init {
+    @throw nil;
+}
+
 - (instancetype)initWithMessage:(NSString *)message
                           level:(DDLogLevel)level
                            flag:(DDLogFlag)flag

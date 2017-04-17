@@ -780,6 +780,8 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
     NSString *_queueLabel;
 }
 
+- (instancetype)init NS_UNAVAILABLE;
+
 /**
  *  Default `init` for empty messages.
  */
