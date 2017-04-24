@@ -34,12 +34,12 @@ For more details about how to use Swift with Lumberjack, see [this conversation]
 
 If you installed using CocoaPods or manually:
 ```swift
-import CocoaLumberjackSwift
+import CocoaLumberjack
 ```
 
 ```swift
-DDLog.add(DDTTYLogger.sharedInstance()) // TTY = Xcode console
-DDLog.add(DDASLLogger.sharedInstance()) // ASL = Apple System Logs
+DDLog.add(DDTTYLogger.sharedInstance) // TTY = Xcode console
+DDLog.add(DDASLLogger.sharedInstance) // ASL = Apple System Logs
 
 let fileLogger: DDFileLogger = DDFileLogger() // File Logger
 fileLogger.rollingFrequency = TimeInterval(60*60*24)  // 24 hours
