@@ -60,7 +60,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     unsigned long long _logFilesDiskQuota;
     NSString *_logsDirectory;
 #if TARGET_OS_IPHONE
-    NSString *_defaultFileProtectionLevel;
+    NSFileProtectionType _defaultFileProtectionLevel;
 #endif
 }
 
@@ -115,7 +115,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 }
 
 #if TARGET_OS_IPHONE
-- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory defaultFileProtectionLevel:(NSString *)fileProtectionLevel {
+- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory defaultFileProtectionLevel:(NSFileProtectionType)fileProtectionLevel {
     if ((self = [self initWithLogsDirectory:logsDirectory])) {
         if ([fileProtectionLevel isEqualToString:NSFileProtectionNone] ||
             [fileProtectionLevel isEqualToString:NSFileProtectionComplete] ||
@@ -467,7 +467,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
             // want (even if device is locked). Thats why that attribute have to be changed to
             // NSFileProtectionCompleteUntilFirstUserAuthentication.
 
-            NSString *key = _defaultFileProtectionLevel ? :
+            NSFileProtectionType key = _defaultFileProtectionLevel ? :
                 (doesAppRunInBackground() ? NSFileProtectionCompleteUntilFirstUserAuthentication : NSFileProtectionCompleteUnlessOpen);
 
             attributes = @{
@@ -911,7 +911,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
             // If user has overwritten to NSFileProtectionNone there is no neeed to create a new one.
 
             if (!_doNotReuseLogFiles && doesAppRunInBackground()) {
-                NSString *key = mostRecentLogFileInfo.fileAttributes[NSFileProtectionKey];
+                NSFileProtectionType key = mostRecentLogFileInfo.fileAttributes[NSFileProtectionKey];
 
                 if ([key length] > 0 && !([key isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication] || [key isEqualToString:NSFileProtectionNone])) {
                     shouldArchiveMostRecent = YES;

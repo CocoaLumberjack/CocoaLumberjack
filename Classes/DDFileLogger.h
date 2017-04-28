@@ -203,7 +203,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *    null
  *    cy#
  **/
-- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory defaultFileProtectionLevel:(NSString *)fileProtectionLevel;
+- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory defaultFileProtectionLevel:(NSFileProtectionType)fileProtectionLevel;
 #endif
 
 /*
