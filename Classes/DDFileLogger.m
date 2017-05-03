@@ -281,45 +281,15 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
     BOOL hasProperPrefix = [fileName hasPrefix:appName];
     BOOL hasProperSuffix = [fileName hasSuffix:@".log"];
-    BOOL hasProperDate = NO;
-
-    if (hasProperPrefix && hasProperSuffix) {
-        NSUInteger lengthOfMiddle = fileName.length - appName.length - @".log".length;
-
-        // Date string should have at least 16 characters - " 2013-12-03 17-14"
-        if (lengthOfMiddle >= 17) {
-            NSRange range = NSMakeRange(appName.length, lengthOfMiddle);
-
-            NSString *middle = [fileName substringWithRange:range];
-            NSArray *components = [middle componentsSeparatedByString:@" "];
-
-            // When creating logfile if there is existing file with the same name, we append attemp number at the end.
-            // Thats why here we can have three or four components. For details see createNewLogFile method.
-            //
-            // Components:
-            //     "", "2013-12-03", "17-14"
-            // or
-            //     "", "2013-12-03", "17-14", "1"
-            if (components.count == 3 || components.count == 4) {
-                NSString *dateString = [NSString stringWithFormat:@"%@ %@", components[1], components[2]];
-                NSDateFormatter *dateFormatter = [self logFileDateFormatter];
-
-                NSDate *date = [dateFormatter dateFromString:dateString];
-
-                if (date) {
-                    hasProperDate = YES;
-                }
-            }
-        }
-    }
-
-    return (hasProperPrefix && hasProperDate && hasProperSuffix);
+    
+    return (hasProperPrefix && hasProperSuffix);
 }
 
+//if you change formater , then  change sortedLogFileInfos method also accordingly
 - (NSDateFormatter *)logFileDateFormatter {
     NSMutableDictionary *dictionary = [[NSThread currentThread]
                                        threadDictionary];
-    NSString *dateFormat = @"yyyy'-'MM'-'dd' 'HH'-'mm'";
+    NSString *dateFormat = @"yyyy'-'MM'-'dd'--'HH'-'mm'-'ss'-'SSS'";
     NSString *key = [NSString stringWithFormat:@"logFileDateFormatter.%@", dateFormat];
     NSDateFormatter *dateFormatter = dictionary[key];
 
@@ -417,13 +387,35 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 }
 
 - (NSArray *)sortedLogFileInfos {
-    return [[self unsortedLogFileInfos] sortedArrayUsingSelector:@selector(reverseCompareByCreationDate:)];
+    return  [[self unsortedLogFileInfos] sortedArrayUsingComparator:^NSComparisonResult(DDLogFileInfo   * _Nonnull obj1, DDLogFileInfo   * _Nonnull obj2) {
+        
+        NSDate *date1 = [NSDate new];
+        NSDate *date2 = [NSDate new];
+        NSArray *arryComponant = [[obj1 fileName] componentsSeparatedByString:@" "];
+        if(arryComponant.count>0){
+            NSString *stringDate = arryComponant.lastObject;
+            stringDate = [stringDate stringByReplacingOccurrencesOfString:@".log" withString:@""];
+            stringDate = [stringDate stringByReplacingOccurrencesOfString:@".archived" withString:@""];
+            date1 = [[self logFileDateFormatter] dateFromString:stringDate];
+        }
+        
+        arryComponant = [[obj2 fileName] componentsSeparatedByString:@" "];
+        if(arryComponant.count>0){
+            NSString *stringDate = arryComponant.lastObject;
+            stringDate = [stringDate stringByReplacingOccurrencesOfString:@".log" withString:@""];
+            stringDate = [stringDate stringByReplacingOccurrencesOfString:@".archived" withString:@""];
+            date2 = [[self logFileDateFormatter] dateFromString:stringDate];
+        }
+        
+        return [date2 compare:date1];
+    }];
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Creation
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//if you change newLogFileName , then  change isLogFile method also accordingly
 - (NSString *)newLogFileName {
     NSString *appName = [self applicationName];
 
