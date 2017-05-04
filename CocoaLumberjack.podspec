@@ -24,22 +24,16 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '2.0'
   s.tvos.deployment_target    = '9.0'
 
-  s.default_subspecs = 'Default', 'Extensions'
+  s.module_map = 'Framework/Lumberjack/CocoaLumberjack.modulemap'
+  s.default_subspecs = 'Default'
 
   s.subspec 'Default' do |ss|
-    ss.source_files         = 'Classes/CocoaLumberjack.h', 'Classes/DD*.{h,m}'
-    ss.public_header_files  = 'Classes/CocoaLumberjack.h', 'Classes/DD*.h'
-  end
-
-  s.subspec 'Core' do |ss|
-    ss.source_files         = 'Classes/DD*.{h,m}'
-    ss.public_header_files  = 'Classes/DD*.h'
-  end
-
-  s.subspec 'Extensions' do |ss|
-    ss.dependency 'CocoaLumberjack/Default'
-    ss.source_files         = 'Classes/Extensions/*.{h,m}'
-    ss.public_header_files  = 'Classes/Extensions/*.h'
+    ss.source_files         = 'Classes/CocoaLumberjack.h',
+                              'Classes/DD*.{h,m}',
+                              'Classes/Extensions/*.{h,m}'
+    ss.public_header_files  = 'Classes/CocoaLumberjack.h',
+                              'Classes/DD*.h',
+                              'Classes/Extensions/*.h'
   end
   
   s.subspec 'CLI' do |ss|
