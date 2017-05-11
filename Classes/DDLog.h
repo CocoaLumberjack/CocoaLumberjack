@@ -208,6 +208,12 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
  */
 @interface DDLog : NSObject
 
+
++(void)setPrefix:(NSString*)prefix forFlag:(DDLogFlag)flag;
+
++(NSString*)getPrefixWithFlag:(DDLogFlag)flag;
+
+
 /**
  *  Returns the singleton `DDLog`.
  *  The instance is used by `DDLog` class methods.
