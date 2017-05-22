@@ -16,7 +16,7 @@
 import Foundation
 
 extension DDLogFlag {
-    public static func fromLogLevel(logLevel: DDLogLevel) -> DDLogFlag {
+    public static func fromLogLevel(_ logLevel: DDLogLevel) -> DDLogFlag {
         return DDLogFlag(rawValue: logLevel.rawValue)
     }
     
