@@ -1152,8 +1152,9 @@ static DDTTYLogger *sharedInstance;
     BOOL isFormatted = NO;
 
     if (_logFormatter) {
-        logMsg = [_logFormatter formatLogMessage:logMessage];
+        logMessage->_message = [_logFormatter formatLogMessage:logMessage];
         isFormatted = logMsg != logMessage->_message;
+        logMsg = logMessage->_message;
     }
 
     if (logMsg) {
