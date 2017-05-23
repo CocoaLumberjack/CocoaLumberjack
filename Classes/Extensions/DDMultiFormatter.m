@@ -46,8 +46,6 @@
     NSMutableArray *_formatters;
 }
 
-- (DDLogMessage *)logMessageForLine:(NSString *)line originalMessage:(DDLogMessage *)message;
-
 @end
 
 
@@ -78,27 +76,19 @@
 #pragma mark Processing
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
-    __block NSString *line = logMessage->_message;
+    DDLogMessage *message = [logMessage copy];
 
     dispatch_sync(_queue, ^{
         for (id<DDLogFormatter> formatter in _formatters) {
-            DDLogMessage *message = [self logMessageForLine:line originalMessage:logMessage];
-            line = [formatter formatLogMessage:message];
+            message->message = [formatter formatLogMessage:message];
 
-            if (!line) {
+            if (!message->_message) {
                 break;
             }
         }
     });
 
-    return line;
-}
-
-- (DDLogMessage *)logMessageForLine:(NSString *)line originalMessage:(DDLogMessage *)message {
-    DDLogMessage *newMessage = [message copy];
-
-    newMessage->_message = line;
-    return newMessage;
+    return message->_message;
 }
 
 #pragma mark Formatters
