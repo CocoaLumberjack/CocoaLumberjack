@@ -59,6 +59,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     NSUInteger _maximumNumberOfLogFiles;
     unsigned long long _logFilesDiskQuota;
     NSString *_logsDirectory;
+    NSDate* _lastLogFileCreateDate;
 #if TARGET_OS_IPHONE
     NSFileProtectionType _defaultFileProtectionLevel;
 #endif
@@ -425,6 +426,28 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return [NSString stringWithFormat:@"%@ %@.log", appName, formattedDate];
 }
 
+- (void)modifyLogFileCreateDateIfNeed:(NSString *)filePath
+{
+    NSDate* fileCreateDate = [NSDate date];
+    if (_lastLogFileCreateDate == nil) {
+        DDLogFileInfo *logFileInfo = [self sortedLogFileInfos].firstObject;
+        if (logFileInfo) {
+            _lastLogFileCreateDate = logFileInfo.creationDate;
+        }
+    }
+    if (_lastLogFileCreateDate && (int)_lastLogFileCreateDate.timeIntervalSince1970 >= (int)fileCreateDate.timeIntervalSince1970) {
+        fileCreateDate = [_lastLogFileCreateDate dateByAddingTimeInterval:1];
+    }
+    NSDictionary* attr = [NSDictionary dictionaryWithObjectsAndKeys:fileCreateDate, NSFileModificationDate, fileCreateDate, NSFileCreationDate, NULL];
+    NSError* error = nil;
+    [[NSFileManager defaultManager] setAttributes:attr ofItemAtPath:filePath error:&error];
+    if (error) {
+        NSLogError(@"DDLogFileInfo: Error modify log file create date %@", error);
+    } else {
+        _lastLogFileCreateDate = fileCreateDate;
+    }
+}
+
 - (NSString *)createNewLogFile {
     NSString *fileName = [self newLogFileName];
     NSString *logsDirectory = [self logsDirectory];
@@ -469,6 +492,11 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
             [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:attributes];
 
+            // When log file rolling so fast, log file's create date may be same, so sorting log files is not reliable
+            // Eventually leading to the newly created file out, immediately deleted (by deleteOldLogFiles function below)
+            // The workaround is to control file creation time interval of 1 second, because ios file system is not accurate to the millisecond
+            [self modifyLogFileCreateDateIfNeed:filePath];
+            
             // Since we just created a new log file, we may need to delete some old log files
             [self deleteOldLogFiles];
 
