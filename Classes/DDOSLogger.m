@@ -55,16 +55,16 @@ static DDOSLogger *sharedInstance;
         
         switch (logMessage->_flag) {
             case DDLogFlagError     :
-                os_log_error(OS_LOG_DEFAULT, msg);
+                os_log_error(OS_LOG_DEFAULT, "%{public}s", msg);
                 break;
             case DDLogFlagWarning   :
             case DDLogFlagInfo      :
-                os_log_info(OS_LOG_DEFAULT, msg);
+                os_log_info(OS_LOG_DEFAULT, "%{public}s", msg);
                 break;
             case DDLogFlagDebug     :
             case DDLogFlagVerbose   :
             default                 :
-                os_log_debug(OS_LOG_DEFAULT, msg);
+                os_log_debug(OS_LOG_DEFAULT, "%{public}s", msg);
                 break;
         }
     }
