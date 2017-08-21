@@ -1,3 +1,10 @@
+## [3.2.1 - Xcode 9 beta on Aug 21st, 2017](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.2.1)
+- Xcode 9 beta support #874 #873 #884 #883 #882
+- Fixed some issues around deleting log files #868 #879
+- update 'Use Log Level per Logger' doc #888
+- Remove empty asset catalogs so that they don't show up in Open Quickly #877
+- Fixed typo in pull request template #880
+
 ## [3.2.0 - Swift 3.0.0, Xcode 8.3 on May 3rd, 2017](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.2.0)
 - Xcode 8.3 support #860 #853 
 - added a very basic `os_log` (unified logging) logger #850 #856 
