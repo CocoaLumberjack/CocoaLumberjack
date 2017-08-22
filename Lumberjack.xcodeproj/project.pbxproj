@@ -174,6 +174,7 @@
 		DDBE6E871E73ED11003F093F /* DDOSLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DD4738821E7168A400F1A4F5 /* DDOSLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DDBE6E881E73ED12003F093F /* DDOSLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DD4738821E7168A400F1A4F5 /* DDOSLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DDBE6E891E73ED12003F093F /* DDOSLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = DD4738821E7168A400F1A4F5 /* DDOSLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E43636411F2F0D7100BE80CF /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FF46021B8B4CF400B43179 /* CocoaLumberjack.framework */; };
 		E58079631A032F92008819CA /* DDLegacyMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E58079621A032F92008819CA /* DDLegacyMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5D89BA81994749300C180CF /* DDAssertMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BA51994749300C180CF /* DDAssertMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5D89BA91994749300C180CF /* DDLogMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D89BA61994749300C180CF /* DDLogMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -539,6 +540,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E43636411F2F0D7100BE80CF /* CocoaLumberjack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
