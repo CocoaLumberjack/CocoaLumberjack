@@ -1,9 +1,10 @@
 
-xcodeproj 'FineGrainedLogging'
+project 'FineGrainedLogging'
 workspace '../Demos'
 
 target :'FineGrainedLogging' do
   platform :osx, '10.7'
+  use_frameworks!
   pod 'CocoaLumberjack', :path => '../../'
 end
 

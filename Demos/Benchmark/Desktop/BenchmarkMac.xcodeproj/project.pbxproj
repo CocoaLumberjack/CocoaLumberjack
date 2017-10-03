@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		006EC6782CAB189D605F470E /* libPods-BenchmarkMac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D085848B9377916FA3BF57 /* libPods-BenchmarkMac.a */; };
 		DCC29DE114730AA9005E8FD4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC29DE014730AA9005E8FD4 /* Cocoa.framework */; };
 		DCC29DEB14730AA9005E8FD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCC29DE914730AA9005E8FD4 /* InfoPlist.strings */; };
 		DCC29DED14730AA9005E8FD4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29DEC14730AA9005E8FD4 /* main.m */; };
@@ -18,10 +17,11 @@
 		DCC29E2014730B05005E8FD4 /* DynamicLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E1A14730B05005E8FD4 /* DynamicLogging.m */; };
 		DCC29E2114730B05005E8FD4 /* PerformanceTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E1C14730B05005E8FD4 /* PerformanceTesting.m */; };
 		DCC29E2214730B05005E8FD4 /* StaticLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E1E14730B05005E8FD4 /* StaticLogging.m */; };
+		DEFECBAB62BC430EC3A3FAAB /* Pods_BenchmarkMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2CA005FBDD7360D86E3BA1 /* Pods_BenchmarkMac.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		75D085848B9377916FA3BF57 /* libPods-BenchmarkMac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BenchmarkMac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D2CA005FBDD7360D86E3BA1 /* Pods_BenchmarkMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BenchmarkMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5740B0CCB466F5BE2C23905 /* Pods-BenchmarkMac.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BenchmarkMac.release.xcconfig"; path = "Pods/Target Support Files/Pods-BenchmarkMac/Pods-BenchmarkMac.release.xcconfig"; sourceTree = "<group>"; };
 		DCC29DDC14730AA9005E8FD4 /* BenchmarkMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BenchmarkMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCC29DE014730AA9005E8FD4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -53,7 +53,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCC29DE114730AA9005E8FD4 /* Cocoa.framework in Frameworks */,
-				006EC6782CAB189D605F470E /* libPods-BenchmarkMac.a in Frameworks */,
+				DEFECBAB62BC430EC3A3FAAB /* Pods_BenchmarkMac.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,7 +93,7 @@
 			children = (
 				DCC29DE014730AA9005E8FD4 /* Cocoa.framework */,
 				DCC29DE214730AA9005E8FD4 /* Other Frameworks */,
-				75D085848B9377916FA3BF57 /* libPods-BenchmarkMac.a */,
+				7D2CA005FBDD7360D86E3BA1 /* Pods_BenchmarkMac.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -154,12 +154,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCC29DFA14730AA9005E8FD4 /* Build configuration list for PBXNativeTarget "BenchmarkMac" */;
 			buildPhases = (
-				CCC3BE78F0DF486A86ECB56A /* 📦 Check Pods Manifest.lock */,
+				CCC3BE78F0DF486A86ECB56A /* [CP] Check Pods Manifest.lock */,
 				DCC29DD814730AA9005E8FD4 /* Sources */,
 				DCC29DD914730AA9005E8FD4 /* Frameworks */,
 				DCC29DDA14730AA9005E8FD4 /* Resources */,
-				8506515FE7184EE6BF1F427F /* 📦 Copy Pods Resources */,
-				2F7E12BE852B635A45DBD2B0 /* 📦 Embed Pods Frameworks */,
+				8506515FE7184EE6BF1F427F /* [CP] Copy Pods Resources */,
+				2F7E12BE852B635A45DBD2B0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -176,7 +176,7 @@
 		DCC29DD314730AA9005E8FD4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0900;
 			};
 			buildConfigurationList = DCC29DD614730AA9005E8FD4 /* Build configuration list for PBXProject "BenchmarkMac" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -209,29 +209,32 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2F7E12BE852B635A45DBD2B0 /* 📦 Embed Pods Frameworks */ = {
+		2F7E12BE852B635A45DBD2B0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-BenchmarkMac/Pods-BenchmarkMac-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BenchmarkMac/Pods-BenchmarkMac-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8506515FE7184EE6BF1F427F /* 📦 Copy Pods Resources */ = {
+		8506515FE7184EE6BF1F427F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,19 +242,22 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BenchmarkMac/Pods-BenchmarkMac-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CCC3BE78F0DF486A86ECB56A /* 📦 Check Pods Manifest.lock */ = {
+		CCC3BE78F0DF486A86ECB56A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BenchmarkMac-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -305,18 +311,28 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -342,11 +358,19 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
@@ -354,6 +378,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
@@ -375,6 +400,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BenchmarkMac/BenchmarkMac-Prefix.pch";
 				INFOPLIST_FILE = "BenchmarkMac/BenchmarkMac-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.oss.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -388,6 +414,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BenchmarkMac/BenchmarkMac-Prefix.pch";
 				INFOPLIST_FILE = "BenchmarkMac/BenchmarkMac-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.oss.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

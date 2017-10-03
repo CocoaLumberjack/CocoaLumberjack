@@ -1,9 +1,10 @@
 
-xcodeproj 'RegisteredLoggingTest'
+project 'RegisteredLoggingTest'
 workspace '../../Demos'
 
 target :'RegisteredLoggingTest' do
   platform :osx, '10.7'
+  use_frameworks!
   pod 'CocoaLumberjack', :path => '../../../'
 end
 

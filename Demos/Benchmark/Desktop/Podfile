@@ -1,9 +1,10 @@
 
-xcodeproj 'BenchmarkMac'
+project 'BenchmarkMac'
 workspace '../../Demos'
 
 target :'BenchmarkMac' do
   platform :osx, '10.7'
+  use_frameworks!
   pod 'CocoaLumberjack', :path => '../../../'
 end
 

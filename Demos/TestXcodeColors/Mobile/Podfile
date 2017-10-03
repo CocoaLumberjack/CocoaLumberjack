@@ -1,9 +1,10 @@
 
-xcodeproj 'TextXcodeColors'
+project 'TextXcodeColors'
 workspace '../../Demos'
 
 target :'TextXcodeColors' do
-  platform :ios, '5.0'
+  platform :ios, '8.0'
+  use_frameworks!
   pod 'CocoaLumberjack', :path => '../../../'
 end
 

@@ -1,9 +1,10 @@
 
-xcodeproj 'CustomLogLevels'
+project 'CustomLogLevels'
 workspace '../Demos'
 
 target :'CustomLogLevels' do
   platform :osx, '10.7'
+  use_frameworks!
   pod 'CocoaLumberjack', :path => '../../'
 end
 

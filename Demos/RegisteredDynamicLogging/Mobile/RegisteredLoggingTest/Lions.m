@@ -7,7 +7,7 @@ static DDLogLevel ddLogLevel = DDLogLevelWarning;
 
 @implementation Lions
 
-+ (int)ddLogLevel
++ (NSUInteger)ddLogLevel
 {
     return ddLogLevel;
 }

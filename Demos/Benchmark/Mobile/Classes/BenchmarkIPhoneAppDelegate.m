@@ -11,7 +11,7 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
-    [window addSubview:viewController.view];
+    window.rootViewController = viewController;
     [window makeKeyAndVisible];
     
     [PerformanceTesting startPerformanceTests];

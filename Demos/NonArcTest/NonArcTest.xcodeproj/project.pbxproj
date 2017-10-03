@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2138820E7EA5E279A3154364 /* libPods-NonArcTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CAFDC3C5C69E9479A1A6422 /* libPods-NonArcTest.a */; };
+		C4241A83DE1A2C4ED312F208 /* Pods_NonArcTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419C108CDFD7B9F1493AD068 /* Pods_NonArcTest.framework */; };
 		DCA67DEF146B531D003411EE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCA67DEE146B531D003411EE /* Cocoa.framework */; };
 		DCA67DF9146B531D003411EE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCA67DF7146B531D003411EE /* InfoPlist.strings */; };
 		DCA67DFB146B531D003411EE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA67DFA146B531D003411EE /* main.m */; };
@@ -17,8 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		419C108CDFD7B9F1493AD068 /* Pods_NonArcTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NonArcTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73588C7819855AE94477DBD1 /* Pods-NonArcTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NonArcTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NonArcTest/Pods-NonArcTest.debug.xcconfig"; sourceTree = "<group>"; };
-		9CAFDC3C5C69E9479A1A6422 /* libPods-NonArcTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NonArcTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D435F5F11D7862454A848E55 /* Pods-NonArcTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NonArcTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-NonArcTest/Pods-NonArcTest.release.xcconfig"; sourceTree = "<group>"; };
 		DCA67DEA146B531D003411EE /* NonArcTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NonArcTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCA67DEE146B531D003411EE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -41,7 +41,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCA67DEF146B531D003411EE /* Cocoa.framework in Frameworks */,
-				2138820E7EA5E279A3154364 /* libPods-NonArcTest.a in Frameworks */,
+				C4241A83DE1A2C4ED312F208 /* Pods_NonArcTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,7 +71,7 @@
 			children = (
 				DCA67DEE146B531D003411EE /* Cocoa.framework */,
 				DCA67DF0146B531D003411EE /* Other Frameworks */,
-				9CAFDC3C5C69E9479A1A6422 /* libPods-NonArcTest.a */,
+				419C108CDFD7B9F1493AD068 /* Pods_NonArcTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -125,12 +125,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCA67E08146B531E003411EE /* Build configuration list for PBXNativeTarget "NonArcTest" */;
 			buildPhases = (
-				57AAB2FE9257497AB04E31B6 /* 📦 Check Pods Manifest.lock */,
+				57AAB2FE9257497AB04E31B6 /* [CP] Check Pods Manifest.lock */,
 				DCA67DE6146B531D003411EE /* Sources */,
 				DCA67DE7146B531D003411EE /* Frameworks */,
 				DCA67DE8146B531D003411EE /* Resources */,
-				8241FE795A7C4F108AED0BFC /* 📦 Copy Pods Resources */,
-				044326A82041199E29581CED /* 📦 Embed Pods Frameworks */,
+				8241FE795A7C4F108AED0BFC /* [CP] Copy Pods Resources */,
+				044326A82041199E29581CED /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -147,7 +147,7 @@
 		DCA67DE1146B531D003411EE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0900;
 			};
 			buildConfigurationList = DCA67DE4146B531D003411EE /* Build configuration list for PBXProject "NonArcTest" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -180,44 +180,50 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		044326A82041199E29581CED /* 📦 Embed Pods Frameworks */ = {
+		044326A82041199E29581CED /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-NonArcTest/Pods-NonArcTest-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NonArcTest/Pods-NonArcTest-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		57AAB2FE9257497AB04E31B6 /* 📦 Check Pods Manifest.lock */ = {
+		57AAB2FE9257497AB04E31B6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NonArcTest-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8241FE795A7C4F108AED0BFC /* 📦 Copy Pods Resources */ = {
+		8241FE795A7C4F108AED0BFC /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,16 +277,28 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -305,16 +323,27 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
@@ -336,6 +365,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NonArcTest/NonArcTest-Prefix.pch";
 				INFOPLIST_FILE = "NonArcTest/NonArcTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.oss.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -349,6 +379,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NonArcTest/NonArcTest-Prefix.pch";
 				INFOPLIST_FILE = "NonArcTest/NonArcTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.oss.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

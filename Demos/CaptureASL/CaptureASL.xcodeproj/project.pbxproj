@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		518D82590E336D9F9BFE0A7E /* libPods-CaptureASL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1BC17EBE138CC685264544F /* libPods-CaptureASL.a */; };
+		AFA5AEDF296EEF812F7063E9 /* Pods_CaptureASL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D52E0AED9C1E3765A9FE18F /* Pods_CaptureASL.framework */; };
 		E50619821A2EF295000F835A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E50619811A2EF295000F835A /* Main.storyboard */; };
 		E5AE803B18DA83A400E0501F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803A18DA83A400E0501F /* Foundation.framework */; };
 		E5AE803D18DA83A400E0501F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803C18DA83A400E0501F /* CoreGraphics.framework */; };
@@ -20,9 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2B14D3038267666EE0AC2330 /* Pods-CaptureASL.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaptureASL.release.xcconfig"; path = "Pods/Target Support Files/Pods-CaptureASL/Pods-CaptureASL.release.xcconfig"; sourceTree = "<group>"; };
-		7B384ACDCD40E28D8AE989BA /* Pods-CaptureASL.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaptureASL.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CaptureASL/Pods-CaptureASL.debug.xcconfig"; sourceTree = "<group>"; };
-		B1BC17EBE138CC685264544F /* libPods-CaptureASL.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CaptureASL.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D52E0AED9C1E3765A9FE18F /* Pods_CaptureASL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CaptureASL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		57FC10FC92829DC85AB9EA2F /* Pods-CaptureASL.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaptureASL.release.xcconfig"; path = "Pods/Target Support Files/Pods-CaptureASL/Pods-CaptureASL.release.xcconfig"; sourceTree = "<group>"; };
+		BA7F39B2221EA7BE946CF8C8 /* Pods-CaptureASL.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaptureASL.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CaptureASL/Pods-CaptureASL.debug.xcconfig"; sourceTree = "<group>"; };
 		E50619811A2EF295000F835A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E5AE803718DA83A400E0501F /* CaptureASL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptureASL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AE803A18DA83A400E0501F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -48,7 +48,7 @@
 				E5AE803D18DA83A400E0501F /* CoreGraphics.framework in Frameworks */,
 				E5AE803F18DA83A400E0501F /* UIKit.framework in Frameworks */,
 				E5AE803B18DA83A400E0501F /* Foundation.framework in Frameworks */,
-				518D82590E336D9F9BFE0A7E /* libPods-CaptureASL.a in Frameworks */,
+				AFA5AEDF296EEF812F7063E9 /* Pods_CaptureASL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,8 +58,8 @@
 		A0D458FE10FDDAC08B8FA4E3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				7B384ACDCD40E28D8AE989BA /* Pods-CaptureASL.debug.xcconfig */,
-				2B14D3038267666EE0AC2330 /* Pods-CaptureASL.release.xcconfig */,
+				BA7F39B2221EA7BE946CF8C8 /* Pods-CaptureASL.debug.xcconfig */,
+				57FC10FC92829DC85AB9EA2F /* Pods-CaptureASL.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -89,7 +89,7 @@
 				E5AE803C18DA83A400E0501F /* CoreGraphics.framework */,
 				E5AE803E18DA83A400E0501F /* UIKit.framework */,
 				E5AE805918DA83A400E0501F /* XCTest.framework */,
-				B1BC17EBE138CC685264544F /* libPods-CaptureASL.a */,
+				0D52E0AED9C1E3765A9FE18F /* Pods_CaptureASL.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -126,12 +126,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5AE806918DA83A500E0501F /* Build configuration list for PBXNativeTarget "CaptureASL" */;
 			buildPhases = (
-				F5E87D2C35224932B7B01D44 /* 📦 Check Pods Manifest.lock */,
+				0375EED24F326990440A3964 /* [CP] Check Pods Manifest.lock */,
 				E5AE803318DA83A400E0501F /* Sources */,
 				E5AE803418DA83A400E0501F /* Frameworks */,
 				E5AE803518DA83A400E0501F /* Resources */,
-				3C38B447E7BD4E5EA6361538 /* 📦 Copy Pods Resources */,
-				95BBA35CC38C544916A1262B /* 📦 Embed Pods Frameworks */,
+				CB93BC9E3379F309309A7088 /* [CP] Embed Pods Frameworks */,
+				24C9555A5B5A2B436786CB9A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -148,7 +148,7 @@
 		E5AE802F18DA83A400E0501F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0900;
 			};
 			buildConfigurationList = E5AE803218DA83A400E0501F /* Build configuration list for PBXProject "CaptureASL" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -181,14 +181,32 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3C38B447E7BD4E5EA6361538 /* 📦 Copy Pods Resources */ = {
+		0375EED24F326990440A3964 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CaptureASL-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		24C9555A5B5A2B436786CB9A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -196,34 +214,22 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CaptureASL/Pods-CaptureASL-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		95BBA35CC38C544916A1262B /* 📦 Embed Pods Frameworks */ = {
+		CB93BC9E3379F309309A7088 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CaptureASL/Pods-CaptureASL-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CaptureASL/Pods-CaptureASL-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F5E87D2C35224932B7B01D44 /* 📦 Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -261,18 +267,30 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -285,7 +303,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -299,25 +317,36 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -325,13 +354,14 @@
 		};
 		E5AE806A18DA83A500E0501F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7B384ACDCD40E28D8AE989BA /* Pods-CaptureASL.debug.xcconfig */;
+			baseConfigurationReference = BA7F39B2221EA7BE946CF8C8 /* Pods-CaptureASL.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CaptureASL/CaptureASL-Prefix.pch";
 				INFOPLIST_FILE = "CaptureASL/CaptureASL-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "CocoaLumberjack.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -339,13 +369,14 @@
 		};
 		E5AE806B18DA83A500E0501F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2B14D3038267666EE0AC2330 /* Pods-CaptureASL.release.xcconfig */;
+			baseConfigurationReference = 57FC10FC92829DC85AB9EA2F /* Pods-CaptureASL.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CaptureASL/CaptureASL-Prefix.pch";
 				INFOPLIST_FILE = "CaptureASL/CaptureASL-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "CocoaLumberjack.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

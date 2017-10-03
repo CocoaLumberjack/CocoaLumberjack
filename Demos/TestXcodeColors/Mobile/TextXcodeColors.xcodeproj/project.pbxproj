@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7F0F8511DEA990F1406F7CE9 /* libPods-TextXcodeColors.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 820DC6E6BE43529BBB85F669 /* libPods-TextXcodeColors.a */; };
 		DC361299156E1D3800956227 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC361298156E1D3800956227 /* UIKit.framework */; };
 		DC36129B156E1D3800956227 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC36129A156E1D3800956227 /* Foundation.framework */; };
 		DC36129D156E1D3800956227 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC36129C156E1D3800956227 /* CoreGraphics.framework */; };
@@ -16,13 +15,14 @@
 		DC3612A9156E1D3800956227 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612A8156E1D3800956227 /* AppDelegate.m */; };
 		DC3612AC156E1D3800956227 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3612AB156E1D3800956227 /* ViewController.m */; };
 		DC3612AF156E1D3800956227 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC3612AD156E1D3800956227 /* ViewController.xib */; };
+		DCA7CB6B61365B46534BEB21 /* Pods_TextXcodeColors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82E3A02CF219388DD9F26861 /* Pods_TextXcodeColors.framework */; };
 		DCD6EACC16FFC47500710668 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD6EACB16FFC47500710668 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4178E7AF72A128963347BA3F /* Pods-TextXcodeColors.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TextXcodeColors.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TextXcodeColors/Pods-TextXcodeColors.debug.xcconfig"; sourceTree = "<group>"; };
 		7DCF417237276689C2276EE1 /* Pods-TextXcodeColors.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TextXcodeColors.release.xcconfig"; path = "Pods/Target Support Files/Pods-TextXcodeColors/Pods-TextXcodeColors.release.xcconfig"; sourceTree = "<group>"; };
-		820DC6E6BE43529BBB85F669 /* libPods-TextXcodeColors.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TextXcodeColors.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		82E3A02CF219388DD9F26861 /* Pods_TextXcodeColors.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TextXcodeColors.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC361294156E1D3800956227 /* TextXcodeColors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextXcodeColors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC361298156E1D3800956227 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DC36129A156E1D3800956227 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -47,7 +47,7 @@
 				DC361299156E1D3800956227 /* UIKit.framework in Frameworks */,
 				DC36129B156E1D3800956227 /* Foundation.framework in Frameworks */,
 				DC36129D156E1D3800956227 /* CoreGraphics.framework in Frameworks */,
-				7F0F8511DEA990F1406F7CE9 /* libPods-TextXcodeColors.a in Frameworks */,
+				DCA7CB6B61365B46534BEB21 /* Pods_TextXcodeColors.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,7 +79,7 @@
 				DC361298156E1D3800956227 /* UIKit.framework */,
 				DC36129A156E1D3800956227 /* Foundation.framework */,
 				DC36129C156E1D3800956227 /* CoreGraphics.framework */,
-				820DC6E6BE43529BBB85F669 /* libPods-TextXcodeColors.a */,
+				82E3A02CF219388DD9F26861 /* Pods_TextXcodeColors.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -124,12 +124,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC3612B2156E1D3800956227 /* Build configuration list for PBXNativeTarget "TextXcodeColors" */;
 			buildPhases = (
-				1F450BAFFAAF4E0C9234609D /* 📦 Check Pods Manifest.lock */,
+				1F450BAFFAAF4E0C9234609D /* [CP] Check Pods Manifest.lock */,
 				DC361290156E1D3800956227 /* Sources */,
 				DC361291156E1D3800956227 /* Frameworks */,
 				DC361292156E1D3800956227 /* Resources */,
-				CB70F1F0EEEB49A2BE62788D /* 📦 Copy Pods Resources */,
-				2AC4DB441F2019F353709779 /* 📦 Embed Pods Frameworks */,
+				CB70F1F0EEEB49A2BE62788D /* [CP] Copy Pods Resources */,
+				2AC4DB441F2019F353709779 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -146,7 +146,7 @@
 		DC36128B156E1D3700956227 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0900;
 			};
 			buildConfigurationList = DC36128E156E1D3700956227 /* Build configuration list for PBXProject "TextXcodeColors" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -179,44 +179,50 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1F450BAFFAAF4E0C9234609D /* 📦 Check Pods Manifest.lock */ = {
+		1F450BAFFAAF4E0C9234609D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TextXcodeColors-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2AC4DB441F2019F353709779 /* 📦 Embed Pods Frameworks */ = {
+		2AC4DB441F2019F353709779 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TextXcodeColors/Pods-TextXcodeColors-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TextXcodeColors/Pods-TextXcodeColors-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CB70F1F0EEEB49A2BE62788D /* 📦 Copy Pods Resources */ = {
+		CB70F1F0EEEB49A2BE62788D /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,18 +270,28 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -289,7 +305,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -300,17 +316,26 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -318,7 +343,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -332,6 +357,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TextXcodeColors/TextXcodeColors-Prefix.pch";
 				INFOPLIST_FILE = "TextXcodeColors/TextXcodeColors-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -344,6 +370,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TextXcodeColors/TextXcodeColors-Prefix.pch";
 				INFOPLIST_FILE = "TextXcodeColors/TextXcodeColors-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
