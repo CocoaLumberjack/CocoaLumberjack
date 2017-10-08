@@ -151,14 +151,15 @@ Configure your logging however you want. Change log levels per file (perfect for
 
 ### Requirements 
 The current version of Lumberjack requires:
-- Xcode 8 or later
-- Swift 3.0 or later
+- Xcode 9 or later
+- Swift 4.0 or later
 - iOS 5 or later
 - OS X 10.7 or later
 - WatchOS 2 or later
 - TVOS 9 or later
 
 #### Backwards compability
+- for Xcode 8 and Swift 3, use the 3.2 version
 - for Xcode 7.3 and Swift 2.3, use the 2.4.0 version
 - for Xcode 7.3 and Swift 2.2, use the 2.3.0 version
 - for Xcode 7.2 and 7.1, use the 2.2.0 version
