@@ -25,7 +25,6 @@
 /**
  * This class provides a logger for the Apple os_log facility.
  **/
-API_AVAILABLE(ios(10.0), macos(10.12), tvos(10.0), watchos(3.0))
 @interface DDOSLogger : DDAbstractLogger <DDLogger>
 
 /**
