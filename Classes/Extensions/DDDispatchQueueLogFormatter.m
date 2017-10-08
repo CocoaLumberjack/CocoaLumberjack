@@ -67,7 +67,7 @@
 
         // Set default replacements:
 
-        _replacements[@"com.apple.main-thread"] = @"main";
+        [_replacements setObject:@"main" forKey:@"com.apple.main-thread"];
     }
 
     return self;
@@ -96,7 +96,7 @@
 
     pthread_mutex_lock(&_mutex);
     {
-        result = _replacements[longLabel];
+        result = [_replacements objectForKey:longLabel];
     }
     pthread_mutex_unlock(&_mutex);
 
@@ -107,7 +107,7 @@
     pthread_mutex_lock(&_mutex);
     {
         if (shortLabel) {
-            _replacements[longLabel] = shortLabel;
+            [_replacements setObject:shortLabel forKey:longLabel];
         } else {
             [_replacements removeObjectForKey:longLabel];
         }
@@ -158,11 +158,11 @@
         NSString *key = _dateFormatterKey;
 
         NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
-        dateFormatter = threadDictionary[key];
+        dateFormatter = [threadDictionary objectForKey:key];
 
         if (dateFormatter == nil) {
             dateFormatter = [self createDateFormatter];
-            threadDictionary[key] = dateFormatter;
+            [threadDictionary setObject:dateFormatter forKey:key];
         }
     }
 
@@ -219,7 +219,7 @@
 
         pthread_mutex_lock(&_mutex);
         {
-            abrvLabel = _replacements[fullLabel];
+            abrvLabel = [_replacements objectForKey:fullLabel];
         }
         pthread_mutex_unlock(&_mutex);
 
