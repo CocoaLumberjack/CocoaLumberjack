@@ -147,8 +147,8 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
                       ofObject:(id)object
                         change:(NSDictionary *)change
                        context:(void *)context {
-    NSNumber *old = [change objectForKey:NSKeyValueChangeOldKey];
-    NSNumber *new = [change objectForKey:NSKeyValueChangeNewKey];
+    NSNumber *old = change[NSKeyValueChangeOldKey];
+    NSNumber *new = change[NSKeyValueChangeNewKey];
 
     if ([old isEqual:new]) {
         // No change in value - don't bother with any processing.
@@ -186,7 +186,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         unsigned long long used = 0;
 
         for (NSUInteger i = 0; i < sortedLogFileInfos.count; i++) {
-            DDLogFileInfo *info = [sortedLogFileInfos objectAtIndex:i];
+            DDLogFileInfo *info = sortedLogFileInfos[i];
             used += info.fileSize;
 
             if (used > diskQuota) {
@@ -211,7 +211,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         // So in most cases, we do not want to consider this file for deletion.
 
         if (sortedLogFileInfos.count > 0) {
-            DDLogFileInfo *logFileInfo = [sortedLogFileInfos objectAtIndex:0];
+            DDLogFileInfo *logFileInfo = sortedLogFileInfos[0];
 
             if (!logFileInfo.isArchived) {
                 // Don't delete active file.
@@ -224,7 +224,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         // removing all logfiles starting with firstIndexToDelete
 
         for (NSUInteger i = firstIndexToDelete; i < sortedLogFileInfos.count; i++) {
-            DDLogFileInfo *logFileInfo = [sortedLogFileInfos objectAtIndex:i];
+            DDLogFileInfo *logFileInfo = sortedLogFileInfos[i];
 
             NSLogInfo(@"DDLogFileManagerDefault: Deleting file: %@", logFileInfo.fileName);
 
@@ -250,7 +250,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 #else
     NSString *appName = [[NSProcessInfo processInfo] processName];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
+    NSString *basePath = ([paths count] > 0) ? paths[0] : NSTemporaryDirectory();
     NSString *logsDirectory = [[basePath stringByAppendingPathComponent:@"Logs"] stringByAppendingPathComponent:appName];
 
 #endif
@@ -291,14 +291,14 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
                                        threadDictionary];
     NSString *dateFormat = @"yyyy'-'MM'-'dd'--'HH'-'mm'-'ss'-'SSS'";
     NSString *key = [NSString stringWithFormat:@"logFileDateFormatter.%@", dateFormat];
-    NSDateFormatter *dateFormatter = [dictionary objectForKey:key];
+    NSDateFormatter *dateFormatter = dictionary[key];
 
     if (dateFormatter == nil) {
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
         [dateFormatter setDateFormat:dateFormat];
         [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-        [dictionary setObject:dateFormatter forKey:key];
+        dictionary[key] = dateFormatter;
     }
 
     return dateFormatter;
@@ -876,7 +876,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         NSArray *sortedLogFileInfos = [logFileManager sortedLogFileInfos];
 
         if ([sortedLogFileInfos count] > 0) {
-            DDLogFileInfo *mostRecentLogFileInfo = [sortedLogFileInfos objectAtIndex:0];
+            DDLogFileInfo *mostRecentLogFileInfo = sortedLogFileInfos[0];
 
             BOOL shouldArchiveMostRecent = NO;
 
@@ -1116,7 +1116,7 @@ static int exception_count = 0;
 
 - (NSDate *)modificationDate {
     if (_modificationDate == nil) {
-        _modificationDate = [self.fileAttributes objectForKey:NSFileModificationDate];
+        _modificationDate = self.fileAttributes[NSFileModificationDate];
     }
 
     return _modificationDate;
@@ -1124,7 +1124,7 @@ static int exception_count = 0;
 
 - (NSDate *)creationDate {
     if (_creationDate == nil) {
-        _creationDate = [self.fileAttributes objectForKey:NSFileCreationDate];
+        _creationDate = self.fileAttributes[NSFileCreationDate];
     }
 
     return _creationDate;
@@ -1132,7 +1132,7 @@ static int exception_count = 0;
 
 - (unsigned long long)fileSize {
     if (_fileSize == 0) {
-        _fileSize = [[self.fileAttributes objectForKey:NSFileSize] unsignedLongLongValue];
+        _fileSize = [self.fileAttributes[NSFileSize] unsignedLongLongValue];
     }
 
     return _fileSize;
