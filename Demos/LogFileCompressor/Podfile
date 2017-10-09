@@ -3,7 +3,7 @@ project 'LogFileCompressor'
 workspace '../Demos'
 
 target :'LogFileCompressor' do
-  platform :osx, '10.7'
+  platform :osx, '10.8'
   use_frameworks!
   pod 'CocoaLumberjack', :path => '../../'
 end

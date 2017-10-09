@@ -3,7 +3,7 @@ project 'SQLiteLogger'
 workspace '../Demos'
 
 target :'SQLiteLogger' do
-  platform :osx, '10.7'
+  platform :osx, '10.8'
   use_frameworks!
   pod 'CocoaLumberjack', :path => '../../'
 end

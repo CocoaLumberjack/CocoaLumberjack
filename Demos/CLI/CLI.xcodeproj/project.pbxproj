@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		955C6FD9BDE063D622A2186A /* Pods_CLI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D062FDF5D8B5BBB7FA83EC50 /* Pods_CLI.framework */; };
+		91A3462B1AAFDF6AA3D7CA0E /* libPods-CLI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FF28F3C00FDFF4F484F173 /* libPods-CLI.a */; };
 		E5EDB896186286BC002D0689 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EDB895186286BC002D0689 /* Foundation.framework */; };
 		E5EDB899186286BC002D0689 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EDB898186286BC002D0689 /* main.m */; };
 		E5EDB89D186286BC002D0689 /* CLI.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = E5EDB89C186286BC002D0689 /* CLI.1 */; };
@@ -27,9 +27,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		24F9475DE4ED80CCEB9E725A /* Pods-CLI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CLI/Pods-CLI.debug.xcconfig"; sourceTree = "<group>"; };
-		B133647711A9C51546116E04 /* Pods-CLI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLI.release.xcconfig"; path = "Pods/Target Support Files/Pods-CLI/Pods-CLI.release.xcconfig"; sourceTree = "<group>"; };
-		D062FDF5D8B5BBB7FA83EC50 /* Pods_CLI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CLI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EA1AF91EC3B8BC1C284CD05 /* Pods-CLI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CLI/Pods-CLI.debug.xcconfig"; sourceTree = "<group>"; };
+		A498B1E259CD3C9BD7CD2B41 /* Pods-CLI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLI.release.xcconfig"; path = "Pods/Target Support Files/Pods-CLI/Pods-CLI.release.xcconfig"; sourceTree = "<group>"; };
+		B5FF28F3C00FDFF4F484F173 /* libPods-CLI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CLI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EDB892186286BC002D0689 /* CLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CLI; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EDB895186286BC002D0689 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E5EDB898186286BC002D0689 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -43,18 +43,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5EDB896186286BC002D0689 /* Foundation.framework in Frameworks */,
-				955C6FD9BDE063D622A2186A /* Pods_CLI.framework in Frameworks */,
+				91A3462B1AAFDF6AA3D7CA0E /* libPods-CLI.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9EEB7AD5BA89C5EB50B2546A /* Pods */ = {
+		ADF448C66286813E0B195AA2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				24F9475DE4ED80CCEB9E725A /* Pods-CLI.debug.xcconfig */,
-				B133647711A9C51546116E04 /* Pods-CLI.release.xcconfig */,
+				4EA1AF91EC3B8BC1C284CD05 /* Pods-CLI.debug.xcconfig */,
+				A498B1E259CD3C9BD7CD2B41 /* Pods-CLI.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -65,7 +65,7 @@
 				E5EDB897186286BC002D0689 /* CLI */,
 				E5EDB894186286BC002D0689 /* Frameworks */,
 				E5EDB893186286BC002D0689 /* Products */,
-				9EEB7AD5BA89C5EB50B2546A /* Pods */,
+				ADF448C66286813E0B195AA2 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,7 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				E5EDB895186286BC002D0689 /* Foundation.framework */,
-				D062FDF5D8B5BBB7FA83EC50 /* Pods_CLI.framework */,
+				B5FF28F3C00FDFF4F484F173 /* libPods-CLI.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -111,11 +111,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5EDB8A0186286BC002D0689 /* Build configuration list for PBXNativeTarget "CLI" */;
 			buildPhases = (
-				FB3FE9C3466C46F28F57491C /* [CP] Check Pods Manifest.lock */,
+				85E4D688ED9B02ECD3161D42 /* [CP] Check Pods Manifest.lock */,
 				E5EDB88E186286BC002D0689 /* Sources */,
 				E5EDB88F186286BC002D0689 /* Frameworks */,
 				E5EDB890186286BC002D0689 /* CopyFiles */,
-				339E52FCDD1A492889F5A30D /* [CP] Copy Pods Resources */,
+				56BDFEFC86F42F9712A57916 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -153,7 +153,7 @@
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		339E52FCDD1A492889F5A30D /* [CP] Copy Pods Resources */ = {
+		56BDFEFC86F42F9712A57916 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -168,7 +168,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CLI/Pods-CLI-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FB3FE9C3466C46F28F57491C /* [CP] Check Pods Manifest.lock */ = {
+		85E4D688ED9B02ECD3161D42 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -243,7 +243,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -286,14 +286,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 		E5EDB8A1186286BC002D0689 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 24F9475DE4ED80CCEB9E725A /* Pods-CLI.debug.xcconfig */;
+			baseConfigurationReference = 4EA1AF91EC3B8BC1C284CD05 /* Pods-CLI.debug.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CLI/CLI-Prefix.pch";
@@ -303,7 +303,7 @@
 		};
 		E5EDB8A2186286BC002D0689 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B133647711A9C51546116E04 /* Pods-CLI.release.xcconfig */;
+			baseConfigurationReference = A498B1E259CD3C9BD7CD2B41 /* Pods-CLI.release.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CLI/CLI-Prefix.pch";

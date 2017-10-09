@@ -3,8 +3,8 @@ project 'CLI'
 workspace '../Demos'
 
 target :'CLI' do
-  platform :osx, '10.7'
-  use_frameworks!
+  platform :osx, '10.8'
+
   pod 'CocoaLumberjack/CLI', :path => '../../'
 end
 
