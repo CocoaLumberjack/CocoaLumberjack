@@ -285,7 +285,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return (hasProperPrefix && hasProperSuffix);
 }
 
-//if you change formater , then  change sortedLogFileInfos method also accordingly
+// if you change formatter, then change sortedLogFileInfos method also accordingly
 - (NSDateFormatter *)logFileDateFormatter {
     NSMutableDictionary *dictionary = [[NSThread currentThread]
                                        threadDictionary];
