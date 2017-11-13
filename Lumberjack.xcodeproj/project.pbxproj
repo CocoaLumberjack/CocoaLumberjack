@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07CA82901F90E89000FF0F17 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCB3185114EB418E001CFBEE /* CocoaLumberjack.framework */; };
+		07CA82911F90E89C00FF0F17 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19D90B261BBFA9DB00947169 /* CocoaLumberjack.framework */; };
+		07CA82921F90E8A800FF0F17 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19190EDE1B84D812008D059E /* CocoaLumberjack.framework */; };
 		18F3BF081A81D8B700692297 /* CocoaLumberjack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BCB5C619D4BB6E0096E784 /* CocoaLumberjack.swift */; };
 		18F3BF641A81DD2E00692297 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F3BF631A81DD2E00692297 /* AppDelegate.swift */; };
 		18F3BF661A81DD2E00692297 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F3BF651A81DD2E00692297 /* ViewController.swift */; };
@@ -459,6 +462,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07CA82901F90E89000FF0F17 /* CocoaLumberjack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,6 +500,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07CA82921F90E8A800FF0F17 /* CocoaLumberjack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,6 +523,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07CA82911F90E89C00FF0F17 /* CocoaLumberjack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
