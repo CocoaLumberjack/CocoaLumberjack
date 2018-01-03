@@ -1,3 +1,12 @@
+## [3.4.0 - Xcode 9.1 on Jan 3rd, 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.4.0)
+- Fix Travis CI #895
+- Fix typos #896
+- Fix schemes and link errors #897 #899 #903 #907
+
+## [3.3.0 - Xcode 9 on Oct 3rd, 2017](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.3.0)
+- Xcode 9 support and Swift 4 support #890 #893
+- Replace `OSSpinLock` with `pthread_mutex` #889
+
 ## [3.2.1 - Xcode 9 beta on Aug 21st, 2017](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.2.1)
 - Xcode 9 beta support #874 #873 #884 #883 #882
 - Fixed some issues around deleting log files #868 #879
