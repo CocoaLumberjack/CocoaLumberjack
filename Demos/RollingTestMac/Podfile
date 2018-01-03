@@ -1,5 +1,5 @@
 
-xcodeproj 'RollingTestMac'
+project 'RollingTestMac'
 workspace '../Demos'
 
 target :'RollingTestMac' do
