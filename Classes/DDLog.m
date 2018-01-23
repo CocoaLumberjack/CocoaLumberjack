@@ -351,16 +351,15 @@ static NSUInteger _numProcessors;
     // Dispatch semaphores call down to the kernel only when the calling thread needs to be blocked.
     // If the calling semaphore does not need to block, no kernel call is made.
 
-    dispatch_semaphore_wait(_queueSemaphore, DISPATCH_TIME_FOREVER);
-
-    // We've now sure we won't overflow the queue.
-    // It is time to queue our log message.
-
     dispatch_block_t logBlock = ^{
+        dispatch_semaphore_wait(_queueSemaphore, DISPATCH_TIME_FOREVER);
         @autoreleasepool {
             [self lt_log:logMessage];
         }
     };
+
+    // We've now sure we won't overflow the queue.
+    // It is time to queue our log message.
 
     if (asyncFlag) {
         dispatch_async(_loggingQueue, logBlock);
