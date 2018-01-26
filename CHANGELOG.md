@@ -1,3 +1,7 @@
+## [3.4.1 - Xcode 9.1 on Jan 26th, 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.4.0)
+- Fix `DDLogFileManagerDefault` `-isLogFile` #909
+- Fix locking the main thread #911
+
 ## [3.4.0 - Xcode 9.1 on Jan 3rd, 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.4.0)
 - Fix Travis CI #895
 - Fix typos #896
