@@ -629,6 +629,7 @@ static NSUInteger _numProcessors;
         if (numClasses > bufferSize || numClasses == 0) {
             //apparently more classes added between calls (or a problem); try again
             free(classes);
+            classes = NULL;
             numClasses = 0;
         }
     }
