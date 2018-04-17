@@ -1,4 +1,4 @@
-## [3.4.2 - Xcode 9.3 on , 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.4.2)
+## [3.4.2 - Xcode 9.3 on Apr 17th, 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.4.2)
 - Update README.md #912
 - Fixed typo in pull request template #913
 - Fix `-Wimplicit-retain-self` warnings #915
