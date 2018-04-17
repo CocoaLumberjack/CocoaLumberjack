@@ -1040,6 +1040,10 @@ static int exception_count = 0;
     return @"cocoa.lumberjack.fileLogger";
 }
 
+- (void)flush {
+    [_currentLogFileHandle synchronizeFile];
+}
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
