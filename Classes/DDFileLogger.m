@@ -762,7 +762,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     #endif
 
     uint64_t delay = (uint64_t)([logFileRollingDate timeIntervalSinceNow] * (NSTimeInterval) NSEC_PER_SEC);
-    dispatch_time_t fireTime = dispatch_time(DISPATCH_TIME_NOW, delay);
+    dispatch_time_t fireTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)delay);
 
     dispatch_source_set_timer(_rollingTimer, fireTime, DISPATCH_TIME_FOREVER, 1ull * NSEC_PER_SEC);
     dispatch_resume(_rollingTimer);
@@ -952,7 +952,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
             // somewhere we want to roll it and use a new one.
             _currentLogFileVnode = dispatch_source_create(
                     DISPATCH_SOURCE_TYPE_VNODE,
-                    [_currentLogFileHandle fileDescriptor],
+                    (uintptr_t)[_currentLogFileHandle fileDescriptor],
                     DISPATCH_VNODE_DELETE | DISPATCH_VNODE_RENAME,
                     self.loggerQueue
                     );

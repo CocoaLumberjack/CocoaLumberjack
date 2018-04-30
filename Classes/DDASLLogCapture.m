@@ -45,7 +45,7 @@ static void (*dd_asl_release)(aslresponse obj);
 + (void)initialize
 {
     #if (defined(DDASL_IOS_PIVOT_VERSION) && __IPHONE_OS_VERSION_MAX_ALLOWED >= DDASL_IOS_PIVOT_VERSION) || (defined(DDASL_OSX_PIVOT_VERSION) && __MAC_OS_X_VERSION_MAX_ALLOWED >= DDASL_OSX_PIVOT_VERSION)
-        #if __IPHONE_OS_VERSION_MIN_REQUIRED < DDASL_IOS_PIVOT_VERSION || __MAC_OS_X_VERSION_MIN_REQUIRED < DDASL_OSX_PIVOT_VERSION
+        #if __IPHONE_OS_VERSION_MIN_REQUIRED < DDASL_IOS_PIVOT_VERSION || (defined(__MAC_OS_X_VERSION_MIN_REQUIRED) && __MAC_OS_X_VERSION_MIN_REQUIRED < DDASL_OSX_PIVOT_VERSION)
             #pragma GCC diagnostic push
             #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
                 // Building on falsely advertised SDK, targeting deprecated API
@@ -99,7 +99,7 @@ static void (*dd_asl_release)(aslresponse obj);
     // Don't retrieve logs from our own DDASLLogger
     asl_set_query(query, kDDASLKeyDDLog, kDDASLDDLogValue, ASL_QUERY_OP_NOT_EQUAL);
     
-#if !TARGET_OS_IPHONE || TARGET_SIMULATOR
+#if !TARGET_OS_IPHONE || (defined(TARGET_SIMULATOR) && TARGET_SIMULATOR)
     int processId = [[NSProcessInfo processInfo] processIdentifier];
     char pid[16];
     sprintf(pid, "%d", processId);
@@ -112,7 +112,7 @@ static void (*dd_asl_release)(aslresponse obj);
     if ( messageCString == NULL )
         return;
 
-    int flag;
+    DDLogFlag flag;
     BOOL async;
 
     const char* levelCString = asl_get(msg, ASL_KEY_LEVEL);
@@ -171,7 +171,7 @@ static void (*dd_asl_release)(aslresponse obj);
             .tv_sec = 0
         };
         gettimeofday(&timeval, NULL);
-        unsigned long long startTime = timeval.tv_sec;
+        unsigned long long startTime = (unsigned long long)timeval.tv_sec;
         __block unsigned long long lastSeenID = 0;
 
         /*
@@ -212,7 +212,7 @@ static void (*dd_asl_release)(aslresponse obj);
                     [self aslMessageReceived:msg];
 
                     // Keep track of which messages we've seen.
-                    lastSeenID = atoll(asl_get(msg, ASL_KEY_MSG_ID));
+                    lastSeenID = (unsigned long long)atoll(asl_get(msg, ASL_KEY_MSG_ID));
                 }
                 dd_asl_release(response);
                 asl_free(query);
