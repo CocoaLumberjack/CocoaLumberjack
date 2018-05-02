@@ -192,7 +192,8 @@
             @"com.apple.root.high-priority",
             @"com.apple.root.low-overcommit-priority",
             @"com.apple.root.default-overcommit-priority",
-            @"com.apple.root.high-overcommit-priority"
+            @"com.apple.root.high-overcommit-priority",
+            @"com.apple.root.default-qos.overcommit"
         ];
 
         for (NSString * name in names) {
