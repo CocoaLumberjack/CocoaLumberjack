@@ -130,6 +130,10 @@
 		55CCBF0619BA679200957A39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CCBF0519BA679200957A39 /* AppDelegate.swift */; };
 		55CCBF2019BA67CB00957A39 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCB3185114EB418E001CFBEE /* CocoaLumberjack.framework */; };
 		55F88BF81B3CB15C00E31255 /* CocoaLumberjackSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F88BF71B3CB15C00E31255 /* CocoaLumberjackSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5D34A74720B00EB400233A79 /* DDAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D34A74620B00EB400233A79 /* DDAssert.swift */; };
+		5D34A74820B00EB400233A79 /* DDAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D34A74620B00EB400233A79 /* DDAssert.swift */; };
+		5D34A74920B00EB400233A79 /* DDAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D34A74620B00EB400233A79 /* DDAssert.swift */; };
+		5D34A74A20B00EB400233A79 /* DDAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D34A74620B00EB400233A79 /* DDAssert.swift */; };
 		620EEE741BFA65CE00D1B9CB /* CocoaLumberjack.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E5D89BA41994749300C180CF /* CocoaLumberjack.h */; };
 		620EEE751BFA65CE00D1B9CB /* DDLogMacros.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E5D89BA61994749300C180CF /* DDLogMacros.h */; };
 		620EEE761BFA65CE00D1B9CB /* DDAssertMacros.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E5D89BA51994749300C180CF /* DDAssertMacros.h */; };
@@ -418,6 +422,7 @@
 		55CCBF0219BA679200957A39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55CCBF0519BA679200957A39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55F88BF71B3CB15C00E31255 /* CocoaLumberjackSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaLumberjackSwift.h; sourceTree = "<group>"; };
+		5D34A74620B00EB400233A79 /* DDAssert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDAssert.swift; sourceTree = "<group>"; };
 		93483CFA1D09E39000AD40D6 /* CLIColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLIColor.h; path = CLI/CLIColor.h; sourceTree = "<group>"; };
 		93483CFB1D09E39000AD40D6 /* CLIColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLIColor.m; path = CLI/CLIColor.m; sourceTree = "<group>"; };
 		DA9C20BD192A0E0000AB7171 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
@@ -756,6 +761,7 @@
 				55BCB5C619D4BB6E0096E784 /* CocoaLumberjack.swift */,
 				E5D89BA61994749300C180CF /* DDLogMacros.h */,
 				E5D89BA51994749300C180CF /* DDAssertMacros.h */,
+				5D34A74620B00EB400233A79 /* DDAssert.swift */,
 				E58079621A032F92008819CA /* DDLegacyMacros.h */,
 				DA9C20C7192A0E0000AB7171 /* DDLog+LOGV.h */,
 				DA9C20BD192A0E0000AB7171 /* DDAbstractDatabaseLogger.h */,
@@ -1467,6 +1473,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18F3BF081A81D8B700692297 /* CocoaLumberjack.swift in Sources */,
+				5D34A74820B00EB400233A79 /* DDAssert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1529,6 +1536,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				19190F0B1B84DB9F008D059E /* CocoaLumberjack.swift in Sources */,
+				5D34A74A20B00EB400233A79 /* DDAssert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1564,6 +1572,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				19D90B2E1BBFAA7500947169 /* CocoaLumberjack.swift in Sources */,
+				5D34A74920B00EB400233A79 /* DDAssert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1599,6 +1608,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				19FF46351B8B4F0700B43179 /* CocoaLumberjack.swift in Sources */,
+				5D34A74720B00EB400233A79 /* DDAssert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
