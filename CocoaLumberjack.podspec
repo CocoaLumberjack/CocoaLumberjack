@@ -55,7 +55,7 @@ Pod::Spec.new do |s|
     ss.watchos.deployment_target  = '2.0'
     ss.tvos.deployment_target     = '9.0'
     ss.dependency 'CocoaLumberjack/Default'
-    ss.source_files               = 'Classes/CocoaLumberjack.swift'
+    ss.source_files               = 'Classes/CocoaLumberjack.swift', 'Classes/DDAssert.swift'
   end
   
 end
