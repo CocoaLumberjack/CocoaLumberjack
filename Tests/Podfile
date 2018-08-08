@@ -2,7 +2,7 @@ source 'https://github.com/CocoaPods/Specs'
 
 use_frameworks!
 
-xcodeproj 'CocoaLumberjack Tests'
+project 'CocoaLumberjack Tests'
 workspace '../Framework/Lumberjack'
 inhibit_all_warnings!
 
