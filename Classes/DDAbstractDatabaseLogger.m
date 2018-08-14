@@ -126,8 +126,8 @@
 
 - (void)updateAndResumeSaveTimer {
     if ((_saveTimer != NULL) && (_saveInterval > 0.0) && (_unsavedTime > 0.0)) {
-        uint64_t interval = (uint64_t)(_saveInterval * (NSTimeInterval) NSEC_PER_SEC);
-        dispatch_time_t startTime = dispatch_time(_unsavedTime, (int64_t)interval);
+        int64_t interval = (int64_t)(_saveInterval * (NSTimeInterval) NSEC_PER_SEC);
+        dispatch_time_t startTime = dispatch_time(_unsavedTime, interval);
 
         dispatch_source_set_timer(_saveTimer, startTime, interval, 1ull * NSEC_PER_SEC);
 
@@ -162,13 +162,13 @@
 
 - (void)updateDeleteTimer {
     if ((_deleteTimer != NULL) && (_deleteInterval > 0.0) && (_maxAge > 0.0)) {
-        uint64_t interval = (uint64_t)(_deleteInterval * (NSTimeInterval) NSEC_PER_SEC);
+        int64_t interval = (int64_t)(_deleteInterval * (NSTimeInterval) NSEC_PER_SEC);
         dispatch_time_t startTime;
 
         if (_lastDeleteTime > 0) {
-            startTime = (dispatch_time_t)dispatch_time(_lastDeleteTime, (int64_t)interval);
+            startTime = dispatch_time(_lastDeleteTime, interval);
         } else {
-            startTime = (dispatch_time_t)dispatch_time(DISPATCH_TIME_NOW, (int64_t)interval);
+            startTime = dispatch_time(DISPATCH_TIME_NOW, interval);
         }
 
         dispatch_source_set_timer(_deleteTimer, startTime, interval, 1ull * NSEC_PER_SEC);

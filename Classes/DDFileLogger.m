@@ -144,9 +144,9 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
+                      ofObject:(__unused id)object
                         change:(NSDictionary *)change
-                       context:(void *)context {
+                       context:(__unused void *)context {
     NSNumber *old = change[NSKeyValueChangeOldKey];
     NSNumber *new = change[NSKeyValueChangeNewKey];
 
