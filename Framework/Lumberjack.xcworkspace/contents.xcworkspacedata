@@ -14,7 +14,7 @@
       location = "group:../CHANGELOG.md">
    </FileRef>
    <FileRef
-      location = "group:../LICENSE.txt">
+      location = "group:../LICENSE">
    </FileRef>
    <FileRef
       location = "group:../LumberjackLogo.png">
