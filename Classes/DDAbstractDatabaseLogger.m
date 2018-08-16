@@ -52,7 +52,7 @@
 #pragma mark Override Me
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (BOOL)db_log:(DDLogMessage *)logMessage {
+- (BOOL)db_log:(__unused DDLogMessage *)logMessage {
     // Override me and add your implementation.
     //
     // Return YES if an item was added to the buffer.
@@ -162,16 +162,16 @@
 
 - (void)updateDeleteTimer {
     if ((_deleteTimer != NULL) && (_deleteInterval > 0.0) && (_maxAge > 0.0)) {
-        uint64_t interval = (uint64_t)(_deleteInterval * (NSTimeInterval) NSEC_PER_SEC);
+        int64_t interval = (int64_t)(_deleteInterval * (NSTimeInterval) NSEC_PER_SEC);
         dispatch_time_t startTime;
 
         if (_lastDeleteTime > 0) {
-            startTime = (dispatch_time_t)dispatch_time(_lastDeleteTime, (int64_t)interval);
+            startTime = dispatch_time(_lastDeleteTime, interval);
         } else {
-            startTime = (dispatch_time_t)dispatch_time(DISPATCH_TIME_NOW, (int64_t)interval);
+            startTime = dispatch_time(DISPATCH_TIME_NOW, interval);
         }
 
-        dispatch_source_set_timer(_deleteTimer, startTime, interval, 1ull * NSEC_PER_SEC);
+        dispatch_source_set_timer(_deleteTimer, startTime, (uint64_t)interval, 1ull * NSEC_PER_SEC);
     }
 }
 
