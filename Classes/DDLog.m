@@ -1147,8 +1147,11 @@ static __inline__ __attribute__((__always_inline__)) void _dispatch_queue_label_
 
         if (USE_PTHREAD_THREADID_NP) {
             __uint64_t tid;
-            pthread_threadid_np(NULL, &tid);
-            _threadID = [[NSString alloc] initWithFormat:@"%llu", tid];
+            if (pthread_threadid_np(NULL, &tid) == 0) {
+                _threadID = [[NSString alloc] initWithFormat:@"%llu", tid];
+            } else {
+                _threadID = @"missing threadId";
+            }
         } else {
             _threadID = [[NSString alloc] initWithFormat:@"%x", pthread_mach_thread_np(pthread_self())];
         }
