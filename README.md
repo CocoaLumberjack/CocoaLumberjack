@@ -187,7 +187,7 @@ The current version of Lumberjack requires:
 - [C.W. Betts](https://github.com/MaddTheSane)
 
 ### License
-- CocoaLumberjack is available under the BSD license. See the [LICENSE file](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/LICENSE.txt).
+- CocoaLumberjack is available under the BSD 3 license. See the [LICENSE file](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/LICENSE).
 
 ### Architecture
 
