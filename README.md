@@ -185,6 +185,7 @@ The current version of Lumberjack requires:
 - [Dmitry Vorobyov](https://github.com/dvor)
 - [Bogdan Poplauschi](https://github.com/bpoplauschi)
 - [C.W. Betts](https://github.com/MaddTheSane)
+- [Koichi Yokota (sushichop)](https://github.com/sushichop)
 
 ### License
 - CocoaLumberjack is available under the BSD 3 license. See the [LICENSE file](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/LICENSE).
