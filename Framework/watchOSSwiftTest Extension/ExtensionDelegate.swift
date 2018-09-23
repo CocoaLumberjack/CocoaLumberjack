@@ -8,7 +8,6 @@
 
 import WatchKit
 import CocoaLumberjack
-import CocoaLumberjackSwift
 
 let ddloglevel = DDLogLevel.verbose
 

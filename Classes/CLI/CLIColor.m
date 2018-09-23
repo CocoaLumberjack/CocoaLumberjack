@@ -13,6 +13,8 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
+#if TARGET_OS_OSX
+
 #import "CLIColor.h"
 
 @interface CLIColor () {
@@ -53,3 +55,5 @@
 }
 
 @end
+
+#endif

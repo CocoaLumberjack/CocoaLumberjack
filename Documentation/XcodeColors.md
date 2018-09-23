@@ -20,7 +20,7 @@ But here's a summary:
 
 All it takes is one extra line of code to enable colors in Lumberjack:
 
-```objective-c
+```objc
 // Standard lumberjack initialization
 [DDLog addLogger:[DDTTYLogger sharedInstance]];
 
@@ -37,7 +37,7 @@ However, **you can fully customize the color schemes** however you like!
 In fact, you can customize the foreground and/or background colors.  
 And you can specify any RGB value you'd like.
 
-```objective-c
+```objc
 // Let's customize our colors.
 // DDLogInfo : Pink
 

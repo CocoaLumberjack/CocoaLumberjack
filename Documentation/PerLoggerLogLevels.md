@@ -9,7 +9,7 @@ DDLog.add(DDFileLogger.sharedInstance, with: DDLogLevel.debug)
 ```
 
 #### Objective C
-```objective-c
+```objc
 [DDLog addLogger:[DDOSLogger sharedInstance] withLevel:DDLogLevelInfo];
 [DDLog addLogger:[DDFileLogger sharedInstance] withLevel:DDLogLevelDebug];
 ```

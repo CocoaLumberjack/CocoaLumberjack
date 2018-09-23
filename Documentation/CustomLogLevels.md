@@ -29,7 +29,7 @@ Some internal methods, such as `addLogger:`, ignore custom log levels/flags.
 To avoid unexpected behaviors use more specific methods such as `addLogger:withLevel:`.
 
 MYLog.h:
-```objective-c
+```objc
 #import "DDLog.h"
 
 // We want to use the following log levels:

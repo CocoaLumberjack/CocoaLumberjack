@@ -6,7 +6,7 @@ Loggers allow you to direct log messages wherever you want. For general informat
 
 The `DDLog` header file defines the `DDLogger` protocol. It consists of only 3 mandatory methods:
 
-```objective-c
+```objc
 @protocol DDLogger <NSObject>
 
 - (void)logMessage:(DDLogMessage *)logMessage;
@@ -73,7 +73,7 @@ Furthermore, **there is a base logger implementation one can extend** (`DDAbstra
 Let's assume we want to write a custom logger. It doesn't take much to write the skeleton code:
 
 MyCustomLogger.h:
-```objective-c
+```objc
 #import <Foundation/Foundation.h>
 #import "DDLog.h"
 
@@ -84,7 +84,7 @@ MyCustomLogger.h:
 ```
 
 MyCustomLogger.m
-```objective-c
+```objc
 #import "MyCustomLogger.h"
 
 @implementation MyCustomLogger
@@ -113,7 +113,7 @@ However, you are obviously free to do whatever you want. If it doesn't make sens
 
 The DDLogMessage object encapsulates the information about a log message. It is also defined in DDLog.h:
 
-```objective-c
+```objc
 @interface DDLogMessage : NSObject <NSCopying>
 {
     // Direct accessors to be used only for performance
@@ -140,7 +140,7 @@ The DDLogMessage object encapsulates the information about a log message. It is 
 ### Threading
 
 Almost all of the multi-threading issues are solved for you. The following 3 methods are **always** invoked on the same thread/gcd_dispatch_queue.
-```objective-c
+```objc
 - (void)logMessage:(DDLogMessage *)logMessage;
 
 - (void)didAddLogger;

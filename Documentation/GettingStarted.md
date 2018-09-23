@@ -13,7 +13,7 @@ There are 3 steps to getting started with the logging framework:
 #### CocoaPods
 
 ```ruby
-	platform :ios, '8.0'
+	platform :ios, '10.0'
 	pod 'CocoaLumberjack'
 ```
 
@@ -37,10 +37,7 @@ _Please note, installation via CocoaPods or Carthage is much simpler and recomme
 * Drag `CocoaLumberjack/Lumberjack.xcodeproj` into your project
 * In your application target Build Phases
 	* Add the framework you need
-		* `CocoaLumberjack-macOS` or `CocoaLumberjackSwift-macOS` for macOS
-		* `CocoaLumberjack-iOS` or `CocoaLumberjackSwift-iOS` for iOS
-		* `CocoaLumberjack-tvOS` or `CocoaLumberjackSwift-tvOS` for tvOS
-		* `CocoaLumberjack-watchOS` or `CocoaLumberjackSwift-watchOS` for watchOS
+		* `CocoaLumberjack` or `CocoaLumberjackSwift`
 * Make this CocoaLumberjack framework a dependency for your application target
 * Add a Copy Files phase to the application bundle 
 	* This needs to specify the _Frameworks_ sub-folder
@@ -58,8 +55,8 @@ Consider this method if you favour static libraries over frameworks or have to u
 ```
 
 * Drag `CocoaLumberjack/Lumberjack.xcodeproj` into your project
-* Make the `CocoaLumberjack-iOS-Static` a dependency for your application target
-* Add the `CocoaLumberjack-iOS-Static` to the `Link Binary` phase
+* Make the `CocoaLumberjack-Static` a dependency for your application target
+* Add the `libCocoaLumberjack.a` to the `Link Binary` phase
 * Add `"$(BUILT_PRODUCTS_DIR)/include"` to the `Header Search Paths`
 
 #### Even more manual installation
@@ -85,7 +82,7 @@ Consider this method if you want to more easily modify target build settings, ha
 	* _Note: newer Xcode projects do not create a .pch file by default but using one eases access to CocoaLumberjack through your project_
 	* _Note: #defining LOG\_LEVEL\_DEF before #importing the framework is currently required, but has been under discussion in the early 2.x series_
 
-```objective-c
+```objc
 #define LOG_LEVEL_DEF ddLogLevel
 #import <CocoaLumberjack/CocoaLumberjack.h>
 ```
@@ -94,7 +91,7 @@ Consider this method if you want to more easily modify target build settings, ha
 
 A couple lines of code is all you need to get started:
 
-```objective-c
+```objc
 [DDLog addLogger:[DDOSLogger sharedInstance]];
 ```
 
@@ -102,7 +99,7 @@ This will add a pair of "loggers" to the logging framework. In other words, your
 
 Part of the power of the logging framework is its flexibility. If you also wanted your log statements to be written to a file, then you could add and configure a file logger:
 
-```objective-c
+```objc
 DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
 fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
 fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
@@ -116,7 +113,7 @@ You will also need to set a global log level for your application. This can be m
 
 To do this, simply define the `ddLogLevel` constant. One example of this may be in your .pch file like so:
 
-```objective-c
+```objc
 static const DDLogLevel ddLogLevel = DDLogLevelDebug;
 ```
 
@@ -126,7 +123,7 @@ This global log level will be used as a default unless stated otherwise. See bel
 
 The DDLog header file defines the macros that you will use to replace your NSLog statements. Essentially they look like this:
 
-```objective-c
+```objc
 // Convert from this:
 NSLog(@"Broken sprocket detected!");
 NSLog(@"User selected file:%@ withSize:%u", filePath, fileSize);
@@ -167,7 +164,7 @@ Of course not! We all know what it's like to debug or add new features. You want
 
 Here's all it takes to convert your log statements:
 
-```objective-c
+```objc
 // CONVERT FROM THIS
 
 #import "Sprocket.h"

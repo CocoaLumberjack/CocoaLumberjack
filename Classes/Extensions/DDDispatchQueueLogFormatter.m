@@ -131,12 +131,7 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss:SSS"];
     [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
 
-    NSString *calendarIdentifier = nil;
-#if defined(__IPHONE_8_0) || defined(__MAC_10_10)
-    calendarIdentifier = NSCalendarIdentifierGregorian;
-#else
-    calendarIdentifier = NSGregorianCalendar;
-#endif
+    NSString *calendarIdentifier = NSCalendarIdentifierGregorian;
 
     [dateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:calendarIdentifier]];
 }
