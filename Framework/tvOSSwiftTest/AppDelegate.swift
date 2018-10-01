@@ -24,13 +24,7 @@ private func printSomething() {
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
-    #if swift(>=4.2)
-    typealias LaunchOptions = [UIApplication.LaunchOptionsKey: Any]
-    #else
-    typealias LaunchOptions = [UIApplicationLaunchOptionsKey: Any]
-    #endif  // swift(>=3.4)
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: LaunchOptions?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         let formatter = Formatter()
         DDTTYLogger.sharedInstance.logFormatter = formatter
