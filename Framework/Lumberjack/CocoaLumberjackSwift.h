@@ -10,3 +10,9 @@
 //Still, this header may still be needed so Swift doesn't complain when importing CocoaLumberjackSwift.
 
 @import CocoaLumberjack;
+
+#ifndef DD_LOG_LEVEL
+#define DD_LOG_LEVEL DDLogLevelAll
+#endif
+
+static const DDLogLevel DDDefaultLogLevel = DD_LOG_LEVEL;

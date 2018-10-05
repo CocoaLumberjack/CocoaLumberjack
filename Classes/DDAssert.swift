@@ -23,7 +23,8 @@
  *   - message: A string to log (using `DDLogError`) if `condition` evaluates to `false`.
  *     The default is an empty string.
  */
-public func DDAssert(_ condition: @autoclosure () -> Bool, _ message: @autoclosure () -> String = "", level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = false, ddlog: DDLog = DDLog.sharedInstance) {
+@inlinable
+public func DDAssert(_ condition: @autoclosure () -> Bool, _ message: @autoclosure () -> String = "", level: DDLogLevel = DDDefaultLogLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = false, ddlog: DDLog = DDLog.sharedInstance) {
     if !condition() {
         DDLogError(message, level: level, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
         Swift.assertionFailure(message, file: file, line: line)
@@ -37,7 +38,8 @@ public func DDAssert(_ condition: @autoclosure () -> Bool, _ message: @autoclosu
  * - Parameters:
  *   - message: A string to log (using `DDLogError`). The default is an empty string.
  */
-public func DDAssertionFailure(_ message: @autoclosure () -> String = "", level: DDLogLevel = defaultDebugLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = false, ddlog: DDLog = DDLog.sharedInstance) {
+@inlinable
+public func DDAssertionFailure(_ message: @autoclosure () -> String = "", level: DDLogLevel = DDDefaultLogLevel, context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = false, ddlog: DDLog = DDLog.sharedInstance) {
     DDLogError(message, level: level, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
     Swift.assertionFailure(message, file: file, line: line)
 }
