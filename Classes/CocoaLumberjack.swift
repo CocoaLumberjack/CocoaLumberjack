@@ -19,12 +19,12 @@ extension DDLogFlag {
     public static func from(_ logLevel: DDLogLevel) -> DDLogFlag {
         return DDLogFlag(rawValue: logLevel.rawValue)
     }
-	
+
 	public init(_ logLevel: DDLogLevel) {
         self = DDLogFlag(rawValue: logLevel.rawValue)
 	}
     
-    ///returns the log level, or the lowest equivalant.
+    /// Returns the log level, or the lowest equivalant.
     public func toLogLevel() -> DDLogLevel {
         if let ourValid = DDLogLevel(rawValue: rawValue) {
             return ourValid
