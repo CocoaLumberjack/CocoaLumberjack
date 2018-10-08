@@ -36,6 +36,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DDLogWarn("Warn")
         DDLogError("Error")
 
+        printSomething()
+
+        dynamicLogLevel = ddloglevel
+
+        DDLogVerbose("Verbose")
+        DDLogDebug("Debug")
+        DDLogInfo("Info")
+        DDLogWarn("Warn")
+        DDLogError("Error")
+
         DDLogVerbose("Verbose", level: ddloglevel)
         DDLogDebug("Debug", level: ddloglevel)
         DDLogInfo("Info", level: ddloglevel)

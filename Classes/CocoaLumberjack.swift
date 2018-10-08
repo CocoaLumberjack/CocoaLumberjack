@@ -46,9 +46,36 @@ extension DDLogFlag {
     }
 }
 
+/// The log level that can dynamically limit log messages (vs. the static DDDefaultLogLevel). This log level will only be checked, if the message passes the `DDDefaultLogLevel`.
+public var dynamicLogLevel = DDLogLevel.all
+
+/// Resets the `dynamicLogLevel` to `.all`.
+/// - SeeAlso: `dynamicLogLevel`
+@inlinable
+public func resetDynamicLogLevel() {
+    dynamicLogLevel = .all
+}
+
+
+@available(*, deprecated, message: "Please use dynamicLogLevel", renamed: "dynamicLogLevel")
+public var defaultDebugLevel: DDLogLevel {
+    get {
+        return dynamicLogLevel
+    }
+    set {
+        dynamicLogLevel = newValue
+    }
+}
+
+@available(*, deprecated, message: "Please use resetDynamicLogLevel", renamed: "resetDynamicLogLevel")
+public func resetDefaultDebugLevel() {
+    resetDynamicLogLevel()
+}
+
 @inlinable
 public func _DDLogMessage(_ message: @autoclosure () -> String, level: DDLogLevel, flag: DDLogFlag, context: Int, file: StaticString, function: StaticString, line: UInt, tag: Any?, asynchronous: Bool, ddlog: DDLog) {
-    if level.rawValue & flag.rawValue != 0 {
+    // The `dynamicLogLevel` will always be checked here (instead of being passed in). We cannot "mix" it with the `DDDefaultLogLevel`, because otherwise the compiler won't strip strings that are not logged.
+    if level.rawValue & flag.rawValue != 0 && dynamicLogLevel.rawValue & flag.rawValue != 0 {
         // Tell the DDLogMessage constructor to copy the C strings that get passed to it.
         let logMessage = DDLogMessage(message: message(), level: level, flag: flag, context: context, file: String(describing: file), function: String(describing: function), line: line, tag: tag, options: [.copyFile, .copyFunction], timestamp: nil)
         ddlog.log(asynchronous: asynchronous, message: logMessage)
