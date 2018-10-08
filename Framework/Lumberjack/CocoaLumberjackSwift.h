@@ -10,3 +10,5 @@
 //Still, this header may still be needed so Swift doesn't complain when importing CocoaLumberjackSwift.
 
 @import CocoaLumberjack;
+
+#import <CocoaLumberjackSwift/SwiftLogLevel.h>

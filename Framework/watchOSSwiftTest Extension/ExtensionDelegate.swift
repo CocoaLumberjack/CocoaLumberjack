@@ -13,11 +13,11 @@ import CocoaLumberjackSwift
 let ddloglevel = DDLogLevel.verbose
 
 private func printSomething() {
-    DDLogVerbose("Verbose");
-    DDLogDebug("Debug");
-    DDLogInfo("Info");
-    DDLogWarn("Warn");
-    DDLogError("Error");
+    DDLogVerbose("Verbose")
+    DDLogDebug("Debug")
+    DDLogInfo("Info")
+    DDLogWarn("Warn")
+    DDLogError("Error")
 }
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
@@ -29,16 +29,28 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         DDTTYLogger.sharedInstance.logFormatter = formatter
         DDLog.add(DDTTYLogger.sharedInstance)
         
-        DDLogVerbose("Verbose");
-        DDLogDebug("Debug");
-        DDLogInfo("Info");
-        DDLogWarn("Warn");
-        DDLogError("Error");
-        
+        DDLogVerbose("Verbose")
+        DDLogDebug("Debug")
+        DDLogInfo("Info")
+        DDLogWarn("Warn")
+        DDLogError("Error")
+
         printSomething()
-        
-        defaultDebugLevel = ddloglevel
-        
+
+        dynamicLogLevel = ddloglevel
+
+        DDLogVerbose("Verbose")
+        DDLogDebug("Debug")
+        DDLogInfo("Info")
+        DDLogWarn("Warn")
+        DDLogError("Error")
+
+        DDLogVerbose("Verbose", level: ddloglevel)
+        DDLogDebug("Debug", level: ddloglevel)
+        DDLogInfo("Info", level: ddloglevel)
+        DDLogWarn("Warn", level: ddloglevel)
+        DDLogError("Error", level: ddloglevel)
+
         printSomething()
     }
 

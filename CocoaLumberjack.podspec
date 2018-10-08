@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.requires_arc   = true
 
   s.preserve_paths = 'README.md', 'Classes/CocoaLumberjack.swift', 'Framework/Lumberjack/CocoaLumberjack.modulemap'
-  
+
   s.ios.deployment_target     = '6.0'
   s.osx.deployment_target     = '10.8'
   s.watchos.deployment_target = '2.0'
@@ -41,7 +41,7 @@ Pod::Spec.new do |s|
     ss.source_files         = 'Classes/Extensions/*.{h,m}'
     ss.public_header_files  = 'Classes/Extensions/*.h'
   end
-  
+
   s.subspec 'CLI' do |ss|
     ss.osx.deployment_target    = '10.8'
     ss.osx.dependency 'CocoaLumberjack/Default'
@@ -55,7 +55,8 @@ Pod::Spec.new do |s|
     ss.watchos.deployment_target  = '2.0'
     ss.tvos.deployment_target     = '9.0'
     ss.dependency 'CocoaLumberjack/Default'
-    ss.source_files               = 'Classes/CocoaLumberjack.swift', 'Classes/DDAssert.swift'
+    ss.source_files               = 'Classes/CocoaLumberjack.swift', 'Classes/DDAssert.swift', 'Classes/SwiftLogLevel.h'
+    ss.public_header_files        = 'Classes/SwiftLogLevel.h'
   end
-  
+
 end
