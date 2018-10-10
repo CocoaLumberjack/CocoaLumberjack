@@ -9,8 +9,9 @@ CocoaLumberjack
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Pod Platform](http://img.shields.io/cocoapods/p/CocoaLumberjack.svg?style=flat)](http://cocoadocs.org/docsets/CocoaLumberjack/)
 [![Pod License](http://img.shields.io/cocoapods/l/CocoaLumberjack.svg?style=flat)](http://opensource.org/licenses/BSD-3-Clause)
-[![Reference Status](https://www.versioneye.com/objective-c/cocoalumberjack/reference_badge.svg?style=flat)](https://www.versioneye.com/objective-c/cocoalumberjack/references)
 [![codecov](https://codecov.io/gh/CocoaLumberjack/CocoaLumberjack/branch/master/graph/badge.svg)](https://codecov.io/gh/CocoaLumberjack/CocoaLumberjack)
+[![codebeat badge](https://codebeat.co/badges/840b714a-c8f3-4936-ada4-363473cd4e6b)](https://codebeat.co/projects/github-com-cocoalumberjack-cocoalumberjack-master)
+
 
 **CocoaLumberjack** is a fast & simple, yet powerful & flexible logging framework for Mac and iOS.
 
@@ -19,15 +20,15 @@ CocoaLumberjack
 
 ##### Swift version via CocoaPods
 ```ruby
-platform :ios, '8.0'
+platform :ios, '12.0'
 
 # You need to set target when you use CocoaPods 1.0.0 or later.
-target 'SampleTarget' do 
+target 'SampleTarget' do
   use_frameworks!
   pod 'CocoaLumberjack/Swift'
 end
 ```
-Note: `Swift` is a subspec which will include all the Obj-C code plus the Swift one, so this is sufficient. 
+Note: `Swift` is a subspec which will include all the Obj-C code plus the Swift one, so this is sufficient.
 For more details about how to use Swift with Lumberjack, see [this conversation](https://github.com/CocoaLumberjack/CocoaLumberjack/issues/405).
 
 ##### Swift Usage
@@ -38,11 +39,10 @@ import CocoaLumberjack
 ```
 
 ```swift
-DDLog.add(DDTTYLogger.sharedInstance) // TTY = Xcode console
-DDLog.add(DDASLLogger.sharedInstance) // ASL = Apple System Logs
+DDLog.add(DDOSLogger.sharedInstance) // Uses os_log
 
 let fileLogger: DDFileLogger = DDFileLogger() // File Logger
-fileLogger.rollingFrequency = TimeInterval(60*60*24)  // 24 hours
+fileLogger.rollingFrequency = 60 * 60 * 24 // 24 hours
 fileLogger.logFileManager.maximumNumberOfLogFiles = 7
 DDLog.add(fileLogger)
 
@@ -58,18 +58,17 @@ DDLogError("Error")
 ##### Obj-C version via CocoaPods
 
 ```ruby
-platform :ios, '7.0'
+platform :ios, '12.0'
 pod 'CocoaLumberjack'
 ```
 
 ##### Obj-C usage
-If you're using Lumberjack as a framework, you can `@import CocoaLumberjack`.
+If you're using Lumberjack as a framework, you can `@import CocoaLumberjack;`.
 
 Otherwise, `#import <CocoaLumberjack/CocoaLumberjack.h>`
 
 ```objc
-[DDLog addLogger:[DDTTYLogger sharedInstance]]; // TTY = Xcode console
-[DDLog addLogger:[DDASLLogger sharedInstance]]; // ASL = Apple System Logs
+[DDLog addLogger:[DDOSLogger sharedInstance]]; // Uses os_log
 
 DDFileLogger *fileLogger = [[DDFileLogger alloc] init]; // File Logger
 fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
@@ -149,7 +148,7 @@ Configure your logging however you want. Change log levels per file (perfect for
 - [AppCode support](https://raw.githubusercontent.com/CocoaLumberjack/CocoaLumberjack/master/Documentation/AppCode-support.md)
 - **[Full Lumberjack documentation](Documentation/)**<br/>
 
-### Requirements 
+### Requirements
 The current version of Lumberjack requires:
 - Xcode 10 or later
 - Swift 4.2 or later
@@ -186,6 +185,10 @@ The current version of Lumberjack requires:
 - [Bogdan Poplauschi](https://github.com/bpoplauschi)
 - [C.W. Betts](https://github.com/MaddTheSane)
 - [Koichi Yokota (sushichop)](https://github.com/sushichop)
+- [Nick Brook](https://github.com/nrbrook)
+- [Florian Friedrich](https://github.com/ffried)
+- [Stephan Diederich](https://github.com/diederich)
+- [Kent Sutherland](https://github.com/ksuther)
 
 ### License
 - CocoaLumberjack is available under the BSD 3 license. See the [LICENSE file](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/LICENSE).
