@@ -228,8 +228,6 @@ MyCustomFormatter.h
 #import "DDLog.h"
 
 @interface MyCustomFormatter : NSObject <DDLogFormatter> {
-    int atomicLoggerCount;
-    NSDateFormatter *threadUnsafeDateFormatter;
 }
 @end
 ```
@@ -237,7 +235,24 @@ MyCustomFormatter.h
 MyCustomFormatter.m
 ```objective-c
 #import "MyCustomFormatter.h"
+
+#if (TARGET_OS_OSX && MAC_OS_X_VERSION_MIN_REQUIRED >= 101200) || (TARGET_OS_IOS && __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000) || (TARGET_OS_WATCH && __WATCH_OS_VERSION_MIN_REQUIRED >= 30000) || (TARGET_OS_TV && __TV_OS_VERSION_MIN_REQUIRED >= 100000)
+#import <stdatomic.h>
+#else
 #import <libkern/OSAtomic.h>
+#endif
+
+@interface MyCustomFormatter () {
+#if (TARGET_OS_OSX && MAC_OS_X_VERSION_MIN_REQUIRED >= 101200) || (TARGET_OS_IOS && __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000) || (TARGET_OS_WATCH && __WATCH_OS_VERSION_MIN_REQUIRED >= 30000) || (TARGET_OS_TV && __TV_OS_VERSION_MIN_REQUIRED >= 100000)
+    _Atomic(int32_t) atomicLoggerCount;
+#else
+    int32_t atomicLoggerCount;
+#endif
+
+    NSDateFormatter *threadUnsafeDateFormatter;
+}
+
+@end
 
 @implementation MyCustomFormatter
 
@@ -290,11 +305,19 @@ MyCustomFormatter.m
 }
 
 - (void)didAddToLogger:(id <DDLogger>)logger {
+#if (TARGET_OS_OSX && MAC_OS_X_VERSION_MIN_REQUIRED >= 101200) || (TARGET_OS_IOS && __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000) || (TARGET_OS_WATCH && __WATCH_OS_VERSION_MIN_REQUIRED >= 30000) || (TARGET_OS_TV && __TV_OS_VERSION_MIN_REQUIRED >= 100000)
+    atomic_fetch_add_explicit(&atomicLoggerCount, 1, memory_order_relaxed);
+#else
     OSAtomicIncrement32(&atomicLoggerCount);
+#endif
 }
 
 - (void)willRemoveFromLogger:(id <DDLogger>)logger {
+#if (TARGET_OS_OSX && MAC_OS_X_VERSION_MIN_REQUIRED >= 101200) || (TARGET_OS_IOS && __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000) || (TARGET_OS_WATCH && __WATCH_OS_VERSION_MIN_REQUIRED >= 30000) || (TARGET_OS_TV && __TV_OS_VERSION_MIN_REQUIRED >= 100000)
+    atomic_fetch_sub_explicit(&atomicLoggerCount, 1, memory_order_relaxed);
+#else
     OSAtomicDecrement32(&atomicLoggerCount);
+#endif
 }
 
 @end
