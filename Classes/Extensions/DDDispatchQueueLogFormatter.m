@@ -17,6 +17,12 @@
 #import <pthread/pthread.h>
 #import <objc/runtime.h>
 
+#if (TARGET_OS_OSX && MAC_OS_X_VERSION_MIN_REQUIRED >= 101200) || (TARGET_OS_IOS && __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000) || (TARGET_OS_WATCH && __WATCH_OS_VERSION_MIN_REQUIRED >= 30000) || (TARGET_OS_TV && __TV_OS_VERSION_MIN_REQUIRED >= 100000)
+#import <stdatomic.h>
+#else
+#import <libkern/OSAtomic.h>
+#endif
+
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
@@ -24,8 +30,13 @@
 @interface DDDispatchQueueLogFormatter () {
     DDDispatchQueueLogFormatterMode _mode;
     NSString *_dateFormatterKey;
-    
+
+#if (TARGET_OS_OSX && MAC_OS_X_VERSION_MIN_REQUIRED >= 101200) || (TARGET_OS_IOS && __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000) || (TARGET_OS_WATCH && __WATCH_OS_VERSION_MIN_REQUIRED >= 30000) || (TARGET_OS_TV && __TV_OS_VERSION_MIN_REQUIRED >= 100000)
+    _Atomic(int32_t) _atomicLoggerCount;
+#else
     int32_t _atomicLoggerCount;
+#endif
+
     NSDateFormatter *_threadUnsafeDateFormatter; // Use [self stringFromDate]
     
     pthread_mutex_t _mutex;
@@ -271,12 +282,22 @@
 
 - (void)didAddToLogger:(id <DDLogger>  __attribute__((unused)))logger {
     int32_t count = 0;
+
+#if (TARGET_OS_OSX && MAC_OS_X_VERSION_MIN_REQUIRED >= 101200) || (TARGET_OS_IOS && __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000) || (TARGET_OS_WATCH && __WATCH_OS_VERSION_MIN_REQUIRED >= 30000) || (TARGET_OS_TV && __TV_OS_VERSION_MIN_REQUIRED >= 100000)
+    atomic_fetch_add_explicit(&_atomicLoggerCount, 1, memory_order_relaxed);
+#else
     count = OSAtomicIncrement32(&_atomicLoggerCount);
+#endif
+
     NSAssert(count <= 1 || _mode == DDDispatchQueueLogFormatterModeShareble, @"Can't reuse formatter with multiple loggers in non-shareable mode.");
 }
 
 - (void)willRemoveFromLogger:(id <DDLogger> __attribute__((unused)))logger {
+#if (TARGET_OS_OSX && MAC_OS_X_VERSION_MIN_REQUIRED >= 101200) || (TARGET_OS_IOS && __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000) || (TARGET_OS_WATCH && __WATCH_OS_VERSION_MIN_REQUIRED >= 30000) || (TARGET_OS_TV && __TV_OS_VERSION_MIN_REQUIRED >= 100000)
+    atomic_fetch_sub_explicit(&_atomicLoggerCount, 1, memory_order_relaxed);
+#else
     OSAtomicDecrement32(&_atomicLoggerCount);
+#endif
 }
 
 @end

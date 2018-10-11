@@ -14,7 +14,6 @@
 //   prior written permission of Deusty, LLC.
 
 #import <Foundation/Foundation.h>
-#import <libkern/OSAtomic.h>
 
 // Disable legacy macros
 #ifndef DD_LEGACY_MACROS
