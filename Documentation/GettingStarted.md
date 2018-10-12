@@ -95,8 +95,7 @@ Consider this method if you want to more easily modify target build settings, ha
 A couple lines of code is all you need to get started:
 
 ```objective-c
-[DDLog addLogger:[DDASLLogger sharedInstance]];
-[DDLog addLogger:[DDTTYLogger sharedInstance]];
+[DDLog addLogger:[DDOSLogger sharedInstance]];
 ```
 
 This will add a pair of "loggers" to the logging framework. In other words, your log statements will be sent to the Console.app and the Xcode console (just like a normal NSLog).

@@ -20,7 +20,7 @@ When a log statement is executed, `DDLog` forwards the log message to every logg
 
 ### Loggers
 
-A logger is a class that does something with a log message. The lumberjack framework comes with several different loggers. (You can also [create your own](CustomLoggers.md).) Loggers such as `DDASLLogger` and `DDTTYLogger` can be used to duplicate the functionality of `NSLog`. And `DDFileLogger` can be used to write log messages to a log file.
+A logger is a class that does something with a log message. The lumberjack framework comes with several different loggers. (You can also [create your own](CustomLoggers.md).) Loggers such as `DDOSLogger` can be used to duplicate the functionality of `NSLog`. And `DDFileLogger` can be used to write log messages to a log file.
 
 You can have multiple simultaneous loggers. So you could, for example, log to the console and a file at the same time. You can add and remove loggers at any time.
 

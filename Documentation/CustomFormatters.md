@@ -92,7 +92,7 @@ MyCustomFormatter.m
 
 Now, just add the custom formatter to your logger:
 ```
-[DDTTYLogger sharedInstance].logFormatter = [[MyCustomFormatter alloc] init];
+[DDOSLogger sharedInstance].logFormatter = [[MyCustomFormatter alloc] init];
 ```
 # Thread-safety (simple)
 

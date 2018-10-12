@@ -4,14 +4,14 @@ If you need a different log level for every logger (i.e. if you have a custom lo
 
 #### Swift
 ```swift
-DDLog.add(DDASLLogger.sharedInstance, with: DDLogLevel.info)
-DDLog.add(DDTTYLogger.sharedInstance, with: DDLogLevel.debug)
+DDLog.add(DDOSLogger.sharedInstance, with: DDLogLevel.info)
+DDLog.add(DDFileLogger.sharedInstance, with: DDLogLevel.debug)
 ```
 
 #### Objective C
 ```objective-c
-[DDLog addLogger:[DDASLLogger sharedInstance] withLevel:DDLogLevelInfo];
-[DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:DDLogLevelDebug];
+[DDLog addLogger:[DDOSLogger sharedInstance] withLevel:DDLogLevelInfo];
+[DDLog addLogger:[DDFileLogger sharedInstance] withLevel:DDLogLevelDebug];
 ```
 
 
