@@ -17,26 +17,16 @@
 #import <pthread/pthread.h>
 #import <objc/runtime.h>
 
-#if (TARGET_OS_OSX && MAC_OS_X_VERSION_MIN_REQUIRED >= 101200) || (TARGET_OS_IOS && __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000) || (TARGET_OS_WATCH && __WATCH_OS_VERSION_MIN_REQUIRED >= 30000) || (TARGET_OS_TV && __TV_OS_VERSION_MIN_REQUIRED >= 100000)
-#import <stdatomic.h>
-#else
-#import <libkern/OSAtomic.h>
-#endif
-
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
+#pragma mark - DDDispatchQueueLogFormatter
+
 @interface DDDispatchQueueLogFormatter () {
     DDDispatchQueueLogFormatterMode _mode;
     NSString *_dateFormatterKey;
-
-#if (TARGET_OS_OSX && MAC_OS_X_VERSION_MIN_REQUIRED >= 101200) || (TARGET_OS_IOS && __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000) || (TARGET_OS_WATCH && __WATCH_OS_VERSION_MIN_REQUIRED >= 30000) || (TARGET_OS_TV && __TV_OS_VERSION_MIN_REQUIRED >= 100000)
-    _Atomic(int32_t) _atomicLoggerCount;
-#else
-    int32_t _atomicLoggerCount;
-#endif
-
+    DDAtomicCounter *_atomicLoggerCounter;
     NSDateFormatter *_threadUnsafeDateFormatter; // Use [self stringFromDate]
     
     pthread_mutex_t _mutex;
@@ -68,7 +58,7 @@
         // now `cls` is the class that provides implementation for `configureDateFormatter:`
         _dateFormatterKey = [NSString stringWithFormat:@"%s_NSDateFormatter", class_getName(cls)];
 
-        _atomicLoggerCount = 0;
+        _atomicLoggerCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
         _threadUnsafeDateFormatter = nil;
 
         _minQueueLength = 0;
@@ -281,23 +271,65 @@
 }
 
 - (void)didAddToLogger:(id <DDLogger>  __attribute__((unused)))logger {
-    int32_t count = 0;
-
-#if (TARGET_OS_OSX && MAC_OS_X_VERSION_MIN_REQUIRED >= 101200) || (TARGET_OS_IOS && __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000) || (TARGET_OS_WATCH && __WATCH_OS_VERSION_MIN_REQUIRED >= 30000) || (TARGET_OS_TV && __TV_OS_VERSION_MIN_REQUIRED >= 100000)
-    atomic_fetch_add_explicit(&_atomicLoggerCount, 1, memory_order_relaxed);
-#else
-    count = OSAtomicIncrement32(&_atomicLoggerCount);
-#endif
-
-    NSAssert(count <= 1 || _mode == DDDispatchQueueLogFormatterModeShareble, @"Can't reuse formatter with multiple loggers in non-shareable mode.");
+    NSAssert([_atomicLoggerCounter increment] <= 1 || _mode == DDDispatchQueueLogFormatterModeShareble, @"Can't reuse formatter with multiple loggers in non-shareable mode.");
 }
 
 - (void)willRemoveFromLogger:(id <DDLogger> __attribute__((unused)))logger {
-#if (TARGET_OS_OSX && MAC_OS_X_VERSION_MIN_REQUIRED >= 101200) || (TARGET_OS_IOS && __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000) || (TARGET_OS_WATCH && __WATCH_OS_VERSION_MIN_REQUIRED >= 30000) || (TARGET_OS_TV && __TV_OS_VERSION_MIN_REQUIRED >= 100000)
-    atomic_fetch_sub_explicit(&_atomicLoggerCount, 1, memory_order_relaxed);
+    [_atomicLoggerCounter decrement];
+}
+
+@end
+
+#pragma mark - DDAtomicCounter
+
+#define DD_OSATOMIC_API_DEPRECATED (TARGET_OS_OSX && MAC_OS_X_VERSION_MIN_REQUIRED >= 101200) || (TARGET_OS_IOS && __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000) || (TARGET_OS_WATCH && __WATCH_OS_VERSION_MIN_REQUIRED >= 30000) || (TARGET_OS_TV && __TV_OS_VERSION_MIN_REQUIRED >= 100000)
+
+#if DD_OSATOMIC_API_DEPRECATED
+#import <stdatomic.h>
 #else
-    OSAtomicDecrement32(&_atomicLoggerCount);
+#import <libkern/OSAtomic.h>
+#endif
+
+@interface DDAtomicCounter() {
+#if DD_OSATOMIC_API_DEPRECATED
+    _Atomic(int32_t) _value;
+#else
+    int32_t _value;
 #endif
 }
+@end
+
+@implementation DDAtomicCounter
+
+- (instancetype)initWithDefaultValue:(int32_t)defaultValue {
+    if ((self = [super init])) {
+        _value = defaultValue;
+    }
+    return self;
+}
+
+- (int32_t)value {
+    return _value;
+}
+
+#if DD_OSATOMIC_API_DEPRECATED
+- (int32_t)increment {
+    atomic_fetch_add_explicit(&_value, 1, memory_order_relaxed);
+    return _value;
+}
+
+- (int32_t)decrement {
+    atomic_fetch_sub_explicit(&_value, 1, memory_order_relaxed);
+    return _value;
+}
+#else
+- (int32_t)increment {
+    return OSAtomicIncrement32(&_value);
+}
+
+- (int32_t)decrement {
+    return OSAtomicDecrement32(&_value);
+}
+#endif
 
 @end

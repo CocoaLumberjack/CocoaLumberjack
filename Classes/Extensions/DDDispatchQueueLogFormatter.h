@@ -175,3 +175,17 @@ typedef NS_ENUM(NSUInteger, DDDispatchQueueLogFormatterMode){
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage;
 
 @end
+
+#pragma mark - DDAtomicCounter
+
+@protocol DDAtomicCountable <NSObject>
+
+- (instancetype)initWithDefaultValue:(int32_t)defaultValue;
+- (int32_t)increment;
+- (int32_t)decrement;
+- (int32_t)value;
+
+@end
+
+@interface DDAtomicCounter: NSObject<DDAtomicCountable>
+@end
