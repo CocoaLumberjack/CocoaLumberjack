@@ -25,7 +25,6 @@
 #import <objc/runtime.h>
 #import <mach/mach_host.h>
 #import <mach/host_info.h>
-#import <libkern/OSAtomic.h>
 #import <Availability.h>
 #if TARGET_OS_IOS
     #import <UIKit/UIDevice.h>
