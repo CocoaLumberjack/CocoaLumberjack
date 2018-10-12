@@ -271,8 +271,7 @@
 }
 
 - (void)didAddToLogger:(id <DDLogger>  __attribute__((unused)))logger {
-    int32_t count = [_atomicLoggerCounter increment];
-    NSAssert(count <= 1 || _mode == DDDispatchQueueLogFormatterModeShareble, @"Can't reuse formatter with multiple loggers in non-shareable mode.");
+    NSAssert([_atomicLoggerCounter increment] <= 1 || _mode == DDDispatchQueueLogFormatterModeShareble, @"Can't reuse formatter with multiple loggers in non-shareable mode.");
 }
 
 - (void)willRemoveFromLogger:(id <DDLogger> __attribute__((unused)))logger {

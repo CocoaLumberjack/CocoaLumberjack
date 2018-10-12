@@ -36,26 +36,58 @@
     DDAtomicCounter *atomicCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Multithread atomic counter"];
     dispatch_queue_global_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    __block BOOL firstOpDidFinish = NO;
-    __block BOOL secondOpDidFinish = NO;
-    dispatch_async(globalQueue, ^{
-        [atomicCounter increment];
-        expect([atomicCounter value]).to.equal(2);
-        firstOpDidFinish = YES;
-        if (firstOpDidFinish && secondOpDidFinish) {
-            [expectation fulfill];
-        }
-    });
-    dispatch_async(globalQueue, ^{
-        [atomicCounter increment];
-        expect([atomicCounter value]).to.equal(2);
-        secondOpDidFinish = YES;
-        if (firstOpDidFinish && secondOpDidFinish) {
-            [expectation fulfill];
-        }
-    });
     
-    [self waitForExpectationsWithTimeout:5.0 handler:nil];
+    int numberOfThreads = 5;
+    __block int executedCount = 0;
+    for (int i=0; i<numberOfThreads; i++) {
+        dispatch_async(globalQueue, ^{
+            [atomicCounter increment];
+            expect([atomicCounter value]).to.beGreaterThanOrEqualTo(1);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                executedCount++;
+                if (executedCount == numberOfThreads) {
+                    [expectation fulfill];
+                }
+            });
+        });
+    }
+    
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * _Nullable error) {
+        expect(error).to.beNil();
+        expect([atomicCounter value]).to.equal(numberOfThreads);
+    }];
+}
+
+- (void)testMultithreadAtomicCounterWithIncrementAndDecrement {
+    DDAtomicCounter *atomicCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Multithread atomic counter inc and dec"];
+    dispatch_queue_global_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    int numberOfThreads = 5;
+    __block int executedCount = 0;
+    for (int i=0; i<numberOfThreads; i++) {
+        dispatch_async(globalQueue, ^{
+            [atomicCounter increment];
+            executedCount++;
+            if (executedCount == 2 * numberOfThreads) {
+                [expectation fulfill];
+            }
+        });
+        dispatch_async(globalQueue, ^{
+            [atomicCounter decrement];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                executedCount++;
+                if (executedCount == 2 * numberOfThreads) {
+                    [expectation fulfill];
+                }
+            });
+        });
+    }
+    
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * _Nullable error) {
+        expect(error).to.beNil();
+        expect([atomicCounter value]).to.equal(0);
+    }];
 }
 
 @end
