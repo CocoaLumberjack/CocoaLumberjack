@@ -17,6 +17,7 @@ CocoaLumberjack
 
 ### How to get started
 - install via [CocoaPods](http://cocoapods.org)
+- use `DDOSLogger` for iOS 10 and later, `DDTTYLogger` and `DDASLLogger` for earlier versions.
 
 ##### Swift version via CocoaPods
 ```ruby
