@@ -24,6 +24,9 @@
 /* Begin PBXFileReference section */
 		07EA9F020536593350267B92 /* Pods-SQLiteLogger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQLiteLogger.release.xcconfig"; path = "Pods/Target Support Files/Pods-SQLiteLogger/Pods-SQLiteLogger.release.xcconfig"; sourceTree = "<group>"; };
 		0A65C3606FC7F999ED17A675 /* Pods-SQLiteLogger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQLiteLogger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SQLiteLogger/Pods-SQLiteLogger.debug.xcconfig"; sourceTree = "<group>"; };
+		43AF80592174ECCC00C0D9DC /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
+		43AF805A2174ECCC00C0D9DC /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
+		43AF805B2174ECCC00C0D9DC /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
 		85ACE3E7AA5375CAED1A0630 /* Pods_SQLiteLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SQLiteLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCE86BF113439AF6004FD85F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		DCFF742213427FF600F53777 /* SQLiteLogger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SQLiteLogger.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +66,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		43AF80582174ECCC00C0D9DC /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				43AF80592174ECCC00C0D9DC /* Module-Release.xcconfig */,
+				43AF805A2174ECCC00C0D9DC /* Module-Debug.xcconfig */,
+				43AF805B2174ECCC00C0D9DC /* Module-Shared.xcconfig */,
+			);
+			name = Configs;
+			path = ../../Configs;
+			sourceTree = "<group>";
+		};
 		AE39D04BE73E47D02EA1025E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -75,6 +89,7 @@
 		DCFF741713427FF600F53777 = {
 			isa = PBXGroup;
 			children = (
+				43AF80582174ECCC00C0D9DC /* Configs */,
 				DCFF74431342801000F53777 /* Logging */,
 				DCFF742C13427FF600F53777 /* SQLiteLogger */,
 				DCFF742513427FF600F53777 /* Frameworks */,
@@ -177,7 +192,6 @@
 				DCFF741E13427FF600F53777 /* Sources */,
 				DCFF741F13427FF600F53777 /* Frameworks */,
 				DCFF742013427FF600F53777 /* Resources */,
-				484BB7107DE44253B505D3D6 /* [CP] Copy Pods Resources */,
 				0421A5DBA1E85BA9EE2E5A4F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -235,7 +249,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SQLiteLogger/Pods-SQLiteLogger-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SQLiteLogger/Pods-SQLiteLogger-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -244,7 +258,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SQLiteLogger/Pods-SQLiteLogger-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SQLiteLogger/Pods-SQLiteLogger-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		2552E1A3D7634E28ADC4145D /* [CP] Check Pods Manifest.lock */ = {
@@ -263,21 +277,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		484BB7107DE44253B505D3D6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SQLiteLogger/Pods-SQLiteLogger-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -328,72 +327,15 @@
 /* Begin XCBuildConfiguration section */
 		DCFF743E13427FF600F53777 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43AF805A2174ECCC00C0D9DC /* Module-Debug.xcconfig */;
 			buildSettings = {
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		DCFF743F13427FF600F53777 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43AF80592174ECCC00C0D9DC /* Module-Release.xcconfig */;
 			buildSettings = {
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -401,17 +343,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0A65C3606FC7F999ED17A675 /* Pods-SQLiteLogger.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SQLiteLogger/SQLiteLogger-Prefix.pch";
 				INFOPLIST_FILE = "SQLiteLogger/SQLiteLogger-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = macosx;
+				TARGETED_DEVICE_FAMILY = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -420,17 +357,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 07EA9F020536593350267B92 /* Pods-SQLiteLogger.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SQLiteLogger/SQLiteLogger-Prefix.pch";
 				INFOPLIST_FILE = "SQLiteLogger/SQLiteLogger-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = macosx;
+				TARGETED_DEVICE_FAMILY = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

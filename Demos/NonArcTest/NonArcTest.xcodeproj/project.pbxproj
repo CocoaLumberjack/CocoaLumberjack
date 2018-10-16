@@ -18,6 +18,9 @@
 
 /* Begin PBXFileReference section */
 		419C108CDFD7B9F1493AD068 /* Pods_NonArcTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NonArcTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		43AF80652174EE5200C0D9DC /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
+		43AF80662174EE5200C0D9DC /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
+		43AF80672174EE5200C0D9DC /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
 		73588C7819855AE94477DBD1 /* Pods-NonArcTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NonArcTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NonArcTest/Pods-NonArcTest.debug.xcconfig"; sourceTree = "<group>"; };
 		D435F5F11D7862454A848E55 /* Pods-NonArcTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NonArcTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-NonArcTest/Pods-NonArcTest.release.xcconfig"; sourceTree = "<group>"; };
 		DCA67DEA146B531D003411EE /* NonArcTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NonArcTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,9 +51,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		43AF80642174EE5200C0D9DC /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				43AF80652174EE5200C0D9DC /* Module-Release.xcconfig */,
+				43AF80662174EE5200C0D9DC /* Module-Debug.xcconfig */,
+				43AF80672174EE5200C0D9DC /* Module-Shared.xcconfig */,
+			);
+			name = Configs;
+			path = ../../Configs;
+			sourceTree = "<group>";
+		};
 		DCA67DDF146B531D003411EE = {
 			isa = PBXGroup;
 			children = (
+				43AF80642174EE5200C0D9DC /* Configs */,
 				DCA67DF4146B531D003411EE /* NonArcTest */,
 				DCA67DED146B531D003411EE /* Frameworks */,
 				DCA67DEB146B531D003411EE /* Products */,
@@ -129,7 +144,6 @@
 				DCA67DE6146B531D003411EE /* Sources */,
 				DCA67DE7146B531D003411EE /* Frameworks */,
 				DCA67DE8146B531D003411EE /* Resources */,
-				8241FE795A7C4F108AED0BFC /* [CP] Copy Pods Resources */,
 				044326A82041199E29581CED /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -186,7 +200,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-NonArcTest/Pods-NonArcTest-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-NonArcTest/Pods-NonArcTest-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -195,7 +209,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NonArcTest/Pods-NonArcTest-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NonArcTest/Pods-NonArcTest-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		57AAB2FE9257497AB04E31B6 /* [CP] Check Pods Manifest.lock */ = {
@@ -214,21 +228,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8241FE795A7C4F108AED0BFC /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NonArcTest/Pods-NonArcTest-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -275,85 +274,15 @@
 /* Begin XCBuildConfiguration section */
 		DCA67E06146B531E003411EE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43AF80662174EE5200C0D9DC /* Module-Debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		DCA67E07146B531E003411EE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43AF80652174EE5200C0D9DC /* Module-Release.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -361,12 +290,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 73588C7819855AE94477DBD1 /* Pods-NonArcTest.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NonArcTest/NonArcTest-Prefix.pch";
 				INFOPLIST_FILE = "NonArcTest/NonArcTest-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.oss.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = macosx;
+				TARGETED_DEVICE_FAMILY = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -375,12 +305,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D435F5F11D7862454A848E55 /* Pods-NonArcTest.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NonArcTest/NonArcTest-Prefix.pch";
 				INFOPLIST_FILE = "NonArcTest/NonArcTest-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.oss.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = macosx;
+				TARGETED_DEVICE_FAMILY = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

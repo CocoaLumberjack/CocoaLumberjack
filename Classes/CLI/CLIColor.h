@@ -13,6 +13,8 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
+#if TARGET_OS_OSX
+
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 
@@ -42,3 +44,5 @@
 - (void)getRed:(CGFloat *)red green:(CGFloat *)green blue:(CGFloat *)blue alpha:(CGFloat *)alpha NS_SWIFT_NAME(get(red:green:blue:alpha:));
 
 @end
+
+#endif

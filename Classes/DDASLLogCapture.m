@@ -30,39 +30,7 @@
 static BOOL _cancel = YES;
 static DDLogLevel _captureLevel = DDLogLevelVerbose;
 
-#ifdef __IPHONE_8_0
-    #define DDASL_IOS_PIVOT_VERSION __IPHONE_8_0
-#endif
-#ifdef __MAC_10_10
-    #define DDASL_OSX_PIVOT_VERSION __MAC_10_10
-#endif
-
 @implementation DDASLLogCapture
-
-static aslmsg (*dd_asl_next)(aslresponse obj);
-static void (*dd_asl_release)(aslresponse obj);
-
-+ (void)initialize
-{
-    #if (defined(DDASL_IOS_PIVOT_VERSION) && __IPHONE_OS_VERSION_MAX_ALLOWED >= DDASL_IOS_PIVOT_VERSION) || (defined(DDASL_OSX_PIVOT_VERSION) && __MAC_OS_X_VERSION_MAX_ALLOWED >= DDASL_OSX_PIVOT_VERSION)
-        #if __IPHONE_OS_VERSION_MIN_REQUIRED < DDASL_IOS_PIVOT_VERSION || (defined(__MAC_OS_X_VERSION_MIN_REQUIRED) && __MAC_OS_X_VERSION_MIN_REQUIRED < DDASL_OSX_PIVOT_VERSION)
-            #pragma GCC diagnostic push
-            #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-                // Building on falsely advertised SDK, targeting deprecated API
-                dd_asl_next    = &aslresponse_next;
-                dd_asl_release = &aslresponse_free;
-            #pragma GCC diagnostic pop
-        #else
-            // Building on lastest, correct SDK, targeting latest API
-            dd_asl_next    = &asl_next;
-            dd_asl_release = &asl_release;
-        #endif
-    #else
-        // Building on old SDKs, targeting deprecated API
-        dd_asl_next    = &aslresponse_next;
-        dd_asl_release = &aslresponse_free;
-    #endif
-}
 
 + (void)start {
     // Ignore subsequent calls
@@ -207,14 +175,14 @@ static void (*dd_asl_release)(aslresponse obj);
                 aslmsg msg;
                 aslresponse response = asl_search(NULL, query);
                 
-                while ((msg = dd_asl_next(response)))
+                while ((msg = asl_next(response)))
                 {
                     [self aslMessageReceived:msg];
 
                     // Keep track of which messages we've seen.
                     lastSeenID = (unsigned long long)atoll(asl_get(msg, ASL_KEY_MSG_ID));
                 }
-                dd_asl_release(response);
+                asl_release(response);
                 asl_free(query);
 
                 if (_cancel) {

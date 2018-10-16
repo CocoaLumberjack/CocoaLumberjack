@@ -1,0 +1,16 @@
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "Module-Shared.xcconfig"
+
+COPY_PHASE_STRIP = YES
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
+ENABLE_NS_ASSERTIONS = NO
+ENABLE_TESTABILITY = NO
+GCC_OPTIMIZATION_LEVEL = s
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited)
+MTL_ENABLE_DEBUG_INFO = NO
+ONLY_ACTIVE_ARCH = NO
+SWIFT_COMPILATION_MODE = wholemodule
+SWIFT_OPTIMIZATION_LEVEL = -O
+VALIDATE_PRODUCT = YES

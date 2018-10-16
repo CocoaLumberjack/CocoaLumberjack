@@ -19,10 +19,11 @@ Pod::Spec.new do |s|
 
   s.preserve_paths = 'README.md', 'Classes/CocoaLumberjack.swift', 'Framework/Lumberjack/CocoaLumberjack.modulemap'
 
-  s.ios.deployment_target     = '6.0'
-  s.osx.deployment_target     = '10.8'
+  s.ios.deployment_target     = '8.0'
+  s.osx.deployment_target     = '10.10'
   s.watchos.deployment_target = '2.0'
   s.tvos.deployment_target    = '9.0'
+  s.swift_version = '4.2'
 
   s.default_subspecs = 'Default', 'Extensions'
 
@@ -43,20 +44,16 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'CLI' do |ss|
-    ss.osx.deployment_target    = '10.8'
+    ss.osx.deployment_target    = '10.10'
     ss.osx.dependency 'CocoaLumberjack/Default'
     ss.osx.source_files         = 'Classes/CLI/*.{h,m}'
     ss.osx.public_header_files  = 'Classes/CLI/*.h'
   end
 
   s.subspec 'Swift' do |ss|
-    ss.ios.deployment_target      = '8.0'
-    ss.osx.deployment_target      = '10.10'
-    ss.watchos.deployment_target  = '2.0'
-    ss.tvos.deployment_target     = '9.0'
     ss.dependency 'CocoaLumberjack/Default'
-    ss.source_files               = 'Classes/CocoaLumberjack.swift', 'Classes/DDAssert.swift', 'Classes/SwiftLogLevel.h'
-    ss.public_header_files        = 'Classes/SwiftLogLevel.h'
+    ss.source_files        = 'Classes/CocoaLumberjack.swift', 'Classes/DDAssert.swift', 'Classes/SwiftLogLevel.h'
+    ss.public_header_files = 'Classes/SwiftLogLevel.h'
   end
 
 end

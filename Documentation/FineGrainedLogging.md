@@ -17,7 +17,7 @@ Not a problem. Lumberjack can help!
 ### Details
 
 If you look closely at the definitions in the `DDLogLegacyMacros` header file, you'll notice something interesting:
-```objective-c
+```objc
 #define LOG_FLAG_ERROR    (1 << 0)  // 0...00001
 #define LOG_FLAG_WARN     (1 << 1)  // 0...00010
 #define LOG_FLAG_INFO     (1 << 2)  // 0...00100
@@ -36,7 +36,7 @@ Imagine you have a series of related timers. The calculation of these timers is 
 So we want all of our logging related to our food timers to be grouped together. This way it can be enabled/disabled independently of the rest of the logging within the various files. And we want the same solution applied to our sleep timers as well.
 
 So we create our own logging header file to be used by our application. We'll call it "MYLog.h":
-```objective-c
+```objc
 #import "DDLog.h"
 
 // The first 5 bits are being used by the standard levels (0 - 4) 
@@ -64,7 +64,7 @@ We also defined LOG\_FLAG\_TIMERS which can be used to enable both loggers. LOG\
 
 Then in our source code files we just make sure that our ddLogLevel bitmask has the flags set to enable logging for our timers:
 
-```objective-c
+```objc
 #import "MYLog.h"
 
 static const int ddLogLevel = LOG_LEVEL_WARN | LOG_FLAG_TIMERS;
@@ -84,7 +84,7 @@ But if that isn't enough, you could change it to be a 64-bit value, or you could
 
 For example, let's say you wanted to have 30 fine-grained log options. No problem. Just do something like this.
 
-```objective-c
+```objc
 #define LOG_FLAG_CAT   (1 << 0)  // 0...00001
 #define LOG_FLAG_DOG   (1 << 1)  // 0...00010
 

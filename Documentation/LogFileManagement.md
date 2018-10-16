@@ -7,7 +7,7 @@ When you think about it, there are two components of file logging. One component
 The `DDFileLogger` implementation, as you may now have guessed, is split into two components. `DDFileLogger` is the component that writes the log messages to the file. And `DDLogFileManager` is a protocol for managing log files, and deciding what to do with them after they've been rolled.
 
 There are two ways to initialize a `DDFileLogger` instance:
-```objective-c
+```objc
 @interface DDFileLogger : NSObject <DDLogger>
 ...
 
@@ -25,7 +25,7 @@ The alternative init method allows you to pass an instance of your own custom lo
 ### Log File Manager
 
 Let's take a look at the DDLogFileManager protocol:
-```objective-c
+```objc
 @protocol DDLogFileManager <NSObject>
 @required
 

@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "19D90B281BBFAA7500947169"
-               BuildableName = "CocoaLumberjackSwift.framework"
-               BlueprintName = "CocoaLumberjackSwift-tvOS"
+               BlueprintIdentifier = "19FF46011B8B4CF400B43179"
+               BuildableName = "CocoaLumberjack.framework"
+               BlueprintName = "CocoaLumberjack"
                ReferencedContainer = "container:Lumberjack.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "19D90B281BBFAA7500947169"
-            BuildableName = "CocoaLumberjackSwift.framework"
-            BlueprintName = "CocoaLumberjackSwift-tvOS"
+            BlueprintIdentifier = "19FF46011B8B4CF400B43179"
+            BuildableName = "CocoaLumberjack.framework"
+            BlueprintName = "CocoaLumberjack"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "19D90B281BBFAA7500947169"
-            BuildableName = "CocoaLumberjackSwift.framework"
-            BlueprintName = "CocoaLumberjackSwift-tvOS"
+            BlueprintIdentifier = "19FF46011B8B4CF400B43179"
+            BuildableName = "CocoaLumberjack.framework"
+            BlueprintName = "CocoaLumberjack"
             ReferencedContainer = "container:Lumberjack.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

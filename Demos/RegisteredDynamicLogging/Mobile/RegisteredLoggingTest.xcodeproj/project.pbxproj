@@ -24,6 +24,9 @@
 
 /* Begin PBXFileReference section */
 		3441577751E32EA192860BE9 /* Pods-RegisteredLoggingTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RegisteredLoggingTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-RegisteredLoggingTest/Pods-RegisteredLoggingTest.release.xcconfig"; sourceTree = "<group>"; };
+		43AF806D2174EF6200C0D9DC /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
+		43AF806E2174EF6200C0D9DC /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
+		43AF806F2174EF6200C0D9DC /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
 		510FDDC1E603974721634C29 /* Pods-RegisteredLoggingTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RegisteredLoggingTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RegisteredLoggingTest/Pods-RegisteredLoggingTest.debug.xcconfig"; sourceTree = "<group>"; };
 		CB331C4BC5323F845B014D38 /* Pods_RegisteredLoggingTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RegisteredLoggingTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC7DC52B1415523E00601B40 /* RegisteredLoggingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RegisteredLoggingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +65,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		43AF806C2174EF6200C0D9DC /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				43AF806D2174EF6200C0D9DC /* Module-Release.xcconfig */,
+				43AF806E2174EF6200C0D9DC /* Module-Debug.xcconfig */,
+				43AF806F2174EF6200C0D9DC /* Module-Shared.xcconfig */,
+			);
+			name = Configs;
+			path = ../../../Configs;
+			sourceTree = "<group>";
+		};
 		6D7B528557A33DCAF5C93B95 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -74,6 +88,7 @@
 		DC7DC5201415523E00601B40 = {
 			isa = PBXGroup;
 			children = (
+				43AF806C2174EF6200C0D9DC /* Configs */,
 				DCD6EAC916FFC34C00710668 /* Default-568h@2x.png */,
 				DC7DC5351415523E00601B40 /* RegisteredLoggingTest */,
 				DC7DC52E1415523E00601B40 /* Frameworks */,
@@ -141,7 +156,6 @@
 				DC7DC5271415523E00601B40 /* Sources */,
 				DC7DC5281415523E00601B40 /* Frameworks */,
 				DC7DC5291415523E00601B40 /* Resources */,
-				7063814F578A4C06A5BD9EBE /* [CP] Copy Pods Resources */,
 				FA988705AA33BC3014454B1C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -193,21 +207,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7063814F578A4C06A5BD9EBE /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RegisteredLoggingTest/Pods-RegisteredLoggingTest-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		FA12C30316144F6E95AE179B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -232,7 +231,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-RegisteredLoggingTest/Pods-RegisteredLoggingTest-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-RegisteredLoggingTest/Pods-RegisteredLoggingTest-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -241,7 +240,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RegisteredLoggingTest/Pods-RegisteredLoggingTest-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RegisteredLoggingTest/Pods-RegisteredLoggingTest-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -291,44 +290,15 @@
 /* Begin XCBuildConfiguration section */
 		DC7DC54A1415523F00601B40 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43AF806E2174EF6200C0D9DC /* Module-Debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
 		DC7DC54B1415523F00601B40 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43AF806D2174EF6200C0D9DC /* Module-Release.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				SDKROOT = iphoneos;
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -336,13 +306,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 510FDDC1E603974721634C29 /* Pods-RegisteredLoggingTest.debug.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RegisteredLoggingTest/RegisteredLoggingTest-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "RegisteredLoggingTest/RegisteredLoggingTest-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.oss.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -351,13 +320,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3441577751E32EA192860BE9 /* Pods-RegisteredLoggingTest.release.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RegisteredLoggingTest/RegisteredLoggingTest-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "RegisteredLoggingTest/RegisteredLoggingTest-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.deusty.oss.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

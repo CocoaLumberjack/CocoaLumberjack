@@ -3,7 +3,7 @@ Dynamically changing log levels during run-time
 ## Introduction
 
 When you define your log level, you generally define it in a manner similar to this:
-```objective-c
+```objc
 static const DDLogLevel ddLogLevel = DDLogLevelWarn;
 ```
 
@@ -12,12 +12,12 @@ What this means is that your log level is declared as a constant. It cannot be c
 This has the advantage that the compiler can automatically prune `DDLog` statements above the log level threshold during compilation.  However, it also has the disadvantage that you cannot change your log level during run-time.
 
 To allow a dynamic log level, all we need to do is remove the "const" part:
-```objective-c
+```objc
 static DDLogLevel ddLogLevel = DDLogLevelWarn;
 ```
 
 This means that we can change the log level when/how we want. For example, maybe we're debugging some specific part of our application.
-```objective-c
+```objc
 - (void)startTask {
     ddLogLevel = DDLogLevelVerbose;
     [self startTaskInBackground];
@@ -39,12 +39,12 @@ Dynamic logging, as used in the example above, can be helpful for debugging.\
 Imagine if you could alter log levels via the `NSUserDefaults` system...\
 
 A user is complaining about the application not acting properly (in the preference pane somewhere). So you simply tell them to issue a
-```objective-c
+```objc
 defaults write com.yourapp.prefsLogLevel 4
 ```
 
 And in your preference pane code, you have something like this:
-```objective-c
+```objc
 static DDLogLevel ddLogLevel = DDLogLevelWarn;
 
 + (void)initialize {
@@ -71,7 +71,7 @@ One of the tasks involved in such an endeavor is to create a list of all the sou
 
 The lumberjack framework has something called "registered dynamic logging". Here's all you have to do in your source code files:
 
-```objective-c
+```objc
 #import "Sprocket.h"
 #import "DDLog.h"
 
@@ -96,7 +96,7 @@ In other words, just add the two class methods (ddLogLevel and ddSetLogLevel:).
 
 Now take a look at the registered dynamic logging section of DDLog:
 
-```objective-c
+```objc
 /**
  * Registered Dynamic Logging
  * 

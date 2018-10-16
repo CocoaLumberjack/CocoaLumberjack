@@ -18,7 +18,7 @@ You are developing a framework for other developers to use in their application.
 
 Every log message that goes through the Lumberjack framework is turned into a DDLogMessage object. This object contains all kinds of juicy information:
 
-```objective-c
+```objc
 @interface DDLogMessage : NSObject <NSCopying>
 {
     // Direct accessors to be used only for performance
@@ -50,7 +50,7 @@ Example 2 above mentioned using Lumberjack in third party frameworks. A great ex
 
 The HTTP server project then defines its own log messages, using a custom context:
 
-```objective-c
+```objc
 #define HTTP_LOG_CONTEXT 80
 
 #define HTTPLogError(frmt, ...)     SYNC_LOG_OBJC_MAYBE(httpLogLevel, LOG_FLAG_ERROR,   HTTP_LOG_CONTEXT, frmt, ##__VA_ARGS__)
@@ -64,7 +64,7 @@ The HTTP server project then defines its own log messages, using a custom contex
 
 Now HTTP log messages are clearly identifiable in the code:
 
-```objective-c
+```objc
 HTTPLogError(@"File not found - %@", filePath);
 ```
 

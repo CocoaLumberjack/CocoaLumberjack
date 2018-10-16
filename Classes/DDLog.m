@@ -1003,114 +1003,6 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
 
 @implementation DDLogMessage
 
-// Can we use DISPATCH_CURRENT_QUEUE_LABEL ?
-// Can we use dispatch_get_current_queue (without it crashing) ?
-//
-// a) Compiling against newer SDK's (iOS 7+/OS X 10.9+) where DISPATCH_CURRENT_QUEUE_LABEL is defined
-//    on a (iOS 7.0+/OS X 10.9+) runtime version
-//
-// b) Systems where dispatch_get_current_queue is not yet deprecated and won't crash (< iOS 6.0/OS X 10.9)
-//
-//    dispatch_get_current_queue(void);
-//      __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_6,__MAC_10_9,__IPHONE_4_0,__IPHONE_6_0)
-
-#if TARGET_OS_IOS
-
-// Compiling for iOS
-
-static BOOL _use_dispatch_current_queue_label;
-static BOOL _use_dispatch_get_current_queue;
-
-static void _dispatch_queue_label_init_once(void * __attribute__((unused)) context)
-{
-    _use_dispatch_current_queue_label = (UIDevice.currentDevice.systemVersion.floatValue >= 7.0f);
-    _use_dispatch_get_current_queue = (!_use_dispatch_current_queue_label && UIDevice.currentDevice.systemVersion.floatValue >= 6.1f);
-}
-
-static __inline__ __attribute__((__always_inline__)) void _dispatch_queue_label_init()
-{
-    static dispatch_once_t onceToken;
-    dispatch_once_f(&onceToken, NULL, _dispatch_queue_label_init_once);
-}
-
-  #define USE_DISPATCH_CURRENT_QUEUE_LABEL (_dispatch_queue_label_init(), _use_dispatch_current_queue_label)
-  #define USE_DISPATCH_GET_CURRENT_QUEUE   (_dispatch_queue_label_init(), _use_dispatch_get_current_queue)
-
-#elif TARGET_OS_WATCH || TARGET_OS_TV
-
-// Compiling for watchOS, tvOS
-
-  #define USE_DISPATCH_CURRENT_QUEUE_LABEL YES
-  #define USE_DISPATCH_GET_CURRENT_QUEUE   NO
-
-#else
-
-// Compiling for Mac OS X
-
-  #ifndef MAC_OS_X_VERSION_10_9
-    #define MAC_OS_X_VERSION_10_9            1090
-  #endif
-
-  #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_9 // Mac OS X 10.9 or later required
-
-    #define USE_DISPATCH_CURRENT_QUEUE_LABEL YES
-    #define USE_DISPATCH_GET_CURRENT_QUEUE   NO
-
-  #else
-
-static BOOL _use_dispatch_current_queue_label;
-static BOOL _use_dispatch_get_current_queue;
-
-static void _dispatch_queue_label_init_once(void * __attribute__((unused)) context)
-{
-    _use_dispatch_current_queue_label = [NSTimer instancesRespondToSelector : @selector(tolerance)]; // OS X 10.9+
-    _use_dispatch_get_current_queue = !_use_dispatch_current_queue_label;                            // < OS X 10.9
-}
-
-static __inline__ __attribute__((__always_inline__)) void _dispatch_queue_label_init()
-{
-    static dispatch_once_t onceToken;
-    dispatch_once_f(&onceToken, NULL, _dispatch_queue_label_init_once);
-}
-
-    #define USE_DISPATCH_CURRENT_QUEUE_LABEL (_dispatch_queue_label_init(), _use_dispatch_current_queue_label)
-    #define USE_DISPATCH_GET_CURRENT_QUEUE   (_dispatch_queue_label_init(), _use_dispatch_get_current_queue)
-
-  #endif
-
-#endif /* if TARGET_OS_IOS */
-
-// Should we use pthread_threadid_np ?
-// With iOS 8+/OSX 10.10+ NSLog uses pthread_threadid_np instead of pthread_mach_thread_np
-
-#if TARGET_OS_IOS
-
-// Compiling for iOS
-
-  #ifndef kCFCoreFoundationVersionNumber_iOS_8_0
-    #define kCFCoreFoundationVersionNumber_iOS_8_0 1140.10
-  #endif
-
-  #define USE_PTHREAD_THREADID_NP                (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0)
-
-#elif TARGET_OS_WATCH || TARGET_OS_TV
-
-// Compiling for watchOS, tvOS
-
-  #define USE_PTHREAD_THREADID_NP                YES
-
-#else
-
-// Compiling for Mac OS X
-
-  #ifndef kCFCoreFoundationVersionNumber10_10
-    #define kCFCoreFoundationVersionNumber10_10    1151.16
-  #endif
-
-  #define USE_PTHREAD_THREADID_NP                (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber10_10)
-
-#endif /* if TARGET_OS_IOS */
-
 - (instancetype)init {
     self = [super init];
     return self;
@@ -1144,15 +1036,11 @@ static __inline__ __attribute__((__always_inline__)) void _dispatch_queue_label_
         _options      = options;
         _timestamp    = timestamp ?: [NSDate new];
 
-        if (USE_PTHREAD_THREADID_NP) {
-            __uint64_t tid;
-            if (pthread_threadid_np(NULL, &tid) == 0) {
-                _threadID = [[NSString alloc] initWithFormat:@"%llu", tid];
-            } else {
-                _threadID = @"missing threadId";
-            }
+        __uint64_t tid;
+        if (pthread_threadid_np(NULL, &tid) == 0) {
+            _threadID = [[NSString alloc] initWithFormat:@"%llu", tid];
         } else {
-            _threadID = [[NSString alloc] initWithFormat:@"%x", pthread_mach_thread_np(pthread_self())];
+            _threadID = @"missing threadId";
         }
         _threadName   = NSThread.currentThread.name;
 
@@ -1165,17 +1053,7 @@ static __inline__ __attribute__((__always_inline__)) void _dispatch_queue_label_
         }
         
         // Try to get the current queue's label
-        if (USE_DISPATCH_CURRENT_QUEUE_LABEL) {
-            _queueLabel = [[NSString alloc] initWithFormat:@"%s", dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL)];
-        } else if (USE_DISPATCH_GET_CURRENT_QUEUE) {
-            #pragma clang diagnostic push
-            #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-            dispatch_queue_t currentQueue = dispatch_get_current_queue();
-            #pragma clang diagnostic pop
-            _queueLabel = [[NSString alloc] initWithFormat:@"%s", dispatch_queue_get_label(currentQueue)];
-        } else {
-            _queueLabel = @""; // iOS 6.x only
-        }
+        _queueLabel = [[NSString alloc] initWithFormat:@"%s", dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL)];
     }
     return self;
 }
