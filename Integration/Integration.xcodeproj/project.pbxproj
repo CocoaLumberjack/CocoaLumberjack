@@ -44,7 +44,10 @@
 		0A87D4BD217649E700BD0C4C /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; };
 		0A87D4BE217649EC00BD0C4C /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; };
 		0A87D4C021764C4800BD0C4C /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4A9217649B700BD0C4C /* CocoaLumberjack.framework */; };
-		0A87D4C121764C8B00BD0C4C /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4A9217649B700BD0C4C /* CocoaLumberjack.framework */; };
+		0A87D4C821767B1800BD0C4C /* CocoaLumberjack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4A9217649B700BD0C4C /* CocoaLumberjack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0A87D4CB21767B1800BD0C4C /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; };
+		0A87D4CC21767B1800BD0C4C /* CocoaLumberjackSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0A87D4D021767D1B00BD0C4C /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +86,48 @@
 			remoteGlobalIDString = 19FF460F1B8B4D1400B43179;
 			remoteInfo = CocoaLumberjackSwift;
 		};
+		0A87D4C3217677A500BD0C4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A87D499217649B700BD0C4C /* Lumberjack.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 19FF460E1B8B4D1400B43179;
+			remoteInfo = CocoaLumberjackSwift;
+		};
+		0A87D4C5217677B100BD0C4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A87D499217649B700BD0C4C /* Lumberjack.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 19FF46011B8B4CF400B43179;
+			remoteInfo = CocoaLumberjack;
+		};
+		0A87D4C921767B1800BD0C4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A87D499217649B700BD0C4C /* Lumberjack.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 19FF46011B8B4CF400B43179;
+			remoteInfo = CocoaLumberjack;
+		};
+		0A87D4CD21767B1800BD0C4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A87D499217649B700BD0C4C /* Lumberjack.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 19FF460E1B8B4D1400B43179;
+			remoteInfo = CocoaLumberjackSwift;
+		};
+		0A87D4D121767E9A00BD0C4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A87D499217649B700BD0C4C /* Lumberjack.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 19FF46011B8B4CF400B43179;
+			remoteInfo = CocoaLumberjack;
+		};
+		0A87D4D321767E9A00BD0C4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A87D499217649B700BD0C4C /* Lumberjack.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 19FF460E1B8B4D1400B43179;
+			remoteInfo = CocoaLumberjackSwift;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -106,6 +151,18 @@
 				0A87D45E2175E93600BD0C4C /* watchOSSwiftIntegration.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A87D4CF21767B1800BD0C4C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0A87D4CC21767B1800BD0C4C /* CocoaLumberjackSwift.framework in Embed Frameworks */,
+				0A87D4C821767B1800BD0C4C /* CocoaLumberjack.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -186,6 +243,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A87D4C021764C4800BD0C4C /* CocoaLumberjack.framework in Frameworks */,
+				0A87D4CB21767B1800BD0C4C /* CocoaLumberjackSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,7 +267,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A87D4C121764C8B00BD0C4C /* CocoaLumberjack.framework in Frameworks */,
+				0A87D4D021767D1B00BD0C4C /* CocoaLumberjackSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,11 +458,16 @@
 				0A87D4022175E7F700BD0C4C /* Frameworks */,
 				0A87D4032175E7F700BD0C4C /* Resources */,
 				0A87D4662175E93600BD0C4C /* Embed Watch Content */,
+				0A87D4CF21767B1800BD0C4C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0A87D4C6217677B100BD0C4C /* PBXTargetDependency */,
+				0A87D4C4217677A500BD0C4C /* PBXTargetDependency */,
 				0A87D45D2175E93600BD0C4C /* PBXTargetDependency */,
+				0A87D4CA21767B1800BD0C4C /* PBXTargetDependency */,
+				0A87D4CE21767B1800BD0C4C /* PBXTargetDependency */,
 			);
 			name = iOSSwiftIntegration;
 			productName = iOSSwiftIntegration;
@@ -473,6 +536,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				0A87D4D221767E9A00BD0C4C /* PBXTargetDependency */,
+				0A87D4D421767E9A00BD0C4C /* PBXTargetDependency */,
 			);
 			name = "watchOSSwiftIntegration Extension";
 			productName = "watchOSSwiftIntegration Extension";
@@ -703,6 +768,36 @@
 			isa = PBXTargetDependency;
 			target = 0A87D4402175E93400BD0C4C /* watchOSSwiftIntegration */;
 			targetProxy = 0A87D45C2175E93600BD0C4C /* PBXContainerItemProxy */;
+		};
+		0A87D4C4217677A500BD0C4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaLumberjackSwift;
+			targetProxy = 0A87D4C3217677A500BD0C4C /* PBXContainerItemProxy */;
+		};
+		0A87D4C6217677B100BD0C4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaLumberjack;
+			targetProxy = 0A87D4C5217677B100BD0C4C /* PBXContainerItemProxy */;
+		};
+		0A87D4CA21767B1800BD0C4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaLumberjack;
+			targetProxy = 0A87D4C921767B1800BD0C4C /* PBXContainerItemProxy */;
+		};
+		0A87D4CE21767B1800BD0C4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaLumberjackSwift;
+			targetProxy = 0A87D4CD21767B1800BD0C4C /* PBXContainerItemProxy */;
+		};
+		0A87D4D221767E9A00BD0C4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaLumberjack;
+			targetProxy = 0A87D4D121767E9A00BD0C4C /* PBXContainerItemProxy */;
+		};
+		0A87D4D421767E9A00BD0C4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaLumberjackSwift;
+			targetProxy = 0A87D4D321767E9A00BD0C4C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -975,6 +1070,7 @@
 		0A87D4152175E7F800BD0C4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -997,6 +1093,7 @@
 		0A87D4162175E7F800BD0C4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -1131,7 +1228,6 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
@@ -1157,7 +1253,6 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 4.2;
