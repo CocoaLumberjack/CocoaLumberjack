@@ -11,22 +11,28 @@
       location = "container:.."
       name = "Pod">
       <FileRef
-         location = "group:/Users/bogdan/Github/CocoaLumberjack/CocoaLumberjack.podspec">
+         location = "group:CHANGELOG.md">
       </FileRef>
       <FileRef
-         location = "group:/Users/bogdan/Github/CocoaLumberjack/CHANGELOG.md">
+         location = "group:CocoaLumberjack.podspec">
       </FileRef>
       <FileRef
-         location = "group:/Users/bogdan/Github/CocoaLumberjack/LICENSE">
+         location = "group:Dangerfile">
       </FileRef>
       <FileRef
-         location = "group:/Users/bogdan/Github/CocoaLumberjack/LumberjackLogo.png">
+         location = "group:Gemfile">
       </FileRef>
       <FileRef
-         location = "group:/Users/bogdan/Github/CocoaLumberjack/README.md">
+         location = "group:LICENSE">
       </FileRef>
       <FileRef
-         location = "group:/Users/bogdan/Github/CocoaLumberjack/uncrustify.cfg">
+         location = "group:LumberjackLogo.png">
+      </FileRef>
+      <FileRef
+         location = "group:README.md">
+      </FileRef>
+      <FileRef
+         location = "group:uncrustify.cfg">
       </FileRef>
    </Group>
    <FileRef

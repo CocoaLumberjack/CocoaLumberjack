@@ -23,7 +23,7 @@ extension DDLogFlag {
 	public init(_ logLevel: DDLogLevel) {
         self = DDLogFlag(rawValue: logLevel.rawValue)
 	}
-    
+
     /// Returns the log level, or the lowest equivalant.
     public func toLogLevel() -> DDLogLevel {
         if let ourValid = DDLogLevel(rawValue: rawValue) {
@@ -55,7 +55,6 @@ public var dynamicLogLevel = DDLogLevel.all
 public func resetDynamicLogLevel() {
     dynamicLogLevel = .all
 }
-
 
 @available(*, deprecated, message: "Please use dynamicLogLevel", renamed: "dynamicLogLevel")
 public var defaultDebugLevel: DDLogLevel {
@@ -110,7 +109,7 @@ public func DDLogError(_ message: @autoclosure () -> String, level: DDLogLevel =
 /// Returns a String of the current filename, without full path or extension.
 ///
 /// Analogous to the C preprocessor macro `THIS_FILE`.
-public func CurrentFileName(_ fileName: StaticString = #file) -> String {
+public func currentFileName(_ fileName: StaticString = #file) -> String {
     var str = String(describing: fileName)
     if let idx = str.range(of: "/", options: .backwards)?.upperBound {
         str = String(str[idx...])
@@ -119,4 +118,11 @@ public func CurrentFileName(_ fileName: StaticString = #file) -> String {
         str = String(str[..<idx])
     }
     return str
+}
+
+// swiftlint:disable identifier_name
+// swiftlint doesn't like func names that begin with a capital letter - deprecated
+@available(*, deprecated, message: "Please use currentFileName", renamed: "currentFileName")
+public func CurrentFileName(_ fileName: StaticString = #file) -> String {
+    return currentFileName(fileName)
 }
