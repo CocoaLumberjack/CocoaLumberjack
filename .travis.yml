@@ -130,5 +130,8 @@ script:
     - pod install --project-directory=CaptureASL
     - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'CaptureASL' -configuration Release -sdk iphonesimulator | xcpretty -c
 
+    - cd ..
+    - bundle exec danger
+
 after_success:
     - bash <(curl -s https://codecov.io/bash)
