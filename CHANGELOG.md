@@ -1,3 +1,24 @@
+## [3.5.0 - Xcode 10 on ?? ??, 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.0)
+- Add danger support for PR checks #962 - fixes #956
+- Merged framework targets + using `xcconfig` + deployment target `iOS 8` and `Mac OS 10.10` #959 e97da34
+- Doc update #955 e7414ae 0239196 #933
+- Replace `OSAtomic` with `stdatomic` in `DDDispatchQueueLogFormatter` #957 #958
+- Add Stale Bot + configuration #953
+- Use static const for default log level so Swift can strip strings #952
+- Update to Xcode 10 and Swift 4.2 complier #950
+- Xcode 10 scheme changes #949
+- Synchronous access to `currentLogFileHandle` #946
+- Full links to Docs and other resources so they are resolved on external pages (i.e. https://cocoapods.org/pods/CocoaLumberjack) e9d6971
+- Proper BSD 3-Clause License (the old one was incomplete) #942
+- Prevent memory access errors caused by a failed fetch #944
+- Fix common warnings emitted by `-Wall` `-Wconversion` `-Wextra` etc #943
+- Updated to CocoaPods 1.5.3 2d0590f
+- Uses Xcode 9.4 image for tests #939
+- Xcode (schemes) version bumps #938
+- Add `DDAssert` and `DDAssertionFailure` functions for Swift #934
+- Fixed compiler warnings #931
+- Add new queue label which will be hold by a manual created thread #932
+
 ## [3.4.2 - Xcode 9.3 on Apr 17th, 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.4.2)
 - Update README.md #912
 - Fixed typo in pull request template #913
