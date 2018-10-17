@@ -42,7 +42,8 @@ script:
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift' -destination 'platform=tvOS Simulator,name=Apple TV 4K' -configuration Release -sdk appletvsimulator | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift' -configuration Release -sdk watchsimulator | xcpretty -c
 
-    - pod install --project-directory=Framework
+    # Redundant pod install.
+    # - pod install --project-directory=Framework
 
     - echo "Build test app using the static library"
     - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'iOSStaticLibraryIntegration' -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration Release | xcpretty -c
