@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
-static const DDLogLevel ddLogLevel = DDLogLevelAll;
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 @interface ViewController ()
 
@@ -25,13 +25,20 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [DDLog addLogger:[DDOSLogger sharedInstance]];
     
     DDLogVerbose(@"Verbose");
     DDLogInfo(@"Info");
     DDLogWarn(@"Warn");
     DDLogError(@"Error");
     
+    DDLog *aDDLogInstance = [DDLog new];
+    [aDDLogInstance addLogger:[DDOSLogger sharedInstance]];
+    
+    DDLogVerboseToDDLog(aDDLogInstance, @"Verbose from aDDLogInstance");
+    DDLogInfoToDDLog(aDDLogInstance, @"Info from aDDLogInstance");
+    DDLogWarnToDDLog(aDDLogInstance, @"Warn from aDDLogInstance");
+    DDLogErrorToDDLog(aDDLogInstance, @"Error from aDDLogInstance");
 }
 
 @end
