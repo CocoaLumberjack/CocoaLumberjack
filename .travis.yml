@@ -49,6 +49,8 @@ script:
     - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'macOSSwiftIntegration' -configuration Release -sdk macosx | xcpretty -c
     - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'iOSFrameworkIntegration' -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration Release | xcpretty -c
     - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'tvOSSwiftIntegration' -destination 'platform=tvOS Simulator,name=Apple TV 4K' -configuration Release -sdk appletvsimulator | xcpretty -c
+    # Uncomment later if watchos is needed.
+    # - xcodebuild clean build -project Integration.xcodeproj -scheme 'watchOSSwiftIntegration' -configuration Release -sdk watchsimulator -destination 'platform=iOS Simulator,name=iPhone XS Max,OS=12.0' | xcpretty -c
 
     - echo Run the tests
     - pod install --project-directory=Tests
