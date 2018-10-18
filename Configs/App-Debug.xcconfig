@@ -1,5 +1,5 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-#include "../Configs/Module-Debug.xcconfig"
+#include "Module-Debug.xcconfig"
 #include "App-Shared.xcconfig"

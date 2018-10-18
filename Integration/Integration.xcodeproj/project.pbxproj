@@ -34,6 +34,15 @@
 		0AC2979D2178A13700BFE4D2 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC2979C2178A13700BFE4D2 /* Formatter.swift */; };
 		0AC2979E2178A13700BFE4D2 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC2979C2178A13700BFE4D2 /* Formatter.swift */; };
 		0AC2979F2178A13700BFE4D2 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC2979C2178A13700BFE4D2 /* Formatter.swift */; };
+		0AC297A32178E44600BFE4D2 /* App-Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A02178E44600BFE4D2 /* App-Release.xcconfig */; };
+		0AC297A42178E44600BFE4D2 /* App-Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A02178E44600BFE4D2 /* App-Release.xcconfig */; };
+		0AC297A52178E44600BFE4D2 /* App-Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A02178E44600BFE4D2 /* App-Release.xcconfig */; };
+		0AC297A62178E44600BFE4D2 /* App-Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A12178E44600BFE4D2 /* App-Debug.xcconfig */; };
+		0AC297A72178E44600BFE4D2 /* App-Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A12178E44600BFE4D2 /* App-Debug.xcconfig */; };
+		0AC297A82178E44600BFE4D2 /* App-Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A12178E44600BFE4D2 /* App-Debug.xcconfig */; };
+		0AC297A92178E44600BFE4D2 /* App-Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A22178E44600BFE4D2 /* App-Shared.xcconfig */; };
+		0AC297AA2178E44600BFE4D2 /* App-Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A22178E44600BFE4D2 /* App-Shared.xcconfig */; };
+		0AC297AB2178E44600BFE4D2 /* App-Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A22178E44600BFE4D2 /* App-Shared.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,10 +159,10 @@
 		0A87D59B217892E500BD0C4C /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		0A87D59C217892E500BD0C4C /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		0A87D59D217892E500BD0C4C /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		0A87D5B021789F0600BD0C4C /* App-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "App-Debug.xcconfig"; sourceTree = "<group>"; };
-		0A87D5B121789F2900BD0C4C /* App-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "App-Release.xcconfig"; sourceTree = "<group>"; };
-		0AC2979921789F7F00BFE4D2 /* App-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "App-Shared.xcconfig"; sourceTree = "<group>"; };
 		0AC2979C2178A13700BFE4D2 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		0AC297A02178E44600BFE4D2 /* App-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "App-Release.xcconfig"; sourceTree = "<group>"; };
+		0AC297A12178E44600BFE4D2 /* App-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "App-Debug.xcconfig"; sourceTree = "<group>"; };
+		0AC297A22178E44600BFE4D2 /* App-Shared.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "App-Shared.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,7 +222,6 @@
 				0A87D499217649B700BD0C4C /* Lumberjack.xcodeproj */,
 				0A87D4DA2177345B00BD0C4C /* Configs */,
 				0A87D596217892E500BD0C4C /* Sources */,
-				0A87D5AF21789ECA00BD0C4C /* Configurations */,
 				0A87D3C52175E56200BD0C4C /* iOSStaticLibraryIntegration */,
 				0A87D3EB2175E6E600BD0C4C /* iOSFrameworkIntegration */,
 				0A87D41C2175E82900BD0C4C /* macOSSwiftIntegration */,
@@ -294,6 +302,9 @@
 		0A87D4DA2177345B00BD0C4C /* Configs */ = {
 			isa = PBXGroup;
 			children = (
+				0AC297A12178E44600BFE4D2 /* App-Debug.xcconfig */,
+				0AC297A02178E44600BFE4D2 /* App-Release.xcconfig */,
+				0AC297A22178E44600BFE4D2 /* App-Shared.xcconfig */,
 				0A87D4DB2177345B00BD0C4C /* Module-Debug.xcconfig */,
 				0A87D4DC2177345B00BD0C4C /* Module-Release.xcconfig */,
 				0A87D4DD2177345B00BD0C4C /* Module-Shared.xcconfig */,
@@ -345,16 +356,6 @@
 				0AC2979C2178A13700BFE4D2 /* Formatter.swift */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		0A87D5AF21789ECA00BD0C4C /* Configurations */ = {
-			isa = PBXGroup;
-			children = (
-				0AC2979921789F7F00BFE4D2 /* App-Shared.xcconfig */,
-				0A87D5B021789F0600BD0C4C /* App-Debug.xcconfig */,
-				0A87D5B121789F2900BD0C4C /* App-Release.xcconfig */,
-			);
-			path = Configurations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -591,6 +592,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AC297A62178E44600BFE4D2 /* App-Debug.xcconfig in Resources */,
+				0AC297A32178E44600BFE4D2 /* App-Release.xcconfig in Resources */,
+				0AC297A92178E44600BFE4D2 /* App-Shared.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,6 +602,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AC297A72178E44600BFE4D2 /* App-Debug.xcconfig in Resources */,
+				0AC297A42178E44600BFE4D2 /* App-Release.xcconfig in Resources */,
+				0AC297AA2178E44600BFE4D2 /* App-Shared.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,6 +612,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AC297A82178E44600BFE4D2 /* App-Debug.xcconfig in Resources */,
+				0AC297A52178E44600BFE4D2 /* App-Release.xcconfig in Resources */,
+				0AC297AB2178E44600BFE4D2 /* App-Shared.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -720,14 +730,14 @@
 /* Begin XCBuildConfiguration section */
 		0A87D3642175E4A300BD0C4C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A87D5B021789F0600BD0C4C /* App-Debug.xcconfig */;
+			baseConfigurationReference = 0AC297A12178E44600BFE4D2 /* App-Debug.xcconfig */;
 			buildSettings = {
 			};
 			name = Debug;
 		};
 		0A87D3652175E4A300BD0C4C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A87D5B121789F2900BD0C4C /* App-Release.xcconfig */;
+			baseConfigurationReference = 0AC297A02178E44600BFE4D2 /* App-Release.xcconfig */;
 			buildSettings = {
 			};
 			name = Release;
