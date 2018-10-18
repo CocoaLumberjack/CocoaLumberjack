@@ -1,0 +1,11 @@
+//
+//  App-Release.xcconfig
+//  Integration
+//
+//  Created by Dmitry Lobanov on 18.10.2018.
+//  Copyright © 2018 CocoaLumberjack. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+#include "App-Shared.xcconfig"
