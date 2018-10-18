@@ -17,9 +17,6 @@
 		0A87D4BB217649CD00BD0C4C /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4A9217649B700BD0C4C /* CocoaLumberjack.framework */; };
 		0A87D4BD217649E700BD0C4C /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; };
 		0A87D4BE217649EC00BD0C4C /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; };
-		0A87D4E02177345B00BD0C4C /* Module-Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0A87D4DB2177345B00BD0C4C /* Module-Debug.xcconfig */; };
-		0A87D4E12177345B00BD0C4C /* Module-Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0A87D4DC2177345B00BD0C4C /* Module-Release.xcconfig */; };
-		0A87D4E22177345B00BD0C4C /* Module-Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0A87D4DD2177345B00BD0C4C /* Module-Shared.xcconfig */; };
 		0A87D54D2177C22700BD0C4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A87D54C2177C22700BD0C4C /* Assets.xcassets */; };
 		0A87D55B2177C25700BD0C4C /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A87D5592177C25700BD0C4C /* Interface.storyboard */; };
 		0A87D55D2177C25800BD0C4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A87D55C2177C25800BD0C4C /* Assets.xcassets */; };
@@ -601,10 +598,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A87D4E12177345B00BD0C4C /* Module-Release.xcconfig in Resources */,
-				0A87D4E22177345B00BD0C4C /* Module-Shared.xcconfig in Resources */,
 				0A87D3D02175E56400BD0C4C /* Assets.xcassets in Resources */,
-				0A87D4E02177345B00BD0C4C /* Module-Debug.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
