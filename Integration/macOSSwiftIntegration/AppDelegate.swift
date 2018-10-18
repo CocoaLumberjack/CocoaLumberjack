@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
-        DDLog.add(DDTTYLogger.sharedInstance)
+        DDLog.add(DDOSLogger.sharedInstance)
         DDLogVerbose("Verbose")
         DDLogInfo("Info")
         DDLogWarn("Warn")

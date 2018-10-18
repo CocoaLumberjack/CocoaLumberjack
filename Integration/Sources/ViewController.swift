@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjackSwift
 
 class ViewController: UIViewController {
 
@@ -15,6 +16,13 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DDLog.add(DDOSLogger.sharedInstance)
+        DDLogVerbose("Verbose")
+        DDLogInfo("Info")
+        DDLogWarn("Warn")
+        DDLogError("Error")
+    }
 }
 
