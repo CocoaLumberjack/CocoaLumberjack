@@ -14,8 +14,9 @@
 //   prior written permission of Deusty, LLC.
 
 #import <XCTest/XCTest.h>
-#import "DDDispatchQueueLogFormatter.h"
-#import <Expecta/Expecta.h>
+#import <CocoaLumberjack/CocoaLumberjack.h>
+#import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
+//#import <Expecta/Expecta.h>
 
 @interface DDAtomicCounterTests : XCTestCase
 
@@ -25,11 +26,11 @@
 
 - (void)testSimpleAtomicCounter {
     DDAtomicCounter *atomicCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
-    expect([atomicCounter value]).to.equal(0);
-    expect([atomicCounter increment]).to.equal(1);
-    expect([atomicCounter value]).to.equal(1);
-    expect([atomicCounter decrement]).to.equal(0);
-    expect([atomicCounter value]).to.equal(0);
+    XCTAssertEqual([atomicCounter value], 0);
+    XCTAssertEqual([atomicCounter increment], 1);
+    XCTAssertEqual([atomicCounter value], 1);
+    XCTAssertEqual([atomicCounter decrement], 0);
+    XCTAssertEqual([atomicCounter value], 0);
 }
 
 - (void)testMultithreadAtomicCounter {
@@ -42,7 +43,7 @@
     for (int i=0; i<numberOfThreads; i++) {
         dispatch_async(globalQueue, ^{
             [atomicCounter increment];
-            expect([atomicCounter value]).to.beGreaterThanOrEqualTo(1);
+            XCTAssertGreaterThanOrEqual([atomicCounter value], 1);
             dispatch_async(dispatch_get_main_queue(), ^{
                 executedCount++;
                 if (executedCount == numberOfThreads) {
@@ -53,8 +54,8 @@
     }
     
     [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * _Nullable error) {
-        expect(error).to.beNil();
-        expect([atomicCounter value]).to.equal(numberOfThreads);
+        XCTAssertNil(error);
+        XCTAssertEqual([atomicCounter value], numberOfThreads);
     }];
 }
 
@@ -85,8 +86,8 @@
     }
     
     [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * _Nullable error) {
-        expect(error).to.beNil();
-        expect([atomicCounter value]).to.equal(0);
+        XCTAssertNil(error);
+        XCTAssertEqual([atomicCounter value], 0);
     }];
 }
 
