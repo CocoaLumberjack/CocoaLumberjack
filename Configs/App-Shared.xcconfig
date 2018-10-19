@@ -1,4 +1,6 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
+// Collection of xcconfig files by Fabric team: https://github.com/google-fabric/FABConfig
+// The Unofficial Guide to xcconfig files: https://pewpewthespells.com/blog/xcconfig_guide.html
 
 PREPROCESSOR_MACROS = $(inherited) DD_LOG_LEVEL=DDLogLevelWarning

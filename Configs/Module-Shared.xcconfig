@@ -1,5 +1,10 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
+// Collection of xcconfig files by Fabric team: https://github.com/google-fabric/FABConfig
+// The Unofficial Guide to xcconfig files: https://pewpewthespells.com/blog/xcconfig_guide.html
+
+// A list of the architectures for which the product will be built. This is usually set to a predefined build setting provided by the platform. If more than one architecture is specified, a universal binary will be produced.
+ARCHS = i386 x86_64 armv7 armv7s armv7k arm64 arm64e
 
 // This setting is deprecated as of Xcode 8.3 and may not be supported in future versions. It is recommended that you disable the setting. If enabled, both `#include <header.h>`-style and `#include "header.h"`-style directives search the paths in `USER_HEADER_SEARCH_PATHS` before `HEADER_SEARCH_PATHS`
 ALWAYS_SEARCH_USER_PATHS = NO
@@ -223,6 +228,15 @@ TARGETED_DEVICE_FAMILY = 1,2,3,4
 
 // Code will load on this and later versions of tvOS. Framework APIs that are unavailable in earlier versions will be weak-linked; your code should check for null function pointers or specific system versions before calling newer APIs.
 TVOS_DEPLOYMENT_TARGET = 9.0
+
+// A space-separated list of architectures for which the target should actually be built. For each target, this is intersected with the list specified in `ARCHS`, and the resulting set is built. This allows individual targets to opt out of building for particular architectures. If the resulting set of architectures is empty, no executable will be produced.
+VALID_ARCHS[sdk=macosx*] = x86_64
+VALID_ARCHS[sdk=watchos*] = armv7k
+VALID_ARCHS[sdk=watchsimulator*] = i386
+VALID_ARCHS[sdk=appletvos*] = arm64
+VALID_ARCHS[sdk=appletvsimulator*] = x86_64
+VALID_ARCHS[sdk=iphoneos*] = arm64e arm64 armv7s armv7
+VALID_ARCHS[sdk=iphonesimulator*] = i386 x86_64
 
 // Selects the process used for version-stamping generated files. * *None:* Use no versioning system. * *Apple Generic:* Use the current project version setting. [apple-generic]
 VERSIONING_SYSTEM = apple-generic
