@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0A7D8FD4217A1E9800B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8FD0217A1E9000B496D7 /* CocoaLumberjack.framework */; };
 		0A7D8FD5217A1E9D00B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8FD0217A1E9000B496D7 /* CocoaLumberjack.framework */; };
+		0A7E1D57217A7A380011CFEB /* DDSMocking.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E1D56217A7A380011CFEB /* DDSMocking.m */; };
 		432B534D1AAE43A200843E69 /* DDBasicLoggingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 432B534C1AAE43A200843E69 /* DDBasicLoggingTests.m */; };
 		432B534E1AAE43A200843E69 /* DDBasicLoggingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 432B534C1AAE43A200843E69 /* DDBasicLoggingTests.m */; };
 		80AC19B12170AC54007800DC /* DDAtomicCounterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AC19B02170AC54007800DC /* DDAtomicCounterTests.m */; };
@@ -45,6 +46,8 @@
 
 /* Begin PBXFileReference section */
 		0A7D8FC7217A1E9000B496D7 /* Lumberjack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lumberjack.xcodeproj; path = ../Lumberjack.xcodeproj; sourceTree = "<group>"; };
+		0A7E1D55217A7A380011CFEB /* DDSMocking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDSMocking.h; sourceTree = "<group>"; };
+		0A7E1D56217A7A380011CFEB /* DDSMocking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDSMocking.m; sourceTree = "<group>"; };
 		432B53331AAE423E00843E69 /* OS X Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "OS X Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		432B53401AAE425D00843E69 /* iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		432B534C1AAE43A200843E69 /* DDBasicLoggingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDBasicLoggingTests.m; sourceTree = "<group>"; };
@@ -122,6 +125,8 @@
 				E982AAF11AE2C25800088365 /* DDLogTests.m */,
 				E9D3C9E21AE28AF400E795C5 /* DDLogMessageTests.m */,
 				80AC19B02170AC54007800DC /* DDAtomicCounterTests.m */,
+				0A7E1D55217A7A380011CFEB /* DDSMocking.h */,
+				0A7E1D56217A7A380011CFEB /* DDSMocking.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -185,7 +190,7 @@
 				TargetAttributes = {
 					432B53321AAE423E00843E69 = {
 						CreatedOnToolsVersion = 6.1.1;
-						LastSwiftMigration = 0810;
+						LastSwiftMigration = 1000;
 					};
 					432B533F1AAE425D00843E69 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -263,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A7E1D57217A7A380011CFEB /* DDSMocking.m in Sources */,
 				E982AAF21AE2C25800088365 /* DDLogTests.m in Sources */,
 				80AC19B12170AC54007800DC /* DDAtomicCounterTests.m in Sources */,
 				E9D3C9E31AE28AF400E795C5 /* DDLogMessageTests.m in Sources */,
@@ -305,13 +311,17 @@
 		432B533A1AAE423E00843E69 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "";
 			};
 			name = Debug;
@@ -319,13 +329,16 @@
 		432B533B1AAE423E00843E69 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "";
 			};
 			name = Release;

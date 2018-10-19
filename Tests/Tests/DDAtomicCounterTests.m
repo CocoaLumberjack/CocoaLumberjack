@@ -16,7 +16,6 @@
 #import <XCTest/XCTest.h>
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
-//#import <Expecta/Expecta.h>
 
 @interface DDAtomicCounterTests : XCTestCase
 

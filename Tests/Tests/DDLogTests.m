@@ -14,7 +14,6 @@
 //   prior written permission of Deusty, LLC.
 
 @import XCTest;
-//#import <Expecta/Expecta.h>
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
 @interface DDTestLogger : NSObject <DDLogger> @end
