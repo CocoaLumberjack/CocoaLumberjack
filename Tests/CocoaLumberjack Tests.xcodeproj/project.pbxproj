@@ -10,6 +10,7 @@
 		0A7D8FD4217A1E9800B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8FD0217A1E9000B496D7 /* CocoaLumberjack.framework */; };
 		0A7D8FD5217A1E9D00B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8FD0217A1E9000B496D7 /* CocoaLumberjack.framework */; };
 		0A7E1D57217A7A380011CFEB /* DDSMocking.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E1D56217A7A380011CFEB /* DDSMocking.m */; };
+		0A7E1D58217A86EF0011CFEB /* DDSMocking.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E1D56217A7A380011CFEB /* DDSMocking.m */; };
 		432B534D1AAE43A200843E69 /* DDBasicLoggingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 432B534C1AAE43A200843E69 /* DDBasicLoggingTests.m */; };
 		432B534E1AAE43A200843E69 /* DDBasicLoggingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 432B534C1AAE43A200843E69 /* DDBasicLoggingTests.m */; };
 		80AC19B12170AC54007800DC /* DDAtomicCounterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AC19B02170AC54007800DC /* DDAtomicCounterTests.m */; };
@@ -280,6 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A7E1D58217A86EF0011CFEB /* DDSMocking.m in Sources */,
 				E982AAF31AE2C25800088365 /* DDLogTests.m in Sources */,
 				80AC19B22170AC58007800DC /* DDAtomicCounterTests.m in Sources */,
 				E9D3C9E41AE28AF400E795C5 /* DDLogMessageTests.m in Sources */,
