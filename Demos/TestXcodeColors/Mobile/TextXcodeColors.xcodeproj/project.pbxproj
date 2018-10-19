@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A7D8FC6217A10F900B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8FC5217A10F900B496D7 /* CocoaLumberjack.framework */; };
 		DC361299156E1D3800956227 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC361298156E1D3800956227 /* UIKit.framework */; };
 		DC36129B156E1D3800956227 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC36129A156E1D3800956227 /* Foundation.framework */; };
 		DC36129D156E1D3800956227 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC36129C156E1D3800956227 /* CoreGraphics.framework */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A7D8FC5217A10F900B496D7 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		43AF80752174F05A00C0D9DC /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
 		43AF80762174F05A00C0D9DC /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
 		43AF80772174F05A00C0D9DC /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
@@ -43,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A7D8FC6217A10F900B496D7 /* CocoaLumberjack.framework in Frameworks */,
 				DC361299156E1D3800956227 /* UIKit.framework in Frameworks */,
 				DC36129B156E1D3800956227 /* Foundation.framework in Frameworks */,
 				DC36129D156E1D3800956227 /* CoreGraphics.framework in Frameworks */,
@@ -85,6 +88,7 @@
 		DC361297156E1D3800956227 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0A7D8FC5217A10F900B496D7 /* CocoaLumberjack.framework */,
 				DC361298156E1D3800956227 /* UIKit.framework */,
 				DC36129A156E1D3800956227 /* Foundation.framework */,
 				DC36129C156E1D3800956227 /* CoreGraphics.framework */,

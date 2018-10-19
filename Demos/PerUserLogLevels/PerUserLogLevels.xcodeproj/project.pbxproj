@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A7D8FB4217A10D400B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8FB3217A10D400B496D7 /* CocoaLumberjack.framework */; };
 		DC87A6F91525AEA3005A09B0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC87A6F81525AEA3005A09B0 /* Cocoa.framework */; };
 		DC87A7031525AEA3005A09B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DC87A7011525AEA3005A09B0 /* InfoPlist.strings */; };
 		DC87A7051525AEA3005A09B0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC87A7041525AEA3005A09B0 /* main.m */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A7D8FB3217A10D400B496D7 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		43AF80512174EB5300C0D9DC /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
 		43AF80522174EB5300C0D9DC /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
 		43AF80532174EB5300C0D9DC /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
@@ -41,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A7D8FB4217A10D400B496D7 /* CocoaLumberjack.framework in Frameworks */,
 				DC87A6F91525AEA3005A09B0 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -81,6 +84,7 @@
 		DC87A6F71525AEA3005A09B0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0A7D8FB3217A10D400B496D7 /* CocoaLumberjack.framework */,
 				DC87A6F81525AEA3005A09B0 /* Cocoa.framework */,
 				DC87A6FA1525AEA3005A09B0 /* Other Frameworks */,
 			);

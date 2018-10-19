@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A7D8FB8217A10DB00B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8FB7217A10DB00B496D7 /* CocoaLumberjack.framework */; };
 		DCE86BF213439AF6004FD85F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE86BF113439AF6004FD85F /* libsqlite3.dylib */; };
 		DCFF742713427FF600F53777 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFF742613427FF600F53777 /* Cocoa.framework */; };
 		DCFF743113427FF600F53777 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCFF742F13427FF600F53777 /* InfoPlist.strings */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A7D8FB7217A10DB00B496D7 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		43AF80592174ECCC00C0D9DC /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
 		43AF805A2174ECCC00C0D9DC /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
 		43AF805B2174ECCC00C0D9DC /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A7D8FB8217A10DB00B496D7 /* CocoaLumberjack.framework in Frameworks */,
 				DCE86BF213439AF6004FD85F /* libsqlite3.dylib in Frameworks */,
 				DCFF742713427FF600F53777 /* Cocoa.framework in Frameworks */,
 			);
@@ -94,6 +97,7 @@
 		DCFF742513427FF600F53777 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0A7D8FB7217A10DB00B496D7 /* CocoaLumberjack.framework */,
 				DCFF742613427FF600F53777 /* Cocoa.framework */,
 				DCE86BF113439AF6004FD85F /* libsqlite3.dylib */,
 				DCFF742813427FF600F53777 /* Other Frameworks */,
