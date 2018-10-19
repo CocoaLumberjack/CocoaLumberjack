@@ -2,14 +2,11 @@
 //  UniversalAppViewController.h
 //  UniversalApp
 //
-//  Created by Robbie Hanson on 7/1/10.
+//  CococaLumberjack Demos
 //
 
 #import <UIKit/UIKit.h>
 
-@interface UniversalAppViewController : UIViewController {
-
-}
+@interface UniversalAppViewController : UIViewController
 
 @end
-

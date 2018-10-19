@@ -1,8 +1,14 @@
+//
+//  FineGrainedLoggingAppDelegate.h
+//  FineGrainedLogging
+//
+//  CococaLumberjack Demos
+//
+
 #import <Cocoa/Cocoa.h>
 
 @class TimerOne;
 @class TimerTwo;
-
 
 @interface FineGrainedLoggingAppDelegate : NSObject <NSApplicationDelegate>
 {

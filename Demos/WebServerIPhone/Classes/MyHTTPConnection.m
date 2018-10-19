@@ -1,3 +1,10 @@
+//
+//  MyHTTPConnection.m
+//  WebServerIPhone
+//
+//  CococaLumberjack Demos
+//
+
 #import "MyHTTPConnection.h"
 #import "WebServerIPhoneAppDelegate.h"
 #import "HTTPLogging.h"
@@ -8,7 +15,6 @@
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import "WebSocket.h"
 #import "WebSocketLogger.h"
-
 
 @implementation MyHTTPConnection
 

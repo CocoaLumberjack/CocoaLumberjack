@@ -1,9 +1,15 @@
+//
+//  TimerOne.m
+//  FineGrainedLogging
+//
+//  CococaLumberjack Demos
+//
+
 #import "TimerOne.h"
 #import "MYLog.h"
 
 // Debug levels: off, error, warn, info, verbose
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose | LOG_FLAG_TIMERS;
-
 
 @implementation TimerOne
 

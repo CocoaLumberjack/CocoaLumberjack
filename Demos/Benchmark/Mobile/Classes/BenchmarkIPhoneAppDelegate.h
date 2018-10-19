@@ -1,7 +1,13 @@
+//
+//  BenchmarkIPhoneAppDelegate.h
+//  BenchmarkIPhone
+//
+//  CocoaLumberjack Demos
+//
+
 #import <UIKit/UIKit.h>
 
 @class BenchmarkIPhoneViewController;
-
 
 @interface BenchmarkIPhoneAppDelegate : NSObject <UIApplicationDelegate>
 {
@@ -13,4 +19,3 @@
 @property (nonatomic, strong) IBOutlet BenchmarkIPhoneViewController *viewController;
 
 @end
-

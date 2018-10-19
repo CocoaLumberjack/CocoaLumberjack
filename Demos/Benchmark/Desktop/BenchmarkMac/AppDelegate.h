@@ -2,7 +2,7 @@
 //  AppDelegate.h
 //  BenchmarkMac
 //
-//  Created by Robbie Hanson on 11/15/11.
+//  CocoaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

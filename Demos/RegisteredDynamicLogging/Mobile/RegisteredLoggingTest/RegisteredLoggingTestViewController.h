@@ -1,5 +1,11 @@
-#import <UIKit/UIKit.h>
+//
+//  RegisteredLoggingTestViewController.h
+//  RegisteredLoggingTest
+//
+//  CococaLumberjack Demos
+//
 
+#import <UIKit/UIKit.h>
 
 @interface RegisteredLoggingTestViewController : UIViewController
 

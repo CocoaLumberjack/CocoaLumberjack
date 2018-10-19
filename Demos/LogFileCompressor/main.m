@@ -2,7 +2,7 @@
 //  main.m
 //  LogFileCompressor
 //
-//  Created by Robbie Hanson on 5/25/10.
+//  CococaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

@@ -1,6 +1,12 @@
+//
+//  MyContextFilter.m
+//  ContextFilter
+//
+//  CococaLumberjack Demos
+//
+
 #import "MyContextFilter.h"
 #import "ThirdPartyFramework.h"
-
 
 @implementation MyContextFilter
 

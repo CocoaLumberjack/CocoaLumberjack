@@ -1,3 +1,10 @@
+//
+//  OverflowTestMacAppDelegate.m
+//  OverflowTestMac
+//
+//  CococaLumberjack Demos
+//
+
 #import "OverflowTestMacAppDelegate.h"
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
@@ -5,7 +12,6 @@
 
 // Debug levels: off, error, warn, info, verbose
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
-
 
 @implementation OverflowTestMacAppDelegate
 
@@ -57,7 +63,6 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         {
             DDLogVerbose(@"bgThread1 : %i", i);
         }
-    
     }
 }
 
@@ -71,7 +76,6 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         {
             DDLogVerbose(@"bgThread2 : %i", i);
         }
-    
     }
 }
 

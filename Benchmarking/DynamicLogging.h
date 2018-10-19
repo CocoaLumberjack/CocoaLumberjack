@@ -1,5 +1,11 @@
-#import <Foundation/Foundation.h>
+//
+//  DynamicLogging.h
+//  Benchmarking
+//
+//  CocoaLumberjack Demos
+//
 
+#import <Foundation/Foundation.h>
 
 @interface DynamicLogging : NSObject
 

@@ -2,7 +2,7 @@
 //  main.m
 //  CLI
 //
-//  Created by Ernesto Rivera on 2013/12/19.
+//  CococaLumberjack Demos
 //
 
 #import <Foundation/Foundation.h>
@@ -28,4 +28,3 @@ int main(int argc, const char * argv[])
     }
     return 0;
 }
-

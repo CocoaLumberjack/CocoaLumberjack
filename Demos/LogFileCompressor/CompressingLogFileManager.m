@@ -1,3 +1,10 @@
+//
+//  CompressingLogFileManager.m
+//  LogFileCompressor
+//
+//  CococaLumberjack Demos
+//
+
 #import "CompressingLogFileManager.h"
 #import <zlib.h>
 
@@ -485,7 +492,6 @@
     
     return newFilePath;
 }
-
 
 - (NSString *)fileNameByAppendingPathExtension:(NSString *)newExt
 {

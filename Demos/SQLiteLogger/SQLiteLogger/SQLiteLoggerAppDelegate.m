@@ -1,10 +1,16 @@
+//
+//  SQLiteLoggerAppDelegate.m
+//  SQLiteLogger
+//
+//  CococaLumberjack Demos
+//
+
 #import "SQLiteLoggerAppDelegate.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import "FMDBLogger.h"
 
 // Log levels: off, error, warn, info, verbose
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
-
 
 @implementation SQLiteLoggerAppDelegate
 

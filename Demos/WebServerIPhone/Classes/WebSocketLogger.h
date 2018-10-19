@@ -1,7 +1,13 @@
+//
+//  WebSocketLogger.h
+//  WebServerIPhone
+//
+//  CococaLumberjack Demos
+//
+
 #import <Foundation/Foundation.h>
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import "WebSocket.h"
-
 
 #define WebSocketLoggerDidDieNotification  @"WebSocketLoggerDidDie"
 

@@ -1,10 +1,16 @@
+//
+//  CoreDataLoggerAppDelegate.m
+//  CoreDataLogger
+//
+//  CococaLumberjack Demos
+//
+
 #import "CoreDataLoggerAppDelegate.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import "CoreDataLogger.h"
 
 // Log levels: off, error, warn, info, verbose
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
-
 
 @implementation CoreDataLoggerAppDelegate
 

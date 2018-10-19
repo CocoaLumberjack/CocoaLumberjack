@@ -1,3 +1,10 @@
+//
+//  AppDelegate.m
+//  TestXcodeColors
+//
+//  CococaLumberjack Demos
+//
+
 #import "AppDelegate.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
 

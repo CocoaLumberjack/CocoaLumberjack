@@ -1,6 +1,12 @@
+//
+//  AppDelegate.m
+//  BenchmarkMac
+//
+//  CocoaLumberjack Demos
+//
+
 #import "AppDelegate.h"
 #import "PerformanceTesting.h"
-
 
 @implementation AppDelegate
 

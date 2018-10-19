@@ -1,4 +1,10 @@
 //
+//  LogFileCompressor_Prefix.pch
+//  LogFileCompressor
+//
+//  CococaLumberjack Demos
+//
+//
 // Prefix header for all source files of the 'LogFileCompressor' target in the 'LogFileCompressor' project
 //
 

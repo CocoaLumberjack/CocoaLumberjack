@@ -1,10 +1,16 @@
+//
+//  AppDelegate.m
+//  DispatchQueueLogger
+//
+//  CococaLumberjack Demos
+//
+
 #import "AppDelegate.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
 
 // Log levels: 0-off, 1-error, 2-warn, 3-info, 4-verbose
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
-
 
 @implementation AppDelegate
 {

@@ -1,3 +1,10 @@
+//
+//  RegisteredLoggingTestAppDelegate.m
+//  RegisteredLoggingTest
+//
+//  CococaLumberjack Demos
+//
+
 #import "RegisteredLoggingTestAppDelegate.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import "Lions.h"
@@ -5,7 +12,6 @@
 
 // Log levels: off, error, warn, info, verbose
 static DDLogLevel ddLogLevel = DDLogLevelVerbose;
-
 
 @implementation RegisteredLoggingTestAppDelegate
 

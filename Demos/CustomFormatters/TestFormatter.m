@@ -1,5 +1,11 @@
-#import "TestFormatter.h"
+//
+//  TestFormatter.m
+//  CustomFormatters
+//
+//  CococaLumberjack Demos
+//
 
+#import "TestFormatter.h"
 
 /**
  * For more information about creating custom formatters, see the wiki article:

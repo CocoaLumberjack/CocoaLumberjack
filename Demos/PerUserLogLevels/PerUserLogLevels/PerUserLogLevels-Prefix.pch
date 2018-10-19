@@ -1,4 +1,10 @@
 //
+//  PerUserLogLevels-Prefix.pch
+//  PerUserLogLevels
+//
+//  CococaLumberjack Demos
+//
+//
 // Prefix header for all source files of the 'PerUserLogLevels' target in the 'PerUserLogLevels' project
 //
 

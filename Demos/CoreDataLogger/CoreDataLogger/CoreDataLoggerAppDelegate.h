@@ -1,7 +1,13 @@
+//
+//  CoreDataLoggerAppDelegate.h
+//  CoreDataLogger
+//
+//  CococaLumberjack Demos
+//
+
 #import <Cocoa/Cocoa.h>
 
 @class CoreDataLogger;
-
 
 @interface CoreDataLoggerAppDelegate : NSObject <NSApplicationDelegate> {
 @private

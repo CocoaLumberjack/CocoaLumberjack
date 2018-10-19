@@ -1,3 +1,10 @@
+//
+//  CustomFormattersAppDelegate.m
+//  CustomFormatters
+//
+//  CococaLumberjack Demos
+//
+
 #import "CustomFormattersAppDelegate.h"
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
@@ -5,7 +12,6 @@
 
 // Debug levels: off, error, warn, info, verbose
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
-
 
 @implementation CustomFormattersAppDelegate
 

@@ -1,9 +1,15 @@
+//
+//  TimerTwo.m
+//  FineGrainedLogging
+//
+//  CococaLumberjack Demos
+//
+
 #import "TimerTwo.h"
 #import "MYLog.h"
 
 // Debug levels: off, error, warn, info, verbose
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose | LOG_FLAG_TIMERS;
-
 
 @implementation TimerTwo
 
@@ -45,7 +51,6 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose | LOG_FLAG_TIMERS;
     [foodTimer invalidate];
     
     [sleepTimer invalidate];
-    
 }
 
 @end

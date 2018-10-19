@@ -1,3 +1,10 @@
+//
+//  PerformanceTesting.m
+//  Benchmarking
+//
+//  CocoaLumberjack Demos
+//
+
 #import "PerformanceTesting.h"
 #import "DDLog.h"
 #import "DDASLLogger.h"

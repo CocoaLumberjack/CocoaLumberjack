@@ -2,8 +2,7 @@
 //  main.m
 //  GlobalLogLevel
 //
-//  Created by Robbie Hanson on 2/28/11.
-//  Copyright 2011 Voalte. All rights reserved.
+//  CococaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

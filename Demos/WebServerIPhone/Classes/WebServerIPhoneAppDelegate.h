@@ -1,3 +1,10 @@
+//
+//  WebServerIPhoneAppDelegate.h
+//  WebServerIPhone
+//
+//  CococaLumberjack Demos
+//
+
 #import <UIKit/UIKit.h>
 
 @class WebServerIPhoneViewController;
@@ -20,4 +27,3 @@
 @property (nonatomic, strong) IBOutlet WebServerIPhoneViewController *viewController;
 
 @end
-

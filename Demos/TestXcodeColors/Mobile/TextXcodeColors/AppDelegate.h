@@ -1,7 +1,13 @@
+//
+//  AppDelegate.h
+//  TextXcodeColors
+//
+//  CococaLumberjack Demos
+//
+
 #import <UIKit/UIKit.h>
 
 @class ViewController;
-
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

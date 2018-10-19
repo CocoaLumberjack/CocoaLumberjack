@@ -1,3 +1,10 @@
+//
+//  CoreDataLogger.m
+//  CoreDataLogger
+//
+//  CococaLumberjack Demos
+//
+
 #import "CoreDataLogger.h"
 #import "LogEntry.h"
 
@@ -23,7 +30,6 @@
     }
     return self;
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Private API
