@@ -71,6 +71,24 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     return [[self.class alloc] initWithSelector:self.selector position:self.position];
 }
 
+- (BOOL)isEqual:(id)object {
+    if (object == self) {
+        return YES;
+    }
+    
+    if (![object isKindOfClass:self.class]) {
+        return NO;
+    }
+    
+    DDBasicMockArgumentPosition *position = (DDBasicMockArgumentPosition *)object;
+    
+    return [position.selector isEqualToString:self.selector] && [position.position isEqualToNumber:self.position];
+}
+
+- (NSUInteger)hash {
+    return [self.selector hash] + [self.position hash];
+}
+
 - (NSString *)debugDescription {
     return [NSString stringWithFormat:@"%@ selector: %@ position: %@", [super debugDescription], self.selector, self.position];
 }
@@ -79,7 +97,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 }
 @end
 
-@interface DDBasicMock<T>: NSProxy
+@interface DDBasicMock<T>: NSObject
 + (instancetype)decoratedInstance:(T)object;
 - (instancetype)enableStub;
 - (instancetype)disableStub;
@@ -89,14 +107,13 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 @interface DDBasicMock ()
 @property (strong, nonatomic, readwrite) id object;
 @property (assign, nonatomic, readwrite) BOOL stubEnabled;
-@property (copy, nonatomic, readwrite) NSDictionary <DDBasicMockArgumentPosition *, DDBasicMockArgument *>*handlers; // extend later to NSArray if needed.
+@property (copy, nonatomic, readwrite) NSDictionary <DDBasicMockArgumentPosition *, DDBasicMockArgument *>*positionsAndArguments; // extend later to NSArray if needed.
 @end
 
 @implementation DDBasicMock
-@synthesize handlers = _handlers;
 - (instancetype)initWithInstance:(id)object {
     self.object = object;
-    self.handlers = @{};
+    self.positionsAndArguments = [NSDictionary new];
     return self;
 }
 + (instancetype)decoratedInstance:(id)object {
@@ -111,52 +128,46 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     return self;
 }
 - (void)addArgument:(DDBasicMockArgument *)argument forSelector:(SEL)selector atIndex:(NSInteger)index {
-    NSMutableDictionary *dictionary = [self.handlers mutableCopy];
+    NSMutableDictionary *dictionary = [self.positionsAndArguments mutableCopy];
     DDBasicMockArgumentPosition *thePosition = [[DDBasicMockArgumentPosition alloc] initWithSelector:NSStringFromSelector(selector) position:@(index)];
-    dictionary[thePosition] = argument;
-    self.handlers = dictionary;
+    dictionary[thePosition] = [argument copy];
+    __auto_type theArgument = argument;
+    NSLog(@"%s %@ here we have: thePosition: %@ and theArgument: %@. All Handlers: %@", __PRETTY_FUNCTION__, self, thePosition, theArgument, _positionsAndArguments);
+    self.positionsAndArguments = dictionary;
+    NSLog(@"%s %@ here we have: thePosition: %@ and theArgument: %@. All Handlers: %@", __PRETTY_FUNCTION__, self, thePosition, theArgument, _positionsAndArguments);
+}
+- (void)abc_forwardInvocation:(NSInvocation *)anInvocation {
+    [anInvocation setTarget:self.object];
 }
 - (void)forwardInvocation:(NSInvocation *)invocation {
-//    if (self.stubEnabled) {
-//        // check also that we have correct invocation.
-//        // hm..
-//        NSUInteger numberOfArguments = [[invocation methodSignature] numberOfArguments];
-//        for (NSUInteger i = 2; i < numberOfArguments; ++i) {
-//            id argument = nil;
-//            [invocation getArgument:&argument atIndex:i];
-//            if ([argument isKindOfClass:[DDBasicMockArgument class]]) {
-//                DDBasicMockArgument *theArgument = (DDBasicMockArgument *)argument;
-//                DDBasicMockArgumentPosition *thePosition = [[DDBasicMockArgumentPosition alloc] initWithSelector:NSStringFromSelector(invocation.selector) position:@(i)];
-//
-//                NSMutableDictionary *dictionary = [_handlers mutableCopy];
-//                dictionary[thePosition] = [theArgument copy];
-//                _handlers = dictionary;
-//            }
-//        }
-//    }
-//    else {
     NSUInteger numberOfArguments = [[invocation methodSignature] numberOfArguments];
+    BOOL found = NO;
     for (NSUInteger i = 2; i < numberOfArguments; ++i) {
-        id argument = nil;
-        [invocation getArgument:&argument atIndex:i];
+        void *abc = nil;
+        [invocation getArgument:&abc atIndex:i];
+        id argument = (__bridge id)(abc);
         DDBasicMockArgumentPosition *thePosition = [[DDBasicMockArgumentPosition alloc] initWithSelector:NSStringFromSelector(invocation.selector) position:@(i)];
-        DDBasicMockArgument *theArgument = _handlers[thePosition];
-        NSLog(@"%@ here we have: thePosition: %@ and theArgument: %@. All Handlers: %@", self, thePosition, theArgument, _handlers);
+        DDBasicMockArgument *theArgument = _positionsAndArguments[thePosition];
+        NSLog(@"%@ here we have: thePosition: %@ and theArgument: %@. All Handlers: %@", self, thePosition, theArgument, _positionsAndArguments);
         if (theArgument.block) {
+            found = YES;
             theArgument.block(argument);
         }
+        [invocation setArgument:(__bridge void * _Nonnull)(argument) atIndex:i];
+        argument = nil;
     }
-    [invocation setTarget:self.object];
-    [invocation invoke];
-//    }
+    if (!found) {
+        [invocation setTarget:self.object];
+        [invocation invoke];
+    }
+    else {
+        [invocation setTarget:nil];
+        [invocation invoke];
+    }
 }
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel {
     return [self.object methodSignatureForSelector:sel];
 }
-//- (void)doesNotRecognizeSelector:(SEL)aSelector {
-//    NSLog(@"%s -> %@", __PRETTY_FUNCTION__, NSStringFromSelector(aSelector));
-//    [self.object doesNotRecognizeSelector:aSelector];
-//}
 - (BOOL)respondsToSelector:(SEL)aSelector {
     return [self.object respondsToSelector:aSelector];
 }
@@ -204,7 +215,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     self.noOfMessagesLogged = 0;
 }
 
-- (void)setUp {
+- (void)_setUp {
     [super setUp];
     
     if (self.logger == nil) {
@@ -218,7 +229,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     [self cleanup];
 }
 
-- (void)oldSetUp {
+- (void)setUp {
     [super setUp];
     
     if (self.logger == nil) {
