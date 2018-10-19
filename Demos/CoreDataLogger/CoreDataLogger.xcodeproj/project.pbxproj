@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		466CB4454C9F0E1719F00493 /* Pods_CoreDataLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2B7FA3965161C35D4F0480 /* Pods_CoreDataLogger.framework */; };
 		DCE86C0E1343C419004FD85F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE86C0D1343C419004FD85F /* Cocoa.framework */; };
 		DCE86C181343C419004FD85F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCE86C161343C419004FD85F /* InfoPlist.strings */; };
 		DCE86C1B1343C419004FD85F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE86C1A1343C419004FD85F /* main.m */; };
@@ -20,12 +19,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		14537C8B30AF95E18BCEA654 /* Pods-CoreDataLogger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreDataLogger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoreDataLogger/Pods-CoreDataLogger.debug.xcconfig"; sourceTree = "<group>"; };
 		43AF80312174E4C300C0D9DC /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
 		43AF80322174E4C300C0D9DC /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
 		43AF80332174E4C300C0D9DC /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
-		460BF95AC1FE68D1CE0626A5 /* Pods-CoreDataLogger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreDataLogger.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoreDataLogger/Pods-CoreDataLogger.release.xcconfig"; sourceTree = "<group>"; };
-		4B2B7FA3965161C35D4F0480 /* Pods_CoreDataLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoreDataLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCE86C091343C419004FD85F /* CoreDataLogger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataLogger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCE86C0D1343C419004FD85F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DCE86C101343C419004FD85F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -52,22 +48,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCE86C0E1343C419004FD85F /* Cocoa.framework in Frameworks */,
-				466CB4454C9F0E1719F00493 /* Pods_CoreDataLogger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		029654B0E34E31A09088B9E8 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				14537C8B30AF95E18BCEA654 /* Pods-CoreDataLogger.debug.xcconfig */,
-				460BF95AC1FE68D1CE0626A5 /* Pods-CoreDataLogger.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		43AF80302174E4C300C0D9DC /* Configs */ = {
 			isa = PBXGroup;
 			children = (
@@ -87,7 +73,6 @@
 				DCE86C131343C419004FD85F /* CoreDataLogger */,
 				DCE86C0C1343C419004FD85F /* Frameworks */,
 				DCE86C0A1343C419004FD85F /* Products */,
-				029654B0E34E31A09088B9E8 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,7 +89,6 @@
 			children = (
 				DCE86C0D1343C419004FD85F /* Cocoa.framework */,
 				DCE86C0F1343C419004FD85F /* Other Frameworks */,
-				4B2B7FA3965161C35D4F0480 /* Pods_CoreDataLogger.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -169,11 +153,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCE86C2A1343C41A004FD85F /* Build configuration list for PBXNativeTarget "CoreDataLogger" */;
 			buildPhases = (
-				8CCA0EBBED064C809FFE26DE /* [CP] Check Pods Manifest.lock */,
 				DCE86C051343C419004FD85F /* Sources */,
 				DCE86C061343C419004FD85F /* Frameworks */,
 				DCE86C071343C419004FD85F /* Resources */,
-				FDE181D6DC62955D85D834F7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -221,45 +203,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		8CCA0EBBED064C809FFE26DE /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-CoreDataLogger-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FDE181D6DC62955D85D834F7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CoreDataLogger/Pods-CoreDataLogger-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CoreDataLogger/Pods-CoreDataLogger-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DCE86C051343C419004FD85F /* Sources */ = {
@@ -320,7 +263,6 @@
 		};
 		DCE86C2B1343C41A004FD85F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 14537C8B30AF95E18BCEA654 /* Pods-CoreDataLogger.debug.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -334,7 +276,6 @@
 		};
 		DCE86C2C1343C41A004FD85F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 460BF95AC1FE68D1CE0626A5 /* Pods-CoreDataLogger.release.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

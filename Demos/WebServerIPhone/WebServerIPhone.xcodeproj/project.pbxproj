@@ -15,7 +15,6 @@
 		2899E5220DE3E06400AC0155 /* WebServerIPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* WebServerIPhoneViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* WebServerIPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* WebServerIPhoneViewController.m */; };
-		A4E86A7764FB92E3B251792E /* Pods_WebServerIPhone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308072BF76BA9BEAB210A371 /* Pods_WebServerIPhone.framework */; };
 		DC588A1F158DF014007AFCFC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC588A1E158DF014007AFCFC /* Security.framework */; };
 		DC987C90119294FD0020FF52 /* MyHTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987C8B119294FD0020FF52 /* MyHTTPConnection.m */; };
 		DC987C92119294FD0020FF52 /* WebSocketLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = DC987C8F119294FD0020FF52 /* WebSocketLogger.m */; };
@@ -47,17 +46,14 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2899E5210DE3E06400AC0155 /* WebServerIPhoneViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebServerIPhoneViewController.xib; sourceTree = "<group>"; };
 		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
-		28B2DB56B4126FE857EBBBFF /* Pods-WebServerIPhone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebServerIPhone.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WebServerIPhone/Pods-WebServerIPhone.debug.xcconfig"; sourceTree = "<group>"; };
 		28D7ACF60DDB3853001CB0EB /* WebServerIPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebServerIPhoneViewController.h; sourceTree = "<group>"; };
 		28D7ACF70DDB3853001CB0EB /* WebServerIPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebServerIPhoneViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		308072BF76BA9BEAB210A371 /* Pods_WebServerIPhone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WebServerIPhone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32CA4F630368D1EE00C91783 /* WebServerIPhone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebServerIPhone_Prefix.pch; sourceTree = "<group>"; };
 		43AF80612174EDBF00C0D9DC /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
 		43AF80622174EDBF00C0D9DC /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
 		43AF80632174EDBF00C0D9DC /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* WebServerIPhone-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WebServerIPhone-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		C641A1893290064A330C99A9 /* Pods-WebServerIPhone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebServerIPhone.release.xcconfig"; path = "Pods/Target Support Files/Pods-WebServerIPhone/Pods-WebServerIPhone.release.xcconfig"; sourceTree = "<group>"; };
 		DC588A1E158DF014007AFCFC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		DC987C8A119294FD0020FF52 /* MyHTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyHTTPConnection.h; path = Classes/MyHTTPConnection.h; sourceTree = "<group>"; };
 		DC987C8B119294FD0020FF52 /* MyHTTPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyHTTPConnection.m; path = Classes/MyHTTPConnection.m; sourceTree = "<group>"; };
@@ -108,7 +104,6 @@
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
 				DC987C96119295650020FF52 /* CFNetwork.framework in Frameworks */,
-				A4E86A7764FB92E3B251792E /* Pods_WebServerIPhone.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,7 +129,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+		29B97314FDCFA39411CA2CEA = {
 			isa = PBXGroup;
 			children = (
 				43AF80602174EDBE00C0D9DC /* Configs */,
@@ -147,7 +142,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				CA1467B01C4D304BA1029BB7 /* Pods */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -180,7 +174,6 @@
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
 				DC987C95119295650020FF52 /* CFNetwork.framework */,
 				DC588A1E158DF014007AFCFC /* Security.framework */,
-				308072BF76BA9BEAB210A371 /* Pods_WebServerIPhone.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -194,15 +187,6 @@
 			);
 			name = Configs;
 			path = ../../Configs;
-			sourceTree = "<group>";
-		};
-		CA1467B01C4D304BA1029BB7 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				28B2DB56B4126FE857EBBBFF /* Pods-WebServerIPhone.debug.xcconfig */,
-				C641A1893290064A330C99A9 /* Pods-WebServerIPhone.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		DC987C89119294E10020FF52 /* MyHTTP */ = {
@@ -285,11 +269,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "WebServerIPhone" */;
 			buildPhases = (
-				833F2869D00C4CEB893D794B /* [CP] Check Pods Manifest.lock */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
-				8C26FF3E48D5BAA1BD87B943 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -318,7 +300,7 @@
 				French,
 				German,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			mainGroup = 29B97314FDCFA39411CA2CEA;
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -341,45 +323,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		833F2869D00C4CEB893D794B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-WebServerIPhone-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8C26FF3E48D5BAA1BD87B943 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-WebServerIPhone/Pods-WebServerIPhone-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WebServerIPhone/Pods-WebServerIPhone-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
@@ -413,7 +356,6 @@
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 28B2DB56B4126FE857EBBBFF /* Pods-WebServerIPhone.debug.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -427,7 +369,6 @@
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C641A1893290064A330C99A9 /* Pods-WebServerIPhone.release.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
