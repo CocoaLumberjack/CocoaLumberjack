@@ -1,3 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>FILEHEADER</key>
+	<string>
 // Software License Agreement (BSD License)
 //
 // Copyright (c) 2010-2018, Deusty, LLC
@@ -11,11 +17,6 @@
 //
 // * Neither the name of Deusty nor the names of its contributors may be used
 //   to endorse or promote products derived from this software without specific
-//   prior written permission of Deusty, LLC.
-
-// This header is mostly blank because all of the declarations are in Swift.
-// Still, this header may still be needed so Swift doesn't complain when importing CocoaLumberjackSwift.
-
-@import CocoaLumberjack;
-
-#import <CocoaLumberjackSwift/SwiftLogLevel.h>
+//   prior written permission of Deusty, LLC.</string>
+</dict>
+</plist>
