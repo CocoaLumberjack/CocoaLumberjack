@@ -2,7 +2,7 @@
 //  main.m
 //  FineGrainedLogging
 //
-//  Created by Robbie Hanson on 5/14/10.
+//  CococaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

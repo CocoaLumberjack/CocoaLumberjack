@@ -2,7 +2,7 @@
 //  main.m
 //  RegisteredLoggingTest
 //
-//  Created by Robbie Hanson on 9/5/11.
+//  CococaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

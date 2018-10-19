@@ -1,4 +1,10 @@
 //
+//  SQLiteLogger-Prefix.pch
+//  SQLiteLogger
+//
+//  CococaLumberjack Demos
+//
+//
 // Prefix header for all source files of the 'SQLiteLogger' target in the 'SQLiteLogger' project
 //
 

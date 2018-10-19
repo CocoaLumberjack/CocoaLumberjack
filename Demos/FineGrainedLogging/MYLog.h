@@ -1,3 +1,10 @@
+//
+//  MYLog.h
+//  FineGrainedLogging
+//
+//  CococaLumberjack Demos
+//
+
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
 // The first 4 bits are being used by the standard levels (0 - 3) 

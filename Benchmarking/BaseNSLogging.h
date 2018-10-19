@@ -1,5 +1,11 @@
-#import <Foundation/Foundation.h>
+//
+//  BaseNSLogging.h
+//  Benchmarking
+//
+//  CocoaLumberjack Demos
+//
 
+#import <Foundation/Foundation.h>
 
 @interface BaseNSLogging : NSObject
 

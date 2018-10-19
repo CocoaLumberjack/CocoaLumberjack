@@ -1,13 +1,17 @@
-#import "RollingTestMacAppDelegate.h"
+//
+//  RollingTestMacAppDelegate.m
+//  RollingTestMac
+//
+//  CococaLumberjack Demos
+//
 
+#import "RollingTestMacAppDelegate.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
 // Debug levels: off, error, warn, info, verbose
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
-
 @implementation RollingTestMacAppDelegate
-
 @synthesize window;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification

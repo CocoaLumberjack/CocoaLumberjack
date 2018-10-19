@@ -2,7 +2,7 @@
 //  main.m
 //  DispatchQueueLogger
 //
-//  Created by Robbie Hanson on 11/8/11.
+//  CococaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

@@ -2,7 +2,7 @@
 //  main.m
 //  RollingTestMac
 //
-//  Created by Robbie Hanson on 5/6/10.
+//  CococaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

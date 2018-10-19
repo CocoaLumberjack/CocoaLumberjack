@@ -1,6 +1,12 @@
+//
+//  Stuff.m
+//  GlobalLogLevel
+//
+//  CococaLumberjack Demos
+//
+
 #import "Stuff.h"
 #import "MyLogging.h"
-
 
 @implementation Stuff
 

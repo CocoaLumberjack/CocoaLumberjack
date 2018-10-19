@@ -2,7 +2,7 @@
 //  main.m
 //  TestXcodeColors
 //
-//  Created by Robbie Hanson on 5/17/12.
+//  CococaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

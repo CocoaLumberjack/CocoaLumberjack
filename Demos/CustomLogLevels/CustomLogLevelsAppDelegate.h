@@ -1,5 +1,11 @@
-#import <Cocoa/Cocoa.h>
+//
+//  CustomLogLevelsAppDelegate.h
+//  CustomLogLevels
+//
+//  CococaLumberjack Demos
+//
 
+#import <Cocoa/Cocoa.h>
 
 @interface CustomLogLevelsAppDelegate : NSObject <NSApplicationDelegate> {
     NSWindow *__unsafe_unretained window;

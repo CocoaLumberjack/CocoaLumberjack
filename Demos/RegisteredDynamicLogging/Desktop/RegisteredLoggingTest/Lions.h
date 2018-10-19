@@ -1,5 +1,11 @@
-#import <Foundation/Foundation.h>
+//
+//  Lions.h
+//  RegisteredLoggingTest
+//
+//  CococaLumberjack Demos
+//
 
+#import <Foundation/Foundation.h>
 
 @interface Lions : NSObject
 

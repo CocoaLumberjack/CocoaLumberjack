@@ -1,3 +1,10 @@
+//
+//  BaseNSLogging.m
+//  Benchmarking
+//
+//  CocoaLumberjack Demos
+//
+
 #import "BaseNSLogging.h"
 #import "PerformanceTesting.h"
 
@@ -7,7 +14,6 @@
 #define DDLogError   NSLog
 
 #define FILENAME @"BaseNSLogging " // Trailing space to match exactly the others in length
-
 
 @implementation BaseNSLogging
 

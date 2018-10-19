@@ -1,5 +1,11 @@
-#import <Cocoa/Cocoa.h>
+//
+//  CustomFormattersAppDelegate.h
+//  CustomFormatters
+//
+//  CococaLumberjack Demos
+//
 
+#import <Cocoa/Cocoa.h>
 
 @interface CustomFormattersAppDelegate : NSObject <NSApplicationDelegate> {
     NSWindow *__unsafe_unretained window;

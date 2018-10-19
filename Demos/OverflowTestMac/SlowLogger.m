@@ -1,5 +1,11 @@
-#import "SlowLogger.h"
+//
+//  SlowLogger.m
+//  OverflowTestMac
+//
+//  CococaLumberjack Demos
+//
 
+#import "SlowLogger.h"
 
 @implementation SlowLogger
 

@@ -1,8 +1,14 @@
+//
+//  FMDBLogger.h
+//  SQLiteLogger
+//
+//  CococaLumberjack Demos
+//
+
 #import <Foundation/Foundation.h>
 #import <CocoaLumberjack/DDAbstractDatabaseLogger.h>
 
 @class FMDatabase;
-
 
 @interface FMDBLogger : DDAbstractDatabaseLogger <DDLogger>
 {

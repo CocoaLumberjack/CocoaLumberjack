@@ -1,7 +1,13 @@
+//
+//  SQLiteLoggerAppDelegate.h
+//  SQLiteLogger
+//
+//  CococaLumberjack Demos
+//
+
 #import <Cocoa/Cocoa.h>
 
 @class FMDBLogger;
-
 
 @interface SQLiteLoggerAppDelegate : NSObject <NSApplicationDelegate> {
 @private

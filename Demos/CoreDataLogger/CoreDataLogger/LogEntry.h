@@ -1,6 +1,12 @@
+//
+//  LogEntry.h
+//  CoreDataLogger
+//
+//  CococaLumberjack Demos
+//
+
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
 
 @interface LogEntry : NSManagedObject
 

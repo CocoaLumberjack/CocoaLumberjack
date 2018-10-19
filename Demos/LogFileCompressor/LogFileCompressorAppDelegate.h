@@ -1,7 +1,13 @@
+//
+//  LogFileCompressorAppDelegate.h
+//  LogFileCompressor
+//
+//  CococaLumberjack Demos
+//
+
 #import <Cocoa/Cocoa.h>
 
 @class DDFileLogger;
-
 
 @interface LogFileCompressorAppDelegate : NSObject <NSApplicationDelegate>
 {

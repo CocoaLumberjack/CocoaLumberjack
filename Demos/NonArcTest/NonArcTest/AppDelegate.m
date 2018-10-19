@@ -1,9 +1,15 @@
+//
+//  AppDelegate.m
+//  NonArcTest
+//
+//  CococaLumberjack Demos
+//
+
 #import "AppDelegate.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
 // Log levels: off, error, warn, info, verbose
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
-
 
 @implementation AppDelegate
 

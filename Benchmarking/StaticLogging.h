@@ -1,5 +1,11 @@
-#import <Foundation/Foundation.h>
+//
+//  StaticLogging.h
+//  Benchmarking
+//
+//  CocoaLumberjack Demos
+//
 
+#import <Foundation/Foundation.h>
 
 @interface StaticLogging : NSObject
 

@@ -1,3 +1,10 @@
+//
+//  ContextFilterAppDelegate.m
+//  ContextFilter
+//
+//  CococaLumberjack Demos
+//
+
 #import "ContextFilterAppDelegate.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import "MyContextFilter.h"
@@ -6,9 +13,7 @@
 // Log levels: off, error, warn, info, verbose
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
-
 @implementation ContextFilterAppDelegate
-
 @synthesize window;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification

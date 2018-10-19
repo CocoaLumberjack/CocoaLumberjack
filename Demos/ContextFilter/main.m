@@ -2,8 +2,7 @@
 //  main.m
 //  ContextFilter
 //
-//  Created by Robbie Hanson on 11/22/10.
-//  Copyright 2010 Voalte. All rights reserved.
+//  CococaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

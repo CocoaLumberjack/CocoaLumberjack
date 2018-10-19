@@ -1,4 +1,10 @@
 //
+//  FineGrainedLogging_Prefix.pch
+//  FineGrainedLogging
+//
+//  CococaLumberjack Demos
+//
+//
 // Prefix header for all source files of the 'FineGrainedLogging' target in the 'FineGrainedLogging' project
 //
 

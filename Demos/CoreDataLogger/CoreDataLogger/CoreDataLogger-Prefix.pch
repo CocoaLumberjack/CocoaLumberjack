@@ -1,4 +1,10 @@
 //
+//  CoreDataLogger-Prefix.pch
+//  CoreDataLogger
+//
+//  CococaLumberjack Demos
+//
+//
 // Prefix header for all source files of the 'CoreDataLogger' target in the 'CoreDataLogger' project
 //
 

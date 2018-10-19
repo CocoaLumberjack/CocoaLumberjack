@@ -1,3 +1,10 @@
+//
+//  DynamicLogging.m
+//  Benchmarking
+//
+//  CocoaLumberjack Demos
+//
+
 #import "DynamicLogging.h"
 #import "PerformanceTesting.h"
 #import "DDLogMacros.h"
@@ -6,7 +13,6 @@
 
 // Debug levels: off, error, warn, info, verbose
 static DDLogLevel ddLogLevel = DDLogLevelWarning; // NOT CONST
-
 
 @implementation DynamicLogging
 

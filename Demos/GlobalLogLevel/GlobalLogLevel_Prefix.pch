@@ -1,4 +1,10 @@
 //
+//  GlobalLogLevel_Prefix.pch
+//  GlobalLogLevel
+//
+//  CococaLumberjack Demos
+//
+//
 // Prefix header for all source files of the 'GlobalLogLevel' target in the 'GlobalLogLevel' project
 //
 

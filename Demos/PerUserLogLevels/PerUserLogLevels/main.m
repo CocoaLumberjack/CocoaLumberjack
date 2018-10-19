@@ -2,7 +2,7 @@
 //  main.m
 //  PerUserLogLevels
 //
-//  Created by Robbie Hanson on 3/30/12.
+//  CococaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

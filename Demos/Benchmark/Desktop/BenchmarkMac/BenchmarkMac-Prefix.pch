@@ -1,4 +1,10 @@
 //
+//  BenchmarkMac-Prefix.pch
+//  BenchmarkMac
+//
+//  CocoaLumberjack Demos
+//
+//
 // Prefix header for all source files of the 'BenchmarkMac' target in the 'BenchmarkMac' project
 //
 

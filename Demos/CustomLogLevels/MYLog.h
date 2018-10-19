@@ -1,3 +1,9 @@
+//
+//  MYLog.h
+//  CustomLogLevels
+//
+//  CococaLumberjack Demos
+//
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
@@ -43,4 +49,3 @@
 #define DDLogNotice(frmt, ...)  LOG_MAYBE(YES, ddLogLevel, LOG_FLAG_NOTICE, 0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 #define DDLogInfo(frmt, ...)    LOG_MAYBE(YES, ddLogLevel, LOG_FLAG_INFO,   0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 #define DDLogDebug(frmt, ...)   LOG_MAYBE(YES, ddLogLevel, LOG_FLAG_DEBUG,  0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-

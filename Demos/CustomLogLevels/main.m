@@ -2,7 +2,7 @@
 //  main.m
 //  CustomLogLevels
 //
-//  Created by Robbie Hanson on 5/13/10.
+//  CococaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

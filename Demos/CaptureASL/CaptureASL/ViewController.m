@@ -2,8 +2,7 @@
 //  ViewController.m
 //  CaptureASL
 //
-//  Created by Ernesto Rivera on 2014/03/20.
-//
+//  CococaLumberjack Demos
 //
 
 #import "ViewController.h"

@@ -1,7 +1,13 @@
+//
+//  RollingTestMacAppDelegate.h
+//  RollingTestMac
+//
+//  CococaLumberjack Demos
+//
+
 #import <Cocoa/Cocoa.h>
 
 @class DDFileLogger;
-
 
 @interface RollingTestMacAppDelegate : NSObject <NSApplicationDelegate>
 {

@@ -1,5 +1,11 @@
-#import "RegisteredLoggingTestViewController.h"
+//
+//  RegisteredLoggingTestViewController.m
+//  RegisteredLoggingTest
+//
+//  CococaLumberjack Demos
+//
 
+#import "RegisteredLoggingTestViewController.h"
 
 @implementation RegisteredLoggingTestViewController
 

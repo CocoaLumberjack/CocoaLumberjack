@@ -1,10 +1,16 @@
+//
+//  CustomLogLevelsAppDelegate.m
+//  CustomLogLevels
+//
+//  CococaLumberjack Demos
+//
+
 #import "CustomLogLevelsAppDelegate.h"
 
 #import "MYLog.h"
 
 // Debug levels: off, fatal, error, warn, notice, info, debug
 static const DDLogLevel ddLogLevel = DDLogLevelDebug;
-
 
 @implementation CustomLogLevelsAppDelegate
 

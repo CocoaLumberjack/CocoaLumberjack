@@ -1,3 +1,10 @@
+//
+//  LogFileCompressorAppDelegate.m
+//  LogFileCompressor
+//
+//  CococaLumberjack Demos
+//
+
 #import "LogFileCompressorAppDelegate.h"
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
@@ -5,7 +12,6 @@
 
 // Debug levels: off, error, warn, info, verbose
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -

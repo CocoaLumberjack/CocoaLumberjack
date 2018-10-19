@@ -2,8 +2,7 @@
 //  main.m
 //  SQLiteLogger
 //
-//  Created by Robbie Hanson on 3/29/11.
-//  Copyright 2011 Voalte. All rights reserved.
+//  CococaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

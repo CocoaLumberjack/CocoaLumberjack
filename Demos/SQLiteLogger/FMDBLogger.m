@@ -1,6 +1,12 @@
+//
+//  FMDBLogger.m
+//  SQLiteLogger
+//
+//  CococaLumberjack Demos
+//
+
 #import "FMDBLogger.h"
 #import "FMDatabase.h"
-
 
 @interface FMDBLogger ()
 - (void)validateLogDirectory;
@@ -40,7 +46,6 @@
     }
     return self;
 }
-
 
 @end
 
