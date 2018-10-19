@@ -58,75 +58,30 @@ script:
 
     - echo Building the Demos
     - cd Demos
-    - pod install --project-directory=ContextFilter
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'ContextFilter' | xcpretty -c
-
-    - pod install --project-directory=CoreDataLogger
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'CoreDataLogger' | xcpretty -c
-
-    - pod install --project-directory=CustomFormatters
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'CustomFormatters' | xcpretty -c
-
-    - pod install --project-directory=CustomLogLevels
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'CustomLogLevels' | xcpretty -c
-
-    - pod install --project-directory=DispatchQueueLogger
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'DispatchQueueLogger' | xcpretty -c
-
-    - pod install --project-directory=FineGrainedLogging
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'FineGrainedLogging' | xcpretty -c
-
-    - pod install --project-directory=GlobalLogLevel
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'GlobalLogLevel' | xcpretty -c
-
-    - pod install --project-directory=LogFileCompressor
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'LogFileCompressor' | xcpretty -c
-
-    - pod install --project-directory=NonArcTest
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'NonArcTest' | xcpretty -c
-
-    - pod install --project-directory=OverflowTestMac
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'OverflowTestMac' | xcpretty -c
-
-    - pod install --project-directory=PerUserLogLevels
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'PerUserLogLevels' | xcpretty -c
-
-    - pod install --project-directory=RegisteredDynamicLogging/Mobile
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'RegisteredLoggingTest (Mobile)' -configuration Release -sdk iphonesimulator | xcpretty -c
-
-    - pod install --project-directory=RegisteredDynamicLogging/Desktop
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'RegisteredLoggingTest (Desktop)' | xcpretty -c
-
-    - pod install --project-directory=RollingTestMac
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'RollingTestMac' | xcpretty -c
-
-    - pod install --project-directory=TestXcodeColors/Desktop
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'TestXcodeColors (Desktop)' | xcpretty -c
-
-    - pod install --project-directory=TestXcodeColors/Mobile
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'TextXcodeColors (Mobile)' -configuration Release -sdk iphonesimulator | xcpretty -c
-
-    - pod install --project-directory=WebServerIPhone
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'WebServerIPhone' -configuration Release -sdk iphonesimulator | xcpretty -c
-
-    - pod install --project-directory=Benchmark/Desktop
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'BenchmarkMac' | xcpretty -c
-
-    - pod install --project-directory=Benchmark/Mobile
     - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'BenchmarkIPhone' -configuration Release -sdk iphonesimulator | xcpretty -c
-
-    - pod install --project-directory=SQLiteLogger
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'SQLiteLogger' | xcpretty -c
-
-    - pod install --project-directory=UniversalApp
-    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'UniversalApp' -configuration Release -sdk iphonesimulator | xcpretty -c
-
-    - pod install --project-directory=CLI
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'BenchmarkMac' | xcpretty -c
     - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'CLI' | xcpretty -c
-
-    - pod install --project-directory=CaptureASL
     - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'CaptureASL' -configuration Release -sdk iphonesimulator | xcpretty -c
-
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'ContextFilter' | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'CoreDataLogger' | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'CustomFormatters' | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'CustomLogLevels' | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'DispatchQueueLogger' | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'FineGrainedLogging' | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'GlobalLogLevel' | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'LogFileCompressor' | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'NonArcTest' | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'OverflowTestMac' | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'PerUserLogLevels' | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'RegisteredLoggingTest (Desktop)' | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'RegisteredLoggingTest (Mobile)' -configuration Release -sdk iphonesimulator | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'RollingTestMac' | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'SQLiteLogger' | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'TestXcodeColors (Desktop)' | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'TextXcodeColors (Mobile)' -configuration Release -sdk iphonesimulator | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'UniversalApp' -configuration Release -sdk iphonesimulator | xcpretty -c
+    - xcodebuild clean build -workspace Demos.xcworkspace -scheme 'WebServerIPhone' -configuration Release -sdk iphonesimulator | xcpretty -c
+    
     - cd ..
     - bundle exec danger
 

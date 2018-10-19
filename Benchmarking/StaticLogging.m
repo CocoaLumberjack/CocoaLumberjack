@@ -7,7 +7,7 @@
 
 #import "StaticLogging.h"
 #import "PerformanceTesting.h"
-#import "DDLogMacros.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
 
 #define FILENAME @"StaticLogging " // Trailing space to match exactly the others in length
 

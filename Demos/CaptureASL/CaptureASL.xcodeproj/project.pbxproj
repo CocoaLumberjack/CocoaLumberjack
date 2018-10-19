@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AFA5AEDF296EEF812F7063E9 /* Pods_CaptureASL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D52E0AED9C1E3765A9FE18F /* Pods_CaptureASL.framework */; };
+		0A7D8F9E217A10A500B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8F9D217A10A500B496D7 /* CocoaLumberjack.framework */; };
 		E50619821A2EF295000F835A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E50619811A2EF295000F835A /* Main.storyboard */; };
 		E5AE803B18DA83A400E0501F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803A18DA83A400E0501F /* Foundation.framework */; };
 		E5AE803D18DA83A400E0501F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803C18DA83A400E0501F /* CoreGraphics.framework */; };
@@ -20,12 +20,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0D52E0AED9C1E3765A9FE18F /* Pods_CaptureASL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CaptureASL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A7D8F9D217A10A500B496D7 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		43AF80252174E2F700C0D9DC /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
 		43AF80262174E2F700C0D9DC /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
 		43AF80272174E2F700C0D9DC /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
-		57FC10FC92829DC85AB9EA2F /* Pods-CaptureASL.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaptureASL.release.xcconfig"; path = "Pods/Target Support Files/Pods-CaptureASL/Pods-CaptureASL.release.xcconfig"; sourceTree = "<group>"; };
-		BA7F39B2221EA7BE946CF8C8 /* Pods-CaptureASL.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaptureASL.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CaptureASL/Pods-CaptureASL.debug.xcconfig"; sourceTree = "<group>"; };
 		E50619811A2EF295000F835A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E5AE803718DA83A400E0501F /* CaptureASL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptureASL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AE803A18DA83A400E0501F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -48,10 +46,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A7D8F9E217A10A500B496D7 /* CocoaLumberjack.framework in Frameworks */,
 				E5AE803D18DA83A400E0501F /* CoreGraphics.framework in Frameworks */,
 				E5AE803F18DA83A400E0501F /* UIKit.framework in Frameworks */,
 				E5AE803B18DA83A400E0501F /* Foundation.framework in Frameworks */,
-				AFA5AEDF296EEF812F7063E9 /* Pods_CaptureASL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,15 +67,6 @@
 			path = ../../Configs;
 			sourceTree = "<group>";
 		};
-		A0D458FE10FDDAC08B8FA4E3 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				BA7F39B2221EA7BE946CF8C8 /* Pods-CaptureASL.debug.xcconfig */,
-				57FC10FC92829DC85AB9EA2F /* Pods-CaptureASL.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		E5AE802E18DA83A400E0501F = {
 			isa = PBXGroup;
 			children = (
@@ -85,7 +74,6 @@
 				E5AE804018DA83A400E0501F /* CaptureASL */,
 				E5AE803918DA83A400E0501F /* Frameworks */,
 				E5AE803818DA83A400E0501F /* Products */,
-				A0D458FE10FDDAC08B8FA4E3 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,11 +88,11 @@
 		E5AE803918DA83A400E0501F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0A7D8F9D217A10A500B496D7 /* CocoaLumberjack.framework */,
 				E5AE803A18DA83A400E0501F /* Foundation.framework */,
 				E5AE803C18DA83A400E0501F /* CoreGraphics.framework */,
 				E5AE803E18DA83A400E0501F /* UIKit.framework */,
 				E5AE805918DA83A400E0501F /* XCTest.framework */,
-				0D52E0AED9C1E3765A9FE18F /* Pods_CaptureASL.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -141,11 +129,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5AE806918DA83A500E0501F /* Build configuration list for PBXNativeTarget "CaptureASL" */;
 			buildPhases = (
-				0375EED24F326990440A3964 /* [CP] Check Pods Manifest.lock */,
 				E5AE803318DA83A400E0501F /* Sources */,
 				E5AE803418DA83A400E0501F /* Frameworks */,
 				E5AE803518DA83A400E0501F /* Resources */,
-				CB93BC9E3379F309309A7088 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -194,45 +180,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		0375EED24F326990440A3964 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-CaptureASL-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CB93BC9E3379F309309A7088 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CaptureASL/Pods-CaptureASL-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CaptureASL/Pods-CaptureASL-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		E5AE803318DA83A400E0501F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -274,7 +221,6 @@
 		};
 		E5AE806A18DA83A500E0501F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BA7F39B2221EA7BE946CF8C8 /* Pods-CaptureASL.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -290,7 +236,6 @@
 		};
 		E5AE806B18DA83A500E0501F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 57FC10FC92829DC85AB9EA2F /* Pods-CaptureASL.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

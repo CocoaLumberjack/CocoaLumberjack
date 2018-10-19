@@ -6,11 +6,7 @@
 //
 
 #import "PerformanceTesting.h"
-#import "DDLog.h"
-#import "DDASLLogger.h"
-#import "DDTTYLogger.h"
-#import "DDFileLogger.h"
-
+#import <CocoaLumberjack/CocoaLumberjack.h>
 
 #import "BaseNSLogging.h"
 #import "StaticLogging.h"

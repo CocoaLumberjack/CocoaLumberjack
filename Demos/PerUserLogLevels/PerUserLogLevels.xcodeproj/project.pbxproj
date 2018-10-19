@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		70D022BC64646F5370FC6DA7 /* Pods_PerUserLogLevels.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A3E0F20CD5BDE853D9130E /* Pods_PerUserLogLevels.framework */; };
+		0A7D8FB4217A10D400B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8FB3217A10D400B496D7 /* CocoaLumberjack.framework */; };
 		DC87A6F91525AEA3005A09B0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC87A6F81525AEA3005A09B0 /* Cocoa.framework */; };
 		DC87A7031525AEA3005A09B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DC87A7011525AEA3005A09B0 /* InfoPlist.strings */; };
 		DC87A7051525AEA3005A09B0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC87A7041525AEA3005A09B0 /* main.m */; };
@@ -17,12 +17,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0B4A25C155194CE786243D86 /* Pods-PerUserLogLevels.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PerUserLogLevels.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PerUserLogLevels/Pods-PerUserLogLevels.debug.xcconfig"; sourceTree = "<group>"; };
-		21E12BAE43E90BD8E31C353A /* Pods-PerUserLogLevels.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PerUserLogLevels.release.xcconfig"; path = "Pods/Target Support Files/Pods-PerUserLogLevels/Pods-PerUserLogLevels.release.xcconfig"; sourceTree = "<group>"; };
+		0A7D8FB3217A10D400B496D7 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		43AF80512174EB5300C0D9DC /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
 		43AF80522174EB5300C0D9DC /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
 		43AF80532174EB5300C0D9DC /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
-		91A3E0F20CD5BDE853D9130E /* Pods_PerUserLogLevels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PerUserLogLevels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC28B92D15263ED00043126F /* LumberjackUser.bash */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = LumberjackUser.bash; path = Scripts/LumberjackUser.bash; sourceTree = SOURCE_ROOT; };
 		DC87A6F41525AEA3005A09B0 /* PerUserLogLevels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerUserLogLevels.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC87A6F81525AEA3005A09B0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -45,23 +43,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A7D8FB4217A10D400B496D7 /* CocoaLumberjack.framework in Frameworks */,
 				DC87A6F91525AEA3005A09B0 /* Cocoa.framework in Frameworks */,
-				70D022BC64646F5370FC6DA7 /* Pods_PerUserLogLevels.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3CEFE886C93FBC963106267F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0B4A25C155194CE786243D86 /* Pods-PerUserLogLevels.debug.xcconfig */,
-				21E12BAE43E90BD8E31C353A /* Pods-PerUserLogLevels.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		43AF80502174EB5300C0D9DC /* Configs */ = {
 			isa = PBXGroup;
 			children = (
@@ -81,7 +70,6 @@
 				DC87A6FE1525AEA3005A09B0 /* PerUserLogLevels */,
 				DC87A6F71525AEA3005A09B0 /* Frameworks */,
 				DC87A6F51525AEA3005A09B0 /* Products */,
-				3CEFE886C93FBC963106267F /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -96,9 +84,9 @@
 		DC87A6F71525AEA3005A09B0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0A7D8FB3217A10D400B496D7 /* CocoaLumberjack.framework */,
 				DC87A6F81525AEA3005A09B0 /* Cocoa.framework */,
 				DC87A6FA1525AEA3005A09B0 /* Other Frameworks */,
-				91A3E0F20CD5BDE853D9130E /* Pods_PerUserLogLevels.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -153,12 +141,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC87A7121525AEA3005A09B0 /* Build configuration list for PBXNativeTarget "PerUserLogLevels" */;
 			buildPhases = (
-				76E60D6416AA4C2AB3DFE316 /* [CP] Check Pods Manifest.lock */,
 				DC87A7341525B41D005A09B0 /* ShellScript */,
 				DC87A6F01525AEA3005A09B0 /* Sources */,
 				DC87A6F11525AEA3005A09B0 /* Frameworks */,
 				DC87A6F21525AEA3005A09B0 /* Resources */,
-				A1EC2902394DA1F09A2D79F5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -208,42 +194,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		76E60D6416AA4C2AB3DFE316 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PerUserLogLevels-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A1EC2902394DA1F09A2D79F5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PerUserLogLevels/Pods-PerUserLogLevels-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PerUserLogLevels/Pods-PerUserLogLevels-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		DC87A7341525B41D005A09B0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -315,7 +265,6 @@
 		};
 		DC87A7131525AEA3005A09B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0B4A25C155194CE786243D86 /* Pods-PerUserLogLevels.debug.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -329,7 +278,6 @@
 		};
 		DC87A7141525AEA3005A09B0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 21E12BAE43E90BD8E31C353A /* Pods-PerUserLogLevels.release.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

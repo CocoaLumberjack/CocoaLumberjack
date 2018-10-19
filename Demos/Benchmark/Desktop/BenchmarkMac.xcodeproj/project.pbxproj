@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A7D8F9C217A10A000B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8F9B217A10A000B496D7 /* CocoaLumberjack.framework */; };
 		DCC29DE114730AA9005E8FD4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC29DE014730AA9005E8FD4 /* Cocoa.framework */; };
 		DCC29DEB14730AA9005E8FD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCC29DE914730AA9005E8FD4 /* InfoPlist.strings */; };
 		DCC29DED14730AA9005E8FD4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29DEC14730AA9005E8FD4 /* main.m */; };
@@ -17,15 +18,13 @@
 		DCC29E2014730B05005E8FD4 /* DynamicLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E1A14730B05005E8FD4 /* DynamicLogging.m */; };
 		DCC29E2114730B05005E8FD4 /* PerformanceTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E1C14730B05005E8FD4 /* PerformanceTesting.m */; };
 		DCC29E2214730B05005E8FD4 /* StaticLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E1E14730B05005E8FD4 /* StaticLogging.m */; };
-		DEFECBAB62BC430EC3A3FAAB /* Pods_BenchmarkMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2CA005FBDD7360D86E3BA1 /* Pods_BenchmarkMac.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A7D8F9B217A10A000B496D7 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		43AF80212174E19700C0D9DC /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
 		43AF80222174E19700C0D9DC /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
 		43AF80232174E19700C0D9DC /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
-		7D2CA005FBDD7360D86E3BA1 /* Pods_BenchmarkMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BenchmarkMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B5740B0CCB466F5BE2C23905 /* Pods-BenchmarkMac.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BenchmarkMac.release.xcconfig"; path = "Pods/Target Support Files/Pods-BenchmarkMac/Pods-BenchmarkMac.release.xcconfig"; sourceTree = "<group>"; };
 		DCC29DDC14730AA9005E8FD4 /* BenchmarkMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BenchmarkMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCC29DE014730AA9005E8FD4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DCC29DE314730AA9005E8FD4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -47,7 +46,6 @@
 		DCC29E1C14730B05005E8FD4 /* PerformanceTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceTesting.m; sourceTree = "<group>"; };
 		DCC29E1D14730B05005E8FD4 /* StaticLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticLogging.h; sourceTree = "<group>"; };
 		DCC29E1E14730B05005E8FD4 /* StaticLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaticLogging.m; sourceTree = "<group>"; };
-		ECBABCE606F0087E19512FED /* Pods-BenchmarkMac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BenchmarkMac.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BenchmarkMac/Pods-BenchmarkMac.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,8 +53,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A7D8F9C217A10A000B496D7 /* CocoaLumberjack.framework in Frameworks */,
 				DCC29DE114730AA9005E8FD4 /* Cocoa.framework in Frameworks */,
-				DEFECBAB62BC430EC3A3FAAB /* Pods_BenchmarkMac.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,15 +72,6 @@
 			path = ../../../Configs;
 			sourceTree = "<group>";
 		};
-		8B2D89AB0547F7D910983389 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				ECBABCE606F0087E19512FED /* Pods-BenchmarkMac.debug.xcconfig */,
-				B5740B0CCB466F5BE2C23905 /* Pods-BenchmarkMac.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		DCC29DD114730AA9005E8FD4 = {
 			isa = PBXGroup;
 			children = (
@@ -91,7 +80,6 @@
 				DCC29DE614730AA9005E8FD4 /* BenchmarkMac */,
 				DCC29DDF14730AA9005E8FD4 /* Frameworks */,
 				DCC29DDD14730AA9005E8FD4 /* Products */,
-				8B2D89AB0547F7D910983389 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -106,9 +94,9 @@
 		DCC29DDF14730AA9005E8FD4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0A7D8F9B217A10A000B496D7 /* CocoaLumberjack.framework */,
 				DCC29DE014730AA9005E8FD4 /* Cocoa.framework */,
 				DCC29DE214730AA9005E8FD4 /* Other Frameworks */,
-				7D2CA005FBDD7360D86E3BA1 /* Pods_BenchmarkMac.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -169,11 +157,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCC29DFA14730AA9005E8FD4 /* Build configuration list for PBXNativeTarget "BenchmarkMac" */;
 			buildPhases = (
-				CCC3BE78F0DF486A86ECB56A /* [CP] Check Pods Manifest.lock */,
 				DCC29DD814730AA9005E8FD4 /* Sources */,
 				DCC29DD914730AA9005E8FD4 /* Frameworks */,
 				DCC29DDA14730AA9005E8FD4 /* Resources */,
-				6C3BF63B61DFFB5771B918A8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -221,49 +207,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		6C3BF63B61DFFB5771B918A8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BenchmarkMac/Pods-BenchmarkMac-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BenchmarkMac/Pods-BenchmarkMac-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CCC3BE78F0DF486A86ECB56A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BenchmarkMac-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DCC29DD814730AA9005E8FD4 /* Sources */ = {
@@ -325,7 +268,6 @@
 		};
 		DCC29DFB14730AA9005E8FD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ECBABCE606F0087E19512FED /* Pods-BenchmarkMac.debug.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -339,7 +281,6 @@
 		};
 		DCC29DFC14730AA9005E8FD4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B5740B0CCB466F5BE2C23905 /* Pods-BenchmarkMac.release.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
