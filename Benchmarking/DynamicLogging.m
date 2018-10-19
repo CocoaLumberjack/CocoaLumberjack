@@ -7,7 +7,6 @@
 
 #import "DynamicLogging.h"
 #import "PerformanceTesting.h"
-//#import "DDLogMacros.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
 #define FILENAME @"DynamicLogging"
