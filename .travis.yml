@@ -14,7 +14,6 @@ before_install:
     - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
     - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
     - pod --version
-    - pod setup --silent > /dev/null
     - xcpretty --version
     - xcodebuild -version
     - xcodebuild -showsdks
@@ -22,10 +21,10 @@ before_install:
 script:
     - set -o pipefail
 
-    - echo Check if the library described by the podspec can be built
+    - echo "Check if the library described by the podspec can be built"
     - pod lib lint
 
-    - echo Build as static library
+    - echo "Build as static library"
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-Static' -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration Release | xcpretty -c
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-Static' -sdk macosx -configuration Release | xcpretty -c
 
@@ -50,11 +49,11 @@ script:
     - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'tvOSSwiftIntegration' -destination 'platform=tvOS Simulator,name=Apple TV 4K' -configuration Release -sdk appletvsimulator | xcpretty -c
     - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'watchOSSwiftIntegration' -configuration Release -sdk watchsimulator -destination 'platform=iOS Simulator,name=iPhone XS Max,OS=12.0' | xcpretty -c
 
-    - echo Run the tests
+    - echo "Run the tests"
     - xcodebuild test -workspace Framework/Lumberjack.xcworkspace -scheme 'iOS Tests' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=latest' GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
     - xcodebuild test -workspace Framework/Lumberjack.xcworkspace -scheme 'OS X Tests' -sdk macosx GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
 
-    - echo Building the Demos
+    - echo "Building the Demos"
     - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'BenchmarkIPhone' -configuration Release -sdk iphonesimulator | xcpretty -c
     - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'BenchmarkMac' | xcpretty -c
     - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'CLI' | xcpretty -c
