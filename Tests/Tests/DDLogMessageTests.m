@@ -117,7 +117,7 @@ static NSString * const kDefaultMessage = @"Log message";
 #pragma mark - Message creation
 
 - (void)testInitSetsAllPassedParameters {
-    NSDate *referenceDate  = [NSDate dateWithTimeIntervalSince1970:0];
+    __auto_type referenceDate = [NSDate dateWithTimeIntervalSince1970:0];
     self.message =
         [[DDLogMessage alloc] initWithMessage:kDefaultMessage
                                         level:DDLogLevelDebug
@@ -142,7 +142,7 @@ static NSString * const kDefaultMessage = @"Log message";
 }
 
 - (void)testInitCopyMessageParameter {
-    NSMutableString *message = [NSMutableString stringWithString:@"Log message"];
+    __auto_type message = [NSMutableString stringWithString:@"Log message"];
     self.message = [DDLogMessage test_messageWithMessage:message];
     [message appendString:@" changed"];
     XCTAssertEqualObjects(self.message.message, @"Log message");
@@ -177,7 +177,7 @@ static NSString * const kDefaultMessage = @"Log message";
 
 
 - (void)testInitAssignsFileParameterWithoutCopyFileOption {
-    NSMutableString *file = [NSMutableString stringWithString:@"file"];
+    __auto_type file = [NSMutableString stringWithString:@"file"];
     self.message = [DDLogMessage test_messageWithFile:file options:(DDLogMessageOptions)0];
     XCTAssertEqualObjects(self.message.file, @"file");
     [file appendString:@"file"];
@@ -185,7 +185,7 @@ static NSString * const kDefaultMessage = @"Log message";
 }
 
 - (void)testInitCopyFileParameterWithCopyFileOption {
-    NSMutableString *file = [NSMutableString stringWithString:@"file"];
+    __auto_type file = [NSMutableString stringWithString:@"file"];
     self.message = [DDLogMessage test_messageWithFile:file options:DDLogMessageCopyFile];
     XCTAssertEqualObjects(self.message.file, @"file");
     [file appendString:@"file"];
@@ -193,7 +193,7 @@ static NSString * const kDefaultMessage = @"Log message";
 }
 
 - (void)testInitAssignFunctionParameterWithoutCopyFunctionOption {
-    NSMutableString *function = [NSMutableString stringWithString:@"function"];
+    __auto_type function = [NSMutableString stringWithString:@"function"];
     self.message = [DDLogMessage test_messageWithFunction:function options:(DDLogMessageOptions)0];
     XCTAssertEqualObjects(self.message.function, @"function");
     [function appendString:@"function"];
@@ -201,7 +201,7 @@ static NSString * const kDefaultMessage = @"Log message";
 }
 
 - (void)testInitCopyFunctionParameterWithCopyFunctionOption {
-    NSMutableString *function = [NSMutableString stringWithString:@"function"];
+    __auto_type function = [NSMutableString stringWithString:@"function"];
     self.message = [DDLogMessage test_messageWithFunction:function options:DDLogMessageCopyFunction];
     XCTAssertEqualObjects(self.message.function, @"function");
     [function appendString:@"function"];
@@ -209,7 +209,7 @@ static NSString * const kDefaultMessage = @"Log message";
 }
 
 - (void)testCopyWithZoneCreatesValidCopy {
-    DDLogMessage *copy = [self.message copy];
+    __auto_type copy = (typeof(self.message))[self.message copy];
     XCTAssertEqualObjects(self.message.message, copy.message);
     XCTAssertEqual(self.message.level, copy.level);
     XCTAssertEqual(self.message.flag, copy.flag);

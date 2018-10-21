@@ -52,7 +52,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 @implementation DDBasicLoggingTests
 
 - (void)reactOnMessage:(id)object {
-    DDLogMessage *message = (DDLogMessage *)object;
+    __auto_type message = (DDLogMessage *)object;
     XCTAssertTrue([self.logs containsObject:message.message]);
     self.noOfMessagesLogged++;
     if (self.noOfMessagesLogged == [self.logs count]) {
@@ -77,7 +77,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     
     if (self.logger == nil) {
         __weak typeof(self) weakSelf = self;
-        DDBasicMockAbstractLogger *logger = [[DDBasicMockAbstractLogger new] configuredWithBlock:^(id object) {
+        __auto_type logger = [[DDBasicMockAbstractLogger new] configuredWithBlock:^(id object) {
             [weakSelf reactOnMessage:object];
         }];
         self.logger = logger;
@@ -90,10 +90,10 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     [super setUp];
     
     if (self.logger == nil) {
-        DDBasicMock<DDAbstractLogger *> *logger = [DDBasicMock<DDAbstractLogger *> decoratedInstance:[[DDAbstractLogger alloc] init]];
+        __auto_type logger = [DDBasicMock<DDAbstractLogger *> decoratedInstance:[[DDAbstractLogger alloc] init]];
 
         __weak typeof(self)weakSelf = self;
-        DDBasicMockArgument *argument = [DDBasicMockArgument alongsideWithBlock:^(id object) {
+        __auto_type argument = [DDBasicMockArgument alongsideWithBlock:^(id object) {
             [weakSelf reactOnMessage:object];
         }];
         

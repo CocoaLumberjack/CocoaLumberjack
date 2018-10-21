@@ -24,7 +24,7 @@
 @implementation DDAtomicCounterTests
 
 - (void)testSimpleAtomicCounter {
-    DDAtomicCounter *atomicCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
+    __auto_type atomicCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
     XCTAssertEqual([atomicCounter value], 0);
     XCTAssertEqual([atomicCounter increment], 1);
     XCTAssertEqual([atomicCounter value], 1);
@@ -33,8 +33,8 @@
 }
 
 - (void)testMultithreadAtomicCounter {
-    DDAtomicCounter *atomicCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Multithread atomic counter"];
+    __auto_type atomicCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
+    __auto_type expectation = [self expectationWithDescription:@"Multithread atomic counter"];
     dispatch_queue_global_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
     int numberOfThreads = 5;
@@ -59,8 +59,8 @@
 }
 
 - (void)testMultithreadAtomicCounterWithIncrementAndDecrement {
-    DDAtomicCounter *atomicCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Multithread atomic counter inc and dec"];
+    __auto_type atomicCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
+    __auto_type expectation = [self expectationWithDescription:@"Multithread atomic counter inc and dec"];
     dispatch_queue_global_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
     int numberOfThreads = 5;

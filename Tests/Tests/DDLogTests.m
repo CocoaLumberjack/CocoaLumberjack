@@ -43,19 +43,19 @@
 #pragma mark - Logger management
 
 - (void)testAddLoggerAddsNewLoggerWithDDLogLevelAll {
-    DDTestLogger *logger = [DDTestLogger new];
+    __auto_type logger = [DDTestLogger new];
     [DDLog addLogger:logger];
     XCTAssertEqual([DDLog allLoggers].count, 1);
 }
 
 - (void)testAddLoggerWithLevelAddLoggerWithSpecifiedLevelMask {
-    DDTestLogger *logger = [DDTestLogger new];
+    __auto_type logger = [DDTestLogger new];
     [DDLog addLogger:logger withLevel:DDLogLevelDebug | DDLogLevelError];
     XCTAssertEqual([DDLog allLoggers].count, 1);
 }
 
 - (void)testRemoveLoggerRemovesExistingLogger {
-    DDTestLogger *logger = [DDTestLogger new];
+    __auto_type logger = [DDTestLogger new];
     [DDLog addLogger:logger];
     [DDLog addLogger:[DDTestLogger new]];
     [DDLog removeLogger:logger];

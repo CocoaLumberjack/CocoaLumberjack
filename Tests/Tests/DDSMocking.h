@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_END
 - (instancetype)initWithSelector:(NSString *)selector position:(NSNumber *)position;
 @end
 
-@interface DDBasicMock<T>: NSObject
+@interface DDBasicMock<T>: NSProxy
 + (instancetype)decoratedInstance:(T)object;
 - (instancetype)enableStub;
 - (instancetype)disableStub;
