@@ -30,25 +30,6 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 @end
 
-@interface DDBasicMockAbstractLogger: DDAbstractLogger
-@property (copy, nonatomic, readwrite) void(^block)(id object);
-- (instancetype)configuredWithBlock:(void(^)(id object))block;
-@end
-@implementation DDBasicMockAbstractLogger
-- (void)logMessage:(DDLogMessage *)logMessage {
-    if (self.block) {
-        self.block(logMessage);
-    }
-    else {
-        [super logMessage:logMessage];
-    }
-}
-- (instancetype)configuredWithBlock:(void (^)(id))block {
-    self.block = block;
-    return self;
-}
-@end
-
 @implementation DDBasicLoggingTests
 
 - (void)reactOnMessage:(id)object {
@@ -70,20 +51,6 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     self.logs = @[];
     self.expectation = nil;
     self.noOfMessagesLogged = 0;
-}
-
-- (void)_setUp {
-    [super setUp];
-    
-    if (self.logger == nil) {
-        __weak typeof(self) weakSelf = self;
-        __auto_type logger = [[DDBasicMockAbstractLogger new] configuredWithBlock:^(id object) {
-            [weakSelf reactOnMessage:object];
-        }];
-        self.logger = logger;
-    }
-    
-    [self cleanup];
 }
 
 - (void)setUp {
