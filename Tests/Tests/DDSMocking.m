@@ -102,9 +102,8 @@
     DDBasicMockArgumentPosition *thePosition = [[DDBasicMockArgumentPosition alloc] initWithSelector:NSStringFromSelector(selector) position:@(index)];
     dictionary[thePosition] = [argument copy];
     __auto_type theArgument = argument;
-    NSLog(@"%s %@ here we have: thePosition: %@ and theArgument: %@. All Handlers: %@", __PRETTY_FUNCTION__, self, thePosition, theArgument, _positionsAndArguments);
     self.positionsAndArguments = dictionary;
-    NSLog(@"%s %@ here we have: thePosition: %@ and theArgument: %@. All Handlers: %@", __PRETTY_FUNCTION__, self, thePosition, theArgument, _positionsAndArguments);
+    NSLog(@"%s %@ here we have: thePosition: %@ and theArgument: %@. All Handlers: %@", __PRETTY_FUNCTION__, self, thePosition, theArgument, self.positionsAndArguments);
 }
 - (void)forwardInvocation:(NSInvocation *)invocation {
     NSUInteger numberOfArguments = [[invocation methodSignature] numberOfArguments];
@@ -114,22 +113,15 @@
         [invocation getArgument:&abc atIndex:i];
         id argument = (__bridge id)(abc);
         DDBasicMockArgumentPosition *thePosition = [[DDBasicMockArgumentPosition alloc] initWithSelector:NSStringFromSelector(invocation.selector) position:@(i)];
-        DDBasicMockArgument *theArgument = _positionsAndArguments[thePosition];
-        NSLog(@"%@ here we have: thePosition: %@ and theArgument: %@. All Handlers: %@", self, thePosition, theArgument, _positionsAndArguments);
+        DDBasicMockArgument *theArgument = self.positionsAndArguments[thePosition];
+        NSLog(@"%@ here we have: thePosition: %@ and theArgument: %@. All Handlers: %@", self, thePosition, theArgument, self.positionsAndArguments);
         if (theArgument.block) {
             found = YES;
             theArgument.block(argument);
         }
-        [invocation setArgument:(__bridge void * _Nonnull)(argument) atIndex:i];
-        argument = nil;
     }
     if (!found) {
-        [invocation setTarget:self.object];
-        [invocation invoke];
-    }
-    else {
-        [invocation setTarget:nil];
-        [invocation invoke];
+        [invocation invokeWithTarget:self.object];
     }
 }
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel {
