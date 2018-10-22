@@ -17,8 +17,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DDSMocking : NSObject
-
+@interface DDSMocking: NSObject
 @end
 
 NS_ASSUME_NONNULL_END

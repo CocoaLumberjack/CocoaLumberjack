@@ -23,7 +23,6 @@ static NSString * const kDefaultMessage = @"Log message";
 + (DDLogMessage *)test_messageWithMessage:(NSString *)message;
 + (DDLogMessage *)test_messageWithFunction:(NSString *)function options:(DDLogMessageOptions)options;
 + (DDLogMessage *)test_messageWithFile:(NSString *)file options:(DDLogMessageOptions)options;
-
 @end
 
 @implementation DDLogMessage (TestHelpers)
@@ -110,7 +109,6 @@ static NSString * const kDefaultMessage = @"Log message";
 
 - (void)tearDown {
     [super tearDown];
-
     self.message = nil;
 }
 
@@ -174,7 +172,6 @@ static NSString * const kDefaultMessage = @"Log message";
     // We're running on main thread
     XCTAssertEqualObjects(self.message.queueLabel, @"com.apple.main-thread");
 }
-
 
 - (void)testInitAssignsFileParameterWithoutCopyFileOption {
     __auto_type file = [NSMutableString stringWithString:@"file"];

@@ -199,7 +199,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 432B53201AAE40EB00843E69 /* Build configuration list for PBXProject "CocoaLumberjack Tests" */;
+			buildConfigurationList = 432B53201AAE40EB00843E69 /* Build configuration list for PBXProject "Tests" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -322,8 +322,6 @@
 				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				SUPPORTED_PLATFORMS = macosx;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "";
 			};
 			name = Debug;
@@ -340,7 +338,6 @@
 				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				SUPPORTED_PLATFORMS = macosx;
-				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "";
 			};
 			name = Release;
@@ -368,7 +365,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		432B53201AAE40EB00843E69 /* Build configuration list for PBXProject "CocoaLumberjack Tests" */ = {
+		432B53201AAE40EB00843E69 /* Build configuration list for PBXProject "Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				432B532A1AAE40EB00843E69 /* Debug */,

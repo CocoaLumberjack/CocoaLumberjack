@@ -22,12 +22,10 @@ const NSTimeInterval kAsyncExpectationTimeout = 3.0f;
 static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 @interface DDBasicLoggingTests : XCTestCase
-
 @property (nonatomic, strong) NSArray *logs;
 @property (nonatomic, strong) XCTestExpectation *expectation;
 @property (nonatomic, strong) DDAbstractLogger *logger;
 @property (nonatomic, assign) NSUInteger noOfMessagesLogged;
-
 @end
 
 @implementation DDBasicLoggingTests
@@ -70,6 +68,12 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     }
 
     [self cleanup];
+}
+
+- (void)tearDown {
+    [self cleanup];
+    
+    [super tearDown];
 }
 
 - (void)testAll5DefaultLevelsAsync {
