@@ -39,12 +39,6 @@
       location = "group:../Lumberjack.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../Tests/CocoaLumberjack Tests.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:../Tests/Pods/Pods.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Pods/Pods.xcodeproj">
+      location = "group:../Tests/Tests.xcodeproj">
    </FileRef>
 </Workspace>

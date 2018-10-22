@@ -14,14 +14,12 @@
 //   prior written permission of Deusty, LLC.
 
 @import XCTest;
-#import "CocoaLumberjack.h"
-#import <OCMock/OCMock.h>
-#import <Expecta/Expecta.h>
-
+#import <CocoaLumberjack/CocoaLumberjack.h>
+#import "DDSMocking.h"
 
 const NSTimeInterval kAsyncExpectationTimeout = 3.0f;
 
-DDLogLevel ddLogLevel = DDLogLevelVerbose;
+static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 @interface DDBasicLoggingTests : XCTestCase
 
@@ -34,31 +32,16 @@ DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 @implementation DDBasicLoggingTests
 
-- (void)setUp {
-    [super setUp];
-    
-    if (self.logger == nil) {
-        self.logger = OCMPartialMock([[DDAbstractLogger alloc] init]);
-        
-        __weak typeof(self)weakSelf = self;
-        
-        OCMStub([self.logger logMessage:[OCMArg checkWithBlock:^BOOL(id obj) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            
-            DDLogMessage *message = (DDLogMessage *)obj;
-            
-            expect(strongSelf.logs).to.contain(message.message);
-            
-            strongSelf.noOfMessagesLogged++;
-            
-            if (strongSelf.noOfMessagesLogged == [strongSelf.logs count]) {
-                [self.expectation fulfill];
-            }
-            
-            return YES;
-        }]]);
+- (void)reactOnMessage:(id)object {
+    __auto_type message = (DDLogMessage *)object;
+    XCTAssertTrue([self.logs containsObject:message.message]);
+    self.noOfMessagesLogged++;
+    if (self.noOfMessagesLogged == [self.logs count]) {
+        [self.expectation fulfill];
     }
-    
+}
+
+- (void)cleanup {
     [DDLog removeAllLoggers];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     [DDLog addLogger:self.logger];
@@ -68,6 +51,25 @@ DDLogLevel ddLogLevel = DDLogLevelVerbose;
     self.logs = @[];
     self.expectation = nil;
     self.noOfMessagesLogged = 0;
+}
+
+- (void)setUp {
+    [super setUp];
+    
+    if (self.logger == nil) {
+        __auto_type logger = [DDBasicMock<DDAbstractLogger *> decoratedInstance:[[DDAbstractLogger alloc] init]];
+
+        __weak typeof(self)weakSelf = self;
+        __auto_type argument = [DDBasicMockArgument alongsideWithBlock:^(id object) {
+            [weakSelf reactOnMessage:object];
+        }];
+        
+        [logger addArgument:argument forSelector:@selector(logMessage:) atIndex:2];
+        
+        self.logger = (DDAbstractLogger *)logger;
+    }
+
+    [self cleanup];
 }
 
 - (void)testAll5DefaultLevelsAsync {
@@ -81,7 +83,7 @@ DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogVerbose(@"Verbose");
     
     [self waitForExpectationsWithTimeout:kAsyncExpectationTimeout handler:^(NSError *timeoutError) {
-        expect(timeoutError).to.beNil();
+        XCTAssertNil(timeoutError);
     }];
 }
 
@@ -99,7 +101,7 @@ DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogVerbose(@"Verbose");
     
     [self waitForExpectationsWithTimeout:kAsyncExpectationTimeout handler:^(NSError *timeoutError) {
-        expect(timeoutError).to.beNil();
+        XCTAssertNil(timeoutError);
     }];
 }
 
@@ -116,7 +118,7 @@ DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogVerbose(@"Verbose");
     
     [self waitForExpectationsWithTimeout:kAsyncExpectationTimeout handler:^(NSError *timeoutError) {
-        expect(timeoutError).to.beNil();
+        XCTAssertNil(timeoutError);
     }];
     
     ddLogLevel = DDLogLevelVerbose;
