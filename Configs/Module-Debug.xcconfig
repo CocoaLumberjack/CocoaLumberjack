@@ -19,7 +19,7 @@ ENABLE_TESTABILITY = YES
 GCC_OPTIMIZATION_LEVEL = 0
 
 // Space-separated list of preprocessor macros of the form `foo` or `foo=bar`
-GCC_PREPROCESSOR_DEFINITIONS = DEBUG=1 $(inherited)
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) DEBUG=1
 
 // Metal debug info - not sure why we need it
 MTL_ENABLE_DEBUG_INFO = YES

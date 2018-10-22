@@ -296,8 +296,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 435F03B32174AB9600A86B2D /* Module-Debug.xcconfig */;
 			buildSettings = {
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -305,15 +303,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 435F03B22174AB9600A86B2D /* Module-Release.xcconfig */;
 			buildSettings = {
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 		432B533A1AAE423E00843E69 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -329,7 +324,6 @@
 		432B533B1AAE423E00843E69 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",

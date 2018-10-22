@@ -3,3 +3,9 @@
 
 #include "Module-Debug.xcconfig"
 #include "App-Shared.xcconfig"
+
+// Space-separated list of preprocessor macros of the form `foo` or `foo=bar`
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) DEBUG=1 DD_LOG_LEVEL=DDLogLevelAll
+
+// A list of compilation conditions to enable for conditional compilation expressions.
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG

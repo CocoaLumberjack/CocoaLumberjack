@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A87D41E2175E82900BD0C4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A87D41D2175E82900BD0C4C /* AppDelegate.swift */; };
 		0A87D4BA217649C600BD0C4C /* libCocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4A7217649B700BD0C4C /* libCocoaLumberjack.a */; };
 		0A87D4BB217649CD00BD0C4C /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4A9217649B700BD0C4C /* CocoaLumberjack.framework */; };
 		0A87D4BD217649E700BD0C4C /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; };
@@ -34,15 +33,8 @@
 		0AC2979D2178A13700BFE4D2 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC2979C2178A13700BFE4D2 /* Formatter.swift */; };
 		0AC2979E2178A13700BFE4D2 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC2979C2178A13700BFE4D2 /* Formatter.swift */; };
 		0AC2979F2178A13700BFE4D2 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC2979C2178A13700BFE4D2 /* Formatter.swift */; };
-		0AC297A32178E44600BFE4D2 /* App-Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A02178E44600BFE4D2 /* App-Release.xcconfig */; };
-		0AC297A42178E44600BFE4D2 /* App-Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A02178E44600BFE4D2 /* App-Release.xcconfig */; };
-		0AC297A52178E44600BFE4D2 /* App-Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A02178E44600BFE4D2 /* App-Release.xcconfig */; };
-		0AC297A62178E44600BFE4D2 /* App-Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A12178E44600BFE4D2 /* App-Debug.xcconfig */; };
-		0AC297A72178E44600BFE4D2 /* App-Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A12178E44600BFE4D2 /* App-Debug.xcconfig */; };
-		0AC297A82178E44600BFE4D2 /* App-Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A12178E44600BFE4D2 /* App-Debug.xcconfig */; };
-		0AC297A92178E44600BFE4D2 /* App-Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A22178E44600BFE4D2 /* App-Shared.xcconfig */; };
-		0AC297AA2178E44600BFE4D2 /* App-Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A22178E44600BFE4D2 /* App-Shared.xcconfig */; };
-		0AC297AB2178E44600BFE4D2 /* App-Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0AC297A22178E44600BFE4D2 /* App-Shared.xcconfig */; };
+		43151F2F2179042A00DBB436 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43151F2E2179042A00DBB436 /* main.swift */; };
+		43151F362179051D00DBB436 /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +74,34 @@
 			remoteInfo = watchOSSwiftIntegration;
 		};
 		0A87D57E2177C2BC00BD0C4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A87D499217649B700BD0C4C /* Lumberjack.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 19FF460E1B8B4D1400B43179;
+			remoteInfo = CocoaLumberjackSwift;
+		};
+		43151F17217900D900DBB436 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A87D499217649B700BD0C4C /* Lumberjack.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 19FF460E1B8B4D1400B43179;
+			remoteInfo = CocoaLumberjackSwift;
+		};
+		43151F30217904E300DBB436 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A87D499217649B700BD0C4C /* Lumberjack.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 18F3BFD61A81E06E00692297;
+			remoteInfo = "CocoaLumberjack-Static";
+		};
+		43151F32217904ED00DBB436 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A87D499217649B700BD0C4C /* Lumberjack.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 19FF46011B8B4CF400B43179;
+			remoteInfo = CocoaLumberjack;
+		};
+		43151F342179050400DBB436 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A87D499217649B700BD0C4C /* Lumberjack.xcodeproj */;
 			proxyType = 1;
@@ -131,7 +151,6 @@
 		0A87D3EA2175E6E600BD0C4C /* iOSFrameworkIntegration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSFrameworkIntegration.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A87D3FA2175E6E700BD0C4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A87D41B2175E82900BD0C4C /* macOSSwiftIntegration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macOSSwiftIntegration.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0A87D41D2175E82900BD0C4C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A87D4242175E82A00BD0C4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A87D4252175E82A00BD0C4C /* macOSSwiftIntegration.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOSSwiftIntegration.entitlements; sourceTree = "<group>"; };
 		0A87D42D2175E84100BD0C4C /* tvOSSwiftIntegration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tvOSSwiftIntegration.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -163,6 +182,7 @@
 		0AC297A02178E44600BFE4D2 /* App-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "App-Release.xcconfig"; sourceTree = "<group>"; };
 		0AC297A12178E44600BFE4D2 /* App-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "App-Debug.xcconfig"; sourceTree = "<group>"; };
 		0AC297A22178E44600BFE4D2 /* App-Shared.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "App-Shared.xcconfig"; sourceTree = "<group>"; };
+		43151F2E2179042A00DBB436 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +222,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43151F362179051D00DBB436 /* CocoaLumberjackSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,9 +295,9 @@
 		0A87D41C2175E82900BD0C4C /* macOSSwiftIntegration */ = {
 			isa = PBXGroup;
 			children = (
-				0A87D41D2175E82900BD0C4C /* AppDelegate.swift */,
 				0A87D4242175E82A00BD0C4C /* Info.plist */,
 				0A87D4252175E82A00BD0C4C /* macOSSwiftIntegration.entitlements */,
+				43151F2E2179042A00DBB436 /* main.swift */,
 			);
 			path = macOSSwiftIntegration;
 			sourceTree = "<group>";
@@ -372,6 +393,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				43151F31217904E300DBB436 /* PBXTargetDependency */,
 			);
 			name = iOSStaticLibraryIntegration;
 			productName = iOSStaticLibraryIntegration;
@@ -389,6 +411,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				43151F33217904ED00DBB436 /* PBXTargetDependency */,
 			);
 			name = iOSFrameworkIntegration;
 			productName = iOSFrameworkIntegration;
@@ -406,6 +429,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				43151F18217900D900DBB436 /* PBXTargetDependency */,
 			);
 			name = macOSSwiftIntegration;
 			productName = macOSSwiftIntegration;
@@ -423,6 +447,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				43151F352179050400DBB436 /* PBXTargetDependency */,
 			);
 			name = tvOSSwiftIntegration;
 			productName = tvOSSwiftIntegration;
@@ -502,6 +527,7 @@
 					};
 					0A87D41A2175E82900BD0C4C = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1000;
 					};
 					0A87D42C2175E84100BD0C4C = {
 						CreatedOnToolsVersion = 10.0;
@@ -592,9 +618,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AC297A62178E44600BFE4D2 /* App-Debug.xcconfig in Resources */,
-				0AC297A32178E44600BFE4D2 /* App-Release.xcconfig in Resources */,
-				0AC297A92178E44600BFE4D2 /* App-Shared.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -602,9 +625,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AC297A72178E44600BFE4D2 /* App-Debug.xcconfig in Resources */,
-				0AC297A42178E44600BFE4D2 /* App-Release.xcconfig in Resources */,
-				0AC297AA2178E44600BFE4D2 /* App-Shared.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,9 +632,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AC297A82178E44600BFE4D2 /* App-Debug.xcconfig in Resources */,
-				0AC297A52178E44600BFE4D2 /* App-Release.xcconfig in Resources */,
-				0AC297AB2178E44600BFE4D2 /* App-Shared.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -662,7 +679,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AC2979D2178A13700BFE4D2 /* Formatter.swift in Sources */,
-				0A87D41E2175E82900BD0C4C /* AppDelegate.swift in Sources */,
+				43151F2F2179042A00DBB436 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -714,6 +731,26 @@
 			name = CocoaLumberjackSwift;
 			targetProxy = 0A87D57E2177C2BC00BD0C4C /* PBXContainerItemProxy */;
 		};
+		43151F18217900D900DBB436 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaLumberjackSwift;
+			targetProxy = 43151F17217900D900DBB436 /* PBXContainerItemProxy */;
+		};
+		43151F31217904E300DBB436 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CocoaLumberjack-Static";
+			targetProxy = 43151F30217904E300DBB436 /* PBXContainerItemProxy */;
+		};
+		43151F33217904ED00DBB436 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaLumberjack;
+			targetProxy = 43151F32217904ED00DBB436 /* PBXContainerItemProxy */;
+		};
+		43151F352179050400DBB436 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaLumberjackSwift;
+			targetProxy = 43151F342179050400DBB436 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -745,15 +782,8 @@
 		0A87D3D72175E56400BD0C4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = iOSStaticLibraryIntegration/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -762,15 +792,8 @@
 		0A87D3D82175E56400BD0C4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = iOSStaticLibraryIntegration/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -779,16 +802,8 @@
 		0A87D3FE2175E6E700BD0C4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = iOSFrameworkIntegration/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -797,16 +812,8 @@
 		0A87D3FF2175E6E700BD0C4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = iOSFrameworkIntegration/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -815,16 +822,18 @@
 		0A87D4272175E82A00BD0C4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = macOSSwiftIntegration/macOSSwiftIntegration.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = macOSSwiftIntegration/Info.plist;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = macosx;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				TARGETED_DEVICE_FAMILY = "";
 			};
 			name = Debug;
@@ -832,13 +841,16 @@
 		0A87D4282175E82A00BD0C4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = macOSSwiftIntegration/macOSSwiftIntegration.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = macOSSwiftIntegration/Info.plist;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = macosx;
 				TARGETED_DEVICE_FAMILY = "";
@@ -848,13 +860,9 @@
 		0A87D43A2175E84200BD0C4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = tvOSSwiftIntegration/Info.plist;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				TARGETED_DEVICE_FAMILY = 3;
 			};
 			name = Debug;
@@ -862,10 +870,7 @@
 		0A87D43B2175E84200BD0C4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = tvOSSwiftIntegration/Info.plist;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				TARGETED_DEVICE_FAMILY = 3;
@@ -875,18 +880,9 @@
 		0A87D5532177C22700BD0C4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = iOSSwiftIntegration/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -894,16 +890,9 @@
 		0A87D5542177C22700BD0C4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = iOSSwiftIntegration/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
-				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -911,29 +900,26 @@
 		0A87D5762177C25900BD0C4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				INFOPLIST_FILE = "watchOSSwiftIntegration Extension/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER_PREFIX).iOSSwiftIntegration.watchkitapp.watchkitextension";
-				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 5.0;
 			};
 			name = Debug;
 		};
 		0A87D5772177C25900BD0C4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				INFOPLIST_FILE = "watchOSSwiftIntegration Extension/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER_PREFIX).iOSSwiftIntegration.watchkitapp.watchkitextension";
-				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 5.0;
 			};
 			name = Release;
 		};
@@ -941,19 +927,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				IBSC_MODULE = watchOSSwiftIntegration_Extension;
 				INFOPLIST_FILE = watchOSSwiftIntegration/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER_PREFIX).iOSSwiftIntegration.watchkitapp";
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 5.0;
 			};
 			name = Debug;
 		};
@@ -961,19 +940,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				IBSC_MODULE = watchOSSwiftIntegration_Extension;
 				INFOPLIST_FILE = watchOSSwiftIntegration/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER_PREFIX).iOSSwiftIntegration.watchkitapp";
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 5.0;
 			};
 			name = Release;
 		};
