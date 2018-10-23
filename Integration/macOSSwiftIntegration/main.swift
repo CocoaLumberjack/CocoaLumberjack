@@ -13,23 +13,11 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-import WatchKit
 import Foundation
+import CocoaLumberjackSwift
 
-class InterfaceController: WKInterfaceController {
-
-    override func awake(withContext context: Any?) {
-        super.awake(withContext: context)
-        // Configure interface objects here.
-    }
-    
-    override func willActivate() {
-        // This method is called when watch view controller is about to be visible to user
-        super.willActivate()
-    }
-    
-    override func didDeactivate() {
-        // This method is called when watch view controller is no longer visible
-        super.didDeactivate()
-    }
-}
+DDLog.add(DDOSLogger.sharedInstance)
+DDLogVerbose("Verbose")
+DDLogInfo("Info")
+DDLogWarn("Warn")
+DDLogError("Error")
