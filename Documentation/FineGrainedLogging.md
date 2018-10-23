@@ -98,3 +98,35 @@ For example, let's say you wanted to have 30 fine-grained log options. No proble
 All we had to do was use a new variable - ddLogLevel2.
 
 You should also note that you aren't restricted to the 4 pre-defined log levels. You can define them however you want. Learn more in the [Custom Log Levels](CustomLogLevels.md) page.
+
+### Swift equivalent
+
+Thanks to @omerlh, we have a Swift equivalent for this feature.
+
+1. Create another enum
+
+```swift
+public enum CustomLogFlags : UInt{
+    case test = 0b0100000
+}
+```
+
+2. Then set the log level
+
+```swift
+DDLog.logLevel = DDLogLevel(rawValue: DDLogLevel.error.rawValue | CustomLogFlags.test.rawValue) ?? DDLogLevel.error
+```
+
+3. Now you can log messages using the new log level:
+
+```swift
+let logLevel = DDLogFlag(rawValue: CustomLogFlags.test.rawValue)
+let logMsg = DDLogMessage(message: message(), level: logLevel, flag: flag, context: 0, 
+                          file: file, function: function, line: line,
+                          tag: tag, options: DDLogMessageOptions(rawValue: 0), timestamp: nil)
+DDLog.log(logAsync, message: logMsg)
+```
+
+Details can be found:
+- https://stackoverflow.com/questions/44627804/fine-grained-logging-when-using-cocoalumberjack-in-swift/44692158#44692158
+- https://github.com/CocoaLumberjack/CocoaLumberjack/issues/876
