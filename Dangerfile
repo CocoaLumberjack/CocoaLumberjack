@@ -84,3 +84,57 @@ if modified_carthage_xcode_project
 	end
   end
 end
+
+
+# Check Copyright
+source_copyright_lines = [
+"// Software License Agreement (BSD License)",
+"//",
+"// Copyright (c) 2010-2018, Deusty, LLC",
+"// All rights reserved.",
+"//",
+"// Redistribution and use of this software in source and binary forms,",
+"// with or without modification, are permitted provided that the following conditions are met:",
+"//",
+"// * Redistributions of source code must retain the above copyright notice,",
+"//   this list of conditions and the following disclaimer.",
+"//",
+"// * Neither the name of Deusty nor the names of its contributors may be used",
+"//   to endorse or promote products derived from this software without specific",
+"//   prior written permission of Deusty, LLC."
+]
+
+demos_copyright_lines = [
+"//",
+"//  ",
+"//  ",
+"//",
+"//  CococaLumberjack Demos",
+"//"
+]
+
+# sourcefiles_to_check = Dir.glob("*/*/*") # uncomment when we want to test all the files (locally)
+
+sourcefiles_to_check = (git.modified_files + git.added_files).uniq
+invalid_copyright = false
+sourcefiles_to_check.each do |sourcefile|
+  fileExtension = File.extname(sourcefile)
+  next unless (fileExtension===".swift" or fileExtension===".h" or fileExtension===".m")
+  next unless File.file?(sourcefile)
+
+  # decision: source files will check against source_copyright_lines, while demos against demos_copyright_lines
+  copyright_lines = source_copyright_lines
+  if sourcefile.start_with?("Demos/")
+    copyright_lines = demos_copyright_lines
+  end
+  File.readlines(sourcefile)[0..copyright_lines.count-1].each_with_index do |line, index|
+    if !line.include?(copyright_lines[index])
+      invalid_copyright = true
+      markdown("Invalid copyright: " + sourcefile)
+      break
+    end
+  end
+end
+if invalid_copyright === true
+  warn("Copyright is not valid. See our default copyright in all of our files (Classed and Demos use different format).")
+end
