@@ -10,10 +10,37 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "19FF46011B8B4CF400B43179"
+            BuildableName = "CocoaLumberjack.framework"
+            BlueprintName = "CocoaLumberjack"
+            ReferencedContainer = "container:../Lumberjack.xcodeproj">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "18F3BFD61A81E06E00692297"
+            BuildableName = "libCocoaLumberjack.a"
+            BlueprintName = "CocoaLumberjack-Static"
+            ReferencedContainer = "container:../Lumberjack.xcodeproj">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "19FF460E1B8B4D1400B43179"
+            BuildableName = "CocoaLumberjackSwift.framework"
+            BlueprintName = "CocoaLumberjackSwift"
+            ReferencedContainer = "container:../Lumberjack.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "YES"
+            testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "432B533F1AAE425D00843E69"

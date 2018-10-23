@@ -16,11 +16,16 @@
 @import XCTest;
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
-@interface DDTestLogger : NSObject <DDLogger> @end
+@interface DDTestLogger : NSObject <DDLogger>
+@end
 
-@implementation DDTestLogger @end
+@implementation DDTestLogger
+@synthesize logFormatter;
+- (void)logMessage:(nonnull DDLogMessage *)logMessage {}
+@end
 
-@interface DDLogTests : XCTestCase @end
+@interface DDLogTests : XCTestCase
+@end
 
 
 // The fact thath the DDLog is initialized using +initialize makes it a bit
@@ -30,8 +35,8 @@
 @implementation DDLogTests
 
 - (void)setUp {
-    [DDLog removeAllLoggers];
     [super setUp];
+    [DDLog removeAllLoggers];
 }
 
 - (void)tearDown {

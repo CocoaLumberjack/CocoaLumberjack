@@ -18,7 +18,6 @@
 #import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
 
 @interface DDAtomicCounterTests : XCTestCase
-
 @end
 
 @implementation DDAtomicCounterTests
@@ -35,11 +34,11 @@
 - (void)testMultithreadAtomicCounter {
     __auto_type atomicCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
     __auto_type expectation = [self expectationWithDescription:@"Multithread atomic counter"];
-    dispatch_queue_global_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    __auto_type globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
-    int numberOfThreads = 5;
-    __block int executedCount = 0;
-    for (int i=0; i<numberOfThreads; i++) {
+    NSInteger numberOfThreads = 5;
+    __block NSInteger executedCount = 0;
+    for (NSInteger i=0; i<numberOfThreads; i++) {
         dispatch_async(globalQueue, ^{
             [atomicCounter increment];
             XCTAssertGreaterThanOrEqual([atomicCounter value], 1);
@@ -61,11 +60,11 @@
 - (void)testMultithreadAtomicCounterWithIncrementAndDecrement {
     __auto_type atomicCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
     __auto_type expectation = [self expectationWithDescription:@"Multithread atomic counter inc and dec"];
-    dispatch_queue_global_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    __auto_type globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
-    int numberOfThreads = 5;
-    __block int executedCount = 0;
-    for (int i=0; i<numberOfThreads; i++) {
+    NSInteger numberOfThreads = 5;
+    __block NSInteger executedCount = 0;
+    for (NSInteger i=0; i<numberOfThreads; i++) {
         dispatch_async(globalQueue, ^{
             [atomicCounter increment];
             executedCount++;
