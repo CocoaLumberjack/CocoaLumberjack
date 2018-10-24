@@ -1,4 +1,5 @@
 ## [3.5.0 - Xcode 10 on ?? ??, 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.0)
+- Reduce podspec to 2subspecs and remove customized modulemap #976
 - Add danger support for PR checks #962 - fixes #956
 - Merged framework targets + using `xcconfig` + deployment target `iOS 8` and `Mac OS 10.10` #959 e97da34
 - Doc update #955 e7414ae 0239196 #933

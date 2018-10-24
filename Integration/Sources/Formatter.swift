@@ -14,7 +14,7 @@
 //   prior written permission of Deusty, LLC.
 
 import Foundation
-import CocoaLumberjack.DDDispatchQueueLogFormatter
+import CocoaLumberjackSwift
 
 class Formatter: DDDispatchQueueLogFormatter {
     let threadUnsafeDateFormatter: DateFormatter

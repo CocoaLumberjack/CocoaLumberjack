@@ -59,6 +59,12 @@
 
 #import <Foundation/Foundation.h>
 
+//! Project version number for CocoaLumberjack.
+FOUNDATION_EXPORT double CocoaLumberjackVersionNumber;
+
+//! Project version string for CocoaLumberjack.
+FOUNDATION_EXPORT const unsigned char CocoaLumberjackVersionString[];
+
 // Disable legacy macros
 #ifndef DD_LEGACY_MACROS
     #define DD_LEGACY_MACROS 0
@@ -80,7 +86,15 @@
 #import "DDFileLogger.h"
 #import "DDOSLogger.h"
 
+// Extensions
+#import "DDContextFilterLogFormatter.h"
+#import "DDDispatchQueueLogFormatter.h"
+#import "DDMultiFormatter.h"
+
 // CLI
-#if __has_include("CLIColor.h") && TARGET_OS_OSX
 #import "CLIColor.h"
-#endif
+
+// etc
+#import "DDAbstractDatabaseLogger.h"
+#import "DDLog+LOGV.h"
+#import "DDLegacyMacros.h"
