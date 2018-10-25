@@ -21,7 +21,7 @@ CocoaLumberjack
 
 ##### Swift version via CocoaPods
 ```ruby
-platform :ios, '12.0'
+platform :ios, '8.0'
 
 # You need to set target when you use CocoaPods 1.0.0 or later.
 target 'SampleTarget' do
@@ -59,7 +59,7 @@ DDLogError("Error")
 ##### Obj-C version via CocoaPods
 
 ```ruby
-platform :ios, '12.0'
+platform :ios, '8.0'
 pod 'CocoaLumberjack'
 ```
 
