@@ -15,6 +15,8 @@
 		432B534E1AAE43A200843E69 /* DDBasicLoggingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 432B534C1AAE43A200843E69 /* DDBasicLoggingTests.m */; };
 		80AC19B12170AC54007800DC /* DDAtomicCounterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AC19B02170AC54007800DC /* DDAtomicCounterTests.m */; };
 		80AC19B22170AC58007800DC /* DDAtomicCounterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AC19B02170AC54007800DC /* DDAtomicCounterTests.m */; };
+		C7BC6D1F21906764005AF2FC /* DDOSLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BC6D1E21906764005AF2FC /* DDOSLoggerTests.m */; };
+		C7BC6D2021906764005AF2FC /* DDOSLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BC6D1E21906764005AF2FC /* DDOSLoggerTests.m */; };
 		E982AAF21AE2C25800088365 /* DDLogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E982AAF11AE2C25800088365 /* DDLogTests.m */; };
 		E982AAF31AE2C25800088365 /* DDLogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E982AAF11AE2C25800088365 /* DDLogTests.m */; };
 		E9D3C9E31AE28AF400E795C5 /* DDLogMessageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E9D3C9E21AE28AF400E795C5 /* DDLogMessageTests.m */; };
@@ -56,6 +58,7 @@
 		435F03B32174AB9600A86B2D /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
 		435F03B42174AB9600A86B2D /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
 		80AC19B02170AC54007800DC /* DDAtomicCounterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDAtomicCounterTests.m; sourceTree = "<group>"; };
+		C7BC6D1E21906764005AF2FC /* DDOSLoggerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDOSLoggerTests.m; sourceTree = "<group>"; };
 		DA1B17371AB067EF004705E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E982AAF11AE2C25800088365 /* DDLogTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLogTests.m; sourceTree = "<group>"; };
 		E9D3C9E21AE28AF400E795C5 /* DDLogMessageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLogMessageTests.m; sourceTree = "<group>"; };
@@ -122,10 +125,11 @@
 		432B534B1AAE437D00843E69 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				432B534C1AAE43A200843E69 /* DDBasicLoggingTests.m */,
-				E982AAF11AE2C25800088365 /* DDLogTests.m */,
-				E9D3C9E21AE28AF400E795C5 /* DDLogMessageTests.m */,
 				80AC19B02170AC54007800DC /* DDAtomicCounterTests.m */,
+				432B534C1AAE43A200843E69 /* DDBasicLoggingTests.m */,
+				E9D3C9E21AE28AF400E795C5 /* DDLogMessageTests.m */,
+				E982AAF11AE2C25800088365 /* DDLogTests.m */,
+				C7BC6D1E21906764005AF2FC /* DDOSLoggerTests.m */,
 				0A7E1D55217A7A380011CFEB /* DDSMocking.h */,
 				0A7E1D56217A7A380011CFEB /* DDSMocking.m */,
 			);
@@ -274,6 +278,7 @@
 				80AC19B12170AC54007800DC /* DDAtomicCounterTests.m in Sources */,
 				E9D3C9E31AE28AF400E795C5 /* DDLogMessageTests.m in Sources */,
 				432B534D1AAE43A200843E69 /* DDBasicLoggingTests.m in Sources */,
+				C7BC6D1F21906764005AF2FC /* DDOSLoggerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +291,7 @@
 				80AC19B22170AC58007800DC /* DDAtomicCounterTests.m in Sources */,
 				E9D3C9E41AE28AF400E795C5 /* DDLogMessageTests.m in Sources */,
 				432B534E1AAE43A200843E69 /* DDBasicLoggingTests.m in Sources */,
+				C7BC6D2021906764005AF2FC /* DDOSLoggerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

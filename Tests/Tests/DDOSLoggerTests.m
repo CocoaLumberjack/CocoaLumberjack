@@ -13,7 +13,7 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-@import XCTest;
+#import <XCTest/XCTest.h>
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import "DDSMocking.h"
 
@@ -21,14 +21,14 @@ static const NSTimeInterval kAsyncExpectationTimeout = 3.0f;
 
 static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
-@interface DDBasicLoggingTests : XCTestCase
+@interface DDOSLoggerTests : XCTestCase
 @property (nonatomic, strong) NSArray *logs;
 @property (nonatomic, strong) XCTestExpectation *expectation;
 @property (nonatomic, strong) DDAbstractLogger *logger;
 @property (nonatomic, assign) NSUInteger noOfMessagesLogged;
 @end
 
-@implementation DDBasicLoggingTests
+@implementation DDOSLoggerTests
 
 - (void)reactOnMessage:(id)object {
     __auto_type message = (DDLogMessage *)object;
@@ -41,7 +41,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 - (void)cleanup {
     [DDLog removeAllLoggers];
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [DDLog addLogger:[DDOSLogger sharedInstance]];
     [DDLog addLogger:self.logger];
     
     ddLogLevel = DDLogLevelVerbose;
@@ -56,7 +56,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     
     if (self.logger == nil) {
         __auto_type logger = [DDBasicMock<DDAbstractLogger *> decoratedInstance:[[DDAbstractLogger alloc] init]];
-
+        
         __weak typeof(self)weakSelf = self;
         __auto_type argument = [DDBasicMockArgument alongsideWithBlock:^(id object) {
             [weakSelf reactOnMessage:object];
@@ -66,7 +66,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
         
         self.logger = (DDAbstractLogger *)logger;
     }
-
+    
     [self cleanup];
 }
 
