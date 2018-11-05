@@ -14,6 +14,8 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDASLLogger.h"
+
+#if !TARGET_OS_WATCH
 #import <asl.h>
 
 #if !__has_feature(objc_arc)
@@ -119,3 +121,5 @@ static DDASLLogger *sharedInstance;
 }
 
 @end
+
+#endif

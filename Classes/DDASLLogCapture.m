@@ -20,6 +20,8 @@
     #define DD_LEGACY_MACROS 0
 #endif
 
+#if !TARGET_OS_WATCH
+
 #import "DDLog.h"
 
 #include <asl.h>
@@ -196,3 +198,5 @@ static DDLogLevel _captureLevel = DDLogLevelVerbose;
 }
 
 @end
+
+#endif
