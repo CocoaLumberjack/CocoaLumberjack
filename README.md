@@ -155,7 +155,7 @@ The current version of Lumberjack requires:
 - Swift 4.2 or later
 - iOS 8 or later
 - OS X 10.10 or later
-- WatchOS 2 or later
+- WatchOS 3 or later
 - TVOS 9 or later
 
 #### Backwards compability
