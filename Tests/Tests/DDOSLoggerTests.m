@@ -33,6 +33,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 - (void)reactOnMessage:(id)object {
     __auto_type message = (DDLogMessage *)object;
     XCTAssertTrue([self.logs containsObject:message.message]);
+    XCTAssertEqualObjects(message.fileName, @"DDOSLoggerTests");
     self.noOfMessagesLogged++;
     if (self.noOfMessagesLogged == [self.logs count]) {
         [self.expectation fulfill];
