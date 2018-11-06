@@ -20,6 +20,7 @@
 /**
  *  This class provides the ability to capture the ASL (Apple System Logs)
  */
+API_DEPRECATED("Use DDOSLogger instead", macosx(10.4,10.12), ios(2.0,10.0), watchos(2.0,3.0), tvos(9.0,10.0))
 @interface DDASLLogCapture : NSObject
 
 /**

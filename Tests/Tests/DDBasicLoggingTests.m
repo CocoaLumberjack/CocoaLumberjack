@@ -17,7 +17,7 @@
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import "DDSMocking.h"
 
-const NSTimeInterval kAsyncExpectationTimeout = 3.0f;
+static const NSTimeInterval kAsyncExpectationTimeout = 3.0f;
 
 static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
@@ -33,6 +33,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 - (void)reactOnMessage:(id)object {
     __auto_type message = (DDLogMessage *)object;
     XCTAssertTrue([self.logs containsObject:message.message]);
+    XCTAssertEqualObjects(message.fileName, @"DDBasicLoggingTests");
     self.noOfMessagesLogged++;
     if (self.noOfMessagesLogged == [self.logs count]) {
         [self.expectation fulfill];
@@ -56,7 +57,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     
     if (self.logger == nil) {
         __auto_type logger = [DDBasicMock<DDAbstractLogger *> decoratedInstance:[[DDAbstractLogger alloc] init]];
-
+        
         __weak typeof(self)weakSelf = self;
         __auto_type argument = [DDBasicMockArgument alongsideWithBlock:^(id object) {
             [weakSelf reactOnMessage:object];
@@ -66,7 +67,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
         
         self.logger = (DDAbstractLogger *)logger;
     }
-
+    
     [self cleanup];
 }
 
