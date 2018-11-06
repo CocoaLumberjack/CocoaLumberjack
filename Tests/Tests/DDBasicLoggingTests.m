@@ -13,7 +13,7 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import <XCTest/XCTest.h>
+@import XCTest;
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import "DDSMocking.h"
 
@@ -21,19 +21,19 @@ static const NSTimeInterval kAsyncExpectationTimeout = 3.0f;
 
 static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
-@interface DDOSLoggerTests : XCTestCase
+@interface DDBasicLoggingTests : XCTestCase
 @property (nonatomic, strong) NSArray *logs;
 @property (nonatomic, strong) XCTestExpectation *expectation;
 @property (nonatomic, strong) DDAbstractLogger *logger;
 @property (nonatomic, assign) NSUInteger noOfMessagesLogged;
 @end
 
-@implementation DDOSLoggerTests
+@implementation DDBasicLoggingTests
 
 - (void)reactOnMessage:(id)object {
     __auto_type message = (DDLogMessage *)object;
     XCTAssertTrue([self.logs containsObject:message.message]);
-    XCTAssertEqualObjects(message.fileName, @"DDOSLoggerTests");
+    XCTAssertEqualObjects(message.fileName, @"DDBasicLoggingTests");
     self.noOfMessagesLogged++;
     if (self.noOfMessagesLogged == [self.logs count]) {
         [self.expectation fulfill];
@@ -42,7 +42,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 - (void)cleanup {
     [DDLog removeAllLoggers];
-    [DDLog addLogger:[DDOSLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
     [DDLog addLogger:self.logger];
     
     ddLogLevel = DDLogLevelVerbose;
