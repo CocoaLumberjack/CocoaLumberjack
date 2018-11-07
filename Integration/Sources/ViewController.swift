@@ -36,8 +36,18 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let formatter = Formatter()
-        DDOSLogger.sharedInstance.logFormatter = formatter
-        DDLog.add(DDOSLogger.sharedInstance)
+
+        if #available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *) {
+            if let logger = DDOSLogger.sharedInstance {
+                logger.logFormatter = formatter
+                DDLog.add(logger)
+            }
+        } else {
+            if let logger = DDTTYLogger.sharedInstance {
+                logger.logFormatter = formatter
+                DDLog.add(logger)
+            }
+        }
         
         DDLogVerbose("Verbose")
         DDLogDebug("Debug")

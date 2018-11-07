@@ -40,10 +40,18 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     }
 }
 
-- (void)cleanup {
-    [DDLog removeAllLoggers];
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+- (void)setupLoggers {
+    if (@available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *)) {
+        [DDLog addLogger:[DDOSLogger new]];
+    } else {
+        [DDLog addLogger:[DDTTYLogger new]];
+    }
+    
     [DDLog addLogger:self.logger];
+}
+
+- (void)resetToDefaults {
+    [DDLog removeAllLoggers];
     
     ddLogLevel = DDLogLevelVerbose;
     
@@ -54,11 +62,12 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 - (void)setUp {
     [super setUp];
+    [self resetToDefaults];
     
     if (self.logger == nil) {
         __auto_type logger = [DDBasicMock<DDAbstractLogger *> decoratedInstance:[[DDAbstractLogger alloc] init]];
         
-        __weak typeof(self)weakSelf = self;
+        __weak __auto_type weakSelf = self;
         __auto_type argument = [DDBasicMockArgument alongsideWithBlock:^(id object) {
             [weakSelf reactOnMessage:object];
         }];
@@ -68,13 +77,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
         self.logger = (DDAbstractLogger *)logger;
     }
     
-    [self cleanup];
-}
-
-- (void)tearDown {
-    [self cleanup];
-    
-    [super tearDown];
+    [self setupLoggers];
 }
 
 - (void)testAll5DefaultLevelsAsync {
@@ -110,7 +113,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     }];
 }
 
-- (void)testX_ddLogLevel_async {
+- (void)testGlobalLogLevelAsync {
     self.expectation = [self expectationWithDescription:@"ddLogLevel"];
     self.logs = @[ @"Error", @"Warn", @"Info" ];
     
