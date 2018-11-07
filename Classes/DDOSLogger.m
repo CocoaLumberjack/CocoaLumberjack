@@ -16,9 +16,9 @@
 #import "DDOSLogger.h"
 #import <os/log.h>
 
-static id sharedInstance;
-
 @implementation DDOSLogger
+
+static DDOSLogger *sharedInstance;
 
 + (instancetype)sharedInstance {
     static dispatch_once_t DDOSLoggerOnceToken;
