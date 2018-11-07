@@ -16,7 +16,7 @@
 #import "DDOSLogger.h"
 #import <os/log.h>
 
-static DDOSLogger *sharedInstance;
+static id sharedInstance;
 
 @implementation DDOSLogger
 
