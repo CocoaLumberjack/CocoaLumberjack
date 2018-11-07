@@ -31,16 +31,16 @@
 }
 
 - (void)testRegisterLogger {
-    if(@available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *)) {
-        DDOSLogger *logger = [DDOSLogger sharedInstance];
+    if (@available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *)) {
+        __auto_type logger = [DDOSLogger new];
         [DDLog addLogger:logger];
-        XCTAssertEqualObjects(logger.loggerName, @"cocoa.lumberjack.osLogger");
-        XCTAssertEqualObjects(logger, DDLog.allLoggers[0]);
+        XCTAssertEqualObjects(logger.loggerName, [DDOSLogger new].loggerName);
+        XCTAssertEqualObjects(logger, DDLog.allLoggers.firstObject);
     } else {
-        DDASLLogger *logger = [DDASLLogger sharedInstance];
+        __auto_type logger = [DDASLLogger new];
         [DDLog addLogger:logger];
-        XCTAssertEqualObjects(logger.loggerName, @"cocoa.lumberjack.aslLogger");
-        XCTAssertEqualObjects(logger, DDLog.allLoggers[0]);
+        XCTAssertEqualObjects(logger.loggerName, [DDASLLogger new].loggerName);
+        XCTAssertEqualObjects(logger, DDLog.allLoggers.firstObject);
     }
 }
 
