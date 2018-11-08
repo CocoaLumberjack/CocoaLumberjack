@@ -15,6 +15,8 @@
 
 #import "DDFileLogger.h"
 
+#import "DDLoggerNames.h"
+
 #import <unistd.h>
 #import <sys/attr.h>
 #import <sys/xattr.h>
@@ -1053,7 +1055,7 @@ static int exception_count = 0;
 }
 
 - (NSString *)loggerName {
-    return @"cocoa.lumberjack.fileLogger";
+    return DDLoggerNameFile;
 }
 
 - (void)flush {

@@ -14,6 +14,9 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDOSLogger.h"
+
+#import "DDLoggerNames.h"
+
 #import <os/log.h>
 
 @implementation DDOSLogger
@@ -75,7 +78,7 @@ static DDOSLogger *sharedInstance;
 }
 
 - (NSString *)loggerName {
-    return @"cocoa.lumberjack.osLogger";
+    return DDLoggerNameOSDefault;
 }
 
 @end

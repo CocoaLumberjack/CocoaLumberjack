@@ -15,6 +15,8 @@
 
 #import "DDASLLogger.h"
 
+#import "DDLoggerNames.h"
+
 #if !TARGET_OS_WATCH
 #import <asl.h>
 
@@ -117,7 +119,7 @@ static DDASLLogger *sharedInstance;
 }
 
 - (NSString *)loggerName {
-    return @"cocoa.lumberjack.aslLogger";
+    return DDLoggerNameASL;
 }
 
 @end
