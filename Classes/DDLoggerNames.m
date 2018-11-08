@@ -15,7 +15,7 @@
 
 #import "DDLoggerNames.h"
 
-DDLoggerName DDLoggerNameASL    = @"cocoa.lumberjack.aslLogger";    // DDASLLogger
-DDLoggerName DDLoggerNameTTY    = @"cocoa.lumberjack.ttyLogger";    // DDTTYLogger
-DDLoggerName DDLoggerNameOS     = @"cocoa.lumberjack.osLogger";     // DDOSLogger
-DDLoggerName DDLoggerNameFile   = @"cocoa.lumberjack.fileLogger";   // DDOSLogger
+DDLoggerName DDLoggerNameASL    = @"cocoa.lumberjack.aslLogger";
+DDLoggerName DDLoggerNameTTY    = @"cocoa.lumberjack.ttyLogger";
+DDLoggerName DDLoggerNameOS     = @"cocoa.lumberjack.osLogger";
+DDLoggerName DDLoggerNameFile   = @"cocoa.lumberjack.fileLogger";
