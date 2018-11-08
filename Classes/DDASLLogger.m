@@ -118,7 +118,7 @@ static DDASLLogger *sharedInstance;
     }
 }
 
-- (NSString *)loggerName {
+- (DDLoggerName)loggerName {
     return DDLoggerNameASL;
 }
 

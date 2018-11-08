@@ -1054,7 +1054,7 @@ static int exception_count = 0;
     [self rollLogFileNow];
 }
 
-- (NSString *)loggerName {
+- (DDLoggerName)loggerName {
     return DDLoggerNameFile;
 }
 

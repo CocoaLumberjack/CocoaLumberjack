@@ -1354,7 +1354,7 @@ static DDTTYLogger *sharedInstance;
     }
 }
 
-- (NSString *)loggerName {
+- (DDLoggerName)loggerName {
     return DDLoggerNameTTY;
 }
 
