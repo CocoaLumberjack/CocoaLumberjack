@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		07305D7B2167920B00C61363 /* SwiftLogLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = 07305D7A216790F300C61363 /* SwiftLogLevel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0AE6D52521941F0A00B2A35D /* DDLoggerNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE6D52321941F0900B2A35D /* DDLoggerNames.m */; };
+		0AE6D52621941F1200B2A35D /* DDLoggerNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE6D52321941F0900B2A35D /* DDLoggerNames.m */; };
 		18F3C0181A81E14000692297 /* DDContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20CC192A0E0000AB7171 /* DDContextFilterLogFormatter.m */; };
 		18F3C0191A81E14000692297 /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20CE192A0E0000AB7171 /* DDDispatchQueueLogFormatter.m */; };
 		18F3C01A1A81E14000692297 /* DDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9C20D0192A0E0000AB7171 /* DDMultiFormatter.m */; };
@@ -108,6 +110,8 @@
 
 /* Begin PBXFileReference section */
 		07305D7A216790F300C61363 /* SwiftLogLevel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftLogLevel.h; sourceTree = "<group>"; };
+		0AE6D52321941F0900B2A35D /* DDLoggerNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLoggerNames.m; sourceTree = "<group>"; };
+		0AE6D52421941F0900B2A35D /* DDLoggerNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLoggerNames.h; sourceTree = "<group>"; };
 		18F3BFD71A81E06E00692297 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocoaLumberjack.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		19FF46021B8B4CF400B43179 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		19FF460F1B8B4D1400B43179 /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaLumberjackSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -240,6 +244,8 @@
 		DCB3185A14EB418E001CFBEE /* Lumberjack */ = {
 			isa = PBXGroup;
 			children = (
+				0AE6D52421941F0900B2A35D /* DDLoggerNames.h */,
+				0AE6D52321941F0900B2A35D /* DDLoggerNames.m */,
 				E5D89BA41994749300C180CF /* CocoaLumberjack.h */,
 				55BCB5C619D4BB6E0096E784 /* CocoaLumberjack.swift */,
 				E5D89BA61994749300C180CF /* DDLogMacros.h */,
@@ -445,6 +451,7 @@
 				18F3C0201A81E14E00692297 /* DDTTYLogger.m in Sources */,
 				18F3C01E1A81E14E00692297 /* DDFileLogger.m in Sources */,
 				18F3C01F1A81E14E00692297 /* DDLog.m in Sources */,
+				0AE6D52521941F0A00B2A35D /* DDLoggerNames.m in Sources */,
 				18F3C01B1A81E14E00692297 /* DDAbstractDatabaseLogger.m in Sources */,
 				DD4738841E7168A400F1A4F5 /* DDOSLogger.m in Sources */,
 				18F3C0191A81E14000692297 /* DDDispatchQueueLogFormatter.m in Sources */,
@@ -463,6 +470,7 @@
 				19FF46301B8B4ED900B43179 /* DDDispatchQueueLogFormatter.m in Sources */,
 				19FF462F1B8B4ED500B43179 /* DDFileLogger.m in Sources */,
 				19FF462E1B8B4ED200B43179 /* DDTTYLogger.m in Sources */,
+				0AE6D52621941F1200B2A35D /* DDLoggerNames.m in Sources */,
 				19FF462D1B8B4ECE00B43179 /* DDMultiFormatter.m in Sources */,
 				C72CB9821FBF27EE009AEE6B /* DDOSLogger.m in Sources */,
 				19FF462C1B8B4ECA00B43179 /* DDAbstractDatabaseLogger.m in Sources */,
