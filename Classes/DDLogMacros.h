@@ -99,3 +99,23 @@
 #define DDLogInfoToDDLog(ddlog, frmt, ...)    LOG_MAYBE_TO_DDLOG(ddlog, LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagInfo,    0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 #define DDLogDebugToDDLog(ddlog, frmt, ...)   LOG_MAYBE_TO_DDLOG(ddlog, LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagDebug,   0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 #define DDLogVerboseToDDLog(ddlog, frmt, ...) LOG_MAYBE_TO_DDLOG(ddlog, LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagVerbose, 0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+
+// OSLog macros.
+
+#import <os/log.h>
+/*
+ OS_LOG_TYPE_DEFAULT = 0x00,
+ OS_LOG_TYPE_INFO    = 0x01,
+ OS_LOG_TYPE_DEBUG   = 0x02,
+ OS_LOG_TYPE_ERROR   = 0x10,
+ OS_LOG_TYPE_FAULT   = 0x11,
+ */
+
+#define DDOSLogCStringFromString(string) ([string cStringUsingEncoding:NSUTF8StringEncoding])
+#define DDOSLogGetBundleIdentifier ([NSBundle bundleForClass:self.class].bundleIdentifier) // convert to (char *)
+#define DDOSLogWithBundleIndetifier(subsystem, category) os_log_create(subsystem, category) // both parameters are (char *)
+
+#define DDOSLog(subsystem, category, level, frmt, ...) os_log_with_type(DDOSLogWithBundleIndetifier(subsystem, category), OS_LOG_TYPE_DEBUG, format, ##__VA_ARGS__)
+
+#define DDOSLogError(subsystem, category, frmt, ...) DDOSLog(subsystem, category, OS_LOG_TYPE_ERROR, frmt, ##__VA_ARGS__)
+#define DDOSLogError(category, frmt, ...) DDOSLogError(DDOSLogGetBundleIdentifier, category, frmt, ##__VA_ARGS__)
