@@ -17,7 +17,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NSString *DDLoggerName NS_STRING_ENUM;
+typedef NSString *DDLoggerName NS_TYPED_EXTENSIBLE_ENUM;
 FOUNDATION_EXPORT DDLoggerName DDLoggerNameASL; // DDASLLogger
 FOUNDATION_EXPORT DDLoggerName DDLoggerNameTTY; // DDTTYLogger
 FOUNDATION_EXPORT DDLoggerName DDLoggerNameOS; // DDOSLogger
