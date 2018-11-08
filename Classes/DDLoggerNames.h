@@ -15,16 +15,12 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NSString *const DDLoggerName NS_STRING_ENUM;
 FOUNDATION_EXPORT DDLoggerName DDLoggerNameASL; // DDASLLogger
 FOUNDATION_EXPORT DDLoggerName DDLoggerNameTTY; // DDTTYLogger
-FOUNDATION_EXPORT DDLoggerName DDLoggerNameOSDefault; // DDOSLogger
+FOUNDATION_EXPORT DDLoggerName DDLoggerNameOS; // DDOSLogger
 FOUNDATION_EXPORT DDLoggerName DDLoggerNameFile; // DDOSLogger
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface DDLoggerNames : NSObject
-- (instancetype)initWitName:(DDLoggerName *)name;
-@end
 
 NS_ASSUME_NONNULL_END

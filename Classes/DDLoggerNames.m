@@ -15,17 +15,7 @@
 
 #import "DDLoggerNames.h"
 
-typedef NSString *const DDLoggerName NS_STRING_ENUM;
-DDLoggerName DDLoggerNameASL = @"cocoa.lumberjack.aslLogger"; // DDASLLogger
-DDLoggerName DDLoggerNameTTY = @"cocoa.lumberjack.ttyLogger"; // DDTTYLogger
-DDLoggerName DDLoggerNameOSDefault = @"cocoa.lumberjack.osLogger"; // DDOSLogger
-DDLoggerName DDLoggerNameFile = @"cocoa.lumberjack.fileLogger"; // DDOSLogger
-
-@implementation DDLoggerNames
-- (instancetype)initWitName:(DDLoggerName *)name {
-    if (self = [super init]) {
-        // do something.
-    }
-    return self;
-}
-@end
+DDLoggerName DDLoggerNameASL    = @"cocoa.lumberjack.aslLogger";    // DDASLLogger
+DDLoggerName DDLoggerNameTTY    = @"cocoa.lumberjack.ttyLogger";    // DDTTYLogger
+DDLoggerName DDLoggerNameOS     = @"cocoa.lumberjack.osLogger";     // DDOSLogger
+DDLoggerName DDLoggerNameFile   = @"cocoa.lumberjack.fileLogger";   // DDOSLogger

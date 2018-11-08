@@ -78,7 +78,7 @@ static DDOSLogger *sharedInstance;
 }
 
 - (NSString *)loggerName {
-    return DDLoggerNameOSDefault;
+    return DDLoggerNameOS;
 }
 
 @end
