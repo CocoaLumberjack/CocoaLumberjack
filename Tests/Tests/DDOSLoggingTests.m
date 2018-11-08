@@ -34,12 +34,12 @@
     if (@available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *)) {
         __auto_type logger = [DDOSLogger new];
         [DDLog addLogger:logger];
-        XCTAssertEqualObjects(logger.loggerName, @"cocoa.lumberjack.osLogger");
+        XCTAssertEqualObjects(logger.loggerName, DDLoggerNameOSDefault);
         XCTAssertEqualObjects(logger, DDLog.allLoggers.firstObject);
     } else {
         __auto_type logger = [DDASLLogger new];
         [DDLog addLogger:logger];
-        XCTAssertEqualObjects(logger.loggerName, @"cocoa.lumberjack.aslLogger");
+        XCTAssertEqualObjects(logger.loggerName, DDLoggerNameASL);
         XCTAssertEqualObjects(logger, DDLog.allLoggers.firstObject);
     }
 }
