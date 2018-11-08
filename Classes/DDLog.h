@@ -22,6 +22,9 @@
 // DD_LEGACY_MACROS is checked in the file itself
 #import "DDLegacyMacros.h"
 
+// Names of loggers.
+#import "DDLoggerNames.h"
+
 #if OS_OBJECT_USE_OBJC
     #define DISPATCH_QUEUE_REFERENCE_TYPE strong
 #else
@@ -635,7 +638,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  * The created queue will receive its name from this method.
  * This may be helpful for debugging or profiling reasons.
  **/
-@property (nonatomic, readonly) NSString *loggerName;
+@property (copy, nonatomic, readonly) DDLoggerName loggerName;
 
 @end
 

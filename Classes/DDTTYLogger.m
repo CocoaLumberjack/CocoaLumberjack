@@ -15,6 +15,8 @@
 
 #import "DDTTYLogger.h"
 
+#import "DDLoggerNames.h"
+
 #import <unistd.h>
 #import <sys/uio.h>
 
@@ -1352,8 +1354,8 @@ static DDTTYLogger *sharedInstance;
     }
 }
 
-- (NSString *)loggerName {
-    return @"cocoa.lumberjack.ttyLogger";
+- (DDLoggerName)loggerName {
+    return DDLoggerNameTTY;
 }
 
 @end

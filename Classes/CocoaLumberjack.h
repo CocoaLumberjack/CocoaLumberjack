@@ -81,6 +81,8 @@ FOUNDATION_EXPORT const unsigned char CocoaLumberjackVersionString[];
 #import "DDASLLogCapture.h"
 
 // Loggers
+#import "DDLoggerNames.h"
+
 #import "DDTTYLogger.h"
 #import "DDASLLogger.h"
 #import "DDFileLogger.h"
