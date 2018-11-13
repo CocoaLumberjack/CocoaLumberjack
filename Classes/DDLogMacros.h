@@ -102,6 +102,7 @@
 
 // OSLog macros.
 
+#if __has_include(<os/log.h>)
 #import <os/log.h>
 /*
  OS_LOG_TYPE_DEFAULT = 0x00,
@@ -111,11 +112,31 @@
  OS_LOG_TYPE_FAULT   = 0x11,
  */
 
-#define DDOSLogCStringFromString(string) ([string cStringUsingEncoding:NSUTF8StringEncoding])
-#define DDOSLogGetBundleIdentifier ([NSBundle bundleForClass:self.class].bundleIdentifier) // convert to (char *)
-#define DDOSLogWithBundleIndetifier(subsystem, category) os_log_create(subsystem, category) // both parameters are (char *)
+// Support macros.
+static inline const char *DDOSLogCStringFromString(NSString *string) { return [string cStringUsingEncoding:NSUTF8StringEncoding]; }
+#define DDOSLogCStringFromStringWithFormat(format, ...) (DDOSLogCStringFromString([NSString stringWithFormat:format, ##__VA_ARGS__]))
+static inline const NSString *DDOSLogGetBundleIdentifier(Class the_class) { return [NSBundle bundleForClass:the_class].bundleIdentifier; }
+static inline const os_log_t DDOSLogWithBundleIndetifier(const char *subsystem, const char *category) {
+    if (@available(macos 10.12, ios 10.0, watchos 3.0, tvos 10.0, *)) {
+    return os_log_create(subsystem, category);
+} else {
+    return NULL;
+} }
 
-#define DDOSLog(subsystem, category, level, frmt, ...) os_log_with_type(DDOSLogWithBundleIndetifier(subsystem, category), OS_LOG_TYPE_DEBUG, format, ##__VA_ARGS__)
 
-#define DDOSLogError(subsystem, category, frmt, ...) DDOSLog(subsystem, category, OS_LOG_TYPE_ERROR, frmt, ##__VA_ARGS__)
-#define DDOSLogError(category, frmt, ...) DDOSLogError(DDOSLogGetBundleIdentifier, category, frmt, ##__VA_ARGS__)
+// Proper check for [self isClass:Class] here.
+// Also, for functions it should iterate over CFBundleGetAllBundles and
+// check CFBundleGetFunctionPointerForName(<#CFBundleRef bundle#>, <#CFStringRef functionName#>)
+// for NULL.
+#define DDOSLogGetBundleIdentifier_Default DDOSLogGetBundleIdentifier(self.class)
+
+// Main log.
+#define DDOSLog(subsystem, category, level, format, ...) os_log_with_type( \
+                                                            DDOSLogWithBundleIndetifier(DDOSLogCStringFromString(subsystem), DDOSLogCStringFromString(category)), \
+                                                            level, \
+                                                            DDOSLogCStringFromStringWithFormat(format, ##__VA_ARGS__))
+
+#define DDOSLogErrorExtended(subsystem, category, frmt, ...) DDOSLog(subsystem, category, OS_LOG_TYPE_ERROR, frmt, ##__VA_ARGS__)
+#define DDOSLogError(category, frmt, ...) DDOSLogErrorExtended(DDOSLogGetBundleIdentifier, category, frmt, ##__VA_ARGS__)
+
+#endif
