@@ -1019,6 +1019,7 @@ static int exception_count = 0;
         @try {
             [self willLogMessage];
 			
+            [[self currentLogFileHandle] seekToEndOfFile];
             [[self currentLogFileHandle] writeData:logData];
 
             [self didLogMessage];

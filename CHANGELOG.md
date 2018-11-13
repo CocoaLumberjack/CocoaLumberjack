@@ -19,6 +19,7 @@
 - Add `DDAssert` and `DDAssertionFailure` functions for Swift #934
 - Fixed compiler warnings #931
 - Add new queue label which will be hold by a manual created thread #932
+- DDFileLogger log message is overridden #924
 
 ## [3.4.2 - Xcode 9.3 on Apr 17th, 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.4.2)
 - Update README.md #912
