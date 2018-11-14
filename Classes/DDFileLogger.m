@@ -565,6 +565,11 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
  */
 @property (nonatomic, strong) dispatch_queue_t currentLogFileHandleQueue;
 
+/**
+ Serial queue for synchronous access to `currentLogFileInfo`.
+ */
+@property (nonatomic, strong) dispatch_queue_t currentLogFileInfoQueue;
+
 - (void)rollLogFileNow;
 - (void)maybeRollLogFileDueToAge;
 - (void)maybeRollLogFileDueToSize;
@@ -586,6 +591,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         _automaticallyAppendNewlineForCustomFormatters = YES;
         
         _currentLogFileHandleQueue = dispatch_queue_create("cocoa.lumberjack.fileLogger.currentLogFileHandleQueue", DISPATCH_QUEUE_SERIAL);
+        _currentLogFileInfoQueue = dispatch_queue_create("cocoa.lumberjack.fileLogger.currentLogFileInfoQueue", DISPATCH_QUEUE_SERIAL);
         
         logFileManager = aLogFileManager;
 
@@ -885,69 +891,75 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
  * Otherwise a new file is created and returned.
  **/
 - (DDLogFileInfo *)currentLogFileInfo {
-    if (_currentLogFileInfo == nil) {
-        NSArray *sortedLogFileInfos = [logFileManager sortedLogFileInfos];
+    __block DDLogFileInfo *result;
 
-        if ([sortedLogFileInfos count] > 0) {
-            DDLogFileInfo *mostRecentLogFileInfo = sortedLogFileInfos[0];
+    dispatch_sync(_currentLogFileInfoQueue, ^{
+        if (result == nil) {
+            NSArray *sortedLogFileInfos = [self.logFileManager sortedLogFileInfos];
 
-            BOOL shouldArchiveMostRecent = NO;
+            if ([sortedLogFileInfos count] > 0) {
+                DDLogFileInfo *mostRecentLogFileInfo = sortedLogFileInfos[0];
 
-            if (mostRecentLogFileInfo.isArchived) {
-                shouldArchiveMostRecent = NO;
-			} else if ([self shouldArchiveRecentLogFileInfo:mostRecentLogFileInfo]) {
-				shouldArchiveMostRecent = YES;
-			} else if (_maximumFileSize > 0 && mostRecentLogFileInfo.fileSize >= _maximumFileSize) {
-                shouldArchiveMostRecent = YES;
-            } else if (_rollingFrequency > 0.0 && mostRecentLogFileInfo.age >= _rollingFrequency) {
-                shouldArchiveMostRecent = YES;
-            }
+                BOOL shouldArchiveMostRecent = NO;
 
-        #if TARGET_OS_IPHONE
-            // When creating log file on iOS we're setting NSFileProtectionKey attribute to NSFileProtectionCompleteUnlessOpen.
-            //
-            // But in case if app is able to launch from background we need to have an ability to open log file any time we
-            // want (even if device is locked). Thats why that attribute have to be changed to
-            // NSFileProtectionCompleteUntilFirstUserAuthentication.
-            //
-            // If previous log was created when app wasn't running in background, but now it is - we archive it and create
-            // a new one.
-            //
-            // If user has overwritten to NSFileProtectionNone there is no neeed to create a new one.
-
-            if (!_doNotReuseLogFiles && doesAppRunInBackground()) {
-                NSFileProtectionType key = mostRecentLogFileInfo.fileAttributes[NSFileProtectionKey];
-
-                if ([key length] > 0 && !([key isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication] || [key isEqualToString:NSFileProtectionNone])) {
+                if (mostRecentLogFileInfo.isArchived) {
+                    shouldArchiveMostRecent = NO;
+                } else if ([self shouldArchiveRecentLogFileInfo:mostRecentLogFileInfo]) {
+                    shouldArchiveMostRecent = YES;
+                } else if (self->_maximumFileSize > 0 && mostRecentLogFileInfo.fileSize >= self->_maximumFileSize) {
+                    shouldArchiveMostRecent = YES;
+                } else if (self->_rollingFrequency > 0.0 && mostRecentLogFileInfo.age >= self->_rollingFrequency) {
                     shouldArchiveMostRecent = YES;
                 }
-            }
 
-        #endif
+#if TARGET_OS_IPHONE
+                // When creating log file on iOS we're setting NSFileProtectionKey attribute to NSFileProtectionCompleteUnlessOpen.
+                //
+                // But in case if app is able to launch from background we need to have an ability to open log file any time we
+                // want (even if device is locked). Thats why that attribute have to be changed to
+                // NSFileProtectionCompleteUntilFirstUserAuthentication.
+                //
+                // If previous log was created when app wasn't running in background, but now it is - we archive it and create
+                // a new one.
+                //
+                // If user has overwritten to NSFileProtectionNone there is no neeed to create a new one.
 
-            if (!_doNotReuseLogFiles && !mostRecentLogFileInfo.isArchived && !shouldArchiveMostRecent) {
-                NSLogVerbose(@"DDFileLogger: Resuming logging with file %@", mostRecentLogFileInfo.fileName);
+                if (!self->_doNotReuseLogFiles && doesAppRunInBackground()) {
+                    NSFileProtectionType key = mostRecentLogFileInfo.fileAttributes[NSFileProtectionKey];
 
-                _currentLogFileInfo = mostRecentLogFileInfo;
-            } else {
-                if (shouldArchiveMostRecent) {
-                    mostRecentLogFileInfo.isArchived = YES;
+                    if ([key length] > 0 && !([key isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication] || [key isEqualToString:NSFileProtectionNone])) {
+                        shouldArchiveMostRecent = YES;
+                    }
+                }
 
-                    if ([logFileManager respondsToSelector:@selector(didArchiveLogFile:)]) {
-                        [logFileManager didArchiveLogFile:(mostRecentLogFileInfo.filePath)];
+#endif
+
+                if (!self->_doNotReuseLogFiles && !mostRecentLogFileInfo.isArchived && !shouldArchiveMostRecent) {
+                    NSLogVerbose(@"DDFileLogger: Resuming logging with file %@", mostRecentLogFileInfo.fileName);
+
+                    self->_currentLogFileInfo = mostRecentLogFileInfo;
+                } else {
+                    if (shouldArchiveMostRecent) {
+                        mostRecentLogFileInfo.isArchived = YES;
+
+                        if ([self.logFileManager respondsToSelector:@selector(didArchiveLogFile:)]) {
+                            [self.logFileManager didArchiveLogFile:(mostRecentLogFileInfo.filePath)];
+                        }
                     }
                 }
             }
+
+            if (self->_currentLogFileInfo == nil) {
+                NSString *currentLogFilePath = [self.logFileManager createNewLogFile];
+
+                self->_currentLogFileInfo = [[DDLogFileInfo alloc] initWithFilePath:currentLogFilePath];
+            }
         }
 
-        if (_currentLogFileInfo == nil) {
-            NSString *currentLogFilePath = [logFileManager createNewLogFile];
+        result = self->_currentLogFileInfo;
+    });
 
-            _currentLogFileInfo = [[DDLogFileInfo alloc] initWithFilePath:currentLogFilePath];
-        }
-    }
-
-    return _currentLogFileInfo;
+    return result;
 }
 
 - (NSFileHandle *)currentLogFileHandle {
