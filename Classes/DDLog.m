@@ -109,7 +109,7 @@ static void *const GlobalLoggingQueueIdentityKey = (void *)&GlobalLoggingQueueId
 static dispatch_queue_t _loggingQueue;
 
 // Individual loggers are executed concurrently per log statement.
-// Each logger has it's own associated queue, and a dispatch group is used for synchrnoization.
+// Each logger has it's own associated queue, and a dispatch group is used for synchronization.
 static dispatch_group_t _loggingGroup;
 
 // In order to prevent to queue from growing infinitely large,
@@ -352,13 +352,12 @@ static NSUInteger _numProcessors;
 
     dispatch_block_t logBlock = ^{
         dispatch_semaphore_wait(_queueSemaphore, DISPATCH_TIME_FOREVER);
+        // We're now sure we won't overflow the queue.
+        // It is time to queue our log message.
         @autoreleasepool {
             [self lt_log:logMessage];
         }
     };
-
-    // We've now sure we won't overflow the queue.
-    // It is time to queue our log message.
 
     if (asyncFlag) {
         dispatch_async(_loggingQueue, logBlock);
