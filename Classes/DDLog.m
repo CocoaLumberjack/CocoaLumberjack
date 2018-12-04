@@ -28,6 +28,9 @@
 #import <Availability.h>
 #if TARGET_OS_IOS
     #import <UIKit/UIDevice.h>
+    #import <UIKit/UIApplication.h>
+#elif !defined(DD_CLI) && __has_include(<AppKit/NSApplication.h>)
+    #import <AppKit/NSApplication.h>
 #endif
 
 
@@ -180,24 +183,23 @@ static NSUInteger _numProcessors;
         self._loggers = [[NSMutableArray alloc] initWithCapacity:4];
         
 #if TARGET_OS_IOS
-        NSString *notificationName = @"UIApplicationWillTerminateNotification";
+        NSString *notificationName = UIApplicationWillTerminateNotification;
 #else
         NSString *notificationName = nil;
-        
+
         // On Command Line Tool apps AppKit may not be avaliable
-#ifdef NSAppKitVersionNumber10_0
-        
+#if !defined(DD_CLI) && __has_include(<AppKit/NSApplication.h>)
         if (NSApp) {
-            notificationName = @"NSApplicationWillTerminateNotification";
+            notificationName = NSApplicationWillTerminateNotification;
         }
-        
 #endif
-        
+
         if (!notificationName) {
             // If there is no NSApp -> we are running Command Line Tool app.
             // In this case terminate notification wouldn't be fired, so we use workaround.
+            __weak __auto_type weakSelf = self;
             atexit_b (^{
-                [self applicationWillTerminate:nil];
+                [weakSelf applicationWillTerminate:nil];
             });
         }
         
