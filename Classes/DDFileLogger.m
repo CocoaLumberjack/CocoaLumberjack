@@ -68,6 +68,8 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 - (void)deleteOldLogFiles;
 - (NSString *)defaultLogsDirectory;
 
+@property (readonly, copy) NSData *initialFileContentsData;
+
 @end
 
 @implementation DDLogFileManagerDefault
@@ -427,9 +429,28 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return [NSString stringWithFormat:@"%@ %@.log", appName, formattedDate];
 }
 
+- (NSString *)initialFileContents {
+    return nil;
+}
+
+- (NSData *)initialFileContentsData {
+    NSString *fileContentsStr = [self initialFileContents];
+    
+    if (fileContentsStr == nil || [fileContentsStr length] == 0) {
+        return nil;
+    }
+    
+    // Ensure that we have a newline at the end of the string
+    fileContentsStr = [NSString stringWithFormat:@"%@\n", fileContentsStr];
+    
+    NSData *fileContentsData = [fileContentsStr dataUsingEncoding:NSUTF8StringEncoding];
+    return fileContentsData;
+}
+
 - (NSString *)createNewLogFile {
     NSString *fileName = [self newLogFileName];
     NSString *logsDirectory = [self logsDirectory];
+    NSData *fileContents = [self initialFileContentsData];
 
     NSUInteger attempt = 1;
 
@@ -469,7 +490,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
             };
         #endif
 
-            [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:attributes];
+            [[NSFileManager defaultManager] createFileAtPath:filePath contents:fileContents attributes:attributes];
 
             // Since we just created a new log file, we may need to delete some old log files
             [self deleteOldLogFiles];
