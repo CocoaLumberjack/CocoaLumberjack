@@ -68,7 +68,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 - (void)deleteOldLogFiles;
 - (NSString *)defaultLogsDirectory;
 
-@property (readonly, copy) NSData *initialFileContentsData;
+@property (readonly, copy) NSData *logFileHeaderData;
 
 @end
 
@@ -429,12 +429,12 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return [NSString stringWithFormat:@"%@ %@.log", appName, formattedDate];
 }
 
-- (NSString *)initialFileContents {
+- (NSString *)logFileHeader {
     return nil;
 }
 
-- (NSData *)initialFileContentsData {
-    NSString *fileContentsStr = [self initialFileContents];
+- (NSData *)logFileHeaderData {
+    NSString *fileContentsStr = [self logFileHeader];
     
     if (fileContentsStr == nil || [fileContentsStr length] == 0) {
         return nil;
@@ -450,7 +450,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 - (NSString *)createNewLogFile {
     NSString *fileName = [self newLogFileName];
     NSString *logsDirectory = [self logsDirectory];
-    NSData *fileContents = [self initialFileContentsData];
+    NSData *fileContents = [self logFileHeaderData];
 
     NSUInteger attempt = 1;
 
