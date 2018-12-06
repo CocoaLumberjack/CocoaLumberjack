@@ -785,8 +785,9 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
     _rollingTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.loggerQueue);
 
+    __weak __auto_type weakSelf = self;
     dispatch_source_set_event_handler(_rollingTimer, ^{ @autoreleasepool {
-                                                           [self maybeRollLogFileDueToAge];
+                                                           [weakSelf maybeRollLogFileDueToAge];
                                                        } });
 
     #if !OS_OBJECT_USE_OBJC
@@ -1004,10 +1005,11 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
                                                               DISPATCH_VNODE_DELETE | DISPATCH_VNODE_RENAME,
                                                               self.loggerQueue
                                                               );
-                
+
+                __weak __auto_type weakSelf = self;
                 dispatch_source_set_event_handler(self->_currentLogFileVnode, ^{ @autoreleasepool {
                     NSLogInfo(@"DDFileLogger: Current logfile was moved. Rolling it and creating a new one");
-                    [self rollLogFileNow];
+                    [weakSelf rollLogFileNow];
                 } });
                 
 #if !OS_OBJECT_USE_OBJC
