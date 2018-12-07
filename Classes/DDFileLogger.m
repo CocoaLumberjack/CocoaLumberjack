@@ -434,23 +434,23 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 }
 
 - (NSData *)logFileHeaderData {
-    NSString *fileContentsStr = [self logFileHeader];
+    NSString *fileHeaderStr = [self logFileHeader];
     
-    if (fileContentsStr == nil || [fileContentsStr length] == 0) {
+    if (fileHeaderStr == nil || [fileHeaderStr length] == 0) {
         return nil;
     }
     
     // Ensure that we have a newline at the end of the string
-    fileContentsStr = [NSString stringWithFormat:@"%@\n", fileContentsStr];
+    fileHeaderStr = [NSString stringWithFormat:@"%@\n", fileHeaderStr];
     
-    NSData *fileContentsData = [fileContentsStr dataUsingEncoding:NSUTF8StringEncoding];
-    return fileContentsData;
+    NSData *fileHeaderData = [fileHeaderStr dataUsingEncoding:NSUTF8StringEncoding];
+    return fileHeaderData;
 }
 
 - (NSString *)createNewLogFile {
     NSString *fileName = [self newLogFileName];
     NSString *logsDirectory = [self logsDirectory];
-    NSData *fileContents = [self logFileHeaderData];
+    NSData *fileHeader = [self logFileHeaderData];
 
     NSUInteger attempt = 1;
 
@@ -490,7 +490,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
             };
         #endif
 
-            [[NSFileManager defaultManager] createFileAtPath:filePath contents:fileContents attributes:attributes];
+            [[NSFileManager defaultManager] createFileAtPath:filePath contents:fileHeader attributes:attributes];
 
             // Since we just created a new log file, we may need to delete some old log files
             [self deleteOldLogFiles];

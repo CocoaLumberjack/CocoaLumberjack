@@ -22,7 +22,7 @@
 - DDFileLogger log message is overridden #924
 - Fix thread safety issue in DDFileLogger #986
 - Fix availability checks and memory leak #996
-- Added `initialFileContents` property to `DDLogFileManagerDefault` to set log file header
+- Added `logFileHeader` property to `DDLogFileManagerDefault` which you can override to set log file header
 
 ## [3.4.2 - Xcode 9.3 on Apr 17th, 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.4.2)
 - Update README.md #912
