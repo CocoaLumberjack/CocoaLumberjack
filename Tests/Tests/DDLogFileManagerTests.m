@@ -32,8 +32,7 @@
 }
 
 - (void)setUpLogFileManager {
-    NSString *logsDirectory = NSTemporaryDirectory();
-    self.logFileManager = [[DDLogFileManagerDefault alloc] initWithLogsDirectory:logsDirectory];
+    self.logFileManager = [[DDLogFileManagerDefault alloc] initWithLogsDirectory:NSTemporaryDirectory()];
 }
 
 - (void)tearDown {
@@ -42,8 +41,7 @@
 }
 
 - (void)deleteLogFile:(NSString *)filePath {
-    NSError *error = nil;
-    if ([[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
+    if ([[NSFileManager defaultManager] removeItemAtPath:filePath error:nil]) {
         // file was deleted
         XCTAssertFalse([[NSFileManager defaultManager] fileExistsAtPath:filePath]);
     }
@@ -53,7 +51,7 @@
 }
 
 - (void)testCreateNewLogFile {
-    NSString *filePath = [self.logFileManager createNewLogFile];
+    __auto_type filePath = [self.logFileManager createNewLogFile];
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
         [self deleteLogFile:filePath];
@@ -64,11 +62,11 @@
 }
 
 - (void)testCreateNewLogFileAssertEmpty {
-    NSString *filePath = [self.logFileManager createNewLogFile];
+    __auto_type filePath = [self.logFileManager createNewLogFile];
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
         // check that log file is created empty
-        unsigned long long fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil][NSFileSize] unsignedLongLongValue];
+        __auto_type fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil][NSFileSize] unsignedLongLongValue];
         XCTAssertEqual(fileSize, 0);
 
         [self deleteLogFile:filePath];
@@ -105,8 +103,7 @@
 }
 
 - (void)setUpLogFileManager {
-    NSString *logsDirectory = NSTemporaryDirectory();
-    self.logFileManager = [[DDLogFileManagerOverride alloc] initWithLogsDirectory:logsDirectory];
+    self.logFileManager = [[DDLogFileManagerOverride alloc] initWithLogsDirectory:NSTemporaryDirectory()];
 }
 
 - (void)tearDown {
@@ -115,8 +112,7 @@
 }
 
 - (void)deleteLogFile:(NSString *)filePath {
-    NSError *error = nil;
-    if ([[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
+    if ([[NSFileManager defaultManager] removeItemAtPath:filePath error:nil]) {
         // file was deleted
         XCTAssertFalse([[NSFileManager defaultManager] fileExistsAtPath:filePath]);
     }
@@ -126,16 +122,16 @@
 }
 
 - (void)testCreateNewLogFileAssertCorrectContents {
-    NSString *filePath = [self.logFileManager createNewLogFile];
+    __auto_type filePath = [self.logFileManager createNewLogFile];
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
         // check that log file is _not_ created empty
-        unsigned long long fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil][NSFileSize] unsignedLongLongValue];
+        __auto_type fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil][NSFileSize] unsignedLongLongValue];
         XCTAssertNotEqual(fileSize, 0);
         
         // check that initial contents is equal to input text
-        NSString *strToFile = [NSString stringWithFormat:@"%@\n", [self.logFileManager logFileHeader]];
-        NSString *strFromFile = [NSString  stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+        __auto_type strToFile = [NSString stringWithFormat:@"%@\n", [self.logFileManager logFileHeader]];
+        __auto_type strFromFile = [NSString  stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
         if(![strFromFile isEqualToString: strToFile]) {
             XCTFail("Log file contents is incorrect!");
         }
