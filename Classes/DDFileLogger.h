@@ -515,3 +515,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 - (NSComparisonResult)reverseCompareByModificationDate:(DDLogFileInfo *)another;
 
 @end
+
+@interface DDFileLogger (ClassCluster)
++ (instancetype)createLoggerWithBuffer;
+@end

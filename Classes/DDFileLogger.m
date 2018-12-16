@@ -136,6 +136,10 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     @try {
         [self removeObserver:self forKeyPath:NSStringFromSelector(@selector(maximumNumberOfLogFiles))];
         [self removeObserver:self forKeyPath:NSStringFromSelector(@selector(logFilesDiskQuota))];
+        __auto_type path = [NSTemporaryDirectory() pathComponents];
+        __auto_type directory = NSTemporaryDirectory();
+        __auto_type components = [NSTemporaryDirectory() pathComponents];
+        __auto_type extension = [NSTemporaryDirectory() pathExtension];
     } @catch (NSException *exception) {
     }
 }
@@ -601,19 +605,23 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return self;
 }
 
-- (void)dealloc {
+- (void)cleanup {
     [_currentLogFileHandle synchronizeFile];
     [_currentLogFileHandle closeFile];
-
+    
     if (_currentLogFileVnode) {
         dispatch_source_cancel(_currentLogFileVnode);
         _currentLogFileVnode = NULL;
     }
-
+    
     if (_rollingTimer) {
         dispatch_source_cancel(_rollingTimer);
         _rollingTimer = NULL;
     }
+}
+
+- (void)dealloc {
+    [self cleanup];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1013,28 +1021,13 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static int exception_count = 0;
-- (void)logMessage:(DDLogMessage *)logMessage {
-    NSString *message = logMessage->_message;
-    BOOL isFormatted = NO;
-
-    if (_logFormatter) {
-        message = [_logFormatter formatLogMessage:logMessage];
-        isFormatted = message != logMessage->_message;
-    }
-
-    if (message) {
-        if ((!isFormatted || _automaticallyAppendNewlineForCustomFormatters) &&
-            (![message hasSuffix:@"\n"])) {
-            message = [message stringByAppendingString:@"\n"];
-        }
-
-        NSData *logData = [message dataUsingEncoding:NSUTF8StringEncoding];
-
+- (void)logData:(NSData *)data {
+    if (data != nil) {
         @try {
             [self willLogMessage];
-			
+            
             [[self currentLogFileHandle] seekToEndOfFile];
-            [[self currentLogFileHandle] writeData:logData];
+            [[self currentLogFileHandle] writeData:data];
 
             [self didLogMessage];
         } @catch (NSException *exception) {
@@ -1048,6 +1041,26 @@ static int exception_count = 0;
                 }
             }
         }
+    }
+}
+
+- (void)logMessage:(DDLogMessage *)logMessage {
+    NSString *message = logMessage->_message;
+    BOOL isFormatted = NO;
+
+    if (_logFormatter != nil) {
+        message = [_logFormatter formatLogMessage:logMessage];
+        isFormatted = message != logMessage->_message;
+    }
+
+    if (message != nil) {
+        if ((!isFormatted || _automaticallyAppendNewlineForCustomFormatters) &&
+            (![message hasSuffix:@"\n"])) {
+            message = [message stringByAppendingString:@"\n"];
+        }
+
+        NSData *logData = [message dataUsingEncoding:NSUTF8StringEncoding];
+        [self logData:logData];
     }
 }
 
@@ -1531,3 +1544,101 @@ BOOL doesAppRunInBackground() {
 }
 
 #endif
+
+static NSUInteger kMaximumBytesCountInBuffer = (1 << 10) * (1 << 10); // 1 MB.
+static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
+@interface DDFileLoggerWithBuffer : DDFileLogger
+@property (assign, nonatomic, readwrite) NSUInteger maximumBytesCountInBuffer;
+@end
+
+@interface DDFileLoggerWithBuffer() {
+    NSOutputStream *_bufferStream;
+    NSUInteger _bufferSize;
+}
+@end
+
+@interface DDFileLoggerWithBuffer (StreamManipulation)
+- (void)flushBuffer;
+- (void)dumpBufferToDisk;
+- (void)appendToBufferData:(NSData *)data;
+@end
+
+@implementation DDFileLoggerWithBuffer (StreamManipulation)
+- (void)flushBuffer {
+    // do something.
+    [_bufferStream close];
+    _bufferStream = nil;
+    _bufferSize = 0;
+}
+- (void)dumpBufferToDisk {
+    // do something.
+    __auto_type data = (NSData *)[_bufferStream propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
+    [super logData:data];
+    [self flushBuffer];
+}
+- (void)appendToBufferData:(NSData *)data {
+    __auto_type length = data.length;
+    if (data.length != 0) {
+        if (_bufferStream == nil) {
+            _bufferStream = [[NSOutputStream alloc] initToMemory];
+            [_bufferStream open];
+            _bufferSize = 0;
+        }
+        const uint8_t *appendedData = calloc(length, sizeof(uint8_t));
+        [data getBytes:(void *)appendedData length:length];
+        if (appendedData != NULL) {
+            [_bufferStream write:appendedData maxLength:length];
+        }
+        if (appendedData != NULL) {
+            free((void *)appendedData);
+        }
+        _bufferSize += _bufferSize + length;
+    }
+}
+@end
+
+@implementation DDFileLoggerWithBuffer
+@synthesize maximumBytesCountInBuffer = _maximumBytesCountInBuffer;
+- (instancetype)init {
+    if (self = [super init]) {
+        self.maximumBytesCountInBuffer = kDefaultBytesCountInBuffer;
+    }
+    return self;
+}
+
+#pragma mark - Subclass
+- (void)logData:(NSData *)data {
+    [self appendToBufferData:data];
+}
+
+#pragma mark - Initialization
+- (void)cleanup {
+    [self dumpBufferToDisk];
+    [super cleanup];
+}
+@end
+
+@interface DDFileLoggerWithBuffer (Logging)
+- (BOOL)shouldDumpBufferToDisk;
+- (void)putDataIntoBufferOrToDisk:(NSData *)data;
+@end
+
+@implementation DDFileLoggerWithBuffer (Logging)
+- (BOOL)shouldDumpBufferToDisk {
+    return _bufferSize > _maximumBytesCountInBuffer;
+}
+- (void)putDataIntoBufferOrToDisk:(NSData *)data {
+    if ([self shouldDumpBufferToDisk]) {
+        [self dumpBufferToDisk];
+    }
+    else {
+        [self logData:data];
+    }
+}
+@end
+
+@implementation DDFileLogger (ClassCluster)
++ (instancetype)createLoggerWithBuffer {
+    return [DDFileLoggerWithBuffer new];
+}
+@end
