@@ -136,10 +136,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     @try {
         [self removeObserver:self forKeyPath:NSStringFromSelector(@selector(maximumNumberOfLogFiles))];
         [self removeObserver:self forKeyPath:NSStringFromSelector(@selector(logFilesDiskQuota))];
-        __auto_type path = [NSTemporaryDirectory() pathComponents];
-        __auto_type directory = NSTemporaryDirectory();
-        __auto_type components = [NSTemporaryDirectory() pathComponents];
-        __auto_type extension = [NSTemporaryDirectory() pathExtension];
     } @catch (NSException *exception) {
     }
 }
@@ -1564,18 +1560,21 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 @end
 
 @implementation DDFileLoggerWithBuffer (StreamManipulation)
+
 - (void)flushBuffer {
     // do something.
     [_bufferStream close];
     _bufferStream = nil;
     _bufferSize = 0;
 }
+
 - (void)dumpBufferToDisk {
     // do something.
     __auto_type data = (NSData *)[_bufferStream propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
     [super logData:data];
     [self flushBuffer];
 }
+
 - (void)appendToBufferData:(NSData *)data {
     __auto_type length = data.length;
     if (data.length != 0) {
@@ -1595,10 +1594,13 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
         _bufferSize += _bufferSize + length;
     }
 }
+
 @end
 
 @implementation DDFileLoggerWithBuffer
+
 @synthesize maximumBytesCountInBuffer = _maximumBytesCountInBuffer;
+
 - (instancetype)init {
     if (self = [super init]) {
         self.maximumBytesCountInBuffer = kDefaultBytesCountInBuffer;
@@ -1608,7 +1610,7 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 
 #pragma mark - Subclass
 - (void)logData:(NSData *)data {
-    [self appendToBufferData:data];
+    [self putDataIntoBufferOrToDisk:data];
 }
 
 #pragma mark - Initialization
@@ -1616,6 +1618,7 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
     [self dumpBufferToDisk];
     [super cleanup];
 }
+
 @end
 
 @interface DDFileLoggerWithBuffer (Logging)
@@ -1624,21 +1627,27 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 @end
 
 @implementation DDFileLoggerWithBuffer (Logging)
+
 - (BOOL)shouldDumpBufferToDisk {
     return _bufferSize > _maximumBytesCountInBuffer;
 }
+
 - (void)putDataIntoBufferOrToDisk:(NSData *)data {
     if ([self shouldDumpBufferToDisk]) {
         [self dumpBufferToDisk];
+        [self appendToBufferData:data];
     }
     else {
-        [self logData:data];
+        [self appendToBufferData:data];
     }
 }
+
 @end
 
 @implementation DDFileLogger (ClassCluster)
+
 + (instancetype)createLoggerWithBuffer {
     return [DDFileLoggerWithBuffer new];
 }
+
 @end
