@@ -1555,8 +1555,7 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 
 @interface DDFileLoggerWithBuffer (StreamManipulation)
 - (void)flushBuffer;
-- (void)dumpBufferToDisk;
-- (void)appendToBufferData:(NSData *)data;
+- (void)appendToBuffer:(NSData *)data;
 @end
 
 @implementation DDFileLoggerWithBuffer (StreamManipulation)
@@ -1575,7 +1574,7 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
     [self flushBuffer];
 }
 
-- (void)appendToBufferData:(NSData *)data {
+- (void)appendToBuffer:(NSData *)data {
     __auto_type length = data.length;
     if (data.length != 0) {
         if (_bufferStream == nil) {
@@ -1619,27 +1618,15 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
     [super cleanup];
 }
 
-@end
-
-@interface DDFileLoggerWithBuffer (Logging)
-- (BOOL)shouldDumpBufferToDisk;
-- (void)putDataIntoBufferOrToDisk:(NSData *)data;
-@end
-
-@implementation DDFileLoggerWithBuffer (Logging)
-
-- (BOOL)shouldDumpBufferToDisk {
+- (BOOL)isBufferFull {
     return _bufferSize > _maximumBytesCountInBuffer;
 }
 
 - (void)putDataIntoBufferOrToDisk:(NSData *)data {
-    if ([self shouldDumpBufferToDisk]) {
+    if ([self isBufferFull]) {
         [self dumpBufferToDisk];
-        [self appendToBufferData:data];
     }
-    else {
-        [self appendToBufferData:data];
-    }
+    [self appendToBuffer:data];
 }
 
 @end
@@ -1648,6 +1635,136 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 
 + (instancetype)createLoggerWithBuffer {
     return [DDFileLoggerWithBuffer new];
+}
+
+@end
+
+// MARK: Public Interface
+@interface DDBufferedProxy: NSProxy
++ (instancetype)decoratedInstance:(DDFileLogger *)instance;
+@property (assign, nonatomic, readwrite) NSUInteger maximumBytesCountInBuffer;
+@end
+
+@interface DDBufferedProxy () {
+    NSOutputStream *_bufferStream;
+    NSUInteger _bufferSize;
+}
+- (instancetype)initWithInstance:(DDFileLogger *)instance;
+@property (strong, nonatomic, readwrite) DDFileLogger* instance;
+@end
+
+@interface DDBufferedProxy (StreamManipulation)
+- (void)flushBuffer;
+- (void)dumpBufferToDisk;
+- (void)appendToBuffer:(NSData *)data;
+- (BOOL)isBufferFull;
+@end
+
+@implementation DDBufferedProxy (StreamManipulation)
+
+- (void)flushBuffer {
+    // do something.
+    [_bufferStream close];
+    _bufferStream = nil;
+    _bufferSize = 0;
+}
+
+- (void)dumpBufferToDisk {
+    // do something.
+    __auto_type data = (NSData *)[_bufferStream propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
+    [self.instance logData:data];
+    [self flushBuffer];
+}
+
+- (void)appendToBuffer:(NSData *)data {
+    __auto_type length = data.length;
+    if (data.length != 0) {
+        if (_bufferStream == nil) {
+            _bufferStream = [[NSOutputStream alloc] initToMemory];
+            [_bufferStream open];
+            _bufferSize = 0;
+        }
+        const uint8_t *appendedData = calloc(length, sizeof(uint8_t));
+        [data getBytes:(void *)appendedData length:length];
+        if (appendedData != NULL) {
+            [_bufferStream write:appendedData maxLength:length];
+        }
+        if (appendedData != NULL) {
+            free((void *)appendedData);
+        }
+        _bufferSize += _bufferSize + length;
+    }
+}
+
+- (BOOL)isBufferFull {
+    return _bufferSize > self.maximumBytesCountInBuffer;
+}
+
+@end
+
+@implementation DDBufferedProxy
+@synthesize maximumBytesCountInBuffer = _maximumBytesCountInBuffer;
+
+#pragma mark - Initialization
++ (instancetype)decoratedInstance:(DDFileLogger *)instance {
+    return [[self alloc] initWithInstance:instance];
+}
+
+- (instancetype)initWithInstance:(DDFileLogger *)instance {
+    self.instance = instance;
+    self.maximumBytesCountInBuffer = kDefaultBytesCountInBuffer;
+    return self;
+}
+
+- (void)dealloc {
+    [self dumpBufferToDisk];
+    self.instance = nil;
+}
+
+#pragma mark - Logging
+- (void)logData:(NSData *)data {
+    if ([self isBufferFull]) {
+        [self dumpBufferToDisk];
+    }
+    [self appendToBuffer:data];
+}
+
+#pragma mark - NSProxy
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)sel {
+    return [self.instance methodSignatureForSelector:sel];
+}
+
+- (BOOL)respondsToSelector:(SEL)aSelector {
+    return [self.instance respondsToSelector:aSelector];
+}
+
+- (void)forwardInvocation:(NSInvocation *)invocation {
+    [invocation setTarget:self.instance];
+    [invocation invoke];
+}
+
+@end
+
+@implementation  DDFileLogger (Buffering)
+
+- (instancetype)wrapWithBuffer {
+    if (self.class == DDBufferedProxy.class) {
+        return self;
+    }
+    else {
+        // wrap into proxy.
+        return [DDBufferedProxy decoratedInstance:self];
+    }
+}
+
+- (instancetype)unwrapFromBuffer {
+    if (self.class == DDBufferedProxy.class) {
+        __auto_type proxy = (DDBufferedProxy *)self;
+        return proxy.instance;
+    }
+    else {
+        return self;
+    }
 }
 
 @end

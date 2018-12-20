@@ -519,3 +519,8 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 @interface DDFileLogger (ClassCluster)
 + (instancetype)createLoggerWithBuffer;
 @end
+
+@interface DDFileLogger (Buffering)
+- (instancetype)wrapWithBuffer;
+- (instancetype)unwrapFromBuffer;
+@end
