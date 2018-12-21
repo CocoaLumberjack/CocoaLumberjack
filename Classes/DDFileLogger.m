@@ -1017,7 +1017,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static int exception_count = 0;
-- (void)logData:(NSData *)data {
+- (void)writeToFile:(NSData *)data {
     if (data != nil) {
         @try {
             [self willLogMessage];
@@ -1038,6 +1038,10 @@ static int exception_count = 0;
             }
         }
     }
+}
+
+- (void)logData:(NSData *)data {
+    [self writeToFile:data];
 }
 
 - (void)logMessage:(DDLogMessage *)logMessage {
@@ -1554,11 +1558,44 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 @end
 
 @interface DDFileLoggerWithBuffer (StreamManipulation)
+- (BOOL)isBufferFull;
 - (void)flushBuffer;
+- (void)dumpBufferToDisk;
 - (void)appendToBuffer:(NSData *)data;
 @end
 
+@implementation DDFileLoggerWithBuffer
+
+@synthesize maximumBytesCountInBuffer = _maximumBytesCountInBuffer;
+
+#pragma mark - Initialization
+- (instancetype)init {
+    if (self = [super init]) {
+        self.maximumBytesCountInBuffer = kDefaultBytesCountInBuffer;
+    }
+    return self;
+}
+
+- (void)cleanup {
+    [self dumpBufferToDisk];
+    [super cleanup];
+}
+
+#pragma mark - Subclass
+- (void)logData:(NSData *)data {
+    if ([self isBufferFull]) {
+        [self dumpBufferToDisk];
+    }
+    [self appendToBuffer:data];
+}
+
+@end
+
 @implementation DDFileLoggerWithBuffer (StreamManipulation)
+
+- (BOOL)isBufferFull {
+    return _bufferSize > self.maximumBytesCountInBuffer;
+}
 
 - (void)flushBuffer {
     // do something.
@@ -1570,7 +1607,7 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 - (void)dumpBufferToDisk {
     // do something.
     __auto_type data = (NSData *)[_bufferStream propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
-    [super logData:data];
+    [self writeToFile:data];
     [self flushBuffer];
 }
 
@@ -1590,46 +1627,12 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
         if (appendedData != NULL) {
             free((void *)appendedData);
         }
-        _bufferSize += _bufferSize + length;
+        _bufferSize += length;
     }
 }
 
 @end
 
-@implementation DDFileLoggerWithBuffer
-
-@synthesize maximumBytesCountInBuffer = _maximumBytesCountInBuffer;
-
-- (instancetype)init {
-    if (self = [super init]) {
-        self.maximumBytesCountInBuffer = kDefaultBytesCountInBuffer;
-    }
-    return self;
-}
-
-#pragma mark - Subclass
-- (void)logData:(NSData *)data {
-    [self putDataIntoBufferOrToDisk:data];
-}
-
-#pragma mark - Initialization
-- (void)cleanup {
-    [self dumpBufferToDisk];
-    [super cleanup];
-}
-
-- (BOOL)isBufferFull {
-    return _bufferSize > _maximumBytesCountInBuffer;
-}
-
-- (void)putDataIntoBufferOrToDisk:(NSData *)data {
-    if ([self isBufferFull]) {
-        [self dumpBufferToDisk];
-    }
-    [self appendToBuffer:data];
-}
-
-@end
 
 @implementation DDFileLogger (ClassCluster)
 
@@ -1692,7 +1695,7 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
         if (appendedData != NULL) {
             free((void *)appendedData);
         }
-        _bufferSize += _bufferSize + length;
+        _bufferSize += length;
     }
 }
 
@@ -1753,7 +1756,7 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
     }
     else {
         // wrap into proxy.
-        return [DDBufferedProxy decoratedInstance:self];
+        return (DDFileLogger *)[DDBufferedProxy decoratedInstance:self];
     }
 }
 
