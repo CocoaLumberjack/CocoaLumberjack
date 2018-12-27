@@ -302,9 +302,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 /**
  *  The standard implementation for a file logger
  */
-@interface DDFileLogger : DDAbstractLogger <DDLogger> {
-	DDLogFileInfo *_currentLogFileInfo;
-}
+@interface DDFileLogger : DDAbstractLogger <DDLogger>
 
 /**
  *  Default initializer
