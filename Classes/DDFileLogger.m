@@ -426,7 +426,9 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return [NSString stringWithFormat:@"%@ %@.log", appName, formattedDate];
 }
 
-- (NSString *)createNewLogFile {
+// This method is executed directly on the file logger's internal queue.
+// The file has to exist by the time the method returns.
+- (NSString *)dd_createNewLogFile {
     NSString *fileName = [self newLogFileName];
     NSString *logsDirectory = [self logsDirectory];
 
@@ -470,8 +472,10 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
             [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:attributes];
 
-            // Since we just created a new log file, we may need to delete some old log files
-            [self deleteOldLogFiles];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                // Since we just created a new log file, we may need to delete some old log files
+                [self deleteOldLogFiles];
+            });
 
             return filePath;
         } else {
@@ -963,7 +967,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     }
 
     if (!self->_currentLogFileInfo) {
-        NSString *currentLogFilePath = [self->_logFileManager createNewLogFile];
+        NSString *currentLogFilePath = [self->_logFileManager dd_createNewLogFile];
         self->_currentLogFileInfo = [[DDLogFileInfo alloc] initWithFilePath:currentLogFilePath];
     }
 
