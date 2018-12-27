@@ -143,8 +143,10 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 /**
  * Generates a new unique log file path, and creates the corresponding log file.
+ * This method is executed directly on the file logger's internal queue.
+ * The file has to exist by the time the method returns.
  **/
-- (NSString *)dd_createNewLogFile;
+- (NSString *)createNewLogFile;
 
 @optional
 

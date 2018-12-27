@@ -426,9 +426,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return [NSString stringWithFormat:@"%@ %@.log", appName, formattedDate];
 }
 
-// This method is executed directly on the file logger's internal queue.
-// The file has to exist by the time the method returns.
-- (NSString *)dd_createNewLogFile {
+- (NSString *)createNewLogFile {
     NSString *fileName = [self newLogFileName];
     NSString *logsDirectory = [self logsDirectory];
 
@@ -817,12 +815,14 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     self->_currentLogFileHandle = nil;
 
     _currentLogFileInfo.isArchived = YES;
-
-    if ([_logFileManager respondsToSelector:@selector(didRollAndArchiveLogFile:)]) {
-        [_logFileManager didRollAndArchiveLogFile:(_currentLogFileInfo.filePath)];
-    }
-
+    NSString *archivedFilePath = [_currentLogFileInfo.filePath copy];
     _currentLogFileInfo = nil;
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if ([self->_logFileManager respondsToSelector:@selector(didRollAndArchiveLogFile:)]) {
+            [self->_logFileManager didRollAndArchiveLogFile:archivedFilePath];
+        }
+    });
 
     if (_currentLogFileVnode) {
         dispatch_source_cancel(_currentLogFileVnode);
@@ -953,12 +953,14 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
         if (forceArchive || [self dd_shouldLogFileBeArchived:self->_currentLogFileInfo]) {
             self->_currentLogFileInfo.isArchived = YES;
-
-            if ([self->_logFileManager respondsToSelector:@selector(didArchiveLogFile:)]) {
-                [self->_logFileManager didArchiveLogFile:self->_currentLogFileInfo.filePath];
-            }
-
+            NSString *archivedLogFilePath = [self->_currentLogFileInfo.fileName copy];
             self->_currentLogFileInfo = nil;
+
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                if ([self->_logFileManager respondsToSelector:@selector(didArchiveLogFile:)]) {
+                    [self->_logFileManager didArchiveLogFile:archivedLogFilePath];
+                }
+            });
         }
     }
 
@@ -967,7 +969,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     }
 
     if (!self->_currentLogFileInfo) {
-        NSString *currentLogFilePath = [self->_logFileManager dd_createNewLogFile];
+        NSString *currentLogFilePath = [self->_logFileManager createNewLogFile];
         self->_currentLogFileInfo = [[DDLogFileInfo alloc] initWithFilePath:currentLogFilePath];
     }
 
