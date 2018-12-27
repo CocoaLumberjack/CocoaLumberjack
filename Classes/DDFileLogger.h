@@ -330,10 +330,11 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 - (void)flush NS_REQUIRES_SUPER;
 
 /**
- *  Called when the logger checks archive or not current log file. 
- *  Override this method to exdend standart behavior. By default returns NO.
+ *  Called when the logger checks archive or not current log file.
+ *  Override this method to extend standard behavior. By default returns NO.
+ *  This is executed directly on the logger's internal queue.
  */
-- (BOOL)shouldArchiveRecentLogFileInfo:(DDLogFileInfo *)recentLogFileInfo;
+- (BOOL)dd_shouldArchiveRecentLogFileInfo:(DDLogFileInfo *)recentLogFileInfo;
 
 /**
  * Log File Rolling:
