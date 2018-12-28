@@ -637,7 +637,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     dispatch_block_t block = ^{
         @autoreleasepool {
             self->_maximumFileSize = newMaximumFileSize;
-            [self dd_maybeRollLogFileDueToSize];
+            [self lt_maybeRollLogFileDueToSize];
         }
     };
 
@@ -694,7 +694,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     dispatch_block_t block = ^{
         @autoreleasepool {
             self->_rollingFrequency = newRollingFrequency;
-            [self dd_maybeRollLogFileDueToAge];
+            [self lt_maybeRollLogFileDueToAge];
         }
     };
 
@@ -722,8 +722,8 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 #pragma mark File Rolling
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)dd_scheduleTimerToRollLogFileDueToAge {
-    NSAssert([self isOnInternalLoggerQueue], @"dd_ methods should be on logger queue.");
+- (void)lt_scheduleTimerToRollLogFileDueToAge {
+    NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
 
     if (_rollingTimer) {
         dispatch_source_cancel(_rollingTimer);
@@ -750,7 +750,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
     __weak __auto_type weakSelf = self;
     dispatch_source_set_event_handler(_rollingTimer, ^{ @autoreleasepool {
-                                                           [weakSelf dd_maybeRollLogFileDueToAge];
+                                                           [weakSelf lt_maybeRollLogFileDueToAge];
                                                        } });
 
     #if !OS_OBJECT_USE_OBJC
@@ -777,7 +777,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
     dispatch_block_t block = ^{
         @autoreleasepool {
-            [self dd_rollLogFileNow];
+            [self lt_rollLogFileNow];
 
             if (completionBlock) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -802,8 +802,8 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     }
 }
 
-- (void)dd_rollLogFileNow {
-    NSAssert([self isOnInternalLoggerQueue], @"dd_ methods should be on logger queue.");
+- (void)lt_rollLogFileNow {
+    NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
     NSLogVerbose(@"DDFileLogger: rollLogFileNow");
 
     if (_currentLogFileHandle == nil) {
@@ -835,19 +835,19 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     }
 }
 
-- (void)dd_maybeRollLogFileDueToAge {
-    NSAssert([self isOnInternalLoggerQueue], @"dd_ methods should be on logger queue.");
+- (void)lt_maybeRollLogFileDueToAge {
+    NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
 
     if (_rollingFrequency > 0.0 && _currentLogFileInfo.age >= _rollingFrequency) {
         NSLogVerbose(@"DDFileLogger: Rolling log file due to age...");
-        [self dd_rollLogFileNow];
+        [self lt_rollLogFileNow];
     } else {
-        [self dd_scheduleTimerToRollLogFileDueToAge];
+        [self lt_scheduleTimerToRollLogFileDueToAge];
     }
 }
 
-- (void)dd_maybeRollLogFileDueToSize {
-    NSAssert([self isOnInternalLoggerQueue], @"dd_ methods should be on logger queue.");
+- (void)lt_maybeRollLogFileDueToSize {
+    NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
 
     // This method is called from logMessage.
     // Keep it FAST.
@@ -861,7 +861,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         if (fileSize >= _maximumFileSize) {
             NSLogVerbose(@"DDFileLogger: Rolling log file due to size (%qu)...", fileSize);
 
-            [self dd_rollLogFileNow];
+            [self lt_rollLogFileNow];
         }
     }
 }
@@ -870,12 +870,12 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 #pragma mark File Logging
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (BOOL)dd_shouldLogFileBeArchived:(DDLogFileInfo *)mostRecentLogFileInfo {
-    NSAssert([self isOnInternalLoggerQueue], @"dd_ methods should be on logger queue.");
+- (BOOL)lt_shouldLogFileBeArchived:(DDLogFileInfo *)mostRecentLogFileInfo {
+    NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
 
     if (mostRecentLogFileInfo.isArchived) {
         return NO;
-    } else if ([self dd_shouldArchiveRecentLogFileInfo:mostRecentLogFileInfo]) {
+    } else if ([self lt_shouldArchiveRecentLogFileInfo:mostRecentLogFileInfo]) {
         return YES;
     } else if (self->_maximumFileSize > 0 && mostRecentLogFileInfo.fileSize >= self->_maximumFileSize) {
         return YES;
@@ -918,7 +918,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 - (DDLogFileInfo *)currentLogFileInfo {
     __block DDLogFileInfo *info = nil;
     dispatch_block_t block = ^{
-        info = [self dd_currentLogFileInfo];
+        info = [self lt_currentLogFileInfo];
     };
 
     // The design of this method is taken from the DDAbstractLogger implementation.
@@ -938,8 +938,8 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return info;
 }
 
-- (DDLogFileInfo *)dd_currentLogFileInfo {
-    NSAssert([self isOnInternalLoggerQueue], @"dd_ methods should be on logger queue.");
+- (DDLogFileInfo *)lt_currentLogFileInfo {
+    NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
 
     BOOL isResuming = self->_currentLogFileInfo == nil;
     if (isResuming) {
@@ -951,7 +951,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         BOOL isMostRecentLogArchived = self->_currentLogFileInfo.isArchived;
         BOOL forceArchive = self->_doNotReuseLogFiles && isMostRecentLogArchived == NO;
 
-        if (forceArchive || [self dd_shouldLogFileBeArchived:self->_currentLogFileInfo]) {
+        if (forceArchive || [self lt_shouldLogFileBeArchived:self->_currentLogFileInfo]) {
             self->_currentLogFileInfo.isArchived = YES;
             NSString *archivedLogFilePath = [self->_currentLogFileInfo.fileName copy];
             self->_currentLogFileInfo = nil;
@@ -976,9 +976,9 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return self->_currentLogFileInfo;
 }
 
-- (void)dd_monitorCurrentLogFileForExternalChanges {
+- (void)lt_monitorCurrentLogFileForExternalChanges {
     NSAssert(self->_currentLogFileHandle, @"Can not monitor without handle.");
-    NSAssert([self isOnInternalLoggerQueue], @"dd_ methods should be on logger queue.");
+    NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
 
     dispatch_source_vnode_flags_t flags = DISPATCH_VNODE_DELETE | DISPATCH_VNODE_RENAME | DISPATCH_VNODE_REVOKE;
     self->_currentLogFileVnode = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE,
@@ -989,7 +989,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     __weak __auto_type weakSelf = self;
     dispatch_source_set_event_handler(self->_currentLogFileVnode, ^{ @autoreleasepool {
         NSLogInfo(@"DDFileLogger: Current logfile was moved. Rolling it and creating a new one");
-        [weakSelf dd_rollLogFileNow];
+        [weakSelf lt_rollLogFileNow];
     } });
 
 #if !OS_OBJECT_USE_OBJC
@@ -1002,17 +1002,17 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     dispatch_resume(self->_currentLogFileVnode);
 }
 
-- (NSFileHandle *)dd_currentLogFileHandle {
-    NSAssert([self isOnInternalLoggerQueue], @"dd_ methods should be on logger queue.");
+- (NSFileHandle *)lt_currentLogFileHandle {
+    NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
 
     if (!self->_currentLogFileHandle) {
-        NSString *logFilePath = [[self dd_currentLogFileInfo] filePath];
+        NSString *logFilePath = [[self lt_currentLogFileInfo] filePath];
         self->_currentLogFileHandle = [NSFileHandle fileHandleForWritingAtPath:logFilePath];
         [self->_currentLogFileHandle seekToEndOfFile];
 
         if (self->_currentLogFileHandle) {
-            [self dd_scheduleTimerToRollLogFileDueToAge];
-            [self dd_monitorCurrentLogFileForExternalChanges];
+            [self lt_scheduleTimerToRollLogFileDueToAge];
+            [self lt_monitorCurrentLogFileForExternalChanges];
         }
     }
 
@@ -1044,7 +1044,7 @@ static int exception_count = 0;
         @try {
             [self willLogMessage];
 
-            NSFileHandle *handle = [self dd_currentLogFileHandle];
+            NSFileHandle *handle = [self lt_currentLogFileHandle];
             [handle seekToEndOfFile];
             [handle writeData:logData];
 
@@ -1068,19 +1068,19 @@ static int exception_count = 0;
 }
 
 - (void)didLogMessage {
-    [self dd_maybeRollLogFileDueToSize];
+    [self lt_maybeRollLogFileDueToSize];
 }
 
-- (BOOL)dd_shouldArchiveRecentLogFileInfo:(__unused DDLogFileInfo *)recentLogFileInfo {
+- (BOOL)lt_shouldArchiveRecentLogFileInfo:(__unused DDLogFileInfo *)recentLogFileInfo {
     return NO;
 }
 
 - (void)willRemoveLogger {
-    [self dd_rollLogFileNow];
+    [self lt_rollLogFileNow];
 }
 
 - (void)flush {
-    NSAssert([self isOnInternalLoggerQueue], @"dd_ methods should be on logger queue.");
+    NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
     [_currentLogFileHandle synchronizeFile];
 }
 
