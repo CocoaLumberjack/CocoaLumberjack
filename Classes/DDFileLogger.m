@@ -875,7 +875,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
     if (mostRecentLogFileInfo.isArchived) {
         return NO;
-    } else if ([self lt_shouldArchiveRecentLogFileInfo:mostRecentLogFileInfo]) {
+    } else if ([self shouldArchiveRecentLogFileInfo:mostRecentLogFileInfo]) {
         return YES;
     } else if (self->_maximumFileSize > 0 && mostRecentLogFileInfo.fileSize >= self->_maximumFileSize) {
         return YES;
@@ -1071,7 +1071,7 @@ static int exception_count = 0;
     [self lt_maybeRollLogFileDueToSize];
 }
 
-- (BOOL)lt_shouldArchiveRecentLogFileInfo:(__unused DDLogFileInfo *)recentLogFileInfo {
+- (BOOL)shouldArchiveRecentLogFileInfo:(__unused DDLogFileInfo *)recentLogFileInfo {
     return NO;
 }
 
