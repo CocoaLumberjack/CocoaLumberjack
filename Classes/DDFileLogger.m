@@ -263,6 +263,8 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     // We could do this check once, during initalization, and not bother again.
     // But this way the code continues to work if the directory gets deleted while the code is running.
 
+    NSAssert(_logsDirectory.length > 0, @"Directory must be set.");
+
     NSError *err = nil;
     BOOL success = [[NSFileManager defaultManager] createDirectoryAtPath:_logsDirectory
                                              withIntermediateDirectories:YES
@@ -931,7 +933,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_sync(globalLoggingQueue, ^{
-            dispatch_sync(self.loggerQueue, block);
+            dispatch_sync(self->_loggerQueue, block);
         });
     }
 
