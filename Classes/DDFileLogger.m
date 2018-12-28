@@ -75,7 +75,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 @synthesize maximumNumberOfLogFiles = _maximumNumberOfLogFiles;
 @synthesize logFilesDiskQuota = _logFilesDiskQuota;
 
-
 - (instancetype)init {
     return [self initWithLogsDirectory:nil];
 }
@@ -103,20 +102,19 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return self;
 }
 
-+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)theKey
-{
-    BOOL automatic = NO;
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)theKey {
+
     if ([theKey isEqualToString:@"maximumNumberOfLogFiles"] || [theKey isEqualToString:@"logFilesDiskQuota"]) {
-        automatic = NO;
+        return NO;
     } else {
-        automatic = [super automaticallyNotifiesObserversForKey:theKey];
+        return [super automaticallyNotifiesObserversForKey:theKey];
     }
-    
-    return automatic;
 }
 
 #if TARGET_OS_IPHONE
-- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory defaultFileProtectionLevel:(NSFileProtectionType)fileProtectionLevel {
+- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory
+           defaultFileProtectionLevel:(NSFileProtectionType)fileProtectionLevel {
+
     if ((self = [self initWithLogsDirectory:logsDirectory])) {
         if ([fileProtectionLevel isEqualToString:NSFileProtectionNone] ||
             [fileProtectionLevel isEqualToString:NSFileProtectionComplete] ||
@@ -160,9 +158,12 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         [keyPath isEqualToString:NSStringFromSelector(@selector(logFilesDiskQuota))]) {
         NSLogInfo(@"DDFileLogManagerDefault: Responding to configuration change: %@", keyPath);
 
-        dispatch_async([DDLog loggingQueue], ^{ @autoreleasepool {
-                                                    [self deleteOldLogFiles];
-                                                } });
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            @autoreleasepool {
+                // See method header for queue reasoning.
+                [self deleteOldLogFiles];
+            }
+        });
     }
 }
 
@@ -172,12 +173,14 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
 /**
  * Deletes archived log files that exceed the maximumNumberOfLogFiles or logFilesDiskQuota configuration values.
+ * Method may take a while to execute since we're performing IO. It's not critical that this is synchronized with
+ * log output, since the files we're deleting are all archived and not in use, therefore this method is called on a
+ * background queue.
  **/
 - (void)deleteOldLogFiles {
     NSLogVerbose(@"DDLogFileManagerDefault: deleteOldLogFiles");
 
     NSArray *sortedLogFileInfos = [self sortedLogFileInfos];
-
     NSUInteger firstIndexToDelete = NSNotFound;
 
     const unsigned long long diskQuota = self.logFilesDiskQuota;
@@ -289,8 +292,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
 // if you change formatter, then change sortedLogFileInfos method also accordingly
 - (NSDateFormatter *)logFileDateFormatter {
-    NSMutableDictionary *dictionary = [[NSThread currentThread]
-                                       threadDictionary];
+    NSMutableDictionary *dictionary = [[NSThread currentThread] threadDictionary];
     NSString *dateFormat = @"yyyy'-'MM'-'dd'--'HH'-'mm'-'ss'-'SSS'";
     NSString *key = [NSString stringWithFormat:@"logFileDateFormatter.%@", dateFormat];
     NSDateFormatter *dateFormatter = dictionary[key];
@@ -1036,9 +1038,14 @@ static int exception_count = 0;
     }
 
     if (message) {
-        if ((!isFormatted || _automaticallyAppendNewlineForCustomFormatters) &&
-            (![message hasSuffix:@"\n"])) {
-            message = [message stringByAppendingString:@"\n"];
+
+        if (!isFormatted || _automaticallyAppendNewlineForCustomFormatters) {
+            unichar lastChar = [message characterAtIndex:message.length - 1];
+            BOOL isLastCharNewline = [NSCharacterSet.newlineCharacterSet characterIsMember:lastChar];
+
+            if (!isLastCharNewline) {
+                message = [message stringByAppendingString:@"\n"];
+            }
         }
 
         NSData *logData = [message dataUsingEncoding:NSUTF8StringEncoding];
