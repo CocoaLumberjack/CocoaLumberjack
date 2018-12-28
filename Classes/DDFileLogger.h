@@ -153,12 +153,13 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 // Notifications from DDFileLogger
 
 /**
- *  Called when a log file was archieved
+ *  Called when a log file was archieved. Executed on global queue with default priority.
  */
 - (void)didArchiveLogFile:(NSString *)logFilePath NS_SWIFT_NAME(didArchiveLogFile(atPath:));
 
 /**
- *  Called when the roll action was executed and the log was archieved
+ *  Called when the roll action was executed and the log was archieved.
+ *  Executed on global queue with default priority.
  */
 - (void)didRollAndArchiveLogFile:(NSString *)logFilePath NS_SWIFT_NAME(didRollAndArchiveLogFile(atPath:));
 
