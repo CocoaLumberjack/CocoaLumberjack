@@ -920,24 +920,23 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
  * Otherwise a new file is created and returned.
  **/
 - (DDLogFileInfo *)currentLogFileInfo {
+    // The design of this method is taken from the DDAbstractLogger implementation.
+    // For extensive documentation please refer to the DDAbstractLogger implementation.
+    // Do not access this method on any Lumberjack queue, will deadllock.
+
+    NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+    NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.");
+
     __block DDLogFileInfo *info = nil;
     dispatch_block_t block = ^{
         info = [self lt_currentLogFileInfo];
     };
 
-    // The design of this method is taken from the DDAbstractLogger implementation.
-    // For extensive documentation please refer to the DDAbstractLogger implementation.
+    dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
 
-    if ([self isOnInternalLoggerQueue]) {
-        block();
-    } else {
-        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-        NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-
-        dispatch_sync(globalLoggingQueue, ^{
-            dispatch_sync(self->_loggerQueue, block);
-        });
-    }
+    dispatch_sync(globalLoggingQueue, ^{
+        dispatch_sync(self->_loggerQueue, block);
+    });
 
     return info;
 }
