@@ -20,6 +20,8 @@
 
 #import "DDLog.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class DDLogFileInfo;
 
 /**
@@ -532,3 +534,5 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 - (NSComparisonResult)reverseCompareByModificationDate:(DDLogFileInfo *)another;
 
 @end
+
+NS_ASSUME_NONNULL_END
