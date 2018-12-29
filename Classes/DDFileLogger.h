@@ -248,6 +248,14 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  **/
 - (BOOL)isLogFile:(NSString *)fileName NS_SWIFT_NAME(isLogFile(withName:));
 
+/**
+ * New log files are created empty by default in `createNewLogFile:` method
+ *
+ * If you wish to specify a common file header to use in your log files,
+ * you can set the initial log file contents by overriding `logFileHeader`
+ **/
+@property (readonly, copy) NSString *logFileHeader;
+
 /* Inherited from DDLogFileManager protocol:
 
    @property (readwrite, assign, atomic) NSUInteger maximumNumberOfLogFiles;
