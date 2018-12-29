@@ -426,13 +426,42 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return [NSString stringWithFormat:@"%@ %@.log", appName, formattedDate];
 }
 
+- (NSString *)logFileHeader {
+    return nil;
+}
+
+- (NSData *)logFileHeaderData {
+    NSString *fileHeaderStr = [self logFileHeader];
+    
+    if (fileHeaderStr.length == 0) {
+        return nil;
+    }
+    
+    // Ensure that we have a newline at the end of the string
+    unichar lastChar = [fileHeaderStr characterAtIndex:fileHeaderStr.length - 1];
+    if (![[NSCharacterSet newlineCharacterSet] characterIsMember:lastChar]) {
+        fileHeaderStr = [fileHeaderStr stringByAppendingString:@"\n"];
+    }
+
+    return [fileHeaderStr dataUsingEncoding:NSUTF8StringEncoding];
+}
+
 - (NSString *)createNewLogFile {
+    static NSUInteger MAX_ALLOWED_ERROR = 5;
+
     NSString *fileName = [self newLogFileName];
     NSString *logsDirectory = [self logsDirectory];
+    NSData *fileHeader = [self logFileHeaderData];
 
     NSUInteger attempt = 1;
+    NSUInteger criticalErrors = 0;
 
     do {
+        if (criticalErrors >= MAX_ALLOWED_ERROR) {
+            NSLogError(@"DDLogFileManagerDefault: Bailing file creation, encountered %ld errors.", criticalErrors);
+            return nil;
+        }
+
         NSString *actualFileName = fileName;
 
         if (attempt > 1) {
@@ -448,38 +477,43 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
         NSString *filePath = [logsDirectory stringByAppendingPathComponent:actualFileName];
 
-        if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-            NSLogVerbose(@"DDLogFileManagerDefault: Creating new log file: %@", actualFileName);
+        NSDictionary *attributes = nil;
+#if TARGET_OS_IPHONE
+        // When creating log file on iOS we're setting NSFileProtectionKey attribute to NSFileProtectionCompleteUnlessOpen.
+        //
+        // But in case if app is able to launch from background we need to have an ability to open log file any time we
+        // want (even if device is locked). Thats why that attribute have to be changed to
+        // NSFileProtectionCompleteUntilFirstUserAuthentication.
+        NSFileProtectionType key = _defaultFileProtectionLevel ? :
+        (doesAppRunInBackground() ? NSFileProtectionCompleteUntilFirstUserAuthentication : NSFileProtectionCompleteUnlessOpen);
 
-            NSDictionary *attributes = nil;
+        attributes = @{NSFileProtectionKey: key};
+#endif
 
-        #if TARGET_OS_IPHONE
-            // When creating log file on iOS we're setting NSFileProtectionKey attribute to NSFileProtectionCompleteUnlessOpen.
-            //
-            // But in case if app is able to launch from background we need to have an ability to open log file any time we
-            // want (even if device is locked). Thats why that attribute have to be changed to
-            // NSFileProtectionCompleteUntilFirstUserAuthentication.
+        NSError *error = nil;
+        BOOL success = [fileHeader writeToURL:filePath
+                                      options:NSDataWritingAtomic
+                                        error:&error];
 
-            NSFileProtectionType key = _defaultFileProtectionLevel ? :
-                (doesAppRunInBackground() ? NSFileProtectionCompleteUntilFirstUserAuthentication : NSFileProtectionCompleteUnlessOpen);
-
-            attributes = @{
-                NSFileProtectionKey: key
-            };
-        #endif
-
-            [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:attributes];
-
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                // Since we just created a new log file, we may need to delete some old log files
-                [self deleteOldLogFiles];
-            });
-
-            return filePath;
-        } else {
+        if (success) {
+            NSLogVerbose(@"DDLogFileManagerDefault: Created new log file: %@", actualFileName);
+            break;
+        } else if (error.code == NSFileWriteFileExistsError) {
             attempt++;
+            continue;
+        } else {
+            NSLogError(@"DDLogFileManagerDefault: Critical error while creating log file: %@", error);
+            criticalErrors++;
+            continue;
         }
+
+        return filePath;
     } while (YES);
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // Since we just created a new log file, we may need to delete some old log files
+        [self deleteOldLogFiles];
+    });
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

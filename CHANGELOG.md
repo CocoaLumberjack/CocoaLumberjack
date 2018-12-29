@@ -21,6 +21,7 @@
 - DDFileLogger log message is overridden #924
 - Fix thread safety issues in DDFileLogger #986, #1003, #946
 - Fix availability checks and memory leak #996
+- Added `logFileHeader` property to `DDLogFileManagerDefault` which you can override to set log file header #998
 - DDFileLogger now accepts a dispatch_queue which it uses to run callbacks #1003
 
 ## [3.4.2 - Xcode 9.3 on Apr 17th, 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.4.2)
