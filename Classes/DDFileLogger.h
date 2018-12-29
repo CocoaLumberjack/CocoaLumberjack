@@ -194,7 +194,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 /**
  *  Designated initialized, requires the logs directory
  */
-- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithLogsDirectory:(NSString * __nullable)logsDirectory NS_DESIGNATED_INITIALIZER;
 
 #if TARGET_OS_IPHONE
 /*
@@ -208,7 +208,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *    null
  *    cy#
  **/
-- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory
+- (instancetype)initWithLogsDirectory:(NSString * __nullable)logsDirectory
            defaultFileProtectionLevel:(NSFileProtectionType)fileProtectionLevel;
 #endif
 
@@ -260,7 +260,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  * If you wish to specify a common file header to use in your log files,
  * you can set the initial log file contents by overriding `logFileHeader`
  **/
-@property (readonly, copy) NSString *logFileHeader;
+@property (readonly, copy, nullable) NSString *logFileHeader;
 
 /* Inherited from DDLogFileManager protocol:
 
@@ -305,7 +305,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 /**
  *  Designated initializer, requires a date formatter
  */
-- (instancetype)initWithDateFormatter:(NSDateFormatter *)dateFormatter NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithDateFormatter:(NSDateFormatter * __nullable)dateFormatter NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -323,7 +323,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  */
 - (instancetype)init;
 
-- (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager
+- (instancetype)initWithLogFileManager:(id <DDLogFileManager> __nullable)logFileManager
         __attribute__((deprecated("Use -initWithLogFileManager:completionQueue:")));
 
 /**
@@ -331,7 +331,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *  The completionQueue is used to execute `didArchiveLogFile`, `didRollAndArchiveLogFile`,
  *  and the callback in `rollLog`. If nil, a global queue w/ default priority is used.
  */
-- (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager
+- (instancetype)initWithLogFileManager:(id <DDLogFileManager> __nullable)logFileManager
                        completionQueue:(dispatch_queue_t __nullable)dispatchQueue NS_DESIGNATED_INITIALIZER;
 
 /**
@@ -421,7 +421,8 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *  You can optionally force the current log file to be rolled with this method.
  *  CompletionBlock will be called on main queue.
  */
-- (void)rollLogFileWithCompletionBlock:(void (^)(void))completionBlock NS_SWIFT_NAME(rollLogFile(withCompletion:));
+- (void)rollLogFileWithCompletionBlock:(void (^ __nullable)(void))completionBlock
+    NS_SWIFT_NAME(rollLogFile(withCompletion:));
 
 /**
  *  Method is deprecated.

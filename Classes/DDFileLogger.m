@@ -76,12 +76,12 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return [self initWithLogsDirectory:nil];
 }
 
-- (instancetype)initWithLogsDirectory:(NSString *)aLogsDirectory {
+- (instancetype)initWithLogsDirectory:(NSString * __nullable)aLogsDirectory {
     if ((self = [super init])) {
         _maximumNumberOfLogFiles = kDDDefaultLogMaxNumLogFiles;
         _logFilesDiskQuota = kDDDefaultLogFilesDiskQuota;
 
-        if (aLogsDirectory) {
+        if (aLogsDirectory.length > 0) {
             _logsDirectory = [aLogsDirectory copy];
         } else {
             _logsDirectory = [[self defaultLogsDirectory] copy];
@@ -163,6 +163,16 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     }
 }
 
+- (NSFileProtectionType)logFileProtection {
+    if (_defaultFileProtectionLevel.length > 0) {
+        return _defaultFileProtectionLevel;
+    } else if (doesAppRunInBackground()) {
+        return NSFileProtectionCompleteUntilFirstUserAuthentication;
+    } else {
+        return NSFileProtectionCompleteUnlessOpen;
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark File Deleting
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -226,9 +236,13 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         for (NSUInteger i = firstIndexToDelete; i < sortedLogFileInfos.count; i++) {
             DDLogFileInfo *logFileInfo = sortedLogFileInfos[i];
 
-            NSLogInfo(@"DDLogFileManagerDefault: Deleting file: %@", logFileInfo.fileName);
-
-            [[NSFileManager defaultManager] removeItemAtPath:logFileInfo.filePath error:nil];
+            NSError *error = nil;
+            BOOL success = [[NSFileManager defaultManager] removeItemAtPath:logFileInfo.filePath error:&error];
+            if (success) {
+                NSLogInfo(@"DDLogFileManagerDefault: Deleting file: %@", logFileInfo.fileName);
+            } else {
+                NSLogError(@"DDLogFileManagerDefault: Error deleting file %@", error);
+            }
         }
     }
 }
@@ -426,7 +440,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return [NSString stringWithFormat:@"%@ %@.log", appName, formattedDate];
 }
 
-- (NSString *)logFileHeader {
+- (NSString * __nullable)logFileHeader {
     return nil;
 }
 
@@ -479,20 +493,20 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
         NSError *error = nil;
         BOOL success = [fileHeader writeToFile:filePath options:NSAtomicWrite error:&error];
-        if (success) {
+
 #if TARGET_OS_IPHONE
+        if (success) {
             // When creating log file on iOS we're setting NSFileProtectionKey attribute to NSFileProtectionCompleteUnlessOpen.
             //
             // But in case if app is able to launch from background we need to have an ability to open log file any time we
             // want (even if device is locked). Thats why that attribute have to be changed to
             // NSFileProtectionCompleteUntilFirstUserAuthentication.
-            NSFileProtectionType key = _defaultFileProtectionLevel ? :
-            (doesAppRunInBackground() ? NSFileProtectionCompleteUntilFirstUserAuthentication : NSFileProtectionCompleteUnlessOpen);
-
-            attributes = @{NSFileProtectionKey: key};
-#endif
-            success = [[NSFileManager defaultManager] setAttributes:attempt ofItemAtPath:filePath error:&error];
+            NSDictionary *attributes = @{NSFileProtectionKey: [self logFileProtection]};
+            success = [[NSFileManager defaultManager] setAttributes:attributes
+                                                       ofItemAtPath:filePath
+                                                              error:&error];
         }
+#endif
 
         if (success) {
             NSLogVerbose(@"PURLogFileManagerDefault: Created new log file: %@", actualFileName);
@@ -555,7 +569,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return [self initWithDateFormatter:nil];
 }
 
-- (instancetype)initWithDateFormatter:(NSDateFormatter *)aDateFormatter {
+- (instancetype)initWithDateFormatter:(NSDateFormatter * __nullable)aDateFormatter {
     if ((self = [super init])) {
         if (aDateFormatter) {
             _dateFormatter = aDateFormatter;
@@ -628,17 +642,17 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
 - (void)dealloc {
     dispatch_sync(self.loggerQueue, ^{
-        [_currentLogFileHandle synchronizeFile];
-        [_currentLogFileHandle closeFile];
+        [self->_currentLogFileHandle synchronizeFile];
+        [self->_currentLogFileHandle closeFile];
 
-        if (_currentLogFileVnode) {
-            dispatch_source_cancel(_currentLogFileVnode);
-            _currentLogFileVnode = NULL;
+        if (self->_currentLogFileVnode) {
+            dispatch_source_cancel(self->_currentLogFileVnode);
+            self->_currentLogFileVnode = NULL;
         }
 
-        if (_rollingTimer) {
-            dispatch_source_cancel(_rollingTimer);
-            _rollingTimer = NULL;
+        if (self->_rollingTimer) {
+            dispatch_source_cancel(self->_rollingTimer);
+            self->_rollingTimer = NULL;
         }
     });
 }
@@ -814,7 +828,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     [self rollLogFileWithCompletionBlock:nil];
 }
 
-- (void)rollLogFileWithCompletionBlock:(void (^)(void))completionBlock {
+- (void)rollLogFileWithCompletionBlock:(void (^ __nullable)(void))completionBlock {
     // This method is public.
     // We need to execute the rolling on our logging thread/queue.
 
@@ -1196,7 +1210,12 @@ static int exception_count = 0;
 
 - (NSDictionary *)fileAttributes {
     if (_fileAttributes == nil && filePath != nil) {
-        _fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
+        NSError *error = nil;
+        _fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:&error];
+
+        if (error) {
+            NSLogError(@"DDLogFileInfo: Failed to read file attributes: %@", error);
+        }
     }
 
     return _fileAttributes;
