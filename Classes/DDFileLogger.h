@@ -309,14 +309,20 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 @interface DDFileLogger : DDAbstractLogger <DDLogger>
 
 /**
- *  Default initializer
+ *  Default initializer.
  */
 - (instancetype)init;
 
+- (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager
+        __attribute__((deprecated("Use -initWithLogFileManager:completionQueue:")));
+
 /**
- *  Designated initializer, requires a `DDLogFileManager` instance
+ *  Designated initializer, requires a `DDLogFileManager` instance.
+ *  The completionQueue is used to execute `didArchiveLogFile`, `didRollAndArchiveLogFile`,
+ *  and the callback in `rollLog`. If nil, a global queue w/ default priority is used.
  */
-- (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager
+                       completionQueue:(dispatch_queue_t __nullable)dispatchQueue NS_DESIGNATED_INITIALIZER;
 
 /**
  *  Called when the logger is about to write message. Call super before your implementation.

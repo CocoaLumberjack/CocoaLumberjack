@@ -8,7 +8,6 @@
 - Use static const for default log level so Swift can strip strings #952
 - Update to Xcode 10 and Swift 4.2 complier #950
 - Xcode 10 scheme changes #949
-- Synchronous access to `currentLogFileHandle` #946
 - Full links to Docs and other resources so they are resolved on external pages (i.e. https://cocoapods.org/pods/CocoaLumberjack) e9d6971
 - Proper BSD 3-Clause License (the old one was incomplete) #942
 - Prevent memory access errors caused by a failed fetch #944
@@ -20,8 +19,9 @@
 - Fixed compiler warnings #931
 - Add new queue label which will be hold by a manual created thread #932
 - DDFileLogger log message is overridden #924
-- Fix thread safety issue in DDFileLogger #986
+- Fix thread safety issues in DDFileLogger #986, #1003, #946
 - Fix availability checks and memory leak #996
+- DDFileLogger now accepts a dispatch_queue which it uses to run callbacks #1003
 
 ## [3.4.2 - Xcode 9.3 on Apr 17th, 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.4.2)
 - Update README.md #912

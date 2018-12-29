@@ -65,9 +65,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 #endif
 }
 
-- (void)deleteOldLogFiles;
-- (NSString *)defaultLogsDirectory;
-
 @end
 
 @implementation DDLogFileManagerDefault
@@ -150,7 +147,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     NSNumber *new = change[NSKeyValueChangeNewKey];
 
     if ([old isEqual:new]) {
-        // No change in value - don't bother with any processing.
         return;
     }
 
@@ -246,17 +242,16 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
  * If the logs directory doesn't exist, this method automatically creates it.
  **/
 - (NSString *)defaultLogsDirectory {
+
 #if TARGET_OS_IPHONE
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *baseDir = paths.firstObject;
     NSString *logsDirectory = [baseDir stringByAppendingPathComponent:@"Logs"];
-
 #else
     NSString *appName = [[NSProcessInfo processInfo] processName];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
     NSString *basePath = ([paths count] > 0) ? paths[0] : NSTemporaryDirectory();
     NSString *logsDirectory = [[basePath stringByAppendingPathComponent:@"Logs"] stringByAppendingPathComponent:appName];
-
 #endif
 
     return logsDirectory;
@@ -420,6 +415,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Creation
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //if you change newLogFileName , then  change isLogFile method also accordingly
 - (NSString *)newLogFileName {
     NSString *appName = [self applicationName];
@@ -497,11 +493,11 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     dispatch_once(&onceToken, ^{
         _appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
 
-        if (!_appName) {
+        if (_appName.length == 0) {
             _appName = [[NSProcessInfo processInfo] processName];
         }
 
-        if (!_appName) {
+        if (_appName.length == 0) {
             _appName = @"";
         }
     });
@@ -565,6 +561,8 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     dispatch_source_t _rollingTimer;
     
     unsigned long long _maximumFileSize;
+
+    dispatch_queue_t _completionQueue;
 }
 
 @end
@@ -573,11 +571,18 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
 - (instancetype)init {
     DDLogFileManagerDefault *defaultLogFileManager = [[DDLogFileManagerDefault alloc] init];
-    return [self initWithLogFileManager:defaultLogFileManager];
+    return [self initWithLogFileManager:defaultLogFileManager completionQueue:nil];
 }
 
-- (instancetype)initWithLogFileManager:(id <DDLogFileManager>)aLogFileManager {
+- (instancetype)initWithLogFileManager:(id<DDLogFileManager>)logFileManager {
+    return [self initWithLogFileManager:logFileManager completionQueue:nil];
+}
+
+- (instancetype)initWithLogFileManager:(id <DDLogFileManager>)aLogFileManager
+                       completionQueue:(dispatch_queue_t __nullable)dispatchQueue {
     if ((self = [super init])) {
+        _completionQueue = dispatchQueue ?: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+
         _maximumFileSize = kDDDefaultLogMaxFileSize;
         _rollingFrequency = kDDDefaultLogRollingFrequency;
         _automaticallyAppendNewlineForCustomFormatters = YES;
@@ -590,18 +595,20 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 }
 
 - (void)dealloc {
-    [_currentLogFileHandle synchronizeFile];
-    [_currentLogFileHandle closeFile];
+    dispatch_sync(self.loggerQueue, ^{
+        [_currentLogFileHandle synchronizeFile];
+        [_currentLogFileHandle closeFile];
 
-    if (_currentLogFileVnode) {
-        dispatch_source_cancel(_currentLogFileVnode);
-        _currentLogFileVnode = NULL;
-    }
+        if (_currentLogFileVnode) {
+            dispatch_source_cancel(_currentLogFileVnode);
+            _currentLogFileVnode = NULL;
+        }
 
-    if (_rollingTimer) {
-        dispatch_source_cancel(_rollingTimer);
-        _rollingTimer = NULL;
-    }
+        if (_rollingTimer) {
+            dispatch_source_cancel(_rollingTimer);
+            _rollingTimer = NULL;
+        }
+    });
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -754,8 +761,8 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
     __weak __auto_type weakSelf = self;
     dispatch_source_set_event_handler(_rollingTimer, ^{ @autoreleasepool {
-                                                           [weakSelf lt_maybeRollLogFileDueToAge];
-                                                       } });
+        [weakSelf lt_maybeRollLogFileDueToAge];
+    } });
 
     #if !OS_OBJECT_USE_OBJC
     dispatch_source_t theRollingTimer = _rollingTimer;
@@ -784,7 +791,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
             [self lt_rollLogFileNow];
 
             if (completionBlock) {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                dispatch_async(self->_completionQueue, ^{
                     completionBlock();
                 });
             }
@@ -822,11 +829,11 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     NSString *archivedFilePath = [_currentLogFileInfo.filePath copy];
     _currentLogFileInfo = nil;
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        if ([self->_logFileManager respondsToSelector:@selector(didRollAndArchiveLogFile:)]) {
+    if ([self->_logFileManager respondsToSelector:@selector(didRollAndArchiveLogFile:)]) {
+        dispatch_async(_completionQueue, ^{
             [self->_logFileManager didRollAndArchiveLogFile:archivedFilePath];
-        }
-    });
+        });
+    }
 
     if (_currentLogFileVnode) {
         dispatch_source_cancel(_currentLogFileVnode);
@@ -959,11 +966,11 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
             NSString *archivedLogFilePath = [self->_currentLogFileInfo.fileName copy];
             self->_currentLogFileInfo = nil;
 
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                if ([self->_logFileManager respondsToSelector:@selector(didArchiveLogFile:)]) {
+            if ([self->_logFileManager respondsToSelector:@selector(didArchiveLogFile:)]) {
+                dispatch_async(_completionQueue, ^{
                     [self->_logFileManager didArchiveLogFile:archivedLogFilePath];
-                }
-            });
+                });
+            }
         }
     }
 
