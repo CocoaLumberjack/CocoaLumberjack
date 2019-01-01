@@ -468,6 +468,9 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     NSString *fileName = [self newLogFileName];
     NSString *logsDirectory = [self logsDirectory];
     NSData *fileHeader = [self logFileHeaderData];
+    if (fileHeader == nil) {
+        fileHeader = [NSData new];
+    }
 
     NSUInteger attempt = 1;
     NSUInteger criticalErrors = 0;
