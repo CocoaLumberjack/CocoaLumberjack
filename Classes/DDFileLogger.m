@@ -163,6 +163,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     }
 }
 
+#if TARGET_OS_IPHONE
 - (NSFileProtectionType)logFileProtection {
     if (_defaultFileProtectionLevel.length > 0) {
         return _defaultFileProtectionLevel;
@@ -172,6 +173,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         return NSFileProtectionCompleteUnlessOpen;
     }
 }
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark File Deleting
