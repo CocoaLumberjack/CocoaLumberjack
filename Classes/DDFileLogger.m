@@ -477,7 +477,8 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
     do {
         if (criticalErrors >= MAX_ALLOWED_ERROR) {
-            NSLogError(@"DDLogFileManagerDefault: Bailing file creation, encountered %ld errors.", criticalErrors);
+            NSLogError(@"DDLogFileManagerDefault: Bailing file creation, encountered %ld errors.",
+                        (unsigned long)criticalErrors);
             return nil;
         }
 
@@ -1221,6 +1222,8 @@ static int exception_count = 0;
         if (error) {
             NSLogError(@"DDLogFileInfo: Failed to read file attributes: %@", error);
         }
+    } else {
+        _fileAttributes = [NSDictionary new];
     }
 
     return _fileAttributes;
