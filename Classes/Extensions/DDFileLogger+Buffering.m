@@ -19,6 +19,7 @@
 - (void)logData:(NSData *)data;
 @end
 
+// TODO: Fix it later. ( Protocol adoption? )
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincomplete-implementation"
 @implementation DDFileLogger (Internal)
@@ -93,6 +94,11 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 
 @implementation DDBufferedProxy
 @synthesize maximumBytesCountInBuffer = _maximumBytesCountInBuffer;
+
+#pragma mark - Properties
+- (void)setMaximumBytesCountInBuffer:(NSUInteger)maximumBytesCountInBuffer {
+    _maximumBytesCountInBuffer = MIN(maximumBytesCountInBuffer, kMaximumBytesCountInBuffer);
+}
 
 #pragma mark - Initialization
 + (instancetype)decoratedInstance:(DDFileLogger *)instance {
