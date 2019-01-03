@@ -1501,42 +1501,20 @@ static int exception_count = 0;
     return NO;
 }
 
--(NSUInteger)hash {
+- (NSUInteger)hash {
     return [filePath hash];
 }
 
 - (NSComparisonResult)reverseCompareByCreationDate:(DDLogFileInfo *)another {
-    NSDate *us = [self creationDate];
-    NSDate *them = [another creationDate];
-
-    NSComparisonResult result = [us compare:them];
-
-    if (result == NSOrderedAscending) {
-        return NSOrderedDescending;
-    }
-
-    if (result == NSOrderedDescending) {
-        return NSOrderedAscending;
-    }
-
-    return NSOrderedSame;
+    __auto_type us = [self creationDate];
+    __auto_type them = [another creationDate];
+    return [them compare:us];
 }
 
 - (NSComparisonResult)reverseCompareByModificationDate:(DDLogFileInfo *)another {
-    NSDate *us = [self modificationDate];
-    NSDate *them = [another modificationDate];
-
-    NSComparisonResult result = [us compare:them];
-
-    if (result == NSOrderedAscending) {
-        return NSOrderedDescending;
-    }
-
-    if (result == NSOrderedDescending) {
-        return NSOrderedAscending;
-    }
-
-    return NSOrderedSame;
+    __auto_type us = [self modificationDate];
+    __auto_type them = [another modificationDate];
+    return [them compare:us];
 }
 
 @end
