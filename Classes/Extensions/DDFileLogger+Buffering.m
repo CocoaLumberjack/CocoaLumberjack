@@ -14,17 +14,7 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDFileLogger+Buffering.h"
-
-@interface DDFileLogger (Internal)
-- (void)logData:(NSData *)data;
-@end
-
-// TODO: Fix it later. ( Protocol adoption? )
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincomplete-implementation"
-@implementation DDFileLogger (Internal)
-@end
-#pragma clang diagnostic pop
+#import "DDFileLogger+Internal.h"
 
 static NSUInteger kMaximumBytesCountInBuffer = (1 << 10) * (1 << 10); // 1 MB.
 static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
