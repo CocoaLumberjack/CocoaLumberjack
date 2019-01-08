@@ -14,7 +14,7 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDFileLogger.h"
-
+#import "DDFileLogger+Internal.h"
 #import "DDLoggerNames.h"
 
 #import <unistd.h>
@@ -113,7 +113,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     } else {
         automatic = [super automaticallyNotifiesObserversForKey:theKey];
     }
-    
+
     return automatic;
 }
 
@@ -285,7 +285,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     // We need to add a space to the name as otherwise we could match applications that have the name prefix.
     BOOL hasProperPrefix = [fileName hasPrefix:[appName stringByAppendingString:@" "]];
     BOOL hasProperSuffix = [fileName hasSuffix:@".log"];
-    
+
     return (hasProperPrefix && hasProperSuffix);
 }
 
@@ -402,7 +402,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
             stringDate = [stringDate stringByReplacingOccurrencesOfString:@".archived" withString:@""];
             date1 = [[self logFileDateFormatter] dateFromString:stringDate] ?: [obj1 creationDate];
         }
-        
+
         arrayComponent = [[obj2 fileName] componentsSeparatedByString:@" "];
         if (arrayComponent.count > 0) {
             NSString *stringDate = arrayComponent.lastObject;
@@ -410,7 +410,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
             stringDate = [stringDate stringByReplacingOccurrencesOfString:@".archived" withString:@""];
             date2 = [[self logFileDateFormatter] dateFromString:stringDate] ?: [obj2 creationDate];
         }
-        
+
         return [date2 compare:date1 ?: [NSDate new]];
     }];
 
@@ -435,14 +435,14 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
 - (NSData *)logFileHeaderData {
     NSString *fileHeaderStr = [self logFileHeader];
-    
+
     if (fileHeaderStr == nil || [fileHeaderStr length] == 0) {
         return nil;
     }
-    
+
     // Ensure that we have a newline at the end of the string
     fileHeaderStr = [NSString stringWithFormat:@"%@\n", fileHeaderStr];
-    
+
     NSData *fileHeaderData = [fileHeaderStr dataUsingEncoding:NSUTF8StringEncoding];
     return fileHeaderData;
 }
@@ -571,12 +571,12 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
 @interface DDFileLogger () {
     __strong id <DDLogFileManager> _logFileManager;
-    
+
     NSFileHandle *_currentLogFileHandle;
-    
+
     dispatch_source_t _currentLogFileVnode;
     dispatch_source_t _rollingTimer;
-    
+
     unsigned long long _maximumFileSize;
     NSTimeInterval _rollingFrequency;
 }
@@ -610,10 +610,10 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         _maximumFileSize = kDDDefaultLogMaxFileSize;
         _rollingFrequency = kDDDefaultLogRollingFrequency;
         _automaticallyAppendNewlineForCustomFormatters = YES;
-        
+
         _currentLogFileHandleQueue = dispatch_queue_create("cocoa.lumberjack.fileLogger.currentLogFileHandleQueue", DISPATCH_QUEUE_SERIAL);
         _currentLogFileInfoQueue = dispatch_queue_create("cocoa.lumberjack.fileLogger.currentLogFileInfoQueue", DISPATCH_QUEUE_SERIAL);
-        
+
         logFileManager = aLogFileManager;
 
         self.logFormatter = [DDLogFileFormatterDefault new];
@@ -622,7 +622,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return self;
 }
 
-- (void)dealloc {
+- (void)cleanup {
     [_currentLogFileHandle synchronizeFile];
     [_currentLogFileHandle closeFile];
 
@@ -635,6 +635,10 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         dispatch_source_cancel(_rollingTimer);
         _rollingTimer = NULL;
     }
+}
+
+- (void)dealloc {
+    [self cleanup];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -851,7 +855,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     dispatch_sync(self.currentLogFileHandleQueue, ^{
         self->_currentLogFileHandle = nil;
     });
-    
+
     _currentLogFileInfo.isArchived = YES;
 
     if ([logFileManager respondsToSelector:@selector(didRollAndArchiveLogFile:)]) {
@@ -986,17 +990,17 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
 - (NSFileHandle *)currentLogFileHandle {
     __block NSFileHandle *localCurrentLogFileHandle;
-    
+
     dispatch_sync(self.currentLogFileHandleQueue, ^{
         if (self->_currentLogFileHandle == nil) {
             NSString *logFilePath = [[self currentLogFileInfo] filePath];
-            
+
             self->_currentLogFileHandle = [NSFileHandle fileHandleForWritingAtPath:logFilePath];
             [self->_currentLogFileHandle seekToEndOfFile];
-            
+
             if (self->_currentLogFileHandle) {
                 [self scheduleTimerToRollLogFileDueToAge];
-                
+
                 // Here we are monitoring the log file. In case if it would be deleted ormoved
                 // somewhere we want to roll it and use a new one.
                 self->_currentLogFileVnode = dispatch_source_create(
@@ -1011,21 +1015,21 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
                     NSLogInfo(@"DDFileLogger: Current logfile was moved. Rolling it and creating a new one");
                     [weakSelf rollLogFileNow];
                 } });
-                
+
 #if !OS_OBJECT_USE_OBJC
                 dispatch_source_t vnode = self->_currentLogFileVnode;
                 dispatch_source_set_cancel_handler(self->_currentLogFileVnode, ^{
                     dispatch_release(vnode);
                 });
 #endif
-                
+
                 dispatch_resume(self->_currentLogFileVnode);
             }
         }
-        
+
         localCurrentLogFileHandle = self->_currentLogFileHandle;
     });
-    
+
     return localCurrentLogFileHandle;
 }
 
@@ -1034,46 +1038,29 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static int exception_count = 0;
+
 - (void)logMessage:(DDLogMessage *)logMessage {
     NSString *message = logMessage->_message;
     BOOL isFormatted = NO;
 
-    if (_logFormatter) {
+    if (_logFormatter != nil) {
         message = [_logFormatter formatLogMessage:logMessage];
         isFormatted = message != logMessage->_message;
     }
 
-    if (message) {
+    if (message != nil) {
         if ((!isFormatted || _automaticallyAppendNewlineForCustomFormatters) &&
             (![message hasSuffix:@"\n"])) {
             message = [message stringByAppendingString:@"\n"];
         }
 
         NSData *logData = [message dataUsingEncoding:NSUTF8StringEncoding];
-
-        @try {
-            [self willLogMessage];
-			
-            [[self currentLogFileHandle] seekToEndOfFile];
-            [[self currentLogFileHandle] writeData:logData];
-
-            [self didLogMessage];
-        } @catch (NSException *exception) {
-            exception_count++;
-
-            if (exception_count <= 10) {
-                NSLogError(@"DDFileLogger.logMessage: %@", exception);
-
-                if (exception_count == 10) {
-                    NSLogError(@"DDFileLogger.logMessage: Too many exceptions -- will not log any more of them.");
-                }
-            }
-        }
+        [self logData:logData];
     }
 }
 
 - (void)willLogMessage {
-	
+
 }
 
 - (void)didLogMessage {
@@ -1100,6 +1087,35 @@ static int exception_count = 0;
 
 @end
 
+@implementation DDFileLogger (Internal)
+- (void)writeToFile:(NSData *)data {
+    if (data != nil) {
+        @try {
+            [self willLogMessage];
+
+            [[self currentLogFileHandle] seekToEndOfFile];
+            [[self currentLogFileHandle] writeData:data];
+
+            [self didLogMessage];
+        } @catch (NSException *exception) {
+            exception_count++;
+
+            if (exception_count <= 10) {
+                NSLogError(@"DDFileLogger.logMessage: %@", exception);
+
+                if (exception_count == 10) {
+                    NSLogError(@"DDFileLogger.logMessage: Too many exceptions -- will not log any more of them.");
+                }
+            }
+        }
+    }
+}
+
+- (void)logData:(NSData *)data {
+    [self writeToFile:data];
+}
+@end
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1113,12 +1129,12 @@ static int exception_count = 0;
 @interface DDLogFileInfo () {
     __strong NSString *_filePath;
     __strong NSString *_fileName;
-    
+
     __strong NSDictionary *_fileAttributes;
-    
+
     __strong NSDate *_creationDate;
     __strong NSDate *_modificationDate;
-    
+
     unsigned long long _fileSize;
 }
 
@@ -1488,42 +1504,20 @@ static int exception_count = 0;
     return NO;
 }
 
--(NSUInteger)hash {
+- (NSUInteger)hash {
     return [filePath hash];
 }
 
 - (NSComparisonResult)reverseCompareByCreationDate:(DDLogFileInfo *)another {
-    NSDate *us = [self creationDate];
-    NSDate *them = [another creationDate];
-
-    NSComparisonResult result = [us compare:them];
-
-    if (result == NSOrderedAscending) {
-        return NSOrderedDescending;
-    }
-
-    if (result == NSOrderedDescending) {
-        return NSOrderedAscending;
-    }
-
-    return NSOrderedSame;
+    __auto_type us = [self creationDate];
+    __auto_type them = [another creationDate];
+    return [them compare:us];
 }
 
 - (NSComparisonResult)reverseCompareByModificationDate:(DDLogFileInfo *)another {
-    NSDate *us = [self modificationDate];
-    NSDate *them = [another modificationDate];
-
-    NSComparisonResult result = [us compare:them];
-
-    if (result == NSOrderedAscending) {
-        return NSOrderedDescending;
-    }
-
-    if (result == NSOrderedDescending) {
-        return NSOrderedAscending;
-    }
-
-    return NSOrderedSame;
+    __auto_type us = [self modificationDate];
+    __auto_type them = [another modificationDate];
+    return [them compare:us];
 }
 
 @end

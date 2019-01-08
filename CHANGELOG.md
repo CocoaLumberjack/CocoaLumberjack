@@ -23,6 +23,7 @@
 - Fix thread safety issue in DDFileLogger #986
 - Fix availability checks and memory leak #996
 - Added `logFileHeader` property to `DDLogFileManagerDefault` which you can override to set log file header
+- Add logger extension with buffering #1001
 
 ## [3.4.2 - Xcode 9.3 on Apr 17th, 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.4.2)
 - Update README.md #912
