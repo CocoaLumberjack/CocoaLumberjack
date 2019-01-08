@@ -402,8 +402,8 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 }
 
 - (NSArray *)sortedLogFileInfos {
-    return  [[self unsortedLogFileInfos] sortedArrayUsingComparator:^NSComparisonResult(DDLogFileInfo *obj1,
-                                                                                        DDLogFileInfo *obj2) {
+    return [[self unsortedLogFileInfos] sortedArrayUsingComparator:^NSComparisonResult(DDLogFileInfo *obj1,
+                                                                                       DDLogFileInfo *obj2) {
         NSDate *date1 = [NSDate new];
         NSDate *date2 = [NSDate new];
 
@@ -452,10 +452,8 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     if (fileHeaderStr.length == 0) {
         return nil;
     }
-    
-    // Ensure that we have a newline at the end of the string
-    unichar lastChar = [fileHeaderStr characterAtIndex:fileHeaderStr.length - 1];
-    if (![[NSCharacterSet newlineCharacterSet] characterIsMember:lastChar]) {
+
+    if (![fileHeaderStr hasSuffix:@"\n"]) {
         fileHeaderStr = [fileHeaderStr stringByAppendingString:@"\n"];
     }
 
@@ -1039,8 +1037,8 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 }
 
 - (void)lt_monitorCurrentLogFileForExternalChanges {
-    NSAssert(self->_currentLogFileHandle, @"Can not monitor without handle.");
     NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
+    NSAssert(self->_currentLogFileHandle, @"Can not monitor without handle.");
 
     dispatch_source_vnode_flags_t flags = DISPATCH_VNODE_DELETE | DISPATCH_VNODE_RENAME | DISPATCH_VNODE_REVOKE;
     self->_currentLogFileVnode = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE,
@@ -1098,11 +1096,8 @@ static int exception_count = 0;
     if (message) {
 
         if (!isFormatted || _automaticallyAppendNewlineForCustomFormatters) {
-            unichar lastChar = [message characterAtIndex:message.length - 1];
-            BOOL isLastCharNewline = [NSCharacterSet.newlineCharacterSet characterIsMember:lastChar];
-
-            if (!isLastCharNewline) {
-                message = [message stringByAppendingString:@"\n"];
+            if (![message hasSuffix:@"\n"]) {
+                message = [fileHeaderStr stringByAppendingString:@"\n"];
             }
         }
 
@@ -1147,6 +1142,7 @@ static int exception_count = 0;
 }
 
 - (void)flush {
+    // This method is not named with the lt_ prefix, but it is still only to be called on the internal queue.
     NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
     [_currentLogFileHandle synchronizeFile];
 }
