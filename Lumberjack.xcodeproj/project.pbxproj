@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		07305D7B2167920B00C61363 /* SwiftLogLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = 07305D7A216790F300C61363 /* SwiftLogLevel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A3F9CEC21E3F95400F3B707 /* DDFileLogger+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A3F9CE921E3F8AF00F3B707 /* DDFileLogger+Internal.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		0A3F9CED21E3F99A00F3B707 /* DDFileLogger+Internal.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0A3F9CE921E3F8AF00F3B707 /* DDFileLogger+Internal.h */; };
+		0AA59E1921DD2A080031787C /* DDFileLogger+Buffering.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AA59E1821DD2A080031787C /* DDFileLogger+Buffering.m */; };
+		0AA59E1A21DD2ADB0031787C /* DDFileLogger+Buffering.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AA59E1721DD2A080031787C /* DDFileLogger+Buffering.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0AA59E1B21DD2AE00031787C /* DDFileLogger+Buffering.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AA59E1821DD2A080031787C /* DDFileLogger+Buffering.m */; };
+		0AA59E1C21DD2B0A0031787C /* DDFileLogger+Buffering.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0AA59E1721DD2A080031787C /* DDFileLogger+Buffering.h */; };
 		0AE6D52521941F0A00B2A35D /* DDLoggerNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE6D52321941F0900B2A35D /* DDLoggerNames.m */; };
 		0AE6D52621941F1200B2A35D /* DDLoggerNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE6D52321941F0900B2A35D /* DDLoggerNames.m */; };
 		0AE6D5272194222A00B2A35D /* DDLoggerNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AE6D52421941F0900B2A35D /* DDLoggerNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -89,6 +95,8 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				0A3F9CED21E3F99A00F3B707 /* DDFileLogger+Internal.h in CopyFiles */,
+				0AA59E1C21DD2B0A0031787C /* DDFileLogger+Buffering.h in CopyFiles */,
 				0AE6D5282194223E00B2A35D /* DDLoggerNames.h in CopyFiles */,
 				435F03B02174A97400A86B2D /* CLIColor.h in CopyFiles */,
 				DD4738851E71A14400F1A4F5 /* DDOSLogger.h in CopyFiles */,
@@ -113,6 +121,9 @@
 
 /* Begin PBXFileReference section */
 		07305D7A216790F300C61363 /* SwiftLogLevel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftLogLevel.h; sourceTree = "<group>"; };
+		0A3F9CE921E3F8AF00F3B707 /* DDFileLogger+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DDFileLogger+Internal.h"; sourceTree = "<group>"; };
+		0AA59E1721DD2A080031787C /* DDFileLogger+Buffering.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DDFileLogger+Buffering.h"; sourceTree = "<group>"; };
+		0AA59E1821DD2A080031787C /* DDFileLogger+Buffering.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "DDFileLogger+Buffering.m"; sourceTree = "<group>"; };
 		0AE6D52321941F0900B2A35D /* DDLoggerNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLoggerNames.m; sourceTree = "<group>"; };
 		0AE6D52421941F0900B2A35D /* DDLoggerNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLoggerNames.h; sourceTree = "<group>"; };
 		18F3BFD71A81E06E00692297 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocoaLumberjack.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -202,6 +213,8 @@
 				DA9C20CE192A0E0000AB7171 /* DDDispatchQueueLogFormatter.m */,
 				DA9C20CF192A0E0000AB7171 /* DDMultiFormatter.h */,
 				DA9C20D0192A0E0000AB7171 /* DDMultiFormatter.m */,
+				0AA59E1721DD2A080031787C /* DDFileLogger+Buffering.h */,
+				0AA59E1821DD2A080031787C /* DDFileLogger+Buffering.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -264,6 +277,7 @@
 				DA9C20C2192A0E0000AB7171 /* DDASLLogger.m */,
 				DA9C20C3192A0E0000AB7171 /* DDFileLogger.h */,
 				DA9C20C4192A0E0000AB7171 /* DDFileLogger.m */,
+				0A3F9CE921E3F8AF00F3B707 /* DDFileLogger+Internal.h */,
 				DA9C20C5192A0E0000AB7171 /* DDLog.h */,
 				DA9C20C6192A0E0000AB7171 /* DDLog.m */,
 				DD4738821E7168A400F1A4F5 /* DDOSLogger.h */,
@@ -304,6 +318,7 @@
 				19FF46271B8B4EB000B43179 /* DDDispatchQueueLogFormatter.h in Headers */,
 				19FF46261B8B4EAB00B43179 /* DDLog+LOGV.h in Headers */,
 				19FF46251B8B4EA800B43179 /* DDLegacyMacros.h in Headers */,
+				0A3F9CEC21E3F95400F3B707 /* DDFileLogger+Internal.h in Headers */,
 				19FF46241B8B4EA400B43179 /* DDAbstractDatabaseLogger.h in Headers */,
 				435F03AD2174A94F00A86B2D /* CLIColor.h in Headers */,
 				19FF46231B8B4EA100B43179 /* DDLogMacros.h in Headers */,
@@ -313,6 +328,7 @@
 				19FF461F1B8B4E8800B43179 /* DDMultiFormatter.h in Headers */,
 				DDBE6E861E73ED10003F093F /* DDOSLogger.h in Headers */,
 				19FF461E1B8B4E8400B43179 /* CocoaLumberjack.h in Headers */,
+				0AA59E1A21DD2ADB0031787C /* DDFileLogger+Buffering.h in Headers */,
 				19FF461D1B8B4E8200B43179 /* DDFileLogger.h in Headers */,
 				0AE6D5272194222A00B2A35D /* DDLoggerNames.h in Headers */,
 			);
@@ -457,6 +473,7 @@
 				18F3C01F1A81E14E00692297 /* DDLog.m in Sources */,
 				0AE6D52521941F0A00B2A35D /* DDLoggerNames.m in Sources */,
 				18F3C01B1A81E14E00692297 /* DDAbstractDatabaseLogger.m in Sources */,
+				0AA59E1921DD2A080031787C /* DDFileLogger+Buffering.m in Sources */,
 				DD4738841E7168A400F1A4F5 /* DDOSLogger.m in Sources */,
 				18F3C0191A81E14000692297 /* DDDispatchQueueLogFormatter.m in Sources */,
 				435F03AF2174A95800A86B2D /* CLIColor.m in Sources */,
@@ -476,6 +493,7 @@
 				19FF462E1B8B4ED200B43179 /* DDTTYLogger.m in Sources */,
 				0AE6D52621941F1200B2A35D /* DDLoggerNames.m in Sources */,
 				19FF462D1B8B4ECE00B43179 /* DDMultiFormatter.m in Sources */,
+				0AA59E1B21DD2AE00031787C /* DDFileLogger+Buffering.m in Sources */,
 				C72CB9821FBF27EE009AEE6B /* DDOSLogger.m in Sources */,
 				19FF462C1B8B4ECA00B43179 /* DDAbstractDatabaseLogger.m in Sources */,
 				435F03AE2174A95700A86B2D /* CLIColor.m in Sources */,

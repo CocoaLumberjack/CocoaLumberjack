@@ -14,8 +14,9 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDFileLogger.h"
-
 #import "DDLoggerNames.h"
+
+#import "DDFileLogger+Internal.h"
 
 #import <unistd.h>
 #import <sys/attr.h>
@@ -297,7 +298,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     // We need to add a space to the name as otherwise we could match applications that have the name prefix.
     BOOL hasProperPrefix = [fileName hasPrefix:[appName stringByAppendingString:@" "]];
     BOOL hasProperSuffix = [fileName hasSuffix:@".log"];
-    
+
     return (hasProperPrefix && hasProperSuffix);
 }
 
@@ -414,7 +415,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
             stringDate = [stringDate stringByReplacingOccurrencesOfString:@".archived" withString:@""];
             date1 = [[self logFileDateFormatter] dateFromString:stringDate] ?: [obj1 creationDate];
         }
-        
+
         arrayComponent = [[obj2 fileName] componentsSeparatedByString:@" "];
         if (arrayComponent.count > 0) {
             NSString *stringDate = arrayComponent.lastObject;
@@ -422,7 +423,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
             stringDate = [stringDate stringByReplacingOccurrencesOfString:@".archived" withString:@""];
             date2 = [[self logFileDateFormatter] dateFromString:stringDate] ?: [obj2 creationDate];
         }
-        
+
         return [date2 compare:date1 ?: [NSDate new]];
     }];
 
@@ -604,12 +605,12 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
     DDLogFileInfo *_currentLogFileInfo;
     NSFileHandle *_currentLogFileHandle;
-    
+
     dispatch_source_t _currentLogFileVnode;
 
     NSTimeInterval _rollingFrequency;
     dispatch_source_t _rollingTimer;
-    
+
     unsigned long long _maximumFileSize;
 
     dispatch_queue_t _completionQueue;
@@ -644,20 +645,26 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return self;
 }
 
+- (void)lt_cleanup {
+    NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
+
+    [_currentLogFileHandle synchronizeFile];
+    [_currentLogFileHandle closeFile];
+
+    if (_currentLogFileVnode) {
+        dispatch_source_cancel(_currentLogFileVnode);
+        _currentLogFileVnode = NULL;
+    }
+
+    if (_rollingTimer) {
+        dispatch_source_cancel(_rollingTimer);
+        _rollingTimer = NULL;
+    }
+}
+
 - (void)dealloc {
     dispatch_sync(self.loggerQueue, ^{
-        [self->_currentLogFileHandle synchronizeFile];
-        [self->_currentLogFileHandle closeFile];
-
-        if (self->_currentLogFileVnode) {
-            dispatch_source_cancel(self->_currentLogFileVnode);
-            self->_currentLogFileVnode = NULL;
-        }
-
-        if (self->_rollingTimer) {
-            dispatch_source_cancel(self->_rollingTimer);
-            self->_rollingTimer = NULL;
-        }
+        [self lt_cleanup];
     });
 }
 
@@ -807,7 +814,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     NSLogVerbose(@"DDFileLogger: logFileCreationDate: %@", logFileCreationDate);
     NSLogVerbose(@"DDFileLogger: logFileRollingDate : %@", logFileRollingDate);
 
-    _rollingTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self->_loggerQueue);
+    _rollingTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _loggerQueue);
 
     __weak __auto_type weakSelf = self;
     dispatch_source_set_event_handler(_rollingTimer, ^{ @autoreleasepool {
@@ -873,13 +880,13 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
     [_currentLogFileHandle synchronizeFile];
     [_currentLogFileHandle closeFile];
-    self->_currentLogFileHandle = nil;
+    _currentLogFileHandle = nil;
 
     _currentLogFileInfo.isArchived = YES;
     NSString *archivedFilePath = [_currentLogFileInfo.filePath copy];
     _currentLogFileInfo = nil;
 
-    if ([self->_logFileManager respondsToSelector:@selector(didRollAndArchiveLogFile:)]) {
+    if ([_logFileManager respondsToSelector:@selector(didRollAndArchiveLogFile:)]) {
         dispatch_async(_completionQueue, ^{
             [self->_logFileManager didRollAndArchiveLogFile:archivedFilePath];
         });
@@ -887,12 +894,12 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
     if (_currentLogFileVnode) {
         dispatch_source_cancel(_currentLogFileVnode);
-        self->_currentLogFileVnode = NULL;
+        _currentLogFileVnode = nil;
     }
 
     if (_rollingTimer) {
         dispatch_source_cancel(_rollingTimer);
-        _rollingTimer = NULL;
+        _rollingTimer = nil;
     }
 }
 
@@ -938,9 +945,9 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         return NO;
     } else if ([self shouldArchiveRecentLogFileInfo:mostRecentLogFileInfo]) {
         return YES;
-    } else if (self->_maximumFileSize > 0 && mostRecentLogFileInfo.fileSize >= self->_maximumFileSize) {
+    } else if (_maximumFileSize > 0 && mostRecentLogFileInfo.fileSize >= _maximumFileSize) {
         return YES;
-    } else if (self->_rollingFrequency > 0.0 && mostRecentLogFileInfo.age >= self->_rollingFrequency) {
+    } else if (_rollingFrequency > 0.0 && mostRecentLogFileInfo.age >= _rollingFrequency) {
         return YES;
     }
 
@@ -1001,22 +1008,22 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 - (DDLogFileInfo *)lt_currentLogFileInfo {
     NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
 
-    BOOL isResuming = self->_currentLogFileInfo == nil;
+    BOOL isResuming = _currentLogFileInfo == nil;
     if (isResuming) {
-        NSArray *sortedLogFileInfos = [self->_logFileManager sortedLogFileInfos];
-        self->_currentLogFileInfo = sortedLogFileInfos.firstObject;
+        NSArray *sortedLogFileInfos = [_logFileManager sortedLogFileInfos];
+        _currentLogFileInfo = sortedLogFileInfos.firstObject;
     }
 
-    if (self->_currentLogFileInfo) {
-        BOOL isMostRecentLogArchived = self->_currentLogFileInfo.isArchived;
-        BOOL forceArchive = self->_doNotReuseLogFiles && isMostRecentLogArchived == NO;
+    if (_currentLogFileInfo) {
+        BOOL isMostRecentLogArchived = _currentLogFileInfo.isArchived;
+        BOOL forceArchive = _doNotReuseLogFiles && isMostRecentLogArchived == NO;
 
-        if (forceArchive || [self lt_shouldLogFileBeArchived:self->_currentLogFileInfo]) {
-            self->_currentLogFileInfo.isArchived = YES;
-            NSString *archivedLogFilePath = [self->_currentLogFileInfo.fileName copy];
-            self->_currentLogFileInfo = nil;
+        if (forceArchive || [self lt_shouldLogFileBeArchived:_currentLogFileInfo]) {
+            _currentLogFileInfo.isArchived = YES;
+            NSString *archivedLogFilePath = [_currentLogFileInfo.fileName copy];
+            _currentLogFileInfo = nil;
 
-            if ([self->_logFileManager respondsToSelector:@selector(didArchiveLogFile:)]) {
+            if ([_logFileManager respondsToSelector:@selector(didArchiveLogFile:)]) {
                 dispatch_async(_completionQueue, ^{
                     [self->_logFileManager didArchiveLogFile:archivedLogFilePath];
                 });
@@ -1024,59 +1031,59 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         }
     }
 
-    if (isResuming && self->_currentLogFileInfo) {
-        NSLogVerbose(@"DDFileLogger: Resuming logging with file %@", self->_currentLogFileInfo.fileName);
+    if (isResuming && _currentLogFileInfo) {
+        NSLogVerbose(@"DDFileLogger: Resuming logging with file %@", _currentLogFileInfo.fileName);
     }
 
-    if (!self->_currentLogFileInfo) {
-        NSString *currentLogFilePath = [self->_logFileManager createNewLogFile];
-        self->_currentLogFileInfo = [[DDLogFileInfo alloc] initWithFilePath:currentLogFilePath];
+    if (!_currentLogFileInfo) {
+        NSString *currentLogFilePath = [_logFileManager createNewLogFile];
+        _currentLogFileInfo = [[DDLogFileInfo alloc] initWithFilePath:currentLogFilePath];
     }
 
-    return self->_currentLogFileInfo;
+    return _currentLogFileInfo;
 }
 
 - (void)lt_monitorCurrentLogFileForExternalChanges {
     NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
-    NSAssert(self->_currentLogFileHandle, @"Can not monitor without handle.");
+    NSAssert(_currentLogFileHandle, @"Can not monitor without handle.");
 
     dispatch_source_vnode_flags_t flags = DISPATCH_VNODE_DELETE | DISPATCH_VNODE_RENAME | DISPATCH_VNODE_REVOKE;
-    self->_currentLogFileVnode = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE,
-                                                        (uintptr_t)[self->_currentLogFileHandle fileDescriptor],
+    _currentLogFileVnode = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE,
+                                                        (uintptr_t)[_currentLogFileHandle fileDescriptor],
                                                         flags,
-                                                        self->_loggerQueue);
+                                                        _loggerQueue);
 
     __weak __auto_type weakSelf = self;
-    dispatch_source_set_event_handler(self->_currentLogFileVnode, ^{ @autoreleasepool {
+    dispatch_source_set_event_handler(_currentLogFileVnode, ^{ @autoreleasepool {
         NSLogInfo(@"DDFileLogger: Current logfile was moved. Rolling it and creating a new one");
         [weakSelf lt_rollLogFileNow];
     } });
 
 #if !OS_OBJECT_USE_OBJC
-    dispatch_source_t vnode = self->_currentLogFileVnode;
-    dispatch_source_set_cancel_handler(self->_currentLogFileVnode, ^{
+    dispatch_source_t vnode = _currentLogFileVnode;
+    dispatch_source_set_cancel_handler(_currentLogFileVnode, ^{
         dispatch_release(vnode);
     });
 #endif
 
-    dispatch_resume(self->_currentLogFileVnode);
+    dispatch_resume(_currentLogFileVnode);
 }
 
 - (NSFileHandle *)lt_currentLogFileHandle {
     NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
 
-    if (!self->_currentLogFileHandle) {
+    if (!_currentLogFileHandle) {
         NSString *logFilePath = [[self lt_currentLogFileInfo] filePath];
-        self->_currentLogFileHandle = [NSFileHandle fileHandleForWritingAtPath:logFilePath];
-        [self->_currentLogFileHandle seekToEndOfFile];
+        _currentLogFileHandle = [NSFileHandle fileHandleForWritingAtPath:logFilePath];
+        [_currentLogFileHandle seekToEndOfFile];
 
-        if (self->_currentLogFileHandle) {
+        if (_currentLogFileHandle) {
             [self lt_scheduleTimerToRollLogFileDueToAge];
             [self lt_monitorCurrentLogFileForExternalChanges];
         }
     }
 
-    return self->_currentLogFileHandle;
+    return _currentLogFileHandle;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1084,49 +1091,32 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static int exception_count = 0;
+
 - (void)logMessage:(DDLogMessage *)logMessage {
+    NSAssert([self isOnInternalLoggerQueue], @"logMessage should only be executed on internal queue.");
+
     NSString *message = logMessage->_message;
     BOOL isFormatted = NO;
 
-    if (_logFormatter) {
+    if (_logFormatter != nil) {
         message = [_logFormatter formatLogMessage:logMessage];
         isFormatted = message != logMessage->_message;
     }
 
-    if (message) {
-
-        if (!isFormatted || _automaticallyAppendNewlineForCustomFormatters) {
-            if (![message hasSuffix:@"\n"]) {
-                message = [fileHeaderStr stringByAppendingString:@"\n"];
-            }
-        }
-
-        NSData *logData = [message dataUsingEncoding:NSUTF8StringEncoding];
-
-        @try {
-            [self willLogMessage];
-
-            NSFileHandle *handle = [self lt_currentLogFileHandle];
-            [handle seekToEndOfFile];
-            [handle writeData:logData];
-
-            [self didLogMessage];
-        } @catch (NSException *exception) {
-            exception_count++;
-
-            if (exception_count <= 10) {
-                NSLogError(@"DDFileLogger.logMessage: %@", exception);
-
-                if (exception_count == 10) {
-                    NSLogError(@"DDFileLogger.logMessage: Too many exceptions -- will not log any more of them.");
-                }
-            }
-        }
+    if (message.length == 0) {
+        return;
     }
+
+    BOOL shouldFormat = !isFormatted || _automaticallyAppendNewlineForCustomFormatters;
+    if (shouldFormat && ![message hasSuffix:@"\n"]) {
+        message = [message stringByAppendingString:@"\n"];
+    }
+
+    [self lt_logData:[message dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
 - (void)willLogMessage {
-	
+
 }
 
 - (void)didLogMessage {
@@ -1142,13 +1132,44 @@ static int exception_count = 0;
 }
 
 - (void)flush {
-    // This method is not named with the lt_ prefix, but it is still only to be called on the internal queue.
-    NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
+    NSAssert([self isOnInternalLoggerQueue], @"flush should only be executed on internal queue.");
     [_currentLogFileHandle synchronizeFile];
 }
 
 - (DDLoggerName)loggerName {
     return DDLoggerNameFile;
+}
+
+@end
+
+@implementation DDFileLogger (Internal)
+
+- (void)lt_logData:(NSData *)data {
+    NSAssert([self isOnInternalLoggerQueue], @"logMessage should only be executed on internal queue.");
+
+    if (data.length == 0) {
+        return;
+    }
+
+    @try {
+        [self willLogMessage];
+
+        NSFileHandle *handle = [self lt_currentLogFileHandle];
+        [handle seekToEndOfFile];
+        [handle writeData:data];
+
+        [self didLogMessage];
+    } @catch (NSException *exception) {
+        exception_count++;
+
+        if (exception_count <= 10) {
+            NSLogError(@"DDFileLogger.logMessage: %@", exception);
+
+            if (exception_count == 10) {
+                NSLogError(@"DDFileLogger.logMessage: Too many exceptions -- will not log any more of them.");
+            }
+        }
+    }
 }
 
 @end
@@ -1166,12 +1187,12 @@ static int exception_count = 0;
 @interface DDLogFileInfo () {
     __strong NSString *_filePath;
     __strong NSString *_fileName;
-    
+
     __strong NSDictionary *_fileAttributes;
-    
+
     __strong NSDate *_creationDate;
     __strong NSDate *_modificationDate;
-    
+
     unsigned long long _fileSize;
 }
 
@@ -1546,42 +1567,20 @@ static int exception_count = 0;
     return NO;
 }
 
--(NSUInteger)hash {
+- (NSUInteger)hash {
     return [filePath hash];
 }
 
 - (NSComparisonResult)reverseCompareByCreationDate:(DDLogFileInfo *)another {
-    NSDate *us = [self creationDate];
-    NSDate *them = [another creationDate];
-
-    NSComparisonResult result = [us compare:them];
-
-    if (result == NSOrderedAscending) {
-        return NSOrderedDescending;
-    }
-
-    if (result == NSOrderedDescending) {
-        return NSOrderedAscending;
-    }
-
-    return NSOrderedSame;
+    __auto_type us = [self creationDate];
+    __auto_type them = [another creationDate];
+    return [them compare:us];
 }
 
 - (NSComparisonResult)reverseCompareByModificationDate:(DDLogFileInfo *)another {
-    NSDate *us = [self modificationDate];
-    NSDate *them = [another modificationDate];
-
-    NSComparisonResult result = [us compare:them];
-
-    if (result == NSOrderedAscending) {
-        return NSOrderedDescending;
-    }
-
-    if (result == NSOrderedDescending) {
-        return NSOrderedAscending;
-    }
-
-    return NSOrderedSame;
+    __auto_type us = [self modificationDate];
+    __auto_type them = [another modificationDate];
+    return [them compare:us];
 }
 
 @end

@@ -92,6 +92,7 @@ FOUNDATION_EXPORT const unsigned char CocoaLumberjackVersionString[];
 #import "DDContextFilterLogFormatter.h"
 #import "DDDispatchQueueLogFormatter.h"
 #import "DDMultiFormatter.h"
+#import "DDFileLogger+Buffering.h"
 
 // CLI
 #import "CLIColor.h"
