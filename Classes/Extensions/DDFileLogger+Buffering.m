@@ -20,17 +20,18 @@ static NSUInteger kMaximumBytesCountInBuffer = (1 << 10) * (1 << 10); // 1 MB.
 static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 
 // MARK: Public Interface
-@interface DDBufferedProxy<T: DDFileLogger */*id<DDLogger>*/>: NSProxy
-+ (instancetype)decoratedInstance:(T)instance;
+typedef DDFileLogger* LoggerType;
+@interface DDBufferedProxy<FileLogger: LoggerType>: NSProxy
++ (instancetype)decoratedInstance:(FileLogger)instance;
 @property (assign, nonatomic, readwrite) NSUInteger maximumBytesCountInBuffer;
 @end
 
-@interface DDBufferedProxy<T: DDFileLogger */*id<DDLogger>*/> () {
+@interface DDBufferedProxy<FileLogger: LoggerType> () {
     NSOutputStream *_bufferStream;
     NSUInteger _bufferSize;
 }
-- (instancetype)initWithInstance:(T)instance;
-@property (strong, nonatomic, readwrite) T instance;
+- (instancetype)initWithInstance:(FileLogger)instance;
+@property (strong, nonatomic, readwrite) FileLogger instance;
 @end
 
 @interface DDBufferedProxy (StreamManipulation)
@@ -64,7 +65,7 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
             [_bufferStream open];
             _bufferSize = 0;
         }
-        const uint8_t *appendedData = calloc(length, sizeof(uint8_t));
+        __auto_type appendedData = (const uint8_t *)calloc(length, sizeof(uint8_t));
         [data getBytes:(void *)appendedData length:length];
         if (appendedData != NULL) {
             [_bufferStream write:appendedData maxLength:length];
@@ -91,11 +92,11 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 }
 
 #pragma mark - Initialization
-+ (instancetype)decoratedInstance:(DDFileLogger *)instance {
++ (instancetype)decoratedInstance:(__kindof LoggerType)instance {
     return [[self alloc] initWithInstance:instance];
 }
 
-- (instancetype)initWithInstance:(DDFileLogger *)instance {
+- (instancetype)initWithInstance:(__kindof LoggerType)instance {
     self.instance = instance;
     self.maximumBytesCountInBuffer = kDefaultBytesCountInBuffer;
     return self;
