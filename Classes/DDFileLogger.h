@@ -323,8 +323,12 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  */
 - (instancetype)init;
 
-- (instancetype)initWithLogFileManager:(id <DDLogFileManager> __nullable)logFileManager
-        __attribute__((deprecated("Use -initWithLogFileManager:completionQueue:")));
+/**
+ *  Designated initializer, requires a `DDLogFileManager` instance.
+ *  A global queue w/ default priority is used to run callbacks.
+ *  If needed, specify queue using `initWithLogFileManager:completionQueue:`.
+ */
+- (instancetype)initWithLogFileManager:(id <DDLogFileManager> __nullable)logFileManager;
 
 /**
  *  Designated initializer, requires a `DDLogFileManager` instance.

@@ -1132,6 +1132,31 @@ static int exception_count = 0;
 }
 
 - (void)flush {
+    // This method is public.
+    // We need to execute the rolling on our logging thread/queue.
+
+    dispatch_block_t block = ^{
+        @autoreleasepool {
+            [self lt_flush];
+        }
+    };
+
+    // The design of this method is taken from the DDAbstractLogger implementation.
+    // For extensive documentation please refer to the DDAbstractLogger implementation.
+
+    if ([self isOnInternalLoggerQueue]) {
+        block();
+    } else {
+        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
+        NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+
+        dispatch_sync(globalLoggingQueue, ^{
+            dispatch_sync(self.loggerQueue, block);
+        });
+    }
+}
+
+- (void)lt_flush {
     NSAssert([self isOnInternalLoggerQueue], @"flush should only be executed on internal queue.");
     [_currentLogFileHandle synchronizeFile];
 }
