@@ -20,13 +20,12 @@ static NSUInteger kMaximumBytesCountInBuffer = (1 << 10) * (1 << 10); // 1 MB.
 static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 
 // MARK: Public Interface
-typedef DDFileLogger* LoggerType;
-@interface DDBufferedProxy<FileLogger: LoggerType>: NSProxy
+@interface DDBufferedProxy<FileLogger: DDFileLogger *>: NSProxy
 + (instancetype)decoratedInstance:(FileLogger)instance;
 @property (assign, nonatomic, readwrite) NSUInteger maximumBytesCountInBuffer;
 @end
 
-@interface DDBufferedProxy<FileLogger: LoggerType> () {
+@interface DDBufferedProxy<FileLogger: DDFileLogger *> () {
     NSOutputStream *_bufferStream;
     NSUInteger _bufferSize;
 }
@@ -92,11 +91,11 @@ typedef DDFileLogger* LoggerType;
 }
 
 #pragma mark - Initialization
-+ (instancetype)decoratedInstance:(__kindof LoggerType)instance {
++ (instancetype)decoratedInstance:(DDFileLogger *)instance {
     return [[self alloc] initWithInstance:instance];
 }
 
-- (instancetype)initWithInstance:(__kindof LoggerType)instance {
+- (instancetype)initWithInstance:(DDFileLogger *)instance {
     self.instance = instance;
     self.maximumBytesCountInBuffer = kDefaultBytesCountInBuffer;
     return self;
