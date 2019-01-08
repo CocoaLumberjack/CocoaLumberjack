@@ -72,11 +72,11 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
         }
         const uint8_t *appendedData = calloc(length, sizeof(uint8_t));
         if (appendedData != NULL) {
-            [data getBytes:appendedData length:length];
+            [data getBytes:(void *)appendedData length:length];
             [_bufferStream write:appendedData maxLength:length];
             _bufferSize += length;
 
-            free(appendedData);
+            free((void *)appendedData);
         }
     }
 }
