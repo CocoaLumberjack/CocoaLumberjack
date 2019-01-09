@@ -58,7 +58,7 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 
 - (void)dumpBufferToDisk {
     NSData *data = [_bufferStream propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
-    [self.instance lt_logData:data];
+    [self.instance logData:data];
     [self flushBuffer];
 }
 

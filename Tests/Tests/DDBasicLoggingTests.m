@@ -170,7 +170,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     }
     
     if (self.loggers.count == 0) {
-        for (NSInteger i = 0; i < self.countOfLoggers; ++i) {
+        for (NSUInteger i = 0; i < self.countOfLoggers; ++i) {
             self.loggers = [self.loggers ?: @[] arrayByAddingObject:[self createAbstractLogger]];
         }
     }

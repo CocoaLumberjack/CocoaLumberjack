@@ -1169,6 +1169,31 @@ static int exception_count = 0;
 
 @implementation DDFileLogger (Internal)
 
+- (void)logData:(NSData *)data {
+    // This method is public.
+    // We need to execute the rolling on our logging thread/queue.
+
+    dispatch_block_t block = ^{
+        @autoreleasepool {
+            [self lt_logData:data];
+        }
+    };
+
+    // The design of this method is taken from the DDAbstractLogger implementation.
+    // For extensive documentation please refer to the DDAbstractLogger implementation.
+
+    if ([self isOnInternalLoggerQueue]) {
+        block();
+    } else {
+        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
+        NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+
+        dispatch_sync(globalLoggingQueue, ^{
+            dispatch_sync(self.loggerQueue, block);
+        });
+    }
+}
+
 - (void)lt_logData:(NSData *)data {
     NSAssert([self isOnInternalLoggerQueue], @"logMessage should only be executed on internal queue.");
 

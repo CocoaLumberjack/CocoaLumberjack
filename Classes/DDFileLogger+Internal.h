@@ -19,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DDFileLogger (Internal)
 
+- (void)logData:(NSData *)data;
+
+// Will assert if used outside logger's queue.
 - (void)lt_logData:(NSData *)data;
 
 @end
