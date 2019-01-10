@@ -363,6 +363,9 @@ static NSUInteger _numProcessors;
 
     if (asyncFlag) {
         dispatch_async(_loggingQueue, logBlock);
+    } else if (dispatch_get_specific(GlobalLoggingQueueIdentityKey)) {
+        // We've logged an error message while on the logging queue...
+        logBlock();
     } else {
         dispatch_sync(_loggingQueue, logBlock);
     }

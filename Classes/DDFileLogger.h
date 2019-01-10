@@ -20,6 +20,8 @@
 
 #import "DDLog.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class DDLogFileInfo;
 
 /**
@@ -143,6 +145,8 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 /**
  * Generates a new unique log file path, and creates the corresponding log file.
+ * This method is executed directly on the file logger's internal queue.
+ * The file has to exist by the time the method returns.
  **/
 - (NSString *)createNewLogFile;
 
@@ -151,12 +155,13 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 // Notifications from DDFileLogger
 
 /**
- *  Called when a log file was archieved
+ *  Called when a log file was archieved. Executed on global queue with default priority.
  */
 - (void)didArchiveLogFile:(NSString *)logFilePath NS_SWIFT_NAME(didArchiveLogFile(atPath:));
 
 /**
- *  Called when the roll action was executed and the log was archieved
+ *  Called when the roll action was executed and the log was archieved.
+ *  Executed on global queue with default priority.
  */
 - (void)didRollAndArchiveLogFile:(NSString *)logFilePath NS_SWIFT_NAME(didRollAndArchiveLogFile(atPath:));
 
@@ -189,7 +194,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 /**
  *  Designated initialized, requires the logs directory
  */
-- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithLogsDirectory:(NSString * __nullable)logsDirectory NS_DESIGNATED_INITIALIZER;
 
 #if TARGET_OS_IPHONE
 /*
@@ -203,7 +208,8 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *    null
  *    cy#
  **/
-- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory defaultFileProtectionLevel:(NSFileProtectionType)fileProtectionLevel;
+- (instancetype)initWithLogsDirectory:(NSString * __nullable)logsDirectory
+           defaultFileProtectionLevel:(NSFileProtectionType)fileProtectionLevel;
 #endif
 
 /*
@@ -254,7 +260,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  * If you wish to specify a common file header to use in your log files,
  * you can set the initial log file contents by overriding `logFileHeader`
  **/
-@property (readonly, copy) NSString *logFileHeader;
+@property (readonly, copy, nullable) NSString *logFileHeader;
 
 /* Inherited from DDLogFileManager protocol:
 
@@ -299,7 +305,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 /**
  *  Designated initializer, requires a date formatter
  */
-- (instancetype)initWithDateFormatter:(NSDateFormatter *)dateFormatter NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithDateFormatter:(NSDateFormatter * __nullable)dateFormatter NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -310,19 +316,27 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 /**
  *  The standard implementation for a file logger
  */
-@interface DDFileLogger : DDAbstractLogger <DDLogger> {
-	DDLogFileInfo *_currentLogFileInfo;
-}
+@interface DDFileLogger : DDAbstractLogger <DDLogger>
 
 /**
- *  Default initializer
+ *  Default initializer.
  */
 - (instancetype)init;
 
 /**
- *  Designated initializer, requires a `DDLogFileManager` instance
+ *  Designated initializer, requires a `DDLogFileManager` instance.
+ *  A global queue w/ default priority is used to run callbacks.
+ *  If needed, specify queue using `initWithLogFileManager:completionQueue:`.
  */
-- (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithLogFileManager:(id <DDLogFileManager> __nullable)logFileManager;
+
+/**
+ *  Designated initializer, requires a `DDLogFileManager` instance.
+ *  The completionQueue is used to execute `didArchiveLogFile`, `didRollAndArchiveLogFile`,
+ *  and the callback in `rollLog`. If nil, a global queue w/ default priority is used.
+ */
+- (instancetype)initWithLogFileManager:(id <DDLogFileManager> __nullable)logFileManager
+                       completionQueue:(dispatch_queue_t __nullable)dispatchQueue NS_DESIGNATED_INITIALIZER;
 
 /**
  *  Called when the logger is about to write message. Call super before your implementation.
@@ -340,8 +354,9 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 - (void)flush NS_REQUIRES_SUPER;
 
 /**
- *  Called when the logger checks archive or not current log file. 
- *  Override this method to exdend standart behavior. By default returns NO.
+ *  Called when the logger checks archive or not current log file.
+ *  Override this method to extend standard behavior. By default returns NO.
+ *  This is executed directly on the logger's internal queue, so keep processing light!
  */
 - (BOOL)shouldArchiveRecentLogFileInfo:(DDLogFileInfo *)recentLogFileInfo;
 
@@ -410,7 +425,8 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *  You can optionally force the current log file to be rolled with this method.
  *  CompletionBlock will be called on main queue.
  */
-- (void)rollLogFileWithCompletionBlock:(void (^)(void))completionBlock NS_SWIFT_NAME(rollLogFile(withCompletion:));
+- (void)rollLogFileWithCompletionBlock:(void (^ __nullable)(void))completionBlock
+    NS_SWIFT_NAME(rollLogFile(withCompletion:));
 
 /**
  *  Method is deprecated.
@@ -523,3 +539,5 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 - (NSComparisonResult)reverseCompareByModificationDate:(DDLogFileInfo *)another;
 
 @end
+
+NS_ASSUME_NONNULL_END

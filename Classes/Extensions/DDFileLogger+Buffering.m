@@ -20,38 +20,44 @@ static NSUInteger kMaximumBytesCountInBuffer = (1 << 10) * (1 << 10); // 1 MB.
 static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 
 // MARK: Public Interface
-@interface DDBufferedProxy<FileLogger: DDFileLogger *>: NSProxy
+@interface DDBufferedProxy<FileLogger: DDFileLogger *> : NSProxy
+
 + (instancetype)decoratedInstance:(FileLogger)instance;
+
 @property (assign, nonatomic, readwrite) NSUInteger maximumBytesCountInBuffer;
+
 @end
 
 @interface DDBufferedProxy<FileLogger: DDFileLogger *> () {
     NSOutputStream *_bufferStream;
     NSUInteger _bufferSize;
 }
+
 - (instancetype)initWithInstance:(FileLogger)instance;
+
 @property (strong, nonatomic, readwrite) FileLogger instance;
+
 @end
 
 @interface DDBufferedProxy (StreamManipulation)
+
 - (void)flushBuffer;
 - (void)dumpBufferToDisk;
 - (void)appendToBuffer:(NSData *)data;
 - (BOOL)isBufferFull;
+
 @end
 
 @implementation DDBufferedProxy (StreamManipulation)
 
 - (void)flushBuffer {
-    // do something.
     [_bufferStream close];
     _bufferStream = nil;
     _bufferSize = 0;
 }
 
 - (void)dumpBufferToDisk {
-    // do something.
-    __auto_type data = (NSData *)[_bufferStream propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
+    NSData *data = [_bufferStream propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
     [self.instance logData:data];
     [self flushBuffer];
 }
@@ -64,15 +70,14 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
             [_bufferStream open];
             _bufferSize = 0;
         }
-        __auto_type appendedData = (const uint8_t *)calloc(length, sizeof(uint8_t));
-        [data getBytes:(void *)appendedData length:length];
+        const uint8_t *appendedData = calloc(length, sizeof(uint8_t));
         if (appendedData != NULL) {
+            [data getBytes:(void *)appendedData length:length];
             [_bufferStream write:appendedData maxLength:length];
-        }
-        if (appendedData != NULL) {
+            _bufferSize += length;
+
             free((void *)appendedData);
         }
-        _bufferSize += length;
     }
 }
 
@@ -83,14 +88,17 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 @end
 
 @implementation DDBufferedProxy
+
 @synthesize maximumBytesCountInBuffer = _maximumBytesCountInBuffer;
 
 #pragma mark - Properties
+
 - (void)setMaximumBytesCountInBuffer:(NSUInteger)maximumBytesCountInBuffer {
     _maximumBytesCountInBuffer = MIN(maximumBytesCountInBuffer, kMaximumBytesCountInBuffer);
 }
 
 #pragma mark - Initialization
+
 + (instancetype)decoratedInstance:(DDFileLogger *)instance {
     return [[self alloc] initWithInstance:instance];
 }
@@ -107,7 +115,8 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 }
 
 #pragma mark - Logging
-- (void)logData:(NSData *)data {
+
+- (void)lt_logData:(NSData *)data {
     if ([self isBufferFull]) {
         [self dumpBufferToDisk];
     }
@@ -130,13 +139,12 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 
 @end
 
-@implementation  DDFileLogger (Buffering)
+@implementation DDFileLogger (Buffering)
 
 - (instancetype)wrapWithBuffer {
     if (self.class == DDBufferedProxy.class) {
         return self;
-    }
-    else {
+    } else {
         // wrap into proxy.
         return (typeof(self))[DDBufferedProxy decoratedInstance:self];
     }
@@ -144,10 +152,8 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 
 - (instancetype)unwrapFromBuffer {
     if (self.class == DDBufferedProxy.class) {
-        __auto_type proxy = (DDBufferedProxy *)self;
-        return proxy.instance;
-    }
-    else {
+        return ((DDBufferedProxy *)self).instance;
+    } else {
         return self;
     }
 }
