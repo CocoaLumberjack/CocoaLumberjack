@@ -17,7 +17,7 @@
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import "DDSMocking.h"
 
-static const NSTimeInterval kAsyncExpectationTimeout = 3.0f;
+static const NSTimeInterval kAsyncExpectationTimeout = 1000.0f;
 
 static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
@@ -93,7 +93,8 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogInfo   (@"Info");
     DDLogDebug  (@"Debug");
     DDLogVerbose(@"Verbose");
-    
+
+    [DDLog flushLog];
     [self waitForExpectationsWithTimeout:kAsyncExpectationTimeout handler:^(NSError *timeoutError) {
         XCTAssertNil(timeoutError);
     }];
@@ -111,7 +112,8 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogInfo   (@"Info");
     DDLogDebug  (@"Debug");
     DDLogVerbose(@"Verbose");
-    
+
+    [DDLog flushLog];
     [self waitForExpectationsWithTimeout:kAsyncExpectationTimeout handler:^(NSError *timeoutError) {
         XCTAssertNil(timeoutError);
     }];
@@ -128,7 +130,8 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogInfo   (@"Info");
     DDLogDebug  (@"Debug");
     DDLogVerbose(@"Verbose");
-    
+
+    [DDLog flushLog];
     [self waitForExpectationsWithTimeout:kAsyncExpectationTimeout handler:^(NSError *timeoutError) {
         XCTAssertNil(timeoutError);
     }];
@@ -186,7 +189,8 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     self.logs = @[ @"Error" ];
     
     DDLogError(@"Error");
-    
+
+    [DDLog flushLog];
     [self waitForExpectationsWithTimeout:kAsyncExpectationTimeout handler:^(NSError *timeoutError) {
         XCTAssertNil(timeoutError);
     }];
