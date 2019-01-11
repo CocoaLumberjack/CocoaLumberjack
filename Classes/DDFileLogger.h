@@ -192,7 +192,8 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 - (instancetype)init;
 
 /**
- *  Designated initialized, requires the logs directory
+ *  If logDirectory is not specified, then a folder called "Logs" is created in the app's cache directory.
+ *  While running on the simulator, the "Logs" folder is located in the library temporary directory.
  */
 - (instancetype)initWithLogsDirectory:(NSString * __nullable)logsDirectory NS_DESIGNATED_INITIALIZER;
 
@@ -350,6 +351,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 /**
  *  Writes all in-memory log data to the permanent storage. Call super before your implementation.
+ *  Don't call this method directly, instead use the `[DDLog flushLog]` to ensure all log messages are included in flush.
  */
 - (void)flush NS_REQUIRES_SUPER;
 

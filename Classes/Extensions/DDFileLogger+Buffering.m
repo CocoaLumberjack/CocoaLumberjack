@@ -70,7 +70,7 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
             [_bufferStream open];
             _bufferSize = 0;
         }
-        const uint8_t *appendedData = calloc(length, sizeof(uint8_t));
+        const uint8_t *appendedData = malloc(length * sizeof(uint8_t));
         if (appendedData != NULL) {
             [data getBytes:(void *)appendedData length:length];
             [_bufferStream write:appendedData maxLength:length];
@@ -116,14 +116,54 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 
 #pragma mark - Logging
 
-- (void)lt_logData:(NSData *)data {
+- (void)logMessage:(DDLogMessage *)logMessage {
+    NSData *data = [self.instance lt_dataForMessage:logMessage];
+
     if ([self isBufferFull]) {
         [self dumpBufferToDisk];
     }
+
     [self appendToBuffer:data];
 }
 
+- (void)flush {
+    // This method is public.
+    // We need to execute the rolling on our logging thread/queue.
+
+    dispatch_block_t block = ^{
+        @autoreleasepool {
+            [self dumpBufferToDisk];
+            [self.instance flush];
+        }
+    };
+
+    // The design of this method is taken from the DDAbstractLogger implementation.
+    // For extensive documentation please refer to the DDAbstractLogger implementation.
+
+    if ([self.instance isOnInternalLoggerQueue]) {
+        block();
+    } else {
+        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
+        NSAssert(![self.instance isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+
+        dispatch_sync(globalLoggingQueue, ^{
+            dispatch_sync(self.instance.loggerQueue, block);
+        });
+    }
+}
+
+#pragma mark - Wrapping
+
+- (DDFileLogger *)wrapWithBuffer {
+    return (DDFileLogger *)self;
+}
+
+- (DDFileLogger *)unwrapFromBuffer {
+    return (DDFileLogger *)self.instance;
+}
+
 #pragma mark - NSProxy
+
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel {
     return [self.instance methodSignatureForSelector:sel];
 }
@@ -133,8 +173,7 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
-    [invocation setTarget:self.instance];
-    [invocation invoke];
+    [invocation invokeWithTarget:self.instance];
 }
 
 @end
@@ -142,20 +181,11 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 @implementation DDFileLogger (Buffering)
 
 - (instancetype)wrapWithBuffer {
-    if (self.class == DDBufferedProxy.class) {
-        return self;
-    } else {
-        // wrap into proxy.
-        return (typeof(self))[DDBufferedProxy decoratedInstance:self];
-    }
+    return (typeof(self))[DDBufferedProxy decoratedInstance:self];
 }
 
 - (instancetype)unwrapFromBuffer {
-    if (self.class == DDBufferedProxy.class) {
-        return ((DDBufferedProxy *)self).instance;
-    } else {
-        return self;
-    }
+    return self;
 }
 
 @end
