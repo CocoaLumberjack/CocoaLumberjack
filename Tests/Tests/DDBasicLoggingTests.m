@@ -17,7 +17,7 @@
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import "DDSMocking.h"
 
-static const NSTimeInterval kAsyncExpectationTimeout = 1000.0f;
+static const NSTimeInterval kAsyncExpectationTimeout = 3.0f;
 
 static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
