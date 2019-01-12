@@ -18,18 +18,11 @@
 @implementation DDSMocking
 @end
 
-@interface DDBasicMockArgument ()
-
-@property (nonatomic) dispatch_queue_t serial;
-
-@end
-
 @implementation DDBasicMockArgument
 
 - (instancetype)initWithBlock:(void(^)(id object))block {
     if (self = [super init]) {
-        _block = [block copy];
-        _serial = dispatch_queue_create("serial", NULL);
+        self.block = block;
     }
     return self;
 }
@@ -40,12 +33,6 @@
 
 - (id)copyWithZone:(NSZone *)zone {
     return [self.class alongsideWithBlock:self.block];
-}
-
-- (void)invokeWithArgument:(id)argument {
-    dispatch_sync(_serial, ^{
-        self->_block(argument);
-    });
 }
 
 @end
@@ -139,7 +126,7 @@
 
         if (argListener) {
             found = YES;
-            [argListener invokeWithArgument:argument];
+            argListener.block(argument);
         }
     }
     if (!found) {
