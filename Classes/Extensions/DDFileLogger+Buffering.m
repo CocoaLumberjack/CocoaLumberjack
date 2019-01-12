@@ -49,17 +49,6 @@ static NSUInteger DDGetDefaultBufferSizeBytesMax(BOOL max) {
 
 @implementation DDBufferedProxy
 
-@synthesize maxBufferSizeBytes = _maxBufferSizeBytes;
-
-#pragma mark - Properties
-
-- (void)setMaxBufferSizeBytes:(NSUInteger)maximumBytesCountInBuffer {
-    const NSUInteger maxBufferLength = DDGetDefaultBufferSizeBytesMax(YES);
-    _maxBufferSizeBytes = MIN(maximumBytesCountInBuffer, maxBufferLength);
-}
-
-#pragma mark - Initialization
-
 - (instancetype)initWithFileLogger:(DDFileLogger *)fileLogger {
     _fileLogger = fileLogger;
     _maxBufferSizeBytes = DDGetDefaultBufferSizeBytesMax(NO);
@@ -72,6 +61,8 @@ static NSUInteger DDGetDefaultBufferSizeBytesMax(BOOL max) {
     [self lt_sendBufferedDataToFileLogger];
     self.fileLogger = nil;
 }
+
+#pragma mark - Buffering
 
 - (void)flushBuffer {
     [_buffer close];
@@ -126,6 +117,13 @@ static NSUInteger DDGetDefaultBufferSizeBytesMax(BOOL max) {
             dispatch_sync(self.fileLogger.loggerQueue, block);
         });
     }
+}
+
+#pragma mark - Properties
+
+- (void)setMaxBufferSizeBytes:(NSUInteger)newBufferSizeBytes {
+    const NSUInteger maxBufferSize = DDGetDefaultBufferSizeBytesMax(YES);
+    _maxBufferSizeBytes = MIN(newBufferSizeBytes, maxBufferSize);
 }
 
 #pragma mark - Wrapping
