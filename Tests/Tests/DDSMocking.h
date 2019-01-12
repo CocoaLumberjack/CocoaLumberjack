@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_END
 @interface DDBasicMockArgument: NSObject
 @property (copy, nonatomic, readwrite) void(^block)(id object);
 + (instancetype)alongsideWithBlock:(void(^)(id object))block;
+- (void)invokeWithArgument:(id)argument;
 @end
 
 @interface DDBasicMockArgumentPosition: NSObject <NSCopying>
