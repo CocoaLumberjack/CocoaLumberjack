@@ -37,67 +37,13 @@ static NSUInteger DDGetDefaultBufferSizeBytesMax(BOOL max) {
     return max ? kDDMaxBufferSize : kDDDefaultBufferSize;
 }
 
-// MARK: Public Interface
-@interface DDBufferedProxy<FileLogger: DDFileLogger *> : NSProxy
+@interface DDBufferedProxy : NSProxy
 
-+ (instancetype)decoratedInstance:(FileLogger)instance;
+@property (nonatomic) DDFileLogger *fileLogger;
+@property (nonatomic) NSOutputStream *buffer;
 
-@property (assign, nonatomic, readwrite) NSUInteger maxBufferSizeBytes;
-
-@end
-
-@interface DDBufferedProxy<FileLogger: DDFileLogger *> () {
-    NSOutputStream *_bufferStream;
-    NSUInteger _bufferSize;
-}
-
-- (instancetype)initWithInstance:(FileLogger)instance;
-
-@property (strong, nonatomic, readwrite) FileLogger instance;
-
-@end
-
-@interface DDBufferedProxy (StreamManipulation)
-
-- (void)flushBuffer;
-- (void)dumpBufferToDisk;
-- (void)appendToBuffer:(NSData *)data;
-
-@end
-
-@implementation DDBufferedProxy (StreamManipulation)
-
-- (void)flushBuffer {
-    [_bufferStream close];
-    _bufferStream = nil;
-    _bufferSize = 0;
-}
-
-- (void)dumpBufferToDisk {
-    NSData *data = [_bufferStream propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
-    [self.instance logData:data];
-    [self flushBuffer];
-}
-
-- (void)appendToBuffer:(NSData *)data {
-    NSUInteger length = data.length;
-    if (length == 0) {
-        return;
-    }
-
-    if (_bufferStream == nil) {
-        _bufferStream = [[NSOutputStream alloc] initToMemory];
-        [_bufferStream open];
-        _bufferSize = 0;
-    }
-
-    [_bufferStream write:[data bytes] maxLength:length];
-    _bufferSize += length;
-}
-
-- (BOOL)isBufferFull {
-    return _bufferSize > self.maxBufferSizeBytes;
-}
+@property (nonatomic) NSUInteger maxBufferSizeBytes;
+@property (nonatomic) NSUInteger currentBufferSizeBytes;
 
 @end
 
@@ -114,31 +60,46 @@ static NSUInteger DDGetDefaultBufferSizeBytesMax(BOOL max) {
 
 #pragma mark - Initialization
 
-+ (instancetype)decoratedInstance:(DDFileLogger *)instance {
-    return [[self alloc] initWithInstance:instance];
-}
+- (instancetype)initWithFileLogger:(DDFileLogger *)fileLogger {
+    _fileLogger = fileLogger;
+    _maxBufferSizeBytes = DDGetDefaultBufferSizeBytesMax(NO);
+    [self flushBuffer];
 
-- (instancetype)initWithInstance:(DDFileLogger *)instance {
-    self.instance = instance;
-    self.maxBufferSizeBytes = DDGetDefaultBufferSizeBytesMax(NO);
     return self;
 }
 
 - (void)dealloc {
-    [self dumpBufferToDisk];
-    self.instance = nil;
+    [self lt_sendBufferedDataToFileLogger];
+    self.fileLogger = nil;
+}
+
+- (void)flushBuffer {
+    [_buffer close];
+    _buffer = [NSOutputStream outputStreamToMemory];
+    _currentBufferSizeBytes = 0;
+}
+
+- (void)lt_sendBufferedDataToFileLogger {
+    NSData *data = [_buffer propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
+    [_fileLogger lt_logData:data];
+    [self flushBuffer];
 }
 
 #pragma mark - Logging
 
 - (void)logMessage:(DDLogMessage *)logMessage {
-    NSData *data = [self.instance lt_dataForMessage:logMessage];
-
-    if (_bufferSize >= _maxBufferSizeBytes) {
-        [self dumpBufferToDisk];
+    NSData *data = [_fileLogger lt_dataForMessage:logMessage];
+    NSUInteger length = data.length;
+    if (length == 0) {
+        return;
     }
 
-    [self appendToBuffer:data];
+    [_buffer write:[data bytes] maxLength:length];
+    _currentBufferSizeBytes += length;
+
+    if (_currentBufferSizeBytes >= _maxBufferSizeBytes) {
+        [self lt_sendBufferedDataToFileLogger];
+    }
 }
 
 - (void)flush {
@@ -147,22 +108,22 @@ static NSUInteger DDGetDefaultBufferSizeBytesMax(BOOL max) {
 
     dispatch_block_t block = ^{
         @autoreleasepool {
-            [self dumpBufferToDisk];
-            [self.instance flush];
+            [self lt_sendBufferedDataToFileLogger];
+            [self.fileLogger flush];
         }
     };
 
     // The design of this method is taken from the DDAbstractLogger implementation.
     // For extensive documentation please refer to the DDAbstractLogger implementation.
 
-    if ([self.instance isOnInternalLoggerQueue]) {
+    if ([self.fileLogger isOnInternalLoggerQueue]) {
         block();
     } else {
         dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-        NSAssert(![self.instance isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+        NSAssert(![self.fileLogger isOnGlobalLoggingQueue], @"Core architecture requirement failure");
 
         dispatch_sync(globalLoggingQueue, ^{
-            dispatch_sync(self.instance.loggerQueue, block);
+            dispatch_sync(self.fileLogger.loggerQueue, block);
         });
     }
 }
@@ -174,21 +135,21 @@ static NSUInteger DDGetDefaultBufferSizeBytesMax(BOOL max) {
 }
 
 - (DDFileLogger *)unwrapFromBuffer {
-    return (DDFileLogger *)self.instance;
+    return (DDFileLogger *)self.fileLogger;
 }
 
 #pragma mark - NSProxy
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel {
-    return [self.instance methodSignatureForSelector:sel];
+    return [self.fileLogger methodSignatureForSelector:sel];
 }
 
 - (BOOL)respondsToSelector:(SEL)aSelector {
-    return [self.instance respondsToSelector:aSelector];
+    return [self.fileLogger respondsToSelector:aSelector];
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
-    [invocation invokeWithTarget:self.instance];
+    [invocation invokeWithTarget:self.fileLogger];
 }
 
 @end
@@ -196,7 +157,7 @@ static NSUInteger DDGetDefaultBufferSizeBytesMax(BOOL max) {
 @implementation DDFileLogger (Buffering)
 
 - (instancetype)wrapWithBuffer {
-    return (typeof(self))[DDBufferedProxy decoratedInstance:self];
+    return (DDFileLogger *)[[DDBufferedProxy alloc] initWithFileLogger:self];
 }
 
 - (instancetype)unwrapFromBuffer {
