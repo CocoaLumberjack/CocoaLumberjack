@@ -67,10 +67,13 @@
     for (NSInteger i=0; i<numberOfThreads; i++) {
         dispatch_async(globalQueue, ^{
             [atomicCounter increment];
-            executedCount++;
-            if (executedCount == 2 * numberOfThreads) {
-                [expectation fulfill];
-            }
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                executedCount++;
+                if (executedCount == 2 * numberOfThreads) {
+                    [expectation fulfill];
+                }
+            });
         });
         dispatch_async(globalQueue, ^{
             [atomicCounter decrement];

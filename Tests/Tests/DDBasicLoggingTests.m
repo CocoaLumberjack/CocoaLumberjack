@@ -45,7 +45,9 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     
     __weak __auto_type weakSelf = self;
     __auto_type argument = [DDBasicMockArgument alongsideWithBlock:^(id object) {
-        [weakSelf reactOnMessage:object];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf reactOnMessage:object];
+        });
     }];
     
     [logger addArgument:argument forSelector:@selector(logMessage:) atIndex:2];
