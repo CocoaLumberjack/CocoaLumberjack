@@ -587,7 +587,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 435F03AB2174A39200A86B2D /* Module-Debug.xcconfig */;
 			buildSettings = {
-				OTHER_CFLAGS = "-Wextra";
 			};
 			name = Debug;
 		};
@@ -595,7 +594,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 435F03AA2174A39200A86B2D /* Module-Release.xcconfig */;
 			buildSettings = {
-				OTHER_CFLAGS = "-Wextra";
 			};
 			name = Release;
 		};
