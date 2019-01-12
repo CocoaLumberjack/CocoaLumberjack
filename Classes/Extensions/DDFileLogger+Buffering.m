@@ -16,8 +16,29 @@
 #import "DDFileLogger+Buffering.h"
 #import "DDFileLogger+Internal.h"
 
-static NSUInteger kMaximumBytesCountInBuffer = (1 << 10) * (1 << 10); // 1 MB.
+#import <sys/mount.h>
+
 static NSUInteger kDefaultBytesCountInBuffer = (4 << 10);
+
+// Reads attributes from base file system to determine buffer size.
+// see statfs in sys/mount.h for descriptions of f_iosize and f_bsize.
+static NSUInteger DDGetDefaultBufferByteLengthMax(BOOL max) {
+    struct statfs *mntbufp = NULL;
+    int count = getmntinfo(&mntbufp, 0);
+
+    for (int i = 0; i < count; i++) {
+        const char *name = mntbufp[i].f_mntonname;
+        if (strlen(name) == 1 && *name == '/') {
+            if (max) {
+                return mntbufp[i].f_iosize;
+            } else {
+                return mntbufp[i].f_bsize;
+            }
+        }
+    }
+
+    return kDefaultBytesCountInBuffer;
+}
 
 // MARK: Public Interface
 @interface DDBufferedProxy<FileLogger: DDFileLogger *> : NSProxy
@@ -91,7 +112,8 @@ static NSUInteger kDefaultBytesCountInBuffer = (4 << 10);
 #pragma mark - Properties
 
 - (void)setMaximumBytesCountInBuffer:(NSUInteger)maximumBytesCountInBuffer {
-    _maximumBytesCountInBuffer = MIN(maximumBytesCountInBuffer, kMaximumBytesCountInBuffer);
+    const NSUInteger maxBufferLength = DDGetDefaultBufferByteLengthMax(YES);
+    _maximumBytesCountInBuffer = MIN(maximumBytesCountInBuffer, maxBufferLength);
 }
 
 #pragma mark - Initialization
@@ -102,7 +124,7 @@ static NSUInteger kDefaultBytesCountInBuffer = (4 << 10);
 
 - (instancetype)initWithInstance:(DDFileLogger *)instance {
     self.instance = instance;
-    self.maximumBytesCountInBuffer = kDefaultBytesCountInBuffer;
+    self.maximumBytesCountInBuffer = DDGetDefaultBufferByteLengthMax(NO);
     return self;
 }
 
