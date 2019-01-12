@@ -229,3 +229,5 @@ VERSIONING_SYSTEM = apple-generic
 
 // Code will load on this and later versions of watchOS. Framework APIs that are unavailable in earlier versions will be weak-linked; your code should check for null function pointers or specific system versions before calling newer APIs.
 WATCHOS_DEPLOYMENT_TARGET = 3.0
+
+OTHER_C_FLAGS = -Wextra

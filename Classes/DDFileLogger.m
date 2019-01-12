@@ -1222,6 +1222,29 @@ static int exception_count = 0;
     }
 }
 
+- (NSData *)lt_dataForMessage:(DDLogMessage *)logMessage {
+    NSAssert([self isOnInternalLoggerQueue], @"logMessage should only be executed on internal queue.");
+
+    NSString *message = logMessage->_message;
+    BOOL isFormatted = NO;
+
+    if (_logFormatter != nil) {
+        message = [_logFormatter formatLogMessage:logMessage];
+        isFormatted = message != logMessage->_message;
+    }
+
+    if (message.length == 0) {
+        return [NSData new];
+    }
+
+    BOOL shouldFormat = !isFormatted || _automaticallyAppendNewlineForCustomFormatters;
+    if (shouldFormat && ![message hasSuffix:@"\n"]) {
+        message = [message stringByAppendingString:@"\n"];
+    }
+
+    return [message dataUsingEncoding:NSUTF8StringEncoding];
+}
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
