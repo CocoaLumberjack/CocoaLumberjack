@@ -18,26 +18,23 @@
 
 #import <sys/mount.h>
 
-static NSUInteger kDefaultBytesCountInBuffer = (4 << 10);
+static NSUInteger kDDDefaultBufferSize = 4096; // 4 kB, block f_bsize on iphone7
+static NSUInteger kDDMaxBufferSize = 1048576; // ~1 mB, f_iosize on iphone7
 
 // Reads attributes from base file system to determine buffer size.
 // see statfs in sys/mount.h for descriptions of f_iosize and f_bsize.
-static NSUInteger DDGetDefaultBufferByteLengthMax(BOOL max) {
+static NSUInteger DDGetDefaultBufferSizeBytesMax(BOOL max) {
     struct statfs *mntbufp = NULL;
     int count = getmntinfo(&mntbufp, 0);
 
     for (int i = 0; i < count; i++) {
         const char *name = mntbufp[i].f_mntonname;
         if (strlen(name) == 1 && *name == '/') {
-            if (max) {
-                return mntbufp[i].f_iosize;
-            } else {
-                return mntbufp[i].f_bsize;
-            }
+            return max ? mntbufp[i].f_iosize : mntbufp[i].f_bsize;
         }
     }
 
-    return kDefaultBytesCountInBuffer;
+    return max ? kDDMaxBufferSize : kDDDefaultBufferSize;
 }
 
 // MARK: Public Interface
@@ -45,7 +42,7 @@ static NSUInteger DDGetDefaultBufferByteLengthMax(BOOL max) {
 
 + (instancetype)decoratedInstance:(FileLogger)instance;
 
-@property (assign, nonatomic, readwrite) NSUInteger maximumBytesCountInBuffer;
+@property (assign, nonatomic, readwrite) NSUInteger maxBufferSizeBytes;
 
 @end
 
@@ -65,7 +62,6 @@ static NSUInteger DDGetDefaultBufferByteLengthMax(BOOL max) {
 - (void)flushBuffer;
 - (void)dumpBufferToDisk;
 - (void)appendToBuffer:(NSData *)data;
-- (BOOL)isBufferFull;
 
 @end
 
@@ -100,20 +96,20 @@ static NSUInteger DDGetDefaultBufferByteLengthMax(BOOL max) {
 }
 
 - (BOOL)isBufferFull {
-    return _bufferSize > self.maximumBytesCountInBuffer;
+    return _bufferSize > self.maxBufferSizeBytes;
 }
 
 @end
 
 @implementation DDBufferedProxy
 
-@synthesize maximumBytesCountInBuffer = _maximumBytesCountInBuffer;
+@synthesize maxBufferSizeBytes = _maxBufferSizeBytes;
 
 #pragma mark - Properties
 
-- (void)setMaximumBytesCountInBuffer:(NSUInteger)maximumBytesCountInBuffer {
-    const NSUInteger maxBufferLength = DDGetDefaultBufferByteLengthMax(YES);
-    _maximumBytesCountInBuffer = MIN(maximumBytesCountInBuffer, maxBufferLength);
+- (void)setMaxBufferSizeBytes:(NSUInteger)maximumBytesCountInBuffer {
+    const NSUInteger maxBufferLength = DDGetDefaultBufferSizeBytesMax(YES);
+    _maxBufferSizeBytes = MIN(maximumBytesCountInBuffer, maxBufferLength);
 }
 
 #pragma mark - Initialization
@@ -124,7 +120,7 @@ static NSUInteger DDGetDefaultBufferByteLengthMax(BOOL max) {
 
 - (instancetype)initWithInstance:(DDFileLogger *)instance {
     self.instance = instance;
-    self.maximumBytesCountInBuffer = DDGetDefaultBufferByteLengthMax(NO);
+    self.maxBufferSizeBytes = DDGetDefaultBufferSizeBytesMax(NO);
     return self;
 }
 
@@ -138,7 +134,7 @@ static NSUInteger DDGetDefaultBufferByteLengthMax(BOOL max) {
 - (void)logMessage:(DDLogMessage *)logMessage {
     NSData *data = [self.instance lt_dataForMessage:logMessage];
 
-    if ([self isBufferFull]) {
+    if (_bufferSize >= _maxBufferSizeBytes) {
         [self dumpBufferToDisk];
     }
 
