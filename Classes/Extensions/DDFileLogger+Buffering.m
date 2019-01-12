@@ -17,7 +17,7 @@
 #import "DDFileLogger+Internal.h"
 
 static NSUInteger kMaximumBytesCountInBuffer = (1 << 10) * (1 << 10); // 1 MB.
-static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
+static NSUInteger kDefaultBytesCountInBuffer = (4 << 10);
 
 // MARK: Public Interface
 @interface DDBufferedProxy<FileLogger: DDFileLogger *> : NSProxy
