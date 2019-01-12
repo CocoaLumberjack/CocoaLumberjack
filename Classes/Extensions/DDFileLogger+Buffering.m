@@ -63,22 +63,19 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 }
 
 - (void)appendToBuffer:(NSData *)data {
-    __auto_type length = data.length;
-    if (data.length != 0) {
-        if (_bufferStream == nil) {
-            _bufferStream = [[NSOutputStream alloc] initToMemory];
-            [_bufferStream open];
-            _bufferSize = 0;
-        }
-        const uint8_t *appendedData = malloc(length * sizeof(uint8_t));
-        if (appendedData != NULL) {
-            [data getBytes:(void *)appendedData length:length];
-            [_bufferStream write:appendedData maxLength:length];
-            _bufferSize += length;
-
-            free((void *)appendedData);
-        }
+    NSUInteger length = data.length;
+    if (length == 0) {
+        return;
     }
+
+    if (_bufferStream == nil) {
+        _bufferStream = [[NSOutputStream alloc] initToMemory];
+        [_bufferStream open];
+        _bufferSize = 0;
+    }
+
+    [_bufferStream write:[data bytes] maxLength:length];
+    _bufferSize += length;
 }
 
 - (BOOL)isBufferFull {
