@@ -113,9 +113,14 @@ static NSUInteger DDGetDefaultBufferSizeBytes() {
         return;
     }
 
+#ifdef DEBUG
     NSInteger written = [_buffer write:[data bytes] maxLength:length];
-    _currentBufferSizeBytes += length;
     NSAssert(written == (NSInteger)length, @"Failed to write to memory buffer.");
+#else
+    [_buffer write:[data bytes] maxLength:length];
+#endif
+
+    _currentBufferSizeBytes += length;
 
     if (_currentBufferSizeBytes >= _maxBufferSizeBytes) {
         [self lt_sendBufferedDataToFileLogger];
