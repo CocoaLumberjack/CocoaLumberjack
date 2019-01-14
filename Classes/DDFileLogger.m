@@ -1428,7 +1428,12 @@ static int exception_count = 0;
     if (![newFileName isEqualToString:[self fileName]]) {
         NSString *fileDir = [filePath stringByDeletingLastPathComponent];
         NSString *newFilePath = [fileDir stringByAppendingPathComponent:newFileName];
-        NSLogVerbose(@"DDLogFileInfo: Renaming file: '%@' -> '%@'", self.fileName, newFileName);
+
+#ifdef DEBUG
+        BOOL directory = NO;
+        [[NSFileManager defaultManager] fileExistsAtPath:fileDir isDirectory:&directory];
+        NSAssert(directory, @"Containing directory must exist..");
+#endif
 
         NSError *error = nil;
 
@@ -1437,7 +1442,17 @@ static int exception_count = 0;
             NSLogError(@"DDLogFileInfo: Error deleting archive (%@): %@", self.fileName, error);
         }
 
-        if (![[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newFilePath error:&error]) {
+        success = [[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newFilePath error:&error];
+
+            // When a log file is deleted, moved or renamed on the simulator, we attempt to rename it as a
+            // result of "archiving" it, but since the file doesn't exist anymore, needless error logs are printed
+            // We therefore ignore this error, and assert that the directory we are copying into exists (which
+            // is the only other case where this error code can come up).
+#if TARGET_IPHONE_SIMULATOR
+        if (!success && error.code != NSFileNoSuchFileError) {
+#else
+        if (!success) {
+#endif
             NSLogError(@"DDLogFileInfo: Error renaming file (%@): %@", self.fileName, error);
         }
 

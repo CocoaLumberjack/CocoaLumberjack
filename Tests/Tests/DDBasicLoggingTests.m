@@ -26,6 +26,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 @property (nonatomic, strong) XCTestExpectation *expectation;
 @property (nonatomic, strong) DDAbstractLogger *logger;
 @property (nonatomic, assign) NSUInteger noOfMessagesLogged;
+@property (nonatomic) dispatch_queue_t serial;
 @end
 
 @implementation DDBasicLoggingTests
@@ -45,7 +46,9 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     
     __weak __auto_type weakSelf = self;
     __auto_type argument = [DDBasicMockArgument alongsideWithBlock:^(id object) {
-        [weakSelf reactOnMessage:object];
+        dispatch_sync(self.serial, ^{
+            [weakSelf reactOnMessage:object];
+        });
     }];
     
     [logger addArgument:argument forSelector:@selector(logMessage:) atIndex:2];
@@ -53,12 +56,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 }
 
 - (void)setupLoggers {
-    if (@available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *)) {
-        [DDLog addLogger:[DDOSLogger new]];
-    } else {
-        [DDLog addLogger:[DDTTYLogger new]];
-    }
-    
+    self.logger = (DDAbstractLogger *)[self createAbstractLogger];
     [DDLog addLogger:self.logger];
 }
 
@@ -70,17 +68,12 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     self.logs = @[];
     self.expectation = nil;
     self.noOfMessagesLogged = 0;
+    self.serial = dispatch_queue_create("serial", NULL);
 }
 
 - (void)setUp {
     [super setUp];
     [self resetToDefaults];
-    
-    if (self.logger == nil) {
-        __auto_type logger = [self createAbstractLogger];
-        self.logger = (DDAbstractLogger *)logger;
-    }
-    
     [self setupLoggers];
 }
 
@@ -93,7 +86,8 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogInfo   (@"Info");
     DDLogDebug  (@"Debug");
     DDLogVerbose(@"Verbose");
-    
+
+    [DDLog flushLog];
     [self waitForExpectationsWithTimeout:kAsyncExpectationTimeout handler:^(NSError *timeoutError) {
         XCTAssertNil(timeoutError);
     }];
@@ -111,7 +105,8 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogInfo   (@"Info");
     DDLogDebug  (@"Debug");
     DDLogVerbose(@"Verbose");
-    
+
+    [DDLog flushLog];
     [self waitForExpectationsWithTimeout:kAsyncExpectationTimeout handler:^(NSError *timeoutError) {
         XCTAssertNil(timeoutError);
     }];
@@ -128,7 +123,8 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogInfo   (@"Info");
     DDLogDebug  (@"Debug");
     DDLogVerbose(@"Verbose");
-    
+
+    [DDLog flushLog];
     [self waitForExpectationsWithTimeout:kAsyncExpectationTimeout handler:^(NSError *timeoutError) {
         XCTAssertNil(timeoutError);
     }];
@@ -163,30 +159,22 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 }
 
 - (void)setupLoggers {
-    if (@available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *)) {
-        [DDLog addLogger:[DDOSLogger new]];
-    } else {
-        [DDLog addLogger:[DDTTYLogger new]];
-    }
-    
-    if (self.loggers.count == 0) {
-        for (NSUInteger i = 0; i < self.countOfLoggers; ++i) {
-            self.loggers = [self.loggers ?: @[] arrayByAddingObject:[self createAbstractLogger]];
-        }
-    }
-    
-    for (DDAbstractLogger *logger in self.loggers) {
+    NSMutableArray *loggers = [NSMutableArray arrayWithCapacity:self.countOfLoggers];
+    for (NSUInteger i = 0; i < self.countOfLoggers; i++) {
+        DDAbstractLogger *logger = (DDAbstractLogger *)[self createAbstractLogger];
+        [loggers addObject:logger];
         [DDLog addLogger:logger];
     }
+    self.loggers = [loggers copy];
 }
-
 
 - (void)testAll5DefaultLevelsAsync {
     self.expectation = [self expectationWithDescription:@"default log levels"];
     self.logs = @[ @"Error" ];
     
     DDLogError(@"Error");
-    
+
+    [DDLog flushLog];
     [self waitForExpectationsWithTimeout:kAsyncExpectationTimeout handler:^(NSError *timeoutError) {
         XCTAssertNil(timeoutError);
     }];
