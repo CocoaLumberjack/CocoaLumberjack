@@ -44,6 +44,7 @@ static NSUInteger DDGetMaxBufferSizeBytes() {
     dispatch_once(&onceToken, ^{
         maxBufferSize = p_DDGetDefaultBufferSizeBytesMax(YES);
     });
+    return maxBufferSize;
 }
 
 static NSUInteger DDGetDefaultBufferSizeBytes() {
@@ -52,6 +53,7 @@ static NSUInteger DDGetDefaultBufferSizeBytes() {
     dispatch_once(&onceToken, ^{
         defaultBufferSize = p_DDGetDefaultBufferSizeBytesMax(NO);
     });
+    return defaultBufferSize;
 }
 
 @interface DDBufferedProxy : NSProxy
@@ -75,8 +77,16 @@ static NSUInteger DDGetDefaultBufferSizeBytes() {
 }
 
 - (void)dealloc {
-    [self lt_sendBufferedDataToFileLogger];
-    self.fileLogger = nil;
+    dispatch_block_t block = ^{
+        [self lt_sendBufferedDataToFileLogger];
+        self.fileLogger = nil;
+    };
+
+    if ([self->_fileLogger isOnInternalLoggerQueue]) {
+        block();
+    } else {
+        dispatch_sync(self->_fileLogger.loggerQueue, block);
+    }
 }
 
 #pragma mark - Buffering
@@ -84,6 +94,7 @@ static NSUInteger DDGetDefaultBufferSizeBytes() {
 - (void)flushBuffer {
     [_buffer close];
     _buffer = [NSOutputStream outputStreamToMemory];
+    [_buffer open];
     _currentBufferSizeBytes = 0;
 }
 
@@ -102,8 +113,9 @@ static NSUInteger DDGetDefaultBufferSizeBytes() {
         return;
     }
 
-    [_buffer write:[data bytes] maxLength:length];
+    NSInteger written = [_buffer write:[data bytes] maxLength:length];
     _currentBufferSizeBytes += length;
+    NSAssert(written == (NSInteger)length, @"Failed to write to memory buffer.");
 
     if (_currentBufferSizeBytes >= _maxBufferSizeBytes) {
         [self lt_sendBufferedDataToFileLogger];

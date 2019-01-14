@@ -663,9 +663,13 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 }
 
 - (void)dealloc {
-    dispatch_sync(self.loggerQueue, ^{
+    if (self.isOnInternalLoggerQueue) {
         [self lt_cleanup];
-    });
+    } else {
+        dispatch_sync(self.loggerQueue, ^{
+            [self lt_cleanup];
+        });
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
