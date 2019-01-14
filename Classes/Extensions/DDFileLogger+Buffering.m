@@ -18,12 +18,13 @@
 
 #import <sys/mount.h>
 
-static NSUInteger kDDDefaultBufferSize = 4096; // 4 kB, block f_bsize on iphone7
-static NSUInteger kDDMaxBufferSize = 1048576; // ~1 mB, f_iosize on iphone7
+static const NSUInteger kDDDefaultBufferSize = 4096; // 4 kB, block f_bsize on iphone7
+static const NSUInteger kDDMaxBufferSize = 1048576; // ~1 mB, f_iosize on iphone7
 
 // Reads attributes from base file system to determine buffer size.
 // see statfs in sys/mount.h for descriptions of f_iosize and f_bsize.
-static NSUInteger DDGetDefaultBufferSizeBytesMax(BOOL max) {
+// f_bsize == "default", and f_iosize == "max"
+static NSUInteger p_DDGetDefaultBufferSizeBytesMax(BOOL max) {
     struct statfs *mntbufp = NULL;
     int count = getmntinfo(&mntbufp, 0);
 
@@ -35,6 +36,22 @@ static NSUInteger DDGetDefaultBufferSizeBytesMax(BOOL max) {
     }
 
     return max ? kDDMaxBufferSize : kDDDefaultBufferSize;
+}
+
+static NSUInteger DDGetMaxBufferSizeBytes() {
+    static NSUInteger maxBufferSize = 0;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        maxBufferSize = p_DDGetDefaultBufferSizeBytesMax(YES);
+    });
+}
+
+static NSUInteger DDGetDefaultBufferSizeBytes() {
+    static NSUInteger defaultBufferSize = 0;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        defaultBufferSize = p_DDGetDefaultBufferSizeBytesMax(NO);
+    });
 }
 
 @interface DDBufferedProxy : NSProxy
@@ -51,7 +68,7 @@ static NSUInteger DDGetDefaultBufferSizeBytesMax(BOOL max) {
 
 - (instancetype)initWithFileLogger:(DDFileLogger *)fileLogger {
     _fileLogger = fileLogger;
-    _maxBufferSizeBytes = DDGetDefaultBufferSizeBytesMax(NO);
+    _maxBufferSizeBytes = DDGetDefaultBufferSizeBytes();
     [self flushBuffer];
 
     return self;
@@ -122,8 +139,7 @@ static NSUInteger DDGetDefaultBufferSizeBytesMax(BOOL max) {
 #pragma mark - Properties
 
 - (void)setMaxBufferSizeBytes:(NSUInteger)newBufferSizeBytes {
-    const NSUInteger maxBufferSize = DDGetDefaultBufferSizeBytesMax(YES);
-    _maxBufferSizeBytes = MIN(newBufferSizeBytes, maxBufferSize);
+    _maxBufferSizeBytes = MIN(newBufferSizeBytes, DDGetMaxBufferSizeBytes());
 }
 
 #pragma mark - Wrapping
