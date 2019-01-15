@@ -24,7 +24,7 @@ static const NSUInteger kDDMaxBufferSize = 1048576; // ~1 mB, f_iosize on iphone
 // Reads attributes from base file system to determine buffer size.
 // see statfs in sys/mount.h for descriptions of f_iosize and f_bsize.
 // f_bsize == "default", and f_iosize == "max"
-static NSUInteger p_DDGetDefaultBufferSizeBytesMax(BOOL max) {
+static inline NSUInteger p_DDGetDefaultBufferSizeBytesMax(const BOOL max) {
     struct statfs *mntbufp = NULL;
     int count = getmntinfo(&mntbufp, 0);
 
@@ -113,12 +113,11 @@ static NSUInteger DDGetDefaultBufferSizeBytes() {
         return;
     }
 
-#ifdef DEBUG
+#ifndef DEBUG
+    __unused
+#endif
     NSInteger written = [_buffer write:[data bytes] maxLength:length];
     NSAssert(written == (NSInteger)length, @"Failed to write to memory buffer.");
-#else
-    [_buffer write:[data bytes] maxLength:length];
-#endif
 
     _currentBufferSizeBytes += length;
 

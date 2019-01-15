@@ -2,8 +2,7 @@
 //  main.m
 //  Benchmarking
 //
-//  Created by Hakon Hanesand on 1/11/19.
-//  Copyright © 2019 CocoaLumberjack. All rights reserved.
+//  CocoaLumberjack Benchmarking
 //
 
 #import <Foundation/Foundation.h>

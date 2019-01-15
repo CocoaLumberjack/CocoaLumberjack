@@ -1436,7 +1436,7 @@ static int exception_count = 0;
 #ifdef DEBUG
         BOOL directory = NO;
         [[NSFileManager defaultManager] fileExistsAtPath:fileDir isDirectory:&directory];
-        NSAssert(directory, @"Containing directory must exist..");
+        NSAssert(directory, @"Containing directory must exist.");
 #endif
 
         NSError *error = nil;
