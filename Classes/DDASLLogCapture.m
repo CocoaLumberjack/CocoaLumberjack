@@ -22,8 +22,6 @@
 
 #if !TARGET_OS_WATCH
 
-#import "DDLog.h"
-
 #include <asl.h>
 #include <notify.h>
 #include <notify_keys.h>

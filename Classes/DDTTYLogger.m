@@ -15,9 +15,6 @@
 
 #import "DDTTYLogger.h"
 
-#import "DDLoggerNames.h"
-
-#import <unistd.h>
 #import <sys/uio.h>
 
 #if !__has_feature(objc_arc)

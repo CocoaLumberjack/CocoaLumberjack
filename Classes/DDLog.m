@@ -21,11 +21,8 @@
 #import "DDLog.h"
 
 #import <pthread.h>
-#import <dispatch/dispatch.h>
 #import <objc/runtime.h>
-#import <mach/mach_host.h>
-#import <mach/host_info.h>
-#import <Availability.h>
+
 #if TARGET_OS_IOS
     #import <UIKit/UIDevice.h>
     #import <UIKit/UIApplication.h>

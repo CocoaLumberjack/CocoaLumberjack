@@ -14,12 +14,9 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDFileLogger.h"
-#import "DDLoggerNames.h"
 
 #import "DDFileLogger+Internal.h"
 
-#import <unistd.h>
-#import <sys/attr.h>
 #import <sys/xattr.h>
 
 #if !__has_feature(objc_arc)

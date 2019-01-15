@@ -14,7 +14,6 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDAbstractDatabaseLogger.h"
-#import <math.h>
 
 
 #if !__has_feature(objc_arc)
