@@ -2,7 +2,7 @@
 //  SlowLogger.m
 //  OverflowTestMac
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "SlowLogger.h"

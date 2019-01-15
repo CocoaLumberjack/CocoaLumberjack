@@ -119,7 +119,7 @@ static DDLogLevel _captureLevel = DDLogLevelVerbose;
                                                                flag:flag
                                                             context:0
                                                                file:@"DDASLLogCapture"
-                                                           function:0
+                                                           function:nil
                                                                line:0
                                                                 tag:nil
                                                             options:0

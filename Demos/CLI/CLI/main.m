@@ -2,7 +2,7 @@
 //  main.m
 //  CLI
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <Foundation/Foundation.h>

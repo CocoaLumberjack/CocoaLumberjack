@@ -836,7 +836,7 @@ static DDTTYLogger *sharedInstance;
     }
 
     if ((self = [super init])) {
-        // Initialze 'app' variable (char *)
+        // Initialize 'app' variable (char *)
 
         _appName = [[NSProcessInfo processInfo] processName];
 

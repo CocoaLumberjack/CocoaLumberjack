@@ -2,7 +2,7 @@
 //  ThirdPartyFramework.m
 //  ContextFilter
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "ThirdPartyFramework.h"

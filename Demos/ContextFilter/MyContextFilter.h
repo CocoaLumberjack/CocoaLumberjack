@@ -2,7 +2,7 @@
 //  MyContextFilter.h
 //  ContextFilter
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <Foundation/Foundation.h>

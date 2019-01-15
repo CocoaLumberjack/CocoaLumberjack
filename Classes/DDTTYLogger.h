@@ -133,7 +133,7 @@
  * A logging context is often used to identify log messages coming from a 3rd party framework,
  * although logging context's can be used for many different functions.
  *
- * Use LOG_CONTEXT_ALL to set the deafult color for all contexts that have no specific color set defined.
+ * Use LOG_CONTEXT_ALL to set the default color for all contexts that have no specific color set defined.
  *
  * Logging context's are explained in further detail here:
  * Documentation/CustomContext.md

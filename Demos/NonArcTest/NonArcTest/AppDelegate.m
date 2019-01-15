@@ -2,7 +2,7 @@
 //  AppDelegate.m
 //  NonArcTest
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "AppDelegate.h"

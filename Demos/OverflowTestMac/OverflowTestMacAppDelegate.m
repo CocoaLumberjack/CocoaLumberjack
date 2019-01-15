@@ -2,7 +2,7 @@
 //  OverflowTestMacAppDelegate.m
 //  OverflowTestMac
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "OverflowTestMacAppDelegate.h"

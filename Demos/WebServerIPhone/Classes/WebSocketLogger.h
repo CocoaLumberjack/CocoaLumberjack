@@ -2,7 +2,7 @@
 //  WebSocketLogger.h
 //  WebServerIPhone
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <Foundation/Foundation.h>

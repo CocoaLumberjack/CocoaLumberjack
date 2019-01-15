@@ -2,7 +2,7 @@
 //  MyContextFilter.m
 //  ContextFilter
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "MyContextFilter.h"

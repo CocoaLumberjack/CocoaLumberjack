@@ -24,7 +24,7 @@ extension DDLogFlag {
         self = DDLogFlag(rawValue: logLevel.rawValue)
 	}
 
-    /// Returns the log level, or the lowest equivalant.
+    /// Returns the log level, or the lowest equivalent.
     public func toLogLevel() -> DDLogLevel {
         if let ourValid = DDLogLevel(rawValue: rawValue) {
             return ourValid

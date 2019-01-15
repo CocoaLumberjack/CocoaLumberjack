@@ -2,7 +2,7 @@
 //  RegisteredLoggingTestAppDelegate.h
 //  RegisteredLoggingTest
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <UIKit/UIKit.h>

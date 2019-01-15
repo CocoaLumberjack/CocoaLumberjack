@@ -2,7 +2,7 @@
 //  RollingTestMacAppDelegate.h
 //  RollingTestMac
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

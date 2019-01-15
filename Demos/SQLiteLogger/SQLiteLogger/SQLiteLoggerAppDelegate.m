@@ -2,7 +2,7 @@
 //  SQLiteLoggerAppDelegate.m
 //  SQLiteLogger
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "SQLiteLoggerAppDelegate.h"

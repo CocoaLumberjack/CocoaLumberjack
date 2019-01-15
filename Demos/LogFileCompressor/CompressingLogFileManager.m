@@ -2,7 +2,7 @@
 //  CompressingLogFileManager.m
 //  LogFileCompressor
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "CompressingLogFileManager.h"

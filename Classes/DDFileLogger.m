@@ -234,7 +234,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     }
 
     if (firstIndexToDelete != NSNotFound) {
-        // removing all logfiles starting with firstIndexToDelete
+        // removing all log files starting with firstIndexToDelete
 
         for (NSUInteger i = firstIndexToDelete; i < sortedLogFileInfos.count; i++) {
             DDLogFileInfo *logFileInfo = sortedLogFileInfos[i];
@@ -275,7 +275,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 }
 
 - (NSString *)logsDirectory {
-    // We could do this check once, during initalization, and not bother again.
+    // We could do this check once, during initialization, and not bother again.
     // But this way the code continues to work if the directory gets deleted while the code is running.
 
     NSAssert(_logsDirectory.length > 0, @"Directory must be set.");
@@ -986,7 +986,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 - (DDLogFileInfo *)currentLogFileInfo {
     // The design of this method is taken from the DDAbstractLogger implementation.
     // For extensive documentation please refer to the DDAbstractLogger implementation.
-    // Do not access this method on any Lumberjack queue, will deadllock.
+    // Do not access this method on any Lumberjack queue, will deadlock.
 
     NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
     NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.");

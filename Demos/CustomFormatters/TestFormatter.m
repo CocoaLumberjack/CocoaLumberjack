@@ -2,7 +2,7 @@
 //  TestFormatter.m
 //  CustomFormatters
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "TestFormatter.h"

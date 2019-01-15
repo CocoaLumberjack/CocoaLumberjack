@@ -2,7 +2,7 @@
 //  GlobalLogLevelAppDelegate.m
 //  GlobalLogLevel
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "GlobalLogLevelAppDelegate.h"
