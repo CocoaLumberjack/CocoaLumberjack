@@ -1,29 +1,34 @@
 ## [3.5.0 - Xcode 10 on ?? ??, 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.0)
-- Reduce podspec to 2subspecs and remove customized modulemap #976
+
+### Public
+- Added `logFileHeader` property to `DDLogFileManagerDefault`. Override to set header for each created file. #998
+- `DDFileLogger` now accepts a `dispatch_queue_t` which it uses to run callbacks. If not provided, the default global queue is used. #1003
+- Added opt-in buffing to `DDFileLogger`. Call `wrapWithBuffer` to create a file logger which buffers. #1001, #1012
+- Add `DDAssert` and `DDAssertionFailure` functions for Swift #934
+
+### Internal
+- Prevent memory access errors caused by a failed fetch #944
+- Fix common warnings emitted by `-Wall`, `-Wconversion`, `-Wextra`, etc #943, #931
+- Fixes issue that could cause log messages to become interleaved when there are multiple `DDFileLogger`s #985
+- `DispatchQueueFormatter` knows about `com.apple.root.default-qos.overcommit` now #932
+- Fix thread safety issues in `DDFileLogger`. Makes it a litte harder to deadlock in some cases. #986, #1003, #946
+- Fix availability checks and memory leak #996
+- Use static const for default log level so Swift can strip strings #952
+
+### Repository
+- Reduce podspec to two subspecs and remove customized modulemap #976
 - Add danger support for PR checks #962 - fixes #956
 - Merged framework targets + using `xcconfig` + deployment target `iOS 8` and `Mac OS 10.10` #959 e97da34
-- Doc update #955 e7414ae 0239196 #933
+- Documentation update #955 e7414ae 0239196 #933
+- Full links to Docs and other resources so they are resolved on external pages (i.e. https://cocoapods.org/pods/CocoaLumberjack) e9d6971
 - Replace `OSAtomic` with `stdatomic` in `DDDispatchQueueLogFormatter` #957 #958
 - Add Stale Bot + configuration #953
-- Use static const for default log level so Swift can strip strings #952
 - Update to Xcode 10 and Swift 4.2 complier #950
 - Xcode 10 scheme changes #949
-- Full links to Docs and other resources so they are resolved on external pages (i.e. https://cocoapods.org/pods/CocoaLumberjack) e9d6971
-- Proper BSD 3-Clause License (the old one was incomplete) #942
-- Prevent memory access errors caused by a failed fetch #944
-- Fix common warnings emitted by `-Wall` `-Wconversion` `-Wextra` etc #943
+- Update incomplete BSD 3-Clause License #942
 - Updated to CocoaPods 1.5.3 2d0590f
-- Uses Xcode 9.4 image for tests #939
+- Use Xcode 9.4 image for tests #939
 - Xcode (schemes) version bumps #938
-- Add `DDAssert` and `DDAssertionFailure` functions for Swift #934
-- Fixed compiler warnings #931
-- Add new queue label which will be hold by a manual created thread #932
-- DDFileLogger log message is overridden #924
-- Fix thread safety issues in DDFileLogger #986, #1003, #946
-- Fix availability checks and memory leak #996
-- Added `logFileHeader` property to `DDLogFileManagerDefault` which you can override to set log file header #998
-- DDFileLogger now accepts a dispatch_queue which it uses to run callbacks #1003
-- Add logger extension with buffering #1001
 
 ## [3.4.2 - Xcode 9.3 on Apr 17th, 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.4.2)
 - Update README.md #912
