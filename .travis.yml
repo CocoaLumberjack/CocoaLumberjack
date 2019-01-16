@@ -35,7 +35,7 @@ env:
         - PLATFORM="tvOS Simulator" OS=10.14 SDK="appletvos" NAME="Apple TV" TEST_SCHEME="OS X Tests" INTEGRATION_SCHEME_PREFIX="tvOS"
         - PLATFORM="tvOS Simulator" OS=10.14 SDK="appletvos" NAME="Apple TV" TEST_SCHEME="OS X Tests" INTEGRATION_SCHEME_PREFIX="tvOS"
 
-before_install:
+after_install:
     - env
     - locale
     - bundle exec pod --version
