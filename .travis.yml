@@ -2,6 +2,8 @@
 language: objective-c
 osx_image: xcode10.1
 
+cache: bundler
+
 branches:
     only:
         - master
@@ -36,64 +38,65 @@ env:
 before_install:
     - env
     - locale
-    - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
-    - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
     - pod --version
     - xcpretty --version
     - xcodebuild -version
-    - xcodebuild -showsdks
 
 jobs:
     include:
         - stage: compile_core
           script:
-                - COMMON="-workspace Framework/Lumberjack.xcworkspace          \
-                          -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\" \
-                          -sdk $SDK                                          \
-                          -configuration Release | xcpretty -c"
-
-                - xcodebuild clean build -scheme "CocoaLumberjack-Static" $COMMON                    
-                - xcodebuild clean build -scheme "CocoaLumberjack" $COMMON
-                - xcodebuild clean build -scheme "CocoaLumberjackSwift" $COMMON
+                - |
+                  COMMON="-workspace Framework/Lumberjack.xcworkspace             \
+                          -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\"   \
+                          -sdk $SDK                                               \
+                          -configuration Release | xcpretty -c"                   \
+                                                                                  \
+                  xcodebuild clean build -scheme "CocoaLumberjack-Static" $COMMON \
+                  xcodebuild clean build -scheme "CocoaLumberjack" $COMMON        \
+                  xcodebuild clean build -scheme "CocoaLumberjackSwift" $COMMON
 
         - stage: test
           script:
-                - COMMON="-project Tests/Tests.xcodeproj                          \
+                - |
+                  COMMON="-project Tests/Tests.xcodeproj                          \
                           -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\"   \
                           -sdk $SDK                                               \
                           GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES                    \
                           GCC_GENERATE_TEST_COVERAGE_FILES=YES                    \
-                          -configuration Release | xcpretty -c"
-
-                - xcodebuild test -scheme "iOS Tests" $COMMON
-                - xcodebuild test -scheme "OS X Tests" $COMMON
+                          -configuration Release | xcpretty -c"                   \
+                                                                                  \
+                  xcodebuild test -scheme "iOS Tests" $COMMON                     \
+                  xcodebuild test -scheme "OS X Tests" $COMMON
 
         - stage: compile_integration_only_ios
           if: env(INTEGRATION_SCHEME_PREFIX) = iOS
           script:
-                - COMMON="-project Integration/Integration.xcodeproj           \
-                          -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\" \
-                          -sdk $SDK                                         \
-                          -configuration Release | xcpretty -c"
-
-                - xcodebuild build -scheme "$INTEGRATION_TEST_PREFIXStaticLibraryIntegration" $COMMON
-                - xcodebuild build -scheme "$INTEGRATION_TEST_PREFIXFrameworkIntegration" $COMMON
-                - xcodebuild build -scheme "$INTEGRATION_TEST_PREFIXSwiftIntegration" $COMMON
+                - |
+                  COMMON="-project Integration/Integration.xcodeproj                                  \
+                          -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\"                       \
+                          -sdk $SDK                                                                   \
+                          -configuration Release | xcpretty -c"                                       \
+                                                                                                      \
+                  xcodebuild build -scheme "$INTEGRATION_TEST_PREFIXStaticLibraryIntegration" $COMMON \
+                  xcodebuild build -scheme "$INTEGRATION_TEST_PREFIXFrameworkIntegration" $COMMON     \
+                  xcodebuild build -scheme "$INTEGRATION_TEST_PREFIXSwiftIntegration" $COMMON
 
         - stage: compile_integration_not_ios
           if: env(INTEGRATION_SCHEME_PREFIX) != iOS
           script:
-                - xcodebuild build 
-                      -project Integration/Integration.xcodeproj.          \
-                      -scheme $INTEGRATION_TEST_PREFIXSwiftIntegration   \
-                      -destination \\"platform=$PLATFORM,OS=$OS,name=$NAME\" \
-                      -sdk $SDK                                          \
+                - xcodebuild build                                           \
+                      -project Integration/Integration.xcodeproj             \
+                      -scheme $INTEGRATION_TEST_PREFIXSwiftIntegration       \
+                      -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\"  \
+                      -sdk $SDK                                              \
                       -configuration Release | xcpretty -c"
 
         - stage: compile_ios_demo_apps
           if: env(TRAVIS_PULL_REQUEST) = false AND env(SDK) = iOS
           script:
                 - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "BenchmarkIPhone" -configuration Release -sdk iphonesimulator | xcpretty -c
+                
                 - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "CaptureASL" -sdk iphonesimulator | xcpretty -c
                 - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "RegisteredLoggingTest (Mobile)" -sdk iphonesimulator | xcpretty -c
                 - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "TextXcodeColors (Mobile)" -sdk iphonesimulator | xcpretty -c
