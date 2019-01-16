@@ -145,10 +145,9 @@ static int const DDLoggerCount = 3;
 @property (nonatomic) NSUInteger numberMessagesLogged;
 @property (nonatomic) dispatch_queue_t serial;
 
-    @end
+@end
 
 @implementation DDMultipleLoggerLoggingTests
-
 
 - (void)setUp {
     [super setUp];
