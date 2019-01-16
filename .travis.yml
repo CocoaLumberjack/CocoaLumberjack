@@ -5,6 +5,7 @@ osx_image: xcode10.1
 branches:
     only:
         - master
+        - /^feature\/.*$/
 
 env:
     global:
