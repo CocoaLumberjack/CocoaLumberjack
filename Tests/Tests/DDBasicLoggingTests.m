@@ -21,42 +21,40 @@ static const NSTimeInterval kAsyncExpectationTimeout = 3.0f;
 
 static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
-@interface DDBasicLoggingTests : XCTestCase
-@property (nonatomic, strong) NSArray *logs;
-@property (nonatomic, strong) XCTestExpectation *expectation;
-@property (nonatomic, strong) DDAbstractLogger *logger;
-@property (nonatomic, assign) NSUInteger noOfMessagesLogged;
-@property (nonatomic) dispatch_queue_t serial;
-@end
-
-@implementation DDBasicLoggingTests
-
-- (void)reactOnMessage:(id)object {
-    __auto_type message = (DDLogMessage *)object;
-    XCTAssertTrue([self.logs containsObject:message.message]);
-    XCTAssertEqualObjects(message.fileName, @"DDBasicLoggingTests");
-    self.noOfMessagesLogged++;
-    if (self.noOfMessagesLogged == [self.logs count]) {
-        [self.expectation fulfill];
-    }
-}
-
-- (DDBasicMock<DDAbstractLogger *> *)createAbstractLogger {
+static DDBasicMock<DDAbstractLogger *> *createAbstractLogger(void (^didLogBlock)(id)) {
     __auto_type logger = [DDBasicMock<DDAbstractLogger *> decoratedInstance:[[DDAbstractLogger alloc] init]];
-    
-    __weak __auto_type weakSelf = self;
-    __auto_type argument = [DDBasicMockArgument alongsideWithBlock:^(id object) {
-        dispatch_sync(self.serial, ^{
-            [weakSelf reactOnMessage:object];
-        });
-    }];
-    
+    __auto_type argument = [DDBasicMockArgument alongsideWithBlock:didLogBlock];
     [logger addArgument:argument forSelector:@selector(logMessage:) atIndex:2];
     return logger;
 }
 
+@interface DDSingleLoggerLoggingTests : XCTestCase
+@property (nonatomic, strong) NSArray *logs;
+@property (nonatomic, strong) XCTestExpectation *expectation;
+@property (nonatomic, strong) DDAbstractLogger *logger;
+@property (nonatomic, assign) NSUInteger numberMessagesLoged;
+@property (nonatomic) dispatch_queue_t serial;
+@end
+
+@implementation DDSingleLoggerLoggingTests
+
 - (void)setupLoggers {
-    self.logger = (DDAbstractLogger *)[self createAbstractLogger];
+    __weak __auto_type weakSelf = self;
+    self.logger = (DDAbstractLogger *)createAbstractLogger(^(DDLogMessage *logMessage) {
+        dispatch_sync(self->_serial, ^{
+            __auto_type strongSelf = weakSelf;
+
+            XCTAssertTrue([logMessage isKindOfClass:[DDLogMessage class]]);
+            XCTAssertTrue([strongSelf.logs containsObject:logMessage.message]);
+            XCTAssertEqualObjects(logMessage.fileName, @"DDBasicLoggingTests");
+
+            strongSelf.numberMessagesLoged++;
+            if (strongSelf.numberMessagesLoged == [strongSelf.logs count]) {
+                [strongSelf.expectation fulfill];
+            }
+        });
+    });
+
     [DDLog addLogger:self.logger];
 }
 
@@ -67,7 +65,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
     
     self.logs = @[];
     self.expectation = nil;
-    self.noOfMessagesLogged = 0;
+    self.numberMessagesLoged = 0;
     self.serial = dispatch_queue_create("serial", NULL);
 }
 
@@ -134,37 +132,75 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 @end
 
-@interface DDBasicLoggingTests__MultiLoggers : DDBasicLoggingTests
-@property (strong, nonatomic, readwrite) NSArray *loggers;
-@property (assign, nonatomic, readwrite) NSUInteger countOfLoggers;
+static int const DDLoggerCount = 3;
+
+@interface DDMultipleLoggerLoggingTests : XCTestCase
+
+@property (nonatomic) NSArray *loggers;
+@property (nonatomic) NSArray *logs;
+
+@property (nonatomic) XCTestExpectation *expectation;
+
+@property (nonatomic) NSUInteger numberMessagesLoged;
+@property (nonatomic) dispatch_queue_t serial;
+
 @end
 
-@implementation DDBasicLoggingTests__MultiLoggers
-- (void)setUp {
-    self.countOfLoggers = 3;
-    [super setUp];
-}
-- (void)setLogger:(DDAbstractLogger *)logger {
-    return;
-}
+@implementation DDMultipleLoggerLoggingTests
 
 - (void)reactOnMessage:(id)object {
     __auto_type message = (DDLogMessage *)object;
+
     XCTAssertTrue([self.logs containsObject:message.message]);
     XCTAssertEqualObjects(message.fileName, @"DDBasicLoggingTests");
-    self.noOfMessagesLogged++;
-    if (self.noOfMessagesLogged == self.logs.count * self.loggers.count) {
+
+    self.numberMessagesLoged++;
+    if (self.numberMessagesLoged == self.logs.count * self.loggers.count) {
         [self.expectation fulfill];
     }
 }
 
+- (void)resetToDefaults {
+    [DDLog removeAllLoggers];
+
+    ddLogLevel = DDLogLevelVerbose;
+
+    self.logs = @[];
+    self.expectation = nil;
+    self.numberMessagesLoged = 0;
+    self.serial = dispatch_queue_create("serial", NULL);
+}
+
+- (void)setUp {
+    [super setUp];
+    [self resetToDefaults];
+    [self setupLoggers];
+}
+
 - (void)setupLoggers {
-    NSMutableArray *loggers = [NSMutableArray arrayWithCapacity:self.countOfLoggers];
-    for (NSUInteger i = 0; i < self.countOfLoggers; i++) {
-        DDAbstractLogger *logger = (DDAbstractLogger *)[self createAbstractLogger];
+    NSMutableArray *loggers = [NSMutableArray arrayWithCapacity:DDLoggerCount];
+
+    for (NSUInteger i = 0; i < DDLoggerCount; i++) {
+        __weak __auto_type weakSelf = self;
+        __auto_type logger = (DDAbstractLogger *)createAbstractLogger(^(DDLogMessage *logMessage) {
+            dispatch_sync(self->_serial, ^{
+                __auto_type strongSelf = weakSelf;
+
+                XCTAssertTrue([logMessage isKindOfClass:[DDLogMessage class]]);
+                XCTAssertTrue([strongSelf.logs containsObject:logMessage.message]);
+                XCTAssertEqualObjects(logMessage.fileName, @"DDBasicLoggingTests");
+
+                strongSelf.numberMessagesLoged++;
+                if (strongSelf.numberMessagesLoged == [strongSelf.logs count]) {
+                    [strongSelf.expectation fulfill];
+                }
+            });
+        });
+
         [loggers addObject:logger];
         [DDLog addLogger:logger];
     }
+
     self.loggers = [loggers copy];
 }
 
@@ -179,6 +215,5 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
         XCTAssertNil(timeoutError);
     }];
 }
-- (void)testLoggerLogLevelAsync {}
-- (void)testGlobalLogLevelAsync {}
+
 @end
