@@ -37,7 +37,6 @@ env:
         - PLATFORM="tvOS Simulator" OS=10.14 SDK="appletvos" NAME="Apple TV" TEST_SCHEME="OS X Tests" INTEGRATION_SCHEME_PREFIX="tvOS"
 
 before_install:
-    - set -x
     - gem update --system
     - gem install bundler
 
@@ -58,6 +57,7 @@ jobs:
     include:
         - stage: compile_core
           script:
+                - set -x
                 - |
                   COMMON="-workspace Framework/Lumberjack.xcworkspace             \
                           -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\"   \
@@ -70,6 +70,7 @@ jobs:
 
         - stage: test
           script:
+                - set -x
                 - |
                   COMMON="-project Tests/Tests.xcodeproj                          \
                           -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\"   \
@@ -84,6 +85,7 @@ jobs:
         - stage: compile_integration_only_ios
           if: env(INTEGRATION_SCHEME_PREFIX) = iOS
           script:
+                - set -x
                 - |
                   COMMON="-project Integration/Integration.xcodeproj                                  \
                           -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\"                       \
