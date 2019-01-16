@@ -1,16 +1,37 @@
 
 language: objective-c
-osx_image: xcode10
+osx_image: xcode10.1
 
 branches:
     only:
         - master
 
 env:
-  global:
+    matrix:
+    - PLATFORM='iOS Simulator' OS=8.4 SDK=iphonesimulator NAME='iPhone 8s' TEST_SCHEME='iOS Tests' INTEGRATION_SCHEME_PREFIX='iOS'
+    - PLATFORM='iOS Simulator' OS=9.3 SDK=iphonesimulator NAME='iPhone 8s' TEST_SCHEME='iOS Tests' INTEGRATION_SCHEME_PREFIX='iOS'
+    - PLATFORM='iOS Simulator' OS=10.3 SDK=iphonesimulator NAME='iPhone 8s' TEST_SCHEME='iOS Tests' INTEGRATION_SCHEME_PREFIX='iOS'
+    - PLATFORM='iOS Simulator' OS=11.4 SDK=iphonesimulator NAME='iPhone 8s' TEST_SCHEME='iOS Tests' INTEGRATION_SCHEME_PREFIX='iOS'
+    - PLATFORM='iOS Simulator' OS=12.1 SDK=iphonesimulator NAME='iPhone 8s' TEST_SCHEME='iOS Tests' INTEGRATION_SCHEME_PREFIX='iOS'
+
+    - PLATFORM='iOS Simulator' OS=10.3 SDK='watchos3.2' NAME='iPhone 8s' INTEGRATION_SCHEME_PREFIX='watchOS'
+    - PLATFORM='iOS Simulator' OS=11.4 SDK='watchos4.2' NAME='iPhone 8s' INTEGRATION_SCHEME_PREFIX='watchOS'
+    - PLATFORM='iOS Simulator' OS=12.1 SDK='watchos4.2' NAME='iPhone 8s' INTEGRATION_SCHEME_PREFIX='watchOS'
+
+    - PLATFORM=macOS OS=10.10 SDK='macOS' NAME='' TEST_SCHEME='OS X Tests' INTEGRATION_SCHEME_PREFIX='macOS'
+    - PLATFORM=macOS OS=10.11 SDK='macOS' NAME='' TEST_SCHEME='OS X Tests' INTEGRATION_SCHEME_PREFIX='macOS'
+    - PLATFORM=macOS OS=10.12 SDK='macOS' NAME='' TEST_SCHEME='OS X Tests' INTEGRATION_SCHEME_PREFIX='macOS'
+    - PLATFORM=macOS OS=10.13 SDK='macOS' NAME='' TEST_SCHEME='OS X Tests' INTEGRATION_SCHEME_PREFIX='macOS'
+    - PLATFORM=macOS OS=10.14 SDK='macOS' NAME='' TEST_SCHEME='OS X Tests' INTEGRATION_SCHEME_PREFIX='macOS'
+
+    - PLATFORM='tvOS Simulator' OS=10.14 SDK='appletvos' NAME='Apple TV' TEST_SCHEME='OS X Tests' INTEGRATION_SCHEME_PREFIX='tvOS'
+    - PLATFORM='tvOS Simulator' OS=10.14 SDK='appletvos' NAME='Apple TV' TEST_SCHEME='OS X Tests' INTEGRATION_SCHEME_PREFIX='tvOS'
+    - PLATFORM='tvOS Simulator' OS=10.14 SDK='appletvos' NAME='Apple TV' TEST_SCHEME='OS X Tests' INTEGRATION_SCHEME_PREFIX='tvOS'
+    - PLATFORM='tvOS Simulator' OS=10.14 SDK='appletvos' NAME='Apple TV' TEST_SCHEME='OS X Tests' INTEGRATION_SCHEME_PREFIX='tvOS'
+
+global:
     - LC_CTYPE=en_US.UTF-8
     - LANG=en_US.UTF-8
-
 
 before_install:
     - env
@@ -22,68 +43,86 @@ before_install:
     - xcodebuild -version
     - xcodebuild -showsdks
 
-script:
-    - set -o pipefail
+jobs:
+    include:
+        - stage: compile_core
+          script:
+                - COMMON="-workspace Framework/Lumberjack.xcworkspace          \
+                          -destination 'platform=$PLATFORM,OS=$OS,name='$NAME' \
+                          -sdk '$SDK'                                          \
+                          -configuration Release | xcpretty -c"
 
-    - echo "Check if the library described by the podspec can be built"
-    - pod lib lint
+                - xcodebuild clean build -scheme 'CocoaLumberjack-Static' $COMMON                    
+                - xcodebuild clean build -scheme 'CocoaLumberjack' $COMMON
+                - xcodebuild clean build -scheme 'CocoaLumberjackSwift' $COMMON
 
-    - echo "Build as static library"
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-Static' -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration Release | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-Static' -sdk macosx -configuration Release | xcpretty -c
+        - stage: test
+            script:
+                - COMMON="-project Tests/Tests.xcodeproj          \
+                          -destination 'platform=$PLATFORM,OS=$OS,name='$NAME' \
+                          -sdk '$SDK'                                          \
+                          GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES                 \
+                          GCC_GENERATE_TEST_COVERAGE_FILES=YES                 \
+                          -configuration Release | xcpretty -c"
 
-    - echo "Build as dynamic framework (ObjectiveC), each platform (iOS, macOS, tvOS, watchOS)"
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack' -configuration Release -sdk iphonesimulator | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack' -configuration Release -sdk macosx | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack' -destination 'platform=tvOS Simulator,name=Apple TV 4K' -configuration Release -sdk appletvsimulator | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack' -configuration Release -sdk watchsimulator | xcpretty -c
+                - xcodebuild test -scheme 'iOS Tests' $COMMON
+                - xcodebuild test -scheme 'OS X Tests' $COMMON
 
-    - echo "Build as dynamic framework (Swift), each platform (iOS, macOS, tvOS, watchOS)"
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift' -configuration Release -sdk iphonesimulator | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift' -configuration Release -sdk macosx | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift' -destination 'platform=tvOS Simulator,name=Apple TV 4K' -configuration Release -sdk appletvsimulator | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift' -configuration Release -sdk watchsimulator | xcpretty -c
+        - stage: compile_integration_only_ios
+            if: env(INTEGRATION_SCHEME_PREFIX) = iOS
+            script:
+                - COMMON="-project Integration/Integration.xcodeproj           \
+                          -destination 'platform=$PLATFORM,OS=$OS,name='$NAME' \
+                          -sdk '$SDK'                                          \
+                          -configuration Release | xcpretty -c"
 
-    - echo "Build test app using the static library"
-    - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'iOSStaticLibraryIntegration' -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration Release | xcpretty -c
+                - xcodebuild build -scheme '$INTEGRATION_TEST_PREFIXStaticLibraryIntegration'
+                - xcodebuild build -scheme '$INTEGRATION_TEST_PREFIXFrameworkIntegration'
+                - xcodebuild build -scheme '$INTEGRATION_TEST_PREFIXSwiftIntegration'
 
-    - echo "Build test apps using the dynamic framework, each platform (iOS, macOS, tvOS, watchOS)"
-    - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'macOSSwiftIntegration' -configuration Release -sdk macosx | xcpretty -c
-    - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'iOSFrameworkIntegration' -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration Release | xcpretty -c
-    - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'tvOSSwiftIntegration' -destination 'platform=tvOS Simulator,name=Apple TV 4K' -configuration Release -sdk appletvsimulator | xcpretty -c
-    - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'watchOSSwiftIntegration' -configuration Release -sdk watchsimulator -destination 'platform=iOS Simulator,name=iPhone XS Max,OS=12.0' | xcpretty -c
+        - stage: compile_integration_not_ios
+            if: env(INTEGRATION_SCHEME_PREFIX) != iOS
+            script:
+                - xcodebuild build 
+                      -project Integration/Integration.xcodeproj.          \
+                      -scheme '$INTEGRATION_TEST_PREFIXSwiftIntegration'   \
+                      -destination 'platform=$PLATFORM,OS=$OS,name='$NAME' \
+                      -sdk '$SDK'                                          \
+                      -configuration Release | xcpretty -c"
 
-    - echo "Run the tests"
-    - xcodebuild test -project Tests/Tests.xcodeproj -scheme 'iOS Tests' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
-    - xcodebuild test -project Tests/Tests.xcodeproj -scheme 'iOS Tests' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=latest' GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
-    - xcodebuild test -project Tests/Tests.xcodeproj -scheme 'OS X Tests' -sdk macosx GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
+        - stage: compile_ios_demo_apps
+            if: env(TRAVIS_PULL_REQUEST) = false AND env(SDK) = iOS
+            script:
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'BenchmarkIPhone' -configuration Release -sdk iphonesimulator | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'CaptureASL' -sdk iphonesimulator | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'RegisteredLoggingTest (Mobile)' -sdk iphonesimulator | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'TextXcodeColors (Mobile)' -sdk iphonesimulator | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'UniversalApp' -sdk iphonesimulator | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'WebServerIPhone' -sdk iphonesimulator | xcpretty -c
 
-    - echo "Building the Demos"
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'BenchmarkIPhone' -configuration Release -sdk iphonesimulator | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'BenchmarkMac' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'CLI' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'CaptureASL' -configuration Release -sdk iphonesimulator | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'ContextFilter' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'CoreDataLogger' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'CustomFormatters' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'CustomLogLevels' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'DispatchQueueLogger' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'FineGrainedLogging' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'GlobalLogLevel' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'LogFileCompressor' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'NonArcTest' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'OverflowTestMac' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'PerUserLogLevels' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'RegisteredLoggingTest (Desktop)' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'RegisteredLoggingTest (Mobile)' -configuration Release -sdk iphonesimulator | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'RollingTestMac' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'SQLiteLogger' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'TestXcodeColors (Desktop)' | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'TextXcodeColors (Mobile)' -configuration Release -sdk iphonesimulator | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'UniversalApp' -configuration Release -sdk iphonesimulator | xcpretty -c
-    - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'WebServerIPhone' -configuration Release -sdk iphonesimulator | xcpretty -c
-
-    - bundle exec danger
+        - stage: compile_mac_demo_apps
+            if: env(TRAVIS_PULL_REQUEST) = false AND env(SDK) = macOS
+            script:
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'SQLiteLogger' | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'CLI' | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'BenchmarkMac' | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'RegisteredLoggingTest (Desktop)' | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'RollingTestMac' | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'OverflowTestMac' | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'ContextFilter' | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'CoreDataLogger' | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'CustomFormatters' | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'CustomLogLevels' | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'DispatchQueueLogger' | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'FineGrainedLogging' | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'GlobalLogLevel' | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'LogFileCompressor' | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'NonArcTest' | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'PerUserLogLevels' | xcpretty -c
+                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme 'TestXcodeColors (Desktop)' | xcpretty -c
+                
+after_script:
+    bundle exec danger
 
 after_success:
     - bash <(curl -s https://codecov.io/bash)
