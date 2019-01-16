@@ -69,7 +69,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     DDLogDebug(@"%@", @"debug");
     DDLogVerbose(@"%@", @"verbose");
 
-    [logger flush];
+    [DDLog flushLog];
 
     NSError *error = nil;
     NSData *data = [NSData dataWithContentsOfFile:logger.currentLogFileInfo.filePath options:NSDataReadingUncached error:&error];
@@ -89,7 +89,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     DDLogDebug(@"%@", @"debug");
     DDLogVerbose(@"%@", @"verbose");
 
-    [logger flush];
+    [DDLog flushLog];
 
     NSError *error = nil;
     NSData *data = [NSData dataWithContentsOfFile:logger.currentLogFileInfo.filePath options:NSDataReadingUncached error:&error];
