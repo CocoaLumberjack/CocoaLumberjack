@@ -53,24 +53,31 @@ after_script:
 after_success:
     - bash <(curl -s https://codecov.io/bash)
 
+stages:
+    - compile_core
+    - compile_integration_not_ios
+    - compile_integration_only_ios
+    - test
+    - compile_ios_demo_apps
+    - compile_mac_demo_apps
+
 jobs:
     include:
         - stage: compile_core
           script:
-                - set -x
-                - |
                   COMMON="-workspace Framework/Lumberjack.xcworkspace             \
                           -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\"   \
                           -sdk $SDK                                               \
                           -configuration Release | bundle exec xcpretty -c"       \
                                                                                   \
+                  set -x                                                          \
                   xcodebuild clean build -scheme "CocoaLumberjack-Static" $COMMON \
                   xcodebuild clean build -scheme "CocoaLumberjack" $COMMON        \
                   xcodebuild clean build -scheme "CocoaLumberjackSwift" $COMMON
 
+    exclude:              
         - stage: test
           script:
-                - set -x
                 - |
                   COMMON="-project Tests/Tests.xcodeproj                          \
                           -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\"   \
@@ -78,14 +85,13 @@ jobs:
                           GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES                    \
                           GCC_GENERATE_TEST_COVERAGE_FILES=YES                    \
                           -configuration Release | bundle exec xcpretty -c"       \
-                                                                                  \
+                  set -x                                                          \
                   xcodebuild test -scheme "iOS Tests" $COMMON                     \
                   xcodebuild test -scheme "OS X Tests" $COMMON
 
         - stage: compile_integration_only_ios
           if: env(INTEGRATION_SCHEME_PREFIX) = iOS
           script:
-                - set -x
                 - |
                   COMMON="-project Integration/Integration.xcodeproj                                  \
                           -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\"                       \
@@ -110,7 +116,6 @@ jobs:
           if: env(TRAVIS_PULL_REQUEST) = false AND env(SDK) = iOS
           script:
                 - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "BenchmarkIPhone" -configuration Release -sdk iphonesimulator | bundle exec xcpretty -c
-
                 - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "CaptureASL" -sdk iphonesimulator | bundle exec xcpretty -c
                 - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "RegisteredLoggingTest (Mobile)" -sdk iphonesimulator | bundle exec xcpretty -c
                 - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "TextXcodeColors (Mobile)" -sdk iphonesimulator | bundle exec xcpretty -c
