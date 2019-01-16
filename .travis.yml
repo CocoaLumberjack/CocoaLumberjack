@@ -35,12 +35,21 @@ env:
         - PLATFORM="tvOS Simulator" OS=10.14 SDK="appletvos" NAME="Apple TV" TEST_SCHEME="OS X Tests" INTEGRATION_SCHEME_PREFIX="tvOS"
         - PLATFORM="tvOS Simulator" OS=10.14 SDK="appletvos" NAME="Apple TV" TEST_SCHEME="OS X Tests" INTEGRATION_SCHEME_PREFIX="tvOS"
 
+before_install:
+    gem --version
+
 after_install:
     - env
     - locale
     - bundle exec pod --version
     - bundle exec xcpretty --version
     - xcodebuild -version
+
+after_script:
+    - bundle exec danger
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
 
 jobs:
     include:
@@ -123,9 +132,4 @@ jobs:
                 - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "NonArcTest" | bundle exec xcpretty -c
                 - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "PerUserLogLevels" | bundle exec xcpretty -c
                 - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "TestXcodeColors (Desktop)" | bundle exec xcpretty -c
-                
-after_script:
-    bundle exec danger
-
-after_success:
-    - bash <(curl -s https://codecov.io/bash)
+            
