@@ -37,6 +37,7 @@ env:
         - PLATFORM="tvOS Simulator" OS=10.14 SDK="appletvos" NAME="Apple TV" TEST_SCHEME="OS X Tests" INTEGRATION_SCHEME_PREFIX="tvOS"
 
 before_install:
+    - set -x
     - gem update --system
     - gem install bundler
 
