@@ -32,7 +32,7 @@ static DDBasicMock<DDAbstractLogger *> *createAbstractLogger(void (^didLogBlock)
 @property (nonatomic, strong) NSArray *logs;
 @property (nonatomic, strong) XCTestExpectation *expectation;
 @property (nonatomic, strong) DDAbstractLogger *logger;
-@property (nonatomic, assign) NSUInteger numberMessagesLoged;
+@property (nonatomic, assign) NSUInteger numberMessagesLogged;
 @property (nonatomic) dispatch_queue_t serial;
 @end
 
@@ -48,8 +48,8 @@ static DDBasicMock<DDAbstractLogger *> *createAbstractLogger(void (^didLogBlock)
             XCTAssertTrue([strongSelf.logs containsObject:logMessage.message]);
             XCTAssertEqualObjects(logMessage.fileName, @"DDBasicLoggingTests");
 
-            strongSelf.numberMessagesLoged++;
-            if (strongSelf.numberMessagesLoged == [strongSelf.logs count]) {
+            strongSelf.numberMessagesLogged++;
+            if (strongSelf.numberMessagesLogged == [strongSelf.logs count]) {
                 [strongSelf.expectation fulfill];
             }
         });
@@ -58,21 +58,22 @@ static DDBasicMock<DDAbstractLogger *> *createAbstractLogger(void (^didLogBlock)
     [DDLog addLogger:self.logger];
 }
 
-- (void)resetToDefaults {
-    [DDLog removeAllLoggers];
-    
-    ddLogLevel = DDLogLevelVerbose;
-    
-    self.logs = @[];
-    self.expectation = nil;
-    self.numberMessagesLoged = 0;
-    self.serial = dispatch_queue_create("serial", NULL);
-}
-
 - (void)setUp {
     [super setUp];
-    [self resetToDefaults];
+    self.serial = dispatch_queue_create("serial", NULL);
+    self.logs = @[];
+    self.numberMessagesLogged = 0;
+    ddLogLevel = DDLogLevelVerbose;
     [self setupLoggers];
+}
+
+- (void)tearDown {
+    [DDLog removeAllLoggers];
+
+    self.logger = nil;
+    self.expectation = nil;
+
+    [super tearDown];
 }
 
 - (void)testAll5DefaultLevelsAsync {
@@ -141,40 +142,28 @@ static int const DDLoggerCount = 3;
 
 @property (nonatomic) XCTestExpectation *expectation;
 
-@property (nonatomic) NSUInteger numberMessagesLoged;
+@property (nonatomic) NSUInteger numberMessagesLogged;
 @property (nonatomic) dispatch_queue_t serial;
 
-@end
+    @end
 
 @implementation DDMultipleLoggerLoggingTests
 
-- (void)reactOnMessage:(id)object {
-    __auto_type message = (DDLogMessage *)object;
-
-    XCTAssertTrue([self.logs containsObject:message.message]);
-    XCTAssertEqualObjects(message.fileName, @"DDBasicLoggingTests");
-
-    self.numberMessagesLoged++;
-    if (self.numberMessagesLoged == self.logs.count * self.loggers.count) {
-        [self.expectation fulfill];
-    }
-}
-
-- (void)resetToDefaults {
-    [DDLog removeAllLoggers];
-
-    ddLogLevel = DDLogLevelVerbose;
-
-    self.logs = @[];
-    self.expectation = nil;
-    self.numberMessagesLoged = 0;
-    self.serial = dispatch_queue_create("serial", NULL);
-}
 
 - (void)setUp {
     [super setUp];
-    [self resetToDefaults];
+    self.serial = dispatch_queue_create("serial", NULL);
+    self.logs = @[];
+    self.numberMessagesLogged = 0;
+    ddLogLevel = DDLogLevelVerbose;
     [self setupLoggers];
+}
+
+- (void)tearDown {
+    [DDLog removeAllLoggers];
+    self.loggers = nil;
+    self.expectation = nil;
+    [super tearDown];
 }
 
 - (void)setupLoggers {
@@ -190,8 +179,8 @@ static int const DDLoggerCount = 3;
                 XCTAssertTrue([strongSelf.logs containsObject:logMessage.message]);
                 XCTAssertEqualObjects(logMessage.fileName, @"DDBasicLoggingTests");
 
-                strongSelf.numberMessagesLoged++;
-                if (strongSelf.numberMessagesLoged == [strongSelf.logs count]) {
+                strongSelf.numberMessagesLogged++;
+                if (strongSelf.numberMessagesLogged == [strongSelf.logs count]) {
                     [strongSelf.expectation fulfill];
                 }
             });
