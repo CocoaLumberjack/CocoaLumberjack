@@ -72,13 +72,13 @@ if modified_carthage_xcode_project
     next unless File.file?(project_file)
     File.readlines(project_file).each_with_index do |line, index|
 	  if line.include?("sourceTree = SOURCE_ROOT;") and line.include?("PBXFileReference")
-        warn("Files should be in sync with project structure", file: project_file, line: index+1) 
+        warn("Files should be in sync with project structure", file: project_file, line: index+1)
 	  end
 	  line_containing_setting = line.match(/[A-Z_]+ = .*;/)
 	  if line_containing_setting
 	    setting = line_containing_setting[0].split(' = ')[0]
 	    if !accepted_settings.include?(setting)
-	      warn("Xcode settings need to remain in Configs/*.xcconfig. Please move " + setting + " to the xcodeproj file")
+	      warn("Xcode settings need to remain in Configs/*.xcconfig. Please move " + setting + " to the xcconfig file")
 	    end
 	  end
 	end
@@ -113,6 +113,15 @@ demos_copyright_lines = [
 "//"
 ]
 
+benchmarking_copyright_lines = [
+"//",
+"//  ",
+"//  ",
+"//",
+"//  CococaLumberjack Benchmarking",
+"//"
+]
+
 # sourcefiles_to_check = Dir.glob("*/*/*") # uncomment when we want to test all the files (locally)
 
 sourcefiles_to_check = (git.modified_files + git.added_files).uniq
@@ -122,10 +131,12 @@ sourcefiles_to_check.each do |sourcefile|
   next unless (fileExtension===".swift" or fileExtension===".h" or fileExtension===".m")
   next unless File.file?(sourcefile)
 
-  # decision: source files will check against source_copyright_lines, while demos against demos_copyright_lines
+  # Use correct copyright lines depending on source file location
   copyright_lines = source_copyright_lines
   if sourcefile.start_with?("Demos/")
     copyright_lines = demos_copyright_lines
+  elsif sourcefile.start_with?("Benchmarking/")
+    copyright_lines = benchmarking_copyright_lines
   end
   File.readlines(sourcefile)[0..copyright_lines.count-1].each_with_index do |line, index|
     if !line.include?(copyright_lines[index])
@@ -136,5 +147,5 @@ sourcefiles_to_check.each do |sourcefile|
   end
 end
 if invalid_copyright === true
-  warn("Copyright is not valid. See our default copyright in all of our files (Classed and Demos use different format).")
+  warn("Copyright is not valid. See our default copyright in all of our files (Classes, Demos and Benchmarking use different formats).")
 end
