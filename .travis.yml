@@ -56,7 +56,7 @@ script:
     - echo "Run the tests"
     - xcodebuild test -skip-testing:'iOS Tests/DDFileLoggerPerformanceTests' -project Tests/Tests.xcodeproj -scheme 'iOS Tests' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
     - xcodebuild test -skip-testing:'iOS Tests/DDFileLoggerPerformanceTests' -project Tests/Tests.xcodeproj -scheme 'iOS Tests' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=latest' GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
-    - xcodebuild test -skip-testing:'OSX Tests/DDFileLoggerPerformanceTests' -project Tests/Tests.xcodeproj -scheme 'OS X Tests' -sdk macosx GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
+    - xcodebuild test -skip-testing:'OS X Tests/DDFileLoggerPerformanceTests' -project Tests/Tests.xcodeproj -scheme 'OS X Tests' -sdk macosx GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
 
     - echo "Building the Demos"
     - xcodebuild clean build -workspace Demos/Demos.xcworkspace -scheme 'BenchmarkIPhone' -configuration Release -sdk iphonesimulator | xcpretty -c
