@@ -16,18 +16,87 @@
 #import <XCTest/XCTest.h>
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
-@interface DDFileLoggerTests : XCTestCase
+#import "DDSampleFileManager.h"
+
+static const DDLogLevel ddLogLevel = DDLogLevelAll;
+
+@interface DDFileLoggerTests : XCTestCase {
+    DDFileLogger *logger;
+}
 
 @end
 
 @implementation DDFileLoggerTests
 
-- (void)testBuffer {
-    __auto_type logger = [DDFileLogger new];
+- (void)setUp {
+    [super setUp];
+    logger = [[DDFileLogger alloc] initWithLogFileManager:[[DDSampleFileManager alloc] initWithLogFileHeader:@"header"]];
+}
+
+- (void)tearDown {
+    [super tearDown];
+
+    for (NSString *logFilePaths in logger.logFileManager.unsortedLogFilePaths) {
+        NSError *error = nil;
+        XCTAssertTrue([[NSFileManager defaultManager] removeItemAtPath:logFilePaths error:&error]);
+        XCTAssertNil(error);
+    }
+
+    [DDLog removeAllLoggers];
+}
+
+- (void)testWrapping {
     __auto_type wrapped = [logger wrapWithBuffer];
     XCTAssert([wrapped.class isSubclassOfClass:NSProxy.class]);
+
+    __auto_type wrapped2 = [wrapped wrapWithBuffer];
+    XCTAssertEqual(wrapped2, wrapped);
+
     __auto_type unwrapped = [wrapped unwrapFromBuffer];
     XCTAssert([unwrapped.class isSubclassOfClass:DDFileLogger.class]);
+
+    __auto_type unwrapped2 = [unwrapped unwrapFromBuffer];
+    XCTAssertEqual(unwrapped2, unwrapped);
+}
+
+- (void)testWriteToFileUnbuffered {
+    logger = [logger unwrapFromBuffer];
+    [DDLog addLogger:logger];
+
+    DDLogError(@"%@", @"error");
+    DDLogWarn(@"%@", @"warn");
+    DDLogInfo(@"%@", @"info");
+    DDLogDebug(@"%@", @"debug");
+    DDLogVerbose(@"%@", @"verbose");
+
+    [DDLog flushLog];
+
+    NSError *error = nil;
+    NSData *data = [NSData dataWithContentsOfFile:logger.currentLogFileInfo.filePath options:NSDataReadingUncached error:&error];
+    XCTAssertNil(error);
+
+    NSString *contents = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    XCTAssertEqual([contents componentsSeparatedByString:@"\n"].count, 5 + 2);
+}
+
+- (void)testWriteToFileBuffered {
+    logger = [logger wrapWithBuffer];
+    [DDLog addLogger:logger];
+
+    DDLogError(@"%@", @"error");
+    DDLogWarn(@"%@", @"warn");
+    DDLogInfo(@"%@", @"info");
+    DDLogDebug(@"%@", @"debug");
+    DDLogVerbose(@"%@", @"verbose");
+
+    [DDLog flushLog];
+
+    NSError *error = nil;
+    NSData *data = [NSData dataWithContentsOfFile:logger.currentLogFileInfo.filePath options:NSDataReadingUncached error:&error];
+    XCTAssertNil(error);
+
+    NSString *contents = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    XCTAssertEqual([contents componentsSeparatedByString:@"\n"].count, 5 + 2);
 }
 
 @end

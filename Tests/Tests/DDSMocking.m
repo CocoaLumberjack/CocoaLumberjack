@@ -61,7 +61,6 @@
     }
     
     __auto_type position = (DDBasicMockArgumentPosition *)object;
-    
     return [position.selector isEqualToString:self.selector] && [position.position isEqualToNumber:self.position];
 }
 
@@ -108,12 +107,11 @@
 }
 
 - (void)addArgument:(DDBasicMockArgument *)argument forSelector:(SEL)selector atIndex:(NSInteger)index {
-    __auto_type dictionary = (NSMutableDictionary *)[self.positionsAndArguments mutableCopy];
-    __auto_type thePosition = [[DDBasicMockArgumentPosition alloc] initWithSelector:NSStringFromSelector(selector) position:@(index)];
+    NSMutableDictionary *dictionary = [self.positionsAndArguments mutableCopy];
+    __auto_type thePosition = [[DDBasicMockArgumentPosition alloc] initWithSelector:NSStringFromSelector(selector)
+                                                                           position:@(index)];
     dictionary[thePosition] = [argument copy];
-    __auto_type theArgument = argument;
     self.positionsAndArguments = dictionary;
-    NSLog(@"%s %@ here we have: thePosition: %@ and theArgument: %@. All Handlers: %@", __PRETTY_FUNCTION__, self, thePosition, theArgument, self.positionsAndArguments);
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
@@ -124,11 +122,11 @@
         [invocation getArgument:&abc atIndex:i];
         id argument = (__bridge id)(abc);
         __auto_type thePosition = [[DDBasicMockArgumentPosition alloc] initWithSelector:NSStringFromSelector(invocation.selector) position:@(i)];
-        __auto_type theArgument = self.positionsAndArguments[thePosition];
-        NSLog(@"%@ here we have: thePosition: %@ and theArgument: %@. All Handlers: %@", self, thePosition, theArgument, self.positionsAndArguments);
-        if (theArgument.block) {
+        __auto_type argListener = self.positionsAndArguments[thePosition];
+
+        if (argListener) {
             found = YES;
-            theArgument.block(argument);
+            argListener.block(argument);
         }
     }
     if (!found) {

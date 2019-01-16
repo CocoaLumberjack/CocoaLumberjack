@@ -13,19 +13,30 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import "CocoaLumberjack.h"
+#import "DDSampleFileManager.h"
 
-NS_ASSUME_NONNULL_BEGIN
+@interface DDSampleFileManager ()
 
-@interface DDFileLogger (Internal)
-
-- (void)logData:(NSData *)data;
-
-// Will assert if used outside logger's queue.
-- (void)lt_logData:(NSData *)data;
-
-- (NSData *)lt_dataForMessage:(DDLogMessage *)message;
+@property (nonatomic) NSString *header;
 
 @end
 
-NS_ASSUME_NONNULL_END
+@implementation DDSampleFileManager
+
+- (instancetype)initWithLogFileHeader:(NSString *)header {
+    self = [super initWithLogsDirectory:[NSTemporaryDirectory() stringByAppendingString:[NSUUID UUID].UUIDString]];
+    if (self) {
+        _header = header;
+    }
+    return self;
+}
+
+- (instancetype)initWithLogsDirectory:(NSString *)logsDirectory {
+    return [self initWithLogFileHeader:nil];
+}
+
+- (NSString *)logFileHeader {
+    return _header;
+}
+
+@end

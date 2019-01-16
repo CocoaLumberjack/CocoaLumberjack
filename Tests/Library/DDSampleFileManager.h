@@ -13,18 +13,15 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import "CocoaLumberjack.h"
+#import <Foundation/Foundation.h>
+
+#import <CocoaLumberjack/CocoaLumberjack.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DDFileLogger (Internal)
+@interface DDSampleFileManager : DDLogFileManagerDefault
 
-- (void)logData:(NSData *)data;
-
-// Will assert if used outside logger's queue.
-- (void)lt_logData:(NSData *)data;
-
-- (NSData *)lt_dataForMessage:(DDLogMessage *)message;
+- (instancetype)initWithLogFileHeader:(NSString * __nullable)header NS_DESIGNATED_INITIALIZER;
 
 @end
 

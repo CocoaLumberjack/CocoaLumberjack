@@ -16,125 +16,170 @@
 #import "DDFileLogger+Buffering.h"
 #import "DDFileLogger+Internal.h"
 
-static NSUInteger kMaximumBytesCountInBuffer = (1 << 10) * (1 << 10); // 1 MB.
-static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
+#import <sys/mount.h>
 
-// MARK: Public Interface
-@interface DDBufferedProxy<FileLogger: DDFileLogger *> : NSProxy
+static const NSUInteger kDDDefaultBufferSize = 4096; // 4 kB, block f_bsize on iphone7
+static const NSUInteger kDDMaxBufferSize = 1048576; // ~1 mB, f_iosize on iphone7
 
-+ (instancetype)decoratedInstance:(FileLogger)instance;
+// Reads attributes from base file system to determine buffer size.
+// see statfs in sys/mount.h for descriptions of f_iosize and f_bsize.
+// f_bsize == "default", and f_iosize == "max"
+static inline NSUInteger p_DDGetDefaultBufferSizeBytesMax(const BOOL max) {
+    struct statfs *mntbufp = NULL;
+    int count = getmntinfo(&mntbufp, 0);
 
-@property (assign, nonatomic, readwrite) NSUInteger maximumBytesCountInBuffer;
-
-@end
-
-@interface DDBufferedProxy<FileLogger: DDFileLogger *> () {
-    NSOutputStream *_bufferStream;
-    NSUInteger _bufferSize;
-}
-
-- (instancetype)initWithInstance:(FileLogger)instance;
-
-@property (strong, nonatomic, readwrite) FileLogger instance;
-
-@end
-
-@interface DDBufferedProxy (StreamManipulation)
-
-- (void)flushBuffer;
-- (void)dumpBufferToDisk;
-- (void)appendToBuffer:(NSData *)data;
-- (BOOL)isBufferFull;
-
-@end
-
-@implementation DDBufferedProxy (StreamManipulation)
-
-- (void)flushBuffer {
-    [_bufferStream close];
-    _bufferStream = nil;
-    _bufferSize = 0;
-}
-
-- (void)dumpBufferToDisk {
-    NSData *data = [_bufferStream propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
-    [self.instance logData:data];
-    [self flushBuffer];
-}
-
-- (void)appendToBuffer:(NSData *)data {
-    __auto_type length = data.length;
-    if (data.length != 0) {
-        if (_bufferStream == nil) {
-            _bufferStream = [[NSOutputStream alloc] initToMemory];
-            [_bufferStream open];
-            _bufferSize = 0;
-        }
-        const uint8_t *appendedData = calloc(length, sizeof(uint8_t));
-        if (appendedData != NULL) {
-            [data getBytes:(void *)appendedData length:length];
-            [_bufferStream write:appendedData maxLength:length];
-            _bufferSize += length;
-
-            free((void *)appendedData);
+    for (int i = 0; i < count; i++) {
+        const char *name = mntbufp[i].f_mntonname;
+        if (strlen(name) == 1 && *name == '/') {
+            return max ? mntbufp[i].f_iosize : mntbufp[i].f_bsize;
         }
     }
+
+    return max ? kDDMaxBufferSize : kDDDefaultBufferSize;
 }
 
-- (BOOL)isBufferFull {
-    return _bufferSize > self.maximumBytesCountInBuffer;
+static NSUInteger DDGetMaxBufferSizeBytes() {
+    static NSUInteger maxBufferSize = 0;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        maxBufferSize = p_DDGetDefaultBufferSizeBytesMax(YES);
+    });
+    return maxBufferSize;
 }
+
+static NSUInteger DDGetDefaultBufferSizeBytes() {
+    static NSUInteger defaultBufferSize = 0;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        defaultBufferSize = p_DDGetDefaultBufferSizeBytesMax(NO);
+    });
+    return defaultBufferSize;
+}
+
+@interface DDBufferedProxy : NSProxy
+
+@property (nonatomic) DDFileLogger *fileLogger;
+@property (nonatomic) NSOutputStream *buffer;
+
+@property (nonatomic) NSUInteger maxBufferSizeBytes;
+@property (nonatomic) NSUInteger currentBufferSizeBytes;
 
 @end
 
 @implementation DDBufferedProxy
 
-@synthesize maximumBytesCountInBuffer = _maximumBytesCountInBuffer;
+- (instancetype)initWithFileLogger:(DDFileLogger *)fileLogger {
+    _fileLogger = fileLogger;
+    _maxBufferSizeBytes = DDGetDefaultBufferSizeBytes();
+    [self flushBuffer];
 
-#pragma mark - Properties
-
-- (void)setMaximumBytesCountInBuffer:(NSUInteger)maximumBytesCountInBuffer {
-    _maximumBytesCountInBuffer = MIN(maximumBytesCountInBuffer, kMaximumBytesCountInBuffer);
-}
-
-#pragma mark - Initialization
-
-+ (instancetype)decoratedInstance:(DDFileLogger *)instance {
-    return [[self alloc] initWithInstance:instance];
-}
-
-- (instancetype)initWithInstance:(DDFileLogger *)instance {
-    self.instance = instance;
-    self.maximumBytesCountInBuffer = kDefaultBytesCountInBuffer;
     return self;
 }
 
 - (void)dealloc {
-    [self dumpBufferToDisk];
-    self.instance = nil;
+    dispatch_block_t block = ^{
+        [self lt_sendBufferedDataToFileLogger];
+        self.fileLogger = nil;
+    };
+
+    if ([self->_fileLogger isOnInternalLoggerQueue]) {
+        block();
+    } else {
+        dispatch_sync(self->_fileLogger.loggerQueue, block);
+    }
+}
+
+#pragma mark - Buffering
+
+- (void)flushBuffer {
+    [_buffer close];
+    _buffer = [NSOutputStream outputStreamToMemory];
+    [_buffer open];
+    _currentBufferSizeBytes = 0;
+}
+
+- (void)lt_sendBufferedDataToFileLogger {
+    NSData *data = [_buffer propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
+    [_fileLogger lt_logData:data];
+    [self flushBuffer];
 }
 
 #pragma mark - Logging
 
-- (void)lt_logData:(NSData *)data {
-    if ([self isBufferFull]) {
-        [self dumpBufferToDisk];
+- (void)logMessage:(DDLogMessage *)logMessage {
+    NSData *data = [_fileLogger lt_dataForMessage:logMessage];
+    NSUInteger length = data.length;
+    if (length == 0) {
+        return;
     }
-    [self appendToBuffer:data];
+
+#ifndef DEBUG
+    __unused
+#endif
+    NSInteger written = [_buffer write:[data bytes] maxLength:length];
+    NSAssert(written == (NSInteger)length, @"Failed to write to memory buffer.");
+
+    _currentBufferSizeBytes += length;
+
+    if (_currentBufferSizeBytes >= _maxBufferSizeBytes) {
+        [self lt_sendBufferedDataToFileLogger];
+    }
+}
+
+- (void)flush {
+    // This method is public.
+    // We need to execute the rolling on our logging thread/queue.
+
+    dispatch_block_t block = ^{
+        @autoreleasepool {
+            [self lt_sendBufferedDataToFileLogger];
+            [self.fileLogger flush];
+        }
+    };
+
+    // The design of this method is taken from the DDAbstractLogger implementation.
+    // For extensive documentation please refer to the DDAbstractLogger implementation.
+
+    if ([self.fileLogger isOnInternalLoggerQueue]) {
+        block();
+    } else {
+        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
+        NSAssert(![self.fileLogger isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+
+        dispatch_sync(globalLoggingQueue, ^{
+            dispatch_sync(self.fileLogger.loggerQueue, block);
+        });
+    }
+}
+
+#pragma mark - Properties
+
+- (void)setMaxBufferSizeBytes:(NSUInteger)newBufferSizeBytes {
+    _maxBufferSizeBytes = MIN(newBufferSizeBytes, DDGetMaxBufferSizeBytes());
+}
+
+#pragma mark - Wrapping
+
+- (DDFileLogger *)wrapWithBuffer {
+    return (DDFileLogger *)self;
+}
+
+- (DDFileLogger *)unwrapFromBuffer {
+    return (DDFileLogger *)self.fileLogger;
 }
 
 #pragma mark - NSProxy
+
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel {
-    return [self.instance methodSignatureForSelector:sel];
+    return [self.fileLogger methodSignatureForSelector:sel];
 }
 
 - (BOOL)respondsToSelector:(SEL)aSelector {
-    return [self.instance respondsToSelector:aSelector];
+    return [self.fileLogger respondsToSelector:aSelector];
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
-    [invocation setTarget:self.instance];
-    [invocation invoke];
+    [invocation invokeWithTarget:self.fileLogger];
 }
 
 @end
@@ -142,20 +187,11 @@ static NSUInteger kDefaultBytesCountInBuffer = (1 << 10);
 @implementation DDFileLogger (Buffering)
 
 - (instancetype)wrapWithBuffer {
-    if (self.class == DDBufferedProxy.class) {
-        return self;
-    } else {
-        // wrap into proxy.
-        return (typeof(self))[DDBufferedProxy decoratedInstance:self];
-    }
+    return (DDFileLogger *)[[DDBufferedProxy alloc] initWithFileLogger:self];
 }
 
 - (instancetype)unwrapFromBuffer {
-    if (self.class == DDBufferedProxy.class) {
-        return ((DDBufferedProxy *)self).instance;
-    } else {
-        return self;
-    }
+    return self;
 }
 
 @end
