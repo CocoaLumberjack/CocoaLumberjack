@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -ex # exit on first error, and print commands with expansions
+
 if [ -z "$PLATFORM" ] || [ -z "$OS" ]; then
 	echo "PLATFORM or OS not set."
 	exit 1
