@@ -4,7 +4,7 @@
 HOME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$HOME_DIR/.." || exit
 
-source ./Scripts/setup_default_env.sh
+bash ./Scripts/setup_default_env.sh
 
 build_workspace() {
 	echo "Building $3"
