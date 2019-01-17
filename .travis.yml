@@ -16,9 +16,9 @@ env:
 
     # these lines each add a job to the test stage
     matrix:
-        - PLATFORM="iOS Simulator" OS=12.1 SDK=iphonesimulator NAME="iPhone XS" TEST_SCHEME="iOS Tests"
-        - PLATFORM="iOS Simulator" OS=11.4 SDK=iphonesimulator NAME="iPhone XS" TEST_SCHEME="iOS Tests"
-        - PLATFORM="iOS Simulator" OS=10.3 SDK=iphonesimulator NAME="iPhone XS" TEST_SCHEME="iOS Tests"
+        - PLATFORM="iOS Simulator" OS=12.1   SDK=iphonesimulator NAME="iPhone XS" TEST_SCHEME="iOS Tests"
+        - PLATFORM="iOS Simulator" OS=11.4   SDK=iphonesimulator NAME="iPhone X" TEST_SCHEME="iOS Tests"
+        - PLATFORM="iOS Simulator" OS=10.3.1 SDK=iphonesimulator NAME="iPhone 7" TEST_SCHEME="iOS Tests"
 
         - PLATFORM=macOS OS=10.14 SDK="macOS" NAME="" TEST_SCHEME="OS X Tests"
         - PLATFORM=macOS OS=10.13 SDK="macOS" NAME="" TEST_SCHEME="OS X Tests"
