@@ -6,13 +6,13 @@
 set -exo pipefail
 
 DEFAULT_PLATFORM="iOS Simulator"
-DEFAULT_NAME="iPhone 8"
+DEFAULT_NAME="iPhone XS"
 DEFAULT_SDK="iphonesimulator"
 
 DEFAULT_IOS_OS="12.1"
 DEFAULT_WATCH_OS="4.2"
 DEFAULT_MAC_OS="10.14"
-DEFAULT_TV_OS="12.0"
+DEFAULT_TV_OS="12.1"
 
 if [ -z "$PLATFORM" ]; then
 	echo "\$PLATFORM not set, using $DEFAULT_PLATFORM"

@@ -566,9 +566,9 @@
 			targets = (
 				0A87D3C32175E56200BD0C4C /* iOSStaticLibraryIntegration */,
 				0A87D3E92175E6E600BD0C4C /* iOSFrameworkIntegration */,
+				0A87D5422177C22600BD0C4C /* iOSSwiftIntegration */,
 				0A87D41A2175E82900BD0C4C /* macOSSwiftIntegration */,
 				0A87D42C2175E84100BD0C4C /* tvOSSwiftIntegration */,
-				0A87D5422177C22600BD0C4C /* iOSSwiftIntegration */,
 				0A87D5562177C25700BD0C4C /* watchOSSwiftIntegration */,
 				0A87D5622177C25800BD0C4C /* watchOSSwiftIntegration Extension */,
 			);

@@ -19,7 +19,7 @@ build() {
     xcodebuild build                                                         \
         -workspace "Demos/Demos.xcworkspace"                                 \
         -scheme "$1"                                                         \
-    | bundle exec xcpretty -c -f "$(bundle exec xcpretty-travis-formatter)"
+    | bundle exec xcpretty -c
 }
 
 # tail -n +3 removes the first 3 lines
@@ -35,7 +35,12 @@ while read -r line; do
     fi
 
     if [ $IS_INSIDE_SCHEME_ARRAY -eq 1 ]; then
-        build "${line:1:${#line}-3}"
+        if [[ "$line" == *"\"" ]]; then
+            # the last line doesn't have a trailing ,
+            build "${line:1:${#line}-2}"
+        else
+            build "${line:1:${#line}-3}"
+        fi
     fi
 
     if [ "$START_SCHEMES_LINE" == "$line" ]; then
