@@ -14,26 +14,26 @@ env:
         - LC_CTYPE=en_US.UTF-8
         - LANG=en_US.UTF-8
     matrix:
-        - PLATFORM="iOS Simulator" OS=8.4 SDK=iphonesimulator NAME="iPhone 8s" TEST_SCHEME="iOS Tests" INTEGRATION_SCHEME_PREFIX="iOS"
-        - PLATFORM="iOS Simulator" OS=9.3 SDK=iphonesimulator NAME="iPhone 8s" TEST_SCHEME="iOS Tests" INTEGRATION_SCHEME_PREFIX="iOS"
-        - PLATFORM="iOS Simulator" OS=10.3 SDK=iphonesimulator NAME="iPhone 8s" TEST_SCHEME="iOS Tests" INTEGRATION_SCHEME_PREFIX="iOS"
-        - PLATFORM="iOS Simulator" OS=11.4 SDK=iphonesimulator NAME="iPhone 8s" TEST_SCHEME="iOS Tests" INTEGRATION_SCHEME_PREFIX="iOS"
-        - PLATFORM="iOS Simulator" OS=12.1 SDK=iphonesimulator NAME="iPhone 8s" TEST_SCHEME="iOS Tests" INTEGRATION_SCHEME_PREFIX="iOS"
+        - PLATFORM="iOS Simulator" OS=8.4 SDK=iphonesimulator NAME="iPhone 8s" TEST_SCHEME="iOS Tests"
+        - PLATFORM="iOS Simulator" OS=9.3 SDK=iphonesimulator NAME="iPhone 8s" TEST_SCHEME="iOS Tests"
+        - PLATFORM="iOS Simulator" OS=10.3 SDK=iphonesimulator NAME="iPhone 8s" TEST_SCHEME="iOS Tests"
+        - PLATFORM="iOS Simulator" OS=11.4 SDK=iphonesimulator NAME="iPhone 8s" TEST_SCHEME="iOS Tests"
+        - PLATFORM="iOS Simulator" OS=12.1 SDK=iphonesimulator NAME="iPhone 8s" TEST_SCHEME="iOS Tests"
 
-        - PLATFORM="iOS Simulator" OS=10.3 SDK="watchos3.2" NAME="iPhone 8s" INTEGRATION_SCHEME_PREFIX="watchOS"
-        - PLATFORM="iOS Simulator" OS=11.4 SDK="watchos4.2" NAME="iPhone 8s" INTEGRATION_SCHEME_PREFIX="watchOS"
-        - PLATFORM="iOS Simulator" OS=12.1 SDK="watchos4.2" NAME="iPhone 8s" INTEGRATION_SCHEME_PREFIX="watchOS"
+        - PLATFORM="iOS Simulator" OS=10.3 SDK="watchos3.2" NAME="iPhone 8s"
+        - PLATFORM="iOS Simulator" OS=11.4 SDK="watchos4.2" NAME="iPhone 8s"
+        - PLATFORM="iOS Simulator" OS=12.1 SDK="watchos4.2" NAME="iPhone 8s"
 
-        - PLATFORM=macOS OS=10.10 SDK="macOS" NAME="" TEST_SCHEME="OS X Tests" INTEGRATION_SCHEME_PREFIX="macOS"
-        - PLATFORM=macOS OS=10.11 SDK="macOS" NAME="" TEST_SCHEME="OS X Tests" INTEGRATION_SCHEME_PREFIX="macOS"
-        - PLATFORM=macOS OS=10.12 SDK="macOS" NAME="" TEST_SCHEME="OS X Tests" INTEGRATION_SCHEME_PREFIX="macOS"
-        - PLATFORM=macOS OS=10.13 SDK="macOS" NAME="" TEST_SCHEME="OS X Tests" INTEGRATION_SCHEME_PREFIX="macOS"
-        - PLATFORM=macOS OS=10.14 SDK="macOS" NAME="" TEST_SCHEME="OS X Tests" INTEGRATION_SCHEME_PREFIX="macOS"
+        - PLATFORM=macOS OS=10.10 SDK="macOS" NAME="" TEST_SCHEME="OS X Tests"
+        - PLATFORM=macOS OS=10.11 SDK="macOS" NAME="" TEST_SCHEME="OS X Tests"
+        - PLATFORM=macOS OS=10.12 SDK="macOS" NAME="" TEST_SCHEME="OS X Tests"
+        - PLATFORM=macOS OS=10.13 SDK="macOS" NAME="" TEST_SCHEME="OS X Tests"
+        - PLATFORM=macOS OS=10.14 SDK="macOS" NAME="" TEST_SCHEME="OS X Tests"
 
-        - PLATFORM="tvOS Simulator" OS=10.14 SDK="appletvos" NAME="Apple TV" TEST_SCHEME="OS X Tests" INTEGRATION_SCHEME_PREFIX="tvOS"
-        - PLATFORM="tvOS Simulator" OS=10.14 SDK="appletvos" NAME="Apple TV" TEST_SCHEME="OS X Tests" INTEGRATION_SCHEME_PREFIX="tvOS"
-        - PLATFORM="tvOS Simulator" OS=10.14 SDK="appletvos" NAME="Apple TV" TEST_SCHEME="OS X Tests" INTEGRATION_SCHEME_PREFIX="tvOS"
-        - PLATFORM="tvOS Simulator" OS=10.14 SDK="appletvos" NAME="Apple TV" TEST_SCHEME="OS X Tests" INTEGRATION_SCHEME_PREFIX="tvOS"
+        - PLATFORM="tvOS Simulator" OS=10.14 SDK="appletvos" NAME="Apple TV" TEST_SCHEME="OS X Tests"
+        - PLATFORM="tvOS Simulator" OS=10.14 SDK="appletvos" NAME="Apple TV" TEST_SCHEME="OS X Tests"
+        - PLATFORM="tvOS Simulator" OS=10.14 SDK="appletvos" NAME="Apple TV" TEST_SCHEME="OS X Tests"
+        - PLATFORM="tvOS Simulator" OS=10.14 SDK="appletvos" NAME="Apple TV" TEST_SCHEME="OS X Tests"
 
 before_install:
     - gem update --system
@@ -54,11 +54,8 @@ after_success:
 
 stages:
     - compile_core
-    - compile_integration_not_ios
-    - compile_integration_only_ios
     - test
-    - compile_ios_demo_apps
-    - compile_mac_demo_apps
+    - compile_demo_apps
 
 jobs:
     include:
@@ -67,14 +64,6 @@ jobs:
     
         - stage: test
           script: ./Scripts/test.sh
-
-        - stage: compile_integration_only_ios
-          if: env(INTEGRATION_SCHEME_PREFIX) = iOS
-          script: ./Scripts/compile_integration_only_ios.sh
-
-        - stage: compile_integration_not_ios
-          if: env(INTEGRATION_SCHEME_PREFIX) != iOS
-          script: ./Scripts/compile_integration_not_ios.sh
 
         - stage: compile_demo_apps
           if: env(TRAVIS_PULL_REQUEST) = false
