@@ -1,37 +1,31 @@
 #!/usr/bin/env bash
 
-set -e # exit on first error, and print commands with expansions
+# cd to our root source directory, no matter where we're called from
+HOME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "$HOME_DIR/.." || exit
 
-if [ -z "$PLATFORM" ] || [ -z "$OS" ] || [ -z "$SDK" ]; then
-	echo "PLATFORM or OS not set."
-	exit 1
-fi
-
-if [ -z "$NAME" ] && ! [ "$PLATFORM" = "macOS" ]; then
-	echo "Empty NAME only allowed on macOS."
-	exit 1
-fi
+source ./Scripts/setup_default_env.sh
 
 build_workspace() {
 	echo "Building $3"
 
-	xcodebuild -verbose "$1" build                               \
-	 	-workspace "$2"                                          \
-	 	-scheme "$3"                                             \
-	 	-sdk "$SDK"                                              \
-	 	-destination platform="$PLATFORM",OS="$OS",name="$NAME"  \
-	| bundle exec xcpretty -c
+	xcodebuild -verbose "$1" build                                          \
+	 	-workspace "$2"                                                     \
+	 	-scheme "$3"                                                        \
+	 	-sdk "$SDK"                                                         \
+	 	-destination platform="$PLATFORM",OS="$OS",name="$NAME"             \
+	| bundle exec xcpretty -c -f "$(bundle exec xcpretty-travis-formatter)"
 }
 
 build_project() {
 	echo "Building $3"
 
-	xcodebuild -verbose "$1" build                               \
-	 	-project "$2"                                            \
-	 	-scheme "$3"                                             \
-	 	-sdk "$SDK"                                              \
-	 	-destination platform="$PLATFORM",OS="$OS",name="$NAME"  \
-	| bundle exec xcpretty -c
+	xcodebuild -verbose "$1" build                                          \
+	 	-project "$2"                                                       \
+	 	-scheme "$3"                                                        \
+	 	-sdk "$SDK"                                                         \
+	 	-destination platform="$PLATFORM",OS="$OS",name="$NAME"             \
+	| bundle exec xcpretty -c -f "$(bundle exec xcpretty-travis-formatter)"
 }
 
 build_workspace "clean" "Framework/Lumberjack.xcworkspace" "CocoaLumberjack-Static"

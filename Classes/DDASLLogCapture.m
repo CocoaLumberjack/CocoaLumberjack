@@ -35,7 +35,7 @@ static DDLogLevel _captureLevel = DDLogLevelVerbose;
 @implementation DDASLLogCapture
 
 + (void)start {
-    // Ignore subsequent callss
+    // Ignore subsequent calls
     if (!_cancel) {
         return;
     }
