@@ -51,13 +51,12 @@ stages:
     - test
     - compile_demo_apps
 
+script: bash ./Scripts/test.sh
+
 jobs:
     include:
         - stage: compile_core
           script: bash ./Scripts/compile_core.sh
-    
-        - stage: test
-          script: bash ./Scripts/test.sh
 
         - stage: compile_demo_apps
           if: env(TRAVIS_PULL_REQUEST) = false
