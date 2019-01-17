@@ -2,7 +2,7 @@
 //  AppDelegate.m
 //  TextXcodeColors
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "AppDelegate.h"
@@ -40,7 +40,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     DDLogError(@"Paper jam");
     DDLogWarn(@"Toner is low");
     DDLogInfo(@"Warming up printer (pre-customization)");
-    DDLogVerbose(@"Intializing protcol x26 (pre-customization)");
+    DDLogVerbose(@"Initializing protocol x26 (pre-customization)");
     
     // Now let's do some customization:
     // Info  : Pink
@@ -65,7 +65,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     
     [[DDTTYLogger sharedInstance] setForegroundColor:gray backgroundColor:nil forFlag:DDLogFlagVerbose];
     
-    DDLogVerbose(@"Intializing protcol x26 (post-customization)");
+    DDLogVerbose(@"Initializing protocol x26 (post-customization)");
     
     // Now let's get crazy
     
@@ -80,7 +80,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     
     // Update label for better understanding.
     // 
-    // Be sure to follow the instructions for seting up XcodeColors here:
+    // Be sure to follow the instructions for setting up XcodeColors here:
     // https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/XcodeColors
     
     char *xcode_colors = getenv("XcodeColors");
@@ -102,7 +102,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Lumberjack is extermely flexible.
+ * Lumberjack is extremely flexible.
  * 
  * Below we're going to make a straight NSLog replacement that prints in color.
  * We're also going to demonstrate that log levels are not a requirement to use Lumberjack.

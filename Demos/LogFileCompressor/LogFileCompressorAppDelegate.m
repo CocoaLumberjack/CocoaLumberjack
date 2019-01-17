@@ -2,7 +2,7 @@
 //  LogFileCompressorAppDelegate.m
 //  LogFileCompressor
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "LogFileCompressorAppDelegate.h"

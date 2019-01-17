@@ -2,7 +2,7 @@
 //  MyHTTPConnection.m
 //  WebServerIPhone
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "MyHTTPConnection.h"

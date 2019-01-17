@@ -2,7 +2,7 @@
 //  RegisteredLoggingTestViewController.m
 //  RegisteredLoggingTest
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "RegisteredLoggingTestViewController.h"

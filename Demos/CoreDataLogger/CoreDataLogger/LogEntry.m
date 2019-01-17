@@ -2,7 +2,7 @@
 //  LogEntry.m
 //  CoreDataLogger
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "LogEntry.h"

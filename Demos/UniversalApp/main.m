@@ -2,7 +2,7 @@
 //  main.m
 //  UniversalApp
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <UIKit/UIKit.h>

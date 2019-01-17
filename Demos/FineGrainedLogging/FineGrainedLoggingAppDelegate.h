@@ -2,7 +2,7 @@
 //  FineGrainedLoggingAppDelegate.h
 //  FineGrainedLogging
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

@@ -2,7 +2,7 @@
 //  WebServerIPhoneAppDelegate.m
 //  WebServerIPhone
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "WebServerIPhoneAppDelegate.h"

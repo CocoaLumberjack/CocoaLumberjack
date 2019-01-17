@@ -2,7 +2,7 @@
 //  ViewController.m
 //  TextXcodeColors
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "ViewController.h"

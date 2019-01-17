@@ -2,7 +2,7 @@
 //  Tigers.m
 //  RegisteredLoggingTest
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "Tigers.h"

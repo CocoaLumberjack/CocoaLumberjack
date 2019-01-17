@@ -2,7 +2,7 @@
 //  AppDelegate.m
 //  DispatchQueueLogger
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "AppDelegate.h"

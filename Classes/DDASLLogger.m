@@ -15,8 +15,6 @@
 
 #import "DDASLLogger.h"
 
-#import "DDLoggerNames.h"
-
 #if !TARGET_OS_WATCH
 #import <asl.h>
 

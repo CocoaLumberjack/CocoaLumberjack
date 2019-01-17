@@ -15,8 +15,6 @@
 
 #import "DDOSLogger.h"
 
-#import "DDLoggerNames.h"
-
 #import <os/log.h>
 
 @implementation DDOSLogger

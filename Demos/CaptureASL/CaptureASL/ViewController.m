@@ -2,7 +2,7 @@
 //  ViewController.m
 //  CaptureASL
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "ViewController.h"

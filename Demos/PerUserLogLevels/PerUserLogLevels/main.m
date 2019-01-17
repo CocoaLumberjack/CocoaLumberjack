@@ -2,7 +2,7 @@
 //  main.m
 //  PerUserLogLevels
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

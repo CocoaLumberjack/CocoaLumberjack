@@ -2,7 +2,7 @@
 //  Lions.m
 //  RegisteredLoggingTest
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "Lions.h"

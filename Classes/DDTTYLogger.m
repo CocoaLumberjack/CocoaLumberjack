@@ -15,9 +15,6 @@
 
 #import "DDTTYLogger.h"
 
-#import "DDLoggerNames.h"
-
-#import <unistd.h>
 #import <sys/uio.h>
 
 #if !__has_feature(objc_arc)
@@ -836,7 +833,7 @@ static DDTTYLogger *sharedInstance;
     }
 
     if ((self = [super init])) {
-        // Initialze 'app' variable (char *)
+        // Initialize 'app' variable (char *)
 
         _appName = [[NSProcessInfo processInfo] processName];
 

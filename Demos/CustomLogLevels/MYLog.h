@@ -2,7 +2,7 @@
 //  MYLog.h
 //  CustomLogLevels
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <CocoaLumberjack/CocoaLumberjack.h>

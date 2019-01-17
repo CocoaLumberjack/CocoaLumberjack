@@ -2,7 +2,7 @@
 //  main.m
 //  FineGrainedLogging
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

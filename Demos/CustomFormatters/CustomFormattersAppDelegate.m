@@ -2,7 +2,7 @@
 //  CustomFormattersAppDelegate.m
 //  CustomFormatters
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "CustomFormattersAppDelegate.h"

@@ -22,8 +22,6 @@
 
 #if !TARGET_OS_WATCH
 
-#import "DDLog.h"
-
 #include <asl.h>
 #include <notify.h>
 #include <notify_keys.h>
@@ -119,7 +117,7 @@ static DDLogLevel _captureLevel = DDLogLevelVerbose;
                                                                flag:flag
                                                             context:0
                                                                file:@"DDASLLogCapture"
-                                                           function:0
+                                                           function:nil
                                                                line:0
                                                                 tag:nil
                                                             options:0

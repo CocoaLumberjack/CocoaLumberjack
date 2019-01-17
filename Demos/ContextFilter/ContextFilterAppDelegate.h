@@ -2,7 +2,7 @@
 //  ContextFilterAppDelegate.h
 //  ContextFilter
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

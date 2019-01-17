@@ -410,8 +410,8 @@ static DDFileLogger *fileLogger = nil;
 	
 	NSFileHandle *csvResultsFile = [NSFileHandle fileHandleForWritingAtPath:csvResultsPath];
 	
-	NSString *csvRsults = [self csvResults];
-	[csvResultsFile writeData:[csvRsults dataUsingEncoding:NSUTF8StringEncoding]];
+	NSString *csvResults = [self csvResults];
+	[csvResultsFile writeData:[csvResults dataUsingEncoding:NSUTF8StringEncoding]];
 	
 	NSLog(@"CSV results file written to:\n%@", csvResultsPath);
 }

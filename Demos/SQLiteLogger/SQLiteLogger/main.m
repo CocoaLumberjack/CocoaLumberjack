@@ -2,7 +2,7 @@
 //  main.m
 //  SQLiteLogger
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

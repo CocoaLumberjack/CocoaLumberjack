@@ -2,7 +2,7 @@
 //  main.m
 //  DispatchQueueLogger
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

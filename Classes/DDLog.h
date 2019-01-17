@@ -334,7 +334,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
 /**
  * Logging Primitive.
  *
- * This method can be used if you manualy prepared DDLogMessage.
+ * This method can be used if you manually prepared DDLogMessage.
  *
  *  @param asynchronous YES if the logging is done async, NO if you want to force sync
  *  @param logMessage   the log message stored in a `DDLogMessage` model object
@@ -345,7 +345,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
 /**
  * Logging Primitive.
  *
- * This method can be used if you manualy prepared DDLogMessage.
+ * This method can be used if you manually prepared DDLogMessage.
  *
  *  @param asynchronous YES if the logging is done async, NO if you want to force sync
  *  @param logMessage   the log message stored in a `DDLogMessage` model object
@@ -609,13 +609,13 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
 - (void)didAddLoggerInQueue:(dispatch_queue_t)queue;
 
 /**
- *  See the above description for `didAddLoger`
+ *  See the above description for `didAddLogger`
  */
 - (void)willRemoveLogger;
 
 /**
  * Some loggers may buffer IO for optimization purposes.
- * For example, a database logger may only save occasionaly as the disk IO is slow.
+ * For example, a database logger may only save occasionally as the disk IO is slow.
  * In such loggers, this method should be implemented to flush any pending IO.
  *
  * This allows invocations of DDLog's flushLog method to be propogated to loggers that need it.
@@ -858,10 +858,10 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
  * The `DDLogger` protocol specifies that an optional formatter can be added to a logger.
  * Most (but not all) loggers will want to support formatters.
  *
- * However, writting getters and setters in a thread safe manner,
+ * However, writing getters and setters in a thread safe manner,
  * while still maintaining maximum speed for the logging process, is a difficult task.
  *
- * To do it right, the implementation of the getter/setter has strict requiremenets:
+ * To do it right, the implementation of the getter/setter has strict requirements:
  * - Must NOT require the `logMessage:` method to acquire a lock.
  * - Must NOT require the `logMessage:` method to access an atomic property (also a lock of sorts).
  *

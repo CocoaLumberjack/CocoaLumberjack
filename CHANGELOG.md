@@ -11,7 +11,7 @@
 - Fix common warnings emitted by `-Wall`, `-Wconversion`, `-Wextra`, etc #943, #931
 - Fixes issue that could cause log messages to become interleaved when there are multiple `DDFileLogger`s #985
 - `DispatchQueueFormatter` knows about `com.apple.root.default-qos.overcommit` now #932
-- Fix thread safety issues in `DDFileLogger`. Makes it a litte harder to deadlock in some cases. #986, #1003, #946
+- Fix thread safety issues in `DDFileLogger`. Makes it a little harder to deadlock in some cases. #986, #1003, #946
 - Fix availability checks and memory leak #996
 - Use static const for default log level so Swift can strip strings #952
 
@@ -23,7 +23,7 @@
 - Full links to Docs and other resources so they are resolved on external pages (i.e. https://cocoapods.org/pods/CocoaLumberjack) e9d6971
 - Replace `OSAtomic` with `stdatomic` in `DDDispatchQueueLogFormatter` #957 #958
 - Add Stale Bot + configuration #953
-- Update to Xcode 10 and Swift 4.2 complier #950
+- Update to Xcode 10 and Swift 4.2 compiler #950
 - Xcode 10 scheme changes #949
 - Update incomplete BSD 3-Clause License #942
 - Updated to CocoaPods 1.5.3 2d0590f
@@ -213,7 +213,7 @@ See [Migration from 1.x to 2.x](https://github.com/CocoaLumberjack/CocoaLumberja
 
 - Major refactoring and clean up.
 - Remove superfluous `log` from property names and use underscore for direct variable access.
-- Preliminar Swift support through `CocoaLumberjack.swift`.
+- Preliminary Swift support through `CocoaLumberjack.swift`.
 - Automatic 1.9.x legacy support when `DDLog.h` is imported instead of the new `CocoaLumberjack.h`.
 
 ## [2.0.0-beta3 on Oct 21st, 2014](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/2.0.0-beta3)
@@ -241,7 +241,7 @@ See [Migrate from 1.x to 2.x](https://github.com/CocoaLumberjack/CocoaLumberjack
 - Change the mechanism for adding new line character (i.e. '\n\) to log messages in some logger - [#308](https://github.com/CocoaLumberjack/CocoaLumberjack/issues/308) [#310](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/310) 
 - Fixed deprecations - [#320](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/320) [#312](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/312) [#317](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/317) 
 - `aslmsg` not freed and causing memory leak - [#314](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/314) 
-- Fixed `CompresingLogFileManager` compression bug - [#315](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/315) 
+- Fixed `CompressingLogFileManager` compression bug - [#315](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/315)
 - Remove unnecessary `NULL` check before `free()` - [#316](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/316) 
 
 ## [1.9.1 Patch release for 1.9.0 on Jun 30th, 2014](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/1.9.1)
@@ -322,7 +322,7 @@ See [Migrate from 1.x to 2.x](https://github.com/CocoaLumberjack/CocoaLumberjack
 
 Other:
 - Implemented multiple formatter (`DDMultiFormatter` - alows chaining of formatters) [#178](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/178)
-- Added DD preffix to extension classes (`ContextFilterLogFormatter` and `DispatchQueueLogFormatter`) [#178](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/178)
+- Added DD prefix to extension classes (`ContextFilterLogFormatter` and `DispatchQueueLogFormatter`) [#178](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/178)
 - Updated code indentation: Tabs changed to spaces [#180](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/180)
 - Included `DDLog+LOGV.h` in Cocoapods sources [d253bd7](https://github.com/CocoaLumberjack/CocoaLumberjack/commit/d253bd7)
 - other fixes/improvements

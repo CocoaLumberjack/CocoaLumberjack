@@ -2,7 +2,7 @@
 //  main.m
 //  TestXcodeColors
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

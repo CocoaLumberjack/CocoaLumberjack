@@ -109,7 +109,7 @@ demos_copyright_lines = [
 "//  ",
 "//  ",
 "//",
-"//  CococaLumberjack Demos",
+"//  CocoaLumberjack Demos",
 "//"
 ]
 

@@ -2,7 +2,7 @@
 //  WebServerIPhoneViewController.m
 //  WebServerIPhone
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "WebServerIPhoneViewController.h"

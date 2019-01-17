@@ -2,7 +2,7 @@
 //  CustomLogLevelsAppDelegate.m
 //  CustomLogLevels
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "CustomLogLevelsAppDelegate.h"
