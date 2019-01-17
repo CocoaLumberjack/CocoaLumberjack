@@ -14,7 +14,7 @@ COMMON="-project Tests/Tests.xcodeproj                          \
         -sdk $SDK                                               \
         GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES                    \
         GCC_GENERATE_TEST_COVERAGE_FILES=YES                    \
-        -configuration Release | bundle exec xcpretty -c"       \
+        -configuration Release"
 
-xcodebuild test -scheme "iOS Tests" "$COMMON"
-xcodebuild test -scheme "OS X Tests" "$COMMON"
+xcodebuild test -scheme "iOS Tests" "$COMMON" | bundle exec xcpretty -c
+xcodebuild test -scheme "OS X Tests" "$COMMON" | bundle exec xcpretty -c
