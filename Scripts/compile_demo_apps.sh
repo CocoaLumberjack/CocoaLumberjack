@@ -1,26 +1,28 @@
 #!/usr/bin/env bash
 
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "BenchmarkIPhone" -configuration Release -sdk iphonesimulator | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "CaptureASL" -sdk iphonesimulator | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "RegisteredLoggingTest (Mobile)" -sdk iphonesimulator | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "TextXcodeColors (Mobile)" -sdk iphonesimulator | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "UniversalApp" -sdk iphonesimulator | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "WebServerIPhone" -sdk iphonesimulator | bundle exec xcpretty -c
+# source: https://stackoverflow.com/a/3352015/4080860
+trim() {
+    local var="$*"
+    # remove leading whitespace characters
+    var="${var#"${var%%[![:space:]]*}"}"
+    # remove trailing whitespace characters
+    var="${var%"${var##*[![:space:]]}"}"   
+    echo -n "$var"
+}
 
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "SQLiteLogger" | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "CLI" | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "BenchmarkMac" | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "RegisteredLoggingTest (Desktop)" | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "RollingTestMac" | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "OverflowTestMac" | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "ContextFilter" | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "CoreDataLogger" | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "CustomFormatters" | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "CustomLogLevels" | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "DispatchQueueLogger" | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "FineGrainedLogging" | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "GlobalLogLevel" | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "LogFileCompressor" | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "NonArcTest" | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "PerUserLogLevels" | bundle exec xcpretty -c
-xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "TestXcodeColors (Desktop)" | bundle exec xcpretty -c
+build() {
+    xcodebuild build                       \
+        -workspace Demos/Demos.xcworkspace \
+        -scheme "$1"                       \
+        -configuration Release             \
+        -sdk iphonesimulator               \
+    | bundle exec xcpretty -c
+}
+
+# tail -n +3 removes the first 3 lines
+SCHEMES=$(xcodebuild -workspace Demos/Demos.xcworkspace/ -list | tail -n +3)
+
+while read -r line; do
+    echo "Building $line"
+    build "$(trim "$line")"
+done <<< "$SCHEMES"

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-set -ex # exit on first error, and print commands with expansions
+set -e
 
-if [ -z "$PLATFORM" ] || [ -z "$OS" ]; then
+if [ -z "$PLATFORM" ] || [ -z "$OS" ] || [ -z "$SDK" ]; then
 	echo "PLATFORM or OS not set."
 	exit 1
 fi
@@ -11,12 +11,16 @@ if [ -z "$NAME" ] && ! [ "$PLATFORM" = "macOS" ]; then
 	echo "Empty NAME only allowed on macOS."
 fi
 
-COMMON="-project Tests/Tests.xcodeproj                          \
-        -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\"   \
-        -sdk $SDK                                               \
-        GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES                    \
-        GCC_GENERATE_TEST_COVERAGE_FILES=YES                    \
-        -configuration Release"
+test() {
+	echo "Testing $1"
 
-xcodebuild test -scheme "iOS Tests" $COMMON | bundle exec xcpretty -c
-xcodebuild test -scheme "OS X Tests" $COMMON | bundle exec xcpretty -c
+	xcodebuild test                                             \
+		-project "Tests/Tests.xcodeproj"                        \
+	 	-scheme "$1"                                            \
+	 	-sdk "$SDK"                                             \
+	 	-destination platform="$PLATFORM",OS="$OS",name="$NAME" \
+	| bundle exec xcpretty -c
+}
+
+test "iOS Tests"
+test "OS X Tests"
