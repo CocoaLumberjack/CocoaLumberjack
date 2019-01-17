@@ -60,12 +60,12 @@ stages:
 jobs:
     include:
         - stage: compile_core
-          script: ./Scripts/compile_core.sh
+          script: bash ./Scripts/compile_core.sh
     
         - stage: test
-          script: ./Scripts/test.sh
+          script: bash ./Scripts/test.sh
 
         - stage: compile_demo_apps
           if: env(TRAVIS_PULL_REQUEST) = false
-          script: ./Scripts/compile_demo_apps.sh
+          script: bash ./Scripts/compile_demo_apps.sh
             
