@@ -17,19 +17,19 @@ COMMON="-workspace Framework/Lumberjack.xcworkspace             \
         -sdk $SDK                                               \
         -configuration Release"
 
-xcodebuild clean build -scheme "CocoaLumberjack-Static" "$COMMON" | bundle exec xcpretty -c
-xcodebuild clean build -scheme "CocoaLumberjack" "$COMMON" | bundle exec xcpretty -c
-xcodebuild clean build -scheme "CocoaLumberjackSwift" "$COMMON" | bundle exec xcpretty -c
+xcodebuild clean build -scheme "CocoaLumberjack-Static" $COMMON | bundle exec xcpretty -c
+xcodebuild clean build -scheme "CocoaLumberjack" $COMMON | bundle exec xcpretty -c
+xcodebuild clean build -scheme "CocoaLumberjackSwift" $COMMON | bundle exec xcpretty -c
 
 COMMON="-project Integration/Integration.xcodeproj            \
         -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\" \
         -sdk $SDK                                             \
         -configuration Release"
 
-xcodebuild build -scheme iOSStaticLibraryIntegration "$COMMON" | bundle exec xcpretty -c
-xcodebuild build -scheme iOSFrameworkIntegration "$COMMON" | bundle exec xcpretty -c
-xcodebuild build -scheme iOSSwiftIntegration "$COMMON" | bundle exec xcpretty -c
+xcodebuild build -scheme iOSStaticLibraryIntegration $COMMON | bundle exec xcpretty -c
+xcodebuild build -scheme iOSFrameworkIntegration $COMMON | bundle exec xcpretty -c
+xcodebuild build -scheme iOSSwiftIntegration $COMMON | bundle exec xcpretty -c
 
-xcodebuild build -scheme watchOSSwiftIntegration "$COMMON" | bundle exec xcpretty -c
-xcodebuild build -scheme tvOSSwiftIntegration "$COMMON" | bundle exec xcpretty -c
-xcodebuild build -scheme macOSSwiftIntegration "$COMMON" | bundle exec xcpretty -c
+xcodebuild build -scheme watchOSSwiftIntegration $COMMON | bundle exec xcpretty -c
+xcodebuild build -scheme tvOSSwiftIntegration $COMMON | bundle exec xcpretty -c
+xcodebuild build -scheme macOSSwiftIntegration $COMMON | bundle exec xcpretty -c

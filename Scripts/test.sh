@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -ex # exit on first error, and print commands with expansions
+
 if [ -z "$PLATFORM" ] || [ -z "$OS" ]; then
 	echo "PLATFORM or OS not set."
 	exit 1
@@ -16,5 +18,5 @@ COMMON="-project Tests/Tests.xcodeproj                          \
         GCC_GENERATE_TEST_COVERAGE_FILES=YES                    \
         -configuration Release"
 
-xcodebuild test -scheme "iOS Tests" "$COMMON" | bundle exec xcpretty -c
-xcodebuild test -scheme "OS X Tests" "$COMMON" | bundle exec xcpretty -c
+xcodebuild test -scheme "iOS Tests" $COMMON | bundle exec xcpretty -c
+xcodebuild test -scheme "OS X Tests" $COMMON | bundle exec xcpretty -c
