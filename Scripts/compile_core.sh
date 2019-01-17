@@ -4,12 +4,13 @@
 HOME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$HOME_DIR/.." || exit
 
-bash ./Scripts/setup_default_env.sh
+source ./Scripts/setup_default_env.sh
 
 build_workspace() {
 	echo "Building $3"
 
-	xcodebuild -verbose "$1" build                                          \
+	xcodebuild $1 build                                                     \
+		-verbose                                                            \
 	 	-workspace "$2"                                                     \
 	 	-scheme "$3"                                                        \
 	 	-sdk "$SDK"                                                         \
@@ -20,7 +21,8 @@ build_workspace() {
 build_project() {
 	echo "Building $3"
 
-	xcodebuild -verbose "$1" build                                          \
+	xcodebuild $1 build                                                     \
+		-verbose                                                            \
 	 	-project "$2"                                                       \
 	 	-scheme "$3"                                                        \
 	 	-sdk "$SDK"                                                         \

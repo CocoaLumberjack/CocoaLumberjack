@@ -6,6 +6,15 @@ cd "$HOME_DIR/.." || exit
 
 bash ./Scripts/setup_default_env.sh
 
+# -e: Fail if command fails
+# -x: print commands with expanded arguments
+# -o pipefail: check each command's exit code in a pipe
+set -exo pipefail
+
+if [ -z "$TRAVIS" ]; then
+    set -o functrace
+fi
+
 build() {
     xcodebuild build                                                         \
         -workspace "Demos/Demos.xcworkspace"                                 \
