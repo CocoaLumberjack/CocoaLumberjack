@@ -14,7 +14,6 @@ build() {
     xcodebuild build                       \
         -workspace Demos/Demos.xcworkspace \
         -scheme "$1"                       \
-        -configuration Release             \
         -sdk iphonesimulator               \
     | bundle exec xcpretty -c
 }

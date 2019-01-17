@@ -20,19 +20,17 @@ build_workspace() {
 	 	-scheme "$3"                                             \
 	 	-sdk "$SDK"                                              \
 	 	-destination platform="$PLATFORM",OS="$OS",name="$NAME"  \
-	 	-configuration Release                                   \
 	| bundle exec xcpretty -c
 }
 
 build_project() {
 	echo "Building $3"
-	
+
 	xcodebuild -verbose "$1" build                               \
 	 	-project "$2"                                            \
 	 	-scheme "$3"                                             \
 	 	-sdk "$SDK"                                              \
 	 	-destination platform="$PLATFORM",OS="$OS",name="$NAME"  \
-	 	-configuration Release                                   \
 	| bundle exec xcpretty -c
 }
 
@@ -40,9 +38,9 @@ build_workspace "clean" "Framework/Lumberjack.xcworkspace" "CocoaLumberjack-Stat
 build_workspace "clean" "Framework/Lumberjack.xcworkspace" "CocoaLumberjack"
 build_workspace "clean" "Framework/Lumberjack.xcworkspace" "CocoaLumberjackSwift"
 
-build_project "" "Integration/Integration.xcodeproj" "" "iOSStaticLibraryIntegration"
-build_project "" "Integration/Integration.xcodeproj" "" "iOSFrameworkIntegration"
-build_project "" "Integration/Integration.xcodeproj" "" "iOSSwiftIntegration"
+build_project "" "Integration/Integration.xcodeproj" "iOSStaticLibraryIntegration"
+build_project "" "Integration/Integration.xcodeproj" "iOSFrameworkIntegration"
+build_project "" "Integration/Integration.xcodeproj" "iOSSwiftIntegration"
 
 OS="$$DEFAULT_WATCH_OS"
 SDK="watchSimulator$OS"
