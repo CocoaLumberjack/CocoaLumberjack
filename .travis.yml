@@ -1,4 +1,3 @@
-
 language: objective-c
 osx_image: xcode10.1
 sudo: false
@@ -64,82 +63,20 @@ stages:
 jobs:
     include:
         - stage: compile_core
-          script:
-                  COMMON="-workspace Framework/Lumberjack.xcworkspace             \
-                          -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\"   \
-                          -sdk $SDK                                               \
-                          -configuration Release | bundle exec xcpretty -c"       \
-                                                                                  \
-                  set -x                                                          \
-                  xcodebuild clean build -scheme "CocoaLumberjack-Static" $COMMON \
-                  xcodebuild clean build -scheme "CocoaLumberjack" $COMMON        \
-                  xcodebuild clean build -scheme "CocoaLumberjackSwift" $COMMON
-
-    exclude:              
+          script: ./Scripts/compile_core.sh
+    
         - stage: test
-          script:
-                - |
-                  COMMON="-project Tests/Tests.xcodeproj                          \
-                          -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\"   \
-                          -sdk $SDK                                               \
-                          GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES                    \
-                          GCC_GENERATE_TEST_COVERAGE_FILES=YES                    \
-                          -configuration Release | bundle exec xcpretty -c"       \
-                  set -x                                                          \
-                  xcodebuild test -scheme "iOS Tests" $COMMON                     \
-                  xcodebuild test -scheme "OS X Tests" $COMMON
+          script: ./Scripts/test.sh
 
         - stage: compile_integration_only_ios
           if: env(INTEGRATION_SCHEME_PREFIX) = iOS
-          script:
-                - |
-                  COMMON="-project Integration/Integration.xcodeproj                                  \
-                          -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\"                       \
-                          -sdk $SDK                                                                   \
-                          -configuration Release | bundle exec xcpretty -c"                           \
-                                                                                                      \
-                  xcodebuild build -scheme "$INTEGRATION_TEST_PREFIXStaticLibraryIntegration" $COMMON \
-                  xcodebuild build -scheme "$INTEGRATION_TEST_PREFIXFrameworkIntegration" $COMMON     \
-                  xcodebuild build -scheme "$INTEGRATION_TEST_PREFIXSwiftIntegration" $COMMON
+          script: ./Scripts/compile_integration_only_ios.sh
 
         - stage: compile_integration_not_ios
           if: env(INTEGRATION_SCHEME_PREFIX) != iOS
-          script:
-                - xcodebuild build                                           \
-                      -project Integration/Integration.xcodeproj             \
-                      -scheme $INTEGRATION_TEST_PREFIXSwiftIntegration       \
-                      -destination \"platform=$PLATFORM,OS=$OS,name=$NAME\"  \
-                      -sdk $SDK                                              \
-                      -configuration Release | bundle exec xcpretty -c"
+          script: ./Scripts/compile_integration_not_ios.sh
 
-        - stage: compile_ios_demo_apps
-          if: env(TRAVIS_PULL_REQUEST) = false AND env(SDK) = iOS
-          script:
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "BenchmarkIPhone" -configuration Release -sdk iphonesimulator | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "CaptureASL" -sdk iphonesimulator | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "RegisteredLoggingTest (Mobile)" -sdk iphonesimulator | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "TextXcodeColors (Mobile)" -sdk iphonesimulator | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "UniversalApp" -sdk iphonesimulator | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "WebServerIPhone" -sdk iphonesimulator | bundle exec xcpretty -c
-
-        - stage: compile_mac_demo_apps
-          if: env(TRAVIS_PULL_REQUEST) = false AND env(SDK) = macOS
-          script:
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "SQLiteLogger" | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "CLI" | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "BenchmarkMac" | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "RegisteredLoggingTest (Desktop)" | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "RollingTestMac" | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "OverflowTestMac" | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "ContextFilter" | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "CoreDataLogger" | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "CustomFormatters" | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "CustomLogLevels" | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "DispatchQueueLogger" | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "FineGrainedLogging" | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "GlobalLogLevel" | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "LogFileCompressor" | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "NonArcTest" | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "PerUserLogLevels" | bundle exec xcpretty -c
-                - xcodebuild build -workspace Demos/Demos.xcworkspace -scheme "TestXcodeColors (Desktop)" | bundle exec xcpretty -c
+        - stage: compile_demo_apps
+          if: env(TRAVIS_PULL_REQUEST) = false
+          script: ./Scripts/compile_demo_apps.sh
             
