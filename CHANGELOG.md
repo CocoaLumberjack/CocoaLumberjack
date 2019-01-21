@@ -1,10 +1,12 @@
-## [3.5.0 - Xcode 10 on ?? ??, 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.0)
+## [3.5.0 - Xcode 10 on ?? ??, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.0)
 
 ### Public
 - Added `logFileHeader` property to `DDLogFileManagerDefault`. Override to set header for each created file. #998
 - `DDFileLogger` now accepts a `dispatch_queue_t` which it uses to run callbacks. If not provided, the default global queue is used. #1003
-- Added opt-in buffing to `DDFileLogger`. Call `wrapWithBuffer` to create a file logger which buffers. #1001, #1012
+- Added opt-in buffering to `DDFileLogger`. Call `wrapWithBuffer` to create a file logger which buffers. #1001, #1012
 - Add `DDAssert` and `DDAssertionFailure` functions for Swift #934
+- Add `DDDefaultLogLevel` define for Swift (which can be set in `GCC_PREPROCESSOR_DEFINITIONS`) to set default log level (enables stripping for strings that are not logged). #952
+- Add `asyncLoggingEnabled` global variable to control asynchronous logging. #1019
 
 ### Internal
 - Prevent memory access errors caused by a failed fetch #944
