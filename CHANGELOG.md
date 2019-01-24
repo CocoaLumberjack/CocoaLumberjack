@@ -29,6 +29,7 @@
 - Updated to CocoaPods 1.5.3 2d0590f
 - Use Xcode 9.4 image for tests #939
 - Xcode (schemes) version bumps #938
+- Update demo and documentation about CustomLogLevels #1023
 
 ## [3.4.2 - Xcode 9.3 on Apr 17th, 2018](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.4.2)
 - Update README.md #912
