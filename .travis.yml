@@ -20,9 +20,9 @@ env:
         - PLATFORM="iOS Simulator" OS=11.4   SDK=iphonesimulator NAME="iPhone X" TEST_SCHEME="iOS Tests"
         - PLATFORM="iOS Simulator" OS=10.3.1 SDK=iphonesimulator NAME="iPhone 7" TEST_SCHEME="iOS Tests"
 
-        - PLATFORM=macOS OS=10.14 SDK="macOS" NAME="" TEST_SCHEME="OS X Tests"
-        - PLATFORM=macOS OS=10.13 SDK="macOS" NAME="" TEST_SCHEME="OS X Tests"
-        - PLATFORM=macOS OS=10.12 SDK="macOS" NAME="" TEST_SCHEME="OS X Tests"
+        - PLATFORM=macOS OS=10.14 SDK="macosx" NAME="" TEST_SCHEME="OS X Tests"
+        - PLATFORM=macOS OS=10.13 SDK="macosx" NAME="" TEST_SCHEME="OS X Tests"
+        - PLATFORM=macOS OS=10.12 SDK="macosx" NAME="" TEST_SCHEME="OS X Tests"
 
 before_install:
     - gem update --system
