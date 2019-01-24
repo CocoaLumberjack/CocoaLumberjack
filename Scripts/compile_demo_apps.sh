@@ -4,7 +4,7 @@
 HOME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$HOME_DIR/.." || exit
 
-bash ./Scripts/setup_default_env.sh
+source ./Scripts/setup_default_env.sh
 
 # -e: Fail if command fails
 # -x: print commands with expanded arguments
