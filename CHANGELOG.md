@@ -1,4 +1,4 @@
-## [3.5.0 - Xcode 10 on ?? ??, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.0)
+## [3.5.0 - Xcode 10 on Jan 25th, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.0)
 
 ### Public
 - Added `logFileHeader` property to `DDLogFileManagerDefault`. Override to set header for each created file. #998
