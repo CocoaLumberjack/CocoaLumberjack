@@ -184,7 +184,7 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  *
  * To accept connections on any interface pass nil, or simply use the acceptOnPort:error: method.
  **/
-- (BOOL)acceptOnInterface:(NSString *)interface port : (uint16_t)port error : (NSError **)errPtr;
+- (BOOL)acceptOnInterface:(NSString *)interface port:(uint16_t)port error:(NSError **)errPtr;
 
 #pragma mark Connecting
 
@@ -241,8 +241,8 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
 - (BOOL)connectToHost:(NSString *)host
                onPort:(uint16_t)port
          viaInterface:(NSString *)interface
-        withTimeout : (NSTimeInterval)timeout
-        error : (NSError **)errPtr;
+          withTimeout:(NSTimeInterval)timeout
+                error:(NSError **)errPtr;
 
 /**
  * Connects to the given address, specified as a sockaddr structure wrapped in a NSData object.
@@ -299,8 +299,8 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  **/
 - (BOOL)connectToAddress:(NSData *)remoteAddr
             viaInterface:(NSString *)interface
-        withTimeout : (NSTimeInterval)timeout
-        error : (NSError **)errPtr;
+             withTimeout:(NSTimeInterval)timeout
+                   error:(NSError **)errPtr;
 
 #pragma mark Disconnecting
 

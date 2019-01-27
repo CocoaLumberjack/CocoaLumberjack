@@ -157,13 +157,13 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 /**
  *  Called when a log file was archived. Executed on global queue with default priority.
  */
-- (void)didArchiveLogFile:(NSString *)logFilePath NS_SWIFT_NAME(didArchiveLogFile(atPath:));
+- (void)didArchiveLogFile:(NSString *) logFilePath NS_SWIFT_NAME(didArchiveLogFile(atPath:));
 
 /**
  *  Called when the roll action was executed and the log was archived.
  *  Executed on global queue with default priority.
  */
-- (void)didRollAndArchiveLogFile:(NSString *)logFilePath NS_SWIFT_NAME(didRollAndArchiveLogFile(atPath:));
+- (void)didRollAndArchiveLogFile:(NSString *) logFilePath NS_SWIFT_NAME(didRollAndArchiveLogFile(atPath:));
 
 @end
 
@@ -253,7 +253,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *
  * You can change it by overriding `newLogFileName` and `isLogFile:` methods.
  **/
-- (BOOL)isLogFile:(NSString *)fileName NS_SWIFT_NAME(isLogFile(withName:));
+- (BOOL)isLogFile:(NSString *) fileName NS_SWIFT_NAME(isLogFile(withName:));
 
 /**
  * New log files are created empty by default in `createNewLogFile:` method
@@ -427,8 +427,8 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *  You can optionally force the current log file to be rolled with this method.
  *  CompletionBlock will be called on main queue.
  */
-- (void)rollLogFileWithCompletionBlock          :(void(^__nullable)(void))completionBlock
-        NS_SWIFT_NAME(rollLogFile(withCompletion:));
+- (void)rollLogFileWithCompletionBlock      :(void (^ __nullable)(void)) completionBlock
+    NS_SWIFT_NAME(rollLogFile(withCompletion:));
 
 /**
  *  Method is deprecated.
@@ -490,13 +490,13 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 @property (nonatomic, readwrite) BOOL isArchived;
 
-+ (instancetype)logFileWithPath:(NSString *)filePath NS_SWIFT_UNAVAILABLE("Use init(filePath:)");
++ (instancetype)logFileWithPath:(NSString *) filePath NS_SWIFT_UNAVAILABLE("Use init(filePath:)");
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithFilePath:(NSString *)filePath NS_DESIGNATED_INITIALIZER;
 
 - (void)reset;
-- (void)renameFile:(NSString *)newFileName NS_SWIFT_NAME(renameFile(to:));
+- (void)renameFile:(NSString *) newFileName NS_SWIFT_NAME(renameFile(to:));
 
 #if TARGET_IPHONE_SIMULATOR
 

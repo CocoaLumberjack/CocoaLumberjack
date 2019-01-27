@@ -41,7 +41,7 @@
  *  @param blue  blue channel, between 0 and 1
  *  @param alpha alpha channel, between 0 and 1
  */
-- (void)getRed:(CGFloat *)red green:(CGFloat *)green blue:(CGFloat *)blue alpha:(CGFloat *)alpha NS_SWIFT_NAME(get(red:green:blue:alpha:));
+- (void)getRed:(CGFloat *)red green:(CGFloat *)green blue:(CGFloat *)blue alpha:(CGFloat *) alpha NS_SWIFT_NAME(get(red:green:blue:alpha:));
 
 @end
 

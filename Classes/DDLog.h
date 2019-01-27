@@ -301,7 +301,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
         line:(NSUInteger)line
          tag:(id __nullable)tag
       format:(NSString *)format
-        args:(va_list)argList NS_SWIFT_NAME(log(asynchronous:level:flag:context:file:function:line:tag:format:arguments:));
+        args:(va_list) argList NS_SWIFT_NAME(log(asynchronous:level:flag:context:file:function:line:tag:format:arguments:));
 
 /**
  * Logging Primitive.
@@ -329,7 +329,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
         line:(NSUInteger)line
          tag:(id __nullable)tag
       format:(NSString *)format
-        args:(va_list)argList NS_SWIFT_NAME(log(asynchronous:level:flag:context:file:function:line:tag:format:arguments:));
+        args:(va_list) argList NS_SWIFT_NAME(log(asynchronous:level:flag:context:file:function:line:tag:format:arguments:));
 
 /**
  * Logging Primitive.
@@ -340,7 +340,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  *  @param logMessage   the log message stored in a `DDLogMessage` model object
  */
 + (void)log:(BOOL)asynchronous
-    message:(DDLogMessage *)logMessage NS_SWIFT_NAME(log(asynchronous:message:));
+    message:(DDLogMessage *) logMessage NS_SWIFT_NAME(log(asynchronous:message:));
 
 /**
  * Logging Primitive.
@@ -351,7 +351,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  *  @param logMessage   the log message stored in a `DDLogMessage` model object
  */
 - (void)log:(BOOL)asynchronous
-    message:(DDLogMessage *)logMessage NS_SWIFT_NAME(log(asynchronous:message:));
+    message:(DDLogMessage *) logMessage NS_SWIFT_NAME(log(asynchronous:message:));
 
 /**
  * Since logging can be asynchronous, there may be times when you want to flush the logs.
@@ -570,7 +570,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  *
  *  @param logMessage the message (model)
  */
-- (void)logMessage:(DDLogMessage *)logMessage NS_SWIFT_NAME(log(message:));
+- (void)logMessage:(DDLogMessage *) logMessage NS_SWIFT_NAME(log(message:));
 
 /**
  * Formatters may optionally be added to any logger.
@@ -663,7 +663,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  * The formatter may also optionally filter the log message by returning nil,
  * in which case the logger will not log the message.
  **/
-- (NSString *__nullable)formatLogMessage:(DDLogMessage *)logMessage NS_SWIFT_NAME(format(message:));
+- (NSString *__nullable)formatLogMessage:(DDLogMessage *) logMessage NS_SWIFT_NAME(format(message:));
 
 @optional
 

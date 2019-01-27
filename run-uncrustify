@@ -3,4 +3,4 @@
 root="$(dirname "${BASH_SOURCE[0]}")"
 cd "$root"
 
-find -E . -iregex ".*\.(h|m|mm)" -type f -exec uncrustify --no-backup -c uncrustify.cfg {} +
+find -E . -iregex ".*\.(h|m)" -type f -exec uncrustify -l OC --no-backup -c uncrustify.cfg {} +

@@ -36,17 +36,17 @@
 /**
  *  Add a new formatter
  */
-- (void)addFormatter:(id<DDLogFormatter>)formatter NS_SWIFT_NAME(add(_:));
+- (void)addFormatter:(id<DDLogFormatter>) formatter NS_SWIFT_NAME(add(_:));
 
 /**
  *  Remove a formatter
  */
-- (void)removeFormatter:(id<DDLogFormatter>)formatter NS_SWIFT_NAME(remove(_:));
+- (void)removeFormatter:(id<DDLogFormatter>) formatter NS_SWIFT_NAME(remove(_:));
 
 /**
  *  Remove all existing formatters
  */
-- (void)removeAllFormatters NS_SWIFT_NAME(removeAll());
+- (void) removeAllFormatters NS_SWIFT_NAME(removeAll());
 
 /**
  *  Check if a certain formatter is used
