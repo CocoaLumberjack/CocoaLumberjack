@@ -2,37 +2,36 @@
 
 @implementation HTTPErrorResponse
 
--(id)initWithErrorCode:(int)httpErrorCode
+- (id)initWithErrorCode:(int)httpErrorCode
 {
-    if ((self = [super init]))
-    {
+    if ((self = [super init])) {
         _status = httpErrorCode;
     }
 
     return self;
 }
 
-- (UInt64) contentLength {
+- (UInt64)contentLength {
     return 0;
 }
 
-- (UInt64) offset {
+- (UInt64)offset {
     return 0;
 }
 
 - (void)setOffset:(UInt64)offset {
-    ;
 }
 
-- (NSData*) readDataOfLength:(NSUInteger)length {
+- (NSData *)readDataOfLength:(NSUInteger)length {
     return nil;
 }
 
-- (BOOL) isDone {
+- (BOOL)isDone {
     return YES;
 }
 
-- (NSInteger) status {
+- (NSInteger)status {
     return _status;
 }
+
 @end

@@ -103,71 +103,71 @@
 /**
  *  Flags accompany each log. They are used together with levels to filter out logs.
  */
-typedef NS_OPTIONS(NSUInteger, DDLogFlag){
+typedef NS_OPTIONS (NSUInteger, DDLogFlag) {
     /**
      *  0...00001 DDLogFlagError
      */
-    DDLogFlagError      = (1 << 0),
-    
+    DDLogFlagError   = (1 << 0),
+
     /**
      *  0...00010 DDLogFlagWarning
      */
-    DDLogFlagWarning    = (1 << 1),
-    
+    DDLogFlagWarning = (1 << 1),
+
     /**
      *  0...00100 DDLogFlagInfo
      */
-    DDLogFlagInfo       = (1 << 2),
-    
+    DDLogFlagInfo    = (1 << 2),
+
     /**
      *  0...01000 DDLogFlagDebug
      */
-    DDLogFlagDebug      = (1 << 3),
-    
+    DDLogFlagDebug   = (1 << 3),
+
     /**
      *  0...10000 DDLogFlagVerbose
      */
-    DDLogFlagVerbose    = (1 << 4)
+    DDLogFlagVerbose = (1 << 4)
 };
 
 /**
  *  Log levels are used to filter out logs. Used together with flags.
  */
-typedef NS_ENUM(NSUInteger, DDLogLevel){
+typedef NS_ENUM (NSUInteger, DDLogLevel) {
     /**
      *  No logs
      */
-    DDLogLevelOff       = 0,
-    
+    DDLogLevelOff     = 0,
+
     /**
      *  Error logs only
      */
-    DDLogLevelError     = (DDLogFlagError),
-    
+    DDLogLevelError   = (DDLogFlagError),
+
     /**
      *  Error and warning logs
      */
-    DDLogLevelWarning   = (DDLogLevelError   | DDLogFlagWarning),
-    
+    DDLogLevelWarning = (DDLogLevelError   | DDLogFlagWarning),
+
     /**
      *  Error, warning and info logs
      */
-    DDLogLevelInfo      = (DDLogLevelWarning | DDLogFlagInfo),
-    
+    DDLogLevelInfo    = (DDLogLevelWarning | DDLogFlagInfo),
+
     /**
      *  Error, warning, info and debug logs
      */
-    DDLogLevelDebug     = (DDLogLevelInfo    | DDLogFlagDebug),
-    
+    DDLogLevelDebug   = (DDLogLevelInfo    | DDLogFlagDebug),
+
     /**
      *  Error, warning, info, debug and verbose logs
      */
-    DDLogLevelVerbose   = (DDLogLevelDebug   | DDLogFlagVerbose),
-    
+    DDLogLevelVerbose = (DDLogLevelDebug   | DDLogFlagVerbose),
+
     /**
      *  All logs (1...11111)
      */
-    DDLogLevelAll       = NSUIntegerMax
+    DDLogLevelAll     = NSUIntegerMax
 };
 
 NS_ASSUME_NONNULL_BEGIN
@@ -188,7 +188,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  *
  * For example: DDLogWarn(@"%@: Unable to find thingy", THIS_FILE) -> @"MyViewController: Unable to find thingy"
  **/
-#define THIS_FILE         (DDExtractFileNameWithoutExtension(__FILE__, NO))
+#define THIS_FILE   (DDExtractFileNameWithoutExtension(__FILE__, NO))
 
 /**
  * The THIS_METHOD macro gives you the name of the current objective-c method.
@@ -198,7 +198,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  * Note: This does NOT work in straight C functions (non objective-c).
  * Instead you should use the predefined __FUNCTION__ macro.
  **/
-#define THIS_METHOD       NSStringFromSelector(_cmd)
+#define THIS_METHOD NSStringFromSelector(_cmd)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -239,15 +239,15 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  *  @param tag          potential tag
  *  @param format       the log format
  */
-+ (void)log:(BOOL)asynchronous
-      level:(DDLogLevel)level
-       flag:(DDLogFlag)flag
-    context:(NSInteger)context
-       file:(const char *)file
-   function:(const char *)function
-       line:(NSUInteger)line
-        tag:(id __nullable)tag
-     format:(NSString *)format, ... NS_FORMAT_FUNCTION(9,10);
++ (void) log:(BOOL)asynchronous
+       level:(DDLogLevel)level
+        flag:(DDLogFlag)flag
+     context:(NSInteger)context
+        file:(const char *)file
+    function:(const char *)function
+        line:(NSUInteger)line
+         tag:(id __nullable)tag
+      format:(NSString *)format, ... NS_FORMAT_FUNCTION(9, 10);
 
 /**
  * Logging Primitive.
@@ -265,15 +265,15 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  *  @param tag          potential tag
  *  @param format       the log format
  */
-- (void)log:(BOOL)asynchronous
-      level:(DDLogLevel)level
-       flag:(DDLogFlag)flag
-    context:(NSInteger)context
-       file:(const char *)file
-   function:(const char *)function
-       line:(NSUInteger)line
-        tag:(id __nullable)tag
-     format:(NSString *)format, ... NS_FORMAT_FUNCTION(9,10);
+- (void) log:(BOOL)asynchronous
+       level:(DDLogLevel)level
+        flag:(DDLogFlag)flag
+     context:(NSInteger)context
+        file:(const char *)file
+    function:(const char *)function
+        line:(NSUInteger)line
+         tag:(id __nullable)tag
+      format:(NSString *)format, ... NS_FORMAT_FUNCTION(9, 10);
 
 /**
  * Logging Primitive.
@@ -292,16 +292,16 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  *  @param format       the log format
  *  @param argList      the arguments list as a va_list
  */
-+ (void)log:(BOOL)asynchronous
-      level:(DDLogLevel)level
-       flag:(DDLogFlag)flag
-    context:(NSInteger)context
-       file:(const char *)file
-   function:(const char *)function
-       line:(NSUInteger)line
-        tag:(id __nullable)tag
-     format:(NSString *)format
-       args:(va_list)argList NS_SWIFT_NAME(log(asynchronous:level:flag:context:file:function:line:tag:format:arguments:));
++ (void) log:(BOOL)asynchronous
+       level:(DDLogLevel)level
+        flag:(DDLogFlag)flag
+     context:(NSInteger)context
+        file:(const char *)file
+    function:(const char *)function
+        line:(NSUInteger)line
+         tag:(id __nullable)tag
+      format:(NSString *)format
+        args:(va_list)argList NS_SWIFT_NAME(log(asynchronous:level:flag:context:file:function:line:tag:format:arguments:));
 
 /**
  * Logging Primitive.
@@ -320,16 +320,16 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  *  @param format       the log format
  *  @param argList      the arguments list as a va_list
  */
-- (void)log:(BOOL)asynchronous
-      level:(DDLogLevel)level
-       flag:(DDLogFlag)flag
-    context:(NSInteger)context
-       file:(const char *)file
-   function:(const char *)function
-       line:(NSUInteger)line
-        tag:(id __nullable)tag
-     format:(NSString *)format
-       args:(va_list)argList NS_SWIFT_NAME(log(asynchronous:level:flag:context:file:function:line:tag:format:arguments:));
+- (void) log:(BOOL)asynchronous
+       level:(DDLogLevel)level
+        flag:(DDLogFlag)flag
+     context:(NSInteger)context
+        file:(const char *)file
+    function:(const char *)function
+        line:(NSUInteger)line
+         tag:(id __nullable)tag
+      format:(NSString *)format
+        args:(va_list)argList NS_SWIFT_NAME(log(asynchronous:level:flag:context:file:function:line:tag:format:arguments:));
 
 /**
  * Logging Primitive.
@@ -488,12 +488,12 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
 /**
  *  Return all the current loggers
  */
-@property (class, nonatomic, copy, readonly) NSArray<id<DDLogger>> *allLoggers;
+@property (class, nonatomic, copy, readonly) NSArray<id<DDLogger> > *allLoggers;
 
 /**
  *  Return all the current loggers
  */
-@property (nonatomic, copy, readonly) NSArray<id<DDLogger>> *allLoggers;
+@property (nonatomic, copy, readonly) NSArray<id<DDLogger> > *allLoggers;
 
 /**
  *  Return all the current loggers with their level (aka DDLoggerInformation).
@@ -520,7 +520,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
 /**
  *  Returns an array with the classes names that are using registered dynamic logging
  */
-@property (class, nonatomic, copy, readonly) NSArray<NSString*> *registeredClassNames;
+@property (class, nonatomic, copy, readonly) NSArray<NSString *> *registeredClassNames;
 
 /**
  *  Returns the current log level for a certain class
@@ -559,7 +559,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *  This protocol describes a basic logger behavior. 
+ *  This protocol describes a basic logger behavior.
  *  Basically, it can log messages, store a logFormatter plus a bunch of optional behaviors.
  *  (i.e. flush, get its loggerQueue, get its name, ...
  */
@@ -663,7 +663,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  * The formatter may also optionally filter the log message by returning nil,
  * in which case the logger will not log the message.
  **/
-- (NSString * __nullable)formatLogMessage:(DDLogMessage *)logMessage NS_SWIFT_NAME(format(message:));
+- (NSString *__nullable)formatLogMessage:(DDLogMessage *)logMessage NS_SWIFT_NAME(format(message:));
 
 @optional
 
@@ -686,7 +686,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  * If a formatter is explicitly not thread-safe, it may wish to throw an exception if added to multiple loggers.
  * Or if a formatter has potentially thread-unsafe code (e.g. NSDateFormatter),
  * it could possibly use these hooks to switch to thread-safe versions of the code or use dispatch_set_specific()
-.* to add its own specific values.
+   .* to add its own specific values.
  **/
 - (void)didAddToLogger:(id <DDLogger>)logger inQueue:(dispatch_queue_t)queue;
 
@@ -729,7 +729,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  * }
  * ```
  **/
-@property (class, nonatomic, readwrite, setter=ddSetLogLevel:) DDLogLevel ddLogLevel;
+@property (class, nonatomic, readwrite, setter = ddSetLogLevel:) DDLogLevel ddLogLevel;
 
 @end
 
@@ -744,7 +744,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
 /**
  *  Log message options, allow copying certain log elements
  */
-typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
+typedef NS_OPTIONS (NSInteger, DDLogMessageOptions) {
     /**
      *  Use this to use a copy of the file path
      */
@@ -763,8 +763,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
  * The `DDLogMessage` class encapsulates information about the log message.
  * If you write custom loggers or formatters, you will be dealing with objects of this class.
  **/
-@interface DDLogMessage : NSObject <NSCopying>
-{
+@interface DDLogMessage : NSObject <NSCopying> {
     // Direct accessors to be used only for performance
     @public
     NSString *_message;
@@ -820,11 +819,11 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
                            flag:(DDLogFlag)flag
                         context:(NSInteger)context
                            file:(NSString *)file
-                       function:(NSString * __nullable)function
+                       function:(NSString *__nullable)function
                            line:(NSUInteger)line
                             tag:(id __nullable)tag
                         options:(DDLogMessageOptions)options
-                      timestamp:(NSDate * __nullable)timestamp NS_DESIGNATED_INITIALIZER;
+                      timestamp:(NSDate *__nullable)timestamp NS_DESIGNATED_INITIALIZER;
 
 /**
  * Read-only properties
@@ -839,7 +838,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
 @property (readonly, nonatomic) NSInteger context;
 @property (readonly, nonatomic) NSString *file;
 @property (readonly, nonatomic) NSString *fileName;
-@property (readonly, nonatomic) NSString * __nullable function;
+@property (readonly, nonatomic) NSString *__nullable function;
 @property (readonly, nonatomic) NSUInteger line;
 @property (readonly, nonatomic) id __nullable tag;
 @property (readonly, nonatomic) DDLogMessageOptions options;
@@ -870,8 +869,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
  * Logger implementations may simply extend this class,
  * and they can ACCESS THE FORMATTER VARIABLE DIRECTLY from within their `logMessage:` method!
  **/
-@interface DDAbstractLogger : NSObject <DDLogger>
-{
+@interface DDAbstractLogger : NSObject <DDLogger> {
     // Direct accessors to be used only for performance
     @public
     id <DDLogFormatter> _logFormatter;
@@ -886,12 +884,12 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
 /**
  *  Return YES if the current logger uses a global queue for logging
  */
-@property (nonatomic, readonly, getter=isOnGlobalLoggingQueue)  BOOL onGlobalLoggingQueue;
+@property (nonatomic, readonly, getter = isOnGlobalLoggingQueue)  BOOL onGlobalLoggingQueue;
 
 /**
  *  Return YES if the current logger uses the internal designated queue for logging
  */
-@property (nonatomic, readonly, getter=isOnInternalLoggerQueue) BOOL onInternalLoggerQueue;
+@property (nonatomic, readonly, getter = isOnInternalLoggerQueue) BOOL onInternalLoggerQueue;
 
 @end
 
@@ -905,7 +903,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
 @property (nonatomic, readonly) DDLogLevel level;
 
 + (DDLoggerInformation *)informationWithLogger:(id <DDLogger>)logger
-                           andLevel:(DDLogLevel)level;
+                                      andLevel:(DDLogLevel)level;
 
 @end
 

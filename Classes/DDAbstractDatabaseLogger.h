@@ -28,14 +28,13 @@
  * and override the methods in the implementation file that are prefixed with "db_".
  **/
 @interface DDAbstractDatabaseLogger : DDAbstractLogger {
-    
-@protected
+    @protected
     NSUInteger _saveThreshold;
     NSTimeInterval _saveInterval;
     NSTimeInterval _maxAge;
     NSTimeInterval _deleteInterval;
     BOOL _deleteOnEverySave;
-    
+
     BOOL _saveTimerSuspended;
     NSUInteger _unsavedCount;
     dispatch_time_t _unsavedTime;

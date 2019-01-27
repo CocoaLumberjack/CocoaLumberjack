@@ -20,14 +20,15 @@
 
 @implementation DDBasicMockArgument
 
-- (instancetype)initWithBlock:(void(^)(id object))block {
+- (instancetype)initWithBlock:(void (^)(id object))block {
     if (self = [super init]) {
         self.block = block;
     }
+
     return self;
 }
 
-+ (instancetype)alongsideWithBlock:(void(^)(id object))block {
++ (instancetype)alongsideWithBlock:(void (^)(id object))block {
     return [[self alloc] initWithBlock:block];
 }
 
@@ -44,6 +45,7 @@
         self.selector = selector;
         self.position = position;
     }
+
     return self;
 }
 
@@ -55,11 +57,11 @@
     if (object == self) {
         return YES;
     }
-    
+
     if (![object isKindOfClass:self.class]) {
         return NO;
     }
-    
+
     __auto_type position = (DDBasicMockArgumentPosition *)object;
     return [position.selector isEqualToString:self.selector] && [position.position isEqualToNumber:self.position];
 }
@@ -81,7 +83,7 @@
 @interface DDBasicMock ()
 @property (strong, nonatomic, readwrite) id object;
 @property (assign, nonatomic, readwrite) BOOL stubEnabled;
-@property (copy, nonatomic, readwrite) NSDictionary <DDBasicMockArgumentPosition *, DDBasicMockArgument *>*positionsAndArguments; // extend later to NSArray if needed.
+@property (copy, nonatomic, readwrite) NSDictionary <DDBasicMockArgumentPosition *, DDBasicMockArgument *> *positionsAndArguments; // extend later to NSArray if needed.
 @end
 
 @implementation DDBasicMock
@@ -110,6 +112,7 @@
     NSMutableDictionary *dictionary = [self.positionsAndArguments mutableCopy];
     __auto_type thePosition = [[DDBasicMockArgumentPosition alloc] initWithSelector:NSStringFromSelector(selector)
                                                                            position:@(index)];
+
     dictionary[thePosition] = [argument copy];
     self.positionsAndArguments = dictionary;
 }
@@ -117,6 +120,7 @@
 - (void)forwardInvocation:(NSInvocation *)invocation {
     __auto_type numberOfArguments = [[invocation methodSignature] numberOfArguments];
     BOOL found = NO;
+
     for (NSUInteger i = 2; i < numberOfArguments; ++i) {
         void *abc = nil;
         [invocation getArgument:&abc atIndex:i];
@@ -129,6 +133,7 @@
             argListener.block(argument);
         }
     }
+
     if (!found) {
         [invocation invokeWithTarget:self.object];
     }

@@ -9,10 +9,9 @@
 
 @class DDFileLogger;
 
-@interface RollingTestMacAppDelegate : NSObject <NSApplicationDelegate>
-{
+@interface RollingTestMacAppDelegate : NSObject <NSApplicationDelegate> {
     DDFileLogger *fileLogger;
-    
+
     NSWindow *__unsafe_unretained window;
 }
 

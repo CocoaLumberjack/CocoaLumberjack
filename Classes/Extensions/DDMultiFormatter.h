@@ -31,7 +31,7 @@
 /**
  *  Array of chained formatters
  */
-@property (readonly) NSArray<id<DDLogFormatter>> *formatters;
+@property (readonly) NSArray<id<DDLogFormatter> > *formatters;
 
 /**
  *  Add a new formatter

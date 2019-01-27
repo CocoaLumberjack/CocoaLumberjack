@@ -17,17 +17,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DDSMocking: NSObject
+@interface DDSMocking : NSObject
 @end
 
 NS_ASSUME_NONNULL_END
 
-@interface DDBasicMockArgument: NSObject
-@property (copy, nonatomic, readwrite) void(^block)(id object);
-+ (instancetype)alongsideWithBlock:(void(^)(id object))block;
+@interface DDBasicMockArgument : NSObject
+@property (copy, nonatomic, readwrite) void (^ block)(id object);
++ (instancetype)alongsideWithBlock:(void (^)(id object))block;
 @end
 
-@interface DDBasicMockArgumentPosition: NSObject <NSCopying>
+@interface DDBasicMockArgumentPosition : NSObject <NSCopying>
 @property (copy, nonatomic, readwrite) NSString *selector;
 @property (copy, nonatomic, readwrite) NSNumber *position;
 - (instancetype)initWithSelector:(NSString *)selector position:(NSNumber *)position;

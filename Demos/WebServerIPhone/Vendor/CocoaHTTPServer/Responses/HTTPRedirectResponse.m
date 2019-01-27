@@ -1,7 +1,7 @@
 #import "HTTPRedirectResponse.h"
 #import "HTTPLogging.h"
 
-#if ! __has_feature(objc_arc)
+#if !__has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
@@ -14,12 +14,12 @@ static const DDLogLevel httpLogLevel = DDLogLevelOff; // | HTTP_LOG_FLAG_TRACE;
 
 - (id)initWithPath:(NSString *)path
 {
-    if ((self = [super init]))
-    {
+    if ((self = [super init])) {
         HTTPLogTrace();
-        
+
         redirectPath = [path copy];
     }
+
     return self;
 }
 
@@ -41,7 +41,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelOff; // | HTTP_LOG_FLAG_TRACE;
 - (NSData *)readDataOfLength:(NSUInteger)length
 {
     HTTPLogTrace();
-    
+
     return nil;
 }
 
@@ -53,21 +53,20 @@ static const DDLogLevel httpLogLevel = DDLogLevelOff; // | HTTP_LOG_FLAG_TRACE;
 - (NSDictionary *)httpHeaders
 {
     HTTPLogTrace();
-    
+
     return [NSDictionary dictionaryWithObject:redirectPath forKey:@"Location"];
 }
 
 - (NSInteger)status
 {
     HTTPLogTrace();
-    
+
     return 302;
 }
 
 - (void)dealloc
 {
     HTTPLogTrace();
-    
 }
 
 @end

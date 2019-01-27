@@ -29,10 +29,10 @@
     DDTTYLogger.sharedInstance.logFormatter = [SimpleFormatter new];
     [DDLog addLogger:DDTTYLogger.sharedInstance];
     [DDLog addLogger:DDASLLogger.sharedInstance];
-    
+
     [DDASLLogCapture start];
-    
+
     return YES;
 }
-							
+
 @end

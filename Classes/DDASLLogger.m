@@ -22,9 +22,9 @@
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-const char* const kDDASLKeyDDLog = "DDLog";
+const char *const kDDASLKeyDDLog = "DDLog";
 
-const char* const kDDASLDDLogValue = "1";
+const char *const kDDASLDDLogValue = "1";
 
 static DDASLLogger *sharedInstance;
 
@@ -68,7 +68,7 @@ static DDASLLogger *sharedInstance;
         return;
     }
 
-    NSString * message = _logFormatter ? [_logFormatter formatLogMessage:logMessage] : logMessage->_message;
+    NSString *message = _logFormatter ? [_logFormatter formatLogMessage:logMessage] : logMessage->_message;
 
     if (message) {
         const char *msg = [message UTF8String];
@@ -77,15 +77,20 @@ static DDASLLogger *sharedInstance;
         switch (logMessage->_flag) {
             // Note: By default ASL will filter anything above level 5 (Notice).
             // So our mappings shouldn't go above that level.
-            case DDLogFlagError     : aslLogLevel = ASL_LEVEL_CRIT;     break;
-            case DDLogFlagWarning   : aslLogLevel = ASL_LEVEL_ERR;      break;
-            case DDLogFlagInfo      : aslLogLevel = ASL_LEVEL_WARNING;  break; // Regular NSLog's level
-            case DDLogFlagDebug     :
-            case DDLogFlagVerbose   :
-            default                 : aslLogLevel = ASL_LEVEL_NOTICE;   break;
+            case DDLogFlagError: aslLogLevel = ASL_LEVEL_CRIT;     break;
+
+            case DDLogFlagWarning: aslLogLevel = ASL_LEVEL_ERR;      break;
+
+            case DDLogFlagInfo: aslLogLevel = ASL_LEVEL_WARNING;  break;       // Regular NSLog's level
+
+            case DDLogFlagDebug:
+            case DDLogFlagVerbose:
+            default: aslLogLevel = ASL_LEVEL_NOTICE;   break;
         }
 
-        static char const *const level_strings[] = { "0", "1", "2", "3", "4", "5", "6", "7" };
+        static char const *const level_strings[] = {
+            "0", "1", "2", "3", "4", "5", "6", "7"
+        };
 
         // NSLog uses the current euid to set the ASL_KEY_READ_UID.
         uid_t const readUID = geteuid();
@@ -103,6 +108,7 @@ static DDASLLogger *sharedInstance;
                  @"Unhandled ASL log level.");
 
         aslmsg m = asl_new(ASL_TYPE_MSG);
+
         if (m != NULL) {
             if (asl_set(m, ASL_KEY_LEVEL, level_strings[aslLogLevel]) == 0 &&
                 asl_set(m, ASL_KEY_MSG, msg) == 0 &&
@@ -110,8 +116,10 @@ static DDASLLogger *sharedInstance;
                 asl_set(m, kDDASLKeyDDLog, kDDASLDDLogValue) == 0) {
                 asl_send(_client, m);
             }
+
             asl_free(m);
         }
+
         //TODO handle asl_* failures non-silently?
     }
 }

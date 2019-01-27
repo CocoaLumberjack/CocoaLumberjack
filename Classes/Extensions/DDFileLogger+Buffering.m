@@ -30,6 +30,7 @@ static inline NSUInteger p_DDGetDefaultBufferSizeBytesMax(const BOOL max) {
 
     for (int i = 0; i < count; i++) {
         const char *name = mntbufp[i].f_mntonname;
+
         if (strlen(name) == 1 && *name == '/') {
             return max ? mntbufp[i].f_iosize : mntbufp[i].f_bsize;
         }
@@ -41,6 +42,7 @@ static inline NSUInteger p_DDGetDefaultBufferSizeBytesMax(const BOOL max) {
 static NSUInteger DDGetMaxBufferSizeBytes() {
     static NSUInteger maxBufferSize = 0;
     static dispatch_once_t onceToken;
+
     dispatch_once(&onceToken, ^{
         maxBufferSize = p_DDGetDefaultBufferSizeBytesMax(YES);
     });
@@ -50,6 +52,7 @@ static NSUInteger DDGetMaxBufferSizeBytes() {
 static NSUInteger DDGetDefaultBufferSizeBytes() {
     static NSUInteger defaultBufferSize = 0;
     static dispatch_once_t onceToken;
+
     dispatch_once(&onceToken, ^{
         defaultBufferSize = p_DDGetDefaultBufferSizeBytesMax(NO);
     });
@@ -100,6 +103,7 @@ static NSUInteger DDGetDefaultBufferSizeBytes() {
 
 - (void)lt_sendBufferedDataToFileLogger {
     NSData *data = [_buffer propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
+
     [_fileLogger lt_logData:data];
     [self flushBuffer];
 }
@@ -109,6 +113,7 @@ static NSUInteger DDGetDefaultBufferSizeBytes() {
 - (void)logMessage:(DDLogMessage *)logMessage {
     NSData *data = [_fileLogger lt_dataForMessage:logMessage];
     NSUInteger length = data.length;
+
     if (length == 0) {
         return;
     }

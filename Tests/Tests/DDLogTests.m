@@ -21,7 +21,9 @@
 
 @implementation DDTestLogger
 @synthesize logFormatter;
-- (void)logMessage:(nonnull DDLogMessage *)logMessage {}
+- (void)logMessage:(nonnull DDLogMessage *)logMessage {
+}
+
 @end
 
 @interface DDLogTests : XCTestCase
@@ -44,23 +46,25 @@
     [super tearDown];
 }
 
-
 #pragma mark - Logger management
 
 - (void)testAddLoggerAddsNewLoggerWithDDLogLevelAll {
     __auto_type logger = [DDTestLogger new];
+
     [DDLog addLogger:logger];
     XCTAssertEqual([DDLog allLoggers].count, 1);
 }
 
 - (void)testAddLoggerWithLevelAddLoggerWithSpecifiedLevelMask {
     __auto_type logger = [DDTestLogger new];
+
     [DDLog addLogger:logger withLevel:DDLogLevelDebug | DDLogLevelError];
     XCTAssertEqual([DDLog allLoggers].count, 1);
 }
 
 - (void)testRemoveLoggerRemovesExistingLogger {
     __auto_type logger = [DDTestLogger new];
+
     [DDLog addLogger:logger];
     [DDLog addLogger:[DDTestLogger new]];
     [DDLog removeLogger:logger];

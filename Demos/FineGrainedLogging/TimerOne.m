@@ -15,22 +15,22 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose | LOG_FLAG_TIMERS;
 
 - (id)init
 {
-    if ((self = [super init]))
-    {
+    if ((self = [super init])) {
         DDLogVerbose(@"TimerOne: Creating timers...");
-        
+
         foodTimer = [NSTimer scheduledTimerWithTimeInterval:2.0
+                                                     target:self
+                                                   selector:@selector(foodTimerDidFire:)
+                                                   userInfo:nil
+                                                    repeats:YES];
+
+        sleepTimer = [NSTimer scheduledTimerWithTimeInterval:6.0
                                                       target:self
-                                                    selector:@selector(foodTimerDidFire:)
+                                                    selector:@selector(sleepTimerDidFire:)
                                                     userInfo:nil
                                                      repeats:YES];
-        
-        sleepTimer = [NSTimer scheduledTimerWithTimeInterval:6.0
-                                                       target:self
-                                                     selector:@selector(sleepTimerDidFire:)
-                                                     userInfo:nil
-                                                      repeats:YES];
     }
+
     return self;
 }
 
@@ -47,11 +47,10 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose | LOG_FLAG_TIMERS;
 - (void)dealloc
 {
     DDLogVerbose(@"TimerOne: dealloc");
-    
+
     [foodTimer invalidate];
-    
+
     [sleepTimer invalidate];
-    
 }
 
 @end

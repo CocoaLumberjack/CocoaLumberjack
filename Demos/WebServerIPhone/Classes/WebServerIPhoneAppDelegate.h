@@ -11,12 +11,11 @@
 @class DDFileLogger;
 @class HTTPServer;
 
-@interface WebServerIPhoneAppDelegate : NSObject <UIApplicationDelegate>
-{
+@interface WebServerIPhoneAppDelegate : NSObject <UIApplicationDelegate> {
     DDFileLogger *fileLogger;
-    
+
     HTTPServer *httpServer;
-    
+
     UIWindow *window;
     WebServerIPhoneViewController *viewController;
 }

@@ -25,9 +25,11 @@
 
 - (instancetype)initWithLogFileHeader:(NSString *)header {
     self = [super initWithLogsDirectory:[NSTemporaryDirectory() stringByAppendingString:[NSUUID UUID].UUIDString]];
+
     if (self) {
         _header = header;
     }
+
     return self;
 }
 

@@ -125,7 +125,7 @@
 
 - (void)updateAndResumeSaveTimer {
     if ((_saveTimer != NULL) && (_saveInterval > 0.0) && (_unsavedTime > 0.0)) {
-        uint64_t interval = (uint64_t)(_saveInterval * (NSTimeInterval) NSEC_PER_SEC);
+        uint64_t interval = (uint64_t)(_saveInterval * (NSTimeInterval)NSEC_PER_SEC);
         dispatch_time_t startTime = dispatch_time(_unsavedTime, (int64_t)interval);
 
         dispatch_source_set_timer(_saveTimer, startTime, interval, 1ull * NSEC_PER_SEC);
@@ -142,8 +142,8 @@
         _saveTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.loggerQueue);
 
         dispatch_source_set_event_handler(_saveTimer, ^{ @autoreleasepool {
-                                                            [self performSaveAndSuspendSaveTimer];
-                                                        } });
+                                                             [self performSaveAndSuspendSaveTimer];
+                                                         } });
 
         _saveTimerSuspended = YES;
     }
@@ -161,7 +161,7 @@
 
 - (void)updateDeleteTimer {
     if ((_deleteTimer != NULL) && (_deleteInterval > 0.0) && (_maxAge > 0.0)) {
-        int64_t interval = (int64_t)(_deleteInterval * (NSTimeInterval) NSEC_PER_SEC);
+        int64_t interval = (int64_t)(_deleteInterval * (NSTimeInterval)NSEC_PER_SEC);
         dispatch_time_t startTime;
 
         if (_lastDeleteTime > 0) {
@@ -180,8 +180,8 @@
 
         if (_deleteTimer != NULL) {
             dispatch_source_set_event_handler(_deleteTimer, ^{ @autoreleasepool {
-                                                                  [self performDelete];
-                                                              } });
+                                                                   [self performDelete];
+                                                               } });
 
             [self updateDeleteTimer];
 

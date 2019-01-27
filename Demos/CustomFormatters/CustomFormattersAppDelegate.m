@@ -20,17 +20,17 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Setup logging (with our custom formatter)
-    
+
     TestFormatter *formatter = [[TestFormatter alloc] init];
-    
+
     [[DDASLLogger sharedInstance] setLogFormatter:formatter];
     [[DDTTYLogger sharedInstance] setLogFormatter:formatter];
-    
+
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
-    
+
     // Log some messages
-    
+
     DDLogError(@"Paper Jam!");
     DDLogWarn(@"Low toner");
     DDLogInfo(@"Printing SalesProjections.doc");

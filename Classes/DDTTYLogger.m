@@ -32,11 +32,36 @@
     #define DD_NSLOG_LEVEL 2
 #endif
 
-#define NSLogError(frmt, ...)    do{ if(DD_NSLOG_LEVEL >= 1) NSLog((frmt), ##__VA_ARGS__); } while(0)
-#define NSLogWarn(frmt, ...)     do{ if(DD_NSLOG_LEVEL >= 2) NSLog((frmt), ##__VA_ARGS__); } while(0)
-#define NSLogInfo(frmt, ...)     do{ if(DD_NSLOG_LEVEL >= 3) NSLog((frmt), ##__VA_ARGS__); } while(0)
-#define NSLogDebug(frmt, ...)    do{ if(DD_NSLOG_LEVEL >= 4) NSLog((frmt), ##__VA_ARGS__); } while(0)
-#define NSLogVerbose(frmt, ...)  do{ if(DD_NSLOG_LEVEL >= 5) NSLog((frmt), ##__VA_ARGS__); } while(0)
+#define NSLogError(frmt, ...)              \
+    do {                                   \
+        if (DD_NSLOG_LEVEL >= 1) {         \
+            NSLog((frmt), ## __VA_ARGS__); \
+        }                                  \
+    } while (0)
+#define NSLogWarn(frmt, ...)               \
+    do {                                   \
+        if (DD_NSLOG_LEVEL >= 2) {         \
+            NSLog((frmt), ## __VA_ARGS__); \
+        }                                  \
+    } while (0)
+#define NSLogInfo(frmt, ...)               \
+    do {                                   \
+        if (DD_NSLOG_LEVEL >= 3) {         \
+            NSLog((frmt), ## __VA_ARGS__); \
+        }                                  \
+    } while (0)
+#define NSLogDebug(frmt, ...)              \
+    do {                                   \
+        if (DD_NSLOG_LEVEL >= 4) {         \
+            NSLog((frmt), ## __VA_ARGS__); \
+        }                                  \
+    } while (0)
+#define NSLogVerbose(frmt, ...)            \
+    do {                                   \
+        if (DD_NSLOG_LEVEL >= 5) {         \
+            NSLog((frmt), ## __VA_ARGS__); \
+        }                                  \
+    } while (0)
 
 // Xcode does NOT natively support colors in the Xcode debugging console.
 // You'll need to install the XcodeColors plugin to see colors in the Xcode console.
@@ -79,9 +104,9 @@
 #define MAP_TO_TERMINAL_APP_COLORS 1
 
 typedef struct {
-  uint8_t r;
-  uint8_t g;
-  uint8_t b;
+    uint8_t r;
+    uint8_t g;
+    uint8_t b;
 } DDRGBColor;
 
 @interface DDTTYLoggerColorProfile : NSObject {
@@ -125,11 +150,11 @@ typedef struct {
     NSString *_appName;
     char *_app;
     size_t _appLen;
-    
+
     NSString *_processID;
     char *_pid;
     size_t _pidLen;
-    
+
     BOOL _colorsEnabled;
     NSMutableArray *_colorProfilesArray;
     NSMutableDictionary *_colorProfilesDict;
@@ -146,7 +171,7 @@ static BOOL isaXcodeColorTTY;
 
 static NSArray *codes_fg = nil;
 static NSArray *codes_bg = nil;
-static NSArray *colors   = nil;
+static NSArray *colors = nil;
 
 static DDTTYLogger *sharedInstance;
 
@@ -161,7 +186,7 @@ static DDTTYLogger *sharedInstance;
         return;
     }
 
-    NSMutableArray *m_colors   = [NSMutableArray arrayWithCapacity:16];
+    NSMutableArray *m_colors = [NSMutableArray arrayWithCapacity:16];
 
     // In a standard shell only 16 colors are supported.
     //
@@ -212,22 +237,22 @@ static DDTTYLogger *sharedInstance;
     //
     // These are the default colors used by Apple's Terminal.app.
     DDRGBColor rgbColors[] = {
-        {  0,   0,   0}, // normal - black
-        {194,  54,  33}, // normal - red
-        { 37, 188,  36}, // normal - green
-        {173, 173,  39}, // normal - yellow
-        { 73,  46, 225}, // normal - blue
-        {211,  56, 211}, // normal - magenta
-        { 51, 187, 200}, // normal - cyan
-        {203, 204, 205}, // normal - gray
-        {129, 131, 131}, // bright - darkgray
-        {252,  57,  31}, // bright - red
-        { 49, 231,  34}, // bright - green
-        {234, 236,  35}, // bright - yellow
-        { 88,  51, 255}, // bright - blue
-        {249,  53, 248}, // bright - magenta
-        { 20, 240, 240}, // bright - cyan
-        {233, 235, 235}, // bright - white
+        {  0,  0,    0           }, // normal - black
+        { 194, 54,   33          }, // normal - red
+        { 37,  188,  36          }, // normal - green
+        { 173, 173,  39          }, // normal - yellow
+        { 73,  46,   225         }, // normal - blue
+        { 211, 56,   211         }, // normal - magenta
+        { 51,  187,  200         }, // normal - cyan
+        { 203, 204,  205         }, // normal - gray
+        { 129, 131,  131         }, // bright - darkgray
+        { 252, 57,   31          }, // bright - red
+        { 49,  231,  34          }, // bright - green
+        { 234, 236,  35          }, // bright - yellow
+        { 88,  51,   255         }, // bright - blue
+        { 249, 53,   248         }, // bright - magenta
+        { 20,  240,  240         }, // bright - cyan
+        { 233, 235,  235         }, // bright - white
     };
 
 #else /* if MAP_TO_TERMINAL_APP_COLORS */
@@ -237,29 +262,30 @@ static DDTTYLogger *sharedInstance;
     // These are the default colors used by most xterm shells.
 
     DDRGBColor rgbColors[] = {
-        {  0,   0,   0}, // normal - black
-        {205,   0,   0}, // normal - red
-        {  0, 205,   0}, // normal - green
-        {205, 205,   0}, // normal - yellow
-        {  0,   0, 238}, // normal - blue
-        {205,   0, 205}, // normal - magenta
-        {  0, 205, 205}, // normal - cyan
-        {229, 229, 229}, // normal - gray
-        {127, 127, 127}, // bright - darkgray
-        {255,   0,   0}, // bright - red
-        {  0, 255,   0}, // bright - green
-        {255, 255,   0}, // bright - yellow
-        { 92,  92, 255}, // bright - blue
-        {255,   0, 255}, // bright - magenta
-        {  0, 255, 255}, // bright - cyan
-        {255, 255, 255}, // bright - white
+        {  0,  0,    0           }, // normal - black
+        { 205, 0,    0           }, // normal - red
+        {  0,  205,  0           }, // normal - green
+        { 205, 205,  0           }, // normal - yellow
+        {  0,  0,    238         }, // normal - blue
+        { 205, 0,    205         }, // normal - magenta
+        {  0,  205,  205         }, // normal - cyan
+        { 229, 229,  229         }, // normal - gray
+        { 127, 127,  127         }, // bright - darkgray
+        { 255, 0,    0           }, // bright - red
+        {  0,  255,  0           }, // bright - green
+        { 255, 255,  0           }, // bright - yellow
+        { 92,  92,   255         }, // bright - blue
+        { 255, 0,    255         }, // bright - magenta
+        {  0,  255,  255         }, // bright - cyan
+        { 255, 255,  255         }, // bright - white
     };
 #endif /* if MAP_TO_TERMINAL_APP_COLORS */
 
     for (size_t i = 0; i < sizeof(rgbColors) / sizeof(rgbColors[0]); ++i) {
         [m_colors addObject:DDMakeColor(rgbColors[i].r, rgbColors[i].g, rgbColors[i].b)];
     }
-    colors   = [m_colors   copy];
+
+    colors = [m_colors   copy];
 
     NSAssert([codes_fg count] == [codes_bg count], @"Invalid colors/codes array(s)");
     NSAssert([codes_fg count] == [colors count],   @"Invalid colors/codes array(s)");
@@ -278,7 +304,7 @@ static DDTTYLogger *sharedInstance;
 
     NSMutableArray *m_codes_fg = [NSMutableArray arrayWithCapacity:(256 - 16)];
     NSMutableArray *m_codes_bg = [NSMutableArray arrayWithCapacity:(256 - 16)];
-    NSMutableArray *m_colors   = [NSMutableArray arrayWithCapacity:(256 - 16)];
+    NSMutableArray *m_colors = [NSMutableArray arrayWithCapacity:(256 - 16)];
 
     #if MAP_TO_TERMINAL_APP_COLORS
 
@@ -308,287 +334,287 @@ static DDTTYLogger *sharedInstance;
 
     // Colors
     DDRGBColor rgbColors[] = {
-        { 47,  49,  49},
-        { 60,  42, 144},
-        { 66,  44, 183},
-        { 73,  46, 222},
-        { 81,  50, 253},
-        { 88,  51, 255},
+        { 47,  49,   49       },
+        { 60,  42,   144      },
+        { 66,  44,   183      },
+        { 73,  46,   222      },
+        { 81,  50,   253      },
+        { 88,  51,   255      },
 
-        { 42, 128,  37},
-        { 42, 127, 128},
-        { 44, 126, 169},
-        { 56, 125, 209},
-        { 59, 124, 245},
-        { 66, 123, 255},
+        { 42,  128,  37       },
+        { 42,  127,  128      },
+        { 44,  126,  169      },
+        { 56,  125,  209      },
+        { 59,  124,  245      },
+        { 66,  123,  255      },
 
-        { 51, 163,  41},
-        { 39, 162, 121},
-        { 42, 161, 162},
-        { 53, 160, 202},
-        { 45, 159, 240},
-        { 58, 158, 255},
+        { 51,  163,  41       },
+        { 39,  162,  121      },
+        { 42,  161,  162      },
+        { 53,  160,  202      },
+        { 45,  159,  240      },
+        { 58,  158,  255      },
 
-        { 31, 196,  37},
-        { 48, 196, 115},
-        { 39, 195, 155},
-        { 49, 195, 195},
-        { 32, 194, 235},
-        { 53, 193, 255},
+        { 31,  196,  37       },
+        { 48,  196,  115      },
+        { 39,  195,  155      },
+        { 49,  195,  195      },
+        { 32,  194,  235      },
+        { 53,  193,  255      },
 
-        { 50, 229,  35},
-        { 40, 229, 109},
-        { 27, 229, 149},
-        { 49, 228, 189},
-        { 33, 228, 228},
-        { 53, 227, 255},
+        { 50,  229,  35       },
+        { 40,  229,  109      },
+        { 27,  229,  149      },
+        { 49,  228,  189      },
+        { 33,  228,  228      },
+        { 53,  227,  255      },
 
-        { 27, 254,  30},
-        { 30, 254, 103},
-        { 45, 254, 143},
-        { 38, 253, 182},
-        { 38, 253, 222},
-        { 42, 253, 252},
+        { 27,  254,  30       },
+        { 30,  254,  103      },
+        { 45,  254,  143      },
+        { 38,  253,  182      },
+        { 38,  253,  222      },
+        { 42,  253,  252      },
 
-        {140,  48,  40},
-        {136,  51, 136},
-        {135,  52, 177},
-        {134,  52, 217},
-        {135,  56, 248},
-        {134,  53, 255},
+        { 140, 48,   40       },
+        { 136, 51,   136      },
+        { 135, 52,   177      },
+        { 134, 52,   217      },
+        { 135, 56,   248      },
+        { 134, 53,   255      },
 
-        {125, 125,  38},
-        {124, 125, 125},
-        {122, 124, 166},
-        {123, 124, 207},
-        {123, 122, 247},
-        {124, 121, 255},
+        { 125, 125,  38       },
+        { 124, 125,  125      },
+        { 122, 124,  166      },
+        { 123, 124,  207      },
+        { 123, 122,  247      },
+        { 124, 121,  255      },
 
-        {119, 160,  35},
-        {117, 160, 120},
-        {117, 160, 160},
-        {115, 159, 201},
-        {116, 158, 240},
-        {117, 157, 255},
+        { 119, 160,  35       },
+        { 117, 160,  120      },
+        { 117, 160,  160      },
+        { 115, 159,  201      },
+        { 116, 158,  240      },
+        { 117, 157,  255      },
 
-        {113, 195,  39},
-        {110, 194, 114},
-        {111, 194, 154},
-        {108, 194, 194},
-        {109, 193, 234},
-        {108, 192, 255},
+        { 113, 195,  39       },
+        { 110, 194,  114      },
+        { 111, 194,  154      },
+        { 108, 194,  194      },
+        { 109, 193,  234      },
+        { 108, 192,  255      },
 
-        {105, 228,  30},
-        {103, 228, 109},
-        {105, 228, 148},
-        {100, 227, 188},
-        { 99, 227, 227},
-        { 99, 226, 253},
+        { 105, 228,  30       },
+        { 103, 228,  109      },
+        { 105, 228,  148      },
+        { 100, 227,  188      },
+        { 99,  227,  227      },
+        { 99,  226,  253      },
 
-        { 92, 253,  34},
-        { 96, 253, 103},
-        { 97, 253, 142},
-        { 88, 253, 182},
-        { 93, 253, 221},
-        { 88, 254, 251},
+        { 92,  253,  34       },
+        { 96,  253,  103      },
+        { 97,  253,  142      },
+        { 88,  253,  182      },
+        { 93,  253,  221      },
+        { 88,  254,  251      },
 
-        {177,  53,  34},
-        {174,  54, 131},
-        {172,  55, 172},
-        {171,  57, 213},
-        {170,  55, 249},
-        {170,  57, 255},
+        { 177, 53,   34       },
+        { 174, 54,   131      },
+        { 172, 55,   172      },
+        { 171, 57,   213      },
+        { 170, 55,   249      },
+        { 170, 57,   255      },
 
-        {165, 123,  37},
-        {163, 123, 123},
-        {162, 123, 164},
-        {161, 122, 205},
-        {161, 121, 241},
-        {161, 121, 255},
+        { 165, 123,  37       },
+        { 163, 123,  123      },
+        { 162, 123,  164      },
+        { 161, 122,  205      },
+        { 161, 121,  241      },
+        { 161, 121,  255      },
 
-        {158, 159,  33},
-        {157, 158, 118},
-        {157, 158, 159},
-        {155, 157, 199},
-        {155, 157, 239},
-        {154, 156, 255},
+        { 158, 159,  33       },
+        { 157, 158,  118      },
+        { 157, 158,  159      },
+        { 155, 157,  199      },
+        { 155, 157,  239      },
+        { 154, 156,  255      },
 
-        {152, 193,  40},
-        {151, 193, 113},
-        {150, 193, 153},
-        {150, 192, 193},
-        {148, 192, 232},
-        {149, 191, 253},
+        { 152, 193,  40       },
+        { 151, 193,  113      },
+        { 150, 193,  153      },
+        { 150, 192,  193      },
+        { 148, 192,  232      },
+        { 149, 191,  253      },
 
-        {146, 227,  28},
-        {144, 227, 108},
-        {144, 227, 147},
-        {144, 227, 187},
-        {142, 226, 227},
-        {142, 225, 252},
+        { 146, 227,  28       },
+        { 144, 227,  108      },
+        { 144, 227,  147      },
+        { 144, 227,  187      },
+        { 142, 226,  227      },
+        { 142, 225,  252      },
 
-        {138, 253,  36},
-        {137, 253, 102},
-        {136, 253, 141},
-        {138, 254, 181},
-        {135, 255, 220},
-        {133, 255, 250},
+        { 138, 253,  36       },
+        { 137, 253,  102      },
+        { 136, 253,  141      },
+        { 138, 254,  181      },
+        { 135, 255,  220      },
+        { 133, 255,  250      },
 
-        {214,  57,  30},
-        {211,  59, 126},
-        {209,  57, 168},
-        {208,  55, 208},
-        {207,  58, 247},
-        {206,  61, 255},
+        { 214, 57,   30       },
+        { 211, 59,   126      },
+        { 209, 57,   168      },
+        { 208, 55,   208      },
+        { 207, 58,   247      },
+        { 206, 61,   255      },
 
-        {204, 121,  32},
-        {202, 121, 121},
-        {201, 121, 161},
-        {200, 120, 202},
-        {200, 120, 241},
-        {198, 119, 255},
+        { 204, 121,  32       },
+        { 202, 121,  121      },
+        { 201, 121,  161      },
+        { 200, 120,  202      },
+        { 200, 120,  241      },
+        { 198, 119,  255      },
 
-        {198, 157,  37},
-        {196, 157, 116},
-        {195, 156, 157},
-        {195, 156, 197},
-        {194, 155, 236},
-        {193, 155, 255},
+        { 198, 157,  37       },
+        { 196, 157,  116      },
+        { 195, 156,  157      },
+        { 195, 156,  197      },
+        { 194, 155,  236      },
+        { 193, 155,  255      },
 
-        {191, 192,  36},
-        {190, 191, 112},
-        {189, 191, 152},
-        {189, 191, 191},
-        {188, 190, 230},
-        {187, 190, 253},
+        { 191, 192,  36       },
+        { 190, 191,  112      },
+        { 189, 191,  152      },
+        { 189, 191,  191      },
+        { 188, 190,  230      },
+        { 187, 190,  253      },
 
-        {185, 226,  28},
-        {184, 226, 106},
-        {183, 225, 146},
-        {183, 225, 186},
-        {182, 225, 225},
-        {181, 224, 252},
+        { 185, 226,  28       },
+        { 184, 226,  106      },
+        { 183, 225,  146      },
+        { 183, 225,  186      },
+        { 182, 225,  225      },
+        { 181, 224,  252      },
 
-        {178, 255,  35},
-        {178, 255, 101},
-        {177, 254, 141},
-        {176, 254, 180},
-        {176, 254, 220},
-        {175, 253, 249},
+        { 178, 255,  35       },
+        { 178, 255,  101      },
+        { 177, 254,  141      },
+        { 176, 254,  180      },
+        { 176, 254,  220      },
+        { 175, 253,  249      },
 
-        {247,  56,  30},
-        {245,  57, 122},
-        {243,  59, 163},
-        {244,  60, 204},
-        {242,  59, 241},
-        {240,  55, 255},
+        { 247, 56,   30       },
+        { 245, 57,   122      },
+        { 243, 59,   163      },
+        { 244, 60,   204      },
+        { 242, 59,   241      },
+        { 240, 55,   255      },
 
-        {241, 119,  36},
-        {240, 120, 118},
-        {238, 119, 158},
-        {237, 119, 199},
-        {237, 118, 238},
-        {236, 118, 255},
+        { 241, 119,  36       },
+        { 240, 120,  118      },
+        { 238, 119,  158      },
+        { 237, 119,  199      },
+        { 237, 118,  238      },
+        { 236, 118,  255      },
 
-        {235, 154,  36},
-        {235, 154, 114},
-        {234, 154, 154},
-        {232, 154, 194},
-        {232, 153, 234},
-        {232, 153, 255},
+        { 235, 154,  36       },
+        { 235, 154,  114      },
+        { 234, 154,  154      },
+        { 232, 154,  194      },
+        { 232, 153,  234      },
+        { 232, 153,  255      },
 
-        {230, 190,  30},
-        {229, 189, 110},
-        {228, 189, 150},
-        {227, 189, 190},
-        {227, 189, 229},
-        {226, 188, 255},
+        { 230, 190,  30       },
+        { 229, 189,  110      },
+        { 228, 189,  150      },
+        { 227, 189,  190      },
+        { 227, 189,  229      },
+        { 226, 188,  255      },
 
-        {224, 224,  35},
-        {223, 224, 105},
-        {222, 224, 144},
-        {222, 223, 184},
-        {222, 223, 224},
-        {220, 223, 253},
+        { 224, 224,  35       },
+        { 223, 224,  105      },
+        { 222, 224,  144      },
+        { 222, 223,  184      },
+        { 222, 223,  224      },
+        { 220, 223,  253      },
 
-        {217, 253,  28},
-        {217, 253,  99},
-        {216, 252, 139},
-        {216, 252, 179},
-        {215, 252, 218},
-        {215, 251, 250},
+        { 217, 253,  28       },
+        { 217, 253,  99       },
+        { 216, 252,  139      },
+        { 216, 252,  179      },
+        { 215, 252,  218      },
+        { 215, 251,  250      },
 
-        {255,  61,  30},
-        {255,  60, 118},
-        {255,  58, 159},
-        {255,  56, 199},
-        {255,  55, 238},
-        {255,  59, 255},
+        { 255, 61,   30       },
+        { 255, 60,   118      },
+        { 255, 58,   159      },
+        { 255, 56,   199      },
+        { 255, 55,   238      },
+        { 255, 59,   255      },
 
-        {255, 117,  29},
-        {255, 117, 115},
-        {255, 117, 155},
-        {255, 117, 195},
-        {255, 116, 235},
-        {254, 116, 255},
+        { 255, 117,  29       },
+        { 255, 117,  115      },
+        { 255, 117,  155      },
+        { 255, 117,  195      },
+        { 255, 116,  235      },
+        { 254, 116,  255      },
 
-        {255, 152,  27},
-        {255, 152, 111},
-        {254, 152, 152},
-        {255, 152, 192},
-        {254, 151, 231},
-        {253, 151, 253},
+        { 255, 152,  27       },
+        { 255, 152,  111      },
+        { 254, 152,  152      },
+        { 255, 152,  192      },
+        { 254, 151,  231      },
+        { 253, 151,  253      },
 
-        {255, 187,  33},
-        {253, 187, 107},
-        {252, 187, 148},
-        {253, 187, 187},
-        {254, 187, 227},
-        {252, 186, 252},
+        { 255, 187,  33       },
+        { 253, 187,  107      },
+        { 252, 187,  148      },
+        { 253, 187,  187      },
+        { 254, 187,  227      },
+        { 252, 186,  252      },
 
-        {252, 222,  34},
-        {251, 222, 103},
-        {251, 222, 143},
-        {250, 222, 182},
-        {251, 221, 222},
-        {252, 221, 252},
+        { 252, 222,  34       },
+        { 251, 222,  103      },
+        { 251, 222,  143      },
+        { 250, 222,  182      },
+        { 251, 221,  222      },
+        { 252, 221,  252      },
 
-        {251, 252,  15},
-        {251, 252,  97},
-        {249, 252, 137},
-        {247, 252, 177},
-        {247, 253, 217},
-        {254, 255, 255},
+        { 251, 252,  15       },
+        { 251, 252,  97       },
+        { 249, 252,  137      },
+        { 247, 252,  177      },
+        { 247, 253,  217      },
+        { 254, 255,  255      },
 
         // Grayscale
 
-        { 52,  53,  53},
-        { 57,  58,  59},
-        { 66,  67,  67},
-        { 75,  76,  76},
-        { 83,  85,  85},
-        { 92,  93,  94},
+        { 52,  53,   53       },
+        { 57,  58,   59       },
+        { 66,  67,   67       },
+        { 75,  76,   76       },
+        { 83,  85,   85       },
+        { 92,  93,   94       },
 
-        {101, 102, 102},
-        {109, 111, 111},
-        {118, 119, 119},
-        {126, 127, 128},
-        {134, 136, 136},
-        {143, 144, 145},
+        { 101, 102,  102      },
+        { 109, 111,  111      },
+        { 118, 119,  119      },
+        { 126, 127,  128      },
+        { 134, 136,  136      },
+        { 143, 144,  145      },
 
-        {151, 152, 153},
-        {159, 161, 161},
-        {167, 169, 169},
-        {176, 177, 177},
-        {184, 185, 186},
-        {192, 193, 194},
+        { 151, 152,  153      },
+        { 159, 161,  161      },
+        { 167, 169,  169      },
+        { 176, 177,  177      },
+        { 184, 185,  186      },
+        { 192, 193,  194      },
 
-        {200, 201, 202},
-        {208, 209, 210},
-        {216, 218, 218},
-        {224, 226, 226},
-        {232, 234, 234},
-        {240, 242, 242},
+        { 200, 201,  202      },
+        { 208, 209,  210      },
+        { 216, 218,  218      },
+        { 224, 226,  226      },
+        { 232, 234,  234      },
+        { 240, 242,  242      },
     };
 
     for (size_t i = 0; i < sizeof(rgbColors) / sizeof(rgbColors[0]); ++i) {
@@ -683,7 +709,7 @@ static DDTTYLogger *sharedInstance;
 
     codes_fg = [m_codes_fg copy];
     codes_bg = [m_codes_bg copy];
-    colors   = [m_colors   copy];
+    colors = [m_colors   copy];
 
     NSAssert([codes_fg count] == [codes_bg count], @"Invalid colors/codes array(s)");
     NSAssert([codes_fg count] == [colors count],   @"Invalid colors/codes array(s)");
@@ -1001,7 +1027,7 @@ static DDTTYLogger *sharedInstance;
 }
 
 - (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forTag:(id <NSCopying>)tag {
-    NSAssert([(id < NSObject >) tag conformsToProtocol: @protocol(NSCopying)], @"Invalid tag");
+    NSAssert([(id < NSObject >) tag conformsToProtocol:@protocol(NSCopying)], @"Invalid tag");
 
     dispatch_block_t block = ^{
         @autoreleasepool {
@@ -1071,7 +1097,7 @@ static DDTTYLogger *sharedInstance;
 }
 
 - (void)clearColorsForTag:(id <NSCopying>)tag {
-    NSAssert([(id < NSObject >) tag conformsToProtocol: @protocol(NSCopying)], @"Invalid tag");
+    NSAssert([(id < NSObject >) tag conformsToProtocol:@protocol(NSCopying)], @"Invalid tag");
 
     dispatch_block_t block = ^{
         @autoreleasepool {
@@ -1403,7 +1429,7 @@ static DDTTYLogger *sharedInstance;
             // Map foreground color to closest available shell color
 
             fgCodeIndex = [DDTTYLogger codeIndexForColor:fgColor];
-            fgCodeRaw   = codes_fg[fgCodeIndex];
+            fgCodeRaw = codes_fg[fgCodeIndex];
 
             NSString *escapeSeq = @"\033[";
 
@@ -1436,7 +1462,7 @@ static DDTTYLogger *sharedInstance;
             // Map background color to closest available shell color
 
             bgCodeIndex = [DDTTYLogger codeIndexForColor:bgColor];
-            bgCodeRaw   = codes_bg[bgCodeIndex];
+            bgCodeRaw = codes_bg[bgCodeIndex];
 
             NSString *escapeSeq = @"\033[";
 

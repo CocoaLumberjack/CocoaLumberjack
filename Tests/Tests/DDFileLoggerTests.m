@@ -47,6 +47,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
 
 - (void)testWrapping {
     __auto_type wrapped = [logger wrapWithBuffer];
+
     XCTAssert([wrapped.class isSubclassOfClass:NSProxy.class]);
 
     __auto_type wrapped2 = [wrapped wrapWithBuffer];

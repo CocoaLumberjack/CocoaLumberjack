@@ -16,7 +16,7 @@
 @import XCTest;
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
-static NSString * const kDefaultMessage = @"Log message";
+static NSString *const kDefaultMessage = @"Log message";
 
 @interface DDLogMessage (TestHelpers)
 + (DDLogMessage *)test_message;
@@ -116,6 +116,7 @@ static NSString * const kDefaultMessage = @"Log message";
 
 - (void)testInitSetsAllPassedParameters {
     __auto_type referenceDate = [NSDate dateWithTimeIntervalSince1970:0];
+
     self.message =
         [[DDLogMessage alloc] initWithMessage:kDefaultMessage
                                         level:DDLogLevelDebug
@@ -125,8 +126,8 @@ static NSString * const kDefaultMessage = @"Log message";
                                      function:@"testInitSetsAllPassedParameters"
                                          line:50
                                           tag:NULL
-                                         options:DDLogMessageCopyFile
-                                         timestamp:referenceDate];
+                                      options:DDLogMessageCopyFile
+                                    timestamp:referenceDate];
     XCTAssertEqualObjects(self.message.message, @"Log message");
     XCTAssertEqual(self.message.level, DDLogLevelDebug);
     XCTAssertEqual(self.message.flag, DDLogFlagError);
@@ -141,6 +142,7 @@ static NSString * const kDefaultMessage = @"Log message";
 
 - (void)testInitCopyMessageParameter {
     __auto_type message = [NSMutableString stringWithString:@"Log message"];
+
     self.message = [DDLogMessage test_messageWithMessage:message];
     [message appendString:@" changed"];
     XCTAssertEqualObjects(self.message.message, @"Log message");
@@ -175,6 +177,7 @@ static NSString * const kDefaultMessage = @"Log message";
 
 - (void)testInitAssignsFileParameterWithoutCopyFileOption {
     __auto_type file = [NSMutableString stringWithString:@"file"];
+
     self.message = [DDLogMessage test_messageWithFile:file options:(DDLogMessageOptions)0];
     XCTAssertEqualObjects(self.message.file, @"file");
     [file appendString:@"file"];
@@ -183,6 +186,7 @@ static NSString * const kDefaultMessage = @"Log message";
 
 - (void)testInitCopyFileParameterWithCopyFileOption {
     __auto_type file = [NSMutableString stringWithString:@"file"];
+
     self.message = [DDLogMessage test_messageWithFile:file options:DDLogMessageCopyFile];
     XCTAssertEqualObjects(self.message.file, @"file");
     [file appendString:@"file"];
@@ -191,6 +195,7 @@ static NSString * const kDefaultMessage = @"Log message";
 
 - (void)testInitAssignFunctionParameterWithoutCopyFunctionOption {
     __auto_type function = [NSMutableString stringWithString:@"function"];
+
     self.message = [DDLogMessage test_messageWithFunction:function options:(DDLogMessageOptions)0];
     XCTAssertEqualObjects(self.message.function, @"function");
     [function appendString:@"function"];
@@ -199,6 +204,7 @@ static NSString * const kDefaultMessage = @"Log message";
 
 - (void)testInitCopyFunctionParameterWithCopyFunctionOption {
     __auto_type function = [NSMutableString stringWithString:@"function"];
+
     self.message = [DDLogMessage test_messageWithFunction:function options:DDLogMessageCopyFunction];
     XCTAssertEqualObjects(self.message.function, @"function");
     [function appendString:@"function"];
@@ -207,6 +213,7 @@ static NSString * const kDefaultMessage = @"Log message";
 
 - (void)testCopyWithZoneCreatesValidCopy {
     __auto_type copy = (typeof(self.message))[self.message copy];
+
     XCTAssertEqualObjects(self.message.message, copy.message);
     XCTAssertEqual(self.message.level, copy.level);
     XCTAssertEqual(self.message.flag, copy.flag);

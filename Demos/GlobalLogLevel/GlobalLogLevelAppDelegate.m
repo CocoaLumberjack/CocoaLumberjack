@@ -15,8 +15,7 @@ DDLogLevel ddLogLevel;
 
 @synthesize window;
 
-void someFunction()
-{
+void someFunction() {
     DDLogError(@"%@: C_Error", THIS_FILE);
     DDLogWarn(@"%@: C_Warn", THIS_FILE);
     DDLogInfo(@"%@: C_Info", THIS_FILE);
@@ -27,16 +26,16 @@ void someFunction()
 {
     ddLogLevel = DDLogLevelVerbose;
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
-    
+
     DDLogError(@"%@: Error", THIS_FILE);
     DDLogWarn(@"%@: Warn", THIS_FILE);
     DDLogInfo(@"%@: Info", THIS_FILE);
     DDLogVerbose(@"%@: Verbose", THIS_FILE);
-    
+
     someFunction();
-    
+
     ddLogLevel = DDLogLevelWarning;
-    
+
     [Stuff doStuff];
 }
 

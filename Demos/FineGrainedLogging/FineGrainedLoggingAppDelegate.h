@@ -10,11 +10,10 @@
 @class TimerOne;
 @class TimerTwo;
 
-@interface FineGrainedLoggingAppDelegate : NSObject <NSApplicationDelegate>
-{
+@interface FineGrainedLoggingAppDelegate : NSObject <NSApplicationDelegate> {
     TimerOne *timerOne;
     TimerTwo *timerTwo;
-    
+
     NSWindow *__unsafe_unretained window;
 }
 

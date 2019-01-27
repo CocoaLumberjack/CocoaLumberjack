@@ -18,4 +18,3 @@
 @property (nonatomic, strong) IBOutlet UniversalAppViewController *viewController;
 
 @end
-

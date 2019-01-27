@@ -7,8 +7,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface TimerOne : NSObject
-{
+@interface TimerOne : NSObject {
     NSTimer *foodTimer;
     NSTimer *sleepTimer;
 }

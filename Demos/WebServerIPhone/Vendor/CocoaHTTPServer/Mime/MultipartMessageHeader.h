@@ -18,16 +18,16 @@ enum {
     contentTransferEncoding_8bit,
     contentTransferEncoding_binary,
     contentTransferEncoding_base64,
-    contentTransferEncoding_quotedPrintable,    
+    contentTransferEncoding_quotedPrintable,
 };
 
 @interface MultipartMessageHeader : NSObject {
-    NSMutableDictionary*                    fields;
-    int                                     encoding;
-    NSString*                               contentDispositionName;
+    NSMutableDictionary *fields;
+    int encoding;
+    NSString *contentDispositionName;
 }
-@property (strong,readonly) NSDictionary* fields;
+@property (strong, readonly) NSDictionary *fields;
 @property (readonly) int encoding;
 
-- (id) initWithData:(NSData*) data formEncoding:(NSStringEncoding) encoding;
+- (id)initWithData:(NSData *)data formEncoding:(NSStringEncoding)encoding;
 @end

@@ -9,10 +9,9 @@
 
 @class DDFileLogger;
 
-@interface LogFileCompressorAppDelegate : NSObject <NSApplicationDelegate>
-{
+@interface LogFileCompressorAppDelegate : NSObject <NSApplicationDelegate> {
     DDFileLogger *fileLogger;
-    
+
     NSWindow *__unsafe_unretained window;
 }
 

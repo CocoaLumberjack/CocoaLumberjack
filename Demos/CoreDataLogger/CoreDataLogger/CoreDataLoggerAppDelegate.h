@@ -10,7 +10,7 @@
 @class CoreDataLogger;
 
 @interface CoreDataLoggerAppDelegate : NSObject <NSApplicationDelegate> {
-@private
+    @private
     CoreDataLogger *coreDataLogger;
     NSWindow *__unsafe_unretained window;
 }

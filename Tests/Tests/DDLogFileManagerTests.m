@@ -42,6 +42,7 @@
 
 - (void)testCreateNewLogFile {
     NSString *filePath = [self.logFileManager createNewLogFile];
+
     XCTAssertTrue([self.logFileManager isLogFile:[NSURL fileURLWithPath:filePath].lastPathComponent]);
 
     NSError *error = nil;
@@ -52,4 +53,3 @@
 }
 
 @end
-

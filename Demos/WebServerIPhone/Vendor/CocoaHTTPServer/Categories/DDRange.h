@@ -4,9 +4,9 @@
  * On 32 bit architectures (ppc, i386) NSRange uses unsigned 32 bit integers.
  * This only supports a range of up to 4 gigabytes.
  * By defining our own variant, we can support a range up to 16 exabytes.
- * 
+ *
  * All effort is given such that DDRange functions EXACTLY the same as NSRange.
-**/
+ **/
 
 #import <Foundation/NSValue.h>
 #import <Foundation/NSObjCRuntime.h>
@@ -22,6 +22,7 @@ typedef DDRange *DDRangePointer;
 
 NS_INLINE DDRange DDMakeRange(UInt64 loc, UInt64 len) {
     DDRange r;
+
     r.location = loc;
     r.length = len;
     return r;
@@ -41,7 +42,7 @@ NS_INLINE BOOL DDEqualRanges(DDRange range1, DDRange range2) {
 
 FOUNDATION_EXPORT DDRange DDUnionRange(DDRange range1, DDRange range2);
 FOUNDATION_EXPORT DDRange DDIntersectionRange(DDRange range1, DDRange range2);
-FOUNDATION_EXPORT NSString *DDStringFromRange(DDRange range);
+FOUNDATION_EXPORT NSString * DDStringFromRange(DDRange range);
 FOUNDATION_EXPORT DDRange DDRangeFromString(NSString *aString);
 
 NSInteger DDRangeCompare(DDRangePointer pDDRange1, DDRangePointer pDDRange2);

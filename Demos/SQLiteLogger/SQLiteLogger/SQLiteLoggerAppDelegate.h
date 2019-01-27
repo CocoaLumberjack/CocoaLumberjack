@@ -10,7 +10,7 @@
 @class FMDBLogger;
 
 @interface SQLiteLoggerAppDelegate : NSObject <NSApplicationDelegate> {
-@private
+    @private
     FMDBLogger *sqliteLogger;
     NSWindow *__unsafe_unretained window;
 }

@@ -9,8 +9,7 @@
 
 @class BenchmarkIPhoneViewController;
 
-@interface BenchmarkIPhoneAppDelegate : NSObject <UIApplicationDelegate>
-{
+@interface BenchmarkIPhoneAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
     BenchmarkIPhoneViewController *viewController;
 }

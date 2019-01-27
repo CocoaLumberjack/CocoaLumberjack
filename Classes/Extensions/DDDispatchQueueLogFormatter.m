@@ -28,9 +28,9 @@
     NSString *_dateFormatterKey;
     DDAtomicCounter *_atomicLoggerCounter;
     NSDateFormatter *_threadUnsafeDateFormatter; // Use [self stringFromDate]
-    
+
     pthread_mutex_t _mutex;
-    
+
     NSUInteger _minQueueLength;           // _prefix == Only access via atomic property
     NSUInteger _maxQueueLength;           // _prefix == Only access via atomic property
     NSMutableDictionary *_replacements;   // _prefix == Only access from within spinlock
@@ -51,6 +51,7 @@
         Class superClass = class_getSuperclass(cls);
         SEL configMethodName = @selector(configureDateFormatter:);
         Method configMethod = class_getInstanceMethod(cls, configMethodName);
+
         while (class_getInstanceMethod(superClass, configMethodName) == configMethod) {
             cls = superClass;
             superClass = class_getSuperclass(cls);
@@ -78,6 +79,7 @@
     if ((self = [self init])) {
         _mode = mode;
     }
+
     return self;
 }
 
@@ -122,6 +124,7 @@
 
 - (NSDateFormatter *)createDateFormatter {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+
     [self configureDateFormatter:formatter];
     return formatter;
 }
@@ -137,12 +140,13 @@
 }
 
 - (NSString *)stringFromDate:(NSDate *)date {
-
     NSDateFormatter *dateFormatter = nil;
+
     if (_mode == DDDispatchQueueLogFormatterModeNonShareble) {
         // Single-threaded mode.
 
         dateFormatter = _threadUnsafeDateFormatter;
+
         if (dateFormatter == nil) {
             dateFormatter = [self createDateFormatter];
             _threadUnsafeDateFormatter = dateFormatter;
@@ -192,7 +196,7 @@
             @"com.apple.root.default-qos.overcommit"
         ];
 
-        for (NSString * name in names) {
+        for (NSString *name in names) {
             if ([logMessage->_queueLabel isEqualToString:name]) {
                 useQueueLabel = NO;
                 useThreadName = [logMessage->_threadName length] > 0;
@@ -285,7 +289,7 @@
 #import <libkern/OSAtomic.h>
 #endif
 
-@interface DDAtomicCounter() {
+@interface DDAtomicCounter () {
 #if DD_OSATOMIC_API_DEPRECATED
     _Atomic(int32_t) _value;
 #else
@@ -300,6 +304,7 @@
     if ((self = [super init])) {
         _value = defaultValue;
     }
+
     return self;
 }
 
@@ -317,6 +322,7 @@
     atomic_fetch_sub_explicit(&_value, 1, memory_order_relaxed);
     return _value;
 }
+
 #else
 - (int32_t)increment {
     return OSAtomicIncrement32(&_value);
@@ -325,6 +331,7 @@
 - (int32_t)decrement {
     return OSAtomicDecrement32(&_value);
 }
+
 #endif
 
 @end

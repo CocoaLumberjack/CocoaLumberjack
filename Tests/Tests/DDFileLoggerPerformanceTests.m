@@ -41,20 +41,20 @@ static const DDLogLevel ddLogLevel = DDLogLevelWarning; // CONST
 
 - (void)testPerformanceNotPrinted {
     [self measureBlock:^{
-        for (NSUInteger i = 0; i < 1000; i++) {
-            // Log statements that will not be executed due to log level
-            DDLogVerbose(@"testPerformanceNotPrinted - %lu", (unsigned long)i);
-        }
-    }];
+              for (NSUInteger i = 0; i < 1000; i++) {
+              // Log statements that will not be executed due to log level
+              DDLogVerbose(@"testPerformanceNotPrinted - %lu", (unsigned long)i);
+              }
+          }];
 }
 
 - (void)testPerformanceAsyncPrint {
     [self measureBlock:^{
-        for (NSUInteger i = 0; i < 1000; i++) {
-            // Log statements that will be executed asynchronously
-            DDLogWarn(@"testPerformanceAsyncPrint - %lu", (unsigned long)i);
-        }
-    }];
+              for (NSUInteger i = 0; i < 1000; i++) {
+              // Log statements that will be executed asynchronously
+              DDLogWarn(@"testPerformanceAsyncPrint - %lu", (unsigned long)i);
+              }
+          }];
 }
 
 - (void)testPerformanceAsyncPrintBuffered {
@@ -62,20 +62,20 @@ static const DDLogLevel ddLogLevel = DDLogLevelWarning; // CONST
     [DDLog addLogger:[_logger wrapWithBuffer]];
 
     [self measureBlock:^{
-        for (NSUInteger i = 0; i < 1000; i++) {
-            // Log statements that will be executed asynchronously
-            DDLogWarn(@"testPerformanceAsyncPrintBuffered - %lu", (unsigned long)i);
-        }
-    }];
+              for (NSUInteger i = 0; i < 1000; i++) {
+              // Log statements that will be executed asynchronously
+              DDLogWarn(@"testPerformanceAsyncPrintBuffered - %lu", (unsigned long)i);
+              }
+          }];
 }
 
 - (void)testPerformanceSyncPrint {
     [self measureBlock:^{
-        for (NSUInteger i = 0; i < 1000; i++) {
-            // Log statements that will be executed synchronously
-            DDLogError(@"testPerformanceSyncPrint - %lu", (unsigned long)i);
-        }
-    }];
+              for (NSUInteger i = 0; i < 1000; i++) {
+              // Log statements that will be executed synchronously
+              DDLogError(@"testPerformanceSyncPrint - %lu", (unsigned long)i);
+              }
+          }];
 }
 
 - (void)testPerformanceSyncPrintBuffered {
@@ -83,39 +83,39 @@ static const DDLogLevel ddLogLevel = DDLogLevelWarning; // CONST
     [DDLog addLogger:[_logger wrapWithBuffer]];
 
     [self measureBlock:^{
-        for (NSUInteger i = 0; i < 1000; i++) {
-            // Log statements that will be executed asynchronously
-            DDLogError(@"testPerformanceSyncPrintBuffered - %lu", (unsigned long)i);
-        }
-    }];
+              for (NSUInteger i = 0; i < 1000; i++) {
+              // Log statements that will be executed asynchronously
+              DDLogError(@"testPerformanceSyncPrintBuffered - %lu", (unsigned long)i);
+              }
+          }];
 }
 
 - (void)testPerformancePrintEvenSpread {
     [self measureBlock:^{
-        // Even Spread:
-        //
-        // 25% - Not executed due to log level
-        // 50% - Executed asynchronously
-        // 25% - Executed synchronously
+              // Even Spread:
+              //
+              // 25% - Not executed due to log level
+              // 50% - Executed asynchronously
+              // 25% - Executed synchronously
 
-        NSString *fmt = @"testPerformancePrintEvenSpread - %lu";
+              NSString *fmt = @"testPerformancePrintEvenSpread - %lu";
 
-        for (NSUInteger i = 0; i < 250; i++) {
-            DDLogError(fmt, (unsigned long)i);
-        }
+              for (NSUInteger i = 0; i < 250; i++) {
+              DDLogError(fmt, (unsigned long)i);
+              }
 
-        for (NSUInteger i = 0; i < 250; i++) {
-            DDLogWarn(fmt, (unsigned long)i);
-        }
+              for (NSUInteger i = 0; i < 250; i++) {
+              DDLogWarn(fmt, (unsigned long)i);
+              }
 
-        for (NSUInteger i = 0; i < 250; i++) {
-            DDLogInfo(fmt, (unsigned long)i);
-        }
+              for (NSUInteger i = 0; i < 250; i++) {
+              DDLogInfo(fmt, (unsigned long)i);
+              }
 
-        for (NSUInteger i = 0; i < 250; i++) {
-            DDLogVerbose(fmt, (unsigned long)i);
-        }
-    }];
+              for (NSUInteger i = 0; i < 250; i++) {
+              DDLogVerbose(fmt, (unsigned long)i);
+              }
+          }];
 }
 
 - (void)testPerformancePrintEvenSpreadBuffered {
@@ -123,54 +123,54 @@ static const DDLogLevel ddLogLevel = DDLogLevelWarning; // CONST
     [DDLog addLogger:[_logger wrapWithBuffer]];
 
     [self measureBlock:^{
-        // Even Spread:
-        //
-        // 25% - Not executed due to log level
-        // 50% - Executed asynchronously
-        // 25% - Executed synchronously
+              // Even Spread:
+              //
+              // 25% - Not executed due to log level
+              // 50% - Executed asynchronously
+              // 25% - Executed synchronously
 
-        NSString *fmt = @"testPerformancePrintEvenSpreadBuffered - %lu";
+              NSString *fmt = @"testPerformancePrintEvenSpreadBuffered - %lu";
 
-        for (NSUInteger i = 0; i < 250; i++) {
-            DDLogError(fmt, (unsigned long)i);
-        }
+              for (NSUInteger i = 0; i < 250; i++) {
+              DDLogError(fmt, (unsigned long)i);
+              }
 
-        for (NSUInteger i = 0; i < 250; i++) {
-            DDLogWarn(fmt, (unsigned long)i);
-        }
+              for (NSUInteger i = 0; i < 250; i++) {
+              DDLogWarn(fmt, (unsigned long)i);
+              }
 
-        for (NSUInteger i = 0; i < 250; i++) {
-            DDLogInfo(fmt, (unsigned long)i);
-        }
+              for (NSUInteger i = 0; i < 250; i++) {
+              DDLogInfo(fmt, (unsigned long)i);
+              }
 
-        for (NSUInteger i = 0; i < 250; i++) {
-            DDLogVerbose(fmt, (unsigned long)i);
-        }
-    }];
+              for (NSUInteger i = 0; i < 250; i++) {
+              DDLogVerbose(fmt, (unsigned long)i);
+              }
+          }];
 }
 
 - (void)testPerformanceCustomSpread {
     [self measureBlock:^{
-        // Custom Spread
+              // Custom Spread
 
-        NSString *fmt = @"testPerformanceCustomSpread - %lu";
+              NSString *fmt = @"testPerformanceCustomSpread - %lu";
 
-        for (NSUInteger i = 0; i < 900; i++) {
-            DDLogError(fmt, (unsigned long)i);
-        }
+              for (NSUInteger i = 0; i < 900; i++) {
+              DDLogError(fmt, (unsigned long)i);
+              }
 
-        for (NSUInteger i = 0; i < 100; i++) {
-            DDLogWarn(fmt, (unsigned long)i);
-        }
+              for (NSUInteger i = 0; i < 100; i++) {
+              DDLogWarn(fmt, (unsigned long)i);
+              }
 
-        for (NSUInteger i = 0; i < 100; i++) {
-            DDLogInfo(fmt, (unsigned long)i);
-        }
+              for (NSUInteger i = 0; i < 100; i++) {
+              DDLogInfo(fmt, (unsigned long)i);
+              }
 
-        for (NSUInteger i = 0; i < 100; i++) {
-            DDLogVerbose(fmt, (unsigned long)i);
-        }
-    }];
+              for (NSUInteger i = 0; i < 100; i++) {
+              DDLogVerbose(fmt, (unsigned long)i);
+              }
+          }];
 }
 
 - (void)testPerformanceCustomSpreadBuffered {
@@ -178,26 +178,26 @@ static const DDLogLevel ddLogLevel = DDLogLevelWarning; // CONST
     [DDLog addLogger:[_logger wrapWithBuffer]];
 
     [self measureBlock:^{
-        // Custom Spread
+              // Custom Spread
 
-        NSString *fmt = @"testPerformanceCustomSpreadBuffered - %lu";
+              NSString *fmt = @"testPerformanceCustomSpreadBuffered - %lu";
 
-        for (NSUInteger i = 0; i < 900; i++) {
-            DDLogError(fmt, (unsigned long)i);
-        }
+              for (NSUInteger i = 0; i < 900; i++) {
+              DDLogError(fmt, (unsigned long)i);
+              }
 
-        for (NSUInteger i = 0; i < 100; i++) {
-            DDLogWarn(fmt, (unsigned long)i);
-        }
+              for (NSUInteger i = 0; i < 100; i++) {
+              DDLogWarn(fmt, (unsigned long)i);
+              }
 
-        for (NSUInteger i = 0; i < 100; i++) {
-            DDLogInfo(fmt, (unsigned long)i);
-        }
+              for (NSUInteger i = 0; i < 100; i++) {
+              DDLogInfo(fmt, (unsigned long)i);
+              }
 
-        for (NSUInteger i = 0; i < 100; i++) {
-            DDLogVerbose(fmt, (unsigned long)i);
-        }
-    }];
+              for (NSUInteger i = 0; i < 100; i++) {
+              DDLogVerbose(fmt, (unsigned long)i);
+              }
+          }];
 }
 
 @end

@@ -20,25 +20,34 @@
 
 #import "DDLog.h"
 
-#define LOG_CONTEXT_ALL INT_MAX
+#define LOG_CONTEXT_ALL      INT_MAX
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-function"
 #if !(TARGET_OS_OSX)
-    // iOS or tvOS or watchOS
+// iOS or tvOS or watchOS
     #import <UIKit/UIColor.h>
-    typedef UIColor DDColor;
-    static inline DDColor* DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {return [DDColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f];}
+typedef UIColor DDColor;
+static inline DDColor * DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {
+    return [DDColor colorWithRed:(r / 255.0f) green:(g / 255.0f) blue:(b / 255.0f) alpha:1.0f];
+}
+
 #elif defined(DD_CLI) || !__has_include(<AppKit/NSColor.h>)
-    // OS X CLI
+// OS X CLI
     #import "CLIColor.h"
-    typedef CLIColor DDColor;
-    static inline DDColor* DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {return [DDColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f];}
+typedef CLIColor DDColor;
+static inline DDColor * DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {
+    return [DDColor colorWithCalibratedRed:(r / 255.0f) green:(g / 255.0f) blue:(b / 255.0f) alpha:1.0f];
+}
+
 #else
-    // OS X with AppKit
+// OS X with AppKit
     #import <AppKit/NSColor.h>
-    typedef NSColor DDColor;
-    static inline DDColor* DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {return [DDColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f];}
+typedef NSColor DDColor;
+static inline DDColor * DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {
+    return [DDColor colorWithCalibratedRed:(r / 255.0f) green:(g / 255.0f) blue:(b / 255.0f) alpha:1.0f];
+}
+
 #endif
 #pragma clang diagnostic pop
 
@@ -147,7 +156,7 @@
  * static NSString *const PurpleTag = @"PurpleTag";
  *
  * #define DDLogPurple(frmt, ...) LOG_OBJC_TAG_MACRO(NO, 0, 0, 0, PurpleTag, frmt, ##__VA_ARGS__)
- * 
+ *
  * And then where you configure CocoaLumberjack:
  *
  * purple = DDMakeColor((64/255.0), (0/255.0), (128/255.0));

@@ -24,6 +24,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     UIWindow *window = [UIWindow new];
+
     window.backgroundColor = [UIColor blackColor];
     self.window = window;
     self.window.rootViewController = [ViewController new];

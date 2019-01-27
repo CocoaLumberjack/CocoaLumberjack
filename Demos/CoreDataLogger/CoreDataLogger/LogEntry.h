@@ -10,9 +10,9 @@
 
 @interface LogEntry : NSManagedObject
 
-@property (nonatomic, strong) NSNumber * context;
-@property (nonatomic, strong) NSNumber * level;
-@property (nonatomic, strong) NSString * message;
-@property (nonatomic, strong) NSDate   * timestamp;
+@property (nonatomic, strong) NSNumber *context;
+@property (nonatomic, strong) NSNumber *level;
+@property (nonatomic, strong) NSString *message;
+@property (nonatomic, strong) NSDate *timestamp;
 
 @end

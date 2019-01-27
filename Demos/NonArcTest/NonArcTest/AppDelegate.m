@@ -24,7 +24,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 {
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
-    
+
     DDLogVerbose(@"Testing");
 }
 

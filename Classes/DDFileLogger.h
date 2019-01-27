@@ -39,8 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 // You should carefully consider the proper configuration values for your application.
 
 extern unsigned long long const kDDDefaultLogMaxFileSize;
-extern NSTimeInterval     const kDDDefaultLogRollingFrequency;
-extern NSUInteger         const kDDDefaultLogMaxNumLogFiles;
+extern NSTimeInterval const kDDDefaultLogRollingFrequency;
+extern NSUInteger const kDDDefaultLogMaxNumLogFiles;
 extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 
@@ -195,7 +195,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *  If logDirectory is not specified, then a folder called "Logs" is created in the app's cache directory.
  *  While running on the simulator, the "Logs" folder is located in the library temporary directory.
  */
-- (instancetype)initWithLogsDirectory:(NSString * __nullable)logsDirectory NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithLogsDirectory:(NSString *__nullable)logsDirectory NS_DESIGNATED_INITIALIZER;
 
 #if TARGET_OS_IPHONE
 /*
@@ -209,7 +209,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *    null
  *    cy#
  **/
-- (instancetype)initWithLogsDirectory:(NSString * __nullable)logsDirectory
+- (instancetype)initWithLogsDirectory:(NSString *__nullable)logsDirectory
            defaultFileProtectionLevel:(NSFileProtectionType)fileProtectionLevel;
 #endif
 
@@ -306,7 +306,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 /**
  *  Designated initializer, requires a date formatter
  */
-- (instancetype)initWithDateFormatter:(NSDateFormatter * __nullable)dateFormatter NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithDateFormatter:(NSDateFormatter *__nullable)dateFormatter NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -427,14 +427,14 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *  You can optionally force the current log file to be rolled with this method.
  *  CompletionBlock will be called on main queue.
  */
-- (void)rollLogFileWithCompletionBlock:(void (^ __nullable)(void))completionBlock
-    NS_SWIFT_NAME(rollLogFile(withCompletion:));
+- (void)rollLogFileWithCompletionBlock          :(void(^__nullable)(void))completionBlock
+        NS_SWIFT_NAME(rollLogFile(withCompletion:));
 
 /**
  *  Method is deprecated.
  *  @deprecated Use `rollLogFileWithCompletionBlock:` method instead.
  */
-- (void)rollLogFile __attribute((deprecated));
+- (void) rollLogFile __attribute((deprecated));
 
 // Inherited from DDAbstractLogger
 

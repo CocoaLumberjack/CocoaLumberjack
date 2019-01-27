@@ -10,7 +10,7 @@
 /**
  * For more information about creating custom formatters, see the wiki article:
  * https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/CustomFormatters
-**/
+ **/
 @implementation TestFormatter
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage

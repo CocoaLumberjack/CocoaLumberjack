@@ -25,7 +25,7 @@
 /**
  *  Log formatter mode
  */
-typedef NS_ENUM(NSUInteger, DDDispatchQueueLogFormatterMode){
+typedef NS_ENUM (NSUInteger, DDDispatchQueueLogFormatterMode) {
     /**
      *  This is the default option, means the formatter can be reused between multiple loggers and therefore is thread-safe.
      *  There is, of course, a performance cost for the thread-safety
@@ -187,5 +187,5 @@ typedef NS_ENUM(NSUInteger, DDDispatchQueueLogFormatterMode){
 
 @end
 
-@interface DDAtomicCounter: NSObject<DDAtomicCountable>
+@interface DDAtomicCounter : NSObject<DDAtomicCountable>
 @end

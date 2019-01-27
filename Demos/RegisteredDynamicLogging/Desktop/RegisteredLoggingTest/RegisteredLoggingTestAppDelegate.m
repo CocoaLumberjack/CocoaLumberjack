@@ -20,19 +20,19 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
-    
+
     [Lions logStuff];
     [Tigers logStuff];
-    
+
     NSArray *registeredClassNames = [DDLog registeredClassNames];
     DDLogVerbose(@"registeredClassNames: %@", registeredClassNames);
-    
+
     NSArray *registeredClasses = [DDLog registeredClasses];
-    for (Class class in registeredClasses)
-    {
+
+    for (Class class in registeredClasses) {
         [class ddSetLogLevel:DDLogLevelVerbose];
     }
-    
+
     [Lions logStuff];
     [Tigers logStuff];
 }

@@ -9,7 +9,7 @@
 
 #import "PerformanceTesting.h"
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char *argv[]) {
     @autoreleasepool {
         [PerformanceTesting startPerformanceTests];
     }

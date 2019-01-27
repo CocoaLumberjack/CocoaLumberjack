@@ -37,9 +37,9 @@ static DDLogLevel _captureLevel = DDLogLevelVerbose;
     if (!_cancel) {
         return;
     }
-    
+
     _cancel = NO;
-    
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
         [self captureAslLogs];
     });
@@ -61,12 +61,12 @@ static DDLogLevel _captureLevel = DDLogLevelVerbose;
 
 + (void)configureAslQuery:(aslmsg)query {
     const char param[] = "7";  // ASL_LEVEL_DEBUG, which is everything. We'll rely on regular DDlog log level to filter
-    
+
     asl_set_query(query, ASL_KEY_LEVEL, param, ASL_QUERY_OP_LESS_EQUAL | ASL_QUERY_OP_NUMERIC);
 
     // Don't retrieve logs from our own DDASLLogger
     asl_set_query(query, kDDASLKeyDDLog, kDDASLDDLogValue, ASL_QUERY_OP_NOT_EQUAL);
-    
+
 #if !TARGET_OS_IPHONE || (defined(TARGET_SIMULATOR) && TARGET_SIMULATOR)
     int processId = [[NSProcessInfo processInfo] processIdentifier];
     char pid[16];
@@ -76,25 +76,31 @@ static DDLogLevel _captureLevel = DDLogLevelVerbose;
 }
 
 + (void)aslMessageReceived:(aslmsg)msg {
-    const char* messageCString = asl_get( msg, ASL_KEY_MSG );
-    if ( messageCString == NULL )
+    const char *messageCString = asl_get(msg, ASL_KEY_MSG);
+
+    if (messageCString == NULL) {
         return;
+    }
 
     DDLogFlag flag;
     BOOL async;
 
-    const char* levelCString = asl_get(msg, ASL_KEY_LEVEL);
-    switch (levelCString? atoi(levelCString) : 0) {
+    const char *levelCString = asl_get(msg, ASL_KEY_LEVEL);
+    switch (levelCString ? atoi(levelCString) : 0) {
         // By default all NSLog's with a ASL_LEVEL_WARNING level
-        case ASL_LEVEL_EMERG    :
-        case ASL_LEVEL_ALERT    :
-        case ASL_LEVEL_CRIT     : flag = DDLogFlagError;    async = NO;  break;
-        case ASL_LEVEL_ERR      : flag = DDLogFlagWarning;  async = YES; break;
-        case ASL_LEVEL_WARNING  : flag = DDLogFlagInfo;     async = YES; break;
-        case ASL_LEVEL_NOTICE   : flag = DDLogFlagDebug;    async = YES; break;
-        case ASL_LEVEL_INFO     :
-        case ASL_LEVEL_DEBUG    :
-        default                 : flag = DDLogFlagVerbose;  async = YES;  break;
+        case ASL_LEVEL_EMERG:
+        case ASL_LEVEL_ALERT:
+        case ASL_LEVEL_CRIT: flag = DDLogFlagError;    async = NO;  break;
+
+        case ASL_LEVEL_ERR: flag = DDLogFlagWarning;  async = YES; break;
+
+        case ASL_LEVEL_WARNING: flag = DDLogFlagInfo;     async = YES; break;
+
+        case ASL_LEVEL_NOTICE: flag = DDLogFlagDebug;    async = YES; break;
+
+        case ASL_LEVEL_INFO:
+        case ASL_LEVEL_DEBUG:
+        default: flag = DDLogFlagVerbose;  async = YES;  break;
     }
 
     if (!(_captureLevel & flag)) {
@@ -104,10 +110,10 @@ static DDLogLevel _captureLevel = DDLogLevelVerbose;
     //  NSString * sender = [NSString stringWithCString:asl_get(msg, ASL_KEY_SENDER) encoding:NSUTF8StringEncoding];
     NSString *message = @(messageCString);
 
-    const char* secondsCString = asl_get( msg, ASL_KEY_TIME );
-    const char* nanoCString = asl_get( msg, ASL_KEY_TIME_NSEC );
+    const char *secondsCString = asl_get(msg, ASL_KEY_TIME);
+    const char *nanoCString = asl_get(msg, ASL_KEY_TIME_NSEC);
     NSTimeInterval seconds = secondsCString ? strtod(secondsCString, NULL) : [NSDate timeIntervalSinceReferenceDate] - NSTimeIntervalSince1970;
-    double nanoSeconds = nanoCString? strtod(nanoCString, NULL) : 0;
+    double nanoSeconds = nanoCString ? strtod(nanoCString, NULL) : 0;
     NSTimeInterval totalSeconds = seconds + (nanoSeconds / 1e9);
 
     NSDate *timeStamp = [NSDate dateWithTimeIntervalSince1970:totalSeconds];
@@ -122,7 +128,7 @@ static DDLogLevel _captureLevel = DDLogLevelVerbose;
                                                                 tag:nil
                                                             options:0
                                                           timestamp:timeStamp];
-    
+
     [DDLog log:async message:logMessage];
 }
 
@@ -174,9 +180,8 @@ static DDLogLevel _captureLevel = DDLogLevelVerbose;
                 // Iterate over new messages.
                 aslmsg msg;
                 aslresponse response = asl_search(NULL, query);
-                
-                while ((msg = asl_next(response)))
-                {
+
+                while ((msg = asl_next(response))) {
                     [self aslMessageReceived:msg];
 
                     // Keep track of which messages we've seen.
@@ -189,7 +194,6 @@ static DDLogLevel _captureLevel = DDLogLevelVerbose;
                     notify_cancel(token);
                     return;
                 }
-
             }
         });
     }
