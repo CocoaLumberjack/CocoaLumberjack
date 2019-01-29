@@ -19,8 +19,7 @@
 
 @implementation CoreDataLogger
 
-- (id)initWithLogDirectory:(NSString *)aLogDirectory
-{
+- (id)initWithLogDirectory:(NSString *)aLogDirectory {
     if ((self = [super init])) {
         logDirectory = [aLogDirectory copy];
 
@@ -35,8 +34,7 @@
 #pragma mark Private API
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)validateLogDirectory
-{
+- (void)validateLogDirectory {
     // Validate log directory exists or create the directory.
 
     BOOL isDirectory;
@@ -64,8 +62,7 @@
     }
 }
 
-- (NSString *)logFilePath
-{
+- (NSString *)logFilePath {
     return [logDirectory stringByAppendingPathComponent:@"Log.sqlite"];
 }
 
@@ -73,8 +70,7 @@
 #pragma mark Core Data
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (NSManagedObjectModel *)managedObjectModel
-{
+- (NSManagedObjectModel *)managedObjectModel {
     if (managedObjectModel) {
         return managedObjectModel;
     }
@@ -84,8 +80,7 @@
     return managedObjectModel;
 }
 
-- (BOOL)addPersistentStore:(NSError **)errorPtr
-{
+- (BOOL)addPersistentStore:(NSError **)errorPtr {
     if (logDirectory == nil) {
         if (errorPtr) {
             NSString *errMsg = @"Invalid logDirectory";
@@ -107,8 +102,7 @@
     return (result != nil);
 }
 
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
-{
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
     if (persistentStoreCoordinator) {
         return persistentStoreCoordinator;
     }
@@ -137,8 +131,7 @@
     return persistentStoreCoordinator;
 }
 
-- (void)createManagedObjectContext
-{
+- (void)createManagedObjectContext {
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
 
     if (coordinator) {
@@ -159,8 +152,7 @@
 #pragma mark Public API
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)clearLog
-{
+- (void)clearLog {
     dispatch_block_t block = ^{
         if (managedObjectContext == nil) {
             return;
@@ -205,8 +197,7 @@
 #pragma mark DDLogger
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (BOOL)db_log:(DDLogMessage *)logMessage
-{
+- (BOOL)db_log:(DDLogMessage *)logMessage {
     if (managedObjectContext == nil) {
         return NO;
     }
@@ -223,8 +214,7 @@
     return YES;
 }
 
-- (void)saveContext
-{
+- (void)saveContext {
     if ([managedObjectContext hasChanges]) {
         NSError *error = nil;
 
@@ -240,8 +230,7 @@
     }
 }
 
-- (void)deleteOldLogEntries:(BOOL)shouldSaveWhenDone
-{
+- (void)deleteOldLogEntries:(BOOL)shouldSaveWhenDone {
     if (_maxAge <= 0.0) {
         // Deleting old log entries is disabled.
         // The superclass won't likely call us if this is the case, but we're being cautious.
@@ -277,18 +266,15 @@
     }
 }
 
-- (void)db_save
-{
+- (void)db_save {
     [self saveContext];
 }
 
-- (void)db_delete
-{
+- (void)db_delete {
     [self deleteOldLogEntries:YES];
 }
 
-- (void)db_saveAndDelete
-{
+- (void)db_saveAndDelete {
     [self deleteOldLogEntries:NO];
     [self saveContext];
 }

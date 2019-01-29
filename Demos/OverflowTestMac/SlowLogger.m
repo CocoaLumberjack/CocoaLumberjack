@@ -9,8 +9,7 @@
 
 @implementation SlowLogger
 
-- (void)logMessage:(DDLogMessage *)logMessage
-{
+- (void)logMessage:(DDLogMessage *)logMessage {
     [NSThread sleepForTimeInterval:0.25];
 }
 

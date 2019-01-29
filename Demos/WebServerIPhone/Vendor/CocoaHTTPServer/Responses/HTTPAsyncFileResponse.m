@@ -60,8 +60,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
 
 @implementation HTTPAsyncFileResponse
 
-- (id)initWithFilePath:(NSString *)fpath forConnection:(HTTPConnection *)parent
-{
+- (id)initWithFilePath:(NSString *)fpath forConnection:(HTTPConnection *)parent {
     if ((self = [super init])) {
         HTTPLogTrace();
 
@@ -96,16 +95,14 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     return self;
 }
 
-- (void)abort
-{
+- (void)abort {
     HTTPLogTrace();
 
     [connection responseDidAbort:self];
     aborted = YES;
 }
 
-- (void)processReadBuffer
-{
+- (void)processReadBuffer {
     // This method is here to allow superclasses to perform post-processing of the data.
     // For an example, see the HTTPDynamicFileResponse class.
     //
@@ -123,8 +120,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     [connection responseHasAvailableData:self];
 }
 
-- (void)pauseReadSource
-{
+- (void)pauseReadSource {
     if (!readSourceSuspended) {
         HTTPLogVerbose(@"%@[%p]: Suspending readSource", THIS_FILE, self);
 
@@ -133,8 +129,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     }
 }
 
-- (void)resumeReadSource
-{
+- (void)resumeReadSource {
     if (readSourceSuspended) {
         HTTPLogVerbose(@"%@[%p]: Resuming readSource", THIS_FILE, self);
 
@@ -143,8 +138,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     }
 }
 
-- (void)cancelReadSource
-{
+- (void)cancelReadSource {
     HTTPLogVerbose(@"%@[%p]: Canceling readSource", THIS_FILE, self);
 
     dispatch_source_cancel(readSource);
@@ -158,8 +152,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     }
 }
 
-- (BOOL)openFileAndSetupReadSource
-{
+- (BOOL)openFileAndSetupReadSource {
     HTTPLogTrace();
 
     fileFD = open([filePath UTF8String], (O_RDONLY | O_NONBLOCK));
@@ -268,8 +261,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     return YES;
 }
 
-- (BOOL)openFileIfNeeded
-{
+- (BOOL)openFileIfNeeded {
     if (aborted) {
         // The file operation has been aborted.
         // This could be because we failed to open the file,
@@ -285,22 +277,19 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     return [self openFileAndSetupReadSource];
 }
 
-- (UInt64)contentLength
-{
+- (UInt64)contentLength {
     HTTPLogTrace2(@"%@[%p]: contentLength - %llu", THIS_FILE, self, fileLength);
 
     return fileLength;
 }
 
-- (UInt64)offset
-{
+- (UInt64)offset {
     HTTPLogTrace();
 
     return fileOffset;
 }
 
-- (void)setOffset:(UInt64)offset
-{
+- (void)setOffset:(UInt64)offset {
     HTTPLogTrace2(@"%@[%p]: setOffset:%llu", THIS_FILE, self, offset);
 
     if (![self openFileIfNeeded]) {
@@ -321,8 +310,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     }
 }
 
-- (NSData *)readDataOfLength:(NSUInteger)length
-{
+- (NSData *)readDataOfLength:(NSUInteger)length {
     HTTPLogTrace2(@"%@[%p]: readDataOfLength:%lu", THIS_FILE, self, (unsigned long)length);
 
     if (data) {
@@ -354,8 +342,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     }
 }
 
-- (BOOL)isDone
-{
+- (BOOL)isDone {
     BOOL result = (fileOffset == fileLength);
 
     HTTPLogTrace2(@"%@[%p]: isDone - %@", THIS_FILE, self, (result ? @"YES" : @"NO"));
@@ -363,20 +350,17 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     return result;
 }
 
-- (NSString *)filePath
-{
+- (NSString *)filePath {
     return filePath;
 }
 
-- (BOOL)isAsynchronous
-{
+- (BOOL)isAsynchronous {
     HTTPLogTrace();
 
     return YES;
 }
 
-- (void)connectionDidClose
-{
+- (void)connectionDidClose {
     HTTPLogTrace();
 
     if (fileFD != NULL_FD) {
@@ -393,8 +377,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     }
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     HTTPLogTrace();
 
     #if NEEDS_DISPATCH_RETAIN_RELEASE

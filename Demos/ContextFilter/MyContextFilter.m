@@ -10,8 +10,7 @@
 
 @implementation MyContextFilter
 
-- (NSString *)formatLogMessage:(DDLogMessage *)logMessage
-{
+- (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     if (logMessage->_context == TP_LOG_CONTEXT) {
         // We can filter this message by simply returning nil
         return nil;

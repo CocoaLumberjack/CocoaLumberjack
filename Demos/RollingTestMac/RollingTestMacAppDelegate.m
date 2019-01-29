@@ -14,8 +14,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 @implementation RollingTestMacAppDelegate
 @synthesize window;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     fileLogger = [[DDFileLogger alloc] init];
 
     fileLogger.maximumFileSize = 1024 * 1;  //  1 KB
@@ -46,8 +45,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 //  DDLogInfo(@"Log file 2 : Log message 3");
 }
 
-- (void)fillLogFiles:(NSTimer *)aTimer
-{
+- (void)fillLogFiles:(NSTimer *)aTimer {
     int max = 1;
 
     // To test rolling log files due to age, set max to 1

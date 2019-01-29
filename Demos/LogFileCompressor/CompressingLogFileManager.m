@@ -65,13 +65,11 @@
 
 @synthesize isCompressing;
 
-- (id)init
-{
+- (id)init {
     return [self initWithLogsDirectory:nil];
 }
 
-- (id)initWithLogsDirectory:(NSString *)aLogsDirectory
-{
+- (id)initWithLogsDirectory:(NSString *)aLogsDirectory {
     if ((self = [super initWithLogsDirectory:aLogsDirectory])) {
         upToDate = NO;
 
@@ -85,13 +83,11 @@
     return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(compressNextLogFile) object:nil];
 }
 
-- (void)compressLogFile:(DDLogFileInfo *)logFile
-{
+- (void)compressLogFile:(DDLogFileInfo *)logFile {
     self.isCompressing = YES;
 
     CompressingLogFileManager *__weak weakSelf = self;
@@ -100,8 +96,7 @@
     });
 }
 
-- (void)compressNextLogFile
-{
+- (void)compressNextLogFile {
     if (self.isCompressing) {
         // We're already compressing a file.
         // Wait until it's done to move onto the next file.
@@ -139,8 +134,7 @@
     upToDate = YES;
 }
 
-- (void)compressionDidSucceed:(DDLogFileInfo *)logFile
-{
+- (void)compressionDidSucceed:(DDLogFileInfo *)logFile {
     NSLogVerbose(@"CompressingLogFileManager: compressionDidSucceed: %@", logFile.fileName);
 
     self.isCompressing = NO;
@@ -148,8 +142,7 @@
     [self compressNextLogFile];
 }
 
-- (void)compressionDidFail:(DDLogFileInfo *)logFile
-{
+- (void)compressionDidFail:(DDLogFileInfo *)logFile {
     NSLogWarn(@"CompressingLogFileManager: compressionDidFail: %@", logFile.fileName);
 
     self.isCompressing = NO;
@@ -164,8 +157,7 @@
     [self performSelector:@selector(compressNextLogFile) withObject:nil afterDelay:delay];
 }
 
-- (void)didArchiveLogFile:(NSString *)logFilePath
-{
+- (void)didArchiveLogFile:(NSString *)logFilePath {
     NSLogVerbose(@"CompressingLogFileManager: didArchiveLogFile: %@", [logFilePath lastPathComponent]);
 
     // If all other log files have been compressed,
@@ -177,8 +169,7 @@
     }
 }
 
-- (void)didRollAndArchiveLogFile:(NSString *)logFilePath
-{
+- (void)didRollAndArchiveLogFile:(NSString *)logFilePath {
     NSLogVerbose(@"CompressingLogFileManager: didRollAndArchiveLogFile: %@", [logFilePath lastPathComponent]);
 
     // If all other log files have been compressed,
@@ -190,8 +181,7 @@
     }
 }
 
-- (void)backgroundThread_CompressLogFile:(DDLogFileInfo *)logFile
-{
+- (void)backgroundThread_CompressLogFile:(DDLogFileInfo *)logFile {
     @autoreleasepool {
         NSLogInfo(@"CompressingLogFileManager: Compressing log file: %@", logFile.fileName);
 
@@ -475,13 +465,11 @@
 
 @dynamic isCompressed;
 
-- (BOOL)isCompressed
-{
+- (BOOL)isCompressed {
     return [[[self fileName] pathExtension] isEqualToString:@"gz"];
 }
 
-- (NSString *)tempFilePathByAppendingPathExtension:(NSString *)newExt
-{
+- (NSString *)tempFilePathByAppendingPathExtension:(NSString *)newExt {
     // Example:
     //
     // Current File Name: "/full/path/to/log-ABC123.txt"
@@ -500,8 +488,7 @@
     return newFilePath;
 }
 
-- (NSString *)fileNameByAppendingPathExtension:(NSString *)newExt
-{
+- (NSString *)fileNameByAppendingPathExtension:(NSString *)newExt {
     // Example:
     //
     // Current File Name: "log-ABC123.txt"

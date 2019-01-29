@@ -13,21 +13,18 @@
     aslclient client;
 }
 
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
     [super awakeFromNib];
 
     count = 0;
     client = asl_open(NULL, "CocoaLumberjack.CaptureASL", 0);
 }
 
-- (IBAction)log:(id)sender
-{
+- (IBAction)log:(id)sender {
     NSLog(@"ASL test message %d", count++);
 }
 
-- (IBAction)asl_log:(UIButton *)sender
-{
+- (IBAction)asl_log:(UIButton *)sender {
     char *level = NULL;
 
     switch (sender.tag) {

@@ -29,13 +29,11 @@ static const int tpLogLevel = DDLogLevelVerbose;
 
 @implementation ThirdPartyFramework
 
-+ (void)start
-{
++ (void)start {
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(fire:) userInfo:nil repeats:YES];
 }
 
-+ (void)fire:(NSTimer *)timer
-{
++ (void)fire:(NSTimer *)timer {
     TPLogVerbose(@"Log message from third party framework");
 }
 

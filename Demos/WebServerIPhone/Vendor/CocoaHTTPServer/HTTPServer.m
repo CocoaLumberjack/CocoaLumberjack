@@ -57,8 +57,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
  * Standard Constructor.
  * Instantiates an HTTP server, but does not start it.
  **/
-- (id)init
-{
+- (id)init {
     if ((self = [super init])) {
         HTTPLogTrace();
 
@@ -127,8 +126,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
  * Standard Deconstructor.
  * Stops the server, and clients, and releases any resources connected with this instance.
  **/
-- (void)dealloc
-{
+- (void)dealloc {
     HTTPLogTrace();
 
     // Remove notification observer
@@ -156,8 +154,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
  * Thus requests for /index.html will be referencing the index.html file within the document root directory.
  * All file requests are relative to this document root.
  **/
-- (NSString *)documentRoot
-{
+- (NSString *)documentRoot {
     __block NSString *result;
 
     dispatch_sync(serverQueue, ^{
@@ -167,8 +164,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
     return result;
 }
 
-- (void)setDocumentRoot:(NSString *)value
-{
+- (void)setDocumentRoot:(NSString *)value {
     HTTPLogTrace();
 
     // Document root used to be of type NSURL.
@@ -193,8 +189,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
  * The default connection class is HTTPConnection.
  * If you use a different connection class, it is assumed that the class extends HTTPConnection
  **/
-- (Class)connectionClass
-{
+- (Class)connectionClass {
     __block Class result;
 
     dispatch_sync(serverQueue, ^{
@@ -204,8 +199,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
     return result;
 }
 
-- (void)setConnectionClass:(Class)value
-{
+- (void)setConnectionClass:(Class)value {
     HTTPLogTrace();
 
     dispatch_async(serverQueue, ^{
@@ -216,8 +210,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
 /**
  * What interface to bind the listening socket to.
  **/
-- (NSString *)interface
-{
+- (NSString *)interface {
     __block NSString *result;
 
     dispatch_sync(serverQueue, ^{
@@ -227,8 +220,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
     return result;
 }
 
-- (void)setInterface:(NSString *)value
-{
+- (void)setInterface:(NSString *)value {
     NSString *valueCopy = [value copy];
 
     dispatch_async(serverQueue, ^{
@@ -241,8 +233,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
  * By default this port is initially set to zero, which allows the kernel to pick an available port for us.
  * After the HTTP server has started, the port being used may be obtained by this method.
  **/
-- (UInt16)port
-{
+- (UInt16)port {
     __block UInt16 result;
 
     dispatch_sync(serverQueue, ^{
@@ -252,8 +243,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
     return result;
 }
 
-- (UInt16)listeningPort
-{
+- (UInt16)listeningPort {
     __block UInt16 result;
 
     dispatch_sync(serverQueue, ^{
@@ -267,8 +257,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
     return result;
 }
 
-- (void)setPort:(UInt16)value
-{
+- (void)setPort:(UInt16)value {
     HTTPLogTrace();
 
     dispatch_async(serverQueue, ^{
@@ -280,8 +269,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
  * Domain on which to broadcast this service via Bonjour.
  * The default domain is @"local".
  **/
-- (NSString *)domain
-{
+- (NSString *)domain {
     __block NSString *result;
 
     dispatch_sync(serverQueue, ^{
@@ -291,8 +279,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
     return result;
 }
 
-- (void)setDomain:(NSString *)value
-{
+- (void)setDomain:(NSString *)value {
     HTTPLogTrace();
 
     NSString *valueCopy = [value copy];
@@ -307,8 +294,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
  * The default name is an empty string,
  * which should result in the published name being the host name of the computer.
  **/
-- (NSString *)name
-{
+- (NSString *)name {
     __block NSString *result;
 
     dispatch_sync(serverQueue, ^{
@@ -318,8 +304,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
     return result;
 }
 
-- (NSString *)publishedName
-{
+- (NSString *)publishedName {
     __block NSString *result;
 
     dispatch_sync(serverQueue, ^{
@@ -337,8 +322,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
     return result;
 }
 
-- (void)setName:(NSString *)value
-{
+- (void)setName:(NSString *)value {
     NSString *valueCopy = [value copy];
 
     dispatch_async(serverQueue, ^{
@@ -350,8 +334,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
  * The type of service to publish via Bonjour.
  * No type is set by default, and one must be set in order for the service to be published.
  **/
-- (NSString *)type
-{
+- (NSString *)type {
     __block NSString *result;
 
     dispatch_sync(serverQueue, ^{
@@ -361,8 +344,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
     return result;
 }
 
-- (void)setType:(NSString *)value
-{
+- (void)setType:(NSString *)value {
     NSString *valueCopy = [value copy];
 
     dispatch_async(serverQueue, ^{
@@ -373,8 +355,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
 /**
  * The extra data to use for this service via Bonjour.
  **/
-- (NSDictionary *)TXTRecordDictionary
-{
+- (NSDictionary *)TXTRecordDictionary {
     __block NSDictionary *result;
 
     dispatch_sync(serverQueue, ^{
@@ -384,8 +365,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
     return result;
 }
 
-- (void)setTXTRecordDictionary:(NSDictionary *)value
-{
+- (void)setTXTRecordDictionary:(NSDictionary *)value {
     HTTPLogTrace();
 
     NSDictionary *valueCopy = [value copy];
@@ -415,8 +395,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
 #pragma mark Server Control
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (BOOL)start:(NSError **)errPtr
-{
+- (BOOL)start:(NSError **)errPtr {
     HTTPLogTrace();
 
     __block BOOL success = YES;
@@ -442,13 +421,11 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
     return success;
 }
 
-- (void)stop
-{
+- (void)stop {
     [self stop:NO];
 }
 
-- (void)stop:(BOOL)keepExistingConnections
-{
+- (void)stop:(BOOL)keepExistingConnections {
     HTTPLogTrace();
 
     dispatch_sync(serverQueue, ^{ @autoreleasepool {
@@ -483,8 +460,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
                                   } });
 }
 
-- (BOOL)isRunning
-{
+- (BOOL)isRunning {
     __block BOOL result;
 
     dispatch_sync(serverQueue, ^{
@@ -494,8 +470,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
     return result;
 }
 
-- (void)addWebSocket:(WebSocket *)ws
-{
+- (void)addWebSocket:(WebSocket *)ws {
     [webSocketsLock lock];
 
     HTTPLogTrace();
@@ -511,8 +486,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
 /**
  * Returns the number of http client connections that are currently connected to the server.
  **/
-- (NSUInteger)numberOfHTTPConnections
-{
+- (NSUInteger)numberOfHTTPConnections {
     NSUInteger result = 0;
 
     [connectionsLock lock];
@@ -525,8 +499,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
 /**
  * Returns the number of websocket client connections that are currently connected to the server.
  **/
-- (NSUInteger)numberOfWebSocketConnections
-{
+- (NSUInteger)numberOfWebSocketConnections {
     NSUInteger result = 0;
 
     [webSocketsLock lock];
@@ -540,8 +513,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
 #pragma mark Incoming Connections
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (HTTPConfig *)config
-{
+- (HTTPConfig *)config {
     // Override me if you want to provide a custom config to the new connection.
     //
     // Generally this involves overriding the HTTPConfig class to include any custom settings,
@@ -556,8 +528,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
     return [[HTTPConfig alloc] initWithServer:self documentRoot:documentRoot queue:connectionQueue];
 }
 
-- (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket
-{
+- (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket {
     HTTPConnection *newConnection = (HTTPConnection *)[[connectionClass alloc] initWithAsyncSocket:newSocket
                                                                                      configuration:[self config]];
 
@@ -572,8 +543,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
 #pragma mark Bonjour
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)publishBonjour
-{
+- (void)publishBonjour {
     HTTPLogTrace();
 
     NSAssert(dispatch_get_specific(IsOnServerQueueKey) != NULL, @"Must be on serverQueue");
@@ -606,8 +576,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
     }
 }
 
-- (void)unpublishBonjour
-{
+- (void)unpublishBonjour {
     HTTPLogTrace();
 
     NSAssert(dispatch_get_specific(IsOnServerQueueKey) != NULL, @"Must be on serverQueue");
@@ -629,8 +598,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
  * Republishes the service via bonjour if the server is running.
  * If the service was not previously published, this method will publish it (if the server is running).
  **/
-- (void)republishBonjour
-{
+- (void)republishBonjour {
     HTTPLogTrace();
 
     dispatch_async(serverQueue, ^{
@@ -643,8 +611,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
  * Called when our bonjour service has been successfully published.
  * This method does nothing but output a log message telling us about the published service.
  **/
-- (void)netServiceDidPublish:(NSNetService *)ns
-{
+- (void)netServiceDidPublish:(NSNetService *)ns {
     // Override me to do something here...
     //
     // Note: This method is invoked on our bonjour thread.
@@ -656,8 +623,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
  * Called if our bonjour service failed to publish itself.
  * This method does nothing but output a log message telling us about the published service.
  **/
-- (void)netService:(NSNetService *)ns didNotPublish:(NSDictionary *)errorDict
-{
+- (void)netService:(NSNetService *)ns didNotPublish:(NSDictionary *)errorDict {
     // Override me to do something here...
     //
     // Note: This method in invoked on our bonjour thread.
@@ -674,8 +640,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
  * This method is automatically called when a notification of type HTTPConnectionDidDieNotification is posted.
  * It allows us to remove the connection from our array.
  **/
-- (void)connectionDidDie:(NSNotification *)notification
-{
+- (void)connectionDidDie:(NSNotification *)notification {
     // Note: This method is called on the connection queue that posted the notification
 
     [connectionsLock lock];
@@ -690,8 +655,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
  * This method is automatically called when a notification of type WebSocketDidDieNotification is posted.
  * It allows us to remove the websocket from our array.
  **/
-- (void)webSocketDidDie:(NSNotification *)notification
-{
+- (void)webSocketDidDie:(NSNotification *)notification {
     // Note: This method is called on the connection queue that posted the notification
 
     [webSocketsLock lock];
@@ -719,8 +683,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelInfo; // | HTTP_LOG_FLAG_TRACE;
 
 static NSThread *bonjourThread;
 
-+ (void)startBonjourThreadIfNeeded
-{
++ (void)startBonjourThreadIfNeeded {
     HTTPLogTrace();
 
     static dispatch_once_t predicate;
@@ -734,8 +697,7 @@ static NSThread *bonjourThread;
     });
 }
 
-+ (void)bonjourThread
-{
++ (void)bonjourThread {
     @autoreleasepool {
         HTTPLogVerbose(@"%@: BonjourThread: Started", THIS_FILE);
 
@@ -752,12 +714,10 @@ static NSThread *bonjourThread;
     }
 }
 
-- (void)doNothingAtAll:(NSTimer *)timer
-{
+- (void)doNothingAtAll:(NSTimer *)timer {
 }
 
-+ (void)executeBonjourBlock:(dispatch_block_t)block
-{
++ (void)executeBonjourBlock:(dispatch_block_t)block {
     HTTPLogTrace();
 
     NSAssert([NSThread currentThread] == bonjourThread, @"Executed on incorrect thread");
@@ -765,8 +725,7 @@ static NSThread *bonjourThread;
     block();
 }
 
-+ (void)performBonjourBlock:(dispatch_block_t)block
-{
++ (void)performBonjourBlock:(dispatch_block_t)block {
     HTTPLogTrace();
 
     [self performSelector:@selector(executeBonjourBlock:)

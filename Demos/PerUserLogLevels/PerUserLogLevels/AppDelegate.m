@@ -37,8 +37,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelWarning;   // Log level for relea
 
 @synthesize window = _window;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
 
     DDLogVerbose(@"Invoking machine_init_cold");

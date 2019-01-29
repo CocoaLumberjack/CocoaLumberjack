@@ -17,8 +17,7 @@
 
 @implementation BaseNSLogging
 
-+ (void)speedTest0
-{
++ (void)speedTest0 {
     // Log statements that will not be executed due to log level
 
     for (NSUInteger i = 0; i < SPEED_TEST_0_COUNT; i++) {
@@ -26,8 +25,7 @@
     }
 }
 
-+ (void)speedTest1
-{
++ (void)speedTest1 {
     // Log statements that will be executed asynchronously
 
     for (NSUInteger i = 0; i < SPEED_TEST_1_COUNT; i++) {
@@ -35,8 +33,7 @@
     }
 }
 
-+ (void)speedTest2
-{
++ (void)speedTest2 {
     // Log statements that will be executed synchronously
 
     for (NSUInteger i = 0; i < SPEED_TEST_2_COUNT; i++) {
@@ -44,8 +41,7 @@
     }
 }
 
-+ (void)speedTest3
-{
++ (void)speedTest3 {
     // Even Spread:
     //
     // 25% - Not executed due to log level
@@ -69,8 +65,7 @@
     }
 }
 
-+ (void)speedTest4
-{
++ (void)speedTest4 {
     // Custom Spread
 
     for (NSUInteger i = 0; i < SPEED_TEST_4_ERROR_COUNT; i++) {

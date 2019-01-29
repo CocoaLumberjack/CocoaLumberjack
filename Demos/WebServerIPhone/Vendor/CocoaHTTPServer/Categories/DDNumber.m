@@ -3,8 +3,7 @@
 
 @implementation NSNumber (DDNumber)
 
-+ (BOOL)parseString:(NSString *)str intoSInt64:(SInt64 *)pNum
-{
++ (BOOL)parseString:(NSString *)str intoSInt64:(SInt64 *)pNum {
     if (str == nil) {
         *pNum = 0;
         return NO;
@@ -23,8 +22,7 @@
     }
 }
 
-+ (BOOL)parseString:(NSString *)str intoUInt64:(UInt64 *)pNum
-{
++ (BOOL)parseString:(NSString *)str intoUInt64:(UInt64 *)pNum {
     if (str == nil) {
         *pNum = 0;
         return NO;
@@ -43,8 +41,7 @@
     }
 }
 
-+ (BOOL)parseString:(NSString *)str intoNSInteger:(NSInteger *)pNum
-{
++ (BOOL)parseString:(NSString *)str intoNSInteger:(NSInteger *)pNum {
     if (str == nil) {
         *pNum = 0;
         return NO;
@@ -64,8 +61,7 @@
     }
 }
 
-+ (BOOL)parseString:(NSString *)str intoNSUInteger:(NSUInteger *)pNum
-{
++ (BOOL)parseString:(NSString *)str intoNSUInteger:(NSUInteger *)pNum {
     if (str == nil) {
         *pNum = 0;
         return NO;

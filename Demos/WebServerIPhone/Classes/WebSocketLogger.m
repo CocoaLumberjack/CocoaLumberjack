@@ -10,8 +10,7 @@
 
 @implementation WebSocketLogger
 
-- (id)initWithWebSocket:(WebSocket *)ws
-{
+- (id)initWithWebSocket:(WebSocket *)ws {
     if ((self = [super init])) {
         websocket = ws;
         websocket.delegate = self;
@@ -22,8 +21,7 @@
     return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [websocket setDelegate:nil];
 }
 
@@ -31,8 +29,7 @@
 #pragma mark WebSocket delegate
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)webSocketDidOpen:(WebSocket *)ws
-{
+- (void)webSocketDidOpen:(WebSocket *)ws {
     // This method is invoked on the websocketQueue
 
     isWebSocketOpen = YES;
@@ -41,8 +38,7 @@
     [DDLog addLogger:self];
 }
 
-- (void)webSocketDidClose:(WebSocket *)ws
-{
+- (void)webSocketDidClose:(WebSocket *)ws {
     // This method is invoked on the websocketQueue
 
     isWebSocketOpen = NO;
@@ -58,8 +54,7 @@
 #pragma mark DDLogger Protocol
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)logMessage:(DDLogMessage *)logMessage
-{
+- (void)logMessage:(DDLogMessage *)logMessage {
     if (logMessage->_context == HTTP_LOG_CONTEXT) {
         // Don't relay HTTP log messages.
         // Doing so could essentially cause an endless loop of log messages.
@@ -90,8 +85,7 @@
 
 @implementation WebSocketFormatter
 
-- (id)init
-{
+- (id)init {
     if ((self = [super init])) {
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
@@ -101,8 +95,7 @@
     return self;
 }
 
-- (NSString *)formatLogMessage:(DDLogMessage *)logMessage
-{
+- (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     NSString *dateAndTime = [dateFormatter stringFromDate:(logMessage->_timestamp)];
 
     NSMutableString *webMsg = [logMessage->_message mutableCopy];

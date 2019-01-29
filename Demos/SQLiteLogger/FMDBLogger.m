@@ -35,8 +35,7 @@
 
 @implementation FMDBLogEntry
 
-- (id)initWithLogMessage:(DDLogMessage *)logMessage
-{
+- (id)initWithLogMessage:(DDLogMessage *)logMessage {
     if ((self = [super init])) {
         context = @(logMessage->_context);
         level = @(logMessage->_flag);
@@ -55,8 +54,7 @@
 
 @implementation FMDBLogger
 
-- (id)initWithLogDirectory:(NSString *)aLogDirectory
-{
+- (id)initWithLogDirectory:(NSString *)aLogDirectory {
     if ((self = [super init])) {
         logDirectory = [aLogDirectory copy];
 
@@ -69,8 +67,7 @@
     return self;
 }
 
-- (void)validateLogDirectory
-{
+- (void)validateLogDirectory {
     // Validate log directory exists or create the directory.
 
     BOOL isDirectory;
@@ -98,8 +95,7 @@
     }
 }
 
-- (void)openDatabase
-{
+- (void)openDatabase {
     if (logDirectory == nil) {
         return;
     }
@@ -145,8 +141,7 @@
 
 #pragma mark AbstractDatabaseLogger Overrides
 
-- (BOOL)db_log:(DDLogMessage *)logMessage
-{
+- (BOOL)db_log:(DDLogMessage *)logMessage {
     // You may be wondering, how come we don't just do the insert here and be done with it?
     // Is the buffering really needed?
     //
@@ -178,8 +173,7 @@
     return YES;
 }
 
-- (void)db_save
-{
+- (void)db_save {
     if ([pendingLogEntries count] == 0) {
         // Nothing to save.
         // The superclass won't likely call us if this is the case, but we're being cautious.
@@ -213,8 +207,7 @@
     }
 }
 
-- (void)db_delete
-{
+- (void)db_delete {
     if (_maxAge <= 0.0) {
         // Deleting old log entries is disabled.
         // The superclass won't likely call us if this is the case, but we're being cautious.
@@ -235,8 +228,7 @@
     }
 }
 
-- (void)db_saveAndDelete
-{
+- (void)db_saveAndDelete {
     [database beginTransaction];
 
     [self db_delete];

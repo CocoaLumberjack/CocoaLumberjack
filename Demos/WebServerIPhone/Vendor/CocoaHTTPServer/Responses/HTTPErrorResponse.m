@@ -2,8 +2,7 @@
 
 @implementation HTTPErrorResponse
 
-- (id)initWithErrorCode:(int)httpErrorCode
-{
+- (id)initWithErrorCode:(int)httpErrorCode {
     if ((self = [super init])) {
         _status = httpErrorCode;
     }

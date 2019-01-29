@@ -23,8 +23,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 @synthesize window;
 @synthesize viewController;
 
-- (void)setupWebServer
-{
+- (void)setupWebServer {
     // Create server using our custom MyHTTPServer class
     httpServer = [[HTTPServer alloc] init];
 
@@ -54,8 +53,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     }
 }
 
-- (void)applicationDidFinishLaunching:(UIApplication *)application
-{
+- (void)applicationDidFinishLaunching:(UIApplication *)application {
     // Direct log messages to the console.
     // The log messages will look exactly like a normal NSLog statement.
     //
@@ -109,8 +107,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     [window makeKeyAndVisible];
 }
 
-- (void)writeLogMessages:(NSTimer *)aTimer
-{
+- (void)writeLogMessages:(NSTimer *)aTimer {
     // Log a message in verbose mode.
     //
     // Want to disable this log message?

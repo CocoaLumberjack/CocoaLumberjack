@@ -10,8 +10,7 @@
 
 @implementation Stuff
 
-+ (void)doStuff
-{
++ (void)doStuff {
     DDLogError(@"%@: Error", THIS_FILE);
     DDLogWarn(@"%@: Warn", THIS_FILE);
     DDLogInfo(@"%@: Info", THIS_FILE);

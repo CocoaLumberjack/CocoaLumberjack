@@ -13,8 +13,7 @@
  **/
 @implementation TestFormatter
 
-- (NSString *)formatLogMessage:(DDLogMessage *)logMessage
-{
+- (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     return [NSString stringWithFormat:@"%@ | %@ @ %@ | %@",
             [logMessage fileName], logMessage->_function, @(logMessage->_line), logMessage->_message];
 }

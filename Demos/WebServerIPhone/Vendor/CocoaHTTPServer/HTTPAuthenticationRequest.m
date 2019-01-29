@@ -13,8 +13,7 @@
 
 @implementation HTTPAuthenticationRequest
 
-- (id)initWithRequest:(HTTPMessage *)request
-{
+- (id)initWithRequest:(HTTPMessage *)request {
     if ((self = [super init])) {
         NSString *authInfo = [request headerField:@"Authorization"];
 
@@ -121,8 +120,7 @@
  * Authorization: Digest username="Mufasa", qop=auth, response="6629fae4939"
  * The sub header field titled 'username' is quoted, and this method would return the value @"Mufasa".
  **/
-- (NSString *)quotedSubHeaderFieldValue:(NSString *)param fromHeaderFieldValue:(NSString *)header
-{
+- (NSString *)quotedSubHeaderFieldValue:(NSString *)param fromHeaderFieldValue:(NSString *)header {
     NSRange startRange = [header rangeOfString:[NSString stringWithFormat:@"%@=\"", param]];
 
     if (startRange.location == NSNotFound) {
@@ -153,8 +151,7 @@
  * Authorization: Digest username="Mufasa", qop=auth, response="6629fae4939"
  * The sub header field titled 'qop' is nonquoted, and this method would return the value @"auth".
  **/
-- (NSString *)nonquotedSubHeaderFieldValue:(NSString *)param fromHeaderFieldValue:(NSString *)header
-{
+- (NSString *)nonquotedSubHeaderFieldValue:(NSString *)param fromHeaderFieldValue:(NSString *)header {
     NSRange startRange = [header rangeOfString:[NSString stringWithFormat:@"%@=", param]];
 
     if (startRange.location == NSNotFound) {

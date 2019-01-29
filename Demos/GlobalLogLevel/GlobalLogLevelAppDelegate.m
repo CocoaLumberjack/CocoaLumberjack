@@ -22,8 +22,7 @@ void someFunction() {
     DDLogVerbose(@"%@: C_Verbose", THIS_FILE);
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     ddLogLevel = DDLogLevelVerbose;
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
 

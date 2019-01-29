@@ -16,8 +16,7 @@ static const DDLogLevel ddLogLevel = LOG_LEVEL_DEBUG;
 
 @synthesize window;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // since the verbose log level was undefined, we need to specify the log level for every logger
     [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:LOG_LEVEL_DEBUG];
     [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:LOG_LEVEL_DEBUG];

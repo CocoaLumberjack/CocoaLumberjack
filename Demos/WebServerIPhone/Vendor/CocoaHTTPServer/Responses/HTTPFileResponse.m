@@ -18,8 +18,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
 
 @implementation HTTPFileResponse
 
-- (id)initWithFilePath:(NSString *)fpath forConnection:(HTTPConnection *)parent
-{
+- (id)initWithFilePath:(NSString *)fpath forConnection:(HTTPConnection *)parent {
     if ((self = [super init])) {
         HTTPLogTrace();
 
@@ -54,16 +53,14 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     return self;
 }
 
-- (void)abort
-{
+- (void)abort {
     HTTPLogTrace();
 
     [connection responseDidAbort:self];
     aborted = YES;
 }
 
-- (BOOL)openFile
-{
+- (BOOL)openFile {
     HTTPLogTrace();
 
     fileFD = open([filePath UTF8String], O_RDONLY);
@@ -80,8 +77,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     return YES;
 }
 
-- (BOOL)openFileIfNeeded
-{
+- (BOOL)openFileIfNeeded {
     if (aborted) {
         // The file operation has been aborted.
         // This could be because we failed to open the file,
@@ -97,22 +93,19 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     return [self openFile];
 }
 
-- (UInt64)contentLength
-{
+- (UInt64)contentLength {
     HTTPLogTrace();
 
     return fileLength;
 }
 
-- (UInt64)offset
-{
+- (UInt64)offset {
     HTTPLogTrace();
 
     return fileOffset;
 }
 
-- (void)setOffset:(UInt64)offset
-{
+- (void)setOffset:(UInt64)offset {
     HTTPLogTrace2(@"%@[%p]: setOffset:%llu", THIS_FILE, self, offset);
 
     if (![self openFileIfNeeded]) {
@@ -132,8 +125,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     }
 }
 
-- (NSData *)readDataOfLength:(NSUInteger)length
-{
+- (NSData *)readDataOfLength:(NSUInteger)length {
     HTTPLogTrace2(@"%@[%p]: readDataOfLength:%lu", THIS_FILE, self, (unsigned long)length);
 
     if (![self openFileIfNeeded]) {
@@ -193,8 +185,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     }
 }
 
-- (BOOL)isDone
-{
+- (BOOL)isDone {
     BOOL result = (fileOffset == fileLength);
 
     HTTPLogTrace2(@"%@[%p]: isDone - %@", THIS_FILE, self, (result ? @"YES" : @"NO"));
@@ -202,13 +193,11 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     return result;
 }
 
-- (NSString *)filePath
-{
+- (NSString *)filePath {
     return filePath;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     HTTPLogTrace();
 
     if (fileFD != NULL_FD) {

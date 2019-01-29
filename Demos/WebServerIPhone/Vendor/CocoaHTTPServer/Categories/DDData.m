@@ -11,24 +11,21 @@ static char encodingTable[64] = {
     'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
 };
 
-- (NSData *)md5Digest
-{
+- (NSData *)md5Digest {
     unsigned char result[CC_MD5_DIGEST_LENGTH];
 
     CC_MD5([self bytes], (CC_LONG)[self length], result);
     return [NSData dataWithBytes:result length:CC_MD5_DIGEST_LENGTH];
 }
 
-- (NSData *)sha1Digest
-{
+- (NSData *)sha1Digest {
     unsigned char result[CC_SHA1_DIGEST_LENGTH];
 
     CC_SHA1([self bytes], (CC_LONG)[self length], result);
     return [NSData dataWithBytes:result length:CC_SHA1_DIGEST_LENGTH];
 }
 
-- (NSString *)hexStringValue
-{
+- (NSString *)hexStringValue {
     NSMutableString *stringBuffer = [NSMutableString stringWithCapacity:([self length] * 2)];
 
     const unsigned char *dataBuffer = [self bytes];
@@ -41,8 +38,7 @@ static char encodingTable[64] = {
     return [stringBuffer copy];
 }
 
-- (NSString *)base64Encoded
-{
+- (NSString *)base64Encoded {
     const unsigned char *bytes = [self bytes];
     NSMutableString *result = [NSMutableString stringWithCapacity:[self length]];
     unsigned long ixtext = 0;
@@ -101,8 +97,7 @@ static char encodingTable[64] = {
     return [NSString stringWithString:result];
 }
 
-- (NSData *)base64Decoded
-{
+- (NSData *)base64Decoded {
     const unsigned char *bytes = [self bytes];
     NSMutableData *result = [NSMutableData dataWithCapacity:[self length]];
 

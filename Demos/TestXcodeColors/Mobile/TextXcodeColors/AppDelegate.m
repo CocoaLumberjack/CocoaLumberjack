@@ -23,8 +23,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 @synthesize window;
 @synthesize viewController;
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Standard lumberjack initialization
 
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
@@ -112,8 +111,7 @@ static NSString *const PurpleTag = @"PurpleTag";
 #define DDLogPurple(frmt, ...) LOG_MACRO(NO, 1, 1, 0, PurpleTag, __PRETTY_FUNCTION__, frmt, ## __VA_ARGS__)
 
 
-- (void)demoColorTags
-{
+- (void)demoColorTags {
   #if TARGET_OS_IPHONE
     UIColor *purple = [UIColor colorWithRed:(64 / 255.0) green:(0 / 255.0) blue:(128 / 255.0) alpha:1.0];
   #else

@@ -44,14 +44,12 @@ static NSTimeInterval fmwk[3][2][5][3]; // [suite][file][test][min,avg,max]
 
 static DDFileLogger *fileLogger = nil;
 
-+ (void)initialize
-{
++ (void)initialize {
     bzero(&base, sizeof(base));
     bzero(&fmwk, sizeof(fmwk));
 }
 
-+ (DDFileLogger *)fileLogger
-{
++ (DDFileLogger *)fileLogger {
     if (fileLogger == nil) {
         fileLogger = [[DDFileLogger alloc] init];
 
@@ -67,8 +65,7 @@ static DDFileLogger *fileLogger = nil;
 /**
  * Suite 1 - Logging to Console only.
  **/
-+ (void)configureLoggingForSuite1
-{
++ (void)configureLoggingForSuite1 {
     [DDLog removeAllLoggers];
 
     [DDLog addLogger:[DDASLLogger sharedInstance]];
@@ -82,8 +79,7 @@ static DDFileLogger *fileLogger = nil;
  * Rolling the log files requires creating and opening a new file.
  * This could be a performance hit, so we want our benchmark to take this into account.
  **/
-+ (void)configureLoggingForSuite2
-{
++ (void)configureLoggingForSuite2 {
     [DDLog removeAllLoggers];
 
     [DDLog addLogger:[self fileLogger]];
@@ -92,8 +88,7 @@ static DDFileLogger *fileLogger = nil;
 /**
  * Suite 3 - Logging to Console & File.
  **/
-+ (void)configureLoggingForSuite3
-{
++ (void)configureLoggingForSuite3 {
     [DDLog removeAllLoggers];
 
     [DDLog addLogger:[DDASLLogger sharedInstance]];
@@ -101,8 +96,7 @@ static DDFileLogger *fileLogger = nil;
     [DDLog addLogger:[self fileLogger]];
 }
 
-+ (void)executeTestsWithBase:(BOOL)exeBase framework:(BOOL)exeFramework frameworkSuite:(int)suiteNum
-{
++ (void)executeTestsWithBase:(BOOL)exeBase framework:(BOOL)exeFramework frameworkSuite:(int)suiteNum {
     if (!exeBase && !exeFramework) {
         return;
     }
@@ -171,8 +165,7 @@ static DDFileLogger *fileLogger = nil;
     }
 }
 
-+ (NSString *)printableResultsForSuite:(int)suiteNum
-{
++ (NSString *)printableResultsForSuite:(int)suiteNum {
     int sn = suiteNum - 1;     // Zero-indexed for array
 
     NSMutableString *str = [NSMutableString stringWithCapacity:2000];
@@ -249,8 +242,7 @@ static DDFileLogger *fileLogger = nil;
     return str;
 }
 
-+ (NSString *)csvResults
-{
++ (NSString *)csvResults {
     NSMutableString *str = [NSMutableString stringWithCapacity:1000];
 
     // What are we trying to do here?
@@ -311,8 +303,7 @@ static DDFileLogger *fileLogger = nil;
     return str;
 }
 
-+ (void)startPerformanceTests
-{
++ (void)startPerformanceTests {
     BOOL runBase = YES;
     BOOL runSuite1 = YES;
     BOOL runSuite2 = YES;

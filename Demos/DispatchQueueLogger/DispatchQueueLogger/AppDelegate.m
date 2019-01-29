@@ -20,8 +20,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 @synthesize window = _window;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     if (NO) {
         // See what log statements look like *BEFORE* using DispatchQueueLogFormatter :(
     } else {
@@ -67,8 +66,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     [NSThread detachNewThreadSelector:@selector(backgroundThread:) toTarget:self withObject:nil];
 }
 
-- (void)backgroundThread:(id)ignore
-{
+- (void)backgroundThread:(id)ignore {
     @autoreleasepool {
         [[NSThread currentThread] setName:@"MyBgThread"];
 

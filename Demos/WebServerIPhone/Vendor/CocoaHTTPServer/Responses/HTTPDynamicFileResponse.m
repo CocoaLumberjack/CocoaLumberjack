@@ -18,8 +18,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
 - (id)   initWithFilePath:(NSString *)fpath
             forConnection:(HTTPConnection *)parent
                 separator:(NSString *)separatorStr
-    replacementDictionary:(NSDictionary *)dict
-{
+    replacementDictionary:(NSDictionary *)dict {
     if ((self = [super initWithFilePath:fpath forConnection:parent])) {
         HTTPLogTrace();
 
@@ -30,15 +29,13 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     return self;
 }
 
-- (BOOL)isChunked
-{
+- (BOOL)isChunked {
     HTTPLogTrace();
 
     return YES;
 }
 
-- (UInt64)contentLength
-{
+- (UInt64)contentLength {
     // This method shouldn't be called since we're using a chunked response.
     // We override it just to be safe.
 
@@ -47,16 +44,14 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     return 0;
 }
 
-- (void)setOffset:(UInt64)offset
-{
+- (void)setOffset:(UInt64)offset {
     // This method shouldn't be called since we're using a chunked response.
     // We override it just to be safe.
 
     HTTPLogTrace();
 }
 
-- (BOOL)isDone
-{
+- (BOOL)isDone {
     BOOL result = (readOffset == fileLength) && (readBufferOffset == 0);
 
     HTTPLogTrace2(@"%@[%p]: isDone - %@", THIS_FILE, self, (result ? @"YES" : @"NO"));
@@ -64,8 +59,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     return result;
 }
 
-- (void)processReadBuffer
-{
+- (void)processReadBuffer {
     HTTPLogTrace();
 
     // At this point, the readBuffer has readBufferOffset bytes available.
@@ -263,8 +257,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelWarning; // | HTTP_LOG_FLAG_TRA
     [connection responseHasAvailableData:self];
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     HTTPLogTrace();
 }
 

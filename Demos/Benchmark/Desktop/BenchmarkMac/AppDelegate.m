@@ -12,8 +12,7 @@
 
 @synthesize window = _window;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [PerformanceTesting startPerformanceTests];
 }
 

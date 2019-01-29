@@ -16,16 +16,14 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 @synthesize window;
 
-- (NSString *)applicationFilesDirectory
-{
+- (NSString *)applicationFilesDirectory {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
     NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
 
     return [basePath stringByAppendingPathComponent:@"SQLiteLogger"];
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 //  [DDLog addLogger:[DDTTYLogger sharedInstance]];
 
     sqliteLogger = [[FMDBLogger alloc] initWithLogDirectory:[self applicationFilesDirectory]];
@@ -41,8 +39,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(doTest:) userInfo:nil repeats:NO];
 }
 
-- (void)doTest:(NSTimer *)aTimer
-{
+- (void)doTest:(NSTimer *)aTimer {
     NSDate *start = [NSDate date];
 
     int i;

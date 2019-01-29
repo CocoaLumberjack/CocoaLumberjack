@@ -13,8 +13,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose | LOG_FLAG_TIMERS;
 
 @implementation TimerOne
 
-- (id)init
-{
+- (id)init {
     if ((self = [super init])) {
         DDLogVerbose(@"TimerOne: Creating timers...");
 
@@ -34,18 +33,15 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose | LOG_FLAG_TIMERS;
     return self;
 }
 
-- (void)foodTimerDidFire:(NSTimer *)aTimer
-{
+- (void)foodTimerDidFire:(NSTimer *)aTimer {
     DDLogFoodTimer(@"TimerOne: Hungry - Need Food");
 }
 
-- (void)sleepTimerDidFire:(NSTimer *)aTimer
-{
+- (void)sleepTimerDidFire:(NSTimer *)aTimer {
     DDLogSleepTimer(@"TimerOne: Tired - Need Sleep");
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     DDLogVerbose(@"TimerOne: dealloc");
 
     [foodTimer invalidate];

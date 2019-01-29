@@ -13,18 +13,15 @@ static DDLogLevel ddLogLevel = DDLogLevelWarning;
 
 @implementation Tigers
 
-+ (NSUInteger)ddLogLevel
-{
++ (NSUInteger)ddLogLevel {
     return ddLogLevel;
 }
 
-+ (void)ddSetLogLevel:(int)logLevel
-{
++ (void)ddSetLogLevel:(int)logLevel {
     ddLogLevel = logLevel;
 }
 
-+ (void)logStuff
-{
++ (void)logStuff {
     DDLogError(@"%@ - Error", THIS_FILE);
     DDLogWarn(@"%@ - Warn", THIS_FILE);
     DDLogInfo(@"%@ - Info", THIS_FILE);

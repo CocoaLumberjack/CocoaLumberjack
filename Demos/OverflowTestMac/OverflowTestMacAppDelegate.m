@@ -17,8 +17,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 @synthesize window;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Since logging can be asynchronous, its possible for rogue threads to flood the logging queue.
     // That is, to issue an abundance of log statements faster than the logging thread can keepup.
     // Typically such a scenario occurs when log statements are added haphazardly within large loops,
@@ -52,8 +51,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     [DDLog flushLog];
 }
 
-- (void)bgThread1
-{
+- (void)bgThread1 {
     @autoreleasepool {
         NSLog(@"bgThread1");
 
@@ -63,8 +61,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     }
 }
 
-- (void)bgThread2
-{
+- (void)bgThread2 {
     @autoreleasepool {
         NSLog(@"bgThread2");
 

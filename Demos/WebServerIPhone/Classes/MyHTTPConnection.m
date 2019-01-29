@@ -28,8 +28,7 @@ static NSMutableSet *webSocketLoggers;
  *
  * This method may also be called directly (assumably by accident), hence the safety mechanism.
  **/
-+ (void)initialize
-{
++ (void)initialize {
     static dispatch_once_t onceToken;
 
     dispatch_once(&onceToken, ^{
@@ -47,16 +46,14 @@ static NSMutableSet *webSocketLoggers;
     });
 }
 
-+ (void)addWebSocketLogger:(WebSocketLogger *)webSocketLogger
-{
++ (void)addWebSocketLogger:(WebSocketLogger *)webSocketLogger {
     @synchronized(webSocketLoggers)
     {
         [webSocketLoggers addObject:webSocketLogger];
     }
 }
 
-+ (void)webSocketLoggerDidDie:(NSNotification *)notification
-{
++ (void)webSocketLoggerDidDie:(NSNotification *)notification {
     @synchronized(webSocketLoggers)
     {
         [webSocketLoggers removeObject:[notification object]];
@@ -71,8 +68,7 @@ static NSMutableSet *webSocketLoggers;
  * Returns the logFileManager, which is a part of the DDFileLogger system.
  * The DDLogFileManager is the subsystem which manages the location and creation of log files.
  **/
-- (id <DDLogFileManager>)logFileManager
-{
+- (id <DDLogFileManager>)logFileManager {
     WebServerIPhoneAppDelegate *appDelegate;
 
     appDelegate = (WebServerIPhoneAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -83,8 +79,7 @@ static NSMutableSet *webSocketLoggers;
 /**
  * Dynamic discovery of proper websocket href.
  **/
-- (NSString *)wsLocation
-{
+- (NSString *)wsLocation {
     NSString *port = [NSString stringWithFormat:@"%hu", [asyncSocket localPort]];
 
     NSString *wsLocation;
@@ -109,8 +104,7 @@ static NSMutableSet *webSocketLoggers;
  * The response is generated dynamically.
  * It returns the list of log files currently on the system, along with their creation date and file size.
  **/
-- (NSData *)generateIndexData
-{
+- (NSData *)generateIndexData {
     NSArray *sortedLogFileInfos = [[self logFileManager] sortedLogFileInfos];
 
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
@@ -176,8 +170,7 @@ static NSMutableSet *webSocketLoggers;
  * This method is invoked to retrieve the filePath for a given URI.
  * We override it to provide proper mapping for log file paths.
  **/
-- (NSString *)filePathForURI:(NSString *)path allowDirectory:(BOOL)allowDirectory
-{
+- (NSString *)filePathForURI:(NSString *)path allowDirectory:(BOOL)allowDirectory {
     if ([path hasPrefix:@"/logs/"]) {
         NSString *logsDir = [[self logFileManager] logsDirectory];
         return [logsDir stringByAppendingPathComponent:[path lastPathComponent]];
@@ -190,8 +183,7 @@ static NSMutableSet *webSocketLoggers;
 /**
  * Overrides method in HTTPConnection.
  **/
-- (NSObject<HTTPResponse> *)httpResponseForMethod:(NSString *)method URI:(NSString *)path
-{
+- (NSObject<HTTPResponse> *)httpResponseForMethod:(NSString *)method URI:(NSString *)path {
     if ([path isEqualToString:@"/logs.html"]) {
         // Dynamically generate html response with list of available log files
 
@@ -223,8 +215,7 @@ static NSMutableSet *webSocketLoggers;
 /**
  * Overrides method in HTTPConnection.
  **/
-- (WebSocket *)webSocketForURI:(NSString *)path
-{
+- (WebSocket *)webSocketForURI:(NSString *)path {
     if ([path isEqualToString:@"/livelog"]) {
         // Create the WebSocket
         WebSocket *webSocket = [[WebSocket alloc] initWithRequest:request socket:asyncSocket];

@@ -17,8 +17,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 @synthesize window;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Setup logging (with our custom formatter)
 
     TestFormatter *formatter = [[TestFormatter alloc] init];

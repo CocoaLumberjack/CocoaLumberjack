@@ -16,8 +16,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 @implementation ContextFilterAppDelegate
 @synthesize window;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Our application adopts a "third party framework" which also uses the lumberjack framework.
     // We love this because it greatly improves our ability to observe, debug, and diagnose problems!
     //
@@ -62,8 +61,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     [ThirdPartyFramework start];
 }
 
-- (void)fire:(NSTimer *)timer
-{
+- (void)fire:(NSTimer *)timer {
     DDLogVerbose(@"Log message from our code");
 }
 

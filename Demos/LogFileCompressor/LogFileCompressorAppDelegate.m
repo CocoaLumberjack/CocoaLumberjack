@@ -21,8 +21,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 @synthesize window;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     CompressingLogFileManager *logFileManager = [[CompressingLogFileManager alloc] init];
 
     fileLogger = [[DDFileLogger alloc] initWithLogFileManager:logFileManager];
@@ -43,8 +42,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
                                     repeats:YES];
 }
 
-- (void)writeLogMessages:(NSTimer *)aTimer
-{
+- (void)writeLogMessages:(NSTimer *)aTimer {
     DDLogVerbose(@"I like cheese");
 }
 

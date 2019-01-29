@@ -19,8 +19,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 @synthesize window = _window;
 @synthesize viewController = _viewController;
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
 
     [Lions logStuff];

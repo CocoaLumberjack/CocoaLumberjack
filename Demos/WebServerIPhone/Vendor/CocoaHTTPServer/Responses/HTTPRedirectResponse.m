@@ -12,8 +12,7 @@ static const DDLogLevel httpLogLevel = DDLogLevelOff; // | HTTP_LOG_FLAG_TRACE;
 
 @implementation HTTPRedirectResponse
 
-- (id)initWithPath:(NSString *)path
-{
+- (id)initWithPath:(NSString *)path {
     if ((self = [super init])) {
         HTTPLogTrace();
 
@@ -23,49 +22,41 @@ static const DDLogLevel httpLogLevel = DDLogLevelOff; // | HTTP_LOG_FLAG_TRACE;
     return self;
 }
 
-- (UInt64)contentLength
-{
+- (UInt64)contentLength {
     return 0;
 }
 
-- (UInt64)offset
-{
+- (UInt64)offset {
     return 0;
 }
 
-- (void)setOffset:(UInt64)offset
-{
+- (void)setOffset:(UInt64)offset {
     // Nothing to do
 }
 
-- (NSData *)readDataOfLength:(NSUInteger)length
-{
+- (NSData *)readDataOfLength:(NSUInteger)length {
     HTTPLogTrace();
 
     return nil;
 }
 
-- (BOOL)isDone
-{
+- (BOOL)isDone {
     return YES;
 }
 
-- (NSDictionary *)httpHeaders
-{
+- (NSDictionary *)httpHeaders {
     HTTPLogTrace();
 
     return [NSDictionary dictionaryWithObject:redirectPath forKey:@"Location"];
 }
 
-- (NSInteger)status
-{
+- (NSInteger)status {
     HTTPLogTrace();
 
     return 302;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     HTTPLogTrace();
 }
 

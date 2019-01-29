@@ -14,8 +14,7 @@
 
 @implementation SimpleFormatter
 
-- (NSString *)formatLogMessage:(DDLogMessage *)logMessage
-{
+- (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     return [NSString stringWithFormat:@"  Captured: %@", logMessage->_message];
 }
 
@@ -24,8 +23,7 @@
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     DDTTYLogger.sharedInstance.logFormatter = [SimpleFormatter new];
     [DDLog addLogger:DDTTYLogger.sharedInstance];
     [DDLog addLogger:DDASLLogger.sharedInstance];
