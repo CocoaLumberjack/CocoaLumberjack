@@ -37,8 +37,8 @@ print_usage() {
 	fi
 }
 
-OLD_YEAR=${OLD_YEAR:-$(date -v'-1y' '+%Y')}
-NEW_YEAR=${NEW_YEAR:-$(date '+%Y')}
+OLD_YEAR=${OLD_YEAR:-$(last_year)}
+NEW_YEAR=${NEW_YEAR:-$(current_year)}
 if [[ $# -gt 0 ]]; then
 	if [[ $# -eq 2 ]]; then
 		OLD_YEAR="$1"
