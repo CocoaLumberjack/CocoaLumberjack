@@ -1313,11 +1313,9 @@ static int exception_count = 0;
         if (error) {
             NSLogError(@"DDLogFileInfo: Failed to read file attributes: %@", error);
         }
-    } else {
-        _fileAttributes = [NSDictionary new];
     }
 
-    return _fileAttributes;
+    return _fileAttributes ?: @{};
 }
 
 - (NSString *)fileName {
