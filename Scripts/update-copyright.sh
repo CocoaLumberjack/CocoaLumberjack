@@ -17,8 +17,8 @@ if [[ $# -gt 0 ]]; then
 		OLD_YEAR="$1"
 		NEW_YEAR="$2"
 	else
-		echo "Specifiying years via command line arguments requires two arguments (OLD_YEAR and NEW_YEAR)!"
-		echo "Alternatively, the script uses the environment variables with above's name or (if unset) the last and current year."
+		echo "Specifying years via command line arguments requires two arguments (OLD_YEAR and NEW_YEAR)!"
+		echo "Alternatively, the script uses environment variables with above's name or (if unset) the last and current year."
 		echo ""
 		echo "Usage: $(basename $0) [OLD_YEAR NEW_YEAR]"
 		exit -1
