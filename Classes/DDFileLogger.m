@@ -50,6 +50,8 @@ NSTimeInterval     const kDDDefaultLogRollingFrequency = 60 * 60 * 24;     // 24
 NSUInteger         const kDDDefaultLogMaxNumLogFiles   = 5;                // 5 Files
 unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20 MB
 
+static NSTimeInterval const kDDMaxRollingFrequencey = LONG_LONG_MAX / NSEC_PER_SEC;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -762,7 +764,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 - (void)setRollingFrequency:(NSTimeInterval)newRollingFrequency {
     dispatch_block_t block = ^{
         @autoreleasepool {
-            self->_rollingFrequency = newRollingFrequency;
+            self->_rollingFrequency = MIN(kDDMaxRollingFrequencey, newRollingFrequency);
             [self lt_maybeRollLogFileDueToAge];
         }
     };
