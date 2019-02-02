@@ -118,7 +118,7 @@ benchmarking_copyright_lines = [
 "//  ",
 "//  ",
 "//",
-"//  CococaLumberjack Benchmarking",
+"//  CocoaLumberjack Benchmarking",
 "//"
 ]
 
@@ -133,7 +133,7 @@ sourcefiles_to_check.each do |sourcefile|
 
   # Use correct copyright lines depending on source file location
   copyright_lines = source_copyright_lines
-  if sourcefile.start_with?("Demos/")
+  if sourcefile.start_with?("Demos/") and not sourcefile.include?("/Vendor/") and not sourcefile.include?("/FMDB/")
     copyright_lines = demos_copyright_lines
   elsif sourcefile.start_with?("Benchmarking/")
     copyright_lines = benchmarking_copyright_lines
