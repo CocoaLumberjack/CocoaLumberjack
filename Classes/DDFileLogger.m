@@ -804,12 +804,13 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     }
 
     NSDate *logFileCreationDate = [_currentLogFileInfo creationDate];
-    NSDate *logFileRollingDate = [logFileCreationDate dateByAddingTimeInterval:_rollingFrequency];
+    NSTimeInterval frequency = MIN(_rollingFrequency, DBL_MAX - [logFileCreationDate timeIntervalSinceReferenceDate]);
+    NSDate *logFileRollingDate = [logFileCreationDate dateByAddingTimeInterval:frequency];
 
     NSLogVerbose(@"DDFileLogger: scheduleTimerToRollLogFileDueToAge");
-
-    NSLogVerbose(@"DDFileLogger: logFileCreationDate: %@", logFileCreationDate);
-    NSLogVerbose(@"DDFileLogger: logFileRollingDate : %@", logFileRollingDate);
+    NSLogVerbose(@"DDFileLogger: logFileCreationDate    : %@", logFileCreationDate);
+    NSLogVerbose(@"DDFileLogger: actual rollingFrequency: %f", frequency);
+    NSLogVerbose(@"DDFileLogger: logFileRollingDate     : %@", logFileRollingDate);
 
     _rollingTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _loggerQueue);
 
