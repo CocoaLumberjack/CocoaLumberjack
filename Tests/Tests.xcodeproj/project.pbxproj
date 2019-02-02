@@ -13,6 +13,10 @@
 		0A7E1D58217A86EF0011CFEB /* DDSMocking.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E1D56217A7A380011CFEB /* DDSMocking.m */; };
 		0AA9B47321CC0AE60036182F /* DDFileLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AA9B47221CC0AE60036182F /* DDFileLoggerTests.m */; };
 		0AA9B47721CC0B060036182F /* DDFileLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AA9B47221CC0AE60036182F /* DDFileLoggerTests.m */; };
+		6E0C714E21E927E60070C4C4 /* DDSampleFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0C714D21E927E60070C4C4 /* DDSampleFileManager.m */; };
+		6E0C714F21E927E60070C4C4 /* DDSampleFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0C714D21E927E60070C4C4 /* DDSampleFileManager.m */; };
+		6ECBFDB721E9A31500CBB679 /* DDFileLoggerPerformanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ECBFDB321E9A31500CBB679 /* DDFileLoggerPerformanceTests.m */; };
+		6ECBFDB821E9A3BC00CBB679 /* DDFileLoggerPerformanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ECBFDB321E9A31500CBB679 /* DDFileLoggerPerformanceTests.m */; };
 		80AC19B12170AC54007800DC /* DDAtomicCounterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AC19B02170AC54007800DC /* DDAtomicCounterTests.m */; };
 		80AC19B22170AC58007800DC /* DDAtomicCounterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AC19B02170AC54007800DC /* DDAtomicCounterTests.m */; };
 		B2C90DDF21B9796400A72FD2 /* DDLogFileManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2C90DDE21B9796400A72FD2 /* DDLogFileManagerTests.m */; };
@@ -61,6 +65,9 @@
 		435F03B22174AB9600A86B2D /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
 		435F03B32174AB9600A86B2D /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
 		435F03B42174AB9600A86B2D /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
+		6E0C714C21E927E60070C4C4 /* DDSampleFileManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDSampleFileManager.h; sourceTree = "<group>"; };
+		6E0C714D21E927E60070C4C4 /* DDSampleFileManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDSampleFileManager.m; sourceTree = "<group>"; };
+		6ECBFDB321E9A31500CBB679 /* DDFileLoggerPerformanceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLoggerPerformanceTests.m; sourceTree = "<group>"; };
 		80AC19B02170AC54007800DC /* DDAtomicCounterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDAtomicCounterTests.m; sourceTree = "<group>"; };
 		B2C90DDE21B9796400A72FD2 /* DDLogFileManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDLogFileManagerTests.m; sourceTree = "<group>"; };
 		C7A5AB012191DA4D0074B29F /* DDBasicLoggingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDBasicLoggingTests.m; sourceTree = "<group>"; };
@@ -110,6 +117,7 @@
 		432B531C1AAE40EB00843E69 = {
 			isa = PBXGroup;
 			children = (
+				6E0C714821E927BF0070C4C4 /* Library */,
 				0A7D8FC7217A1E9000B496D7 /* Lumberjack.xcodeproj */,
 				435F03B12174AB9600A86B2D /* Configs */,
 				DA1B17371AB067EF004705E8 /* Info.plist */,
@@ -140,6 +148,7 @@
 				0A7E1D56217A7A380011CFEB /* DDSMocking.m */,
 				B2C90DDE21B9796400A72FD2 /* DDLogFileManagerTests.m */,
 				0AA9B47221CC0AE60036182F /* DDFileLoggerTests.m */,
+				6ECBFDB321E9A31500CBB679 /* DDFileLoggerPerformanceTests.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -153,6 +162,15 @@
 			);
 			name = Configs;
 			path = ../Configs;
+			sourceTree = "<group>";
+		};
+		6E0C714821E927BF0070C4C4 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				6E0C714C21E927E60070C4C4 /* DDSampleFileManager.h */,
+				6E0C714D21E927E60070C4C4 /* DDSampleFileManager.m */,
+			);
+			path = Library;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -285,10 +303,12 @@
 				C7A5AB052191DB530074B29F /* DDOSLoggingTests.m in Sources */,
 				C7A5AB022191DA4D0074B29F /* DDBasicLoggingTests.m in Sources */,
 				E982AAF21AE2C25800088365 /* DDLogTests.m in Sources */,
+				6ECBFDB721E9A31500CBB679 /* DDFileLoggerPerformanceTests.m in Sources */,
 				0AA9B47321CC0AE60036182F /* DDFileLoggerTests.m in Sources */,
 				80AC19B12170AC54007800DC /* DDAtomicCounterTests.m in Sources */,
 				B2C90DDF21B9796400A72FD2 /* DDLogFileManagerTests.m in Sources */,
 				E9D3C9E31AE28AF400E795C5 /* DDLogMessageTests.m in Sources */,
+				6E0C714E21E927E60070C4C4 /* DDSampleFileManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,10 +320,12 @@
 				C7A5AB062191DB530074B29F /* DDOSLoggingTests.m in Sources */,
 				C7A5AB032191DA4D0074B29F /* DDBasicLoggingTests.m in Sources */,
 				E982AAF31AE2C25800088365 /* DDLogTests.m in Sources */,
+				6ECBFDB821E9A3BC00CBB679 /* DDFileLoggerPerformanceTests.m in Sources */,
 				0AA9B47721CC0B060036182F /* DDFileLoggerTests.m in Sources */,
 				80AC19B22170AC58007800DC /* DDAtomicCounterTests.m in Sources */,
 				B2C90DE321B9797800A72FD2 /* DDLogFileManagerTests.m in Sources */,
 				E9D3C9E41AE28AF400E795C5 /* DDLogMessageTests.m in Sources */,
+				6E0C714F21E927E60070C4C4 /* DDSampleFileManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

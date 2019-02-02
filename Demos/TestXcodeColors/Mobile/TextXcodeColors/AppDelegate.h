@@ -2,7 +2,7 @@
 //  AppDelegate.h
 //  TextXcodeColors
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <UIKit/UIKit.h>

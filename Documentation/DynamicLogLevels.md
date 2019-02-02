@@ -40,7 +40,7 @@ Imagine if you could alter log levels via the `NSUserDefaults` system...\
 
 A user is complaining about the application not acting properly (in the preference pane somewhere). So you simply tell them to issue a
 ```objc
-defaults write com.yourapp.prefsLogLevel 4
+defaults write com.myapp.prefsLogLevel 4
 ```
 
 And in your preference pane code, you have something like this:

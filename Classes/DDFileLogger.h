@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2018, Deusty, LLC
+// Copyright (c) 2010-2019, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -87,7 +87,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 @property (readwrite, assign, atomic) NSUInteger maximumNumberOfLogFiles;
 
 /**
- * The maximum space that logs can take. On rolling logfile all old logfiles that exceed logFilesDiskQuota will
+ * The maximum space that logs can take. On rolling logfile all old log files that exceed logFilesDiskQuota will
  * be deleted.
  *
  * You may optionally disable this option by setting it to zero.
@@ -155,12 +155,12 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 // Notifications from DDFileLogger
 
 /**
- *  Called when a log file was archieved. Executed on global queue with default priority.
+ *  Called when a log file was archived. Executed on global queue with default priority.
  */
 - (void)didArchiveLogFile:(NSString *)logFilePath NS_SWIFT_NAME(didArchiveLogFile(atPath:));
 
 /**
- *  Called when the roll action was executed and the log was archieved.
+ *  Called when the roll action was executed and the log was archived.
  *  Executed on global queue with default priority.
  */
 - (void)didRollAndArchiveLogFile:(NSString *)logFilePath NS_SWIFT_NAME(didRollAndArchiveLogFile(atPath:));
@@ -192,7 +192,8 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 - (instancetype)init;
 
 /**
- *  Designated initialized, requires the logs directory
+ *  If logDirectory is not specified, then a folder called "Logs" is created in the app's cache directory.
+ *  While running on the simulator, the "Logs" folder is located in the library temporary directory.
  */
 - (instancetype)initWithLogsDirectory:(NSString * __nullable)logsDirectory NS_DESIGNATED_INITIALIZER;
 
@@ -220,7 +221,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *
  * If you wish to change default filename, you can override following two methods.
  * - `newLogFileName` method would be called on new logfile creation.
- * - `isLogFile:` method would be called to filter logfiles from all other files in logsDirectory.
+ * - `isLogFile:` method would be called to filter log files from all other files in logsDirectory.
  *   You have to parse given filename and return YES if it is logFile.
  *
  * **NOTE**
@@ -350,6 +351,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 /**
  *  Writes all in-memory log data to the permanent storage. Call super before your implementation.
+ *  Don't call this method directly, instead use the `[DDLog flushLog]` to ensure all log messages are included in flush.
  */
 - (void)flush NS_REQUIRES_SUPER;
 

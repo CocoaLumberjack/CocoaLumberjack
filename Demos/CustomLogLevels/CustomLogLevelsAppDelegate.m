@@ -2,7 +2,7 @@
 //  CustomLogLevelsAppDelegate.m
 //  CustomLogLevels
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "CustomLogLevelsAppDelegate.h"
@@ -10,7 +10,7 @@
 #import "MYLog.h"
 
 // Debug levels: off, fatal, error, warn, notice, info, debug
-static const DDLogLevel ddLogLevel = DDLogLevelDebug;
+static const DDLogLevel ddLogLevel = LOG_LEVEL_DEBUG;
 
 @implementation CustomLogLevelsAppDelegate
 
@@ -19,8 +19,8 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // since the verbose log level was undefined, we need to specify the log level for every logger
-    [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:DDLogLevelDebug];
-    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:DDLogLevelDebug];
+    [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:LOG_LEVEL_DEBUG];
+    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:LOG_LEVEL_DEBUG];
     
     DDLogFatal(@"Fatal");
     DDLogError(@"Error");

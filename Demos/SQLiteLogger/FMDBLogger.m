@@ -2,7 +2,7 @@
 //  FMDBLogger.m
 //  SQLiteLogger
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "FMDBLogger.h"

@@ -2,7 +2,7 @@
 //  UniversalAppViewController.m
 //  UniversalApp
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "UniversalAppViewController.h"

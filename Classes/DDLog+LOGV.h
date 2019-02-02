@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2018, Deusty, LLC
+// Copyright (c) 2010-2019, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -39,15 +39,15 @@
  * This big multiline macro makes all the other macros easier to read.
  **/
 #define LOGV_MACRO(isAsynchronous, lvl, flg, ctx, atag, fnct, frmt, avalist) \
-        [DDLog log : isAsynchronous                                     \
-             level : lvl                                                \
-              flag : flg                                                \
-           context : ctx                                                \
-              file : __FILE__                                           \
-          function : fnct                                               \
-              line : __LINE__                                           \
-               tag : atag                                               \
-            format : frmt                                               \
+        [DDLog log : isAsynchronous                                          \
+             level : lvl                                                     \
+              flag : flg                                                     \
+           context : ctx                                                     \
+              file : __FILE__                                                \
+          function : fnct                                                    \
+              line : __LINE__                                                \
+               tag : atag                                                    \
+            format : frmt                                                    \
               args : avalist]
 
 /**

@@ -2,7 +2,7 @@
 //  AppDelegate.h
 //  CaptureASL
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <UIKit/UIKit.h>

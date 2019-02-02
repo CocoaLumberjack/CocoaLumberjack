@@ -2,7 +2,7 @@
 //  Stuff.m
 //  GlobalLogLevel
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "Stuff.h"

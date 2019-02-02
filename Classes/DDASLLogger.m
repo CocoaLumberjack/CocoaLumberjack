@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2018, Deusty, LLC
+// Copyright (c) 2010-2019, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -14,8 +14,6 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDASLLogger.h"
-
-#import "DDLoggerNames.h"
 
 #if !TARGET_OS_WATCH
 #import <asl.h>

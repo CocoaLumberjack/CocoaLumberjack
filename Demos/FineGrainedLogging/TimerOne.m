@@ -2,7 +2,7 @@
 //  TimerOne.m
 //  FineGrainedLogging
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "TimerOne.h"

@@ -12,6 +12,11 @@ By default, for maximum performance, CocoaLumberjack logs messages asynchronousl
 #define LOG_ASYNC_ENABLED NO
 ```
 
+In Swift there's a global variable you an set to achieve the same:
+```swift
+asyncLoggingEnabled = false
+```
+
 This will disable asynchronous logging just for the extension, improving its reliability there.
 
 ### NSConcreteStackBlock

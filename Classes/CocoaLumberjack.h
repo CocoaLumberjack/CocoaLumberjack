@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2018, Deusty, LLC
+// Copyright (c) 2010-2019, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -71,33 +71,33 @@ FOUNDATION_EXPORT const unsigned char CocoaLumberjackVersionString[];
 #endif
 
 // Core
-#import "DDLog.h"
+#import <CocoaLumberjack/DDLog.h>
 
 // Main macros
-#import "DDLogMacros.h"
-#import "DDAssertMacros.h"
+#import <CocoaLumberjack/DDLogMacros.h>
+#import <CocoaLumberjack/DDAssertMacros.h>
 
 // Capture ASL
-#import "DDASLLogCapture.h"
+#import <CocoaLumberjack/DDASLLogCapture.h>
 
 // Loggers
-#import "DDLoggerNames.h"
+#import <CocoaLumberjack/DDLoggerNames.h>
 
-#import "DDTTYLogger.h"
-#import "DDASLLogger.h"
-#import "DDFileLogger.h"
-#import "DDOSLogger.h"
+#import <CocoaLumberjack/DDTTYLogger.h>
+#import <CocoaLumberjack/DDASLLogger.h>
+#import <CocoaLumberjack/DDFileLogger.h>
+#import <CocoaLumberjack/DDOSLogger.h>
 
 // Extensions
-#import "DDContextFilterLogFormatter.h"
-#import "DDDispatchQueueLogFormatter.h"
-#import "DDMultiFormatter.h"
-#import "DDFileLogger+Buffering.h"
+#import <CocoaLumberjack/DDContextFilterLogFormatter.h>
+#import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
+#import <CocoaLumberjack/DDMultiFormatter.h>
+#import <CocoaLumberjack/DDFileLogger+Buffering.h>
 
 // CLI
-#import "CLIColor.h"
+#import <CocoaLumberjack/CLIColor.h>
 
 // etc
-#import "DDAbstractDatabaseLogger.h"
-#import "DDLog+LOGV.h"
-#import "DDLegacyMacros.h"
+#import <CocoaLumberjack/DDAbstractDatabaseLogger.h>
+#import <CocoaLumberjack/DDLog+LOGV.h>
+#import <CocoaLumberjack/DDLegacyMacros.h>

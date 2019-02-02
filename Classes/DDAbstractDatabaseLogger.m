@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2018, Deusty, LLC
+// Copyright (c) 2010-2019, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -14,7 +14,6 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDAbstractDatabaseLogger.h"
-#import <math.h>
 
 
 #if !__has_feature(objc_arc)

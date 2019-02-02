@@ -2,7 +2,7 @@
 //  main.m
 //  CustomFormatters
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

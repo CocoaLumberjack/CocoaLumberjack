@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2018, Deusty, LLC
+// Copyright (c) 2010-2019, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -21,11 +21,8 @@
 #import "DDLog.h"
 
 #import <pthread.h>
-#import <dispatch/dispatch.h>
 #import <objc/runtime.h>
-#import <mach/mach_host.h>
-#import <mach/host_info.h>
-#import <Availability.h>
+
 #if TARGET_OS_IOS
     #import <UIKit/UIDevice.h>
     #import <UIKit/UIApplication.h>
@@ -54,7 +51,7 @@
 // Specifies the maximum queue size of the logging thread.
 //
 // Since most logging is asynchronous, its possible for rogue threads to flood the logging queue.
-// That is, to issue an abundance of log statements faster than the logging thread can keepup.
+// That is, to issue an abundance of log statements faster than the logging thread can keep up.
 // Typically such a scenario occurs when log statements are added haphazardly within large loops,
 // but may also be possible if relatively slow loggers are being used.
 //
@@ -145,7 +142,7 @@ static NSUInteger _numProcessors;
  * method may never be invoked if the class is not used.) The runtime sends the initialize message to
  * classes in a thread-safe manner. Superclasses receive this message before their subclasses.
  *
- * This method may also be called directly (assumably by accident), hence the safety mechanism.
+ * This method may also be called directly, hence the safety mechanism.
  **/
 + (void)initialize {
     static dispatch_once_t DDLogOnceToken;
@@ -187,7 +184,7 @@ static NSUInteger _numProcessors;
 #else
         NSString *notificationName = nil;
 
-        // On Command Line Tool apps AppKit may not be avaliable
+        // On Command Line Tool apps AppKit may not be available
 #if !defined(DD_CLI) && __has_include(<AppKit/NSApplication.h>)
         if (NSApp) {
             notificationName = NSApplicationWillTerminateNotification;
@@ -344,7 +341,7 @@ static NSUInteger _numProcessors;
 
     // We are using a counting semaphore provided by GCD.
     // The semaphore is initialized with our DDLOG_MAX_QUEUE_SIZE value.
-    // Everytime we want to queue a log message we decrement this value.
+    // Every time we want to queue a log message we decrement this value.
     // If the resulting value is less than zero,
     // the semaphore function waits in FIFO order for a signal to occur before returning.
     //
@@ -846,7 +843,7 @@ static NSUInteger _numProcessors;
         
         dispatch_group_wait(_loggingGroup, DISPATCH_TIME_FOREVER);
     } else {
-        // Execute each logger serialy, each within its own queue.
+        // Execute each logger serially, each within its own queue.
         
         for (DDLoggerNode *loggerNode in self._loggers) {
             // skip the loggers that shouldn't write this message based on the log level
@@ -881,7 +878,7 @@ static NSUInteger _numProcessors;
 - (void)lt_flush {
     // All log statements issued before the flush method was invoked have now been executed.
     //
-    // Now we need to propogate the flush request to any loggers that implement the flush method.
+    // Now we need to propagate the flush request to any loggers that implement the flush method.
     // This is designed for loggers that buffer IO.
     
     NSAssert(dispatch_get_specific(GlobalLoggingQueueIdentityKey),
@@ -1177,7 +1174,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
     //
     // globalLoggingQueue : The queue that all log messages go through before they arrive in our loggerQueue.
     //
-    // All log statements go through the serial gloabalLoggingQueue before they arrive at our loggerQueue.
+    // All log statements go through the serial globalLoggingQueue before they arrive at our loggerQueue.
     // Thus this method also goes through the serial globalLoggingQueue to ensure intuitive operation.
 
     // IMPORTANT NOTE:

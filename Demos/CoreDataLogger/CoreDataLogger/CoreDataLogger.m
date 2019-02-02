@@ -2,7 +2,7 @@
 //  CoreDataLogger.m
 //  CoreDataLogger
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "CoreDataLogger.h"

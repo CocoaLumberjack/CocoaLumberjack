@@ -2,7 +2,7 @@
 //  RegisteredLoggingTestAppDelegate.h
 //  RegisteredLoggingTest
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import <Cocoa/Cocoa.h>

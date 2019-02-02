@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2018, Deusty, LLC
+// Copyright (c) 2010-2019, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -14,12 +14,9 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDFileLogger.h"
-#import "DDLoggerNames.h"
 
 #import "DDFileLogger+Internal.h"
 
-#import <unistd.h>
-#import <sys/attr.h>
 #import <sys/xattr.h>
 
 #if !__has_feature(objc_arc)
@@ -52,6 +49,8 @@ unsigned long long const kDDDefaultLogMaxFileSize      = 1024 * 1024;      // 1 
 NSTimeInterval     const kDDDefaultLogRollingFrequency = 60 * 60 * 24;     // 24 Hours
 NSUInteger         const kDDDefaultLogMaxNumLogFiles   = 5;                // 5 Files
 unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20 MB
+
+static NSTimeInterval const kDDMaxRollingFrequencey = LONG_LONG_MAX / NSEC_PER_SEC;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
@@ -234,7 +233,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     }
 
     if (firstIndexToDelete != NSNotFound) {
-        // removing all logfiles starting with firstIndexToDelete
+        // removing all log files starting with firstIndexToDelete
 
         for (NSUInteger i = firstIndexToDelete; i < sortedLogFileInfos.count; i++) {
             DDLogFileInfo *logFileInfo = sortedLogFileInfos[i];
@@ -275,7 +274,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 }
 
 - (NSString *)logsDirectory {
-    // We could do this check once, during initalization, and not bother again.
+    // We could do this check once, during initialization, and not bother again.
     // But this way the code continues to work if the directory gets deleted while the code is running.
 
     NSAssert(_logsDirectory.length > 0, @"Directory must be set.");
@@ -663,9 +662,13 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 }
 
 - (void)dealloc {
-    dispatch_sync(self.loggerQueue, ^{
+    if (self.isOnInternalLoggerQueue) {
         [self lt_cleanup];
-    });
+    } else {
+        dispatch_sync(self.loggerQueue, ^{
+            [self lt_cleanup];
+        });
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -761,7 +764,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 - (void)setRollingFrequency:(NSTimeInterval)newRollingFrequency {
     dispatch_block_t block = ^{
         @autoreleasepool {
-            self->_rollingFrequency = newRollingFrequency;
+            self->_rollingFrequency = MIN(kDDMaxRollingFrequencey, newRollingFrequency);
             [self lt_maybeRollLogFileDueToAge];
         }
     };
@@ -986,7 +989,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 - (DDLogFileInfo *)currentLogFileInfo {
     // The design of this method is taken from the DDAbstractLogger implementation.
     // For extensive documentation please refer to the DDAbstractLogger implementation.
-    // Do not access this method on any Lumberjack queue, will deadllock.
+    // Do not access this method on any Lumberjack queue, will deadlock.
 
     NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
     NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.");
@@ -1222,6 +1225,29 @@ static int exception_count = 0;
     }
 }
 
+- (NSData *)lt_dataForMessage:(DDLogMessage *)logMessage {
+    NSAssert([self isOnInternalLoggerQueue], @"logMessage should only be executed on internal queue.");
+
+    NSString *message = logMessage->_message;
+    BOOL isFormatted = NO;
+
+    if (_logFormatter != nil) {
+        message = [_logFormatter formatLogMessage:logMessage];
+        isFormatted = message != logMessage->_message;
+    }
+
+    if (message.length == 0) {
+        return [NSData new];
+    }
+
+    BOOL shouldFormat = !isFormatted || _automaticallyAppendNewlineForCustomFormatters;
+    if (shouldFormat && ![message hasSuffix:@"\n"]) {
+        message = [message stringByAppendingString:@"\n"];
+    }
+
+    return [message dataUsingEncoding:NSUTF8StringEncoding];
+}
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1289,11 +1315,9 @@ static int exception_count = 0;
         if (error) {
             NSLogError(@"DDLogFileInfo: Failed to read file attributes: %@", error);
         }
-    } else {
-        _fileAttributes = [NSDictionary new];
     }
 
-    return _fileAttributes;
+    return _fileAttributes ?: @{};
 }
 
 - (NSString *)fileName {
@@ -1405,7 +1429,12 @@ static int exception_count = 0;
     if (![newFileName isEqualToString:[self fileName]]) {
         NSString *fileDir = [filePath stringByDeletingLastPathComponent];
         NSString *newFilePath = [fileDir stringByAppendingPathComponent:newFileName];
-        NSLogVerbose(@"DDLogFileInfo: Renaming file: '%@' -> '%@'", self.fileName, newFileName);
+
+#ifdef DEBUG
+        BOOL directory = NO;
+        [[NSFileManager defaultManager] fileExistsAtPath:fileDir isDirectory:&directory];
+        NSAssert(directory, @"Containing directory must exist.");
+#endif
 
         NSError *error = nil;
 
@@ -1414,7 +1443,17 @@ static int exception_count = 0;
             NSLogError(@"DDLogFileInfo: Error deleting archive (%@): %@", self.fileName, error);
         }
 
-        if (![[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newFilePath error:&error]) {
+        success = [[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newFilePath error:&error];
+
+            // When a log file is deleted, moved or renamed on the simulator, we attempt to rename it as a
+            // result of "archiving" it, but since the file doesn't exist anymore, needless error logs are printed
+            // We therefore ignore this error, and assert that the directory we are copying into exists (which
+            // is the only other case where this error code can come up).
+#if TARGET_IPHONE_SIMULATOR
+        if (!success && error.code != NSFileNoSuchFileError) {
+#else
+        if (!success) {
+#endif
             NSLogError(@"DDLogFileInfo: Error renaming file (%@): %@", self.fileName, error);
         }
 

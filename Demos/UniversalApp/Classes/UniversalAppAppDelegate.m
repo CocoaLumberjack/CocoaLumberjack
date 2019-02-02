@@ -2,7 +2,7 @@
 //  UniversalAppAppDelegate.m
 //  UniversalApp
 //
-//  CococaLumberjack Demos
+//  CocoaLumberjack Demos
 //
 
 #import "UniversalAppAppDelegate.h"

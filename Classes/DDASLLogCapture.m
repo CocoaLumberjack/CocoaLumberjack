@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2018, Deusty, LLC
+// Copyright (c) 2010-2019, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -21,8 +21,6 @@
 #endif
 
 #if !TARGET_OS_WATCH
-
-#import "DDLog.h"
 
 #include <asl.h>
 #include <notify.h>
@@ -119,7 +117,7 @@ static DDLogLevel _captureLevel = DDLogLevelVerbose;
                                                                flag:flag
                                                             context:0
                                                                file:@"DDASLLogCapture"
-                                                           function:0
+                                                           function:nil
                                                                line:0
                                                                 tag:nil
                                                             options:0
