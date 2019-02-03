@@ -50,8 +50,6 @@ NSTimeInterval     const kDDDefaultLogRollingFrequency = 60 * 60 * 24;     // 24
 NSUInteger         const kDDDefaultLogMaxNumLogFiles   = 5;                // 5 Files
 unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20 MB
 
-static NSTimeInterval const kDDMaxRollingFrequencey = LONG_LONG_MAX / NSEC_PER_SEC;
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -764,7 +762,7 @@ static NSTimeInterval const kDDMaxRollingFrequencey = LONG_LONG_MAX / NSEC_PER_S
 - (void)setRollingFrequency:(NSTimeInterval)newRollingFrequency {
     dispatch_block_t block = ^{
         @autoreleasepool {
-            self->_rollingFrequency = MIN(kDDMaxRollingFrequencey, newRollingFrequency);
+            self->_rollingFrequency = newRollingFrequency;
             [self lt_maybeRollLogFileDueToAge];
         }
     };
@@ -806,16 +804,13 @@ static NSTimeInterval const kDDMaxRollingFrequencey = LONG_LONG_MAX / NSEC_PER_S
     }
 
     NSDate *logFileCreationDate = [_currentLogFileInfo creationDate];
-
-    NSTimeInterval ti = [logFileCreationDate timeIntervalSinceReferenceDate];
-    ti += _rollingFrequency;
-
-    NSDate *logFileRollingDate = [NSDate dateWithTimeIntervalSinceReferenceDate:ti];
+    NSTimeInterval frequency = MIN(_rollingFrequency, DBL_MAX - [logFileCreationDate timeIntervalSinceReferenceDate]);
+    NSDate *logFileRollingDate = [logFileCreationDate dateByAddingTimeInterval:frequency];
 
     NSLogVerbose(@"DDFileLogger: scheduleTimerToRollLogFileDueToAge");
-
-    NSLogVerbose(@"DDFileLogger: logFileCreationDate: %@", logFileCreationDate);
-    NSLogVerbose(@"DDFileLogger: logFileRollingDate : %@", logFileRollingDate);
+    NSLogVerbose(@"DDFileLogger: logFileCreationDate    : %@", logFileCreationDate);
+    NSLogVerbose(@"DDFileLogger: actual rollingFrequency: %f", frequency);
+    NSLogVerbose(@"DDFileLogger: logFileRollingDate     : %@", logFileRollingDate);
 
     _rollingTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _loggerQueue);
 
@@ -831,7 +826,8 @@ static NSTimeInterval const kDDMaxRollingFrequencey = LONG_LONG_MAX / NSEC_PER_S
     });
     #endif
 
-    int64_t delay = (int64_t)([logFileRollingDate timeIntervalSinceNow] * (NSTimeInterval) NSEC_PER_SEC);
+    static NSTimeInterval const kDDMaxTimerDelay = LONG_LONG_MAX / NSEC_PER_SEC;
+    int64_t delay = (int64_t)(MIN([logFileRollingDate timeIntervalSinceNow], kDDMaxTimerDelay) * (NSTimeInterval) NSEC_PER_SEC);
     dispatch_time_t fireTime = dispatch_time(DISPATCH_TIME_NOW, delay);
 
     dispatch_source_set_timer(_rollingTimer, fireTime, DISPATCH_TIME_FOREVER, 1ull * NSEC_PER_SEC);
