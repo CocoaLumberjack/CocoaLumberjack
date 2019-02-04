@@ -36,7 +36,7 @@ For more details about how to use Swift with Lumberjack, see [this conversation]
 
 If you installed using CocoaPods or manually:
 ```swift
-import CocoaLumberjack
+import CocoaLumberjackSwift
 ```
 
 ```swift
