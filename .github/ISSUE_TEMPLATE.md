@@ -18,5 +18,6 @@
 
 ### Issue Description and Steps
 
-Please fill in the detailed description of the issue (full output of any stack trace, compiler error, ...) and the steps to reproduce the issue.
+Please fill in the detailed description of the issue (full textual output of any stack trace, compiler error, ...) and the steps to reproduce the issue.
 
+Are you reporting a queue deadlock? If so, you must include a complete backtrace of all threads, which you can generate by typing `bt all` in the debugger after you hit the deadlock. Failure to do so will prevent us from helping you.
