@@ -17,6 +17,12 @@
 
 #import <os/log.h>
 
+@interface DDOSLogger ()
+@property (copy, nonatomic, readwrite) NSString *subsystem;
+@property (copy, nonatomic, readwrite) NSString *category;
+- (os_log_t)logger;
+@end
+
 @implementation DDOSLogger
 
 static DDOSLogger *sharedInstance;
@@ -48,29 +54,29 @@ static DDOSLogger *sharedInstance;
     if ([logMessage->_fileName isEqualToString:@"DDASLLogCapture"]) {
         return;
     }
-    
+
     if(@available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *)) {
-        
+
         NSString * message = _logFormatter ? [_logFormatter formatLogMessage:logMessage] : logMessage->_message;
-        if (message) {
+        if (message != nil) {
             const char *msg = [message UTF8String];
-            
+            __auto_type logger = [self logger];
             switch (logMessage->_flag) {
                 case DDLogFlagError     :
-                    os_log_error(OS_LOG_DEFAULT, "%{public}s", msg);
+                    os_log_error(logger, "%{public}s", msg);
                     break;
                 case DDLogFlagWarning   :
                 case DDLogFlagInfo      :
-                    os_log_info(OS_LOG_DEFAULT, "%{public}s", msg);
+                    os_log_info(logger, "%{public}s", msg);
                     break;
                 case DDLogFlagDebug     :
                 case DDLogFlagVerbose   :
                 default                 :
-                    os_log_debug(OS_LOG_DEFAULT, "%{public}s", msg);
+                    os_log_debug(logger, "%{public}s", msg);
                     break;
             }
         }
-        
+
     }
 
 }
@@ -79,4 +85,23 @@ static DDOSLogger *sharedInstance;
     return DDLoggerNameOS;
 }
 
+- (os_log_t)logger {
+    if (self.subsystem == nil || self.category == nil) {
+        return OS_LOG_DEFAULT;
+    }
+    __auto_type subdomain = [self.subsystem UTF8String];
+    __auto_type category = [self.category UTF8String];
+    return os_log_create(subdomain, category);
+}
+@end
+
+@implementation DDOSLogger (Variations)
+- (instancetype)withSubsystem:(NSString *)subsystem {
+    self.subsystem = subsystem;
+    return self;
+}
+- (instancetype)withCategory:(NSString *)category {
+    self.category = category;
+    return self;
+}
 @end
