@@ -45,6 +45,25 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     [DDLog removeAllLoggers];
 }
 
+- (void)testLogFileRolling {
+    [DDLog addLogger:logger];
+    DDLogError(@"Some log in old file");
+    __auto_type oldLogFileInfo = [logger currentLogFileInfo];
+    __auto_type expectation = [self expectationWithDescription:@"Waiting for log file to be rolled"];
+    [logger rollLogFileWithCompletionBlock:^{
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:3 handler:^(NSError * _Nullable error) {
+        XCTAssertNil(error);
+    }];
+    __auto_type newLogFileInfo = [logger currentLogFileInfo];
+    XCTAssertNotNil(oldLogFileInfo);
+    XCTAssertNotNil(newLogFileInfo);
+    XCTAssertNotEqualObjects(oldLogFileInfo.filePath, newLogFileInfo.filePath);
+    XCTAssertTrue(oldLogFileInfo.isArchived);
+    XCTAssertFalse(newLogFileInfo.isArchived);
+}
+
 - (void)testWrapping {
     __auto_type wrapped = [logger wrapWithBuffer];
     XCTAssert([wrapped.class isSubclassOfClass:NSProxy.class]);

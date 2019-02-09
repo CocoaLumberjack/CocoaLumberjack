@@ -1014,10 +1014,9 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     }
 
     if (_currentLogFileInfo) {
-        BOOL isMostRecentLogArchived = _currentLogFileInfo.isArchived;
-        BOOL forceArchive = _doNotReuseLogFiles && isMostRecentLogArchived == NO;
-
-        if (forceArchive || [self lt_shouldLogFileBeArchived:_currentLogFileInfo]) {
+        if (_currentLogFileInfo.isArchived) {
+            _currentLogFileInfo = nil;
+        } else if (_doNotReuseLogFiles || [self lt_shouldLogFileBeArchived:_currentLogFileInfo]) {
             _currentLogFileInfo.isArchived = YES;
             NSString *archivedLogFilePath = [_currentLogFileInfo.fileName copy];
             _currentLogFileInfo = nil;
