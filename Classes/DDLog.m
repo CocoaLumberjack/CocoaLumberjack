@@ -127,12 +127,12 @@ static NSUInteger _numProcessors;
  */
 + (instancetype)sharedInstance {
     static id sharedInstance = nil;
-    
+
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedInstance = [[self alloc] init];
     });
-    
+
     return sharedInstance;
 }
 
@@ -146,23 +146,23 @@ static NSUInteger _numProcessors;
  **/
 + (void)initialize {
     static dispatch_once_t DDLogOnceToken;
-    
+
     dispatch_once(&DDLogOnceToken, ^{
         NSLogDebug(@"DDLog: Using grand central dispatch");
-        
+
         _loggingQueue = dispatch_queue_create("cocoa.lumberjack", NULL);
         _loggingGroup = dispatch_group_create();
-        
+
         void *nonNullValue = GlobalLoggingQueueIdentityKey; // Whatever, just not null
         dispatch_queue_set_specific(_loggingQueue, GlobalLoggingQueueIdentityKey, nonNullValue, NULL);
-        
+
         _queueSemaphore = dispatch_semaphore_create(DDLOG_MAX_QUEUE_SIZE);
-        
+
         // Figure out how many processors are available.
         // This may be used later for an optimization on uniprocessor machines.
-        
+
         _numProcessors = MAX([NSProcessInfo processInfo].processorCount, (NSUInteger) 1);
-        
+
         NSLogDebug(@"DDLog: numProcessors = %@", @(_numProcessors));
     });
 }
@@ -175,10 +175,10 @@ static NSUInteger _numProcessors;
  */
 - (id)init {
     self = [super init];
-    
+
     if (self) {
         self._loggers = [[NSMutableArray alloc] initWithCapacity:4];
-        
+
 #if TARGET_OS_IOS
         NSString *notificationName = UIApplicationWillTerminateNotification;
 #else
@@ -199,9 +199,9 @@ static NSUInteger _numProcessors;
                 [weakSelf applicationWillTerminate:nil];
             });
         }
-        
+
 #endif /* if TARGET_OS_IOS */
-        
+
         if (notificationName) {
             [[NSNotificationCenter defaultCenter] addObserver:self
                                                      selector:@selector(applicationWillTerminate:)
@@ -209,7 +209,7 @@ static NSUInteger _numProcessors;
                                                        object:nil];
         }
     }
-    
+
     return self;
 }
 
@@ -248,7 +248,7 @@ static NSUInteger _numProcessors;
     if (!logger) {
         return;
     }
-    
+
     dispatch_async(_loggingQueue, ^{ @autoreleasepool {
         [self lt_addLogger:logger level:level];
     } });
@@ -262,7 +262,7 @@ static NSUInteger _numProcessors;
     if (!logger) {
         return;
     }
-    
+
     dispatch_async(_loggingQueue, ^{ @autoreleasepool {
         [self lt_removeLogger:logger];
     } });
@@ -284,11 +284,11 @@ static NSUInteger _numProcessors;
 
 - (NSArray<id<DDLogger>> *)allLoggers {
     __block NSArray *theLoggers;
-    
+
     dispatch_sync(_loggingQueue, ^{ @autoreleasepool {
         theLoggers = [self lt_allLoggers];
     } });
-    
+
     return theLoggers;
 }
 
@@ -298,11 +298,11 @@ static NSUInteger _numProcessors;
 
 - (NSArray<DDLoggerInformation *> *)allLoggersWithLevel {
     __block NSArray *theLoggersWithLevel;
-    
+
     dispatch_sync(_loggingQueue, ^{ @autoreleasepool {
         theLoggersWithLevel = [self lt_allLoggersWithLevel];
     } });
-    
+
     return theLoggersWithLevel;
 }
 
@@ -378,16 +378,16 @@ static NSUInteger _numProcessors;
         tag:(id)tag
      format:(NSString *)format, ... {
     va_list args;
-    
+
     if (format) {
         va_start(args, format);
-        
+
         NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
-        
+
         va_end(args);
-        
+
         va_start(args, format);
-        
+
         [self log:asynchronous
           message:message
             level:level
@@ -397,7 +397,7 @@ static NSUInteger _numProcessors;
          function:function
              line:line
               tag:tag];
-        
+
         va_end(args);
     }
 }
@@ -412,16 +412,16 @@ static NSUInteger _numProcessors;
         tag:(id)tag
      format:(NSString *)format, ... {
     va_list args;
-    
+
     if (format) {
         va_start(args, format);
-        
+
         NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
-        
+
         va_end(args);
-        
+
         va_start(args, format);
-        
+
         [self log:asynchronous
           message:message
             level:level
@@ -431,7 +431,7 @@ static NSUInteger _numProcessors;
          function:function
              line:line
               tag:tag];
-        
+
         va_end(args);
     }
 }
@@ -504,7 +504,7 @@ static NSUInteger _numProcessors;
                                                                  tag:tag
                                                              options:(DDLogMessageOptions)0
                                                            timestamp:nil];
-    
+
     [self queueLogMessage:logMessage asynchronously:asynchronous];
 }
 
@@ -753,19 +753,19 @@ static NSUInteger _numProcessors;
             break;
         }
     }
-    
+
     if (loggerNode == nil) {
         NSLogDebug(@"DDLog: Request to remove logger which wasn't added");
         return;
     }
-    
+
     // Notify logger
     if ([logger respondsToSelector:@selector(willRemoveLogger)]) {
         dispatch_async(loggerNode->_loggerQueue, ^{ @autoreleasepool {
             [logger willRemoveLogger];
         } });
     }
-    
+
     // Remove from loggers array
     [self._loggers removeObject:loggerNode];
 }
@@ -773,7 +773,7 @@ static NSUInteger _numProcessors;
 - (void)lt_removeAllLoggers {
     NSAssert(dispatch_get_specific(GlobalLoggingQueueIdentityKey),
              @"This method should only be run on the logging thread/queue");
-    
+
     // Notify all loggers
     for (DDLoggerNode *loggerNode in self._loggers) {
         if ([loggerNode->_logger respondsToSelector:@selector(willRemoveLogger)]) {
@@ -782,7 +782,7 @@ static NSUInteger _numProcessors;
             } });
         }
     }
-    
+
     // Remove all loggers from array
 
     [self._loggers removeAllObjects];
@@ -804,14 +804,14 @@ static NSUInteger _numProcessors;
 - (NSArray *)lt_allLoggersWithLevel {
     NSAssert(dispatch_get_specific(GlobalLoggingQueueIdentityKey),
              @"This method should only be run on the logging thread/queue");
-    
+
     NSMutableArray *theLoggersWithLevel = [NSMutableArray new];
-    
+
     for (DDLoggerNode *loggerNode in self._loggers) {
         [theLoggersWithLevel addObject:[DDLoggerInformation informationWithLogger:loggerNode->_logger
                                                                          andLevel:loggerNode->_level]];
     }
-    
+
     return [theLoggersWithLevel copy];
 }
 
@@ -835,23 +835,37 @@ static NSUInteger _numProcessors;
             if (!(logMessage->_flag & loggerNode->_level)) {
                 continue;
             }
-            
+
             dispatch_group_async(_loggingGroup, loggerNode->_loggerQueue, ^{ @autoreleasepool {
                 [loggerNode->_logger logMessage:logMessage];
             } });
         }
-        
+
         dispatch_group_wait(_loggingGroup, DISPATCH_TIME_FOREVER);
     } else {
         // Execute each logger serially, each within its own queue.
-        
+
         for (DDLoggerNode *loggerNode in self._loggers) {
             // skip the loggers that shouldn't write this message based on the log level
 
             if (!(logMessage->_flag & loggerNode->_level)) {
                 continue;
             }
-            
+
+            // we must assure that we aren not on loggerNode->_loggerQueue.
+            if (loggerNode->_loggerQueue == NULL) {
+              // tell that we can't dispatch logger node on queue that is NULL.
+              NSLogDebug(@"DDLog: current node has loggerQueue == NULL");
+            }
+            else {
+              dispatch_async(loggerNode->_loggerQueue, ^{
+                if (dispatch_get_specific(GlobalLoggingQueueIdentityKey)) {
+                  // tell that we somehow on logging queue?
+                  NSLogDebug(@"DDLog: current node has loggerQueue == globalLoggingQueue");
+                }
+              });
+            }
+            // next, we must check that node is OK.
             dispatch_sync(loggerNode->_loggerQueue, ^{ @autoreleasepool {
                 [loggerNode->_logger logMessage:logMessage];
             } });
@@ -880,10 +894,10 @@ static NSUInteger _numProcessors;
     //
     // Now we need to propagate the flush request to any loggers that implement the flush method.
     // This is designed for loggers that buffer IO.
-    
+
     NSAssert(dispatch_get_specific(GlobalLoggingQueueIdentityKey),
              @"This method should only be run on the logging thread/queue");
-    
+
     for (DDLoggerNode *loggerNode in self._loggers) {
         if ([loggerNode->_logger respondsToSelector:@selector(flush)]) {
             dispatch_group_async(_loggingGroup, loggerNode->_loggerQueue, ^{ @autoreleasepool {
@@ -891,7 +905,7 @@ static NSUInteger _numProcessors;
             } });
         }
     }
-    
+
     dispatch_group_wait(_loggingGroup, DISPATCH_TIME_FOREVER);
 }
 
@@ -1052,7 +1066,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
         {
             _fileName = [_fileName substringToIndex:dotLocation];
         }
-        
+
         // Try to get the current queue's label
         _queueLabel = [[NSString alloc] initWithFormat:@"%s", dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL)];
     }
@@ -1061,7 +1075,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
 
 - (id)copyWithZone:(NSZone * __attribute__((unused)))zone {
     DDLogMessage *newMessage = [DDLogMessage new];
-    
+
     newMessage->_message = _message;
     newMessage->_level = _level;
     newMessage->_flag = _flag;
@@ -1216,7 +1230,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
                 }
 
                 self->_logFormatter = logFormatter;
- 
+
                 if ([self->_logFormatter respondsToSelector:@selector(didAddToLogger:inQueue:)]) {
                     [self->_logFormatter didAddToLogger:self inQueue:self->_loggerQueue];
                 } else if ([self->_logFormatter respondsToSelector:@selector(didAddToLogger:)]) {
