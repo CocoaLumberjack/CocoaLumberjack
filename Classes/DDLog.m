@@ -852,6 +852,7 @@ static NSUInteger _numProcessors;
                 continue;
             }
 
+#if DD_DEBUG
             // we must assure that we aren not on loggerNode->_loggerQueue.
             if (loggerNode->_loggerQueue == NULL) {
               // tell that we can't dispatch logger node on queue that is NULL.
@@ -865,6 +866,7 @@ static NSUInteger _numProcessors;
                 }
               });
             }
+#endif
             // next, we must check that node is OK.
             dispatch_sync(loggerNode->_loggerQueue, ^{ @autoreleasepool {
                 [loggerNode->_logger logMessage:logMessage];
