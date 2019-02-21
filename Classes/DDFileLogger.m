@@ -1031,8 +1031,9 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     return _currentLogFileInfo;
 }
 
-- (BOOL)lt_shouldUseLogFile:(DDLogFileInfo *)logFileInfo {
+- (BOOL)lt_shouldUseLogFile:(nonnull DDLogFileInfo *)logFileInfo {
     NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
+    NSParameterAssert(logFileInfo);
 
     if (logFileInfo.isArchived) { // Archived log files are no longer valid for use.
         return NO;
