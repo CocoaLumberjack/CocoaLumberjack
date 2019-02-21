@@ -2,7 +2,7 @@
 
 ### Public
 - Fix reusing of log files after rolling (#1042)
-- Preliminary compatbility with Swift 5 (backwards compatible with Swift 4) (#1044)
+- Preliminary compatibility with Swift 5 (backwards compatible with Swift 4) (#1044)
 
 ## [3.5.1 - Xcode 10 on Feb 4th, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.1)
 
