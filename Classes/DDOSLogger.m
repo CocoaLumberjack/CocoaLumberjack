@@ -17,15 +17,48 @@
 
 #import <os/log.h>
 
-@interface DDOSLogger ()
-@property (copy, nonatomic, readwrite) NSString *subsystem;
-@property (copy, nonatomic, readwrite) NSString *category;
+@interface DDOSLogger () {
+    NSString *_subsystem;
+    NSString *_category;
+}
+@property (copy, nonatomic, readonly) NSString *subsystem;
+@property (copy, nonatomic, readonly) NSString *category;
 @property (strong, nonatomic, readwrite) os_log_t  logger;
 @end
 
 @implementation DDOSLogger
 
+@synthesize subsystem = _subsystem;
+@synthesize category = _category;
+
+#pragma mark - Initialization
+
+/**
+ * Assertion
+ * Swift: (String, String)?
+ */
+- (instancetype)initWithSubsystem:(NSString *)subsystem category:(NSString *)category {
+    NSAssert((subsystem == nil) == (category == nil), @"Either both subsystem and category or neither can be nil.");
+    if (self = [super init]) {
+        _subsystem = [subsystem copy];
+        _category = [category copy];
+    }
+    return self;
+}
+
 static DDOSLogger *sharedInstance;
+
+- (instancetype)init {
+    if (sharedInstance != nil) {
+        return nil;
+    }
+
+    if (self = [self initWithSubsystem:nil category:nil]) {
+        return self;
+    }
+
+    return nil;
+}
 
 + (instancetype)sharedInstance {
     static dispatch_once_t DDOSLoggerOnceToken;
@@ -37,17 +70,25 @@ static DDOSLogger *sharedInstance;
     return sharedInstance;
 }
 
-- (instancetype)init {
-    if (sharedInstance != nil) {
-        return nil;
-    }
+#pragma mark - os_log
 
-    if (self = [super init]) {
-        return self;
+- (os_log_t)getLogger {
+    if (self.subsystem == nil || self.category == nil) {
+        return OS_LOG_DEFAULT;
     }
-
-    return nil;
+    __auto_type subdomain = self.subsystem.UTF8String;
+    __auto_type category = self.category.UTF8String;
+    return os_log_create(subdomain, category);
 }
+
+- (os_log_t)logger {
+    if (_logger == nil)  {
+        _logger = [self getLogger];
+    }
+    return _logger;
+}
+
+#pragma mark - DDLogger
 
 - (void)logMessage:(DDLogMessage *)logMessage {
     // Skip captured log messages
@@ -83,32 +124,5 @@ static DDOSLogger *sharedInstance;
 
 - (DDLoggerName)loggerName {
     return DDLoggerNameOS;
-}
-
-- (os_log_t)getLogger {
-    if (self.subsystem == nil || self.category == nil) {
-        return OS_LOG_DEFAULT;
-    }
-    __auto_type subdomain = [self.subsystem UTF8String];
-    __auto_type category = [self.category UTF8String];
-    return os_log_create(subdomain, category);
-}
-
-- (os_log_t)logger {
-    if (_logger == nil)  {
-        _logger = [self getLogger];
-    }
-    return _logger;
-}
-@end
-
-@implementation DDOSLogger (Variations)
-- (instancetype)initWithSubsystem:(NSString *)subsystem category:(NSString *)category {
-    NSAssert(subsystem != nil || category != nil, @"Neither subsytem nor category can be nil. Otherwise, OSLogger falls back to OS_LOG_DEFAULT.");
-    if (self = [super init]) {
-        self.subsystem = subsystem;
-        self.category = category;
-    }
-    return self;
 }
 @end
