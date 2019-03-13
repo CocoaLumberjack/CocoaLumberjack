@@ -22,6 +22,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
 
 @interface DDFileLoggerTests : XCTestCase {
     DDFileLogger *logger;
+    NSString *logsDirectory;
 }
 
 @end
@@ -31,25 +32,36 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
 - (void)setUp {
     [super setUp];
     logger = [[DDFileLogger alloc] initWithLogFileManager:[[DDSampleFileManager alloc] initWithLogFileHeader:@"header"]];
+    logsDirectory = logger.logFileManager.logsDirectory;
 }
 
 - (void)tearDown {
     [super tearDown];
-
-    for (NSString *logFilePaths in logger.logFileManager.unsortedLogFilePaths) {
-        NSError *error = nil;
-        XCTAssertTrue([[NSFileManager defaultManager] removeItemAtPath:logFilePaths error:&error]);
+    
+    [DDLog removeAllLoggers];
+    
+    NSError *error = nil;
+    __auto_type contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:logsDirectory error:&error];
+    XCTAssertNil(error);
+    for (NSString *path in contents) {
+        error = nil;
+        XCTAssertTrue([[NSFileManager defaultManager] removeItemAtPath:[logsDirectory stringByAppendingPathComponent:path] error:&error]);
         XCTAssertNil(error);
     }
 
-    [DDLog removeAllLoggers];
+    error = nil;
+    XCTAssertTrue([[NSFileManager defaultManager] removeItemAtPath:logsDirectory error:&error]);
+    XCTAssertNil(error);
+    
+    logger = nil;
+    logsDirectory = nil;
 }
 
-- (void)testLogFileRolling {
+- (void)testExplicitLogFileRolling {
     [DDLog addLogger:logger];
-    DDLogError(@"Some log in old file");
+    DDLogError(@"Some log in the old file");
     __auto_type oldLogFileInfo = [logger currentLogFileInfo];
-    __auto_type expectation = [self expectationWithDescription:@"Waiting for log file to be rolled"];
+    __auto_type expectation = [self expectationWithDescription:@"Waiting for the log file to be rolled"];
     [logger rollLogFileWithCompletionBlock:^{
         [expectation fulfill];
     }];
@@ -62,6 +74,42 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     XCTAssertNotEqualObjects(oldLogFileInfo.filePath, newLogFileInfo.filePath);
     XCTAssertTrue(oldLogFileInfo.isArchived);
     XCTAssertFalse(newLogFileInfo.isArchived);
+}
+
+- (void)testAutomaticLogFileRollingWhenNotReusingLogFiles {
+    logger.doNotReuseLogFiles = YES;
+    
+    [DDLog addLogger:logger];
+    DDLogError(@"Log 1 in the old file");
+    DDLogError(@"Log 2 in the old file");
+    __auto_type expectation = [self expectationWithDescription:@"Waiting for the log file to be rolled"];
+    [logger rollLogFileWithCompletionBlock:^{
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:3 handler:^(NSError * _Nullable error) {
+        XCTAssertNil(error);
+    }];
+    DDLogError(@"Log 1 in the new file");
+    DDLogError(@"Log 2 in the new file");
+    
+    XCTAssertEqual(logger.logFileManager.unsortedLogFileInfos.count, 2);
+}
+
+- (void)testCurrentLogFileInfoWhenNotReusingLogFilesOnlyCreatesNewLogFilesIfNecessary {
+    logger.doNotReuseLogFiles = YES;
+    
+    __auto_type info1 = logger.currentLogFileInfo;
+    __auto_type info2 = logger.currentLogFileInfo;
+    XCTAssertEqualObjects(info1.filePath, info2.filePath);
+    
+    info1.isArchived = YES;
+    
+    __auto_type info3 = logger.currentLogFileInfo;
+    __auto_type info4 = logger.currentLogFileInfo;
+    XCTAssertEqualObjects(info3.filePath, info4.filePath);
+    XCTAssertNotEqualObjects(info2.filePath, info3.filePath);
+    
+    XCTAssertEqual(logger.logFileManager.unsortedLogFileInfos.count, 2);
 }
 
 - (void)testWrapping {
