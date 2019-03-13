@@ -104,4 +104,11 @@ static DDOSLogger *sharedInstance;
     self.category = category;
     return self;
 }
+- (instancetype)initWithSubsystem:(NSString *)subsystem category:(NSString *)category {
+    if (self = [super init]) {
+        self.subsystem = subsystem;
+        self.category = category;
+    }
+    return self;
+}
 @end
