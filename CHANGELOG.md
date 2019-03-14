@@ -1,4 +1,4 @@
-## [3.5.2 - Xcode 10 on ???, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.2)
+## [3.5.2 - Xcode 10 on 14th, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.2)
 
 ### Public
 - Fix reusing of log files after rolling (#1042)
