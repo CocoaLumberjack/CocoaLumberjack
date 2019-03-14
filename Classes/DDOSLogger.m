@@ -49,15 +49,7 @@
 static DDOSLogger *sharedInstance;
 
 - (instancetype)init {
-    if (sharedInstance != nil) {
-        return nil;
-    }
-
-    if (self = [self initWithSubsystem:nil category:nil]) {
-        return self;
-    }
-
-    return nil;
+    return [self initWithSubsystem:nil category:nil];
 }
 
 + (instancetype)sharedInstance {
