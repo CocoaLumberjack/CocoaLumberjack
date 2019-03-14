@@ -39,6 +39,12 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     [super tearDown];
     
     [DDLog removeAllLoggers];
+    // We need to sync all involved queues to wait for the post-removal processing of the logger to finish before deleting the files.
+    dispatch_sync([DDLog loggingQueue], ^{
+        dispatch_sync(self->logger.loggerQueue, ^{
+            /* noop */
+        });
+    });
     
     NSError *error = nil;
     __auto_type contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:logsDirectory error:&error];
