@@ -24,7 +24,7 @@ static const NSUInteger kDDMaxBufferSize = 1048576; // ~1 mB, f_iosize on iphone
 // Reads attributes from base file system to determine buffer size.
 // see statfs in sys/mount.h for descriptions of f_iosize and f_bsize.
 // f_bsize == "default", and f_iosize == "max"
-static inline NSUInteger p_PURGetDefaultBufferSizeBytesMax(const BOOL max) {
+static inline NSUInteger p_DDGetDefaultBufferSizeBytesMax(const BOOL max) {
     struct statfs *mountedFileSystems = NULL;
     int count = getmntinfo(&mountedFileSystems, 0);
 
