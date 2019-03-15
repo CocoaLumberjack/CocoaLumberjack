@@ -37,9 +37,8 @@ static inline NSUInteger p_DDGetDefaultBufferSizeBytesMax(const BOOL max) {
         }
     }
 
-    return max ? kPURMaxBufferSize : kPURDefaultBufferSize;
+    return max ? kDDMaxBufferSize : kDDDefaultBufferSize;
 }
-
 
 static NSUInteger DDGetMaxBufferSizeBytes() {
     static NSUInteger maxBufferSize = 0;
