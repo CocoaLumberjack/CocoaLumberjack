@@ -1,9 +1,14 @@
-## [3.5.2 - Xcode 10 on ???, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.2)
+## [3.5.2 - Xcode 10.1 on 15th, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.2)
 
 ### Public
 - Fix reusing of log files after rolling (#1042)
 - Fix creation of too many log files (#1049)
 - Preliminary compatibility with Swift 5 (backwards compatible with Swift 4) (#1044)
+- core: loggers os logger variations have been added (#1039)
+
+### Internal
+- Sync internal queues to prevent cleaning up log files too soon in tests (#1053)
+- DDLog checks for NULL values and for global queue dispatching has been added (#1045)
 
 ## [3.5.1 - Xcode 10 on Feb 4th, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.1)
 
