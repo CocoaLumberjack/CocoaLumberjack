@@ -4,7 +4,7 @@
 - ...
 
 ### Internal
-- Remove banned APIs (#1056)
+- Remove banned APIs (#1056) (#1057)
 
 ## [3.5.2 - Xcode 10.1 on 15th, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.2)
 
