@@ -844,7 +844,7 @@ static DDTTYLogger *sharedInstance;
             _appLen = [_appName lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
         }
 
-        _app = (char *)malloc(_appLen + 1);
+        _app = (char *)calloc(1, _appLen + 1);
 
         if (_app == NULL) {
             return nil;
@@ -862,7 +862,7 @@ static DDTTYLogger *sharedInstance;
         _processID = [NSString stringWithFormat:@"%i", (int)getpid()];
 
         _pidLen = [_processID lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-        _pid = (char *)malloc(_pidLen + 1);
+        _pid = (char *)calloc(1, _pidLen + 1);
 
         if (_pid == NULL) {
             free(_app);
@@ -1211,7 +1211,7 @@ static DDTTYLogger *sharedInstance;
         const BOOL useStack = msgLen < (1024 * 4);
 
         char msgStack[useStack ? (msgLen + 1) : 1]; // Analyzer doesn't like zero-size array, hence the 1
-        char *msg = useStack ? msgStack : (char *)malloc(msgLen + 1);
+        char *msg = useStack ? msgStack : (char *)calloc(1, msgLen + 1);
 
         if (msg == NULL) {
             return;
