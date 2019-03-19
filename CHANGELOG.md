@@ -1,3 +1,11 @@
+## [3.5.3 - Xcode 10.1 on ??, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.3)
+
+### Public
+- ...
+
+### Internal
+- Remove banned APIs (#1056)
+
 ## [3.5.2 - Xcode 10.1 on 15th, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.2)
 
 ### Public
