@@ -32,7 +32,8 @@ static inline NSUInteger p_DDGetDefaultBufferSizeBytesMax(const BOOL max) {
         struct statfs mounted = mountedFileSystems[i];
         const char *name = mounted.f_mntonname;
 
-        if (strlen(name) == 1 && *name == '/') {
+        // We can use 2 as max here, since any length > 1 will fail the if-statement.
+        if (strnlen(name, 2) == 1 && *name == '/') {
             return max ? (NSUInteger)mounted.f_iosize : (NSUInteger)mounted.f_bsize;
         }
     }

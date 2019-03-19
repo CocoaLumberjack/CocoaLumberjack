@@ -619,7 +619,7 @@ static NSUInteger _numProcessors;
 
         NSUInteger bufferSize = numClasses;
 
-        classes = numClasses ? (Class *)malloc(sizeof(Class) * bufferSize) : NULL;
+        classes = numClasses ? (Class *)calloc(bufferSize, sizeof(Class)) : NULL;
         if (classes == NULL) {
             return @[]; //no memory or classes?
         }
