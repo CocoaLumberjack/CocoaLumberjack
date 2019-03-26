@@ -1,7 +1,7 @@
 ## [3.5.3 - Xcode 10.1 on ??, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.3)
 
 ### Public
-- ...
+- Additional compatibility with Swift 5 (backwards compatible with Swift 4) (#1043)
 
 ### Internal
 - Remove banned APIs (#1056) (#1057)
