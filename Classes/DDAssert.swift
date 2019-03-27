@@ -26,8 +26,9 @@
 @inlinable
 public func DDAssert(_ condition: @autoclosure () -> Bool, _ message: @autoclosure () -> String = "", context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = false, ddlog: DDLog = DDLog.sharedInstance) {
     if !condition() {
-        DDLogError(message(), level: .all, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
-        Swift.assertionFailure(message(), file: file, line: line)
+        let evaluated = message()
+        DDLogError(evaluated, level: .all, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
+        Swift.assertionFailure(evaluated, file: file, line: line)
     }
 }
 
@@ -40,6 +41,7 @@ public func DDAssert(_ condition: @autoclosure () -> Bool, _ message: @autoclosu
  */
 @inlinable
 public func DDAssertionFailure(_ message: @autoclosure () -> String = "", context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = false, ddlog: DDLog = DDLog.sharedInstance) {
-    DDLogError(message(), level: .all, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
-    Swift.assertionFailure(message(), file: file, line: line)
+    let evaluated = message()
+    DDLogError(evaluated, level: .all, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
+    Swift.assertionFailure(evaluated, file: file, line: line)
 }
