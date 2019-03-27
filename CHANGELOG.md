@@ -2,6 +2,10 @@
 
 ### Public
 - Additional compatibility with Swift 5 (backwards compatible with Swift 4) (#1043)
+- improve DDAssert and DDAssertionFailure (#1060)
+  - evaluate message only once
+  - always log the assertion message
+  - fix undefined behaviour
 
 ### Internal
 - Remove banned APIs (#1056) (#1057)
