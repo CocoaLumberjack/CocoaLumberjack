@@ -95,7 +95,6 @@ FOUNDATION_EXPORT const unsigned char CocoaLumberjackVersionString[];
 #import <CocoaLumberjack/DDFileLogger+Buffering.h>
 
 // CLI
-#if __has_include(<CocoaLumberjack/CLIColor.h>) && TARGET_OS_OSX
 #import <CocoaLumberjack/CLIColor.h>
 
 // etc
