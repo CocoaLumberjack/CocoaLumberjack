@@ -18,7 +18,7 @@
     #define DD_LEGACY_MACROS 0
 #endif
 
-#import "DDLog.h"
+#import <CocoaLumberjack/DDLog.h>
 
 /**
  * This class provides an abstract implementation of a database logger.

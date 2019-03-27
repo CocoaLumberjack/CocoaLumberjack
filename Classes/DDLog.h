@@ -20,7 +20,7 @@
     #define DD_LEGACY_MACROS 1
 #endif
 // DD_LEGACY_MACROS is checked in the file itself
-#import "DDLegacyMacros.h"
+#import <CocoaLumberjack/DDLegacyMacros.h>
 
 // Names of loggers.
 #import "DDLoggerNames.h"

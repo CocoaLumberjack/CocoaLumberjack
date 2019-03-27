@@ -20,7 +20,7 @@
     #define DD_LEGACY_MACROS 0
 #endif
 
-#import "DDLog.h"
+#import <CocoaLumberjack/DDLog.h>
 
 /**
  * This formatter can be used to chain different formatters together.
