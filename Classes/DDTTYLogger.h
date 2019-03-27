@@ -18,7 +18,7 @@
     #define DD_LEGACY_MACROS 0
 #endif
 
-#import "DDLog.h"
+#import <CocoaLumberjack/DDLog.h>
 
 #define LOG_CONTEXT_ALL INT_MAX
 
@@ -31,7 +31,7 @@
     static inline DDColor* DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {return [DDColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f];}
 #elif defined(DD_CLI) || !__has_include(<AppKit/NSColor.h>)
     // OS X CLI
-    #import "CLIColor.h"
+    #import <CocoaLumberjack/CLIColor.h>
     typedef CLIColor DDColor;
     static inline DDColor* DDMakeColor(CGFloat r, CGFloat g, CGFloat b) {return [DDColor colorWithCalibratedRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1.0f];}
 #else
