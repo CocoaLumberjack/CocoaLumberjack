@@ -23,7 +23,7 @@
 #import <CocoaLumberjack/DDLegacyMacros.h>
 
 // Names of loggers.
-#import "DDLoggerNames.h"
+#import <CocoaLumberjack/DDLoggerNames.h>
 
 #if OS_OBJECT_USE_OBJC
     #define DISPATCH_QUEUE_REFERENCE_TYPE strong
