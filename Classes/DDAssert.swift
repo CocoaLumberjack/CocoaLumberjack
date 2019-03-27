@@ -28,7 +28,9 @@ public func DDAssert(_ condition: @autoclosure () -> Bool, _ message: @autoclosu
     if !condition() {
         let evaluated = message()
         DDLogError(evaluated, level: .all, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
-        Swift.assertionFailure(evaluated, file: file, line: line)
+        #if DEBUG
+          Swift.assertionFailure(evaluated, file: file, line: line)
+        #endif
     }
 }
 
@@ -43,5 +45,7 @@ public func DDAssert(_ condition: @autoclosure () -> Bool, _ message: @autoclosu
 public func DDAssertionFailure(_ message: @autoclosure () -> String = "", context: Int = 0, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = false, ddlog: DDLog = DDLog.sharedInstance) {
     let evaluated = message()
     DDLogError(evaluated, level: .all, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
-    Swift.assertionFailure(evaluated, file: file, line: line)
+    #if DEBUG
+      Swift.assertionFailure(evaluated, file: file, line: line)
+    #endif
 }
