@@ -7,6 +7,7 @@
 ### Internal
 - Remove banned APIs (#1056) (#1057)
 - Add CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER & fix warnings (#1059)
+- Use LLONG_MAX instead of LONG_LONG_MAX (#1062)
 
 ## [3.5.2 - Xcode 10.1 on 15th, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.2)
 
