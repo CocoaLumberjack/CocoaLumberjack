@@ -1,6 +1,6 @@
 
 language: objective-c
-osx_image: xcode10
+osx_image: xcode10.2
 
 branches:
     only:
@@ -15,8 +15,8 @@ env:
 before_install:
     - env
     - locale
-    - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
-    - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+    - gem install cocoapods --prerelease --no-document --quiet
+    - gem install xcpretty --no-document --quiet
     - pod --version
     - xcpretty --version
     - xcodebuild -version
@@ -51,7 +51,7 @@ script:
     - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'macOSSwiftIntegration' -configuration Release -sdk macosx | xcpretty -c
     - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'iOSFrameworkIntegration' -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration Release | xcpretty -c
     - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'tvOSSwiftIntegration' -destination 'platform=tvOS Simulator,name=Apple TV 4K' -configuration Release -sdk appletvsimulator | xcpretty -c
-    - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'watchOSSwiftIntegration' -configuration Release -sdk watchsimulator -destination 'platform=iOS Simulator,name=iPhone XS Max,OS=12.0' | xcpretty -c
+    - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'watchOSSwiftIntegration' -configuration Release -sdk watchsimulator -destination 'platform=iOS Simulator,name=iPhone XS Max,OS=12.2' | xcpretty -c
 
     - echo "Run the tests"
     - xcodebuild test -skip-testing:'iOS Tests/DDFileLoggerPerformanceTests' -project Tests/Tests.xcodeproj -scheme 'iOS Tests' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
