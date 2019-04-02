@@ -1,8 +1,9 @@
-## [3.5.3 - Xcode 10.1 on ??, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.3)
+## [3.5.3 - Xcode 10.2 on ??, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.3)
 
 ### Public
 - Additional compatibility with Swift 5 (backwards compatible with Swift 4) (#1043)
 - Fix warning building with Xcode 10.2 (#1059)
+- Set Xcode 10.2 and Swift 5.0 as a default (#1064)
 
 ### Internal
 - Remove banned APIs (#1056) (#1057)
