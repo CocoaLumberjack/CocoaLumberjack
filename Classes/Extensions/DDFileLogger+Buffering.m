@@ -29,11 +29,11 @@ static inline NSUInteger p_DDGetDefaultBufferSizeBytesMax(const BOOL max) {
     int count = getmntinfo(&mountedFileSystems, 0);
 
     for (int i = 0; i < count; i++) {
-        struct statfs fileSystem = mountedFileSystems[i];
-        const char *name = fileSystem.f_mntonname;
+        struct statfs mounted = mountedFileSystems[i];
+        const char *name = mounted.f_mntonname;
         
         if (strnlen(name, 2) == 1 && *name == '/') {
-            return max ? (NSUInteger)fileSystem.f_iosize : (NSUInteger)fileSystem.f_bsize;
+            return max ? (NSUInteger)mounted.f_iosize : (NSUInteger)mounted.f_bsize;
         }
     }
 
