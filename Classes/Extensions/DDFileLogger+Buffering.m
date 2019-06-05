@@ -31,13 +31,13 @@ static inline NSUInteger p_DDGetDefaultBufferSizeBytesMax(const BOOL max) {
     for (int i = 0; i < count; i++) {
         struct statfs fileSystem = mountedFileSystems[i];
         const char *name = fileSystem.f_mntonname;
-
-        if (strlen(name) == 1 && *name == '/') {
+        
+        if (strnlen(name, 2) == 1 && *name == '/') {
             return max ? (NSUInteger)fileSystem.f_iosize : (NSUInteger)fileSystem.f_bsize;
         }
     }
 
-    return max ? kPURMaxBufferSize : kPURDefaultBufferSize;
+    return max ? kDDMaxBufferSize : kDDDefaultBufferSize;
 }
 
 static NSUInteger DDGetMaxBufferSizeBytes() {
