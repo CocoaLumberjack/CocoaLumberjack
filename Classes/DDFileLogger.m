@@ -615,7 +615,10 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
 @end
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wincomplete-implementation"
 @implementation DDFileLogger
+#pragma clang diagnostic pop
 
 - (instancetype)init {
     DDLogFileManagerDefault *defaultLogFileManager = [[DDLogFileManagerDefault alloc] init];
@@ -1208,6 +1211,19 @@ static int exception_count = 0;
         });
     }
 }
+
+- (void)dummyMethod {}
+
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
+    if (aSelector == @selector(willLogMessage) || aSelector == @selector(didLogMessage)) {
+        // Ignore calls to deprecated methods.
+        return [self methodSignatureForSelector:@selector(dummyMethod)];
+    }
+
+    return [super methodSignatureForSelector:aSelector];
+}
+
+- (void)forwardInvocation:(NSInvocation *)anInvocation {}
 
 - (void)lt_logData:(NSData *)data {
     static BOOL implementsDeprecatedWillLog = NO;
