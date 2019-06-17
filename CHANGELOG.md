@@ -1,3 +1,8 @@
+## [3.5.3 - Xcode 10.2.1 on ?](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.4)
+
+### Public
+- New `willLogMessage:` and `didLogMessage:` methods on `DDFileLogger` which provide access to the current log file info.
+
 ## [3.5.3 - Xcode 10.2 on Apr 24th, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.3)
 
 ### Public

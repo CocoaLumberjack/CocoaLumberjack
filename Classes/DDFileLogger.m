@@ -615,7 +615,10 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
 @end
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wincomplete-implementation"
 @implementation DDFileLogger
+#pragma clang diagnostic pop
 
 - (instancetype)init {
     DDLogFileManagerDefault *defaultLogFileManager = [[DDLogFileManagerDefault alloc] init];
@@ -1130,11 +1133,11 @@ static int exception_count = 0;
     [self lt_logData:[message dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
-- (void)willLogMessage {
+- (void)willLogMessage:(DDLogFileInfo *)logFileInfo {
 
 }
 
-- (void)didLogMessage {
+- (void)didLogMessage:(DDLogFileInfo *)logFileInfo {
     [self lt_maybeRollLogFileDueToSize];
 }
 
@@ -1209,7 +1212,33 @@ static int exception_count = 0;
     }
 }
 
+- (void)dummyMethod {}
+
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
+    if (aSelector == @selector(willLogMessage) || aSelector == @selector(didLogMessage)) {
+        // Ignore calls to deprecated methods.
+        return [self methodSignatureForSelector:@selector(dummyMethod)];
+    }
+
+    return [super methodSignatureForSelector:aSelector];
+}
+
+- (void)forwardInvocation:(NSInvocation *)anInvocation {
+    if (anInvocation.selector != @selector(dummyMethod)) {
+        [super forwardInvocation:anInvocation];
+    }
+}
+
 - (void)lt_logData:(NSData *)data {
+    static BOOL implementsDeprecatedWillLog = NO;
+    static BOOL implementsDeprecatedDidLog = NO;
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        implementsDeprecatedWillLog = [self respondsToSelector:@selector(willLogMessage)];
+        implementsDeprecatedDidLog = [self respondsToSelector:@selector(didLogMessage)];
+    });
+
     NSAssert([self isOnInternalLoggerQueue], @"logMessage should only be executed on internal queue.");
 
     if (data.length == 0) {
@@ -1217,13 +1246,28 @@ static int exception_count = 0;
     }
 
     @try {
-        [self willLogMessage];
+        if (implementsDeprecatedWillLog) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+            [self willLogMessage];
+#pragma clang diagnostic pop
+        } else {
+            [self willLogMessage:_currentLogFileInfo];
+        }
 
         NSFileHandle *handle = [self lt_currentLogFileHandle];
         [handle seekToEndOfFile];
         [handle writeData:data];
 
-        [self didLogMessage];
+        if (implementsDeprecatedDidLog) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+            [self didLogMessage];
+#pragma clang diagnostic pop
+        } else {
+            [self didLogMessage:_currentLogFileInfo];
+        }
+
     } @catch (NSException *exception) {
         exception_count++;
 
