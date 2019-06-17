@@ -1135,6 +1135,14 @@ static int exception_count = 0;
 }
 
 - (void)didLogMessage {
+
+}
+
+- (void)willLogMessage:(DDLogFileInfo *)logFileInfo {
+
+}
+
+- (void)didLogMessage:(DDLogFileInfo *)logFileInfo {
     [self lt_maybeRollLogFileDueToSize];
 }
 
@@ -1217,13 +1225,23 @@ static int exception_count = 0;
     }
 
     @try {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         [self willLogMessage];
+#pragma clang diagnostic pop
+
+        [self willLogMessage:_currentLogFileInfo];
 
         NSFileHandle *handle = [self lt_currentLogFileHandle];
         [handle seekToEndOfFile];
         [handle writeData:data];
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         [self didLogMessage];
+#pragma clang diagnostic pop
+
+        [self didLogMessage:_currentLogFileInfo];
     } @catch (NSException *exception) {
         exception_count++;
 
