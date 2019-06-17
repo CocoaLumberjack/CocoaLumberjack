@@ -1223,7 +1223,11 @@ static int exception_count = 0;
     return [super methodSignatureForSelector:aSelector];
 }
 
-- (void)forwardInvocation:(NSInvocation *)anInvocation {}
+- (void)forwardInvocation:(NSInvocation *)anInvocation {
+    if (anInvocation.selector != @selector(dummyMethod)) {
+        [super forwardInvocation:anInvocation];
+    }
+}
 
 - (void)lt_logData:(NSData *)data {
     static BOOL implementsDeprecatedWillLog = NO;
