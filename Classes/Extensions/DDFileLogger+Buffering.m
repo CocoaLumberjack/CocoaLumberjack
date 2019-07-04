@@ -13,8 +13,8 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import <CocoaLumberjack/DDFileLogger+Internal.h>
-#import <CocoaLumberjack/DDFileLogger+Buffering.h>
+#import "DDFileLogger+Internal.h"
+#import "DDFileLogger+Buffering.h"
 
 #import <sys/mount.h>
 
