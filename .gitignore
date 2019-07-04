@@ -1,23 +1,12 @@
 # Xcode
 #
-build/
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-project.xcworkspace
-!default.xcworkspace
-xcuserdata
-*.xccheckout
-*.moved-aside
-DerivedData
-*.hmap
-*.ipa
-*.xcuserstate
+xcuserdata/
+
+**/*.xcodeproj/project.xcworkspace/*
+!**/*.xcodeproj/project.xcworkspace/xcshareddata
+
+**/*.xcodeproj/project.xcworkspace/xcshareddata/*
+!**/*.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
 
 # Carthage
 Carthage/Build
@@ -32,3 +21,7 @@ Pods/
 Podfile.lock
 LumberjackUser*.h
 .DS_Store
+
+# SwiftPM
+.swiftpm
+.build
