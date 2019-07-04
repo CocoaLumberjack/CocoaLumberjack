@@ -20,7 +20,7 @@
     #define DD_LEGACY_MACROS 0
 #endif
 
-#import <CocoaLumberjack/DDLog.h>
+#import "DDLog.h"
 
 /**
  * This class provides a log formatter that filters log statements from a logging context not on the whitelist.

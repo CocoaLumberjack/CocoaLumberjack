@@ -20,7 +20,7 @@
     #define DD_LEGACY_MACROS 0
 #endif
 
-#import <CocoaLumberjack/DDLog.h>
+#import "DDLog.h"
 
 /**
  * This class provides a logger for the Apple os_log facility.

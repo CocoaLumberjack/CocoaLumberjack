@@ -20,7 +20,7 @@
     #define DD_LEGACY_MACROS 0
 #endif
 
-#import <CocoaLumberjack/DDLog.h>
+#import "DDLog.h"
 
 // Custom key set on messages sent to ASL
 extern const char* const kDDASLKeyDDLog;
