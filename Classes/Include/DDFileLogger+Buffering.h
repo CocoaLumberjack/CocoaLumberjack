@@ -13,7 +13,7 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import <CocoaLumberjack/DDFileLogger.h>
+#import "DDFileLogger.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

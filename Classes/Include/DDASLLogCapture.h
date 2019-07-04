@@ -13,7 +13,7 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import <CocoaLumberjack/DDASLLogger.h>
+#import "DDASLLogger.h"
 
 @protocol DDLogger;
 
