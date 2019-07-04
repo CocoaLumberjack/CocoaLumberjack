@@ -104,6 +104,12 @@
 @property (nonatomic, readwrite, assign) BOOL automaticallyAppendNewlineForCustomFormatters;
 
 /**
+ * Apply standard NSLog style formatting when use custom formatter,
+ * It will insert timestamp, thread id and so on. Default value is NO.
+ **/
+@property (nonatomic, assign) BOOL useStandardStyleForCustomFormatters;
+
+/**
  * The default color set (foregroundColor, backgroundColor) is:
  *
  * - DDLogFlagError   = (red, nil)
