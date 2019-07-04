@@ -2,6 +2,7 @@
 
 ### Public
 - New `willLogMessage:` and `didLogMessage:` methods on `DDFileLogger` which provide access to the current log file info.
+- New `DDLogSTD` enum and `std` property on `DDTTYLogger` which provide set the output pipe to `STDERR` or `STDOUT` for every log message.
 
 ## [3.5.3 - Xcode 10.2 on Apr 24th, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.3)
 

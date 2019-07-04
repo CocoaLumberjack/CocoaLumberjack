@@ -1227,7 +1227,7 @@ static DDTTYLogger *sharedInstance;
             return;
         }
 
-        // Write the log message to STDERR
+        // Write the log message to logMessage.stdPipe
 
         if (isFormatted) {
             // The log message has already been formatted.
@@ -1262,7 +1262,7 @@ static DDTTYLogger *sharedInstance;
                 v[3].iov_len = (msg[msgLen] == '\n') ? 0 : 1;
             }
 
-            writev(STDERR_FILENO, v, iovec_len);
+            writev(logMessage.stdPipe, v, iovec_len);
         } else {
             // The log message is unformatted, so apply standard NSLog style formatting.
 
@@ -1357,7 +1357,7 @@ static DDTTYLogger *sharedInstance;
             v[11].iov_base = "\n";
             v[11].iov_len = (msg[msgLen] == '\n') ? 0 : 1;
 
-            writev(STDERR_FILENO, v, 13);
+            writev(logMessage.stdPipe, v, 13);
         }
 
         if (!useStack) {

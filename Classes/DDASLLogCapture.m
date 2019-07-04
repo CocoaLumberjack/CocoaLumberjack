@@ -120,6 +120,7 @@ static DDLogLevel _captureLevel = DDLogLevelVerbose;
                                                            function:nil
                                                                line:0
                                                                 tag:nil
+                                                                std:DDLogSTDAuto
                                                             options:0
                                                           timestamp:timeStamp];
     

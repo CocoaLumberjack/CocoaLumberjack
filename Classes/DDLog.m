@@ -502,6 +502,7 @@ static NSUInteger _numProcessors;
                                                             function:[NSString stringWithFormat:@"%s", function]
                                                                 line:line
                                                                  tag:tag
+                                                                 std:DDLogSTDAuto
                                                              options:(DDLogMessageOptions)0
                                                            timestamp:nil];
 
@@ -1033,6 +1034,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
                        function:(NSString *)function
                            line:(NSUInteger)line
                             tag:(id)tag
+                            std:(DDLogSTD)std
                         options:(DDLogMessageOptions)options
                       timestamp:(NSDate *)timestamp {
     if ((self = [super init])) {
@@ -1050,6 +1052,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
 
         _line         = line;
         _tag          = tag;
+        _std          = std;
         _options      = options;
         _timestamp    = timestamp ?: [NSDate new];
 
@@ -1075,6 +1078,14 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
     return self;
 }
 
+- (int)stdPipe {
+    DDLogSTD std = _std;
+    if (std == DDLogSTDAuto) {
+        std = _level == DDLogLevelError ? DDLogSTDErr : DDLogSTDOut;
+    }
+    return std;
+}
+
 - (id)copyWithZone:(NSZone * __attribute__((unused)))zone {
     DDLogMessage *newMessage = [DDLogMessage new];
 
@@ -1087,6 +1098,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
     newMessage->_function = _function;
     newMessage->_line = _line;
     newMessage->_tag = _tag;
+    newMessage->_std = _std;
     newMessage->_options = _options;
     newMessage->_timestamp = _timestamp;
     newMessage->_threadID = _threadID;

@@ -81,6 +81,7 @@ public func _DDLogMessage(_ message: @autoclosure () -> String,
                           function: StaticString,
                           line: UInt,
                           tag: Any?,
+                          std: DDLogSTD = .auto,
                           asynchronous: Bool,
                           ddlog: DDLog) {
     // The `dynamicLogLevel` will always be checked here (instead of being passed in).
@@ -95,6 +96,7 @@ public func _DDLogMessage(_ message: @autoclosure () -> String,
                                       function: String(describing: function),
                                       line: line,
                                       tag: tag,
+                                      std: std,
                                       options: [.copyFile, .copyFunction],
                                       timestamp: nil)
         ddlog.log(asynchronous: asynchronous, message: logMessage)

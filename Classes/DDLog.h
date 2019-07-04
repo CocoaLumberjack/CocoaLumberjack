@@ -170,6 +170,26 @@ typedef NS_ENUM(NSUInteger, DDLogLevel){
     DDLogLevelAll       = NSUIntegerMax
 };
 
+/**
+ *  Log STD are used to choice which pipe to log. Only work for DDTTYLogger.
+ */
+typedef NS_ENUM(NSUInteger, DDLogSTD){
+    /**
+     *  Auto choice the STD base the log level: STDERR for DDLogLevelError
+     */
+    DDLogSTDAuto = 0,
+
+    /**
+     *  Use the STDOUT
+     */
+    DDLogSTDOut  = STDOUT_FILENO,
+
+    /**
+     *  Use the STDERR
+     */
+    DDLogSTDErr  = STDERR_FILENO
+};
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -781,6 +801,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
     NSString *_threadID;
     NSString *_threadName;
     NSString *_queueLabel;
+    DDLogSTD _std;
 }
 
 /**
@@ -810,6 +831,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
  *  @param function  the current function
  *  @param line      the current code line
  *  @param tag       potential tag
+ *  @param std       the output std
  *  @param options   a bitmask which supports DDLogMessageCopyFile and DDLogMessageCopyFunction.
  *  @param timestamp the log timestamp
  *
@@ -823,6 +845,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
                        function:(NSString * __nullable)function
                            line:(NSUInteger)line
                             tag:(id __nullable)tag
+                            std:(DDLogSTD)std
                         options:(DDLogMessageOptions)options
                       timestamp:(NSDate * __nullable)timestamp NS_DESIGNATED_INITIALIZER;
 
@@ -847,6 +870,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
 @property (readonly, nonatomic) NSString *threadID; // ID as it appears in NSLog calculated from the machThreadID
 @property (readonly, nonatomic) NSString *threadName;
 @property (readonly, nonatomic) NSString *queueLabel;
+@property (readonly, nonatomic) int stdPipe;
 
 @end
 
