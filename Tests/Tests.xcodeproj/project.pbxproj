@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A0ED26322CEAB290037739B /* DDSampleFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A55DA2D22CE962B00686977 /* DDSampleFileManager.m */; };
 		0A55DA2E22CE962B00686977 /* DDSampleFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A55DA2D22CE962B00686977 /* DDSampleFileManager.m */; };
 		0A7D8FD4217A1E9800B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8FD0217A1E9000B496D7 /* CocoaLumberjack.framework */; };
 		0A7D8FD5217A1E9D00B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8FD0217A1E9000B496D7 /* CocoaLumberjack.framework */; };
@@ -309,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A7E1D58217A86EF0011CFEB /* DDSMocking.m in Sources */,
+				0A0ED26322CEAB290037739B /* DDSampleFileManager.m in Sources */,
 				C7A5AB062191DB530074B29F /* DDOSLoggingTests.m in Sources */,
 				C7A5AB032191DA4D0074B29F /* DDBasicLoggingTests.m in Sources */,
 				E982AAF31AE2C25800088365 /* DDLogTests.m in Sources */,
