@@ -14,7 +14,8 @@
 //   prior written permission of Deusty, LLC.
 
 @import XCTest;
-#import <CocoaLumberjack/CocoaLumberjack.h>
+@import CocoaLumberjackTestsHelper;
+@import CocoaLumberjack;
 #import "DDSMocking.h"
 
 static const NSTimeInterval kAsyncExpectationTimeout = 3.0f;

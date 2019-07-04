@@ -15,9 +15,9 @@
 
 #import <XCTest/XCTest.h>
 
-#import <CocoaLumberjack/CocoaLumberjack.h>
+@import CocoaLumberjack;
 
-#import "DDSampleFileManager.h"
+#import "../Library/DDSampleFileManager.h"
 
 // Debug levels: off, error, warn, info, verbose
 static const DDLogLevel ddLogLevel = DDLogLevelWarning; // CONST

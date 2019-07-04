@@ -14,8 +14,7 @@
 //   prior written permission of Deusty, LLC.
 
 #import <XCTest/XCTest.h>
-#import <CocoaLumberjack/CocoaLumberjack.h>
-#import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
+@import CocoaLumberjack;
 
 @interface DDAtomicCounterTests : XCTestCase
 @end

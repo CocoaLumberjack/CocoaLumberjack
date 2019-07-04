@@ -14,9 +14,9 @@
 //   prior written permission of Deusty, LLC.
 
 @import XCTest;
-#import <CocoaLumberjack/CocoaLumberjack.h>
+@import CocoaLumberjack;
 
-#import "DDSampleFileManager.h"
+#import "../Library/DDSampleFileManager.h"
 
 #pragma mark DDLogFileManagerDefault
 

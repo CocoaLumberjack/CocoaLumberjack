@@ -14,7 +14,7 @@
 //   prior written permission of Deusty, LLC.
 
 @import XCTest;
-#import <CocoaLumberjack/CocoaLumberjack.h>
+@import CocoaLumberjack;
 
 static NSString * const kDefaultMessage = @"Log message";
 

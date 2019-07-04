@@ -14,7 +14,7 @@
 //   prior written permission of Deusty, LLC.
 
 #import <XCTest/XCTest.h>
-#import <CocoaLumberjack/CocoaLumberjack.h>
+@import CocoaLumberjack;
 
 @interface DDOSLoggingTests : XCTestCase
 @end
