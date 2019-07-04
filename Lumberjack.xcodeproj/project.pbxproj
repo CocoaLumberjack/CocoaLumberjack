@@ -51,27 +51,7 @@
 /* Begin PBXFileReference section */
 		0AD7BC3122CE276F00871859 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
 		0AD7BC3222CE276F00871859 /* DDOSLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDOSLogger.m; sourceTree = "<group>"; };
-		0AD7BC3422CE276F00871859 /* CocoaLumberjack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaLumberjack.h; sourceTree = "<group>"; };
 		0AD7BC3522CE276F00871859 /* DDAssert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDAssert.swift; sourceTree = "<group>"; };
-		0AD7BC3722CE276F00871859 /* DDFileLogger+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DDFileLogger+Internal.h"; sourceTree = "<group>"; };
-		0AD7BC3822CE276F00871859 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
-		0AD7BC3922CE276F00871859 /* DDLegacyMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLegacyMacros.h; sourceTree = "<group>"; };
-		0AD7BC3A22CE276F00871859 /* DDMultiFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMultiFormatter.h; sourceTree = "<group>"; };
-		0AD7BC3B22CE276F00871859 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
-		0AD7BC3C22CE276F00871859 /* DDLoggerNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLoggerNames.h; sourceTree = "<group>"; };
-		0AD7BC3D22CE276F00871859 /* DDLogMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLogMacros.h; sourceTree = "<group>"; };
-		0AD7BC3E22CE276F00871859 /* DDASLLogCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogCapture.h; sourceTree = "<group>"; };
-		0AD7BC3F22CE276F00871859 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
-		0AD7BC4022CE276F00871859 /* SwiftLogLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftLogLevel.h; sourceTree = "<group>"; };
-		0AD7BC4122CE276F00871859 /* DDContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDContextFilterLogFormatter.h; sourceTree = "<group>"; };
-		0AD7BC4222CE276F00871859 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
-		0AD7BC4322CE276F00871859 /* DDAssertMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAssertMacros.h; sourceTree = "<group>"; };
-		0AD7BC4422CE276F00871859 /* DDFileLogger+Buffering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DDFileLogger+Buffering.h"; sourceTree = "<group>"; };
-		0AD7BC4522CE276F00871859 /* DDDispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDispatchQueueLogFormatter.h; sourceTree = "<group>"; };
-		0AD7BC4622CE276F00871859 /* DDOSLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDOSLogger.h; sourceTree = "<group>"; };
-		0AD7BC4722CE276F00871859 /* DDLog+LOGV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DDLog+LOGV.h"; sourceTree = "<group>"; };
-		0AD7BC4822CE276F00871859 /* CLIColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLIColor.h; sourceTree = "<group>"; };
-		0AD7BC4922CE276F00871859 /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
 		0AD7BC4A22CE276F00871859 /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDASLLogger.m; sourceTree = "<group>"; };
 		0AD7BC4C22CE276F00871859 /* CLIColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLIColor.m; sourceTree = "<group>"; };
 		0AD7BC4F22CE276F00871859 /* DDContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDContextFilterLogFormatter.m; sourceTree = "<group>"; };
@@ -84,6 +64,26 @@
 		0AD7BC5622CE276F00871859 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLogger.m; sourceTree = "<group>"; };
 		0AD7BC5722CE276F00871859 /* DDASLLogCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDASLLogCapture.m; sourceTree = "<group>"; };
 		0AD7BC6722CE279700871859 /* CocoaLumberjack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CocoaLumberjack.swift; sourceTree = "<group>"; };
+		0AD7BC6B22CE28AF00871859 /* CocoaLumberjack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaLumberjack.h; sourceTree = "<group>"; };
+		0AD7BC6D22CE28AF00871859 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
+		0AD7BC6E22CE28AF00871859 /* DDLegacyMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLegacyMacros.h; sourceTree = "<group>"; };
+		0AD7BC6F22CE28AF00871859 /* DDMultiFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMultiFormatter.h; sourceTree = "<group>"; };
+		0AD7BC7022CE28AF00871859 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
+		0AD7BC7122CE28AF00871859 /* DDLoggerNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLoggerNames.h; sourceTree = "<group>"; };
+		0AD7BC7222CE28AF00871859 /* DDLogMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLogMacros.h; sourceTree = "<group>"; };
+		0AD7BC7322CE28AF00871859 /* DDASLLogCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogCapture.h; sourceTree = "<group>"; };
+		0AD7BC7422CE28AF00871859 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
+		0AD7BC7522CE28AF00871859 /* SwiftLogLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftLogLevel.h; sourceTree = "<group>"; };
+		0AD7BC7622CE28AF00871859 /* DDContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDContextFilterLogFormatter.h; sourceTree = "<group>"; };
+		0AD7BC7722CE28AF00871859 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
+		0AD7BC7822CE28AF00871859 /* DDAssertMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAssertMacros.h; sourceTree = "<group>"; };
+		0AD7BC7922CE28AF00871859 /* DDFileLogger+Buffering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DDFileLogger+Buffering.h"; sourceTree = "<group>"; };
+		0AD7BC7A22CE28AF00871859 /* DDDispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDispatchQueueLogFormatter.h; sourceTree = "<group>"; };
+		0AD7BC7B22CE28AF00871859 /* DDOSLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDOSLogger.h; sourceTree = "<group>"; };
+		0AD7BC7C22CE28AF00871859 /* DDLog+LOGV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DDLog+LOGV.h"; sourceTree = "<group>"; };
+		0AD7BC7D22CE28AF00871859 /* CLIColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLIColor.h; sourceTree = "<group>"; };
+		0AD7BC7E22CE28AF00871859 /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
+		0AD7BC8122CE293300871859 /* DDFileLogger+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DDFileLogger+Internal.h"; sourceTree = "<group>"; };
 		18F3BFD71A81E06E00692297 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocoaLumberjack.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		19FF46021B8B4CF400B43179 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		19FF460F1B8B4D1400B43179 /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaLumberjackSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,8 +126,7 @@
 		0AD7BC3022CE276F00871859 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				0AD7BC3322CE276F00871859 /* Framework */,
-				0AD7BC3622CE276F00871859 /* Include */,
+				0AD7BC6922CE28AF00871859 /* Include */,
 				0AD7BC4B22CE276F00871859 /* CLI */,
 				0AD7BC4E22CE276F00871859 /* Extensions */,
 				0AD7BC6722CE279700871859 /* CocoaLumberjack.swift */,
@@ -142,40 +141,6 @@
 				0AD7BC5622CE276F00871859 /* DDFileLogger.m */,
 			);
 			path = Classes;
-			sourceTree = "<group>";
-		};
-		0AD7BC3322CE276F00871859 /* Framework */ = {
-			isa = PBXGroup;
-			children = (
-				0AD7BC3422CE276F00871859 /* CocoaLumberjack.h */,
-			);
-			path = Framework;
-			sourceTree = "<group>";
-		};
-		0AD7BC3622CE276F00871859 /* Include */ = {
-			isa = PBXGroup;
-			children = (
-				0AD7BC3722CE276F00871859 /* DDFileLogger+Internal.h */,
-				0AD7BC3822CE276F00871859 /* DDLog.h */,
-				0AD7BC3922CE276F00871859 /* DDLegacyMacros.h */,
-				0AD7BC3A22CE276F00871859 /* DDMultiFormatter.h */,
-				0AD7BC3B22CE276F00871859 /* DDAbstractDatabaseLogger.h */,
-				0AD7BC3C22CE276F00871859 /* DDLoggerNames.h */,
-				0AD7BC3D22CE276F00871859 /* DDLogMacros.h */,
-				0AD7BC3E22CE276F00871859 /* DDASLLogCapture.h */,
-				0AD7BC3F22CE276F00871859 /* DDFileLogger.h */,
-				0AD7BC4022CE276F00871859 /* SwiftLogLevel.h */,
-				0AD7BC4122CE276F00871859 /* DDContextFilterLogFormatter.h */,
-				0AD7BC4222CE276F00871859 /* DDTTYLogger.h */,
-				0AD7BC4322CE276F00871859 /* DDAssertMacros.h */,
-				0AD7BC4422CE276F00871859 /* DDFileLogger+Buffering.h */,
-				0AD7BC4522CE276F00871859 /* DDDispatchQueueLogFormatter.h */,
-				0AD7BC4622CE276F00871859 /* DDOSLogger.h */,
-				0AD7BC4722CE276F00871859 /* DDLog+LOGV.h */,
-				0AD7BC4822CE276F00871859 /* CLIColor.h */,
-				0AD7BC4922CE276F00871859 /* DDASLLogger.h */,
-			);
-			path = Include;
 			sourceTree = "<group>";
 		};
 		0AD7BC4B22CE276F00871859 /* CLI */ = {
@@ -195,6 +160,49 @@
 				0AD7BC5222CE276F00871859 /* DDMultiFormatter.m */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0AD7BC6922CE28AF00871859 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				0AD7BC6A22CE28AF00871859 /* Framework */,
+				0AD7BC6C22CE28AF00871859 /* Public */,
+			);
+			path = Include;
+			sourceTree = "<group>";
+		};
+		0AD7BC6A22CE28AF00871859 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				0AD7BC6B22CE28AF00871859 /* CocoaLumberjack.h */,
+			);
+			path = Framework;
+			sourceTree = "<group>";
+		};
+		0AD7BC6C22CE28AF00871859 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				0AD7BC8122CE293300871859 /* DDFileLogger+Internal.h */,
+				0AD7BC6D22CE28AF00871859 /* DDLog.h */,
+				0AD7BC6E22CE28AF00871859 /* DDLegacyMacros.h */,
+				0AD7BC6F22CE28AF00871859 /* DDMultiFormatter.h */,
+				0AD7BC7022CE28AF00871859 /* DDAbstractDatabaseLogger.h */,
+				0AD7BC7122CE28AF00871859 /* DDLoggerNames.h */,
+				0AD7BC7222CE28AF00871859 /* DDLogMacros.h */,
+				0AD7BC7322CE28AF00871859 /* DDASLLogCapture.h */,
+				0AD7BC7422CE28AF00871859 /* DDFileLogger.h */,
+				0AD7BC7522CE28AF00871859 /* SwiftLogLevel.h */,
+				0AD7BC7622CE28AF00871859 /* DDContextFilterLogFormatter.h */,
+				0AD7BC7722CE28AF00871859 /* DDTTYLogger.h */,
+				0AD7BC7822CE28AF00871859 /* DDAssertMacros.h */,
+				0AD7BC7922CE28AF00871859 /* DDFileLogger+Buffering.h */,
+				0AD7BC7A22CE28AF00871859 /* DDDispatchQueueLogFormatter.h */,
+				0AD7BC7B22CE28AF00871859 /* DDOSLogger.h */,
+				0AD7BC7C22CE28AF00871859 /* DDLog+LOGV.h */,
+				0AD7BC7D22CE28AF00871859 /* CLIColor.h */,
+				0AD7BC7E22CE28AF00871859 /* DDASLLogger.h */,
+			);
+			path = Public;
 			sourceTree = "<group>";
 		};
 		435F03A92174A39200A86B2D /* Configs */ = {

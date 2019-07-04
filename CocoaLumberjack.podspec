@@ -28,13 +28,13 @@ Pod::Spec.new do |s|
   s.default_subspecs = 'Core'
 
   s.subspec 'Core' do |ss|
-    ss.source_files         = 'Classes/CocoaLumberjack.h', 'Classes/DD*.{h,m}', 'Classes/Extensions/*.{h,m}', 'Classes/CLI/*.{h,m}'
-    ss.private_header_files = 'Classes/DD*Internal.{h}'
+    ss.source_files         = 'Classes/Framework/CocoaLumberjack.h', 'Classes/DD*.{h,m}', 'Classes/Extensions/*.{h,m}', 'Classes/CLI/*.{h,m}'
+    ss.private_header_files = 'Classes/Include/Private/DD*Internal.{h}'
   end
 
   s.subspec 'Swift' do |ss|
     ss.dependency 'CocoaLumberjack/Core'
-    ss.source_files        = 'Classes/CocoaLumberjack.swift', 'Classes/DDAssert.swift', 'Classes/SwiftLogLevel.h'
+    ss.source_files        = 'Classes/CocoaLumberjack.swift', 'Classes/DDAssert.swift', 'Classes/Include/Public/SwiftLogLevel.h'
   end
 
 end
