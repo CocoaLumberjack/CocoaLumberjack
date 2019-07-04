@@ -13,8 +13,7 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import <Foundation/Foundation.h>
-
+@import Foundation;
 @import CocoaLumberjack;
 
 NS_ASSUME_NONNULL_BEGIN

@@ -16,7 +16,7 @@
 @import XCTest;
 @import CocoaLumberjack;
 
-#import "../Library/DDSampleFileManager.h"
+#import "DDSampleFileManager.h"
 
 #pragma mark DDLogFileManagerDefault
 

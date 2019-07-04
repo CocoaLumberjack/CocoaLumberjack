@@ -13,10 +13,10 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import <XCTest/XCTest.h>
+@import XCTest;
 @import CocoaLumberjack;
 
-#import "../Library/DDSampleFileManager.h"
+#import "DDSampleFileManager.h"
 
 static const DDLogLevel ddLogLevel = DDLogLevelAll;
 

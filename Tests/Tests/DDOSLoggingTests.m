@@ -13,7 +13,7 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import <XCTest/XCTest.h>
+@import XCTest;
 @import CocoaLumberjack;
 
 @interface DDOSLoggingTests : XCTestCase
