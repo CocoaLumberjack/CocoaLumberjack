@@ -1046,7 +1046,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     // If we're resuming, we need to check if the log file is allowed for reuse or needs to be archived.
     if (isResuming && (_doNotReuseLogFiles || [self lt_shouldLogFileBeArchived:logFileInfo])) {
         logFileInfo.isArchived = YES;
-        NSString *archivedLogFilePath = [logFileInfo.fileName copy];
+        NSString *archivedLogFilePath = [logFileInfo.filePath copy];
 
         if ([_logFileManager respondsToSelector:@selector(didArchiveLogFile:)]) {
             dispatch_async(_completionQueue, ^{
