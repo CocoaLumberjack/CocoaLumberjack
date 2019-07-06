@@ -15,8 +15,6 @@
 
 #import "DDFileLogger.h"
 
-#if SWIFT_PACKAGE
-#else
 NS_ASSUME_NONNULL_BEGIN
 @interface DDFileLogger (Internal)
 
@@ -29,4 +27,3 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 NS_ASSUME_NONNULL_END
-#endif
