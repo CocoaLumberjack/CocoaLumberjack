@@ -25,8 +25,12 @@ before_install:
 script:
     - set -o pipefail
 
-    - echo "Check if the library described by the podspec can be built"
+    - echo "Check external deployment platforms"
+    - echo "Check CocoaPods CocoaLumberjack.podspec"
     - pod lib lint
+
+    - echo "Check Swift Package manager Package.swift"
+    - swift build
 
     - echo "Build as static library"
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-Static' -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration Release | xcpretty -c
