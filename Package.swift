@@ -9,8 +9,9 @@ let package = Package(
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
             name: "CocoaLumberjack",
-            type: .dynamic,
-            targets: ["CocoaLumberjack"]),
+            targets: ["CocoaLumberjack",
+//                      "CocoaLumberjackSwift"
+        ]),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -21,6 +22,12 @@ let package = Package(
                           "Classes/DDAssert.swift"],
                 sources: ["Classes"],
                 publicHeadersPath: "Classes/Include/Public"),
+//        .target(name: "CocoaLumberjackSwift",
+//                dependencies: ["CocoaLumberjack"],
+//                path: ".",
+//                exclude: [],
+//                sources: ["Classes/CocoaLumberjack.swift", "Classes/DDAssert.swift"],
+//                publicHeadersPath: "Classes/Include/Swift"),
 //        .target(name: "CocoaLumberjackTestsHelper",
 //                dependencies: ["CocoaLumberjack"],
 //                path: "Tests",
