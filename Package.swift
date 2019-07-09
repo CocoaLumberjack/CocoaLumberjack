@@ -21,7 +21,7 @@ let package = Package(
                 exclude: ["Classes/CocoaLumberjack.swift",
                           "Classes/DDAssert.swift"],
                 sources: ["Classes"],
-                publicHeadersPath: "Classes/Include/Public"),
+                publicHeadersPath: "Classes/Include"),
 //        .target(name: "CocoaLumberjackSwift",
 //                dependencies: ["CocoaLumberjack"],
 //                path: ".",
