@@ -13,7 +13,7 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import "DDOSLogger.h"
+#import <CocoaLumberjack/DDOSLogger.h>
 
 #import <os/log.h>
 

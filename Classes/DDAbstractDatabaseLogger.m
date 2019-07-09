@@ -13,7 +13,7 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import "DDAbstractDatabaseLogger.h"
+#import <CocoaLumberjack/DDAbstractDatabaseLogger.h>
 
 
 #if !__has_feature(objc_arc)

@@ -13,7 +13,7 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import "DDMultiFormatter.h"
+#import <CocoaLumberjack/DDMultiFormatter.h>
 
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).

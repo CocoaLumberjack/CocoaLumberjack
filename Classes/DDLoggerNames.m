@@ -13,7 +13,7 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import "DDLoggerNames.h"
+#import <CocoaLumberjack/DDLoggerNames.h>
 
 DDLoggerName const DDLoggerNameASL    = @"cocoa.lumberjack.aslLogger";
 DDLoggerName const DDLoggerNameTTY    = @"cocoa.lumberjack.ttyLogger";

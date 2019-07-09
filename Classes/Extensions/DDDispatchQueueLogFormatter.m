@@ -13,7 +13,7 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import "DDDispatchQueueLogFormatter.h"
+#import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
 #import <pthread/pthread.h>
 #import <objc/runtime.h>
 

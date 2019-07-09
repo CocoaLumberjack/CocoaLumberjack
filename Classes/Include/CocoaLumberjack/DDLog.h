@@ -20,10 +20,10 @@
     #define DD_LEGACY_MACROS 1
 #endif
 // DD_LEGACY_MACROS is checked in the file itself
-#import "DDLegacyMacros.h"
+#import <CocoaLumberjack/DDLegacyMacros.h>
 
 // Names of loggers.
-#import "DDLoggerNames.h"
+#import <CocoaLumberjack/DDLoggerNames.h>
 
 #if OS_OBJECT_USE_OBJC
     #define DISPATCH_QUEUE_REFERENCE_TYPE strong

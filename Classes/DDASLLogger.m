@@ -13,7 +13,7 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import "DDASLLogger.h"
+#import <CocoaLumberjack/DDASLLogger.h>
 
 #if !TARGET_OS_WATCH
 #import <asl.h>

@@ -13,30 +13,15 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import "DDASLLogger.h"
+#import <CocoaLumberjack/DDFileLogger.h>
 
-@protocol DDLogger;
+NS_ASSUME_NONNULL_BEGIN
 
-/**
- *  This class provides the ability to capture the ASL (Apple System Logs)
- */
-API_DEPRECATED("Use DDOSLogger instead", macosx(10.4,10.12), ios(2.0,10.0), watchos(2.0,3.0), tvos(9.0,10.0))
-@interface DDASLLogCapture : NSObject
+@interface DDFileLogger (Buffering)
 
-/**
- *  Start capturing logs
- */
-+ (void)start;
-
-/**
- *  Stop capturing logs
- */
-+ (void)stop;
-
-/**
- *  The current capture level.
- *  @note Default log level: DDLogLevelVerbose (i.e. capture all ASL messages).
- */
-@property (class) DDLogLevel captureLevel;
+- (instancetype)wrapWithBuffer;
+- (instancetype)unwrapFromBuffer;
 
 @end
+
+NS_ASSUME_NONNULL_END

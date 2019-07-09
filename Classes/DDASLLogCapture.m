@@ -13,7 +13,7 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import "DDASLLogCapture.h"
+#import <CocoaLumberjack/DDASLLogCapture.h>
 
 // Disable legacy macros
 #ifndef DD_LEGACY_MACROS

@@ -18,7 +18,7 @@
     #define DD_LEGACY_MACROS 0
 #endif
 
-#import "DDLog.h"
+#import <CocoaLumberjack/DDLog.h>
 
 #define LOG_CONTEXT_ALL INT_MAX
 

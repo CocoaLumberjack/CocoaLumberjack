@@ -13,9 +13,9 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import "DDFileLogger.h"
+#import <CocoaLumberjack/DDFileLogger.h>
 
-#import "DDFileLogger+Internal.h"
+#import <CocoaLumberjack/DDFileLogger+Internal.h>
 
 #import <sys/xattr.h>
 
