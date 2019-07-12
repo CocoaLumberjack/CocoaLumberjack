@@ -45,6 +45,8 @@
 		0A263A7722D4C11F0078D59C /* DDLog+LOGV.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0A263A4D22D4BE630078D59C /* DDLog+LOGV.h */; };
 		0A263A7822D4C11F0078D59C /* CLIColor.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0A263A4E22D4BE630078D59C /* CLIColor.h */; };
 		0A263A7922D4C11F0078D59C /* DDASLLogger.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0A263A4F22D4BE630078D59C /* DDASLLogger.h */; };
+		0A26B52222D89FC5004EE6A7 /* CocoaLumberjack.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A26B52122D89FB9004EE6A7 /* CocoaLumberjack.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A26B52522D8A170004EE6A7 /* CocoaLumberjack.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0A26B52122D89FB9004EE6A7 /* CocoaLumberjack.h */; };
 		0AD7BC5822CE276F00871859 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD7BC3122CE276F00871859 /* DDTTYLogger.m */; };
 		0AD7BC5922CE276F00871859 /* DDOSLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD7BC3222CE276F00871859 /* DDOSLogger.m */; };
 		0AD7BC5B22CE276F00871859 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD7BC4A22CE276F00871859 /* DDASLLogger.m */; };
@@ -58,8 +60,6 @@
 		0AD7BC6422CE276F00871859 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD7BC5522CE276F00871859 /* DDAbstractDatabaseLogger.m */; };
 		0AD7BC6522CE276F00871859 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD7BC5622CE276F00871859 /* DDFileLogger.m */; };
 		0AD7BC6622CE276F00871859 /* DDASLLogCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD7BC5722CE276F00871859 /* DDASLLogCapture.m */; };
-		0AD7BC8222CE2C6100871859 /* CocoaLumberjack.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AD7BC6B22CE28AF00871859 /* CocoaLumberjack.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0AD7BCAD22CE43DF00871859 /* CocoaLumberjack.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0AD7BC6B22CE28AF00871859 /* CocoaLumberjack.h */; };
 		0AD7BCC022CE44BF00871859 /* CocoaLumberjack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD7BC6722CE279700871859 /* CocoaLumberjack.swift */; };
 		0AD7BCC122CE44BF00871859 /* DDAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD7BC3522CE276F00871859 /* DDAssert.swift */; };
 		0AD7BCC222CE44D100871859 /* CLIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD7BC4C22CE276F00871859 /* CLIColor.m */; };
@@ -95,6 +95,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				0A26B52522D8A170004EE6A7 /* CocoaLumberjack.h in CopyFiles */,
 				0A263A6722D4C11F0078D59C /* DDFileLogger+Internal.h in CopyFiles */,
 				0A263A6822D4C11F0078D59C /* DDLog.h in CopyFiles */,
 				0A263A6922D4C11F0078D59C /* DDLegacyMacros.h in CopyFiles */,
@@ -113,7 +114,6 @@
 				0A263A7722D4C11F0078D59C /* DDLog+LOGV.h in CopyFiles */,
 				0A263A7822D4C11F0078D59C /* CLIColor.h in CopyFiles */,
 				0A263A7922D4C11F0078D59C /* DDASLLogger.h in CopyFiles */,
-				0AD7BCAD22CE43DF00871859 /* CocoaLumberjack.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +140,7 @@
 		0A263A4E22D4BE630078D59C /* CLIColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLIColor.h; sourceTree = "<group>"; };
 		0A263A4F22D4BE630078D59C /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
 		0A263A5122D4BE6F0078D59C /* CocoaLumberjackSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaLumberjackSwift.h; sourceTree = "<group>"; };
+		0A26B52122D89FB9004EE6A7 /* CocoaLumberjack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaLumberjack.h; sourceTree = "<group>"; };
 		0AD7BC3122CE276F00871859 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
 		0AD7BC3222CE276F00871859 /* DDOSLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDOSLogger.m; sourceTree = "<group>"; };
 		0AD7BC3522CE276F00871859 /* DDAssert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDAssert.swift; sourceTree = "<group>"; };
@@ -155,7 +156,6 @@
 		0AD7BC5622CE276F00871859 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLogger.m; sourceTree = "<group>"; };
 		0AD7BC5722CE276F00871859 /* DDASLLogCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDASLLogCapture.m; sourceTree = "<group>"; };
 		0AD7BC6722CE279700871859 /* CocoaLumberjack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CocoaLumberjack.swift; sourceTree = "<group>"; };
-		0AD7BC6B22CE28AF00871859 /* CocoaLumberjack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaLumberjack.h; sourceTree = "<group>"; };
 		18F3BFD71A81E06E00692297 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocoaLumberjack.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		19FF46021B8B4CF400B43179 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		19FF460F1B8B4D1400B43179 /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaLumberjackSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -197,6 +197,7 @@
 		0A263A3C22D4BE630078D59C /* CocoaLumberjack */ = {
 			isa = PBXGroup;
 			children = (
+				0A26B52122D89FB9004EE6A7 /* CocoaLumberjack.h */,
 				0A263A3D22D4BE630078D59C /* DDFileLogger+Internal.h */,
 				0A263A3E22D4BE630078D59C /* DDLog.h */,
 				0A263A3F22D4BE630078D59C /* DDLegacyMacros.h */,
@@ -272,17 +273,8 @@
 			isa = PBXGroup;
 			children = (
 				0A263A3C22D4BE630078D59C /* CocoaLumberjack */,
-				0AD7BC6A22CE28AF00871859 /* Framework */,
 			);
 			path = Include;
-			sourceTree = "<group>";
-		};
-		0AD7BC6A22CE28AF00871859 /* Framework */ = {
-			isa = PBXGroup;
-			children = (
-				0AD7BC6B22CE28AF00871859 /* CocoaLumberjack.h */,
-			);
-			path = Framework;
 			sourceTree = "<group>";
 		};
 		435F03A92174A39200A86B2D /* Configs */ = {
@@ -363,10 +355,10 @@
 				0A263A5822D4BE7B0078D59C /* DDLogMacros.h in Headers */,
 				0A263A5A22D4BE7B0078D59C /* DDFileLogger.h in Headers */,
 				0A263A5722D4BE7B0078D59C /* DDLoggerNames.h in Headers */,
+				0A26B52222D89FC5004EE6A7 /* CocoaLumberjack.h in Headers */,
 				0A263A5422D4BE7B0078D59C /* DDLegacyMacros.h in Headers */,
 				0A263A5322D4BE7B0078D59C /* DDLog.h in Headers */,
 				0A263A6122D4BE7B0078D59C /* DDOSLogger.h in Headers */,
-				0AD7BC8222CE2C6100871859 /* CocoaLumberjack.h in Headers */,
 				0A263A5222D4BE7B0078D59C /* DDFileLogger+Internal.h in Headers */,
 				0A263A6222D4BE7B0078D59C /* DDLog+LOGV.h in Headers */,
 				0A263A6422D4BE7B0078D59C /* DDASLLogger.h in Headers */,
