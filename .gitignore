@@ -1,12 +1,10 @@
 # Xcode
 #
+.DS_Store
+/.build
+/Packages
+/*.xcodeproj
 xcuserdata/
-
-**/*.xcodeproj/project.xcworkspace/*
-!**/*.xcodeproj/project.xcworkspace/xcshareddata
-
-**/*.xcodeproj/project.xcworkspace/xcshareddata/*
-!**/*.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
 
 # Carthage
 Carthage/Build
@@ -20,7 +18,6 @@ Carthage/Build
 Pods/
 Podfile.lock
 LumberjackUser*.h
-.DS_Store
 
 # SwiftPM
 .swiftpm
