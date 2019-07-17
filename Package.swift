@@ -3,8 +3,21 @@
 
 import PackageDescription
 
+struct CocoaLumberjackPackage {
+    class Package {
+        static let name = "CocoaLumberjack"
+        class Library {
+            static let name = "CocoaLumberjack"
+        }
+        class Target {
+            static let objectiveC = "CocoaLumberjack"
+            static let swift = "CocoaLumberjackSwift"
+        }
+    }
+}
+
 let package = Package(
-    name: "CocoaLumberjack",
+    name: CocoaLumberjackPackage.Package.name,
     platforms: [
         .iOS(.v8),
         .macOS(.v10_10),
@@ -14,20 +27,20 @@ let package = Package(
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
-            name: "CocoaLumberjack",
-            targets: ["CocoaLumberjack",
-                      "CocoaLumberjackSwift"
+            name: CocoaLumberjackPackage.Package.Library.name,
+            targets: [CocoaLumberjackPackage.Package.Target.objectiveC,
+                      CocoaLumberjackPackage.Package.Target.swift
         ]),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
-        .target(name: "CocoaLumberjack",
+        .target(name: CocoaLumberjackPackage.Package.Target.objectiveC,
                 exclude: ["Supporting Files"]),
         
 //                sources: ["Classes"],
 //                publicHeadersPath: "Classes/Include"),
-        .target(name: "CocoaLumberjackSwift",
+        .target(name: CocoaLumberjackPackage.Package.Target.swift,
                 dependencies: ["CocoaLumberjack"],
                 exclude: ["Supporting Files"]),
 //        .testTarget(name: "Tests",
