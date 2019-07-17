@@ -15,7 +15,7 @@
 
 #import <CocoaLumberjack/DDFileLogger.h>
 
-#import <CocoaLumberjack/DDFileLogger+Internal.h>
+#import "DDFileLogger+Internal.h"
 
 #import <sys/xattr.h>
 
