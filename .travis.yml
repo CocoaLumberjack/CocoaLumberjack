@@ -33,20 +33,20 @@ script:
     - swift test
 
     - echo "Build as static library"
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-Static' -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration Release | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-Static' -sdk macosx -configuration Release | xcpretty -c
+    - xcodebuild clean build -workspace Xcode/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-Static' -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration Release | xcpretty -c
+    - xcodebuild clean build -workspace Xcode/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-Static' -sdk macosx -configuration Release | xcpretty -c
 
     - echo "Build as dynamic framework (ObjectiveC), each platform (iOS, macOS, tvOS, watchOS)"
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack' -configuration Release -sdk iphonesimulator | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack' -configuration Release -sdk macosx | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack' -destination 'platform=tvOS Simulator,name=Apple TV 4K' -configuration Release -sdk appletvsimulator | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack' -configuration Release -sdk watchsimulator | xcpretty -c
+    - xcodebuild clean build -workspace Xcode/Lumberjack.xcworkspace -scheme 'CocoaLumberjack' -configuration Release -sdk iphonesimulator | xcpretty -c
+    - xcodebuild clean build -workspace Xcode/Lumberjack.xcworkspace -scheme 'CocoaLumberjack' -configuration Release -sdk macosx | xcpretty -c
+    - xcodebuild clean build -workspace Xcode/Lumberjack.xcworkspace -scheme 'CocoaLumberjack' -destination 'platform=tvOS Simulator,name=Apple TV 4K' -configuration Release -sdk appletvsimulator | xcpretty -c
+    - xcodebuild clean build -workspace Xcode/Lumberjack.xcworkspace -scheme 'CocoaLumberjack' -configuration Release -sdk watchsimulator | xcpretty -c
 
     - echo "Build as dynamic framework (Swift), each platform (iOS, macOS, tvOS, watchOS)"
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift' -configuration Release -sdk iphonesimulator | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift' -configuration Release -sdk macosx | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift' -destination 'platform=tvOS Simulator,name=Apple TV 4K' -configuration Release -sdk appletvsimulator | xcpretty -c
-    - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift' -configuration Release -sdk watchsimulator | xcpretty -c
+    - xcodebuild clean build -workspace Xcode/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift' -configuration Release -sdk iphonesimulator | xcpretty -c
+    - xcodebuild clean build -workspace Xcode/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift' -configuration Release -sdk macosx | xcpretty -c
+    - xcodebuild clean build -workspace Xcode/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift' -destination 'platform=tvOS Simulator,name=Apple TV 4K' -configuration Release -sdk appletvsimulator | xcpretty -c
+    - xcodebuild clean build -workspace Xcode/Lumberjack.xcworkspace -scheme 'CocoaLumberjackSwift' -configuration Release -sdk watchsimulator | xcpretty -c
 
     - echo "Build test app using the static library"
     - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'iOSStaticLibraryIntegration' -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration Release | xcpretty -c
