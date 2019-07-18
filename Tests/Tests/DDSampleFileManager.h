@@ -14,7 +14,7 @@
 //   prior written permission of Deusty, LLC.
 
 @import Foundation;
-@import CocoaLumberjack;
+#import <CocoaLumberjack/DDFileLogger.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -14,7 +14,8 @@
 //   prior written permission of Deusty, LLC.
 
 @import XCTest;
-@import CocoaLumberjack;
+
+#import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
 
 @interface DDAtomicCounterTests : XCTestCase
 @end
@@ -34,7 +35,7 @@
     __auto_type atomicCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
     __auto_type expectation = [self expectationWithDescription:@"Multithread atomic counter"];
     __auto_type globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    
+
     NSInteger numberOfThreads = 5;
     __block NSInteger executedCount = 0;
     for (NSInteger i=0; i<numberOfThreads; i++) {
@@ -49,7 +50,7 @@
             });
         });
     }
-    
+
     [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * _Nullable error) {
         XCTAssertNil(error);
         XCTAssertEqual([atomicCounter value], numberOfThreads);
@@ -60,7 +61,7 @@
     __auto_type atomicCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
     __auto_type expectation = [self expectationWithDescription:@"Multithread atomic counter inc and dec"];
     __auto_type globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    
+
     NSInteger numberOfThreads = 5;
     __block NSInteger executedCount = 0;
     for (NSInteger i=0; i<numberOfThreads; i++) {
@@ -84,7 +85,7 @@
             });
         });
     }
-    
+
     [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * _Nullable error) {
         XCTAssertNil(error);
         XCTAssertEqual([atomicCounter value], 0);

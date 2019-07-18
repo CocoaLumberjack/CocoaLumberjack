@@ -14,7 +14,9 @@
 //   prior written permission of Deusty, LLC.
 
 @import XCTest;
-@import CocoaLumberjack;
+
+#import <CocoaLumberjack/DDLog.h>
+#import <CocoaLumberjack/DDLogMacros.h>
 
 #import "DDSampleFileManager.h"
 #import "DDSMocking.h"
@@ -81,7 +83,7 @@ static DDBasicMock<DDAbstractLogger *> *createAbstractLogger(void (^didLogBlock)
 - (void)testAll5DefaultLevelsAsync {
     self.expectation = [self expectationWithDescription:@"default log levels"];
     self.logs = @[ @"Error", @"Warn", @"Info", @"Debug", @"Verbose" ];
-    
+
     DDLogError  (@"Error");
     DDLogWarn   (@"Warn");
     DDLogInfo   (@"Info");
@@ -97,10 +99,10 @@ static DDBasicMock<DDAbstractLogger *> *createAbstractLogger(void (^didLogBlock)
 - (void)testLoggerLogLevelAsync {
     self.expectation = [self expectationWithDescription:@"logger level"];
     self.logs = @[ @"Error", @"Warn" ];
-    
+
     [DDLog removeLogger:self.logger];
     [DDLog addLogger:self.logger withLevel:DDLogLevelWarning];
-    
+
     DDLogError  (@"Error");
     DDLogWarn   (@"Warn");
     DDLogInfo   (@"Info");
@@ -116,9 +118,9 @@ static DDBasicMock<DDAbstractLogger *> *createAbstractLogger(void (^didLogBlock)
 - (void)testGlobalLogLevelAsync {
     self.expectation = [self expectationWithDescription:@"ddLogLevel"];
     self.logs = @[ @"Error", @"Warn", @"Info" ];
-    
+
     ddLogLevel = DDLogLevelInfo;
-    
+
     DDLogError  (@"Error");
     DDLogWarn   (@"Warn");
     DDLogInfo   (@"Info");
@@ -129,7 +131,7 @@ static DDBasicMock<DDAbstractLogger *> *createAbstractLogger(void (^didLogBlock)
     [self waitForExpectationsWithTimeout:kAsyncExpectationTimeout handler:^(NSError *timeoutError) {
         XCTAssertNil(timeoutError);
     }];
-    
+
     ddLogLevel = DDLogLevelVerbose;
 }
 
@@ -197,7 +199,7 @@ static int const DDLoggerCount = 3;
 - (void)testAll5DefaultLevelsAsync {
     self.expectation = [self expectationWithDescription:@"default log levels"];
     self.logs = @[ @"Error" ];
-    
+
     DDLogError(@"Error");
 
     [DDLog flushLog];

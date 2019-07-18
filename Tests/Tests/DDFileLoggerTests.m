@@ -14,7 +14,10 @@
 //   prior written permission of Deusty, LLC.
 
 @import XCTest;
-@import CocoaLumberjack;
+
+#import <CocoaLumberjack/DDFileLogger.h>
+#import <CocoaLumberjack/DDFileLogger+Buffering.h>
+#import <CocoaLumberjack/DDLogMacros.h>
 
 #import "DDSampleFileManager.h"
 
@@ -37,7 +40,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
 
 - (void)tearDown {
     [super tearDown];
-    
+
     [DDLog removeAllLoggers];
     // We need to sync all involved queues to wait for the post-removal processing of the logger to finish before deleting the files.
     NSAssert(![self->logger isOnGlobalLoggingQueue], @"Trouble ahead!");
@@ -47,7 +50,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
             /* noop */
         });
     });
-    
+
     NSError *error = nil;
     __auto_type contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:logsDirectory error:&error];
     XCTAssertNil(error);
@@ -60,7 +63,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     error = nil;
     XCTAssertTrue([[NSFileManager defaultManager] removeItemAtPath:logsDirectory error:&error]);
     XCTAssertNil(error);
-    
+
     logger = nil;
     logsDirectory = nil;
 }
@@ -86,7 +89,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
 
 - (void)testAutomaticLogFileRollingWhenNotReusingLogFiles {
     logger.doNotReuseLogFiles = YES;
-    
+
     [DDLog addLogger:logger];
     DDLogError(@"Log 1 in the old file");
     DDLogError(@"Log 2 in the old file");
@@ -99,24 +102,24 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     }];
     DDLogError(@"Log 1 in the new file");
     DDLogError(@"Log 2 in the new file");
-    
+
     XCTAssertEqual(logger.logFileManager.unsortedLogFileInfos.count, 2);
 }
 
 - (void)testCurrentLogFileInfoWhenNotReusingLogFilesOnlyCreatesNewLogFilesIfNecessary {
     logger.doNotReuseLogFiles = YES;
-    
+
     __auto_type info1 = logger.currentLogFileInfo;
     __auto_type info2 = logger.currentLogFileInfo;
     XCTAssertEqualObjects(info1.filePath, info2.filePath);
-    
+
     info1.isArchived = YES;
-    
+
     __auto_type info3 = logger.currentLogFileInfo;
     __auto_type info4 = logger.currentLogFileInfo;
     XCTAssertEqualObjects(info3.filePath, info4.filePath);
     XCTAssertNotEqualObjects(info2.filePath, info3.filePath);
-    
+
     XCTAssertEqual(logger.logFileManager.unsortedLogFileInfos.count, 2);
 }
 
