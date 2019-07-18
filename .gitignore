@@ -2,6 +2,7 @@
 #
 .DS_Store
 /.build
+/.swiftpm
 /Packages
 /*.xcodeproj
 xcuserdata/
@@ -11,7 +12,3 @@ Carthage/Build
 
 # Lumberjack generated files
 LumberjackUser*.h
-
-# SwiftPM
-.swiftpm
-.build
