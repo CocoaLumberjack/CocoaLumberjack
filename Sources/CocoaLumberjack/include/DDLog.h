@@ -15,12 +15,15 @@
 
 #import <Foundation/Foundation.h>
 
-// Enable 1.9.x legacy macros if imported directly
-#ifndef DD_LEGACY_MACROS
-    #define DD_LEGACY_MACROS 1
+// The Swift Package integration has no support for the legacy macros.
+#if __has_include(<CocoaLumberjack/DDLegacyMacros.h>)
+    // Enable 1.9.x legacy macros if imported directly and it's not a swift package build.
+    #ifndef DD_LEGACY_MACROS
+        #define DD_LEGACY_MACROS 1
+    #endif
+    // DD_LEGACY_MACROS is checked in the file itself
+    #import <CocoaLumberjack/DDLegacyMacros.h>
 #endif
-// DD_LEGACY_MACROS is checked in the file itself
-#import <CocoaLumberjack/DDLegacyMacros.h>
 
 // Names of loggers.
 #import <CocoaLumberjack/DDLoggerNames.h>

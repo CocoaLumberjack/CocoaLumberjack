@@ -13,6 +13,11 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
+import CocoaLumberjack
+#if SWIFT_PACKAGE
+import CocoaLumberjackSwiftSupport
+#endif
+
 /**
  * Replacement for Swift's `assert` function that will output a log message even when assertions
  * are disabled.
