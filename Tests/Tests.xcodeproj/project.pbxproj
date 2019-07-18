@@ -120,7 +120,7 @@
 				0A7D8FC7217A1E9000B496D7 /* Lumberjack.xcodeproj */,
 				435F03B12174AB9600A86B2D /* Configs */,
 				DA1B17371AB067EF004705E8 /* Info.plist */,
-				432B534B1AAE437D00843E69 /* Tests */,
+				432B534B1AAE437D00843E69 /* CocoaLumberjackTests */,
 				432B53261AAE40EB00843E69 /* Products */,
 				0A7D8FD3217A1E9800B496D7 /* Frameworks */,
 			);
@@ -135,7 +135,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		432B534B1AAE437D00843E69 /* Tests */ = {
+		432B534B1AAE437D00843E69 /* CocoaLumberjackTests */ = {
 			isa = PBXGroup;
 			children = (
 				0A55DA2F22CE962F00686977 /* DDSampleFileManager.h */,
@@ -151,7 +151,7 @@
 				0AA9B47221CC0AE60036182F /* DDFileLoggerTests.m */,
 				6ECBFDB321E9A31500CBB679 /* DDFileLoggerPerformanceTests.m */,
 			);
-			path = Tests;
+			path = CocoaLumberjackTests;
 			sourceTree = "<group>";
 		};
 		435F03B12174AB9600A86B2D /* Configs */ = {
