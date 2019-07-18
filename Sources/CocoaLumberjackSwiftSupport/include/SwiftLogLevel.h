@@ -16,7 +16,7 @@
 #ifndef SwiftLogLevel_h
 #define SwiftLogLevel_h
 
-#import <CocoaLumberjack/DDLogMacros.h>
+#import <CocoaLumberjack/DDLog.h>
 
 #ifndef DD_LOG_LEVEL
 // #warning 'DD_LOG_LEVEL' is not defined. Using 'DDLogLevelAll' as default. Consider defining it yourself.
