@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0752523C22E075E1005D30B3 /* SwiftLogLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = 0752523B22E075E1005D30B3 /* SwiftLogLevel.h */; };
+		0752523E22E07638005D30B3 /* DDLegacyMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 0752523D22E07638005D30B3 /* DDLegacyMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0752523F22E07666005D30B3 /* DDLegacyMacros.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0752523D22E07638005D30B3 /* DDLegacyMacros.h */; };
 		0A26B56422DE346B004EE6A7 /* CLIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B54B22DE346B004EE6A7 /* CLIColor.m */; };
 		0A26B56522DE346B004EE6A7 /* DDContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B54D22DE346B004EE6A7 /* DDContextFilterLogFormatter.m */; };
 		0A26B56622DE346B004EE6A7 /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B54E22DE346B004EE6A7 /* DDDispatchQueueLogFormatter.m */; };
@@ -21,7 +24,6 @@
 		0A26B58022DE34AE004EE6A7 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B57822DE34AE004EE6A7 /* DDAbstractDatabaseLogger.m */; };
 		0A26B58122DE34AE004EE6A7 /* DDOSLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B57922DE34AE004EE6A7 /* DDOSLogger.m */; };
 		0A26B58222DE34C1004EE6A7 /* DDLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A26B53822DE346B004EE6A7 /* DDLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0A26B58322DE34C1004EE6A7 /* DDLegacyMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A26B53922DE346B004EE6A7 /* DDLegacyMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A26B58422DE34C1004EE6A7 /* DDMultiFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A26B53A22DE346B004EE6A7 /* DDMultiFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A26B58522DE34C1004EE6A7 /* DDAbstractDatabaseLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A26B53B22DE346B004EE6A7 /* DDAbstractDatabaseLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A26B58622DE34C1004EE6A7 /* DDLoggerNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A26B53C22DE346B004EE6A7 /* DDLoggerNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -38,7 +40,6 @@
 		0A26B59122DE34C1004EE6A7 /* CLIColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A26B54722DE346B004EE6A7 /* CLIColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A26B59222DE34C1004EE6A7 /* DDASLLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A26B54822DE346B004EE6A7 /* DDASLLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A26B59422DE34E9004EE6A7 /* DDLog.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0A26B53822DE346B004EE6A7 /* DDLog.h */; };
-		0A26B59522DE34E9004EE6A7 /* DDLegacyMacros.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0A26B53922DE346B004EE6A7 /* DDLegacyMacros.h */; };
 		0A26B59622DE34E9004EE6A7 /* DDMultiFormatter.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0A26B53A22DE346B004EE6A7 /* DDMultiFormatter.h */; };
 		0A26B59722DE34E9004EE6A7 /* DDAbstractDatabaseLogger.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0A26B53B22DE346B004EE6A7 /* DDAbstractDatabaseLogger.h */; };
 		0A26B59822DE34E9004EE6A7 /* DDLoggerNames.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0A26B53C22DE346B004EE6A7 /* DDLoggerNames.h */; };
@@ -58,7 +59,6 @@
 		0A26B5A622DE3512004EE6A7 /* DDAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B55A22DE346B004EE6A7 /* DDAssert.swift */; };
 		0A26B5A722DE3516004EE6A7 /* CocoaLumberjack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B55D22DE346B004EE6A7 /* CocoaLumberjack.swift */; };
 		0A26B5A822DE3519004EE6A7 /* CocoaLumberjackSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A26B56022DE346B004EE6A7 /* CocoaLumberjackSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0A26B5A922DE351F004EE6A7 /* SwiftLogLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A26B55C22DE346B004EE6A7 /* SwiftLogLevel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A26B5B222DE3700004EE6A7 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B57822DE34AE004EE6A7 /* DDAbstractDatabaseLogger.m */; };
 		0A26B5B322DE3700004EE6A7 /* DDASLLogCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B57422DE34AE004EE6A7 /* DDASLLogCapture.m */; };
 		0A26B5B422DE3700004EE6A7 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B57122DE34AE004EE6A7 /* DDASLLogger.m */; };
@@ -93,7 +93,6 @@
 				0A26B5BB22DE37AA004EE6A7 /* DDFileLogger+Internal.h in CopyFiles */,
 				0A26B5A522DE3503004EE6A7 /* CocoaLumberjack.h in CopyFiles */,
 				0A26B59422DE34E9004EE6A7 /* DDLog.h in CopyFiles */,
-				0A26B59522DE34E9004EE6A7 /* DDLegacyMacros.h in CopyFiles */,
 				0A26B59622DE34E9004EE6A7 /* DDMultiFormatter.h in CopyFiles */,
 				0A26B59722DE34E9004EE6A7 /* DDAbstractDatabaseLogger.h in CopyFiles */,
 				0A26B59822DE34E9004EE6A7 /* DDLoggerNames.h in CopyFiles */,
@@ -109,14 +108,16 @@
 				0A26B5A222DE34E9004EE6A7 /* DDLog+LOGV.h in CopyFiles */,
 				0A26B5A322DE34E9004EE6A7 /* CLIColor.h in CopyFiles */,
 				0A26B5A422DE34E9004EE6A7 /* DDASLLogger.h in CopyFiles */,
+				0752523F22E07666005D30B3 /* DDLegacyMacros.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0752523B22E075E1005D30B3 /* SwiftLogLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwiftLogLevel.h; path = Sources/CocoaLumberjackSwiftSupport/include/SwiftLogLevel.h; sourceTree = SOURCE_ROOT; };
+		0752523D22E07638005D30B3 /* DDLegacyMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLegacyMacros.h; sourceTree = "<group>"; };
 		0A26B53822DE346B004EE6A7 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
-		0A26B53922DE346B004EE6A7 /* DDLegacyMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLegacyMacros.h; sourceTree = "<group>"; };
 		0A26B53A22DE346B004EE6A7 /* DDMultiFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMultiFormatter.h; sourceTree = "<group>"; };
 		0A26B53B22DE346B004EE6A7 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
 		0A26B53C22DE346B004EE6A7 /* DDLoggerNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLoggerNames.h; sourceTree = "<group>"; };
@@ -140,7 +141,6 @@
 		0A26B55322DE346B004EE6A7 /* CocoaLumberjack-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CocoaLumberjack-Info.plist"; sourceTree = "<group>"; };
 		0A26B55422DE346B004EE6A7 /* CocoaLumberjack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaLumberjack.h; sourceTree = "<group>"; };
 		0A26B55A22DE346B004EE6A7 /* DDAssert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDAssert.swift; sourceTree = "<group>"; };
-		0A26B55C22DE346B004EE6A7 /* SwiftLogLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftLogLevel.h; sourceTree = "<group>"; };
 		0A26B55D22DE346B004EE6A7 /* CocoaLumberjack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CocoaLumberjack.swift; sourceTree = "<group>"; };
 		0A26B55F22DE346B004EE6A7 /* CocoaLumberjackSwift-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CocoaLumberjackSwift-Info.plist"; sourceTree = "<group>"; };
 		0A26B56022DE346B004EE6A7 /* CocoaLumberjackSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaLumberjackSwift.h; sourceTree = "<group>"; };
@@ -222,7 +222,6 @@
 			isa = PBXGroup;
 			children = (
 				0A26B53822DE346B004EE6A7 /* DDLog.h */,
-				0A26B53922DE346B004EE6A7 /* DDLegacyMacros.h */,
 				0A26B53A22DE346B004EE6A7 /* DDMultiFormatter.h */,
 				0A26B53B22DE346B004EE6A7 /* DDAbstractDatabaseLogger.h */,
 				0A26B53C22DE346B004EE6A7 /* DDLoggerNames.h */,
@@ -266,6 +265,7 @@
 			children = (
 				0A26B55322DE346B004EE6A7 /* CocoaLumberjack-Info.plist */,
 				0A26B55422DE346B004EE6A7 /* CocoaLumberjack.h */,
+				0752523D22E07638005D30B3 /* DDLegacyMacros.h */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -273,20 +273,11 @@
 		0A26B55922DE346B004EE6A7 /* CocoaLumberjackSwift */ = {
 			isa = PBXGroup;
 			children = (
-				0A26B55B22DE346B004EE6A7 /* include */,
 				0A26B55E22DE346B004EE6A7 /* Supporting Files */,
-				0A26B55A22DE346B004EE6A7 /* DDAssert.swift */,
 				0A26B55D22DE346B004EE6A7 /* CocoaLumberjack.swift */,
+				0A26B55A22DE346B004EE6A7 /* DDAssert.swift */,
 			);
 			path = CocoaLumberjackSwift;
-			sourceTree = "<group>";
-		};
-		0A26B55B22DE346B004EE6A7 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				0A26B55C22DE346B004EE6A7 /* SwiftLogLevel.h */,
-			);
-			path = include;
 			sourceTree = "<group>";
 		};
 		0A26B55E22DE346B004EE6A7 /* Supporting Files */ = {
@@ -294,6 +285,7 @@
 			children = (
 				0A26B55F22DE346B004EE6A7 /* CocoaLumberjackSwift-Info.plist */,
 				0A26B56022DE346B004EE6A7 /* CocoaLumberjackSwift.h */,
+				0752523B22E075E1005D30B3 /* SwiftLogLevel.h */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -363,7 +355,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A26B58A22DE34C1004EE6A7 /* DDContextFilterLogFormatter.h in Headers */,
-				0A26B58322DE34C1004EE6A7 /* DDLegacyMacros.h in Headers */,
 				0A26B58522DE34C1004EE6A7 /* DDAbstractDatabaseLogger.h in Headers */,
 				0A26B58222DE34C1004EE6A7 /* DDLog.h in Headers */,
 				0A26B58422DE34C1004EE6A7 /* DDMultiFormatter.h in Headers */,
@@ -372,6 +363,7 @@
 				0A26B59122DE34C1004EE6A7 /* CLIColor.h in Headers */,
 				0A26B58B22DE34C1004EE6A7 /* DDTTYLogger.h in Headers */,
 				0A26B5B622DE3700004EE6A7 /* DDFileLogger+Internal.h in Headers */,
+				0752523E22E07638005D30B3 /* DDLegacyMacros.h in Headers */,
 				0A26B59022DE34C1004EE6A7 /* DDLog+LOGV.h in Headers */,
 				0A26B58F22DE34C1004EE6A7 /* DDOSLogger.h in Headers */,
 				0A26B5BC22DE37FB004EE6A7 /* CocoaLumberjack.h in Headers */,
@@ -388,7 +380,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A26B5A922DE351F004EE6A7 /* SwiftLogLevel.h in Headers */,
+				0752523C22E075E1005D30B3 /* SwiftLogLevel.h in Headers */,
 				0A26B5A822DE3519004EE6A7 /* CocoaLumberjackSwift.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
