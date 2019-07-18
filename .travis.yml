@@ -30,7 +30,7 @@ script:
     - pod lib lint
 
     - echo "Check Swift Package manager Package.swift"
-    - swift build
+    - swift test
 
     - echo "Build as static library"
     - xcodebuild clean build -workspace Framework/Lumberjack.xcworkspace -scheme 'CocoaLumberjack-Static' -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration Release | xcpretty -c
