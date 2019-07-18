@@ -30,10 +30,10 @@ let package = Package(
         .target(name: "CocoaLumberjackSwift",
                 dependencies: ["CocoaLumberjack", "CocoaLumberjackSwiftSupport"],
                 exclude: ["Supporting Files"]),
-//        .testTarget(name: "Tests",
-//                    dependencies: ["CocoaLumberjack"],
-//                    path: "Tests",
-//                    exclude: [],
-//                    sources: ["Tests"])
+        .testTarget(name: "Tests",
+                    dependencies: ["CocoaLumberjack"],
+                    path: "Tests",
+                    exclude: [],
+                    sources: ["Tests"])
     ]
 )
