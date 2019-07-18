@@ -1,3 +1,72 @@
+class Sources
+  def self.name
+    ''
+  end
+
+  def self.root
+    "Sources/#{self.name}"
+  end
+
+  def self.implementation_files
+    [self.root]
+  end
+
+  def self.public_headers
+    ["#{self.root}/include/*.{h}", "#{self.root}/Supporting Files/*.{h}"]
+  end
+
+  def self.private_headers
+    []
+  end
+
+  def self.source_files
+    self.implementation_files + self.public_headers + self.private_headers
+  end
+
+  def self.inspection
+    return {
+      "name" => self.name,
+      "root" => self.root,
+      "implementation_files" => self.implementation_files,
+      "public_headers" => self.public_headers,
+      "private_headers" => self.private_headers,
+      "source_files" => self.source_files,
+    }
+  end
+
+  class Core < Sources
+    def self.name
+      'CocoaLumberjack'
+    end
+
+    def self.implementation_files
+      ['DD*.{m}', 'Extensions/*.{m}', 'CLI/*.{m}'].map {|x| "#{self.root}/#{x}"}
+    end
+
+    def self.private_headers
+      ['DD*Internal.{h}'].map {|x| "#{self.root}/#{x}"}
+    end
+  end
+
+  class Swift < Sources
+    def self.name
+      'CocoaLumberjackSwift'
+    end
+
+    def self.implementation_files
+      super.map {|x| "#{x}/*.swift"}
+    end
+
+    def self.public_headers
+      ["#{self.root}/Supporting Files/*.{h}", 'Sources/CocoaLumberjackSwiftSupport/include/SwiftLogLevel.{h}']
+    end
+  end
+end
+
+require 'pp'
+
+pp Sources::Core.inspection
+pp Sources::Swift.inspection
 
 Pod::Spec.new do |s|
 
@@ -28,13 +97,15 @@ Pod::Spec.new do |s|
   s.default_subspecs = 'Core'
 
   s.subspec 'Core' do |ss|
-    ss.source_files         = 'Classes/Include/**/*.{h}', 'Classes/DD*.{h,m}', 'Classes/Extensions/*.{h,m}', 'Classes/CLI/*.{h,m}'
-    ss.private_header_files = 'Classes/Include/CocoaLumberjack/DD*Internal.{h}'
+    ss.source_files         = Sources::Core.source_files#'Sources/CocoaLumberjack/DD*.{m}', 'Sources/CocoaLumberjack/Extensions/*.{m}', 'Sources/CocoaLumberjack/CLI/*.{m}', 'Sources/CocoaLumberjack/DD*Internal.{h}', 'Sources/CocoaLumberjack/include/*.{h}', 'Sources/CocoaLumberjack/Supporting Files/*.{h}'
+    ss.private_header_files = Sources::Core.private_headers#'Sources/CocoaLumberjack/DD*Internal.{h}'
+    ss.public_header_files  = Sources::Core.public_headers#'Sources/CocoaLumberjack/include/*.{h}', 'Sources/CocoaLumberjack/Supporting Files/*.{h}'
   end
 
   s.subspec 'Swift' do |ss|
     ss.dependency 'CocoaLumberjack/Core'
-    ss.source_files        = 'Classes/CocoaLumberjack.swift', 'Classes/DDAssert.swift', 'Classes/Include/CocoaLumberjack/SwiftLogLevel.h'
+    ss.source_files        = Sources::Swift.source_files#'Sources/CocoaLumberjackSwift/*.swift', 'Sources/CocoaLumberjackSwift/Supporting Files/*.{h}', 'Sources/CocoaLumberjackSwiftSupport/include/*.{h}',
+    ss.public_header_files = Sources::Swift.public_headers#'Sources/CocoaLumberjackSwift/Supporting Files/*.{h}', 'Sources/CocoaLumberjackSwiftSupport/include/*.{h}'
   end
 
 end
