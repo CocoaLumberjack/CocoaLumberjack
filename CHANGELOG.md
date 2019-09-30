@@ -6,6 +6,7 @@
 
 ### Internal
 - Fix issue with log archiving in the simulator (#1098)
+- Limit assertion to non-simulator build (#1100)
 
 ## [3.5.3 - Xcode 10.2 on Apr 24th, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.3)
 
