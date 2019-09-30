@@ -1,7 +1,11 @@
-## [3.5.3 - Xcode 10.2.1 on ?](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.4)
+## [3.6.0 - Xcode 11 on ?](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.6.0)
 
 ### Public
+- Swift Package Manager Support (#1083)
 - New `willLogMessage:` and `didLogMessage:` methods on `DDFileLogger` which provide access to the current log file info.
+
+### Internal
+- Fix issue with log archiving in the simulator (#1098)
 
 ## [3.5.3 - Xcode 10.2 on Apr 24th, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.5.3)
 
