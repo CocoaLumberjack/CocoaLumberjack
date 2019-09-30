@@ -1,4 +1,4 @@
-## [3.6.0 - Xcode 11 on ?](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.6.0)
+## [3.6.0 - Xcode 11 on October 2nd, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.6.0)
 
 ### Public
 - Swift Package Manager Support (#1083)
