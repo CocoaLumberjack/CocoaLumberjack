@@ -969,7 +969,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
         BOOL isUntilFirstAuth = [key isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication];
         BOOL isNone = [key isEqualToString:NSFileProtectionNone];
 
-        if (!isUntilFirstAuth && !isNone) {
+        if (key != nil && !isUntilFirstAuth && !isNone) {
             return YES;
         }
     }
