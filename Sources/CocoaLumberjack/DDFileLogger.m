@@ -1486,7 +1486,9 @@ static int exception_count = 0;
         NSString *fileDir = [filePath stringByDeletingLastPathComponent];
         NSString *newFilePath = [fileDir stringByAppendingPathComponent:newFileName];
 
-#ifdef DEBUG
+        // We only want to assert when we're not using the simulator, as we're "archiving" a log file with this method in the sim
+        // (in which case the file might not exist anymore and neither does it parent folder).
+#if defined(DEBUG) && (!defined(TARGET_IPHONE_SIMULATOR) || !TARGET_IPHONE_SIMULATOR)
         BOOL directory = NO;
         [[NSFileManager defaultManager] fileExistsAtPath:fileDir isDirectory:&directory];
         NSAssert(directory, @"Containing directory must exist.");
@@ -1501,10 +1503,10 @@ static int exception_count = 0;
 
         success = [[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newFilePath error:&error];
 
-            // When a log file is deleted, moved or renamed on the simulator, we attempt to rename it as a
-            // result of "archiving" it, but since the file doesn't exist anymore, needless error logs are printed
-            // We therefore ignore this error, and assert that the directory we are copying into exists (which
-            // is the only other case where this error code can come up).
+        // When a log file is deleted, moved or renamed on the simulator, we attempt to rename it as a
+        // result of "archiving" it, but since the file doesn't exist anymore, needless error logs are printed
+        // We therefore ignore this error, and assert that the directory we are copying into exists (which
+        // is the only other case where this error code can come up).
 #if TARGET_IPHONE_SIMULATOR
         if (!success && error.code != NSFileNoSuchFileError) {
 #else
