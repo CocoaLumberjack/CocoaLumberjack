@@ -1,7 +1,7 @@
 # Sometimes it's a README fix, or something like that - which isn't relevant for
 # including in a project's CHANGELOG for example
 declared_trivial = github.pr_title.include? "#trivial"
-has_app_changes = !git.modified_files.grep(/Classes/).empty?
+has_app_changes = !git.modified_files.grep(/Sources/).empty?
 
 # Make it more obvious that a PR is a work in progress and shouldn't be merged yet
 warn("PR is classed as Work in Progress") if github.pr_title.include? "[WIP]"
@@ -17,8 +17,8 @@ end
 
 # Added (or removed) library files need to be added (or removed) from the
 # Carthage Xcode project to avoid breaking things for our Carthage users.
-added_library_files = !(git.added_files.grep(/Classes.*\.{h,m,swift}/).empty?)
-deleted_library_files = !(git.deleted_files.grep(/Classes.*\.{h,m,swift}/).empty?)
+added_library_files = !(git.added_files.grep(/Sources.*\.{h,m,swift}/).empty?)
+deleted_library_files = !(git.deleted_files.grep(/Sources.*\.{h,m,swift}/).empty?)
 modified_carthage_xcode_project = !(git.modified_files.grep(/Lumberjack\.xcodeproj/).empty?)
 if (added_library_files || deleted_library_files) && !modified_carthage_xcode_project
   fail("Added or removed library files require the Carthage Xcode project to be updated.")
@@ -31,7 +31,7 @@ if has_app_changes && !tests_updated
 end
 
 # Run SwiftLint
-swiftlint.lint_files "Classes/*.swift"
+swiftlint.lint_files "Sources/*.swift"
 
 # Check if Carthage modified and CocoaPods didn't or vice-versa
 modified_cocoapods = !(git.modified_files.grep(/CocoaLumberjack\.podspec/).empty?)
@@ -71,7 +71,7 @@ if modified_carthage_xcode_project
   ["Lumberjack.xcodeproj/project.pbxproj"].each do |project_file|
     next unless File.file?(project_file)
     File.readlines(project_file).each_with_index do |line, index|
-	  if line.include?("sourceTree = SOURCE_ROOT;") and line.include?("PBXFileReference")
+	  if line.include?("sourceTree = SOURCE_ROOT;") and line.include?("PBXFileReference") and !line.include("path = Sources/CocoaLumberjackSwiftSupport/include/")
         warn("Files should be in sync with project structure", file: project_file, line: index+1)
 	  end
 	  line_containing_setting = line.match(/[A-Z_]+ = .*;/)
@@ -129,6 +129,7 @@ invalid_copyright = false
 sourcefiles_to_check.each do |sourcefile|
   fileExtension = File.extname(sourcefile)
   next unless (fileExtension===".swift" or fileExtension===".h" or fileExtension===".m")
+  next if sourcefile.match("^Package.*\.swift$")
   next unless File.file?(sourcefile)
 
   # Use correct copyright lines depending on source file location
@@ -147,5 +148,5 @@ sourcefiles_to_check.each do |sourcefile|
   end
 end
 if invalid_copyright === true
-  warn("Copyright is not valid. See our default copyright in all of our files (Classes, Demos and Benchmarking use different formats).")
+  warn("Copyright is not valid. See our default copyright in all of our files (Sources, Demos and Benchmarking use different formats).")
 end
