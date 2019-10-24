@@ -58,7 +58,6 @@ script:
     - xcodebuild clean build -project Integration/Integration.xcodeproj -scheme 'watchOSSwiftIntegration' -configuration Release -sdk watchsimulator -destination 'platform=iOS Simulator,name=iPhone 11 Pro' | xcpretty -c
 
     - echo "Run the tests"
-    - xcodebuild test -skip-testing:'iOS Tests/DDFileLoggerPerformanceTests' -project Tests/Tests.xcodeproj -scheme 'iOS Tests' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.3.1' GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
     - xcodebuild test -skip-testing:'iOS Tests/DDFileLoggerPerformanceTests' -project Tests/Tests.xcodeproj -scheme 'iOS Tests' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=latest' GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
     - xcodebuild test -skip-testing:'OS X Tests/DDFileLoggerPerformanceTests' -project Tests/Tests.xcodeproj -scheme 'OS X Tests' -sdk macosx GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
 
