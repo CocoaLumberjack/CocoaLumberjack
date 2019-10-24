@@ -106,6 +106,9 @@ CURRENT_PROJECT_VERSION = 1
 // If enabled, the product will be treated as defining its own module. This enables automatic production of LLVM module map files when appropriate, and allows the product to be imported as a module.
 DEFINES_MODULE = YES
 
+// macOS Catalyst support
+DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO
+
 // Determines the compatibility version of the resulting library, bundle, or framework binary.
 DYLIB_COMPATIBILITY_VERSION = 1
 
@@ -225,6 +228,9 @@ SKIP_INSTALL = YES
 
 // The list of supported platforms from which a base SDK can be used. This setting is used if the product can be built for multiple platforms using different SDKs.
 SUPPORTED_PLATFORMS = macosx iphoneos iphonesimulator watchsimulator watchos appletvsimulator appletvos
+
+// macOS Catalyst support
+SUPPORTS_MACCATALYST = YES
 
 // Swift language version
 SWIFT_VERSION = 5.0
