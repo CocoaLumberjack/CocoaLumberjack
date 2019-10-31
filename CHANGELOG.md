@@ -1,3 +1,8 @@
+> ## [3.6.1 - Xcode 11.1 on ???](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.6.1)
+
+### Internal
+- Fix rolling timer being rescheduled rapidly due to leeway (#1106 / #1107)
+
 ## [3.6.0 - Xcode 11 on October 2nd, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.6.0)
 
 ### Public
