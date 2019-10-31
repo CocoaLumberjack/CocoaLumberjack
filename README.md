@@ -34,10 +34,9 @@ For more details about how to use Swift with Lumberjack, see [this conversation]
 
 ##### Swift Usage
 
-If you installed using CocoaPods or manually:
-```swift
-import CocoaLumberjackSwift
-```
+When you install CocoaLumberjack using CocoaPods, you can `import CocoaLubmerjack`.
+
+In other cases you can `import CocoaLumberjackSwift`.
 
 ```swift
 DDLog.add(DDOSLogger.sharedInstance) // Uses os_log
