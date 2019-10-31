@@ -50,6 +50,8 @@ NSTimeInterval     const kDDDefaultLogRollingFrequency = 60 * 60 * 24;     // 24
 NSUInteger         const kDDDefaultLogMaxNumLogFiles   = 5;                // 5 Files
 unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20 MB
 
+NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -833,7 +835,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
     int64_t delay = (int64_t)(MIN([logFileRollingDate timeIntervalSinceNow], kDDMaxTimerDelay) * (NSTimeInterval) NSEC_PER_SEC);
     dispatch_time_t fireTime = dispatch_time(DISPATCH_TIME_NOW, delay);
 
-    dispatch_source_set_timer(_rollingTimer, fireTime, DISPATCH_TIME_FOREVER, 1ull * NSEC_PER_SEC);
+    dispatch_source_set_timer(_rollingTimer, fireTime, DISPATCH_TIME_FOREVER, (uint64_t)kDDRollingLeeway * NSEC_PER_SEC);
     dispatch_resume(_rollingTimer);
 }
 
@@ -908,7 +910,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 - (void)lt_maybeRollLogFileDueToAge {
     NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
 
-    if (_rollingFrequency > 0.0 && _currentLogFileInfo.age >= _rollingFrequency) {
+    if (_rollingFrequency > 0.0 && (_currentLogFileInfo.age + kDDRollingLeeway) >= _rollingFrequency) {
         NSLogVerbose(@"DDFileLogger: Rolling log file due to age...");
         [self lt_rollLogFileNow];
     } else {
