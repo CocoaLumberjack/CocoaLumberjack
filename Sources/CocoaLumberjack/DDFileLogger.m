@@ -460,7 +460,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     return [fileHeaderStr dataUsingEncoding:NSUTF8StringEncoding];
 }
 
-- (NSString *)createNewLogFile {
+- (NSString *)createNewLogFileWithError:(NSError *__autoreleasing  _Nullable *)error {
     static NSUInteger MAX_ALLOWED_ERROR = 5;
 
     NSString *fileName = [self newLogFileName];
@@ -472,16 +472,17 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 
     NSUInteger attempt = 1;
     NSUInteger criticalErrors = 0;
+    NSError *lastCriticalError;
 
     do {
         if (criticalErrors >= MAX_ALLOWED_ERROR) {
             NSLogError(@"DDLogFileManagerDefault: Bailing file creation, encountered %ld errors.",
                         (unsigned long)criticalErrors);
+            *error = lastCriticalError;
             return nil;
         }
 
         NSString *actualFileName = fileName;
-
         if (attempt > 1) {
             NSString *extension = [actualFileName pathExtension];
 
@@ -495,8 +496,8 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 
         NSString *filePath = [logsDirectory stringByAppendingPathComponent:actualFileName];
 
-        NSError *error = nil;
-        BOOL success = [fileHeader writeToFile:filePath options:NSAtomicWrite error:&error];
+        NSError *currentError = nil;
+        BOOL success = [fileHeader writeToFile:filePath options:NSDataWritingAtomic error:&currentError];
 
 #if TARGET_OS_IPHONE
         if (success) {
@@ -508,23 +509,24 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
             NSDictionary *attributes = @{NSFileProtectionKey: [self logFileProtection]};
             success = [[NSFileManager defaultManager] setAttributes:attributes
                                                        ofItemAtPath:filePath
-                                                              error:&error];
+                                                              error:&currentError];
         }
 #endif
 
         if (success) {
-            NSLogVerbose(@"PURLogFileManagerDefault: Created new log file: %@", actualFileName);
+            NSLogVerbose(@"DDLogFileManagerDefault: Created new log file: %@", actualFileName);
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 // Since we just created a new log file, we may need to delete some old log files
                 [self deleteOldLogFiles];
             });
             return filePath;
-        } else if (error.code == NSFileWriteFileExistsError) {
+        } else if (currentError.code == NSFileWriteFileExistsError) {
             attempt++;
             continue;
         } else {
-            NSLogError(@"PURLogFileManagerDefault: Critical error while creating log file: %@", error);
+            NSLogError(@"DDLogFileManagerDefault: Critical error while creating log file: %@", currentError);
             criticalErrors++;
+            lastCriticalError = currentError;
             continue;
         }
 
@@ -1029,8 +1031,23 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         }
         _currentLogFileInfo = newCurrentLogFile;
     } else {
-        NSString *currentLogFilePath = [_logFileManager createNewLogFile];
-        _currentLogFileInfo = [[DDLogFileInfo alloc] initWithFilePath:currentLogFilePath];
+        NSString *currentLogFilePath;
+        if ([_logFileManager respondsToSelector:@selector(createNewLogFileWithError:)]) {
+            __autoreleasing NSError *error;
+            currentLogFilePath = [_logFileManager createNewLogFileWithError:&error];
+            if (!currentLogFilePath) {
+                NSLogError(@"DDFileLogger: Failed to create new log file: %@", error);
+            }
+        } else {
+            #pragma clang diagnostic push
+            #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+            NSAssert([_logFileManager respondsToSelector:@selector(createNewLogFile)],
+                     @"Invalid log file manager! Responds neither to `-createNewLogFileWithError:` nor `-createNewLogFile`!");
+            currentLogFilePath = [_logFileManager createNewLogFile];
+            #pragma clang diagnostic pop
+        }
+        // Use static factory method here, since it checks for nil (and is unavailable to Swift).
+        _currentLogFileInfo = [DDLogFileInfo logFileWithPath:currentLogFilePath];
     }
 
     return _currentLogFileInfo;
@@ -1346,14 +1363,15 @@ static int exception_count = 0;
 
 @dynamic isArchived;
 
-
 #pragma mark Lifecycle
 
 + (instancetype)logFileWithPath:(NSString *)aFilePath {
+    if (!aFilePath) return nil;
     return [[self alloc] initWithFilePath:aFilePath];
 }
 
 - (instancetype)initWithFilePath:(NSString *)aFilePath {
+    NSParameterAssert(aFilePath);
     if ((self = [super init])) {
         filePath = [aFilePath copy];
     }
