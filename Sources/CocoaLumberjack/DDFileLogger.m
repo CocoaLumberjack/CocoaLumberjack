@@ -1449,43 +1449,15 @@ static int exception_count = 0;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (BOOL)isArchived {
-#if TARGET_IPHONE_SIMULATOR
-
-    // Extended attributes don't work properly on the simulator.
-    // So we have to use a less attractive alternative.
-    // See full explanation in the header file.
-
-    return [self hasExtensionAttributeWithName:kDDXAttrArchivedName];
-
-#else
-
     return [self hasExtendedAttributeWithName:kDDXAttrArchivedName];
-
-#endif
 }
 
 - (void)setIsArchived:(BOOL)flag {
-#if TARGET_IPHONE_SIMULATOR
-
-    // Extended attributes don't work properly on the simulator.
-    // So we have to use a less attractive alternative.
-    // See full explanation in the header file.
-
-    if (flag) {
-        [self addExtensionAttributeWithName:kDDXAttrArchivedName];
-    } else {
-        [self removeExtensionAttributeWithName:kDDXAttrArchivedName];
-    }
-
-#else
-
     if (flag) {
         [self addExtendedAttributeWithName:kDDXAttrArchivedName];
     } else {
         [self removeExtendedAttributeWithName:kDDXAttrArchivedName];
     }
-
-#endif
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1545,157 +1517,20 @@ static int exception_count = 0;
 #pragma mark Attribute Management
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#if TARGET_IPHONE_SIMULATOR
-
-// Extended attributes don't work properly on the simulator.
-// So we have to use a less attractive alternative.
-// See full explanation in the header file.
-
-- (BOOL)hasExtensionAttributeWithName:(NSString *)attrName {
-    // This method is only used on the iPhone simulator, where normal extended attributes are broken.
-    // See full explanation in the header file.
-
-    // Split the file name into components. File name may have various format, but generally
-    // structure is same:
-    //
-    // <name part>.<extension part> and <name part>.archived.<extension part>
-    // or
-    // <name part> and <name part>.archived
-    //
-    // So we want to search for the attrName in the components (ignoring the first array index).
-
-    NSArray *components = [[self fileName] componentsSeparatedByString:@"."];
-
-    // Watch out for file names without an extension
-
-    for (NSUInteger i = 1; i < components.count; i++) {
-        NSString *attr = components[i];
-
-        if ([attrName isEqualToString:attr]) {
-            return YES;
-        }
-    }
-
-    return NO;
-}
-
-- (void)addExtensionAttributeWithName:(NSString *)attrName {
-    // This method is only used on the iPhone simulator, where normal extended attributes are broken.
-    // See full explanation in the header file.
-
-    if ([attrName length] == 0) {
-        return;
-    }
-
-    // Example:
-    // attrName = "archived"
-    //
-    // "mylog.txt" -> "mylog.archived.txt"
-    // "mylog"     -> "mylog.archived"
-
-    NSArray *components = [[self fileName] componentsSeparatedByString:@"."];
-
-    NSUInteger count = [components count];
-
-    NSUInteger estimatedNewLength = [[self fileName] length] + [attrName length] + 1;
-    NSMutableString *newFileName = [NSMutableString stringWithCapacity:estimatedNewLength];
-
-    if (count > 0) {
-        [newFileName appendString:components.firstObject];
-    }
-
-    NSString *lastExt = @"";
-
-    NSUInteger i;
-
-    for (i = 1; i < count; i++) {
-        NSString *attr = components[i];
-
-        if ([attr length] == 0) {
-            continue;
-        }
-
-        if ([attrName isEqualToString:attr]) {
-            // Extension attribute already exists in file name
-            return;
-        }
-
-        if ([lastExt length] > 0) {
-            [newFileName appendFormat:@".%@", lastExt];
-        }
-
-        lastExt = attr;
-    }
-
-    [newFileName appendFormat:@".%@", attrName];
-
-    if ([lastExt length] > 0) {
-        [newFileName appendFormat:@".%@", lastExt];
-    }
-
-    [self renameFile:newFileName];
-}
-
-- (void)removeExtensionAttributeWithName:(NSString *)attrName {
-    // This method is only used on the iPhone simulator, where normal extended attributes are broken.
-    // See full explanation in the header file.
-
-    if ([attrName length] == 0) {
-        return;
-    }
-
-    // Example:
-    // attrName = "archived"
-    //
-    // "mylog.archived.txt" -> "mylog.txt"
-    // "mylog.archived"     -> "mylog"
-
-    NSArray *components = [[self fileName] componentsSeparatedByString:@"."];
-
-    NSUInteger count = [components count];
-
-    NSUInteger estimatedNewLength = [[self fileName] length];
-    NSMutableString *newFileName = [NSMutableString stringWithCapacity:estimatedNewLength];
-
-    if (count > 0) {
-        [newFileName appendString:components.firstObject];
-    }
-
-    BOOL found = NO;
-
-    NSUInteger i;
-
-    for (i = 1; i < count; i++) {
-        NSString *attr = components[i];
-
-        if ([attrName isEqualToString:attr]) {
-            found = YES;
-        } else {
-            [newFileName appendFormat:@".%@", attr];
-        }
-    }
-
-    if (found) {
-        [self renameFile:newFileName];
-    }
-}
-
-#else /* if TARGET_IPHONE_SIMULATOR */
-
 - (BOOL)hasExtendedAttributeWithName:(NSString *)attrName {
-    const char *path = [filePath UTF8String];
+    const char *path = [filePath fileSystemRepresentation];
     const char *name = [attrName UTF8String];
 
     ssize_t result = getxattr(path, name, NULL, 0, 0, 0);
 
-    return (result >= 0);
+    return (result > 0);
 }
 
 - (void)addExtendedAttributeWithName:(NSString *)attrName {
-    const char *path = [filePath UTF8String];
+    const char *path = [filePath fileSystemRepresentation];
     const char *name = [attrName UTF8String];
 
-    int result = setxattr(path, name, NULL, 0, 0, 0);
+    int result = setxattr(path, name, "", 1, 0, 0);
 
     if (result < 0) {
         NSLogError(@"DDLogFileInfo: setxattr(%@, %@): error = %s",
@@ -1706,7 +1541,7 @@ static int exception_count = 0;
 }
 
 - (void)removeExtendedAttributeWithName:(NSString *)attrName {
-    const char *path = [filePath UTF8String];
+    const char *path = [filePath fileSystemRepresentation];
     const char *name = [attrName UTF8String];
 
     int result = removexattr(path, name, 0);
@@ -1718,8 +1553,6 @@ static int exception_count = 0;
                    strerror(errno));
     }
 }
-
-#endif /* if TARGET_IPHONE_SIMULATOR */
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Comparisons
