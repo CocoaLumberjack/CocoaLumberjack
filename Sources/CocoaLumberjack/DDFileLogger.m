@@ -887,7 +887,6 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     _currentLogFileHandle = nil;
 
     _currentLogFileInfo.isArchived = YES;
-    _currentLogFileInfo = nil;
 
     if ([_logFileManager respondsToSelector:@selector(didRollAndArchiveLogFile:)]) {
         NSString *archivedFilePath = [_currentLogFileInfo.filePath copy];
@@ -895,6 +894,8 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
             [self->_logFileManager didRollAndArchiveLogFile:archivedFilePath];
         });
     }
+
+    _currentLogFileInfo = nil;
 
     if (_currentLogFileVnode) {
         dispatch_source_cancel(_currentLogFileVnode);
