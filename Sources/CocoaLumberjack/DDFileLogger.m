@@ -1523,7 +1523,7 @@ static int exception_count = 0;
 
     ssize_t result = getxattr(path, name, NULL, 0, 0, 0);
 
-    return (result > 0);
+    return (result >= 0);
 }
 
 - (void)addExtendedAttributeWithName:(NSString *)attrName {
