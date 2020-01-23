@@ -61,9 +61,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DDTTYLogger : DDAbstractLogger <DDLogger>
 
 /**
- *  Singleton method
+ *  Singleton instance. Returns `nil` if the initialization of the DDTTYLogger fails.
  */
-@property (nonatomic, class, readonly, strong) DDTTYLogger *sharedInstance;
+@property (nonatomic, class, readonly, strong, nullable) DDTTYLogger *sharedInstance;
 
 /* Inherited from the DDLogger protocol:
  *

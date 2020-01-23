@@ -41,8 +41,7 @@ final class ViewController: UIViewController {
             let logger = DDOSLogger.sharedInstance
             logger.logFormatter = formatter
             DDLog.add(logger)
-        } else {
-            let logger = DDTTYLogger.sharedInstance
+        } else if let logger = DDTTYLogger.sharedInstance {
             logger.logFormatter = formatter
             DDLog.add(logger)
         }
