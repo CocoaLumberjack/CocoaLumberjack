@@ -104,7 +104,10 @@ NS_ASSUME_NONNULL_BEGIN
  **/
 @property (nonatomic, readwrite, assign) BOOL automaticallyAppendNewlineForCustomFormatters;
 
-- (nullable instancetype)init NS_DESIGNATED_INITIALIZER;
+/**
+ Using this initializer is not supported. Please use `DDTTYLogger.sharedInstance`.
+ **/
+- (instancetype)init NS_UNAVAILABLE;
 
 /**
  * The default color set (foregroundColor, backgroundColor) is:
