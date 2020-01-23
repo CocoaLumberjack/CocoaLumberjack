@@ -17,6 +17,8 @@
 
 @protocol DDLogger;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  *  This class provides the ability to capture the ASL (Apple System Logs)
  */
@@ -40,3 +42,5 @@ API_DEPRECATED("Use DDOSLogger instead", macosx(10.4,10.12), ios(2.0,10.0), watc
 @property (class) DDLogLevel captureLevel;
 
 @end
+
+NS_ASSUME_NONNULL_END

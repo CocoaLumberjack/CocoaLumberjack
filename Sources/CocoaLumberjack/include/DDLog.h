@@ -39,6 +39,8 @@
 @protocol DDLogger;
 @protocol DDLogFormatter;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * Define the standard options.
  *
@@ -172,8 +174,6 @@ typedef NS_ENUM(NSUInteger, DDLogLevel){
      */
     DDLogLevelAll       = NSUIntegerMax
 };
-
-NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Extracts just the file name, no path or extension

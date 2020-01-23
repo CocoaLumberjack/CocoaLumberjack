@@ -20,9 +20,9 @@
 
 #import <CocoaLumberjack/DDLog.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @class DDLogFileInfo;
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  * This class provides a logger to write log statements to a file.
