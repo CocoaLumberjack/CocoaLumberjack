@@ -148,9 +148,16 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  * This method is executed directly on the file logger's internal queue.
  * The file has to exist by the time the method returns.
  **/
-- (NSString *)createNewLogFile;
+- (nullable NSString *)createNewLogFileWithError:(NSError **)error;
 
 @optional
+
+// Private methods (only to be used by DDFileLogger)
+/**
+ * Creates a new log file ignoring any errors. Deprecated in favor of `-createNewLogFileWithError:`.
+ * Will only be called if `-createNewLogFileWithError:` is not implemented.
+ **/
+- (nullable NSString *)createNewLogFile __attribute__((deprecated("Use -createNewLogFileWithError:"))) NS_SWIFT_UNAVAILABLE("Use -createNewLogFileWithError:");
 
 // Notifications from DDFileLogger
 
@@ -456,9 +463,9 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  * If there is an existing log file that is suitable,
  * within the constraints of `maximumFileSize` and `rollingFrequency`, then it is returned.
  *
- * Otherwise a new file is created and returned.
+ * Otherwise a new file is created and returned. If this failes, `NULL` is returned.
  **/
-@property (nonatomic, readonly, strong) DDLogFileInfo *currentLogFileInfo;
+@property (nonatomic, nullable, readonly, strong) DDLogFileInfo *currentLogFileInfo;
 
 @end
 
@@ -485,14 +492,10 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 @property (strong, nonatomic, readonly) NSString *filePath;
 @property (strong, nonatomic, readonly) NSString *fileName;
 
-#if FOUNDATION_SWIFT_SDK_EPOCH_AT_LEAST(8)
 @property (strong, nonatomic, readonly) NSDictionary<NSFileAttributeKey, id> *fileAttributes;
-#else
-@property (strong, nonatomic, readonly) NSDictionary<NSString *, id> *fileAttributes;
-#endif
 
-@property (strong, nonatomic, readonly) NSDate *creationDate;
-@property (strong, nonatomic, readonly) NSDate *modificationDate;
+@property (strong, nonatomic, nullable, readonly) NSDate *creationDate;
+@property (strong, nonatomic, nullable, readonly) NSDate *modificationDate;
 
 @property (nonatomic, readonly) unsigned long long fileSize;
 
@@ -500,7 +503,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 @property (nonatomic, readwrite) BOOL isArchived;
 
-+ (instancetype)logFileWithPath:(NSString *)filePath NS_SWIFT_UNAVAILABLE("Use init(filePath:)");
++ (nullable instancetype)logFileWithPath:(nullable NSString *)filePath NS_SWIFT_UNAVAILABLE("Use init(filePath:)");
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithFilePath:(NSString *)filePath NS_DESIGNATED_INITIALIZER;

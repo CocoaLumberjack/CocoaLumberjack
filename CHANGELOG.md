@@ -1,4 +1,8 @@
-> ## [3.6.1 - Xcode 11.1 on ???](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.6.1)
+## [3.6.1 - Xcode 11.1 on ???](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.6.1)
+
+### Public
+- Improve error handling during log file creation in DDFileLogger & DDLogFileManager (#1103 / #1111)
+- Improve Swift nullability annotations of DDLogFileInfo (#1112 / #1111)
 
 ### Internal
 - Fix rolling timer being rescheduled rapidly due to leeway (#1106 / #1107)

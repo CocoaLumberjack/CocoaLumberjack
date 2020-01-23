@@ -40,10 +40,12 @@
 }
 
 - (void)testCreateNewLogFile {
-    NSString *filePath = [self.logFileManager createNewLogFile];
+    __autoreleasing NSError *creationError;
+    NSString *filePath = [self.logFileManager createNewLogFileWithError:&creationError];
+    XCTAssertNil(creationError);
     XCTAssertTrue([self.logFileManager isLogFile:[NSURL fileURLWithPath:filePath].lastPathComponent]);
 
-    NSError *error = nil;
+    __autoreleasing NSError *error = nil;
     NSData *data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingUncached error:&error];
     XCTAssertNil(error);
 
