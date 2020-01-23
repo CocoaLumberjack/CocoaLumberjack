@@ -508,13 +508,11 @@ static NSUInteger _numProcessors;
     [self queueLogMessage:logMessage asynchronously:asynchronous];
 }
 
-+ (void)log:(BOOL)asynchronous
-    message:(DDLogMessage *)logMessage {
++ (void)log:(BOOL)asynchronous message:(DDLogMessage *)logMessage {
     [self.sharedInstance log:asynchronous message:logMessage];
 }
 
-- (void)log:(BOOL)asynchronous
-    message:(DDLogMessage *)logMessage {
+- (void)log:(BOOL)asynchronous message:(DDLogMessage *)logMessage {
     [self queueLogMessage:logMessage asynchronously:asynchronous];
 }
 
@@ -693,7 +691,7 @@ static NSUInteger _numProcessors;
     // Add to loggers array.
     // Need to create loggerQueue if loggerNode doesn't provide one.
 
-    for (DDLoggerNode* node in self._loggers) {
+    for (DDLoggerNode *node in self._loggers) {
         if (node->_logger == logger
             && node->_level == level) {
             // Exactly same logger already added, exit
@@ -705,21 +703,18 @@ static NSUInteger _numProcessors;
              @"This method should only be run on the logging thread/queue");
 
     dispatch_queue_t loggerQueue = NULL;
-
     if ([logger respondsToSelector:@selector(loggerQueue)]) {
         // Logger may be providing its own queue
-
-        loggerQueue = [logger loggerQueue];
+        loggerQueue = logger.loggerQueue;
     }
 
     if (loggerQueue == nil) {
         // Automatically create queue for the logger.
         // Use the logger name as the queue name if possible.
-
         const char *loggerQueueName = NULL;
 
         if ([logger respondsToSelector:@selector(loggerName)]) {
-            loggerQueueName = [[logger loggerName] UTF8String];
+            loggerQueueName = logger.loggerName.UTF8String;
         }
 
         loggerQueue = dispatch_queue_create(loggerQueueName, NULL);
@@ -1110,7 +1105,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
         const char *loggerQueueName = NULL;
 
         if ([self respondsToSelector:@selector(loggerName)]) {
-            loggerQueueName = [[self loggerName] UTF8String];
+            loggerQueueName = self.loggerName.UTF8String;
         }
 
         _loggerQueue = dispatch_queue_create(loggerQueueName, NULL);
@@ -1242,7 +1237,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
         }
     };
 
-    dispatch_async([DDLog loggingQueue], ^{
+    dispatch_async(DDLog.loggingQueue, ^{
         dispatch_async(self->_loggerQueue, block);
     });
 }
