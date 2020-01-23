@@ -22,6 +22,7 @@
 
 #import <pthread.h>
 #import <objc/runtime.h>
+#import <sys/qos.h>
 
 #if TARGET_OS_IOS
     #import <UIKit/UIDevice.h>
@@ -1066,6 +1067,9 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
 
         // Try to get the current queue's label
         _queueLabel = [[NSString alloc] initWithFormat:@"%s", dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL)];
+
+        if (@available(macOS 10.10, iOS 8.0, *))
+            _qos = (NSUInteger) qos_class_self();
     }
     return self;
 }
@@ -1087,6 +1091,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
     newMessage->_threadID = _threadID;
     newMessage->_threadName = _threadName;
     newMessage->_queueLabel = _queueLabel;
+    newMessage->_qos = _qos;
 
     return newMessage;
 }

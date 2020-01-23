@@ -16,10 +16,22 @@
 #import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
 #import <pthread/pthread.h>
 #import <stdatomic.h>
+#import <sys/qos.h>
 
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
+
+static const char* _qos_string(NSUInteger qos) {
+    switch ((qos_class_t) qos) {
+        case QOS_CLASS_USER_INTERACTIVE: return "UI";
+        case QOS_CLASS_USER_INITIATED:   return "IN";
+        case QOS_CLASS_DEFAULT:          return "DF";
+        case QOS_CLASS_UTILITY:          return "UT";
+        case QOS_CLASS_BACKGROUND:       return "BG";
+        default:                         return "UN";
+    }
+}
 
 #pragma mark - DDDispatchQueueLogFormatter
 
@@ -209,7 +221,7 @@
     NSString *timestamp = [self stringFromDate:(logMessage->_timestamp)];
     NSString *queueThreadLabel = [self queueThreadLabelForLogMessage:logMessage];
 
-    return [NSString stringWithFormat:@"%@ [%@] %@", timestamp, queueThreadLabel, logMessage->_message];
+    return [NSString stringWithFormat:@"%@ [%@ (QOS:%s)] %@", timestamp, queueThreadLabel, _qos_string(logMessage->_qos), logMessage->_message];
 }
 
 @end

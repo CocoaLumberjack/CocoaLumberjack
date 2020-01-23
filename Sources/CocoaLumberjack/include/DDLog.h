@@ -784,6 +784,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
     NSString *_threadID;
     NSString *_threadName;
     NSString *_queueLabel;
+    NSUInteger _qos;
 }
 
 /**
@@ -850,6 +851,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
 @property (readonly, nonatomic) NSString *threadID; // ID as it appears in NSLog calculated from the machThreadID
 @property (readonly, nonatomic, nullable) NSString *threadName;
 @property (readonly, nonatomic) NSString *queueLabel;
+@property (readonly, nonatomic) NSUInteger qos;
 
 @end
 
