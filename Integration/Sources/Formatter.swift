@@ -16,7 +16,7 @@
 import Foundation
 import CocoaLumberjackSwift
 
-class Formatter: DDDispatchQueueLogFormatter {
+final class Formatter: DDDispatchQueueLogFormatter {
     let threadUnsafeDateFormatter: DateFormatter
     
     override init() {
@@ -46,8 +46,6 @@ class Formatter: DDDispatchQueueLogFormatter {
             logLevel = "?"
         }
         
-        let formattedLog = "\(dateAndTime) |\(logLevel)| [\(logMessage.fileName) \(logMessage.function ?? "nil")] #\(logMessage.line): \(logMessage.message)"
-        
-        return formattedLog
+        return "\(dateAndTime) |\(logLevel)| [\(logMessage.fileName) \(logMessage.function ?? "nil")] #\(logMessage.line): \(logMessage.message)"
     }
 }
