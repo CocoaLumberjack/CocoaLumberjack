@@ -1530,7 +1530,7 @@ static int exception_count = 0;
     const char *path = [filePath fileSystemRepresentation];
     const char *name = [attrName UTF8String];
 
-    int result = setxattr(path, name, "", 1, 0, 0);
+    int result = setxattr(path, name, "\1", 1, 0, 0);
 
     if (result < 0) {
         NSLogError(@"DDLogFileInfo: setxattr(%@, %@): error = %s",
