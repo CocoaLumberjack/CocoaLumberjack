@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Return the whitelist
  */
-@property (readonly, copy) NSArray<NSNumber *> *whitelist;
+@property (nonatomic, readonly, copy) NSArray<NSNumber *> *whitelist;
 
 /**
  *  Check if a context is on the whitelist

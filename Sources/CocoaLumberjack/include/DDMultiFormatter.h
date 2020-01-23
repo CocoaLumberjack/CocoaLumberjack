@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Array of chained formatters
  */
-@property (readonly) NSArray<id<DDLogFormatter>> *formatters;
+@property (nonatomic, readonly) NSArray<id<DDLogFormatter>> *formatters;
 
 /**
  *  Add a new formatter

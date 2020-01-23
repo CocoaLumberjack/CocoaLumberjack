@@ -35,7 +35,7 @@ API_AVAILABLE(macos(10.12), ios(10.0), watchos(3.0), tvos(10.0))
  *
  *  @return the shared instance with OS_LOG_DEFAULT.
  */
-@property (class, readonly, strong) DDOSLogger *sharedInstance;
+@property (nonatomic, class, readonly, strong) DDOSLogger *sharedInstance;
 
 /**
  Designated initializer

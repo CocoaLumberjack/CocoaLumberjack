@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Singleton method
  */
-@property (class, readonly, strong) DDTTYLogger *sharedInstance;
+@property (nonatomic, class, readonly, strong) DDTTYLogger *sharedInstance;
 
 /* Inherited from the DDLogger protocol:
  *

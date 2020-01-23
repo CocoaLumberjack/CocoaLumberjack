@@ -51,7 +51,7 @@ API_DEPRECATED("Use DDOSLogger instead", macosx(10.4,10.12), ios(2.0,10.0), watc
  *
  *  @return the shared instance
  */
-@property (class, readonly, strong) DDASLLogger *sharedInstance;
+@property (nonatomic, class, readonly, strong) DDASLLogger *sharedInstance;
 
 // Inherited from DDAbstractLogger
 
