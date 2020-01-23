@@ -261,6 +261,9 @@
 }
 
 - (void)didAddToLogger:(id <DDLogger> __attribute__((unused)))logger {
+    #ifdef NS_BLOCK_ASSERTIONS
+    __attribute__((unused))
+    #endif
     __auto_type incValue = [_atomicLoggerCounter increment];
     NSAssert(incValue <= 1 || _mode == DDDispatchQueueLogFormatterModeShareble, @"Can't reuse formatter with multiple loggers in non-shareable mode.");
 }
