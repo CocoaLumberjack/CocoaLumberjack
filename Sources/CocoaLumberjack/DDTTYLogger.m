@@ -113,7 +113,7 @@ typedef struct {
     size_t resetCodeLen;
 }
 
-- (instancetype)initWithForegroundColor:(DDColor *)fgColor backgroundColor:(DDColor *)bgColor flag:(DDLogFlag)mask context:(NSInteger)ctxt;
+- (nullable instancetype)initWithForegroundColor:(nullable DDColor *)fgColor backgroundColor:(nullable DDColor *)bgColor flag:(DDLogFlag)mask context:(NSInteger)ctxt;
 
 @end
 
@@ -821,7 +821,7 @@ static DDTTYLogger *sharedInstance;
         NSLogInfo(@"DDTTYLogger: isaColor256TTY: %@", (isaColor256TTY ? @"YES" : @"NO"));
         NSLogInfo(@"DDTTYLogger: isaXcodeColorTTY: %@", (isaXcodeColorTTY ? @"YES" : @"NO"));
 
-        sharedInstance = [[[self class] alloc] init];
+        sharedInstance = [[self alloc] init];
     });
 
     return sharedInstance;
@@ -887,6 +887,10 @@ static DDTTYLogger *sharedInstance;
     }
 
     return self;
+}
+
+- (DDLoggerName)loggerName {
+    return DDLoggerNameTTY;
 }
 
 - (void)loadDefaultColorProfiles {
@@ -1364,10 +1368,6 @@ static DDTTYLogger *sharedInstance;
             free(msg);
         }
     }
-}
-
-- (DDLoggerName)loggerName {
-    return DDLoggerNameTTY;
 }
 
 @end

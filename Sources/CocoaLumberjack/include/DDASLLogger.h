@@ -22,6 +22,8 @@
 
 #import <CocoaLumberjack/DDLog.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 // Custom key set on messages sent to ASL
 extern const char* const kDDASLKeyDDLog;
 
@@ -57,3 +59,5 @@ API_DEPRECATED("Use DDOSLogger instead", macosx(10.4,10.12), ios(2.0,10.0), watc
 // - (void)setLogFormatter:(id <DDLogFormatter>)formatter;
 
 @end
+
+NS_ASSUME_NONNULL_END
