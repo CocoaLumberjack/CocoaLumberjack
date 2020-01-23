@@ -110,13 +110,13 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
 }
 
 - (void)testAutomaticLogFileRollingWhenNotReusingLogFiles {
-    DDFileLogger *_logger = [[DDFileLogger alloc] initWithLogFileManager:logFileManager];
-    _logger.doNotReuseLogFiles = YES;
+    DDFileLogger *newLogger = [[DDFileLogger alloc] initWithLogFileManager:logFileManager];
+    newLogger.doNotReuseLogFiles = YES;
 
     [DDLog addLogger:logger];
     DDLogError(@"Some log in the old file");
     __auto_type oldLogFileInfo = [logger currentLogFileInfo];
-    __auto_type newLogFileInfo = [_logger currentLogFileInfo];
+    __auto_type newLogFileInfo = [newLogger currentLogFileInfo];
     XCTAssertNotNil(oldLogFileInfo);
     XCTAssertNotNil(newLogFileInfo);
     XCTAssertNotEqualObjects(oldLogFileInfo.filePath, newLogFileInfo.filePath);
