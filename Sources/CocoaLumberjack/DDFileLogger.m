@@ -1502,10 +1502,11 @@ static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
         // We therefore ignore this error, and assert that the directory we are copying into exists (which
         // is the only other case where this error code can come up).
 #if TARGET_IPHONE_SIMULATOR
-        if (!success && error.code != NSFileNoSuchFileError) {
+        if (!success && error.code != NSFileNoSuchFileError)
 #else
-        if (!success) {
+        if (!success)
 #endif
+        {
             NSLogError(@"DDLogFileInfo: Error renaming file (%@): %@", self.fileName, error);
         }
 
