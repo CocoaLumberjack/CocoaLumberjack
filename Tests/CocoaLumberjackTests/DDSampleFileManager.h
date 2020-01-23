@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DDSampleFileManager : DDLogFileManagerDefault
 
+@property (nonatomic) NSString *archivedLogFilePath;
+
 - (instancetype)initWithLogFileHeader:(NSString * __nullable)header NS_DESIGNATED_INITIALIZER;
 
 @end

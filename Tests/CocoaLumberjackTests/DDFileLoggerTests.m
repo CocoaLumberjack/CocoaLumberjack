@@ -24,6 +24,7 @@
 static const DDLogLevel ddLogLevel = DDLogLevelAll;
 
 @interface DDFileLoggerTests : XCTestCase {
+    DDSampleFileManager *logFileManager;
     DDFileLogger *logger;
     NSString *logsDirectory;
 }
@@ -34,7 +35,8 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
 
 - (void)setUp {
     [super setUp];
-    logger = [[DDFileLogger alloc] initWithLogFileManager:[[DDSampleFileManager alloc] initWithLogFileHeader:@"header"]];
+    logFileManager = [[DDSampleFileManager alloc] initWithLogFileHeader:@"header"];
+    logger = [[DDFileLogger alloc] initWithLogFileManager:logFileManager];
     logsDirectory = logger.logFileManager.logsDirectory;
 }
 
@@ -83,11 +85,12 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     XCTAssertNotNil(oldLogFileInfo);
     XCTAssertNotNil(newLogFileInfo);
     XCTAssertNotEqualObjects(oldLogFileInfo.filePath, newLogFileInfo.filePath);
+    XCTAssertEqualObjects(oldLogFileInfo.filePath, logFileManager.archivedLogFilePath);
     XCTAssertTrue(oldLogFileInfo.isArchived);
     XCTAssertFalse(newLogFileInfo.isArchived);
 }
 
-- (void)testAutomaticLogFileRollingWhenNotReusingLogFiles {
+- (void)testExplicitLogFileRollingWhenNotReusingLogFiles {
     logger.doNotReuseLogFiles = YES;
 
     [DDLog addLogger:logger];
@@ -104,6 +107,22 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     DDLogError(@"Log 2 in the new file");
 
     XCTAssertEqual(logger.logFileManager.unsortedLogFileInfos.count, 2);
+}
+
+- (void)testAutomaticLogFileRollingWhenNotReusingLogFiles {
+    DDFileLogger *newLogger = [[DDFileLogger alloc] initWithLogFileManager:logFileManager];
+    newLogger.doNotReuseLogFiles = YES;
+
+    [DDLog addLogger:logger];
+    DDLogError(@"Some log in the old file");
+    __auto_type oldLogFileInfo = [logger currentLogFileInfo];
+    __auto_type newLogFileInfo = [newLogger currentLogFileInfo];
+    XCTAssertNotNil(oldLogFileInfo);
+    XCTAssertNotNil(newLogFileInfo);
+    XCTAssertNotEqualObjects(oldLogFileInfo.filePath, newLogFileInfo.filePath);
+    XCTAssertEqualObjects(oldLogFileInfo.filePath, logFileManager.archivedLogFilePath);
+    XCTAssertTrue(oldLogFileInfo.isArchived);
+    XCTAssertFalse(newLogFileInfo.isArchived);
 }
 
 - (void)testCurrentLogFileInfoWhenNotReusingLogFilesOnlyCreatesNewLogFilesIfNecessary {

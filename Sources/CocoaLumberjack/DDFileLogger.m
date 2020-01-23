@@ -889,10 +889,11 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     _currentLogFileHandle = nil;
 
     _currentLogFileInfo.isArchived = YES;
-    NSString *archivedFilePath = [_currentLogFileInfo.filePath copy];
+    BOOL logFileManagerRespondsToSelector = [_logFileManager respondsToSelector:@selector(didRollAndArchiveLogFile:)];
+    NSString *archivedFilePath = (logFileManagerRespondsToSelector) ? [_currentLogFileInfo.filePath copy] : nil;
     _currentLogFileInfo = nil;
 
-    if ([_logFileManager respondsToSelector:@selector(didRollAndArchiveLogFile:)]) {
+    if (logFileManagerRespondsToSelector) {
         dispatch_async(_completionQueue, ^{
             [self->_logFileManager didRollAndArchiveLogFile:archivedFilePath];
         });
@@ -1065,11 +1066,11 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     // If we're resuming, we need to check if the log file is allowed for reuse or needs to be archived.
     if (isResuming && (_doNotReuseLogFiles || [self lt_shouldLogFileBeArchived:logFileInfo])) {
         logFileInfo.isArchived = YES;
-        NSString *archivedLogFilePath = [logFileInfo.fileName copy];
 
         if ([_logFileManager respondsToSelector:@selector(didArchiveLogFile:)]) {
+            NSString *archivedFilePath = [logFileInfo.filePath copy];
             dispatch_async(_completionQueue, ^{
-                [self->_logFileManager didArchiveLogFile:archivedLogFilePath];
+                [self->_logFileManager didArchiveLogFile:archivedFilePath];
             });
         }
 
