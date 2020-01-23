@@ -2,7 +2,7 @@
 
 ### Public
 - Improve error handling during log file creation in DDFileLogger & DDLogFileManager (#1103 / #1111)
-- Improve Swift nullability annotations of DDLogFileInfo (#1112 / #1111)
+- Improve nullability annotations in public headers (#1111 / #1112 / #1119)
 
 ### Internal
 - Fix rolling timer being rescheduled rapidly due to leeway (#1106 / #1107)
