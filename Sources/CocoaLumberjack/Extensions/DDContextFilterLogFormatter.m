@@ -22,10 +22,10 @@
 
 @interface DDLoggingContextSet : NSObject
 
+@property (readonly, copy, nonnull) NSArray *currentSet;
+
 - (void)addToSet:(NSInteger)loggingContext;
 - (void)removeFromSet:(NSInteger)loggingContext;
-
-@property (readonly, copy) NSArray *currentSet;
 
 - (BOOL)isInSet:(NSInteger)loggingContext;
 

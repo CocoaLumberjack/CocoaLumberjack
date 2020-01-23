@@ -84,9 +84,9 @@ static void *const GlobalLoggingQueueIdentityKey = (void *)&GlobalLoggingQueueId
 @property (nonatomic, readonly) DDLogLevel level;
 @property (nonatomic, readonly) dispatch_queue_t loggerQueue;
 
-+ (DDLoggerNode *)nodeWithLogger:(id <DDLogger>)logger
-                     loggerQueue:(dispatch_queue_t)loggerQueue
-                           level:(DDLogLevel)level;
++ (instancetype)nodeWithLogger:(id <DDLogger>)logger
+                   loggerQueue:(dispatch_queue_t)loggerQueue
+                         level:(DDLogLevel)level;
 
 @end
 
@@ -173,7 +173,7 @@ static NSUInteger _numProcessors;
  *
  *  @return An initialized `DDLog` instance.
  */
-- (id)init {
+- (instancetype)init {
     self = [super init];
 
     if (self) {
@@ -1000,8 +1000,8 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
     return self;
 }
 
-+ (DDLoggerNode *)nodeWithLogger:(id <DDLogger>)logger loggerQueue:(dispatch_queue_t)loggerQueue level:(DDLogLevel)level {
-    return [[DDLoggerNode alloc] initWithLogger:logger loggerQueue:loggerQueue level:level];
++ (instancetype)nodeWithLogger:(id <DDLogger>)logger loggerQueue:(dispatch_queue_t)loggerQueue level:(DDLogLevel)level {
+    return [[self alloc] initWithLogger:logger loggerQueue:loggerQueue level:level];
 }
 
 - (void)dealloc {
@@ -1242,9 +1242,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
         }
     };
 
-    dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-
-    dispatch_async(globalLoggingQueue, ^{
+    dispatch_async([DDLog loggingQueue], ^{
         dispatch_async(self->_loggerQueue, block);
     });
 }
@@ -1293,8 +1291,8 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
     return self;
 }
 
-+ (DDLoggerInformation *)informationWithLogger:(id <DDLogger>)logger andLevel:(DDLogLevel)level {
-    return [[DDLoggerInformation alloc] initWithLogger:logger andLevel:level];
++ (instancetype)informationWithLogger:(id <DDLogger>)logger andLevel:(DDLogLevel)level {
+    return [[self alloc] initWithLogger:logger andLevel:level];
 }
 
 @end

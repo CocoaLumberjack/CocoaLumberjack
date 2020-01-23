@@ -22,6 +22,8 @@
 
 #import <CocoaLumberjack/DDLog.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * This formatter can be used to chain different formatters together.
  * The log message will processed in the order of the formatters added.
@@ -54,3 +56,5 @@
 - (BOOL)isFormattingWithFormatter:(id<DDLogFormatter>)formatter;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -22,6 +22,8 @@
 
 #import <CocoaLumberjack/DDLog.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * This class provides a log formatter that filters log statements from a logging context not on the whitelist.
  *
@@ -115,3 +117,5 @@
 - (BOOL)isOnBlacklist:(NSInteger)loggingContext;
 
 @end
+
+NS_ASSUME_NONNULL_END
