@@ -1476,6 +1476,7 @@ static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
     // See full explanation in the header file.
 
     if (![newFileName isEqualToString:[self fileName]]) {
+        NSFileManager* fileManager = [NSFileManager defaultManager];
         NSString *fileDir = [filePath stringByDeletingLastPathComponent];
         NSString *newFilePath = [fileDir stringByAppendingPathComponent:newFileName];
 
@@ -1483,18 +1484,18 @@ static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
         // (in which case the file might not exist anymore and neither does it parent folder).
 #if defined(DEBUG) && (!defined(TARGET_IPHONE_SIMULATOR) || !TARGET_IPHONE_SIMULATOR)
         BOOL directory = NO;
-        [[NSFileManager defaultManager] fileExistsAtPath:fileDir isDirectory:&directory];
+        [fileManager fileExistsAtPath:fileDir isDirectory:&directory];
         NSAssert(directory, @"Containing directory must exist.");
 #endif
 
         NSError *error = nil;
 
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:newFilePath error:&error];
+        BOOL success = [fileManager removeItemAtPath:newFilePath error:&error];
         if (!success && error.code != NSFileNoSuchFileError) {
             NSLogError(@"DDLogFileInfo: Error deleting archive (%@): %@", self.fileName, error);
         }
 
-        success = [[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newFilePath error:&error];
+        success = [fileManager moveItemAtPath:filePath toPath:newFilePath error:&error];
 
         // When a log file is deleted, moved or renamed on the simulator, we attempt to rename it as a
         // result of "archiving" it, but since the file doesn't exist anymore, needless error logs are printed
