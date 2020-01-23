@@ -328,7 +328,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     for (NSString *fileName in fileNames) {
         // Filter out any files that aren't log files. (Just for extra safety)
 
-    #if TARGET_IPHONE_SIMULATOR
+#if TARGET_IPHONE_SIMULATOR
         // In case of iPhone simulator there can be 'archived' extension. isLogFile:
         // method knows nothing about it. Thus removing it for this method.
         //
@@ -337,10 +337,10 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
                                                                     withString:@""];
 
         if ([self isLogFile:theFileName])
-    #else
+#else
 
         if ([self isLogFile:fileName])
-    #endif
+#endif
         {
             NSString *filePath = [logsDirectory stringByAppendingPathComponent:fileName];
 
@@ -411,7 +411,9 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         if (arrayComponent.count > 0) {
             NSString *stringDate = arrayComponent.lastObject;
             stringDate = [stringDate stringByReplacingOccurrencesOfString:@".log" withString:@""];
+#if TARGET_IPHONE_SIMULATOR
             stringDate = [stringDate stringByReplacingOccurrencesOfString:@".archived" withString:@""];
+#endif
             date1 = [[self logFileDateFormatter] dateFromString:stringDate] ?: [obj1 creationDate];
         }
 
@@ -419,7 +421,9 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         if (arrayComponent.count > 0) {
             NSString *stringDate = arrayComponent.lastObject;
             stringDate = [stringDate stringByReplacingOccurrencesOfString:@".log" withString:@""];
+#if TARGET_IPHONE_SIMULATOR
             stringDate = [stringDate stringByReplacingOccurrencesOfString:@".archived" withString:@""];
+#endif
             date2 = [[self logFileDateFormatter] dateFromString:stringDate] ?: [obj2 creationDate];
         }
 
@@ -448,7 +452,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 
 - (NSData *)logFileHeaderData {
     NSString *fileHeaderStr = [self logFileHeader];
-    
+
     if (fileHeaderStr.length == 0) {
         return nil;
     }
