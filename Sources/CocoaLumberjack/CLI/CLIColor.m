@@ -26,9 +26,8 @@
 
 @implementation CLIColor
 
-+ (CLIColor *)colorWithCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha {
++ (instancetype)colorWithCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha {
     CLIColor *color = [CLIColor new];
-
     color->_red     = red;
     color->_green   = green;
     color->_blue    = blue;
@@ -40,15 +39,12 @@
     if (red) {
         *red    = _red;
     }
-
     if (green) {
         *green  = _green;
     }
-
     if (blue) {
         *blue   = _blue;
     }
-
     if (alpha) {
         *alpha  = _alpha;
     }

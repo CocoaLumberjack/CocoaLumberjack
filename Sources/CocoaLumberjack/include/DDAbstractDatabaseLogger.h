@@ -20,6 +20,8 @@
 
 #import <CocoaLumberjack/DDLog.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * This class provides an abstract implementation of a database logger.
  *
@@ -121,3 +123,5 @@
 - (void)deleteOldLogEntries;
 
 @end
+
+NS_ASSUME_NONNULL_END

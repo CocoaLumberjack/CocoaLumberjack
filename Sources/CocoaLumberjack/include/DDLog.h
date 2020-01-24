@@ -39,6 +39,8 @@
 @protocol DDLogger;
 @protocol DDLogFormatter;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * Define the standard options.
  *
@@ -173,8 +175,6 @@ typedef NS_ENUM(NSUInteger, DDLogLevel){
     DDLogLevelAll       = NSUIntegerMax
 };
 
-NS_ASSUME_NONNULL_BEGIN
-
 /**
  *  Extracts just the file name, no path or extension
  *
@@ -247,9 +247,9 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
        flag:(DDLogFlag)flag
     context:(NSInteger)context
        file:(const char *)file
-   function:(const char *)function
+   function:(nullable const char *)function
        line:(NSUInteger)line
-        tag:(id __nullable)tag
+        tag:(nullable id)tag
      format:(NSString *)format, ... NS_FORMAT_FUNCTION(9,10);
 
 /**
@@ -273,9 +273,9 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
        flag:(DDLogFlag)flag
     context:(NSInteger)context
        file:(const char *)file
-   function:(const char *)function
+   function:(nullable const char *)function
        line:(NSUInteger)line
-        tag:(id __nullable)tag
+        tag:(nullable id)tag
      format:(NSString *)format, ... NS_FORMAT_FUNCTION(9,10);
 
 /**
@@ -300,9 +300,9 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
        flag:(DDLogFlag)flag
     context:(NSInteger)context
        file:(const char *)file
-   function:(const char *)function
+   function:(nullable const char *)function
        line:(NSUInteger)line
-        tag:(id __nullable)tag
+        tag:(nullable id)tag
      format:(NSString *)format
        args:(va_list)argList NS_SWIFT_NAME(log(asynchronous:level:flag:context:file:function:line:tag:format:arguments:));
 
@@ -328,9 +328,9 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
        flag:(DDLogFlag)flag
     context:(NSInteger)context
        file:(const char *)file
-   function:(const char *)function
+   function:(nullable const char *)function
        line:(NSUInteger)line
-        tag:(id __nullable)tag
+        tag:(nullable id)tag
      format:(NSString *)format
        args:(va_list)argList NS_SWIFT_NAME(log(asynchronous:level:flag:context:file:function:line:tag:format:arguments:));
 
@@ -581,7 +581,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  * If no formatter is set, the logger simply logs the message as it is given in logMessage,
  * or it may use its own built in formatting style.
  **/
-@property (nonatomic, strong) id <DDLogFormatter> logFormatter;
+@property (nonatomic, strong, nullable) id <DDLogFormatter> logFormatter;
 
 @optional
 
@@ -666,7 +666,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  * The formatter may also optionally filter the log message by returning nil,
  * in which case the logger will not log the message.
  **/
-- (NSString * __nullable)formatLogMessage:(DDLogMessage *)logMessage NS_SWIFT_NAME(format(message:));
+- (nullable NSString *)formatLogMessage:(DDLogMessage *)logMessage NS_SWIFT_NAME(format(message:));
 
 @optional
 
@@ -780,7 +780,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
     NSUInteger _line;
     id _tag;
     DDLogMessageOptions _options;
-    NSDate *_timestamp;
+    NSDate * _timestamp;
     NSString *_threadID;
     NSString *_threadName;
     NSString *_queueLabel;
@@ -823,11 +823,11 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
                            flag:(DDLogFlag)flag
                         context:(NSInteger)context
                            file:(NSString *)file
-                       function:(NSString * __nullable)function
+                       function:(nullable NSString *)function
                            line:(NSUInteger)line
-                            tag:(id __nullable)tag
+                            tag:(nullable id)tag
                         options:(DDLogMessageOptions)options
-                      timestamp:(NSDate * __nullable)timestamp NS_DESIGNATED_INITIALIZER;
+                      timestamp:(nullable NSDate *)timestamp NS_DESIGNATED_INITIALIZER;
 
 /**
  * Read-only properties
@@ -842,13 +842,13 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
 @property (readonly, nonatomic) NSInteger context;
 @property (readonly, nonatomic) NSString *file;
 @property (readonly, nonatomic) NSString *fileName;
-@property (readonly, nonatomic) NSString * __nullable function;
+@property (readonly, nonatomic, nullable) NSString * function;
 @property (readonly, nonatomic) NSUInteger line;
-@property (readonly, nonatomic) id __nullable tag;
+@property (readonly, nonatomic, nullable) id tag;
 @property (readonly, nonatomic) DDLogMessageOptions options;
 @property (readonly, nonatomic) NSDate *timestamp;
 @property (readonly, nonatomic) NSString *threadID; // ID as it appears in NSLog calculated from the machThreadID
-@property (readonly, nonatomic) NSString *threadName;
+@property (readonly, nonatomic, nullable) NSString *threadName;
 @property (readonly, nonatomic) NSString *queueLabel;
 
 @end
@@ -907,8 +907,8 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
 @property (nonatomic, readonly) id <DDLogger> logger;
 @property (nonatomic, readonly) DDLogLevel level;
 
-+ (DDLoggerInformation *)informationWithLogger:(id <DDLogger>)logger
-                           andLevel:(DDLogLevel)level;
++ (instancetype)informationWithLogger:(id <DDLogger>)logger
+                             andLevel:(DDLogLevel)level;
 
 @end
 

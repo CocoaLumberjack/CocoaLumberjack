@@ -71,7 +71,7 @@ if modified_carthage_xcode_project
   ["Lumberjack.xcodeproj/project.pbxproj"].each do |project_file|
     next unless File.file?(project_file)
     File.readlines(project_file).each_with_index do |line, index|
-	  if line.include?("sourceTree = SOURCE_ROOT;") and line.include?("PBXFileReference") and !line.include("path = Sources/CocoaLumberjackSwiftSupport/include/")
+	  if line.include?("sourceTree = SOURCE_ROOT;") and line.include?("PBXFileReference") and !line.include?("path = Sources/CocoaLumberjackSwiftSupport/include/")
         warn("Files should be in sync with project structure", file: project_file, line: index+1)
 	  end
 	  line_containing_setting = line.match(/[A-Z_]+ = .*;/)

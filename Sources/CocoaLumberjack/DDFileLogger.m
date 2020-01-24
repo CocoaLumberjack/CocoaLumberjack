@@ -72,11 +72,20 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 @synthesize maximumNumberOfLogFiles = _maximumNumberOfLogFiles;
 @synthesize logFilesDiskQuota = _logFilesDiskQuota;
 
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)theKey {
+
+    if ([theKey isEqualToString:@"maximumNumberOfLogFiles"] || [theKey isEqualToString:@"logFilesDiskQuota"]) {
+        return NO;
+    } else {
+        return [super automaticallyNotifiesObserversForKey:theKey];
+    }
+}
+
 - (instancetype)init {
     return [self initWithLogsDirectory:nil];
 }
 
-- (instancetype)initWithLogsDirectory:(NSString * __nullable)aLogsDirectory {
+- (instancetype)initWithLogsDirectory:(nullable NSString *)aLogsDirectory {
     if ((self = [super init])) {
         _maximumNumberOfLogFiles = kDDDefaultLogMaxNumLogFiles;
         _logFilesDiskQuota = kDDDefaultLogFilesDiskQuota;
@@ -97,15 +106,6 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     }
 
     return self;
-}
-
-+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)theKey {
-
-    if ([theKey isEqualToString:@"maximumNumberOfLogFiles"] || [theKey isEqualToString:@"logFilesDiskQuota"]) {
-        return NO;
-    } else {
-        return [super automaticallyNotifiesObserversForKey:theKey];
-    }
 }
 
 #if TARGET_OS_IPHONE
@@ -442,7 +442,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     return [NSString stringWithFormat:@"%@ %@.log", appName, formattedDate];
 }
 
-- (NSString * __nullable)logFileHeader {
+- (nullable NSString *)logFileHeader {
     return nil;
 }
 
@@ -575,7 +575,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     return [self initWithDateFormatter:nil];
 }
 
-- (instancetype)initWithDateFormatter:(NSDateFormatter * __nullable)aDateFormatter {
+- (instancetype)initWithDateFormatter:(nullable NSDateFormatter *)aDateFormatter {
     if ((self = [super init])) {
         if (aDateFormatter) {
             _dateFormatter = aDateFormatter;
@@ -634,7 +634,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 }
 
 - (instancetype)initWithLogFileManager:(id <DDLogFileManager>)aLogFileManager
-                       completionQueue:(dispatch_queue_t __nullable)dispatchQueue {
+                       completionQueue:(nullable dispatch_queue_t)dispatchQueue {
     if ((self = [super init])) {
         _completionQueue = dispatchQueue ?: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
@@ -845,7 +845,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     [self rollLogFileWithCompletionBlock:nil];
 }
 
-- (void)rollLogFileWithCompletionBlock:(void (^ __nullable)(void))completionBlock {
+- (void)rollLogFileWithCompletionBlock:(nullable void (^)(void))completionBlock {
     // This method is public.
     // We need to execute the rolling on our logging thread/queue.
 

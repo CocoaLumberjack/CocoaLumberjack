@@ -22,6 +22,8 @@
 
 #import <CocoaLumberjack/DDLog.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  *  Log formatter mode
  */
@@ -140,12 +142,12 @@ typedef NS_ENUM(NSUInteger, DDDispatchQueueLogFormatterMode){
  *
  * To remove/undo a previous replacement, invoke this method with nil for the 'shortLabel' parameter.
  **/
-- (NSString *)replacementStringForQueueLabel:(NSString *)longLabel;
+- (nullable NSString *)replacementStringForQueueLabel:(NSString *)longLabel;
 
 /**
  *  See the `replacementStringForQueueLabel:` description
  */
-- (void)setReplacementString:(NSString *)shortLabel forQueueLabel:(NSString *)longLabel;
+- (void)setReplacementString:(nullable NSString *)shortLabel forQueueLabel:(NSString *)longLabel;
 
 @end
 
@@ -189,3 +191,5 @@ typedef NS_ENUM(NSUInteger, DDDispatchQueueLogFormatterMode){
 
 @interface DDAtomicCounter: NSObject<DDAtomicCountable>
 @end
+
+NS_ASSUME_NONNULL_END

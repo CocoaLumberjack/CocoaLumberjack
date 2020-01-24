@@ -67,7 +67,6 @@
         _replacements = [[NSMutableDictionary alloc] init];
 
         // Set default replacements:
-
         _replacements[@"com.apple.main-thread"] = @"main";
     }
 
@@ -130,14 +129,10 @@
     [dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss:SSS"];
     [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
-
-    NSString *calendarIdentifier = NSCalendarIdentifierGregorian;
-
-    [dateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:calendarIdentifier]];
+    [dateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian]];
 }
 
 - (NSString *)stringFromDate:(NSDate *)date {
-
     NSDateFormatter *dateFormatter = nil;
     if (_mode == DDDispatchQueueLogFormatterModeNonShareble) {
         // Single-threaded mode.
@@ -265,8 +260,12 @@
     return [NSString stringWithFormat:@"%@ [%@] %@", timestamp, queueThreadLabel, logMessage->_message];
 }
 
-- (void)didAddToLogger:(id <DDLogger>  __attribute__((unused)))logger {
-    NSAssert([_atomicLoggerCounter increment] <= 1 || _mode == DDDispatchQueueLogFormatterModeShareble, @"Can't reuse formatter with multiple loggers in non-shareable mode.");
+- (void)didAddToLogger:(id <DDLogger> __attribute__((unused)))logger {
+    #ifdef NS_BLOCK_ASSERTIONS
+    __attribute__((unused))
+    #endif
+    __auto_type incValue = [_atomicLoggerCounter increment];
+    NSAssert(incValue <= 1 || _mode == DDDispatchQueueLogFormatterModeShareble, @"Can't reuse formatter with multiple loggers in non-shareable mode.");
 }
 
 - (void)willRemoveFromLogger:(id <DDLogger> __attribute__((unused)))logger {

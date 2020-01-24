@@ -20,9 +20,9 @@
 
 #import <CocoaLumberjack/DDLog.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @class DDLogFileInfo;
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  * This class provides a logger to write log statements to a file.
@@ -202,7 +202,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *  If logDirectory is not specified, then a folder called "Logs" is created in the app's cache directory.
  *  While running on the simulator, the "Logs" folder is located in the library temporary directory.
  */
-- (instancetype)initWithLogsDirectory:(NSString * __nullable)logsDirectory NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithLogsDirectory:(nullable NSString *)logsDirectory NS_DESIGNATED_INITIALIZER;
 
 #if TARGET_OS_IPHONE
 /*
@@ -216,7 +216,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *    null
  *    cy#
  **/
-- (instancetype)initWithLogsDirectory:(NSString * __nullable)logsDirectory
+- (instancetype)initWithLogsDirectory:(nullable NSString *)logsDirectory
            defaultFileProtectionLevel:(NSFileProtectionType)fileProtectionLevel;
 #endif
 
@@ -313,7 +313,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 /**
  *  Designated initializer, requires a date formatter
  */
-- (instancetype)initWithDateFormatter:(NSDateFormatter * __nullable)dateFormatter NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithDateFormatter:(nullable NSDateFormatter *)dateFormatter NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -336,15 +336,15 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *  A global queue w/ default priority is used to run callbacks.
  *  If needed, specify queue using `initWithLogFileManager:completionQueue:`.
  */
-- (instancetype)initWithLogFileManager:(id <DDLogFileManager> __nullable)logFileManager;
+- (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager;
 
 /**
  *  Designated initializer, requires a `DDLogFileManager` instance.
  *  The completionQueue is used to execute `didArchiveLogFile`, `didRollAndArchiveLogFile`,
  *  and the callback in `rollLog`. If nil, a global queue w/ default priority is used.
  */
-- (instancetype)initWithLogFileManager:(id <DDLogFileManager> __nullable)logFileManager
-                       completionQueue:(dispatch_queue_t __nullable)dispatchQueue NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager
+                       completionQueue:(nullable dispatch_queue_t)dispatchQueue NS_DESIGNATED_INITIALIZER;
 
 /**
  *  Deprecated. Use `willLogMessage:`
@@ -444,7 +444,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *  You can optionally force the current log file to be rolled with this method.
  *  CompletionBlock will be called on main queue.
  */
-- (void)rollLogFileWithCompletionBlock:(void (^ __nullable)(void))completionBlock
+- (void)rollLogFileWithCompletionBlock:(nullable void (^)(void))completionBlock
     NS_SWIFT_NAME(rollLogFile(withCompletion:));
 
 /**

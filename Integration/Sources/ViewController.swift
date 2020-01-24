@@ -26,7 +26,7 @@ private func printSomething() {
     DDLogError("Error")
 }
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,15 +38,12 @@ class ViewController: UIViewController {
         let formatter = Formatter()
 
         if #available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *) {
-            if let logger = DDOSLogger.sharedInstance {
-                logger.logFormatter = formatter
-                DDLog.add(logger)
-            }
-        } else {
-            if let logger = DDTTYLogger.sharedInstance {
-                logger.logFormatter = formatter
-                DDLog.add(logger)
-            }
+            let logger = DDOSLogger.sharedInstance
+            logger.logFormatter = formatter
+            DDLog.add(logger)
+        } else if let logger = DDTTYLogger.sharedInstance {
+            logger.logFormatter = formatter
+            DDLog.add(logger)
         }
         
         DDLogVerbose("Verbose")
