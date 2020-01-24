@@ -18,8 +18,8 @@ import CocoaLumberjackSwift
 
 if #available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *) {
     DDLog.add(DDOSLogger.sharedInstance)
-} else {
-    DDLog.add(DDTTYLogger.sharedInstance)
+} else if let ttyLogger = DDTTYLogger.sharedInstance {
+    DDLog.add(ttyLogger)
 }
 
 DDLogVerbose("Verbose")
