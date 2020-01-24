@@ -16,6 +16,7 @@
 #import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
 #import <pthread/pthread.h>
 #import <objc/runtime.h>
+#import <stdatomic.h>
 
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
@@ -25,12 +26,15 @@
 
 @interface DDDispatchQueueLogFormatter () {
     DDDispatchQueueLogFormatterMode _mode;
-    NSString *_dateFormatterKey;
-    DDAtomicCounter *_atomicLoggerCounter;
-    NSDateFormatter *_threadUnsafeDateFormatter; // Use [self stringFromDate]
-    
+    NSDateFormatter *_dateFormatter;      // Use [self stringFromDate]
+
     pthread_mutex_t _mutex;
-    
+#if __LP64__ || NS_BUILD_32_LIKE_64
+    atomic_int_fast64_t _counter;
+#else
+    atomic_int_fast32_t _counter;
+#endif
+
     NSUInteger _minQueueLength;           // _prefix == Only access via atomic property
     NSUInteger _maxQueueLength;           // _prefix == Only access via atomic property
     NSMutableDictionary *_replacements;   // _prefix == Only access from within spinlock
@@ -45,24 +49,8 @@
     if ((self = [super init])) {
         _mode = DDDispatchQueueLogFormatterModeShareble;
 
-        // We need to carefully pick the name for storing in thread dictionary to not
-        // use a formatter configured by subclass and avoid surprises.
-        Class cls = [self class];
-        Class superClass = class_getSuperclass(cls);
-        SEL configMethodName = @selector(configureDateFormatter:);
-        Method configMethod = class_getInstanceMethod(cls, configMethodName);
-        while (class_getInstanceMethod(superClass, configMethodName) == configMethod) {
-            cls = superClass;
-            superClass = class_getSuperclass(cls);
-        }
-        // now `cls` is the class that provides implementation for `configureDateFormatter:`
-        _dateFormatterKey = [NSString stringWithFormat:@"%s_NSDateFormatter", class_getName(cls)];
+        _dateFormatter = [self createDateFormatter];
 
-        _atomicLoggerCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
-        _threadUnsafeDateFormatter = nil;
-
-        _minQueueLength = 0;
-        _maxQueueLength = 0;
         pthread_mutex_init(&_mutex, NULL);
         _replacements = [[NSMutableDictionary alloc] init];
 
@@ -133,31 +121,7 @@
 }
 
 - (NSString *)stringFromDate:(NSDate *)date {
-    NSDateFormatter *dateFormatter = nil;
-    if (_mode == DDDispatchQueueLogFormatterModeNonShareble) {
-        // Single-threaded mode.
-
-        dateFormatter = _threadUnsafeDateFormatter;
-        if (dateFormatter == nil) {
-            dateFormatter = [self createDateFormatter];
-            _threadUnsafeDateFormatter = dateFormatter;
-        }
-    } else {
-        // Multi-threaded mode.
-        // NSDateFormatter is NOT thread-safe.
-
-        NSString *key = _dateFormatterKey;
-
-        NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
-        dateFormatter = threadDictionary[key];
-
-        if (dateFormatter == nil) {
-            dateFormatter = [self createDateFormatter];
-            threadDictionary[key] = dateFormatter;
-        }
-    }
-
-    return [dateFormatter stringFromDate:date];
+    return [_dateFormatter stringFromDate:date];
 }
 
 - (NSString *)queueThreadLabelForLogMessage:(DDLogMessage *)logMessage {
@@ -264,12 +228,12 @@
     #ifdef NS_BLOCK_ASSERTIONS
     __attribute__((unused))
     #endif
-    __auto_type incValue = [_atomicLoggerCounter increment];
-    NSAssert(incValue <= 1 || _mode == DDDispatchQueueLogFormatterModeShareble, @"Can't reuse formatter with multiple loggers in non-shareable mode.");
+    __auto_type counter = atomic_fetch_add_explicit(&_counter, 1, memory_order_relaxed);
+    NSAssert(counter < 1 || _mode == DDDispatchQueueLogFormatterModeShareble, @"Can't reuse formatter with multiple loggers in non-shareable mode.");
 }
 
 - (void)willRemoveFromLogger:(id <DDLogger> __attribute__((unused)))logger {
-    [_atomicLoggerCounter decrement];
+    (void) atomic_fetch_sub_explicit(&_counter, 1, memory_order_relaxed);
 }
 
 @end

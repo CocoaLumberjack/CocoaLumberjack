@@ -113,22 +113,22 @@ typedef NS_OPTIONS(NSUInteger, DDLogFlag){
      *  0...00001 DDLogFlagError
      */
     DDLogFlagError      = (1 << 0),
-    
+
     /**
      *  0...00010 DDLogFlagWarning
      */
     DDLogFlagWarning    = (1 << 1),
-    
+
     /**
      *  0...00100 DDLogFlagInfo
      */
     DDLogFlagInfo       = (1 << 2),
-    
+
     /**
      *  0...01000 DDLogFlagDebug
      */
     DDLogFlagDebug      = (1 << 3),
-    
+
     /**
      *  0...10000 DDLogFlagVerbose
      */
@@ -143,32 +143,32 @@ typedef NS_ENUM(NSUInteger, DDLogLevel){
      *  No logs
      */
     DDLogLevelOff       = 0,
-    
+
     /**
      *  Error logs only
      */
     DDLogLevelError     = (DDLogFlagError),
-    
+
     /**
      *  Error and warning logs
      */
     DDLogLevelWarning   = (DDLogLevelError   | DDLogFlagWarning),
-    
+
     /**
      *  Error, warning and info logs
      */
     DDLogLevelInfo      = (DDLogLevelWarning | DDLogFlagInfo),
-    
+
     /**
      *  Error, warning, info and debug logs
      */
     DDLogLevelDebug     = (DDLogLevelInfo    | DDLogFlagDebug),
-    
+
     /**
      *  Error, warning, info, debug and verbose logs
      */
     DDLogLevelVerbose   = (DDLogLevelDebug   | DDLogFlagVerbose),
-    
+
     /**
      *  All logs (1...11111)
      */
@@ -676,7 +676,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  *
  * This is primarily for thread-safety.
  * If a formatter is explicitly not thread-safe, it may wish to throw an exception if added to multiple loggers.
- * Or if a formatter has potentially thread-unsafe code (e.g. NSDateFormatter),
+ * Or if a formatter has potentially thread-unsafe code (e.g. NSDateFormatter with 10.0 behavior),
  * it could possibly use these hooks to switch to thread-safe versions of the code.
  **/
 - (void)didAddToLogger:(id <DDLogger>)logger;
@@ -687,7 +687,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  *
  * This is primarily for thread-safety.
  * If a formatter is explicitly not thread-safe, it may wish to throw an exception if added to multiple loggers.
- * Or if a formatter has potentially thread-unsafe code (e.g. NSDateFormatter),
+ * Or if a formatter has potentially thread-unsafe code (e.g. NSDateFormatter with 10.0 behavior),
  * it could possibly use these hooks to switch to thread-safe versions of the code or use dispatch_set_specific()
 .* to add its own specific values.
  **/
