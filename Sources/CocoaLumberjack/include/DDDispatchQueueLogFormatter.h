@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Log formatter mode
  */
+__attribute((deprecated))
 typedef NS_ENUM(NSUInteger, DDDispatchQueueLogFormatterMode){
     /**
      *  This is the default option, means the formatter can be reused between multiple loggers and therefore is thread-safe.
@@ -91,7 +92,7 @@ typedef NS_ENUM(NSUInteger, DDDispatchQueueLogFormatterMode){
  *
  *  @param mode choose between DDDispatchQueueLogFormatterModeShareble and DDDispatchQueueLogFormatterModeNonShareble, depending if the formatter is shared between several loggers or not
  */
-- (instancetype)initWithMode:(DDDispatchQueueLogFormatterMode)mode;
+- (instancetype)initWithMode:(DDDispatchQueueLogFormatterMode)mode __attribute((deprecated));
 
 /**
  * The minQueueLength restricts the minimum size of the [detail box].
@@ -178,18 +179,16 @@ typedef NS_ENUM(NSUInteger, DDDispatchQueueLogFormatterMode){
 
 @end
 
-#pragma mark - DDAtomicCounter
+#pragma mark - DDAtomicCountable
 
+__attribute((deprecated))
 @protocol DDAtomicCountable <NSObject>
 
-- (instancetype)initWithDefaultValue:(NSInteger)defaultValue;
-- (NSInteger)increment;
-- (NSInteger)decrement;
-- (NSInteger)value;
+- (instancetype)initWithDefaultValue:(int32_t)defaultValue;
+- (int32_t)increment;
+- (int32_t)decrement;
+- (int32_t)value;
 
-@end
-
-@interface DDAtomicCounter: NSObject<DDAtomicCountable>
 @end
 
 NS_ASSUME_NONNULL_END

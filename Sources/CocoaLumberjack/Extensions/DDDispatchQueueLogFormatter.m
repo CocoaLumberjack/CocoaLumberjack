@@ -15,8 +15,6 @@
 
 #import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
 #import <pthread/pthread.h>
-#import <objc/runtime.h>
-#import <stdatomic.h>
 
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
@@ -25,15 +23,9 @@
 #pragma mark - DDDispatchQueueLogFormatter
 
 @interface DDDispatchQueueLogFormatter () {
-    DDDispatchQueueLogFormatterMode _mode;
     NSDateFormatter *_dateFormatter;      // Use [self stringFromDate]
 
     pthread_mutex_t _mutex;
-#if __LP64__ || NS_BUILD_32_LIKE_64
-    atomic_int_fast64_t _counter;
-#else
-    atomic_int_fast32_t _counter;
-#endif
 
     NSUInteger _minQueueLength;           // _prefix == Only access via atomic property
     NSUInteger _maxQueueLength;           // _prefix == Only access via atomic property
@@ -47,8 +39,6 @@
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _mode = DDDispatchQueueLogFormatterModeShareble;
-
         _dateFormatter = [self createDateFormatter];
 
         pthread_mutex_init(&_mutex, NULL);
@@ -62,10 +52,7 @@
 }
 
 - (instancetype)initWithMode:(DDDispatchQueueLogFormatterMode)mode {
-    if ((self = [self init])) {
-        _mode = mode;
-    }
-    return self;
+    return [self init];
 }
 
 - (void)dealloc {
@@ -222,54 +209,6 @@
     NSString *queueThreadLabel = [self queueThreadLabelForLogMessage:logMessage];
 
     return [NSString stringWithFormat:@"%@ [%@] %@", timestamp, queueThreadLabel, logMessage->_message];
-}
-
-- (void)didAddToLogger:(id <DDLogger> __attribute__((unused)))logger {
-    #ifdef NS_BLOCK_ASSERTIONS
-    __attribute__((unused))
-    #endif
-    __auto_type counter = atomic_fetch_add_explicit(&_counter, 1, memory_order_relaxed);
-    NSAssert(counter < 1 || _mode == DDDispatchQueueLogFormatterModeShareble, @"Can't reuse formatter with multiple loggers in non-shareable mode.");
-}
-
-- (void)willRemoveFromLogger:(id <DDLogger> __attribute__((unused)))logger {
-    (void) atomic_fetch_sub_explicit(&_counter, 1, memory_order_relaxed);
-}
-
-@end
-
-#pragma mark - DDAtomicCounter
-
-@interface DDAtomicCounter() {
-#if __LP64__ || NS_BUILD_32_LIKE_64
-    atomic_int_fast64_t _value;
-#else
-    atomic_int_fast32_t _value;
-#endif
-}
-@end
-
-@implementation DDAtomicCounter
-
-- (instancetype)initWithDefaultValue:(NSInteger)defaultValue {
-    if ((self = [super init])) {
-        atomic_init(&_value, defaultValue);
-    }
-    return self;
-}
-
-- (NSInteger)value {
-    return atomic_load_explicit(&_value, memory_order_relaxed);
-}
-
-- (NSInteger)increment {
-    NSInteger old = atomic_fetch_add_explicit(&_value, 1, memory_order_relaxed);
-    return (old + 1);
-}
-
-- (NSInteger)decrement {
-    NSInteger old = atomic_fetch_sub_explicit(&_value, 1, memory_order_relaxed);
-    return (old - 1);
 }
 
 @end
