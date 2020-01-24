@@ -182,10 +182,10 @@ typedef NS_ENUM(NSUInteger, DDDispatchQueueLogFormatterMode){
 
 @protocol DDAtomicCountable <NSObject>
 
-- (instancetype)initWithDefaultValue:(int32_t)defaultValue;
-- (int32_t)increment;
-- (int32_t)decrement;
-- (int32_t)value;
+- (instancetype)initWithDefaultValue:(NSInteger)defaultValue;
+- (NSInteger)increment;
+- (NSInteger)decrement;
+- (NSInteger)value;
 
 @end
 

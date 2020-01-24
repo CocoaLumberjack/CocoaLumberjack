@@ -240,54 +240,36 @@
 
 #pragma mark - DDAtomicCounter
 
-#define DD_OSATOMIC_API_DEPRECATED (TARGET_OS_OSX && MAC_OS_X_VERSION_MIN_REQUIRED >= 101200) || (TARGET_OS_IOS && __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000) || (TARGET_OS_WATCH && __WATCH_OS_VERSION_MIN_REQUIRED >= 30000) || (TARGET_OS_TV && __TV_OS_VERSION_MIN_REQUIRED >= 100000)
-
-#if DD_OSATOMIC_API_DEPRECATED
-#import <stdatomic.h>
-#else
-#import <libkern/OSAtomic.h>
-#endif
-
 @interface DDAtomicCounter() {
-#if DD_OSATOMIC_API_DEPRECATED
-    _Atomic(int32_t) _value;
+#if __LP64__ || NS_BUILD_32_LIKE_64
+    atomic_int_fast64_t _value;
 #else
-    int32_t _value;
+    atomic_int_fast32_t _value;
 #endif
 }
 @end
 
 @implementation DDAtomicCounter
 
-- (instancetype)initWithDefaultValue:(int32_t)defaultValue {
+- (instancetype)initWithDefaultValue:(NSInteger)defaultValue {
     if ((self = [super init])) {
-        _value = defaultValue;
+        atomic_init(&_value, defaultValue);
     }
     return self;
 }
 
-- (int32_t)value {
-    return _value;
+- (NSInteger)value {
+    return atomic_load_explicit(&_value, memory_order_relaxed);
 }
 
-#if DD_OSATOMIC_API_DEPRECATED
-- (int32_t)increment {
-    atomic_fetch_add_explicit(&_value, 1, memory_order_relaxed);
-    return _value;
+- (NSInteger)increment {
+    NSInteger old = atomic_fetch_add_explicit(&_value, 1, memory_order_relaxed);
+    return (old + 1);
 }
 
-- (int32_t)decrement {
-    atomic_fetch_sub_explicit(&_value, 1, memory_order_relaxed);
-    return _value;
+- (NSInteger)decrement {
+    NSInteger old = atomic_fetch_sub_explicit(&_value, 1, memory_order_relaxed);
+    return (old - 1);
 }
-#else
-- (int32_t)increment {
-    return OSAtomicIncrement32(&_value);
-}
-
-- (int32_t)decrement {
-    return OSAtomicDecrement32(&_value);
-}
-#endif
 
 @end
