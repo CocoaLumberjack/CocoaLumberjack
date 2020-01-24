@@ -329,10 +329,10 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         // Filter out any files that aren't log files. (Just for extra safety)
 
 #if TARGET_IPHONE_SIMULATOR
+        // This is only used on the iPhone simulator for backward compatibility reason.
+        //
         // In case of iPhone simulator there can be 'archived' extension. isLogFile:
         // method knows nothing about it. Thus removing it for this method.
-        //
-        // See full explanation in the header file.
         NSString *theFileName = [fileName stringByReplacingOccurrencesOfString:@".archived"
                                                                     withString:@""];
 
@@ -412,6 +412,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
             NSString *stringDate = arrayComponent.lastObject;
             stringDate = [stringDate stringByReplacingOccurrencesOfString:@".log" withString:@""];
 #if TARGET_IPHONE_SIMULATOR
+            // This is only used on the iPhone simulator for backward compatibility reason.
             stringDate = [stringDate stringByReplacingOccurrencesOfString:@".archived" withString:@""];
 #endif
             date1 = [[self logFileDateFormatter] dateFromString:stringDate] ?: [obj1 creationDate];
@@ -422,6 +423,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
             NSString *stringDate = arrayComponent.lastObject;
             stringDate = [stringDate stringByReplacingOccurrencesOfString:@".log" withString:@""];
 #if TARGET_IPHONE_SIMULATOR
+            // This is only used on the iPhone simulator for backward compatibility reason.
             stringDate = [stringDate stringByReplacingOccurrencesOfString:@".archived" withString:@""];
 #endif
             date2 = [[self logFileDateFormatter] dateFromString:stringDate] ?: [obj2 creationDate];
@@ -1348,6 +1350,15 @@ static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
     unsigned long long _fileSize;
 }
 
+#if TARGET_IPHONE_SIMULATOR
+
+// Old implementation of extended attributes on the simulator.
+
+- (BOOL)_hasExtensionAttributeWithName:(NSString *)attrName;
+- (void)_removeExtensionAttributeWithName:(NSString *)attrName;
+
+#endif
+
 @end
 
 
@@ -1521,6 +1532,13 @@ static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
 
 #if TARGET_IPHONE_SIMULATOR
 
+// Old implementation of extended attributes on the simulator.
+
+// Extended attributes were not working properly on the simulator
+// due to misuse of setxattr() function.
+// Now that this is fixed in the new implementation, we want to keep
+// backward compatibility with previous simulator installations.
+
 static NSString* const kDDExtensionSeparator = @".";
 
 static NSString* _xattrToExtensionName(NSString *attrName) {
@@ -1532,13 +1550,8 @@ static NSString* _xattrToExtensionName(NSString *attrName) {
     return [_xattrToExtensionNameMap objectForKey:attrName];
 }
 
-// Extended attributes don't work properly on the simulator.
-// So we have to use a less attractive alternative.
-// See full explanation in the header file.
-
-- (BOOL)hasExtensionAttributeWithName:(NSString *)attrName {
-    // This method is only used on the iPhone simulator, where normal extended attributes are broken.
-    // See full explanation in the header file.
+- (BOOL)_hasExtensionAttributeWithName:(NSString *)attrName {
+    // This method is only used on the iPhone simulator for backward compatibility reason.
 
     // Split the file name into components. File name may have various format, but generally
     // structure is same:
@@ -1564,9 +1577,8 @@ static NSString* _xattrToExtensionName(NSString *attrName) {
     return NO;
 }
 
-- (void)removeExtensionAttributeWithName:(NSString *)attrName {
-    // This method is only used on the iPhone simulator, where normal extended attributes are broken.
-    // See full explanation in the header file.
+- (void)_removeExtensionAttributeWithName:(NSString *)attrName {
+    // This method is only used on the iPhone simulator for backward compatibility reason.
 
     if ([attrName length] == 0) {
         return;
@@ -1623,14 +1635,14 @@ static NSString* _xattrToExtensionName(NSString *attrName) {
     if (result > 0 && buffer[0] == '\1') {
         hasExtendedAttribute = YES;
     }
-    // Maintain backwards compatibility, but fix it for future checks
+    // Maintain backward compatibility, but fix it for future checks
     else if (result >= 0) {
         hasExtendedAttribute = YES;
 
         [self addExtendedAttributeWithName:attrName];
     }
 #if TARGET_IPHONE_SIMULATOR
-    else if ([self hasExtensionAttributeWithName:_xattrToExtensionName(attrName)]) {
+    else if ([self _hasExtensionAttributeWithName:_xattrToExtensionName(attrName)]) {
         hasExtendedAttribute = YES;
 
         [self addExtendedAttributeWithName:attrName];
@@ -1654,7 +1666,7 @@ static NSString* _xattrToExtensionName(NSString *attrName) {
     }
 #if TARGET_IPHONE_SIMULATOR
     else {
-        [self removeExtensionAttributeWithName:_xattrToExtensionName(attrName)];
+        [self _removeExtensionAttributeWithName:_xattrToExtensionName(attrName)];
     }
 #endif
 }
@@ -1673,7 +1685,7 @@ static NSString* _xattrToExtensionName(NSString *attrName) {
     }
 
 #if TARGET_IPHONE_SIMULATOR
-    [self removeExtensionAttributeWithName:_xattrToExtensionName(attrName)];
+    [self _removeExtensionAttributeWithName:_xattrToExtensionName(attrName)];
 #endif
 }
 
