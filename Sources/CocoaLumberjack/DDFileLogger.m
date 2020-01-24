@@ -328,19 +328,19 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     for (NSString *fileName in fileNames) {
         // Filter out any files that aren't log files. (Just for extra safety)
 
-    #if TARGET_IPHONE_SIMULATOR
+#if TARGET_IPHONE_SIMULATOR
+        // This is only used on the iPhone simulator for backward compatibility reason.
+        //
         // In case of iPhone simulator there can be 'archived' extension. isLogFile:
         // method knows nothing about it. Thus removing it for this method.
-        //
-        // See full explanation in the header file.
         NSString *theFileName = [fileName stringByReplacingOccurrencesOfString:@".archived"
                                                                     withString:@""];
 
         if ([self isLogFile:theFileName])
-    #else
+#else
 
         if ([self isLogFile:fileName])
-    #endif
+#endif
         {
             NSString *filePath = [logsDirectory stringByAppendingPathComponent:fileName];
 
@@ -411,7 +411,10 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         if (arrayComponent.count > 0) {
             NSString *stringDate = arrayComponent.lastObject;
             stringDate = [stringDate stringByReplacingOccurrencesOfString:@".log" withString:@""];
+#if TARGET_IPHONE_SIMULATOR
+            // This is only used on the iPhone simulator for backward compatibility reason.
             stringDate = [stringDate stringByReplacingOccurrencesOfString:@".archived" withString:@""];
+#endif
             date1 = [[self logFileDateFormatter] dateFromString:stringDate] ?: [obj1 creationDate];
         }
 
@@ -419,7 +422,10 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         if (arrayComponent.count > 0) {
             NSString *stringDate = arrayComponent.lastObject;
             stringDate = [stringDate stringByReplacingOccurrencesOfString:@".log" withString:@""];
+#if TARGET_IPHONE_SIMULATOR
+            // This is only used on the iPhone simulator for backward compatibility reason.
             stringDate = [stringDate stringByReplacingOccurrencesOfString:@".archived" withString:@""];
+#endif
             date2 = [[self logFileDateFormatter] dateFromString:stringDate] ?: [obj2 creationDate];
         }
 
@@ -448,7 +454,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 
 - (NSData *)logFileHeaderData {
     NSString *fileHeaderStr = [self logFileHeader];
-    
+
     if (fileHeaderStr.length == 0) {
         return nil;
     }
@@ -1330,11 +1336,7 @@ static int exception_count = 0;
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#if TARGET_IPHONE_SIMULATOR
-    static NSString * const kDDXAttrArchivedName = @"archived";
-#else
-    static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
-#endif
+static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
 
 @interface DDLogFileInfo () {
     __strong NSString *_filePath;
@@ -1347,6 +1349,15 @@ static int exception_count = 0;
 
     unsigned long long _fileSize;
 }
+
+#if TARGET_IPHONE_SIMULATOR
+
+// Old implementation of extended attributes on the simulator.
+
+- (BOOL)_hasExtensionAttributeWithName:(NSString *)attrName;
+- (void)_removeExtensionAttributeWithName:(NSString *)attrName;
+
+#endif
 
 @end
 
@@ -1449,43 +1460,15 @@ static int exception_count = 0;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (BOOL)isArchived {
-#if TARGET_IPHONE_SIMULATOR
-
-    // Extended attributes don't work properly on the simulator.
-    // So we have to use a less attractive alternative.
-    // See full explanation in the header file.
-
-    return [self hasExtensionAttributeWithName:kDDXAttrArchivedName];
-
-#else
-
     return [self hasExtendedAttributeWithName:kDDXAttrArchivedName];
-
-#endif
 }
 
 - (void)setIsArchived:(BOOL)flag {
-#if TARGET_IPHONE_SIMULATOR
-
-    // Extended attributes don't work properly on the simulator.
-    // So we have to use a less attractive alternative.
-    // See full explanation in the header file.
-
-    if (flag) {
-        [self addExtensionAttributeWithName:kDDXAttrArchivedName];
-    } else {
-        [self removeExtensionAttributeWithName:kDDXAttrArchivedName];
-    }
-
-#else
-
     if (flag) {
         [self addExtendedAttributeWithName:kDDXAttrArchivedName];
     } else {
         [self removeExtendedAttributeWithName:kDDXAttrArchivedName];
     }
-
-#endif
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1504,6 +1487,7 @@ static int exception_count = 0;
     // See full explanation in the header file.
 
     if (![newFileName isEqualToString:[self fileName]]) {
+        NSFileManager* fileManager = [NSFileManager defaultManager];
         NSString *fileDir = [filePath stringByDeletingLastPathComponent];
         NSString *newFilePath = [fileDir stringByAppendingPathComponent:newFileName];
 
@@ -1511,28 +1495,29 @@ static int exception_count = 0;
         // (in which case the file might not exist anymore and neither does it parent folder).
 #if defined(DEBUG) && (!defined(TARGET_IPHONE_SIMULATOR) || !TARGET_IPHONE_SIMULATOR)
         BOOL directory = NO;
-        [[NSFileManager defaultManager] fileExistsAtPath:fileDir isDirectory:&directory];
+        [fileManager fileExistsAtPath:fileDir isDirectory:&directory];
         NSAssert(directory, @"Containing directory must exist.");
 #endif
 
         NSError *error = nil;
 
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:newFilePath error:&error];
+        BOOL success = [fileManager removeItemAtPath:newFilePath error:&error];
         if (!success && error.code != NSFileNoSuchFileError) {
             NSLogError(@"DDLogFileInfo: Error deleting archive (%@): %@", self.fileName, error);
         }
 
-        success = [[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newFilePath error:&error];
+        success = [fileManager moveItemAtPath:filePath toPath:newFilePath error:&error];
 
         // When a log file is deleted, moved or renamed on the simulator, we attempt to rename it as a
         // result of "archiving" it, but since the file doesn't exist anymore, needless error logs are printed
         // We therefore ignore this error, and assert that the directory we are copying into exists (which
         // is the only other case where this error code can come up).
 #if TARGET_IPHONE_SIMULATOR
-        if (!success && error.code != NSFileNoSuchFileError) {
+        if (!success && error.code != NSFileNoSuchFileError)
 #else
-        if (!success) {
+        if (!success)
 #endif
+        {
             NSLogError(@"DDLogFileInfo: Error renaming file (%@): %@", self.fileName, error);
         }
 
@@ -1547,13 +1532,26 @@ static int exception_count = 0;
 
 #if TARGET_IPHONE_SIMULATOR
 
-// Extended attributes don't work properly on the simulator.
-// So we have to use a less attractive alternative.
-// See full explanation in the header file.
+// Old implementation of extended attributes on the simulator.
 
-- (BOOL)hasExtensionAttributeWithName:(NSString *)attrName {
-    // This method is only used on the iPhone simulator, where normal extended attributes are broken.
-    // See full explanation in the header file.
+// Extended attributes were not working properly on the simulator
+// due to misuse of setxattr() function.
+// Now that this is fixed in the new implementation, we want to keep
+// backward compatibility with previous simulator installations.
+
+static NSString* const kDDExtensionSeparator = @".";
+
+static NSString* _xattrToExtensionName(NSString *attrName) {
+    static NSDictionary<NSString *, NSString *>* _xattrToExtensionNameMap;
+    static dispatch_once_t _token;
+    dispatch_once(&_token, ^{
+        _xattrToExtensionNameMap = @{ kDDXAttrArchivedName: @"archived" };
+    });
+    return [_xattrToExtensionNameMap objectForKey:attrName];
+}
+
+- (BOOL)_hasExtensionAttributeWithName:(NSString *)attrName {
+    // This method is only used on the iPhone simulator for backward compatibility reason.
 
     // Split the file name into components. File name may have various format, but generally
     // structure is same:
@@ -1564,7 +1562,7 @@ static int exception_count = 0;
     //
     // So we want to search for the attrName in the components (ignoring the first array index).
 
-    NSArray *components = [[self fileName] componentsSeparatedByString:@"."];
+    NSArray *components = [[self fileName] componentsSeparatedByString:kDDExtensionSeparator];
 
     // Watch out for file names without an extension
 
@@ -1579,66 +1577,8 @@ static int exception_count = 0;
     return NO;
 }
 
-- (void)addExtensionAttributeWithName:(NSString *)attrName {
-    // This method is only used on the iPhone simulator, where normal extended attributes are broken.
-    // See full explanation in the header file.
-
-    if ([attrName length] == 0) {
-        return;
-    }
-
-    // Example:
-    // attrName = "archived"
-    //
-    // "mylog.txt" -> "mylog.archived.txt"
-    // "mylog"     -> "mylog.archived"
-
-    NSArray *components = [[self fileName] componentsSeparatedByString:@"."];
-
-    NSUInteger count = [components count];
-
-    NSUInteger estimatedNewLength = [[self fileName] length] + [attrName length] + 1;
-    NSMutableString *newFileName = [NSMutableString stringWithCapacity:estimatedNewLength];
-
-    if (count > 0) {
-        [newFileName appendString:components.firstObject];
-    }
-
-    NSString *lastExt = @"";
-
-    NSUInteger i;
-
-    for (i = 1; i < count; i++) {
-        NSString *attr = components[i];
-
-        if ([attr length] == 0) {
-            continue;
-        }
-
-        if ([attrName isEqualToString:attr]) {
-            // Extension attribute already exists in file name
-            return;
-        }
-
-        if ([lastExt length] > 0) {
-            [newFileName appendFormat:@".%@", lastExt];
-        }
-
-        lastExt = attr;
-    }
-
-    [newFileName appendFormat:@".%@", attrName];
-
-    if ([lastExt length] > 0) {
-        [newFileName appendFormat:@".%@", lastExt];
-    }
-
-    [self renameFile:newFileName];
-}
-
-- (void)removeExtensionAttributeWithName:(NSString *)attrName {
-    // This method is only used on the iPhone simulator, where normal extended attributes are broken.
-    // See full explanation in the header file.
+- (void)_removeExtensionAttributeWithName:(NSString *)attrName {
+    // This method is only used on the iPhone simulator for backward compatibility reason.
 
     if ([attrName length] == 0) {
         return;
@@ -1650,7 +1590,7 @@ static int exception_count = 0;
     // "mylog.archived.txt" -> "mylog.txt"
     // "mylog.archived"     -> "mylog"
 
-    NSArray *components = [[self fileName] componentsSeparatedByString:@"."];
+    NSArray *components = [[self fileName] componentsSeparatedByString:kDDExtensionSeparator];
 
     NSUInteger count = [components count];
 
@@ -1671,7 +1611,8 @@ static int exception_count = 0;
         if ([attrName isEqualToString:attr]) {
             found = YES;
         } else {
-            [newFileName appendFormat:@".%@", attr];
+            [newFileName appendString:kDDExtensionSeparator];
+            [newFileName appendString:attr];
         }
     }
 
@@ -1680,22 +1621,42 @@ static int exception_count = 0;
     }
 }
 
-#else /* if TARGET_IPHONE_SIMULATOR */
+#endif /* if TARGET_IPHONE_SIMULATOR */
 
 - (BOOL)hasExtendedAttributeWithName:(NSString *)attrName {
-    const char *path = [filePath UTF8String];
+    const char *path = [filePath fileSystemRepresentation];
     const char *name = [attrName UTF8String];
+    BOOL hasExtendedAttribute = NO;
+    char buffer[1];
 
-    ssize_t result = getxattr(path, name, NULL, 0, 0, 0);
+    ssize_t result = getxattr(path, name, buffer, 1, 0, 0);
 
-    return (result >= 0);
+    // Fast path
+    if (result > 0 && buffer[0] == '\1') {
+        hasExtendedAttribute = YES;
+    }
+    // Maintain backward compatibility, but fix it for future checks
+    else if (result >= 0) {
+        hasExtendedAttribute = YES;
+
+        [self addExtendedAttributeWithName:attrName];
+    }
+#if TARGET_IPHONE_SIMULATOR
+    else if ([self _hasExtensionAttributeWithName:_xattrToExtensionName(attrName)]) {
+        hasExtendedAttribute = YES;
+
+        [self addExtendedAttributeWithName:attrName];
+    }
+#endif
+
+    return hasExtendedAttribute;
 }
 
 - (void)addExtendedAttributeWithName:(NSString *)attrName {
-    const char *path = [filePath UTF8String];
+    const char *path = [filePath fileSystemRepresentation];
     const char *name = [attrName UTF8String];
 
-    int result = setxattr(path, name, NULL, 0, 0, 0);
+    int result = setxattr(path, name, "\1", 1, 0, 0);
 
     if (result < 0) {
         NSLogError(@"DDLogFileInfo: setxattr(%@, %@): error = %s",
@@ -1703,10 +1664,15 @@ static int exception_count = 0;
                    filePath,
                    strerror(errno));
     }
+#if TARGET_IPHONE_SIMULATOR
+    else {
+        [self _removeExtensionAttributeWithName:_xattrToExtensionName(attrName)];
+    }
+#endif
 }
 
 - (void)removeExtendedAttributeWithName:(NSString *)attrName {
-    const char *path = [filePath UTF8String];
+    const char *path = [filePath fileSystemRepresentation];
     const char *name = [attrName UTF8String];
 
     int result = removexattr(path, name, 0);
@@ -1717,9 +1683,11 @@ static int exception_count = 0;
                    self.fileName,
                    strerror(errno));
     }
-}
 
-#endif /* if TARGET_IPHONE_SIMULATOR */
+#if TARGET_IPHONE_SIMULATOR
+    [self _removeExtensionAttributeWithName:_xattrToExtensionName(attrName)];
+#endif
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Comparisons
