@@ -1532,9 +1532,9 @@ static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
 // Now that this is fixed in the new implementation, we want to keep
 // backward compatibility with previous simulator installations.
 
-static NSString* const kDDExtensionSeparator = @".";
+static NSString * const kDDExtensionSeparator = @".";
 
-static NSString* _xattrToExtensionName(NSString *attrName) {
+static NSString *_xattrToExtensionName(NSString *attrName) {
     static NSDictionary<NSString *, NSString *>* _xattrToExtensionNameMap;
     static dispatch_once_t _token;
     dispatch_once(&_token, ^{
