@@ -119,7 +119,7 @@ static NSUInteger DDGetDefaultBufferSizeBytes() {
 
     [data enumerateByteRangesUsingBlock:^(const void * __nonnull bytes, NSRange byteRange, BOOL * __nonnull __unused stop) {
         NSUInteger bytesLength = byteRange.length;
-#ifndef NS_BLOCK_ASSERTIONS
+#ifdef NS_BLOCK_ASSERTIONS
         __unused
 #endif
         NSInteger written = [_buffer write:bytes maxLength:bytesLength];
