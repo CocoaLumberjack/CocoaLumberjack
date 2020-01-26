@@ -23,7 +23,10 @@
 @implementation DDAtomicCounterTests
 
 - (void)testSimpleAtomicCounter {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     __auto_type atomicCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
+#pragma clang diagnostic pop
     XCTAssertEqual([atomicCounter value], 0);
     XCTAssertEqual([atomicCounter increment], 1);
     XCTAssertEqual([atomicCounter value], 1);
@@ -32,7 +35,10 @@
 }
 
 - (void)testMultithreadAtomicCounter {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     __auto_type atomicCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
+#pragma clang diagnostic pop
     __auto_type expectation = [self expectationWithDescription:@"Multithread atomic counter"];
     __auto_type globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
@@ -58,7 +64,10 @@
 }
 
 - (void)testMultithreadAtomicCounterWithIncrementAndDecrement {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     __auto_type atomicCounter = [[DDAtomicCounter alloc] initWithDefaultValue:0];
+#pragma clang diagnostic pop
     __auto_type expectation = [self expectationWithDescription:@"Multithread atomic counter inc and dec"];
     __auto_type globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 

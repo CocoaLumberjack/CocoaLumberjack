@@ -57,6 +57,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface DDLogFileManagerDefault () {
+    NSDateFormatter *_fileDateFormatter;
     NSUInteger _maximumNumberOfLogFiles;
     unsigned long long _logFilesDiskQuota;
     NSString *_logsDirectory;
@@ -89,6 +90,11 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     if ((self = [super init])) {
         _maximumNumberOfLogFiles = kDDDefaultLogMaxNumLogFiles;
         _logFilesDiskQuota = kDDDefaultLogFilesDiskQuota;
+
+        _fileDateFormatter = [[NSDateFormatter alloc] init];
+        [_fileDateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
+        [_fileDateFormatter setDateFormat: @"yyyy'-'MM'-'dd'--'HH'-'mm'-'ss'-'SSS'"];
+        [_fileDateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
 
         if (aLogsDirectory.length > 0) {
             _logsDirectory = [aLogsDirectory copy];
@@ -303,20 +309,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 
 // if you change formatter, then change sortedLogFileInfos method also accordingly
 - (NSDateFormatter *)logFileDateFormatter {
-    NSMutableDictionary *dictionary = [[NSThread currentThread] threadDictionary];
-    NSString *dateFormat = @"yyyy'-'MM'-'dd'--'HH'-'mm'-'ss'-'SSS'";
-    NSString *key = [NSString stringWithFormat:@"logFileDateFormatter.%@", dateFormat];
-    NSDateFormatter *dateFormatter = dictionary[key];
-
-    if (dateFormatter == nil) {
-        dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
-        [dateFormatter setDateFormat:dateFormat];
-        [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-        dictionary[key] = dateFormatter;
-    }
-
-    return dateFormatter;
+    return _fileDateFormatter;
 }
 
 - (NSArray *)unsortedLogFilePaths {
@@ -1539,9 +1532,9 @@ static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
 // Now that this is fixed in the new implementation, we want to keep
 // backward compatibility with previous simulator installations.
 
-static NSString* const kDDExtensionSeparator = @".";
+static NSString * const kDDExtensionSeparator = @".";
 
-static NSString* _xattrToExtensionName(NSString *attrName) {
+static NSString *_xattrToExtensionName(NSString *attrName) {
     static NSDictionary<NSString *, NSString *>* _xattrToExtensionNameMap;
     static dispatch_once_t _token;
     dispatch_once(&_token, ^{

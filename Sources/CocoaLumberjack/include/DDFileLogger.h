@@ -451,7 +451,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *  Method is deprecated.
  *  @deprecated Use `rollLogFileWithCompletionBlock:` method instead.
  */
-- (void)rollLogFile __attribute((deprecated));
+- (void)rollLogFile __attribute__((deprecated("Use -rollLogFileWithCompletionBlock:")));
 
 // Inherited from DDAbstractLogger
 
