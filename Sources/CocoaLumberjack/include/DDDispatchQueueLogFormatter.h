@@ -191,4 +191,8 @@ __attribute((deprecated))
 
 @end
 
+__attribute((deprecated))
+@interface DDAtomicCounter: NSObject<DDAtomicCountable>
+@end
+
 NS_ASSUME_NONNULL_END

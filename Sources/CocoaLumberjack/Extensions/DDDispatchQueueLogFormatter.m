@@ -15,6 +15,7 @@
 
 #import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
 #import <pthread/pthread.h>
+#import <stdatomic.h>
 
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
@@ -209,6 +210,41 @@
     NSString *queueThreadLabel = [self queueThreadLabelForLogMessage:logMessage];
 
     return [NSString stringWithFormat:@"%@ [%@] %@", timestamp, queueThreadLabel, logMessage->_message];
+}
+
+@end
+
+#pragma mark - DDAtomicCounter
+
+@interface DDAtomicCounter() {
+    atomic_int_fast32_t _value;
+}
+@end
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
+@implementation DDAtomicCounter
+#pragma clang diagnostic pop
+
+- (instancetype)initWithDefaultValue:(int32_t)defaultValue {
+    if ((self = [super init])) {
+        atomic_init(&_value, defaultValue);
+    }
+    return self;
+}
+
+- (int32_t)value {
+    return atomic_load_explicit(&_value, memory_order_relaxed);
+}
+
+- (int32_t)increment {
+    int32_t old = atomic_fetch_add_explicit(&_value, 1, memory_order_relaxed);
+    return (old + 1);
+}
+
+- (int32_t)decrement {
+    int32_t old = atomic_fetch_sub_explicit(&_value, 1, memory_order_relaxed);
+    return (old - 1);
 }
 
 @end
