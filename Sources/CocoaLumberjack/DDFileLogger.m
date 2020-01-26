@@ -1130,26 +1130,14 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 static int exception_count = 0;
 
 - (void)logMessage:(DDLogMessage *)logMessage {
-    NSAssert([self isOnInternalLoggerQueue], @"logMessage should only be executed on internal queue.");
+    // Don't need to check for isOnInternalLoggerQueue, -lt_dataForMessage: will do it for us.
+    NSData *data = [self lt_dataForMessage:logMessage];
 
-    NSString *message = logMessage->_message;
-    BOOL isFormatted = NO;
-
-    if (_logFormatter != nil) {
-        message = [_logFormatter formatLogMessage:logMessage];
-        isFormatted = message != logMessage->_message;
-    }
-
-    if (message.length == 0) {
+    if (data.length == 0) {
         return;
     }
 
-    BOOL shouldFormat = !isFormatted || _automaticallyAppendNewlineForCustomFormatters;
-    if (shouldFormat && ![message hasSuffix:@"\n"]) {
-        message = [message stringByAppendingString:@"\n"];
-    }
-
-    [self lt_logData:[message dataUsingEncoding:NSUTF8StringEncoding]];
+    [self lt_logData:data];
 }
 
 - (void)willLogMessage:(DDLogFileInfo *)logFileInfo {
@@ -1312,7 +1300,7 @@ static int exception_count = 0;
     }
 
     if (message.length == 0) {
-        return [NSData new];
+        return nil;
     }
 
     BOOL shouldFormat = !isFormatted || _automaticallyAppendNewlineForCustomFormatters;

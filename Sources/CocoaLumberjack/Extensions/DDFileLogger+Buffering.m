@@ -110,6 +110,7 @@ static NSUInteger DDGetDefaultBufferSizeBytes() {
 #pragma mark - Logging
 
 - (void)logMessage:(DDLogMessage *)logMessage {
+    // Don't need to check for isOnInternalLoggerQueue, -lt_dataForMessage: will do it for us.
     NSData *data = [_fileLogger lt_dataForMessage:logMessage];
     NSUInteger length = data.length;
     if (length == 0) {
