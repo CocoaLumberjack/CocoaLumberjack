@@ -9,6 +9,7 @@
 - Fix -didArchiveLogFile: returning the file name instead of the file path (#1078)
 - Fix setxattr() function usage (#1118)
 - Fix NSDateFormatter thread safety (#1121)
+- Fix -lt_dataForMessage: duplicated code (#1122)
 
 ## [3.6.0 - Xcode 11 on October 2nd, 2019](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.6.0)
 
