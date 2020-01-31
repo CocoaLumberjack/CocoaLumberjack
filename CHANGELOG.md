@@ -3,6 +3,7 @@
 ### Public
 - Improve error handling during log file creation in DDFileLogger & DDLogFileManager (#1103 / #1111)
 - Improve nullability annotations in public headers (#1111 / #1112 / #1119)
+- Added support for thread QOS in DDLogMessage class (#1124)
 
 ### Internal
 - Fix rolling timer being rescheduled rapidly due to leeway (#1106 / #1107)
