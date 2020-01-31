@@ -22,14 +22,21 @@
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-static const char* _qos_string(NSUInteger qos) {
+DDQualityOfServiceName const DDQualityOfServiceUserInteractive = @"UI";
+DDQualityOfServiceName const DDQualityOfServiceUserInitiated   = @"IN";
+DDQualityOfServiceName const DDQualityOfServiceDefault         = @"DF";
+DDQualityOfServiceName const DDQualityOfServiceUtility         = @"UT";
+DDQualityOfServiceName const DDQualityOfServiceBackground      = @"BG";
+DDQualityOfServiceName const DDQualityOfServiceUnspecified     = @"UN";
+
+static DDQualityOfServiceName _qos_name(NSUInteger qos) {
     switch ((qos_class_t) qos) {
-        case QOS_CLASS_USER_INTERACTIVE: return "UI";
-        case QOS_CLASS_USER_INITIATED:   return "IN";
-        case QOS_CLASS_DEFAULT:          return "DF";
-        case QOS_CLASS_UTILITY:          return "UT";
-        case QOS_CLASS_BACKGROUND:       return "BG";
-        default:                         return "UN";
+        case QOS_CLASS_USER_INTERACTIVE: return DDQualityOfServiceUserInteractive;
+        case QOS_CLASS_USER_INITIATED:   return DDQualityOfServiceUserInitiated;
+        case QOS_CLASS_DEFAULT:          return DDQualityOfServiceDefault;
+        case QOS_CLASS_UTILITY:          return DDQualityOfServiceUtility;
+        case QOS_CLASS_BACKGROUND:       return DDQualityOfServiceBackground;
+        default:                         return DDQualityOfServiceUnspecified;
     }
 }
 
@@ -222,7 +229,7 @@ static const char* _qos_string(NSUInteger qos) {
     NSString *queueThreadLabel = [self queueThreadLabelForLogMessage:logMessage];
 
     if (@available(macOS 10.10, iOS 8.0, *))
-        return [NSString stringWithFormat:@"%@ [%@ (QOS:%s)] %@", timestamp, queueThreadLabel, _qos_string(logMessage->_qos), logMessage->_message];
+        return [NSString stringWithFormat:@"%@ [%@ (QOS:%@)] %@", timestamp, queueThreadLabel, _qos_name(logMessage->_qos), logMessage->_message];
     return [NSString stringWithFormat:@"%@ [%@] %@", timestamp, queueThreadLabel, logMessage->_message];
 }
 

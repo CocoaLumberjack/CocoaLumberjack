@@ -41,6 +41,36 @@ typedef NS_ENUM(NSUInteger, DDDispatchQueueLogFormatterMode){
     DDDispatchQueueLogFormatterModeNonShareble,
 };
 
+/**
+ * Quality of Service names.
+ *
+ * Since macOS 10.10 and iOS 8.0, pthreads, dispatch queues and NSOperations express their
+ * scheduling priority by using an abstract classification called Quality of Service (QOS).
+ *
+ * This formatter will add a representation of this QOS in the log message by using those
+ * string constants.
+ * For example:
+ *
+ * `2011-10-17 20:21:45.435 AppName[19928:5207 (QOS:DF)] Your log message here`
+ *
+ * Where QOS is one of:
+ * `- UI = User Interactive`
+ * `- IN = User Initiated`
+ * `- DF = Default`
+ * `- UT = Utility`
+ * `- BG = Background`
+ * `- UN = Unspecified`
+ *
+ * Note: QOS will be absent in the log messages if running on OS versions that don't support it.
+ **/
+typedef NSString * DDQualityOfServiceName NS_EXTENSIBLE_STRING_ENUM;
+
+FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceUserInteractive API_AVAILABLE(macos(10.10), ios(8.0));
+FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceUserInitiated API_AVAILABLE(macos(10.10), ios(8.0));
+FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceDefault API_AVAILABLE(macos(10.10), ios(8.0));
+FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceUtility API_AVAILABLE(macos(10.10), ios(8.0));
+FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceBackground API_AVAILABLE(macos(10.10), ios(8.0));
+FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceUnspecified API_AVAILABLE(macos(10.10), ios(8.0));
 
 /**
  * This class provides a log formatter that prints the dispatch_queue label instead of the mach_thread_id.
