@@ -1,4 +1,4 @@
-## [3.6.1 - Xcode 11.1 on ???](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.6.1)
+## [3.6.1 - Xcode 11.3.1 on Jan 25th, 2020](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.6.1)
 
 ### Public
 - Improve error handling during log file creation in DDFileLogger & DDLogFileManager (#1103 / #1111)
