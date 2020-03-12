@@ -185,9 +185,12 @@
 
             [self updateDeleteTimer];
 
-            if (_deleteTimer != NULL) {
+            // We are sure that -updateDeleteTimer did call dispatch_source_set_timer()
+            // since it has the same guards on _deleteInterval and _maxAge
+            if (@available(macOS 10.12, iOS 10.0, tvOS 10.0, watchOS 3.0, *))
+                dispatch_activate(_deleteTimer);
+            else
                 dispatch_resume(_deleteTimer);
-            }
         }
     }
 }
