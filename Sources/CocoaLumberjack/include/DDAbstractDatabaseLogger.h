@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSTimeInterval _deleteInterval;
     BOOL _deleteOnEverySave;
     
-    BOOL _saveTimerSuspended;
+    NSInteger _saveTimerSuspended;
     NSUInteger _unsavedCount;
     dispatch_time_t _unsavedTime;
     dispatch_source_t _saveTimer;
