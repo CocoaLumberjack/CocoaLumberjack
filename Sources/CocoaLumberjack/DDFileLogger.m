@@ -837,7 +837,11 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     dispatch_time_t fireTime = dispatch_time(DISPATCH_TIME_NOW, delay);
 
     dispatch_source_set_timer(_rollingTimer, fireTime, DISPATCH_TIME_FOREVER, (uint64_t)kDDRollingLeeway * NSEC_PER_SEC);
-    dispatch_resume(_rollingTimer);
+
+    if (@available(macOS 10.12, iOS 10.0, tvOS 10.0, watchOS 3.0, *))
+        dispatch_activate(_rollingTimer);
+    else
+        dispatch_resume(_rollingTimer);
 }
 
 - (void)rollLogFile {
@@ -1103,7 +1107,10 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     });
 #endif
 
-    dispatch_resume(_currentLogFileVnode);
+    if (@available(macOS 10.12, iOS 10.0, tvOS 10.0, watchOS 3.0, *))
+        dispatch_activate(_currentLogFileVnode);
+    else
+        dispatch_resume(_currentLogFileVnode);
 }
 
 - (NSFileHandle *)lt_currentLogFileHandle {
