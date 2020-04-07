@@ -13,17 +13,17 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import <CocoaLumberjack/DDASLLogger.h>
-
 #if !TARGET_OS_WATCH
-#import <asl.h>
 
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-const char* const kDDASLKeyDDLog = "DDLog";
+#import <asl.h>
 
+#import <CocoaLumberjack/DDASLLogger.h>
+
+const char* const kDDASLKeyDDLog = "DDLog";
 const char* const kDDASLDDLogValue = "1";
 
 static DDASLLogger *sharedInstance;
