@@ -35,6 +35,17 @@ class DDLogCombineTests: XCTestCase {
         super.tearDown()
     }
 
+    private var logFormatter: DDLogFileFormatterDefault {
+        //let's return a formatter that doesn't change based where the
+        //test is being run.
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm:ss:SSS"
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        return DDLogFileFormatterDefault(dateFormatter: formatter)
+    }
+
     func testMessagePublisherWithDDLogLevelAll() {
 
         DDLog.sharedInstance.messagePublisher()
@@ -125,6 +136,43 @@ class DDLogCombineTests: XCTestCase {
         let levels = receivedValue.map { $0.flag }
         XCTAssertEqual(levels, [.error,
                                 .warning])
+    }
+
+    func testFormatted() {
+
+        let subject = PassthroughSubject<DDLogMessage, Never>()
+
+        var receivedValue = [String]()
+
+        subject
+            .formatted(with: self.logFormatter)
+            .sink(receiveValue: { receivedValue.append($0) })
+            .store(in: &self.subscriptions)
+
+        subject.send(DDLogMessage(message: "An error occurred",
+                                  level: .all,
+                                  flag: .error,
+                                  context: 42,
+                                  file: "Combine.swift",
+                                  function: "PerformFailure",
+                                  line: 67,
+                                  tag: nil,
+                                  options: [],
+                                  timestamp: Date(timeIntervalSinceReferenceDate: 100)))
+
+        subject.send(DDLogMessage(message: "WARNING: this is incorrect",
+                                  level: .all,
+                                  flag: .warning,
+                                  context: 23,
+                                  file: "Combine.swift",
+                                  function: "PerformWarning",
+                                  line: 90,
+                                  tag: nil,
+                                  options: [],
+                                  timestamp: Date(timeIntervalSinceReferenceDate: 200)))
+
+        XCTAssertEqual(receivedValue, ["2001/01/01 00:01:40:000  An error occurred",
+                                       "2001/01/01 00:03:20:000  WARNING: this is incorrect"])
     }
 }
 

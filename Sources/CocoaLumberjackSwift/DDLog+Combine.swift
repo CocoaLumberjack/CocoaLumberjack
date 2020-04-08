@@ -111,4 +111,11 @@ extension DDLog {
     }
 }
 
+extension Publisher where Output == DDLogMessage {
+
+    public func formatted(with formatter: DDLogFormatter) -> Publishers.CompactMap<Self, String> {
+        return compactMap { formatter.format(message: $0) }
+    }
+}
+
 #endif
