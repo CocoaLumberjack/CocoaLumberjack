@@ -40,17 +40,17 @@ extension DDLog {
      * - Parameter logLevel: preemptive filter of the message returned by the publisher. All levels are sent by default
      * - Returns: A MessagePublisher that emits LogMessages filtered by the specified logLevel
      **/
-    func messagePublisher(with logLevel: DDLogLevel = .all) -> MessagePublisher {
+    public func messagePublisher(with logLevel: DDLogLevel = .all) -> MessagePublisher {
         return MessagePublisher(log: self, with: logLevel)
     }
 
     // MARK: - MessagePublisher
     
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    struct MessagePublisher: Combine.Publisher {
+    public struct MessagePublisher: Combine.Publisher {
 
-        typealias Output = DDLogMessage
-        typealias Failure = Never
+        public typealias Output = DDLogMessage
+        public typealias Failure = Never
 
         private let log: DDLog
         private let logLevel: DDLogLevel
@@ -60,7 +60,7 @@ extension DDLog {
             self.logLevel = logLevel
         }
 
-        func receive<S>(subscriber: S) where S: Subscriber, S.Failure == Never, S.Input == DDLogMessage {
+        public func receive<S>(subscriber: S) where S: Subscriber, S.Failure == Never, S.Input == DDLogMessage {
 
             let subscription = Subscription(log: self.log, with: logLevel, subscriber: subscriber)
             subscriber.receive(subscription: subscription)
