@@ -111,6 +111,7 @@ extension DDLog {
     }
 }
 
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension Publisher where Output == DDLogMessage {
 
     public func formatted(with formatter: DDLogFormatter) -> Publishers.CompactMap<Self, String> {
