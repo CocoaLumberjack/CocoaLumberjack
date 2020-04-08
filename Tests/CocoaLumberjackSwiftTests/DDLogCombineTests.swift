@@ -74,10 +74,10 @@ class DDLogCombineTests: XCTestCase {
 
     func testReceivedValuesWithDDLogLevelAll() {
 
-        var reveicedValues = [DDLogMessage]()
+        var receivedValue = [DDLogMessage]()
 
         DDLog.sharedInstance.messagePublisher()
-            .sink(receiveValue: { reveicedValues.append($0) })
+            .sink(receiveValue: { receivedValue.append($0) })
             .store(in: &self.subscriptions)
 
         DDLogError("Error")
@@ -88,14 +88,14 @@ class DDLogCombineTests: XCTestCase {
 
         DDLog.flushLog()
 
-        let messages = reveicedValues.map { $0.message }
+        let messages = receivedValue.map { $0.message }
         XCTAssertEqual(messages, ["Error",
                                   "Warn",
                                   "Info",
                                   "Debug",
                                   "Verbose"])
 
-        let levels = reveicedValues.map { $0.flag }
+        let levels = receivedValue.map { $0.flag }
         XCTAssertEqual(levels, [.error,
                                 .warning,
                                 .info,
@@ -105,10 +105,10 @@ class DDLogCombineTests: XCTestCase {
 
     func testReceivedValuesWithDDLogLevelWarning() {
 
-        var reveicedValues = [DDLogMessage]()
+        var receivedValue = [DDLogMessage]()
 
         DDLog.sharedInstance.messagePublisher(with: .warning)
-            .sink(receiveValue: { reveicedValues.append($0) })
+            .sink(receiveValue: { receivedValue.append($0) })
             .store(in: &self.subscriptions)
 
         DDLogError("Error")
@@ -119,10 +119,10 @@ class DDLogCombineTests: XCTestCase {
 
         DDLog.flushLog()
 
-        let messages = reveicedValues.map { $0.message }
+        let messages = receivedValue.map { $0.message }
         XCTAssertEqual(messages, ["Error", "Warn"])
 
-        let levels = reveicedValues.map { $0.flag }
+        let levels = receivedValue.map { $0.flag }
         XCTAssertEqual(levels, [.error,
                                 .warning])
     }
