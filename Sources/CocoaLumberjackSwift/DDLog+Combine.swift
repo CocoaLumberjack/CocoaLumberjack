@@ -60,7 +60,7 @@ extension DDLog {
             self.logLevel = logLevel
         }
 
-        public func receive<S>(subscriber: S) where S: Subscriber, S.Failure == Never, S.Input == DDLogMessage {
+        public func receive<S>(subscriber: S) where S: Subscriber, S.Failure == Failure, S.Input == Output {
 
             let subscription = Subscription(log: self.log, with: logLevel, subscriber: subscriber)
             subscriber.receive(subscription: subscription)
@@ -70,8 +70,8 @@ extension DDLog {
     // MARK: - Subscription
 
     private final class Subscription<S: Subscriber>: NSObject, DDLogger, Combine.Subscription
-        where S.Input == DDLogMessage {
-
+        where S.Input == DDLogMessage
+    {
         private var subscriber: S?
         private weak var log: DDLog?
 
