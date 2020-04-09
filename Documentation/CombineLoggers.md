@@ -8,7 +8,7 @@ For general information about loggers, see the [architecture](Architecture.md) p
 
 ### Publisher
 
-`DDLog.messagePublisher()` is a `AnyPublisher<DDLogMessage, Never>`, meaning it will never stop sending `DDLogMessage`s while there is an active subscriber. Note that it'll create a `DDLogger` for each subscription unless you use the `share()` operator.
+`DDLog.messagePublisher()` returns `MessagePublisher`, which will never stop sending `DDLogMessage`s while there is an active subscriber and doesn't emit errors. Note that it'll create a `DDLogger` for each subscription unless you use the `share()` operator.
 
 ### Example
 
