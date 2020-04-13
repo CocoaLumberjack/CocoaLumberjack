@@ -75,6 +75,7 @@
 		0A26B5C822E0812F004EE6A7 /* DDFileLogger+Buffering.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B54F22DE346B004EE6A7 /* DDFileLogger+Buffering.m */; };
 		0A26B5C922E0812F004EE6A7 /* DDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B55022DE346B004EE6A7 /* DDMultiFormatter.m */; };
 		0A26B5CA22E08131004EE6A7 /* CLIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B54B22DE346B004EE6A7 /* CLIColor.m */; };
+		4CFE77952439202B0068D7C6 /* DDLog+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE77942439202B0068D7C6 /* DDLog+Combine.swift */; };
 		E43636411F2F0D7100BE80CF /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FF46021B8B4CF400B43179 /* CocoaLumberjack.framework */; };
 /* End PBXBuildFile section */
 
@@ -165,6 +166,7 @@
 		435F03AA2174A39200A86B2D /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
 		435F03AB2174A39200A86B2D /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
 		435F03AC2174A39200A86B2D /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
+		4CFE77942439202B0068D7C6 /* DDLog+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DDLog+Combine.swift"; sourceTree = "<group>"; };
 		DCB3185914EB418E001CFBEE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DCB3186014EB418E001CFBEE /* CocoaLumberjack-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CocoaLumberjack-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -290,6 +292,7 @@
 				0A26B55E22DE346B004EE6A7 /* Supporting Files */,
 				0A26B55D22DE346B004EE6A7 /* CocoaLumberjack.swift */,
 				0A26B55A22DE346B004EE6A7 /* DDAssert.swift */,
+				4CFE77942439202B0068D7C6 /* DDLog+Combine.swift */,
 			);
 			path = CocoaLumberjackSwift;
 			sourceTree = "<group>";
@@ -561,6 +564,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CFE77952439202B0068D7C6 /* DDLog+Combine.swift in Sources */,
 				0A26B5A622DE3512004EE6A7 /* DDAssert.swift in Sources */,
 				0A26B5A722DE3516004EE6A7 /* CocoaLumberjack.swift in Sources */,
 			);

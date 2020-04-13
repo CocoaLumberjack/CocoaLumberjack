@@ -32,5 +32,7 @@ let package = Package(
                 exclude: ["Supporting Files"]),
         .testTarget(name: "CocoaLumberjackTests",
                     dependencies: ["CocoaLumberjack"]),
+        .testTarget(name: "CocoaLumberjackSwiftTests",
+                    dependencies: ["CocoaLumberjackSwift"])
     ]
 )
