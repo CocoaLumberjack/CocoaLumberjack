@@ -33,7 +33,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Swift' do |ss|
     ss.dependency 'CocoaLumberjack/Core'
-    ss.source_files        = 'Sources/CocoaLumberjackSwift/*.swift', 'Sources/CocoaLumberjackSwiftSupport/include/*.{h}'
+    ss.source_files        = 'Sources/CocoaLumberjackSwift/**/*.swift', 'Sources/CocoaLumberjackSwiftSupport/include/**/*.{h}'
   end
 
 end

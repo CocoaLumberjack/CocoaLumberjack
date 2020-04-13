@@ -13,14 +13,15 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
+#if !__has_feature(objc_arc)
+#error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
+#endif
+
 #import <pthread/pthread.h>
 #import <stdatomic.h>
 #import <sys/qos.h>
 
-#if !__has_feature(objc_arc)
-#error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
-#endif
+#import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
 
 DDQualityOfServiceName const DDQualityOfServiceUserInteractive = @"UI";
 DDQualityOfServiceName const DDQualityOfServiceUserInitiated   = @"IN";
@@ -51,7 +52,6 @@ static DDQualityOfServiceName _qos_name(NSUInteger qos) {
     NSUInteger _maxQueueLength;           // _prefix == Only access via atomic property
     NSMutableDictionary *_replacements;   // _prefix == Only access from within spinlock
 }
-
 @end
 
 

@@ -13,10 +13,10 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import "../DDFileLogger+Internal.h"
-#import <CocoaLumberjack/DDFileLogger+Buffering.h>
-
 #import <sys/mount.h>
+
+#import <CocoaLumberjack/DDFileLogger+Buffering.h>
+#import "../DDFileLogger+Internal.h"
 
 static const NSUInteger kDDDefaultBufferSize = 4096; // 4 kB, block f_bsize on iphone7
 static const NSUInteger kDDMaxBufferSize = 1048576; // ~1 mB, f_iosize on iphone7

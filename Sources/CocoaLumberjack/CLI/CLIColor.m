@@ -15,7 +15,7 @@
 
 #if TARGET_OS_OSX
 
-#import "CLIColor.h"
+#import <CocoaLumberjack/CLIColor.h>
 
 @interface CLIColor () {
     CGFloat _red, _green, _blue, _alpha;

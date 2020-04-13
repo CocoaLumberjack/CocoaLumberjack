@@ -13,12 +13,13 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import <CocoaLumberjack/DDContextFilterLogFormatter.h>
-#import <pthread/pthread.h>
-
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
+
+#import <pthread/pthread.h>
+
+#import <CocoaLumberjack/DDContextFilterLogFormatter.h>
 
 @interface DDLoggingContextSet : NSObject
 
@@ -38,7 +39,6 @@
 @interface DDContextWhitelistFilterLogFormatter () {
     DDLoggingContextSet *_contextSet;
 }
-
 @end
 
 
