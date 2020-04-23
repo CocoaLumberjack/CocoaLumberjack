@@ -174,6 +174,20 @@ class DDLogCombineTests: XCTestCase {
         XCTAssertEqual(receivedValue, ["2001/01/01 00:01:40:000  An error occurred",
                                        "2001/01/01 00:03:20:000  WARNING: this is incorrect"])
     }
+    
+    func testQOSNameInstanciation() {
+        let name = "UI"
+        let qos : qos_class_t = {
+            switch DDQualityOfServiceName(rawValue: name) {
+                case DDQualityOfServiceName.userInteractive:
+                    return QOS_CLASS_USER_INTERACTIVE
+                default:
+                    return QOS_CLASS_UNSPECIFIED
+            }
+        }()
+        
+        XCTAssertEqual(qos, QOS_CLASS_USER_INTERACTIVE)
+    }
 }
 
 #endif
