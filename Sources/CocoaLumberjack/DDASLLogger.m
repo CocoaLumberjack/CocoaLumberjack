@@ -26,7 +26,10 @@
 const char* const kDDASLKeyDDLog = "DDLog";
 const char* const kDDASLDDLogValue = "1";
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
 static DDASLLogger *sharedInstance;
+#pragma clang diagnostic pop
 
 @interface DDASLLogger () {
     aslclient _client;
@@ -35,7 +38,10 @@ static DDASLLogger *sharedInstance;
 @end
 
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation DDASLLogger
+#pragma clang diagnostic pop
 
 + (instancetype)sharedInstance {
     static dispatch_once_t DDASLLoggerOnceToken;

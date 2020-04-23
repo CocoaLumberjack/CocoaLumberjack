@@ -30,7 +30,10 @@
 static BOOL _cancel = YES;
 static DDLogLevel _captureLevel = DDLogLevelVerbose;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation DDASLLogCapture
+#pragma clang diagnostic pop
 
 + (void)start {
     // Ignore subsequent calls
