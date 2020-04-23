@@ -11,29 +11,7 @@ env:
   LANG: en_US.UTF-8
 
 jobs:
-  ios-demos:
-    runs-on: macos-latest
-    strategy:
-      matrix:
-        scheme:
-          - BenchmarkIPhone
-          - CaptureASL
-          - RegisteredLoggingTest (Mobile)
-          - TextXcodeColors (Mobile)
-          - UniversalApp
-          - WebServerIPhone
-    steps:
-      - uses: actions/checkout@v2
-      - run: ./Scripts/ci-select-xcode.sh
-      - uses: sersoft-gmbh/xcodebuild-action@v1
-        with:
-          workspace: Demos/Demos.xcworkspace
-          scheme: ${{matrix.scheme}}
-          configuration: Release
-          sdk: iphonesimulator
-          action: build
-
-  macos-demos:
+  build-demos:
     runs-on: macos-latest
     strategy:
       matrix:
@@ -41,6 +19,7 @@ jobs:
           - BenchmarkIPhone
           - BenchmarkMac
           - CLI
+          - CaptureASL
           - ContextFilter
           - CoreDataLogger
           - CustomFormatters
@@ -53,9 +32,13 @@ jobs:
           - OverflowTestMac
           - PerUserLogLevels
           - RegisteredLoggingTest (Desktop)
+          - RegisteredLoggingTest (Mobile)
           - RollingTestMac
           - SQLiteLogger
           - TestXcodeColors (Desktop)
+          - TextXcodeColors (Mobile)
+          - UniversalApp
+          - WebServerIPhone
     steps:
       - uses: actions/checkout@v2
       - run: ./Scripts/ci-select-xcode.sh

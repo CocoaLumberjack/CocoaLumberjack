@@ -13,46 +13,28 @@ env:
 jobs:
   static-lib:
     runs-on: macos-latest
-    strategy:
-      matrix:
-        scheme: [iOSStaticLibraryIntegration]
-        sdk: [iphonesimulator]
-        destination: ['']
-        build-settings: ['PLATFORM_NAME=iphonesimulator']
     steps:
       - uses: actions/checkout@v2
       - run: ./Scripts/ci-select-xcode.sh
       - uses: sersoft-gmbh/xcodebuild-action@v1
         with:
           project: Integration/Integration.xcodeproj
-          scheme: ${{matrix.scheme}}
+          scheme: iOSStaticLibraryIntegration
           configuration: Release
-          sdk: ${{matrix.sdk}}
-          destination: ${{matrix.destination}}
-          build-settings: ${{matrix.build-settings}}
           action: build
 
   dynamic-lib:
     runs-on: macos-latest
     strategy:
       matrix:
+        scheme:
+          - macOSSwiftIntegration
+          - iOSFrameworkIntegration
+          - tvOSSwiftIntegration
+        destination: ['']
         include:
-          - scheme: macOSSwiftIntegration
-            sdk: macosx
-            destination: ''
-            build-settings: ''
-          - scheme: iOSFrameworkIntegration
-            sdk: iphonesimulator
-            destination: ''
-            build-settings: 'PLATFORM_NAME=iphonesimulator'
-          - scheme: tvOSSwiftIntegration
-            sdk: appletvsimulator
-            destination: 'platform=tvOS Simulator,name=Apple TV 4K'
-            build-settings: ''
           - scheme: watchOSSwiftIntegration
-            sdk: watchsimulator
             destination: 'platform=iOS Simulator,name=iPhone 11 Pro'
-            build-settings: ''
     steps:
       - uses: actions/checkout@v2
       - run: ./Scripts/ci-select-xcode.sh
@@ -61,8 +43,7 @@ jobs:
           project: Integration/Integration.xcodeproj
           scheme: ${{matrix.scheme}}
           configuration: Release
-          sdk: ${{matrix.sdk}}
           destination: ${{matrix.destination}}
-          build-settings: ${{matrix.build-settings}}
           action: build
+        # watchOS builds seems to fail as of Xcode 11.4...
         continue-on-error: ${{matrix.scheme == 'watchOSSwiftIntegration'}}

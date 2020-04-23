@@ -15,11 +15,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        include:
-          - sdk: iphonesimulator
-            build-settings: 'PLATFORM_NAME=iphonesimulator'
-          - sdk: macosx
-            build-settings: ''
+        sdk: [iphonesimulator, macosx]
     steps:
       - uses: actions/checkout@v2
       - run: ./Scripts/ci-select-xcode.sh
@@ -29,7 +25,6 @@ jobs:
           scheme: CocoaLumberjack-Static
           configuration: Release
           sdk: ${{matrix.sdk}}
-          build-settings: ${{matrix.build-settings}}
           action: build
 
   dynamic-lib:
@@ -37,15 +32,7 @@ jobs:
     strategy:
       matrix:
         scheme: [CocoaLumberjack, CocoaLumberjackSwift]
-        sdk: [iphonesimulator, macosx, watchsimulator]
-        destination: ['']
-        include:
-          - scheme: CocoaLumberjack
-            sdk: appletvsimulator
-            destination: 'platform=tvOS Simulator,name=Apple TV 4K'
-          - scheme: CocoaLumberjackSwift
-            sdk: appletvsimulator
-            destination: 'platform=tvOS Simulator,name=Apple TV 4K'
+        sdk: [iphonesimulator, macosx, watchsimulator, appletvsimulator]
     steps:
       - uses: actions/checkout@v2
       - run: ./Scripts/ci-select-xcode.sh
@@ -55,5 +42,4 @@ jobs:
           scheme: ${{matrix.scheme}}
           configuration: Release
           sdk: ${{matrix.sdk}}
-          destination: ${{matrix.destination}}
           action: build

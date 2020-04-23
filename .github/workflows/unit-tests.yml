@@ -29,23 +29,18 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
+        scheme: [Swift Tests]
+        destination:
+          - platform=macOS
+          - platform=iOS Simulator,OS=latest,name=iPhone 11 Pro
+        skip-testing: ['']
         include:
           - scheme: iOS Tests
-            sdk: iphonesimulator
             destination: 'platform=iOS Simulator,name=iPhone 11 Pro,OS=latest'
             skip-testing: 'iOS Tests/DDFileLoggerPerformanceTests'
           - scheme: OS X Tests
-            sdk: macosx
-            destination: ''
+            destination: 'platform=macosx'
             skip-testing: 'OS X Tests/DDFileLoggerPerformanceTests'
-          - scheme: Swift Tests
-            sdk: iphonesimulator
-            destination: 'platform=iOS Simulator,name=iPhone 11 Pro,OS=latest'
-            skip-testing: ''
-          - scheme: Swift Tests
-            sdk: macosx
-            destination: ''
-            skip-testing: ''
     steps:
       - uses: actions/checkout@v2
       - run: ./Scripts/ci-select-xcode.sh
@@ -53,7 +48,6 @@ jobs:
         with:
           project: Tests/Tests.xcodeproj
           scheme: ${{matrix.scheme}}
-          sdk: ${{matrix.sdk}}
           destination: ${{matrix.destination}}
           skip-testing: ${{matrix.skip-testing}}
           build-settings: GCC_GENERATE_TEST_COVERAGE_FILES=YES
