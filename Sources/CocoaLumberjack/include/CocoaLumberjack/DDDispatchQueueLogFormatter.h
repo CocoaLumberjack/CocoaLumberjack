@@ -65,12 +65,12 @@ typedef NS_ENUM(NSUInteger, DDDispatchQueueLogFormatterMode){
  **/
 typedef NSString * DDQualityOfServiceName NS_STRING_ENUM;
 
-FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceUserInteractive NS_SWIFT_NAME(DDQualityOfService.userInteractive) API_AVAILABLE(macos(10.10), ios(8.0));
-FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceUserInitiated NS_SWIFT_NAME(DDQualityOfService.userInitiated) API_AVAILABLE(macos(10.10), ios(8.0));
-FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceDefault NS_SWIFT_NAME(DDQualityOfService.default) API_AVAILABLE(macos(10.10), ios(8.0));
-FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceUtility NS_SWIFT_NAME(DDQualityOfService.utility) API_AVAILABLE(macos(10.10), ios(8.0));
-FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceBackground NS_SWIFT_NAME(DDQualityOfService.background) API_AVAILABLE(macos(10.10), ios(8.0));
-FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceUnspecified NS_SWIFT_NAME(DDQualityOfService.unspecified) API_AVAILABLE(macos(10.10), ios(8.0));
+FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceUserInteractive NS_SWIFT_NAME(DDQualityOfServiceName.userInteractive) API_AVAILABLE(macos(10.10), ios(8.0));
+FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceUserInitiated NS_SWIFT_NAME(DDQualityOfServiceName.userInitiated) API_AVAILABLE(macos(10.10), ios(8.0));
+FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceDefault NS_SWIFT_NAME(DDQualityOfServiceName.default) API_AVAILABLE(macos(10.10), ios(8.0));
+FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceUtility NS_SWIFT_NAME(DDQualityOfServiceName.utility) API_AVAILABLE(macos(10.10), ios(8.0));
+FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceBackground NS_SWIFT_NAME(DDQualityOfServiceName.background) API_AVAILABLE(macos(10.10), ios(8.0));
+FOUNDATION_EXPORT DDQualityOfServiceName const DDQualityOfServiceUnspecified NS_SWIFT_NAME(DDQualityOfServiceName.unspecified) API_AVAILABLE(macos(10.10), ios(8.0));
 
 /**
  * This class provides a log formatter that prints the dispatch_queue label instead of the mach_thread_id.
