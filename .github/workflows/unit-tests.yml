@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: ./Scripts/ci-select-xcode.sh
       - name: Run SwiftPM Tests
-        run: swift test --parallel
+        run: swift test --enable-code-coverage --parallel
       - name: Generate Coverage Files
         run: xcrun llvm-cov export -format="lcov" .build/debug/*PackageTests.xctest/Contents/MacOS/*PackageTests -instr-profile .build/debug/codecov/default.profdata > coverage.lcov
       - uses: codecov/codecov-action@v1
