@@ -58,7 +58,7 @@ jobs:
       - run: ./Scripts/ci-select-xcode.sh
       - uses: sersoft-gmbh/xcodebuild-action@v1
         with:
-          workspace: Integration/Integration.xcodeproj
+          project: Integration/Integration.xcodeproj
           scheme: ${{matrix.scheme}}
           configuration: Release
           sdk: ${{matrix.sdk}}

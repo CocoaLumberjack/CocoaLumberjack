@@ -42,10 +42,10 @@ jobs:
         include:
           - scheme: CocoaLumberjack
             sdk: appletvsimulator
-            destination: 'platform=tvOS Simulator,name=Apple TV 4'
+            destination: 'platform=tvOS Simulator,name=Apple TV 4K'
           - scheme: CocoaLumberjackSwift
             sdk: appletvsimulator
-            destination: 'platform=tvOS Simulator,name=Apple TV 4'
+            destination: 'platform=tvOS Simulator,name=Apple TV 4K'
     steps:
       - uses: actions/checkout@v2
       - run: ./Scripts/ci-select-xcode.sh
