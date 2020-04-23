@@ -20,7 +20,7 @@ jobs:
 
   run-danger:
     runs-on: macos-latest
-    if: github.event_name = 'pull_request'
+    if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v2
       - run: ./Scripts/ci-select-xcode.sh
