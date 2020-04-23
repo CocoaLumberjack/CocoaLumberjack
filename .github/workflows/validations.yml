@@ -26,3 +26,5 @@ jobs:
       - run: ./Scripts/ci-select-xcode.sh
       - run: bundle install
       - run: bundle exec danger
+        env:
+          DANGER_GITHUB_API_TOKEN: ${{secrets.GITHUB_TOKEN}}
