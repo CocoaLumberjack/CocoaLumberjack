@@ -10,11 +10,9 @@ env:
   LC_CTYPE: en_US.UTF-8
   LANG: en_US.UTF-8
 
-defaults:
-  runs-on: macos-latest
-
 jobs:
   swiftpm:
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - run: ./Scripts/ci-select-xcode.sh
@@ -28,6 +26,7 @@ jobs:
           # token: ${{secrets.CODECOV_TOKEN}}
 
   xcode:
+    runs-on: macos-latest
     strategy:
       matrix:
         scheme: []

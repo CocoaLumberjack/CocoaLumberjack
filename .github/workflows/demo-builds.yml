@@ -10,11 +10,9 @@ env:
   LC_CTYPE: en_US.UTF-8
   LANG: en_US.UTF-8
 
-defaults:
-  runs-on: macos-latest
-
 jobs:
   ios-demos:
+    runs-on: macos-latest
     strategy:
       matrix:
         scheme:
@@ -36,6 +34,7 @@ jobs:
           action: build
 
   macos-demos:
+    runs-on: macos-latest
     strategy:
       matrix:
         scheme:

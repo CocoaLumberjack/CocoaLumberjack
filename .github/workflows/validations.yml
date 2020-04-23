@@ -10,17 +10,16 @@ env:
   LC_CTYPE: en_US.UTF-8
   LANG: en_US.UTF-8
 
-defaults:
-  runs-on: macos-latest
-
 jobs:
   validate-cocoapods:
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - run: ./Scripts/ci-select-xcode.sh
       - run: pod lib lint
 
   run-danger:
+    runs-on: macos-latest
     if: github.event == 'pull_request'
     steps:
       - uses: actions/checkout@v2

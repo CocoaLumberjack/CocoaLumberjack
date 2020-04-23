@@ -10,11 +10,9 @@ env:
   LC_CTYPE: en_US.UTF-8
   LANG: en_US.UTF-8
 
-defaults:
-  runs-on: macos-latest
-
 jobs:
   static-lib:
+    runs-on: macos-latest
     strategy:
       matrix:
         scheme: [iOSStaticLibraryIntegration]
@@ -35,6 +33,7 @@ jobs:
           action: build
 
   dynamic-lib:
+    runs-on: macos-latest
     strategy:
       matrix:
         scheme: []
