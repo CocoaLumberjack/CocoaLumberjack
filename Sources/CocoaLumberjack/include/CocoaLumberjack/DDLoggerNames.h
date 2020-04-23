@@ -17,14 +17,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NSString *DDLoggerName NS_TYPED_EXTENSIBLE_ENUM;
+typedef NSString *DDLoggerName NS_EXTENSIBLE_STRING_ENUM;
 
-FOUNDATION_EXPORT DDLoggerName const DDLoggerNameOS NS_SWIFT_NAME(DDLoggerName.os); // DDOSLogger
+FOUNDATION_EXPORT DDLoggerName const DDLoggerNameOS NS_SWIFT_NAME(DDLoggerName.os);     // DDOSLogger
 FOUNDATION_EXPORT DDLoggerName const DDLoggerNameFile NS_SWIFT_NAME(DDLoggerName.file); // DDFileLogger
 
-FOUNDATION_EXPORT DDLoggerName const DDLoggerNameTTY NS_SWIFT_NAME(DDLoggerName.tty); // DDTTYLogger
+FOUNDATION_EXPORT DDLoggerName const DDLoggerNameTTY NS_SWIFT_NAME(DDLoggerName.tty);   // DDTTYLogger
 
 API_DEPRECATED("Use DDOSLogger instead", macosx(10.4, 10.12), ios(2.0, 10.0), watchos(2.0, 3.0), tvos(9.0, 10.0))
-FOUNDATION_EXPORT DDLoggerName const DDLoggerNameASL NS_SWIFT_NAME(DDLoggerName.asl); // DDASLLogger
+FOUNDATION_EXPORT DDLoggerName const DDLoggerNameASL NS_SWIFT_NAME(DDLoggerName.asl);   // DDASLLogger
 
 NS_ASSUME_NONNULL_END
