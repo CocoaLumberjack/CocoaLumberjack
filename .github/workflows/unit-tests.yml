@@ -1,0 +1,68 @@
+name: Unit Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  LC_CTYPE: en_US.UTF-8
+  LANG: en_US.UTF-8
+
+defaults:
+  runs-on: macos-latest
+
+jobs:
+  swiftpm:
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./Scripts/ci-select-xcode.sh
+      - name: Run SwiftPM Tests
+        run: swift test --parallel
+      - name: Generate Coverage Files
+        run: xcrun llvm-cov export -format="lcov" .build/debug/*PackageTests.xctest/Contents/MacOS/*PackageTests -instr-profile .build/debug/codecov/default.profdata > coverage.lcov
+      - uses: codecov/codecov-action@v1
+        with:
+          file: coverage.lcov
+          # token: ${{secrets.CODECOV_TOKEN}}
+
+  xcode:
+    strategy:
+      matrix:
+        scheme: []
+        sdk: []
+        destination: []
+        skip-testing: []
+        include:
+          - scheme: iOS Tests
+            sdk: iphonesimulator
+            destination: 'platform=iOS Simulator,name=iPhone 11 Pro,OS=latest'
+            skip-testing: 'iOS Tests/DDFileLoggerPerformanceTests'
+          - scheme: OS X Tests
+            sdk: macosx
+            destination: ''
+            skip-testing: 'OS X Tests/DDFileLoggerPerformanceTests'
+          - scheme: Swift Tests
+            sdk: iphonesimulator
+            destination: 'platform=iOS Simulator,name=iPhone 11 Pro,OS=latest'
+            skip-testing: ''
+          - scheme: Swift Tests
+            sdk: macosx
+            destination: ''
+            skip-testing: ''
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./Scripts/ci-select-xcode.sh
+      - uses: sersoft-gmbh/xcodebuild-action@v1
+        with:
+          workspace: Tests/Tests.xcodeproj
+          scheme: ${{matrix.scheme}}
+          sdk: ${{matrix.sdk}}
+          destination: ${{matrix.destination}}
+          skip-testing: ${{matrix.skip-testing}}
+          build-settings: GCC_GENERATE_TEST_COVERAGE_FILES=YES
+          action: test
+      - uses: codecov/codecov-action@v1
+        # with:
+        #   token: ${{secrets.CODECOV_TOKEN}}
