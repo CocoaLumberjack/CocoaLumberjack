@@ -23,7 +23,7 @@ jobs:
       - uses: codecov/codecov-action@v1
         with:
           file: coverage.lcov
-          # token: ${{secrets.CODECOV_TOKEN}}
+          token: ${{secrets.CODECOV_TOKEN}}
 
   xcode:
     runs-on: macos-latest
@@ -53,5 +53,5 @@ jobs:
           build-settings: GCC_GENERATE_TEST_COVERAGE_FILES=YES
           action: test
       - uses: codecov/codecov-action@v1
-        # with:
-        #   token: ${{secrets.CODECOV_TOKEN}}
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
