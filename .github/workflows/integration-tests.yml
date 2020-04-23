@@ -51,7 +51,7 @@ jobs:
             build-settings: ''
           - scheme: watchOSSwiftIntegration
             sdk: watchsimulator
-            destination: 'platform=iOS Simulator,name=iPhone 11 Pro'
+            destination: 'platform=watchOS Simulator,name=Apple Watch Series 5 - 44mm'
             build-settings: ''
     steps:
       - uses: actions/checkout@v2
