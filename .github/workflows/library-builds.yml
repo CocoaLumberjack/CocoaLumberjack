@@ -15,8 +15,6 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        sdk: []
-        build-settings: []
         include:
           - sdk: iphonesimulator
             build-settings: 'PLATFORM_NAME=iphonesimulator'
@@ -40,7 +38,7 @@ jobs:
       matrix:
         scheme: [CocoaLumberjack, CocoaLumberjackSwift]
         sdk: [iphonesimulator, macosx, watchsimulator]
-        destination: []
+        destination: ['']
         include:
           - scheme: CocoaLumberjack
             sdk: appletvsimulator

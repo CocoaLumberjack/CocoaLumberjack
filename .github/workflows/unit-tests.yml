@@ -29,10 +29,6 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        scheme: []
-        sdk: []
-        destination: []
-        skip-testing: []
         include:
           - scheme: iOS Tests
             sdk: iphonesimulator
