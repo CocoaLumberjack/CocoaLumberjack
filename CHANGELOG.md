@@ -4,6 +4,9 @@
 - Fix warnings when building with SPM bundled with Swift 5.2 / Xcode 11.4 (#1132)
 - Added Swift name for DDQualityOfServiceName constants.
 
+### Repository
+- Switch from Travis to GitHub Actions (#1135)
+
 ## [3.6.1 - Xcode 11.3.1 on Jan 25th, 2020](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.6.1)
 
 ### Public

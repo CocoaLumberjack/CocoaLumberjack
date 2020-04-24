@@ -1,0 +1,57 @@
+name: Unit Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  LC_CTYPE: en_US.UTF-8
+  LANG: en_US.UTF-8
+
+jobs:
+  swiftpm:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./Scripts/ci-select-xcode.sh
+      - name: Run SwiftPM Tests
+        run: swift test --enable-code-coverage --parallel
+      - name: Generate Coverage Files
+        run: xcrun llvm-cov export -format="lcov" .build/debug/*PackageTests.xctest/Contents/MacOS/*PackageTests -instr-profile .build/debug/codecov/default.profdata > coverage.lcov
+      - uses: codecov/codecov-action@v1
+        with:
+          file: coverage.lcov
+          token: ${{secrets.CODECOV_TOKEN}}
+
+  xcode:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        scheme: [Swift Tests]
+        destination:
+          - platform=macOS
+          - platform=iOS Simulator,OS=latest,name=iPhone 11 Pro
+        skip-testing: ['']
+        include:
+          - scheme: iOS Tests
+            destination: 'platform=iOS Simulator,name=iPhone 11 Pro,OS=latest'
+            skip-testing: 'iOS Tests/DDFileLoggerPerformanceTests'
+          - scheme: OS X Tests
+            destination: 'platform=macosx'
+            skip-testing: 'OS X Tests/DDFileLoggerPerformanceTests'
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./Scripts/ci-select-xcode.sh
+      - uses: sersoft-gmbh/xcodebuild-action@v1
+        with:
+          project: Tests/Tests.xcodeproj
+          scheme: ${{matrix.scheme}}
+          destination: ${{matrix.destination}}
+          skip-testing: ${{matrix.skip-testing}}
+          build-settings: GCC_GENERATE_TEST_COVERAGE_FILES=YES
+          action: test
+      - uses: codecov/codecov-action@v1
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}

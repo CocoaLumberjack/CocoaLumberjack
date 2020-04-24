@@ -14,6 +14,7 @@
 //   prior written permission of Deusty, LLC.
 
 import WatchKit
+import CocoaLumberjackSwift
 
 final class ExtensionDelegate: NSObject, WKExtensionDelegate {
 

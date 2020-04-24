@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07D9F609245188B100BE83C7 /* watchOSSwiftIntegration Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0A87D5632177C25800BD0C4C /* watchOSSwiftIntegration Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		07D9F60E24518A9100BE83C7 /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; };
+		07D9F60F24518A9100BE83C7 /* CocoaLumberjackSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0A87D4BA217649C600BD0C4C /* libCocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4A7217649B700BD0C4C /* libCocoaLumberjack.a */; };
 		0A87D4BB217649CD00BD0C4C /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4A9217649B700BD0C4C /* CocoaLumberjack.framework */; };
 		0A87D4BD217649E700BD0C4C /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; };
 		0A87D4BE217649EC00BD0C4C /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; };
 		0A87D55B2177C25700BD0C4C /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A87D5592177C25700BD0C4C /* Interface.storyboard */; };
-		0A87D5642177C25800BD0C4C /* watchOSSwiftIntegration Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0A87D5632177C25800BD0C4C /* watchOSSwiftIntegration Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0A87D5692177C25800BD0C4C /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A87D5682177C25800BD0C4C /* InterfaceController.swift */; };
 		0A87D56B2177C25800BD0C4C /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A87D56A2177C25800BD0C4C /* ExtensionDelegate.swift */; };
 		0A87D56D2177C25800BD0C4C /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A87D56C2177C25800BD0C4C /* NotificationController.swift */; };
 		0A87D56F2177C25900BD0C4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A87D56E2177C25900BD0C4C /* Assets.xcassets */; };
 		0A87D5742177C25900BD0C4C /* watchOSSwiftIntegration.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 0A87D5572177C25700BD0C4C /* watchOSSwiftIntegration.app */; };
-		0A87D57D2177C2AE00BD0C4C /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; };
-		0A87D5892177C44A00BD0C4C /* CocoaLumberjackSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0A87D59F217892E500BD0C4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A87D599217892E500BD0C4C /* AppDelegate.swift */; };
 		0A87D5A2217892E500BD0C4C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A87D59D217892E500BD0C4C /* ViewController.swift */; };
 		0A87D5A3217892F000BD0C4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A87D599217892E500BD0C4C /* AppDelegate.swift */; };
@@ -38,6 +38,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		07D9F60A245188B100BE83C7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A87D3552175E4A300BD0C4C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0A87D5622177C25800BD0C4C;
+			remoteInfo = "watchOSSwiftIntegration Extension";
+		};
+		07D9F61124518B0F00BE83C7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A87D499217649B700BD0C4C /* Lumberjack.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 19FF460E1B8B4D1400B43179;
+			remoteInfo = CocoaLumberjackSwift;
+		};
 		0A87D4A6217649B700BD0C4C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A87D499217649B700BD0C4C /* Lumberjack.xcodeproj */;
@@ -59,26 +73,12 @@
 			remoteGlobalIDString = 19FF460F1B8B4D1400B43179;
 			remoteInfo = CocoaLumberjackSwift;
 		};
-		0A87D5652177C25800BD0C4C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0A87D3552175E4A300BD0C4C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0A87D5622177C25800BD0C4C;
-			remoteInfo = "watchOSSwiftIntegration Extension";
-		};
 		0A87D5722177C25900BD0C4C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A87D3552175E4A300BD0C4C /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 0A87D5562177C25700BD0C4C;
 			remoteInfo = watchOSSwiftIntegration;
-		};
-		0A87D57E2177C2BC00BD0C4C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0A87D499217649B700BD0C4C /* Lumberjack.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 19FF460E1B8B4D1400B43179;
-			remoteInfo = CocoaLumberjackSwift;
 		};
 		43151F17217900D900DBB436 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -111,15 +111,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		0A87D5782177C25900BD0C4C /* Embed App Extensions */ = {
+		07D9F60C245188B100BE83C7 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				0A87D5642177C25800BD0C4C /* watchOSSwiftIntegration Extension.appex in Embed App Extensions */,
+				07D9F609245188B100BE83C7 /* watchOSSwiftIntegration Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07D9F61024518A9100BE83C7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				07D9F60F24518A9100BE83C7 /* CocoaLumberjackSwift.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		0A87D57C2177C25900BD0C4C /* Embed Watch Content */ = {
@@ -131,16 +142,6 @@
 				0A87D5742177C25900BD0C4C /* watchOSSwiftIntegration.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0A87D5882177C43800BD0C4C /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				0A87D5892177C44A00BD0C4C /* CocoaLumberjackSwift.framework in CopyFiles */,
-			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -230,7 +231,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A87D57D2177C2AE00BD0C4C /* CocoaLumberjackSwift.framework in Frameworks */,
+				07D9F60E24518A9100BE83C7 /* CocoaLumberjackSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,12 +479,12 @@
 			buildConfigurationList = 0A87D5792177C25900BD0C4C /* Build configuration list for PBXNativeTarget "watchOSSwiftIntegration" */;
 			buildPhases = (
 				0A87D5552177C25700BD0C4C /* Resources */,
-				0A87D5782177C25900BD0C4C /* Embed App Extensions */,
+				07D9F60C245188B100BE83C7 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				0A87D5662177C25800BD0C4C /* PBXTargetDependency */,
+				07D9F60B245188B100BE83C7 /* PBXTargetDependency */,
 			);
 			name = watchOSSwiftIntegration;
 			productName = watchOSSwiftIntegration;
@@ -497,12 +498,12 @@
 				0A87D55F2177C25800BD0C4C /* Sources */,
 				0A87D5602177C25800BD0C4C /* Frameworks */,
 				0A87D5612177C25800BD0C4C /* Resources */,
-				0A87D5882177C43800BD0C4C /* CopyFiles */,
+				07D9F61024518A9100BE83C7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				0A87D57F2177C2BC00BD0C4C /* PBXTargetDependency */,
+				07D9F61224518B0F00BE83C7 /* PBXTargetDependency */,
 			);
 			name = "watchOSSwiftIntegration Extension";
 			productName = "watchOSSwiftIntegration Extension";
@@ -716,20 +717,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0A87D5662177C25800BD0C4C /* PBXTargetDependency */ = {
+		07D9F60B245188B100BE83C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0A87D5622177C25800BD0C4C /* watchOSSwiftIntegration Extension */;
-			targetProxy = 0A87D5652177C25800BD0C4C /* PBXContainerItemProxy */;
+			targetProxy = 07D9F60A245188B100BE83C7 /* PBXContainerItemProxy */;
+		};
+		07D9F61224518B0F00BE83C7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaLumberjackSwift;
+			targetProxy = 07D9F61124518B0F00BE83C7 /* PBXContainerItemProxy */;
 		};
 		0A87D5732177C25900BD0C4C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0A87D5562177C25700BD0C4C /* watchOSSwiftIntegration */;
 			targetProxy = 0A87D5722177C25900BD0C4C /* PBXContainerItemProxy */;
-		};
-		0A87D57F2177C2BC00BD0C4C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CocoaLumberjackSwift;
-			targetProxy = 0A87D57E2177C2BC00BD0C4C /* PBXContainerItemProxy */;
 		};
 		43151F18217900D900DBB436 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -902,12 +903,12 @@
 		0A87D5762177C25900BD0C4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				INFOPLIST_FILE = "watchOSSwiftIntegration Extension/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER_PREFIX).iOSSwiftIntegration.watchkitapp.watchkitextension";
 				SDKROOT = watchos;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = 4;
 			};
 			name = Debug;
@@ -915,12 +916,12 @@
 		0A87D5772177C25900BD0C4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				INFOPLIST_FILE = "watchOSSwiftIntegration Extension/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER_PREFIX).iOSSwiftIntegration.watchkitapp.watchkitextension";
 				SDKROOT = watchos;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = 4;
 			};
 			name = Release;
@@ -928,12 +929,12 @@
 		0A87D57A2177C25900BD0C4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				IBSC_MODULE = watchOSSwiftIntegration_Extension;
 				INFOPLIST_FILE = watchOSSwiftIntegration/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER_PREFIX).iOSSwiftIntegration.watchkitapp";
 				SDKROOT = watchos;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = 4;
 			};
 			name = Debug;
@@ -941,12 +942,12 @@
 		0A87D57B2177C25900BD0C4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				IBSC_MODULE = watchOSSwiftIntegration_Extension;
 				INFOPLIST_FILE = watchOSSwiftIntegration/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER_PREFIX).iOSSwiftIntegration.watchkitapp";
 				SDKROOT = watchos;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = 4;
 			};
 			name = Release;
