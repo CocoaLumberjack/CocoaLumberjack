@@ -23,6 +23,8 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: ${{github.event.pull_request.head.sha}}
       - uses: danger/danger@master
         env:
           DANGER_GITHUB_API_TOKEN: ${{secrets.GITHUB_TOKEN}}
