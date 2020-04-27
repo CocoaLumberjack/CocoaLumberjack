@@ -24,7 +24,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: ${{github.event.pull_request.head.sha}}
+          repository: ${{github.event.pull_request.head.repo.full_name}}
+          ref: ${{github.event.pull_request.head.ref}}
       - uses: danger/danger@master
         env:
           DANGER_GITHUB_API_TOKEN: ${{secrets.GITHUB_TOKEN}}
