@@ -25,4 +25,4 @@ jobs:
       - uses: actions/checkout@v2
       - uses: danger/swift@3.3.0
         env:
-          DANGER_GITHUB_API_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
