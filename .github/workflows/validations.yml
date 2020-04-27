@@ -19,12 +19,10 @@ jobs:
       - run: pod lib lint
 
   run-danger:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v2
-      - run: ./Scripts/ci-select-xcode.sh
-      - run: bundle install
-      - run: bundle exec danger
+      - uses: danger/danger@master
         env:
           DANGER_GITHUB_API_TOKEN: ${{secrets.GITHUB_TOKEN}}
