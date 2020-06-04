@@ -23,6 +23,8 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - uses: danger/swift@3.3.0
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
