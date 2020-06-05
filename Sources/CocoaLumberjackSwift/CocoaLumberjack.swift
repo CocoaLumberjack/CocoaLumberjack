@@ -78,7 +78,7 @@ public func resetDefaultDebugLevel() {
 public var asyncLoggingEnabled = true
 
 @inlinable
-public func _DDLogMessage(_ message: @autoclosure () -> Any,
+public func _DDLogMessage(_ message: @escaping @autoclosure () -> Any,
                           level: DDLogLevel,
                           flag: DDLogFlag,
                           context: Int,
@@ -107,7 +107,7 @@ public func _DDLogMessage(_ message: @autoclosure () -> Any,
 }
 
 @inlinable
-public func DDLogDebug(_ message: @autoclosure () -> Any,
+public func DDLogDebug(_ message: @escaping @autoclosure () -> Any,
                        level: DDLogLevel = DDDefaultLogLevel,
                        context: Int = 0,
                        file: StaticString = #file,
@@ -120,7 +120,7 @@ public func DDLogDebug(_ message: @autoclosure () -> Any,
 }
 
 @inlinable
-public func DDLogInfo(_ message: @autoclosure () -> Any,
+public func DDLogInfo(_ message: @escaping @autoclosure () -> Any,
                       level: DDLogLevel = DDDefaultLogLevel,
                       context: Int = 0,
                       file: StaticString = #file,
@@ -133,7 +133,7 @@ public func DDLogInfo(_ message: @autoclosure () -> Any,
 }
 
 @inlinable
-public func DDLogWarn(_ message: @autoclosure () -> Any,
+public func DDLogWarn(_ message: @escaping @autoclosure () -> Any,
                       level: DDLogLevel = DDDefaultLogLevel,
                       context: Int = 0,
                       file: StaticString = #file,
@@ -146,7 +146,7 @@ public func DDLogWarn(_ message: @autoclosure () -> Any,
 }
 
 @inlinable
-public func DDLogVerbose(_ message: @autoclosure () -> Any,
+public func DDLogVerbose(_ message: @escaping @autoclosure () -> Any,
                          level: DDLogLevel = DDDefaultLogLevel,
                          context: Int = 0,
                          file: StaticString = #file,
@@ -159,7 +159,7 @@ public func DDLogVerbose(_ message: @autoclosure () -> Any,
 }
 
 @inlinable
-public func DDLogError(_ message: @autoclosure () -> Any,
+public func DDLogError(_ message: @escaping @autoclosure () -> Any,
                        level: DDLogLevel = DDDefaultLogLevel,
                        context: Int = 0,
                        file: StaticString = #file,
