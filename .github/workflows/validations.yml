@@ -34,7 +34,7 @@ jobs:
 
   run-danger-for-external-pr:
     runs-on: ubuntu-latest
-    if: github.event_name == 'issue_comment'
+    if: github.event_name == 'issue_comment' && github.event.issue.pull_request != null
     steps:
       - uses: xt0rted/slash-command-action@v1
         with:
@@ -44,9 +44,23 @@ jobs:
           reaction-type: "+1"
           allow-edits: false
           permission-level: write
+      - uses: actions/github-script@v2
+        id: pr-details
+        with:
+          script: |
+            const pathComponents = new URL(context.payload.issue.pull_request.url).path.split("/");
+            const { data: pullRequest } = await octokit.pulls.get({
+              owner: pathComponents[1],
+              repo: pathComponents[2],
+              pull_number: pathComponents[4]
+            });
+            return pullRequest;
       - uses: actions/checkout@v2
         with:
+          repository: ${{fromJSON(steps.pr-details.outputs.result).head.repo.full_name}}
+          ref: ${{fromJSON(steps.pr-details.outputs.result).head.sha}}
           fetch-depth: 0
       - uses: danger/swift@3.3.1
+        args: "--pr ${{github.event.issue.pull_request.url}}"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
