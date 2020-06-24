@@ -61,6 +61,7 @@ jobs:
           ref: ${{fromJSON(steps.pr-details.outputs.result).head.sha}}
           fetch-depth: 0
       - uses: danger/swift@3.3.1
-        args: "--pr ${{github.event.issue.pull_request.url}}"
+        with:
+          args: "--pr ${{github.event.issue.pull_request.url}}"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
