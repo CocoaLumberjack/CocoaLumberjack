@@ -34,16 +34,11 @@ jobs:
 
   run-danger-for-external-pr:
     runs-on: ubuntu-latest
-    if: github.event_name == 'issue_comment' && github.event.issue.pull_request != null
+    if: |
+      github.event_name == 'issue_comment' && github.event.action == 'created'
+      && github.event.issue.pull_request != null
+      && startsWith(github.event.comment.body, '/run_checks')
     steps:
-      - uses: xt0rted/slash-command-action@v1
-        with:
-          repo-token: ${{secrets.GITHUB_TOKEN}}
-          command: run_checks
-          reaction: true
-          reaction-type: "+1"
-          allow-edits: false
-          permission-level: write
       - uses: actions/github-script@v2
         id: pr-details
         with:
