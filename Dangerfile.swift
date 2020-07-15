@@ -102,8 +102,7 @@ if xcodeProjectWasModified {
                     warn(message: "Files should be in sync with project structure", file: projectFile, line: offset + 1)
                 }
                 if let range = line.range(of: "[A-Z_]+ = .*;", options: .regularExpression) {
-                    let parts = line[range].split(separator: " = ").dropLast()
-                    let setting = String(parts[parts.startIndex])
+                    let setting = String(line[range].prefix(while: { $0 != " " }))
                     if !acceptedSettings.contains(setting) {
                         warn(message: "Xcode settings need to remain in Configs/*.xcconfig. Please move " + setting + " to the xcconfig file", file: projectFile, line: offset + 1)
                     }
