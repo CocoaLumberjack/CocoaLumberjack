@@ -17,6 +17,10 @@ fileprivate extension Danger.File {
     var isSwiftPackageDefintion: Bool {
         hasPrefix("Package") && hasSuffix(".swift")
     }
+
+    var isDangerfile: Bool {
+        self == "Dangerfile.swift"
+    }
 }
 
 let danger = Danger()
@@ -152,6 +156,7 @@ let sourcefilesToCheck = Set(git.modifiedFiles + git.createdFiles)
 let filesWithInvalidCopyright = sourcefilesToCheck.lazy
     .filter { $0.isSourceFile }
     .filter { !$0.isSwiftPackageDefintion }
+    .filter { !$0.isDangerfile }
     .filter { !$0.isInVendor && !$0.isInFMDB }
     .filter { FileManager.default.fileExists(atPath: $0) }
     .filter {
