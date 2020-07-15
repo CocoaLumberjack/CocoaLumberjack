@@ -43,11 +43,10 @@ jobs:
         id: pr-details
         with:
           script: |
-            const pathComponents = new URL(context.payload.issue.pull_request.url).path.split("/");
             const { data: pullRequest } = await octokit.pulls.get({
-              owner: pathComponents[1],
-              repo: pathComponents[2],
-              pull_number: pathComponents[4]
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: github.event.issue.number
             });
             return pullRequest;
       - uses: actions/checkout@v2
