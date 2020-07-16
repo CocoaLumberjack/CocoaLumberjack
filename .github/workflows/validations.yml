@@ -40,21 +40,30 @@ jobs:
       && startsWith(github.event.comment.body, '/run_checks')
     steps:
       - uses: actions/github-script@v2
+        with:
+          script: |
+            github.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.payload.comment.id,
+              content: "+1"
+            })
+      - uses: actions/github-script@v2
         id: pr-details
         with:
           script: |
-            const { data: pullRequest } = await octokit.pulls.get({
+            const { data: pullRequest } = await github.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: github.event.issue.number
+              pull_number: context.issue.number
             });
             return pullRequest;
       - uses: actions/checkout@v2
         with:
           repository: ${{fromJSON(steps.pr-details.outputs.result).head.repo.full_name}}
-          ref: ${{fromJSON(steps.pr-details.outputs.result).head.sha}}
+          ref: ${{fromJSON(steps.pr-details.outputs.result).head.ref}}
           fetch-depth: 0
-      - uses: danger/swift@3.3.1
+      - uses: danger/swift@3.3.2
         with:
           args: "--pr ${{github.event.issue.pull_request.url}}"
         env:
