@@ -4,6 +4,7 @@
 - Fix warnings when building with SPM bundled with Swift 5.2 / Xcode 11.4 (#1132)
 - Added Swift name for DDQualityOfServiceName constants.
 - Don't localize timestamps in `DDefaultFileLogFormatter` (#1151)
+- Allow logging arbitrary objects via Swift log functions (#1146)
 
 ### Repository
 - Switch from Travis to GitHub Actions (#1135, #1140, #1150, #1152)
