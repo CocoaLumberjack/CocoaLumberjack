@@ -228,9 +228,7 @@ static DDQualityOfServiceName _qos_name(NSUInteger qos) {
     NSString *timestamp = [self stringFromDate:(logMessage->_timestamp)];
     NSString *queueThreadLabel = [self queueThreadLabelForLogMessage:logMessage];
 
-    if (@available(macOS 10.10, iOS 8.0, *))
-        return [NSString stringWithFormat:@"%@ [%@ (QOS:%@)] %@", timestamp, queueThreadLabel, _qos_name(logMessage->_qos), logMessage->_message];
-    return [NSString stringWithFormat:@"%@ [%@] %@", timestamp, queueThreadLabel, logMessage->_message];
+    return [NSString stringWithFormat:@"%@ [%@ (QOS:%@)] %@", timestamp, queueThreadLabel, _qos_name(logMessage->_qos), logMessage->_message];
 }
 
 @end
