@@ -1,6 +1,7 @@
 ## [3.6.2 - Xcode 11.4 on ???, 2020](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.6.2)
 
 ### Public
+- **Breaking change**: Dropped support for iOS 8 (#1153)
 - Fix warnings when building with SPM bundled with Swift 5.2 / Xcode 11.4 (#1132)
 - Added Swift name for DDQualityOfServiceName constants.
 - Don't localize timestamps in `DDefaultFileLogFormatter` (#1151)
