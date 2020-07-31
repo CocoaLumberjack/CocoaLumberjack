@@ -1,4 +1,10 @@
-## [3.6.2 - Xcode 11.4 on ???, 2020](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.6.2)
+## [3.7.0 - Xcode 12 on ???, 2020](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.0)
+
+### Public
+
+- _PLEASE REPLACE WITH FIRST ENTRY_
+
+## [3.6.2 - Xcode 11.6 on July 31st, 2020](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.6.2)
 
 ### Public
 - Fix warnings when building with SPM bundled with Swift 5.2 / Xcode 11.4 (#1132)
