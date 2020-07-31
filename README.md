@@ -23,7 +23,7 @@ Then use `DDOSLogger` for iOS 10 and later, or `DDTTYLogger` and `DDASLLogger` f
 #### CocoaPods
 
 ```ruby
-platform :ios, '8.0'
+platform :ios, '9.0'
 
 target 'SampleTarget' do
   use_frameworks!
@@ -35,7 +35,7 @@ For more details about how to use Swift with Lumberjack, see [this conversation]
 
 For Objective-C use the following:
 ```ruby
-platform :ios, '8.0'
+platform :ios, '9.0'
 
 target 'SampleTarget' do
     pod 'CocoaLumberjack'
@@ -169,13 +169,14 @@ Configure your logging however you want. Change log levels per file (perfect for
 The current version of Lumberjack requires:
 - Xcode 11 or later
 - Swift 5.0 or later
-- iOS 8 or later
+- iOS 9 or later
 - macOS 10.10 or later
 - watchOS 3 or later
 - tvOS 9 or later
 
 #### Backwards compatibility
 - for Xcode 10 and Swift 4.2, use the 3.5.2 version
+- for iOS 8, use the 3.6.1 version
 - for iOS 6, iOS 7, OS X 10.8, OS X 10.9 and Xcode 9, use the 3.4.2 version
 - for iOS 5 and OS X 10.7, use the 3.3 version
 - for Xcode 8 and Swift 3, use the 3.2 version

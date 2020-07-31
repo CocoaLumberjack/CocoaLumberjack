@@ -1066,9 +1066,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
 
         // Try to get the current queue's label
         _queueLabel = [[NSString alloc] initWithFormat:@"%s", dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL)];
-
-        if (@available(macOS 10.10, iOS 8.0, *))
-            _qos = (NSUInteger) qos_class_self();
+        _qos = (NSUInteger) qos_class_self();
     }
     return self;
 }
