@@ -39,15 +39,11 @@ jobs:
       && github.event.issue.pull_request != null
       && startsWith(github.event.comment.body, '/run_checks')
     steps:
-      - uses: actions/github-script@v2
+      - uses: sushichop/action-repository-permission@v1
         with:
-          script: |
-            github.reactions.createForIssueComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              comment_id: context.payload.comment.id,
-              content: "+1"
-            })
+          required-permission: write
+          reaction-permitted: '+1'
+          comment-not-permitted: "Sorry, you don't have enough permission to execute /run_checks..."
       - uses: actions/github-script@v2
         id: pr-details
         with:
