@@ -39,29 +39,13 @@ jobs:
       && github.event.issue.pull_request != null
       && startsWith(github.event.comment.body, '/run_checks')
     steps:
-      - uses: actions/github-script@v2
+      - uses: sushichop/action-repository-permission@v1
         with:
-          script: |
-            github.reactions.createForIssueComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              comment_id: context.payload.comment.id,
-              content: "+1"
-            })
-      - uses: actions/github-script@v2
-        id: pr-details
-        with:
-          script: |
-            const { data: pullRequest } = await github.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number
-            });
-            return pullRequest;
+          required-permission: write
+          reaction-permitted: '+1'
       - uses: actions/checkout@v2
         with:
-          repository: ${{fromJSON(steps.pr-details.outputs.result).head.repo.full_name}}
-          ref: ${{fromJSON(steps.pr-details.outputs.result).head.ref}}
+          ref: refs/pull/${{ github.event.issue.number }}/head
           fetch-depth: 0
       - uses: danger/swift@3.3.2
         with:
