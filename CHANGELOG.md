@@ -4,6 +4,7 @@
 
 - **Breaking change**: Dropped support for iOS 8 (#1153)
 - Update SPM tools-version to 5.3 to enable Swift 5.3 support (#1148)
+- Add backend for swift-log (#1164)
 
 ## [3.6.2 - Xcode 11.6 on July 31st, 2020](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.6.2)
 
