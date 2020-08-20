@@ -14,6 +14,19 @@ fileprivate extension Danger.File {
         hasSuffix(".swift") || hasSuffix(".h") || hasSuffix(".m")
     }
 
+    private static let spmOnlyTargetNames: Set<String> = [
+        "CocoaLumberjackSwiftLogBackend",
+    ]
+    var isSPMOnlySourceFile: Bool {
+        guard isSourceFile else { return false }
+        if isInSources {
+            return Self.spmOnlyTargetNames.contains(where: { contains("/\($0)/") })
+        } else if isInTests {
+            return Self.spmOnlyTargetNames.contains(where: { contains("/\($0)Tests/") })
+        }
+        return false
+    }
+
     var isSwiftPackageDefintion: Bool {
         hasPrefix("Package") && hasSuffix(".swift")
     }
@@ -57,7 +70,8 @@ SwiftLint.lint(.modifiedAndCreatedFiles(directory: "Sources"))
 // Added (or removed) library files need to be added (or removed) from the
 // Carthage Xcode project to avoid breaking things for our Carthage users.
 let xcodeProjectWasModified = git.modifiedFiles.contains("Lumberjack.xcodeproj")
-if (git.createdFiles + git.deletedFiles).contains(where: { $0.isInSources && $0.isSourceFile }) && !xcodeProjectWasModified {
+if (git.createdFiles + git.deletedFiles).contains(where: { $0.isInSources && $0.isSourceFile && !$0.isSPMOnlySourceFile })
+    && !xcodeProjectWasModified {
   fail("Added or removed library files require the Carthage Xcode project to be updated.")
 }
 
