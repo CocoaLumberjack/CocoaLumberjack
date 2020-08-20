@@ -1071,6 +1071,48 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
     return self;
 }
 
+- (BOOL)isEqual:(id)other {
+    if (other == self) {
+        return YES;
+    } else if (![super isEqual:other] || ![other isKindOfClass:[self class]]) {
+        return NO;
+    } else {
+        __auto_type otherMsg = (DDLogMessage *)other;
+        return [otherMsg->_message isEqualToString:_message]
+        && otherMsg->_level == _level
+        && otherMsg->_flag == _flag
+        && otherMsg->_context == _context
+        && [otherMsg->_file isEqualToString:_file]
+        && [otherMsg->_fileName isEqualToString:_fileName]
+        && [otherMsg->_function isEqualToString:_function]
+        && otherMsg->_line == _line
+        && (([otherMsg->_tag respondsToSelector:@selector(isEqual:)] && [otherMsg->_tag isEqual:_tag]) || otherMsg->_tag == _tag)
+        && otherMsg->_options == _options
+        && [otherMsg->_timestamp isEqualToDate:_timestamp]
+        && [otherMsg->_threadID isEqualToString:_threadID] // If the thread ID is the same, the name will likely be the same as well.
+        && [otherMsg->_queueLabel isEqualToString:_queueLabel]
+        && otherMsg->_qos == _qos;
+    }
+}
+
+- (NSUInteger)hash {
+    return [super hash]
+    ^ _message.hash
+    ^ _level
+    ^ _flag
+    ^ _context
+    ^ _file.hash
+    ^ _fileName.hash
+    ^ _function.hash
+    ^ _line
+    ^ ([_tag respondsToSelector:@selector(hash)] ? [_tag hash] : 0)
+    ^ _options
+    ^ _timestamp.hash
+    ^ _threadID.hash
+    ^ _queueLabel.hash
+    ^ _qos;
+}
+
 - (id)copyWithZone:(NSZone * __attribute__((unused)))zone {
     DDLogMessage *newMessage = [DDLogMessage new];
 

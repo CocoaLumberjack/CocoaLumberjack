@@ -20,20 +20,9 @@ import Combine
 import XCTest
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-class DDLogCombineTests: XCTestCase {
+final class DDLogCombineTests: XCTestCase {
 
-    var subscriptions = Set<AnyCancellable>()
-
-    override func setUp() {
-        super.setUp()
-        DDLog.removeAllLoggers()
-    }
-
-    override func tearDown() {
-        self.subscriptions.removeAll()
-        DDLog.removeAllLoggers()
-        super.tearDown()
-    }
+    private var subscriptions = Set<AnyCancellable>()
 
     private var logFormatter: DDLogFileFormatterDefault {
         //let's return a formatter that doesn't change based where the
@@ -46,8 +35,18 @@ class DDLogCombineTests: XCTestCase {
         return DDLogFileFormatterDefault(dateFormatter: formatter)
     }
 
-    func testMessagePublisherWithDDLogLevelAll() {
+    override func setUp() {
+        super.setUp()
+        DDLog.removeAllLoggers()
+    }
 
+    override func tearDown() {
+        DDLog.removeAllLoggers()
+        self.subscriptions.removeAll()
+        super.tearDown()
+    }
+
+    func testMessagePublisherWithDDLogLevelAll() {
         DDLog.sharedInstance.messagePublisher()
             .sink(receiveValue: { _ in })
             .store(in: &self.subscriptions)
@@ -58,7 +57,6 @@ class DDLogCombineTests: XCTestCase {
     }
 
     func testMessagePublisherWithSpecifiedLevelMask() {
-
         DDLog.sharedInstance.messagePublisher(with: .error)
             .sink(receiveValue: { _ in })
             .store(in: &self.subscriptions)
@@ -69,7 +67,6 @@ class DDLogCombineTests: XCTestCase {
     }
 
     func testMessagePublisherRemovedWhenSubscriptionIsCanceled() {
-
         let sub = DDLog.sharedInstance.messagePublisher()
             .sink(receiveValue: { _ in })
 
@@ -84,7 +81,6 @@ class DDLogCombineTests: XCTestCase {
     }
 
     func testReceivedValuesWithDDLogLevelAll() {
-
         var receivedValue = [DDLogMessage]()
 
         DDLog.sharedInstance.messagePublisher()
@@ -115,7 +111,6 @@ class DDLogCombineTests: XCTestCase {
     }
 
     func testReceivedValuesWithDDLogLevelWarning() {
-
         var receivedValue = [DDLogMessage]()
 
         DDLog.sharedInstance.messagePublisher(with: .warning)
@@ -134,12 +129,10 @@ class DDLogCombineTests: XCTestCase {
         XCTAssertEqual(messages, ["Error", "Warn"])
 
         let levels = receivedValue.map { $0.flag }
-        XCTAssertEqual(levels, [.error,
-                                .warning])
+        XCTAssertEqual(levels, [.error, .warning])
     }
 
     func testFormatted() {
-
         let subject = PassthroughSubject<DDLogMessage, Never>()
 
         var receivedValue = [String]()
