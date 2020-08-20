@@ -63,6 +63,8 @@ If you want to use the Swift Package Manager as integration method, either use X
 .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack.git", from: "3.6.0"),
 ```
 
+Note that you may need to add both products, `CocoaLumberjack` and `CocoaLumberjackSwift` to your target since SPM sometimes fails to detect that `CocoaLumerjackSwift` depends on `CocoaLumberjack`.
+
 #### Install manually
 
 If you want to install CocoaLumberjack manually, read the [manual installation](https://raw.githubusercontent.com/CocoaLumberjack/CocoaLumberjack/master/Documentation/GettingStarted.md#manual-installation) guide for more information.
@@ -109,6 +111,17 @@ DDLogInfo(@"Info");
 DDLogWarn(@"Warn");
 DDLogError(@"Error");
 ```
+
+
+### [swift-log](https://github.com/apple/swift-log) backend
+
+CocoaLumberjack also ships with a backend implementation for [swift-log](https://github.com/apple/swift-log).
+Simply add CocoaLumberjack as dependency to your SPM target (see above) and also add the `CocoaLumberjackSwiftLogBackend` product as dependency to your target.
+
+You can then use `DDLogHandler` as backend for swift-log, which will forward all messages to CocoaLumberjack's `DDLog`. You will still configure the loggers and log formatters you want via `DDLog`, but writing log messages will be done using `Logger` from swift-log.
+
+In your own log formatters, you can make use of the `swiftLogInfo` property on `DDLogMessage` to retrieve the details of a message that is logged via swift-log.
+
 
 #### More information
 
