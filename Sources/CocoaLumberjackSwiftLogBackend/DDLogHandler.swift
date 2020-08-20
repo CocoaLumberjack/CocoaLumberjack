@@ -70,8 +70,12 @@ extension DDLogMessage {
 /// It's basically an implementation detail of `DDLogMessage.swiftLogInfo`.
 @usableFromInline
 final class SwiftLogMessage: DDLogMessage {
+    // SwiftLint doesn't like that this starts with an underscore.
+    // It only tolerates that for private vars, but this cant' be private (because @usableFromInline).
+    // swiftlint:disable identifier_name
     @usableFromInline
     let _swiftLogInfo: SwiftLogInformation
+    // swiftlint:enable identifier_name
 
     @usableFromInline
     init(loggerLabel: String,
