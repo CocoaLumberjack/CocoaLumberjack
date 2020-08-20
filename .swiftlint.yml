@@ -5,3 +5,10 @@ disabled_rules:
 opt_in_rules:
   - empty_count
   - force_unwrapping
+
+identifier_name:
+  allowed_symbols:
+    - "_"
+
+nesting:
+  type_level: 4
