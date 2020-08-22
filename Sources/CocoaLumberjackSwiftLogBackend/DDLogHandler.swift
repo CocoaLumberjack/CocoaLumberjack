@@ -110,7 +110,7 @@ final class SwiftLogMessage: DDLogMessage {
     }
 }
 
-/// A swift-log `LogHandler` implenentation that forwards messages to a given `DDLog` instance.
+/// A swift-log `LogHandler` implementation that forwards messages to a given `DDLog` instance.
 public struct DDLogHandler: LogHandler {
     @usableFromInline
     struct Configuration {
