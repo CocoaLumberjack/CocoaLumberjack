@@ -19,6 +19,12 @@ let package = Package(
         .library(
             name: "CocoaLumberjackSwift",
             targets: ["CocoaLumberjackSwift"]),
+        .library(
+            name: "CocoaLumberjackSwiftLogBackend",
+            targets: ["CocoaLumberjackSwiftLogBackend"]),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-log.git", from: "1.4.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -30,7 +36,13 @@ let package = Package(
         .target(name: "CocoaLumberjackSwift",
                 dependencies: ["CocoaLumberjack", "CocoaLumberjackSwiftSupport"],
                 exclude: ["Supporting Files"]),
+        .target(name: "CocoaLumberjackSwiftLogBackend",
+                dependencies: ["CocoaLumberjack", "Logging"]),
         .testTarget(name: "CocoaLumberjackTests",
-                    dependencies: ["CocoaLumberjack"])
+                    dependencies: ["CocoaLumberjack"]),
+        .testTarget(name: "CocoaLumberjackSwiftTests",
+                    dependencies: ["CocoaLumberjackSwift"]),
+        .testTarget(name: "CocoaLumberjackSwiftLogBackendTests",
+                    dependencies: ["CocoaLumberjackSwiftLogBackend"]),
     ]
 )

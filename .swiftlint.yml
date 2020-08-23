@@ -5,3 +5,6 @@ disabled_rules:
 opt_in_rules:
   - empty_count
   - force_unwrapping
+
+nesting:
+  type_level: 4
