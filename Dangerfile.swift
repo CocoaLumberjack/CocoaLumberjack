@@ -201,6 +201,6 @@ if !filesWithInvalidCopyright.isEmpty {
     warn("""
          Copyright is not valid. See our default copyright in all of our files (Sources, Demos and Benchmarking use different formats).
          Invalid files:
-         \(filesWithInvalidCopyright.map { "- \($0)" }.joined(separator: "\n"))")
+         \(filesWithInvalidCopyright.map { "- \($0)" }.joined(separator: "\n"))
          """)
 }
