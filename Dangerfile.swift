@@ -199,8 +199,8 @@ if !filesWithInvalidCopyright.isEmpty {
         markdown(message: "Invalid copyright!", file: $0, line: 1)
     }
     warn("""
-        Copyright is not valid. See our default copyright in all of our files (Sources, Demos and Benchmarking use different formats).
-        Invalid files:
-        \(filesWithInvalidCopyright.map { "- \($0)" }.joined(separator: "\n"))")
-        """
+         Copyright is not valid. See our default copyright in all of our files (Sources, Demos and Benchmarking use different formats).
+         Invalid files:
+         \(filesWithInvalidCopyright.map { "- \($0)" }.joined(separator: "\n"))")
+         """)
 }
