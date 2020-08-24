@@ -66,7 +66,7 @@ extension DDLogMessage {
     }
 }
 
-/// This class (intentionally internal) is basically only an "encapsulation" layer above `DDLogMessage`.
+/// This class (intentionally internal) is only an "encapsulation" layer above `DDLogMessage`.
 /// It's basically an implementation detail of `DDLogMessage.swiftLogInfo`.
 @usableFromInline
 final class SwiftLogMessage: DDLogMessage {

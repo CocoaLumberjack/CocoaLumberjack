@@ -146,28 +146,13 @@
     [self performSelector:@selector(compressNextLogFile) withObject:nil afterDelay:delay];
 }
 
-- (void)didArchiveLogFile:(NSString *)logFilePath
-{
-    NSLogVerbose(@"CompressingLogFileManager: didArchiveLogFile: %@", [logFilePath lastPathComponent]);
-    
-    // If all other log files have been compressed,
-    // then we can get started right away.
-    // Otherwise we should just wait for the current compression process to finish.
-    
-    if (upToDate)
-    {
-        [self compressLogFile:[DDLogFileInfo logFileWithPath:logFilePath]];
-    }
-}
+- (void)didArchiveLogFile:(NSString *)logFilePath wasRolled:(BOOL)wasRolled {
+    NSLogVerbose(@"CompressingLogFileManager: didArchiveLogFile: %@ wasRolled: %@",
+                 [logFilePath lastPathComponent], (wasRolled ? @"YES" : @"NO"));
 
-- (void)didRollAndArchiveLogFile:(NSString *)logFilePath
-{
-    NSLogVerbose(@"CompressingLogFileManager: didRollAndArchiveLogFile: %@", [logFilePath lastPathComponent]);
-    
-    // If all other log files have been compressed,
-    // then we can get started right away.
+    // If all other log files have been compressed, then we can get started right away.
     // Otherwise we should just wait for the current compression process to finish.
-    
+
     if (upToDate)
     {
         [self compressLogFile:[DDLogFileInfo logFileWithPath:logFilePath]];
