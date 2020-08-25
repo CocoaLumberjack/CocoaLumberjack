@@ -1089,7 +1089,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
             dispatch_block_t block;
             if (logFileManagerRespondsToNewArchiveSelector) {
                 block = ^{
-                    [self->_logFileManager didArchiveLogFile:archivedFilePath wasRolled:YES];
+                    [self->_logFileManager didArchiveLogFile:archivedFilePath wasRolled:NO];
                 };
             } else {
                 block = ^{

@@ -162,7 +162,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 // Notifications from DDFileLogger
 
 /// Called when a log file was archived. Executed on global queue with default priority.
-/// @param logFilePath TThe path to the log file that was archived.
+/// @param logFilePath The path to the log file that was archived.
 /// @param wasRolled Whether or not the archiving happend after rolling the log file.
 - (void)didArchiveLogFile:(NSString *)logFilePath wasRolled:(BOOL)wasRolled NS_SWIFT_NAME(didArchiveLogFile(atPath:wasRolled:));
 
@@ -290,7 +290,6 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
    - (NSArray *)sortedLogFilePaths;
    - (NSArray *)sortedLogFileNames;
    - (NSArray *)sortedLogFileInfos;
-
  */
 
 @end
