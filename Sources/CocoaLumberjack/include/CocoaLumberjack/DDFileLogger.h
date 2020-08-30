@@ -161,16 +161,22 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 // Notifications from DDFileLogger
 
+/// Called when a log file was archived. Executed on global queue with default priority.
+/// @param logFilePath The path to the log file that was archived.
+/// @param wasRolled Whether or not the archiving happend after rolling the log file.
+- (void)didArchiveLogFile:(NSString *)logFilePath wasRolled:(BOOL)wasRolled NS_SWIFT_NAME(didArchiveLogFile(atPath:wasRolled:));
+
+// Deprecated APIs
 /**
  *  Called when a log file was archived. Executed on global queue with default priority.
  */
-- (void)didArchiveLogFile:(NSString *)logFilePath NS_SWIFT_NAME(didArchiveLogFile(atPath:));
+- (void)didArchiveLogFile:(NSString *)logFilePath NS_SWIFT_NAME(didArchiveLogFile(atPath:)) __attribute__((deprecated("Use -didArchiveLogFile:wasRolled:")));
 
 /**
  *  Called when the roll action was executed and the log was archived.
  *  Executed on global queue with default priority.
  */
-- (void)didRollAndArchiveLogFile:(NSString *)logFilePath NS_SWIFT_NAME(didRollAndArchiveLogFile(atPath:));
+- (void)didRollAndArchiveLogFile:(NSString *)logFilePath NS_SWIFT_NAME(didRollAndArchiveLogFile(atPath:)) __attribute__((deprecated("Use -didArchiveLogFile:wasRolled:")));
 
 @end
 
@@ -284,7 +290,6 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
    - (NSArray *)sortedLogFilePaths;
    - (NSArray *)sortedLogFileNames;
    - (NSArray *)sortedLogFileInfos;
-
  */
 
 @end
@@ -340,8 +345,9 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 /**
  *  Designated initializer, requires a `DDLogFileManager` instance.
- *  The completionQueue is used to execute `didArchiveLogFile`, `didRollAndArchiveLogFile`,
- *  and the callback in `rollLog`. If nil, a global queue w/ default priority is used.
+ *  The completionQueue is used to execute `didArchiveLogFile:wasRolled:`,
+ *  and the callback in `rollLogFileWithCompletionBlock:`.
+ *  If nil, a global queue w/ default priority is used.
  */
 - (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager
                        completionQueue:(nullable dispatch_queue_t)dispatchQueue NS_DESIGNATED_INITIALIZER;

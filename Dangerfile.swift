@@ -176,19 +176,31 @@ let filesWithInvalidCopyright = sourcefilesToCheck.lazy
     .filter { FileManager.default.fileExists(atPath: $0) }
     .filter {
         // Use correct copyright lines depending on source file location
-        let expectedLines: Array<String>
+        let (expectedLines, shouldMatchExactly): (Array<String>, Bool)
         if $0.isInDemos {
             expectedLines = copyrightLines.demos
+            shouldMatchExactly = false
         } else if $0.isInBenchmarking {
             expectedLines = copyrightLines.benchmarking
+            shouldMatchExactly = false
         } else {
             expectedLines = copyrightLines.source
+            shouldMatchExactly = true
         }
-        return !danger.utils.readFile($0).split(separator: "\n").lazy.map(String.init).starts(with: expectedLines)
+        let actualLines = danger.utils.readFile($0).split(separator: "\n").lazy.map(String.init)
+        if shouldMatchExactly {
+            return !actualLines.starts(with: expectedLines)
+        } else {
+            return !zip(actualLines, expectedLines).allSatisfy { $0.starts(with: $1) }
+        }
 }
 if !filesWithInvalidCopyright.isEmpty {
     filesWithInvalidCopyright.forEach {
         markdown(message: "Invalid copyright!", file: $0, line: 1)
     }
-    warn("Copyright is not valid. See our default copyright in all of our files (Sources, Demos and Benchmarking use different formats).")
+    warn("""
+         Copyright is not valid. See our default copyright in all of our files (Sources, Demos and Benchmarking use different formats).
+         Invalid files:
+         \(filesWithInvalidCopyright.map { "- \($0)" }.joined(separator: "\n"))
+         """)
 }

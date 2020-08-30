@@ -47,20 +47,17 @@ Let's take a look at the DDLogFileManager protocol:
 
 // Private methods (only to be used by DDFileLogger)
 
-- (NSString *)createNewLogFile;
+- (NSString *)createNewLogFileWithError(NSError**)error;
 
 @optional
 
 // Notifications from DDFileLogger
 
-- (void)didArchiveLogFile:(NSString *)logFilePath;
-- (void)didRollAndArchiveLogFile:(NSString *)logFilePath;
+- (void)didArchiveLogFile:(NSString *)logFilePath wasRolled:(BOOL)wasRolled;
 
 @end
 ```
 
-There are methods to get the logs directory, and various methods to get the list of log files. Then there is a method to create a new log file (that returns the new log file path). And lastly, there are hooks from `DDFileLogger` to be notified of when a log file is rolled.
-
-The hooks are designed to allow you do something with those archived log files!
+There are methods to get the logs directory, and various methods to get the list of log files. Then there is a method to create a new log file (that returns the new log file path). And lastly, there is a hook from `DDFileLogger` to be notified of when a log file is rolled. This hook is designed to allow you do something with those archived log files!
 
 The framework comes with a sample Xcode project that demonstrates compressing archived log files to save disk space. (It performs the compression using gzip.) The Xcode project name is `LogFileCompressor`. The `CompressingLogFileManager` class is ready to be used in your project, or you can use it as a template, or simply learn from it so you can do your own custom log file management.

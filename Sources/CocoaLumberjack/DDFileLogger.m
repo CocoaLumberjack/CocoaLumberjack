@@ -588,7 +588,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 }
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
-    NSString *dateAndTime = [_dateFormatter stringFromDate:(logMessage->_timestamp)];
+    NSString *dateAndTime = [_dateFormatter stringFromDate:logMessage->_timestamp];
 
     return [NSString stringWithFormat:@"%@  %@", dateAndTime, logMessage->_message];
 }
@@ -891,14 +891,28 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     _currentLogFileHandle = nil;
 
     _currentLogFileInfo.isArchived = YES;
-    BOOL logFileManagerRespondsToSelector = [_logFileManager respondsToSelector:@selector(didRollAndArchiveLogFile:)];
+
+    const BOOL logFileManagerRespondsToNewArchiveSelector = [_logFileManager respondsToSelector:@selector(didArchiveLogFile:wasRolled:)];
+    const BOOL logFileManagerRespondsToSelector = (logFileManagerRespondsToNewArchiveSelector
+                                                   || [_logFileManager respondsToSelector:@selector(didRollAndArchiveLogFile:)]);
     NSString *archivedFilePath = (logFileManagerRespondsToSelector) ? [_currentLogFileInfo.filePath copy] : nil;
     _currentLogFileInfo = nil;
 
     if (logFileManagerRespondsToSelector) {
-        dispatch_async(_completionQueue, ^{
-            [self->_logFileManager didRollAndArchiveLogFile:archivedFilePath];
-        });
+        dispatch_block_t block;
+        if (logFileManagerRespondsToNewArchiveSelector) {
+            block = ^{
+                [self->_logFileManager didArchiveLogFile:archivedFilePath wasRolled:YES];
+            };
+        } else {
+            block = ^{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+                [self->_logFileManager didRollAndArchiveLogFile:archivedFilePath];
+#pragma clang diagnostic pop
+            };
+        }
+        dispatch_async(_completionQueue, block);
     }
 
     if (_currentLogFileVnode) {
@@ -1069,11 +1083,23 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     if (isResuming && (_doNotReuseLogFiles || [self lt_shouldLogFileBeArchived:logFileInfo])) {
         logFileInfo.isArchived = YES;
 
-        if ([_logFileManager respondsToSelector:@selector(didArchiveLogFile:)]) {
+        const BOOL logFileManagerRespondsToNewArchiveSelector = [_logFileManager respondsToSelector:@selector(didArchiveLogFile:wasRolled:)];
+        if (logFileManagerRespondsToNewArchiveSelector || [_logFileManager respondsToSelector:@selector(didArchiveLogFile:)]) {
             NSString *archivedFilePath = [logFileInfo.filePath copy];
-            dispatch_async(_completionQueue, ^{
-                [self->_logFileManager didArchiveLogFile:archivedFilePath];
-            });
+            dispatch_block_t block;
+            if (logFileManagerRespondsToNewArchiveSelector) {
+                block = ^{
+                    [self->_logFileManager didArchiveLogFile:archivedFilePath wasRolled:NO];
+                };
+            } else {
+                block = ^{
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+                    [self->_logFileManager didArchiveLogFile:archivedFilePath];
+    #pragma clang diagnostic pop
+                };
+            }
+            dispatch_async(_completionQueue, block);
         }
 
         return NO;

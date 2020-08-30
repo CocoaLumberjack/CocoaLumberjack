@@ -39,11 +39,7 @@
     return _header;
 }
 
-- (void)didArchiveLogFile:(NSString *)logFilePath {
-    _archivedLogFilePath = logFilePath;
-}
-
-- (void)didRollAndArchiveLogFile:(NSString *)logFilePath {
+- (void)didArchiveLogFile:(NSString *)logFilePath wasRolled:(BOOL)wasRolled {
     _archivedLogFilePath = logFilePath;
 }
 
