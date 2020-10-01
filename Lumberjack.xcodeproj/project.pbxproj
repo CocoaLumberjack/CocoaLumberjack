@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -168,7 +168,6 @@
 		435F03AC2174A39200A86B2D /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
 		4CFE77942439202B0068D7C6 /* DDLog+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DDLog+Combine.swift"; sourceTree = "<group>"; };
 		DCB3185914EB418E001CFBEE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		DCB3186014EB418E001CFBEE /* CocoaLumberjack-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CocoaLumberjack-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -322,7 +321,6 @@
 			children = (
 				0A26B53222DE346B004EE6A7 /* Sources */,
 				435F03A92174A39200A86B2D /* Configs */,
-				DCB3185B14EB418E001CFBEE /* Supporting Files */,
 				DCB3185314EB418E001CFBEE /* Frameworks */,
 				DCB3185214EB418E001CFBEE /* Products */,
 			);
@@ -353,15 +351,6 @@
 				DCB3185914EB418E001CFBEE /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
-			sourceTree = "<group>";
-		};
-		DCB3185B14EB418E001CFBEE /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				DCB3186014EB418E001CFBEE /* CocoaLumberjack-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			path = Framework/Lumberjack;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -466,7 +455,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1200;
 				TargetAttributes = {
 					18F3BFD61A81E06E00692297 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -483,7 +472,7 @@
 				};
 			};
 			buildConfigurationList = DCB3184A14EB418D001CFBEE /* Build configuration list for PBXProject "Lumberjack" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (

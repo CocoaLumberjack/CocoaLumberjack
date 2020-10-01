@@ -70,7 +70,8 @@ SwiftLint.lint(.modifiedAndCreatedFiles(directory: "Sources"))
 
 // Added (or removed) library files need to be added (or removed) from the
 // Carthage Xcode project to avoid breaking things for our Carthage users.
-let xcodeProjectWasModified = git.modifiedFiles.contains("Lumberjack.xcodeproj")
+let xcodeProjectFile: Danger.File = "Lumberjack.xcodeproj/project.pbxproj"
+let xcodeProjectWasModified = git.modifiedFiles.contains(xcodeProjectFile)
 if (git.createdFiles + git.deletedFiles).contains(where: { $0.isInSources && $0.isSourceFile && !$0.isSPMOnlySourceFile })
     && !xcodeProjectWasModified {
   fail("Added or removed library files require the Carthage Xcode project to be updated.")
@@ -110,7 +111,7 @@ if xcodeProjectWasModified {
         "TARGETED_DEVICE_FAMILY",
         "WRAPPER_EXTENSION",
     ]
-    ["Lumberjack.xcodeproj/project.pbxproj"]
+    [xcodeProjectFile]
         .lazy
         .filter { FileManager.default.fileExists(atPath: $0) }
         .forEach { projectFile in

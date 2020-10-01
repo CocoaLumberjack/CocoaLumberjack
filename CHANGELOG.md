@@ -1,4 +1,10 @@
-## [3.7.0 - Xcode 12 on ???, 2020](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.0)
+## [3.7.1 - Xcode 12 on ???, 2020](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.0)
+
+### Public
+
+- _TBD_
+
+## [3.7.0 - Xcode 12 on Oct 2nd, 2020](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.0)
 
 ### Public
 
