@@ -7,7 +7,7 @@ When you define your log level, you generally define it in a manner similar to t
 static const DDLogLevel ddLogLevel = DDLogLevelWarn;
 ```
 
-What this means is that your log level is declared as a constant. It cannot be changed.\
+What this means is that your log level is declared as a constant. It cannot be changed.
 
 This has the advantage that the compiler can automatically prune `DDLog` statements above the log level threshold during compilation.  However, it also has the disadvantage that you cannot change your log level during run-time.
 
