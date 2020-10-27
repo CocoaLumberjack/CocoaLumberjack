@@ -137,6 +137,7 @@ static NSString * const kDefaultMessage = @"Log message";
     XCTAssertEqualObjects(self.message.function, @"testInitSetsAllPassedParameters");
     XCTAssertEqual(self.message.line, 50);
     XCTAssertEqualObjects(self.message.representedObject, NULL);
+    XCTAssertEqualObjects(self.message.tag, NULL);
     XCTAssertEqual(self.message.options, DDLogMessageCopyFile);
     XCTAssertEqualObjects(self.message.timestamp, referenceDate);
 }
@@ -222,6 +223,7 @@ static NSString * const kDefaultMessage = @"Log message";
     XCTAssertEqualObjects(self.message.function, copy.function);
     XCTAssertEqual(self.message.line, copy.line);
     XCTAssertEqualObjects(self.message.representedObject, copy.representedObject);
+    XCTAssertEqualObjects(self.message.tag, copy.tag);
     XCTAssertEqual(self.message.options, copy.options);
     XCTAssertEqualObjects(self.message.timestamp, copy.timestamp);
     XCTAssertEqualObjects(self.message.threadID, copy.threadID);
