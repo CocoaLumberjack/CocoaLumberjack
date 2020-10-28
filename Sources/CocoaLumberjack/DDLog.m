@@ -1015,10 +1015,6 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
 
 @implementation DDLogMessage
 
-// Fix @selectors name and type conflict from AppKit/UIKit (e.g. views NSInteger tag property)
-// without refactoring DDLog interal code.
-@synthesize representedObject = _tag;
-
 - (instancetype)init {
     self = [super init];
     return self;
@@ -1137,6 +1133,16 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
     newMessage->_qos = _qos;
 
     return newMessage;
+}
+
+- (void)setRepresentedObject:(id)representedObject {
+    if (_tag != representedObject) {
+        _tag = representedObject;
+    }
+}
+
+- (id)representedObject {
+    return _tag;
 }
 
 @end
