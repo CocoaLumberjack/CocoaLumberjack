@@ -1218,20 +1218,22 @@ static DDTTYLogger *sharedInstance;
         NSUInteger msgLen = [logMsg lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
         const BOOL useStack = msgLen < (1024 * 4);
 
-        char msgStack[useStack ? (msgLen + 1) : 1]; // Analyzer doesn't like zero-size array, hence the 1
-        char *msg = useStack ? msgStack : (char *)calloc(msgLen + 1, sizeof(char));
-
+        char *msg;
+        if (useStack) {
+            char msgStack[msgLen + 1];
+            msg = msgStack;
+        } else {
+            msg = (char *)calloc(msgLen + 1, sizeof(char));
+        }
         if (msg == NULL) {
             return;
         }
 
         BOOL logMsgEnc = [logMsg getCString:msg maxLength:(msgLen + 1) encoding:NSUTF8StringEncoding];
-
         if (!logMsgEnc) {
-            if (!useStack && msg != NULL) {
+            if (!useStack) {
                 free(msg);
             }
-
             return;
         }
 
@@ -1239,7 +1241,7 @@ static DDTTYLogger *sharedInstance;
 
         if (isFormatted) {
             // The log message has already been formatted.
-            int iovec_len = (_automaticallyAppendNewlineForCustomFormatters) ? 5 : 4;
+            const int iovec_len = (_automaticallyAppendNewlineForCustomFormatters) ? 5 : 4;
             struct iovec v[iovec_len];
 
             if (colorProfile) {
