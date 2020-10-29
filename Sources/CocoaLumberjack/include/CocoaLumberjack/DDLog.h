@@ -782,7 +782,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
     NSString *_fileName;
     NSString *_function;
     NSUInteger _line;
-    id _tag;
+    id _representedObject;
     DDLogMessageOptions _options;
     NSDate * _timestamp;
     NSString *_threadID;

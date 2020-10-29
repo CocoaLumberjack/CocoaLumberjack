@@ -1044,7 +1044,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
         _function = copyFunction ? [function copy] : function;
 
         _line         = line;
-        _tag          = tag;
+        _representedObject = tag;
         _options      = options;
         _timestamp    = timestamp ?: [NSDate new];
 
@@ -1086,7 +1086,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
         && [otherMsg->_fileName isEqualToString:_fileName]
         && [otherMsg->_function isEqualToString:_function]
         && otherMsg->_line == _line
-        && (([otherMsg->_tag respondsToSelector:@selector(isEqual:)] && [otherMsg->_tag isEqual:_tag]) || otherMsg->_tag == _tag)
+        && (([otherMsg->_representedObject respondsToSelector:@selector(isEqual:)] && [otherMsg->_representedObject isEqual:_representedObject]) || otherMsg->_representedObject == _representedObject)
         && otherMsg->_options == _options
         && [otherMsg->_timestamp isEqualToDate:_timestamp]
         && [otherMsg->_threadID isEqualToString:_threadID] // If the thread ID is the same, the name will likely be the same as well.
@@ -1105,7 +1105,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
     ^ _fileName.hash
     ^ _function.hash
     ^ _line
-    ^ ([_tag respondsToSelector:@selector(hash)] ? [_tag hash] : 0)
+    ^ ([_representedObject respondsToSelector:@selector(hash)] ? [_representedObject hash] : 0)
     ^ _options
     ^ _timestamp.hash
     ^ _threadID.hash
@@ -1124,7 +1124,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
     newMessage->_fileName = _fileName;
     newMessage->_function = _function;
     newMessage->_line = _line;
-    newMessage->_tag = _tag;
+    newMessage->_representedObject = _representedObject;
     newMessage->_options = _options;
     newMessage->_timestamp = _timestamp;
     newMessage->_threadID = _threadID;
@@ -1135,14 +1135,9 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
     return newMessage;
 }
 
-- (void)setRepresentedObject:(id)representedObject {
-    if (_tag != representedObject) {
-        _tag = representedObject;
-    }
-}
-
-- (id)representedObject {
-    return _tag;
+// ensure compatibility even when build with DD_LEGACY_MESSAGE_TAG to 0.
+- (id)tag {
+    return _representedObject;
 }
 
 @end
