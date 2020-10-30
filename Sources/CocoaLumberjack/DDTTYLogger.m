@@ -1220,8 +1220,7 @@ static DDTTYLogger *sharedInstance;
 
         char *msg;
         if (useStack) {
-            char msgStack[msgLen + 1];
-            msg = msgStack;
+            msg = (char *)alloca(msgLen + 1);
         } else {
             msg = (char *)calloc(msgLen + 1, sizeof(char));
         }
@@ -1264,7 +1263,7 @@ static DDTTYLogger *sharedInstance;
                 v[iovec_len - 1].iov_len = 0;
             }
 
-            v[2].iov_base = (char *)msg;
+            v[2].iov_base = msg;
             v[2].iov_len = msgLen;
 
             if (iovec_len == 5) {
