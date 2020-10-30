@@ -1184,8 +1184,8 @@ static DDTTYLogger *sharedInstance;
         DDTTYLoggerColorProfile *colorProfile = nil;
 
         if (_colorsEnabled) {
-            if (logMessage->_tag) {
-                colorProfile = _colorProfilesDict[logMessage->_tag];
+            if (logMessage->_representedObject) {
+                colorProfile = _colorProfilesDict[logMessage->_representedObject];
             }
 
             if (colorProfile == nil) {

@@ -25,6 +25,10 @@
     #import <CocoaLumberjack/DDLegacyMacros.h>
 #endif
 
+#ifndef DD_LEGACY_MESSAGE_TAG
+    #define DD_LEGACY_MESSAGE_TAG 1
+#endif
+
 // Names of loggers.
 #import <CocoaLumberjack/DDLoggerNames.h>
 
@@ -778,7 +782,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
     NSString *_fileName;
     NSString *_function;
     NSUInteger _line;
-    id _tag;
+    id _representedObject;
     DDLogMessageOptions _options;
     NSDate * _timestamp;
     NSString *_threadID;
@@ -845,7 +849,10 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
 @property (readonly, nonatomic) NSString *fileName;
 @property (readonly, nonatomic, nullable) NSString * function;
 @property (readonly, nonatomic) NSUInteger line;
-@property (readonly, nonatomic, nullable) id tag;
+#if DD_LEGACY_MESSAGE_TAG
+@property (readonly, nonatomic, nullable) id tag __attribute__((deprecated("Use representedObject instead", "representedObject")));
+#endif
+@property (readonly, nonatomic, nullable) id representedObject;
 @property (readonly, nonatomic) DDLogMessageOptions options;
 @property (readonly, nonatomic) NSDate *timestamp;
 @property (readonly, nonatomic) NSString *threadID; // ID as it appears in NSLog calculated from the machThreadID

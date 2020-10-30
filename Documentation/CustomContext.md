@@ -33,7 +33,7 @@ Every log message that goes through the Lumberjack framework is turned into a DD
 @property (readonly, nonatomic) NSString *fileName;
 @property (readonly, nonatomic) NSString *function;
 @property (readonly, nonatomic) NSUInteger line;
-@property (readonly, nonatomic) id tag;
+@property (readonly, nonatomic) id representedObject;
 @property (readonly, nonatomic) DDLogMessageOptions options;
 @property (readonly, nonatomic) NSDate *timestamp;
 @property (readonly, nonatomic) NSString *threadID; // ID as it appears in NSLog calculated from the machThreadID

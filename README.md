@@ -111,7 +111,11 @@ DDLogInfo(@"Info");
 DDLogWarn(@"Warn");
 DDLogError(@"Error");
 ```
+#### Objective-C ARC Semantic Issue
 
+When integrating Lumberjack into an existing Objective-C it is possible to run into `Multiple methods named 'tag' found with mismatched result, parameter type or attributes` build error.
+
+Add `#define DD_LEGACY_MESSAGE_TAG 0` before importing CocoaLumberjack or add `#define DD_LEGACY_MESSAGE_TAG 0` or add `-DDD_LEGACY_MESSAGE_TAG=0` to *Other C Flags*/*OTHER_CFLAGS* in your Xcode project.
 
 ### [swift-log](https://github.com/apple/swift-log) backend
 
