@@ -71,14 +71,6 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 @synthesize maximumNumberOfLogFiles = _maximumNumberOfLogFiles;
 @synthesize logFilesDiskQuota = _logFilesDiskQuota;
 
-+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)theKey {
-    if ([theKey isEqualToString:@"maximumNumberOfLogFiles"] || [theKey isEqualToString:@"logFilesDiskQuota"]) {
-        return NO;
-    } else {
-        return [super automaticallyNotifiesObserversForKey:theKey];
-    }
-}
-
 - (instancetype)init {
     return [self initWithLogsDirectory:nil];
 }
@@ -98,11 +90,6 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         } else {
             _logsDirectory = [[self defaultLogsDirectory] copy];
         }
-
-        NSKeyValueObservingOptions kvoOptions = NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew;
-
-        [self addObserver:self forKeyPath:NSStringFromSelector(@selector(maximumNumberOfLogFiles)) options:kvoOptions context:nil];
-        [self addObserver:self forKeyPath:NSStringFromSelector(@selector(logFilesDiskQuota)) options:kvoOptions context:nil];
 
         NSLogVerbose(@"DDFileLogManagerDefault: logsDirectory:\n%@", [self logsDirectory]);
         NSLogVerbose(@"DDFileLogManagerDefault: sortedLogFileNames:\n%@", [self sortedLogFileNames]);
@@ -129,42 +116,31 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 
 #endif
 
-- (void)dealloc {
-    // try-catch because the observer might be removed or never added. In this case, removeObserver throws an exception
-    @try {
-        [self removeObserver:self forKeyPath:NSStringFromSelector(@selector(maximumNumberOfLogFiles))];
-        [self removeObserver:self forKeyPath:NSStringFromSelector(@selector(logFilesDiskQuota))];
-    } @catch (NSException *exception) {
+- (void)_deleteOldLogFiles {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        @autoreleasepool {
+            // See method header for queue reasoning.
+            [self deleteOldLogFiles];
+        }
+    });
+}
+
+- (void)setLogFilesDiskQuota:(unsigned long long)logFilesDiskQuota {
+    if (_logFilesDiskQuota != logFilesDiskQuota) {
+        _logFilesDiskQuota = logFilesDiskQuota;
+        NSLogInfo(@"DDFileLogManagerDefault: Responding to configuration change: logFilesDiskQuota");
+        [self _deleteOldLogFiles];
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Configuration
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(__unused id)object
-                        change:(NSDictionary *)change
-                       context:(__unused void *)context {
-    NSNumber *old = change[NSKeyValueChangeOldKey];
-    NSNumber *new = change[NSKeyValueChangeNewKey];
-
-    if ([old isEqual:new]) {
-        return;
-    }
-
-    if ([keyPath isEqualToString:NSStringFromSelector(@selector(maximumNumberOfLogFiles))] ||
-        [keyPath isEqualToString:NSStringFromSelector(@selector(logFilesDiskQuota))]) {
-        NSLogInfo(@"DDFileLogManagerDefault: Responding to configuration change: %@", keyPath);
-
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            @autoreleasepool {
-                // See method header for queue reasoning.
-                [self deleteOldLogFiles];
-            }
-        });
+- (void)setMaximumNumberOfLogFiles:(NSUInteger)maximumNumberOfLogFiles {
+    if (_maximumNumberOfLogFiles != maximumNumberOfLogFiles) {
+        _maximumNumberOfLogFiles = maximumNumberOfLogFiles;
+        NSLogInfo(@"DDFileLogManagerDefault: Responding to configuration change: maximumNumberOfLogFiles");
+        [self _deleteOldLogFiles];
     }
 }
+
 
 #if TARGET_OS_IPHONE
 - (NSFileProtectionType)logFileProtection {

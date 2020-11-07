@@ -14,6 +14,7 @@
 - Add backend for swift-log (#1164)
 - Specify CocoaPods version to ensure `swift_version` attribute works (#1167)
 - Simplify `DDLogFileManager` callbacks for archived log files (#1166)
+- Use setter to replace kvo for filelogger (#1180)
 
 ## [3.6.2 - Xcode 11.6 on July 31st, 2020](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.6.2)
 
