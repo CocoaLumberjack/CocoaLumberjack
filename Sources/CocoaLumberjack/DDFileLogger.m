@@ -651,8 +651,15 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
 
     if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
-        [_currentLogFileHandle synchronizeAndReturnError:nil];
-        [_currentLogFileHandle closeAndReturnError:nil];
+        __autoreleasing NSError *error;
+        BOOL synchronized = [_currentLogFileHandle synchronizeAndReturnError:&error];
+        if (!synchronized) {
+            NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
+        }
+        BOOL closed = [_currentLogFileHandle closeAndReturnError:&error];
+        if (!closed) {
+            NSLogError(@"DDFileLogger: Failed to close file: %@", error);
+        }
     } else {
         [_currentLogFileHandle synchronizeFile];
         [_currentLogFileHandle closeFile];
@@ -892,8 +899,15 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     }
     
     if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
-        [_currentLogFileHandle synchronizeAndReturnError:nil];
-        [_currentLogFileHandle closeAndReturnError:nil];
+        __autoreleasing NSError *error;
+        BOOL synchronized = [_currentLogFileHandle synchronizeAndReturnError:&error];
+        if (!synchronized) {
+            NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
+        }
+        BOOL closed = [_currentLogFileHandle closeAndReturnError:&error];
+        if (!closed) {
+            NSLogError(@"DDFileLogger: Failed to close file: %@", error);
+        }
     } else {
         [_currentLogFileHandle synchronizeFile];
         [_currentLogFileHandle closeFile];
@@ -959,7 +973,11 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     if (_maximumFileSize > 0) {
         unsigned long long fileSize;
         if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
-            [_currentLogFileHandle getOffset:&fileSize error:nil];
+            __autoreleasing NSError *error;
+            BOOL succeed = [_currentLogFileHandle getOffset:&fileSize error:&error];
+            if (!succeed) {
+                NSLogError(@"DDFileLogger: Failed to get offset: %@", error);
+            }
         } else {
             fileSize = [_currentLogFileHandle offsetInFile];
         }
@@ -1160,7 +1178,11 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         NSString *logFilePath = [[self lt_currentLogFileInfo] filePath];
         _currentLogFileHandle = [NSFileHandle fileHandleForWritingAtPath:logFilePath];
         if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
-            [_currentLogFileHandle seekToEndReturningOffset:nil error:nil];
+            __autoreleasing NSError *error;
+            BOOL succeed = [_currentLogFileHandle seekToEndReturningOffset:nil error:&error];
+            if (!succeed) {
+                NSLogError(@"DDFileLogger: Failed to seek to end of file: %@", error);
+            }
         } else {
             [_currentLogFileHandle seekToEndOfFile];
         }
@@ -1235,7 +1257,11 @@ static int exception_count = 0;
 - (void)lt_flush {
     NSAssert([self isOnInternalLoggerQueue], @"flush should only be executed on internal queue.");
     if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
-        [_currentLogFileHandle synchronizeAndReturnError:nil];
+        __autoreleasing NSError *error;
+        BOOL succeed = [_currentLogFileHandle synchronizeAndReturnError:&error];
+        if (!succeed) {
+            NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
+        }
     } else {
         [_currentLogFileHandle synchronizeFile];
     }
@@ -1319,8 +1345,15 @@ static int exception_count = 0;
 
         NSFileHandle *handle = [self lt_currentLogFileHandle];
         if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
-            [handle seekToEndReturningOffset:nil error:nil];
-            [handle writeData:data error:nil];
+            __autoreleasing NSError *error;
+            BOOL sought = [handle seekToEndReturningOffset:nil error:&error];
+            if (!sought) {
+                NSLogError(@"DDFileLogger: Failed to seek to end of file: %@", error);
+            }
+            BOOL written =  [handle writeData:data error:&error];
+            if (!written) {
+                NSLogError(@"DDFileLogger: Failed to write data: %@", error);
+            }
         } else {
             [handle seekToEndOfFile];
             [handle writeData:data];
