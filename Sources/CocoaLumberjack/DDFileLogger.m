@@ -977,6 +977,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
             BOOL succeed = [_currentLogFileHandle getOffset:&fileSize error:&error];
             if (!succeed) {
                 NSLogError(@"DDFileLogger: Failed to get offset: %@", error);
+                return;
             }
         } else {
             fileSize = [_currentLogFileHandle offsetInFile];
