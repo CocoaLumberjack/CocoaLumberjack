@@ -116,7 +116,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 
 #endif
 
-- (void)_deleteOldLogFiles {
+- (void)deleteOldFilesForConfigurationChange {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         @autoreleasepool {
             // See method header for queue reasoning.
@@ -129,7 +129,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     if (_logFilesDiskQuota != logFilesDiskQuota) {
         _logFilesDiskQuota = logFilesDiskQuota;
         NSLogInfo(@"DDFileLogManagerDefault: Responding to configuration change: logFilesDiskQuota");
-        [self _deleteOldLogFiles];
+        [self deleteOldFilesForConfigurationChange];
     }
 }
 
@@ -137,10 +137,9 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     if (_maximumNumberOfLogFiles != maximumNumberOfLogFiles) {
         _maximumNumberOfLogFiles = maximumNumberOfLogFiles;
         NSLogInfo(@"DDFileLogManagerDefault: Responding to configuration change: maximumNumberOfLogFiles");
-        [self _deleteOldLogFiles];
+        [self deleteOldFilesForConfigurationChange];
     }
 }
-
 
 #if TARGET_OS_IPHONE
 - (NSFileProtectionType)logFileProtection {
