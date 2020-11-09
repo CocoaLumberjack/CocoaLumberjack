@@ -939,9 +939,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 - (BOOL)lt_shouldLogFileBeArchived:(DDLogFileInfo *)mostRecentLogFileInfo {
     NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
 
-    if (mostRecentLogFileInfo.isArchived) {
-        return NO;
-    } else if ([self shouldArchiveRecentLogFileInfo:mostRecentLogFileInfo]) {
+    if ([self shouldArchiveRecentLogFileInfo:mostRecentLogFileInfo]) {
         return YES;
     } else if (_maximumFileSize > 0 && mostRecentLogFileInfo.fileSize >= _maximumFileSize) {
         return YES;
@@ -959,7 +957,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     // If previous log was created when app wasn't running in background, but now it is - we archive it and create
     // a new one.
     //
-    // If user has overwritten to NSFileProtectionNone there is no neeed to create a new one.
+    // If user has overwritten to NSFileProtectionNone there is no need to create a new one.
     if (doesAppRunInBackground()) {
         NSFileProtectionType key = mostRecentLogFileInfo.fileAttributes[NSFileProtectionKey];
         BOOL isUntilFirstAuth = [key isEqualToString:NSFileProtectionCompleteUntilFirstUserAuthentication];
