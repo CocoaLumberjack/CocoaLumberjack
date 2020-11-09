@@ -625,9 +625,21 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 - (void)lt_cleanup {
     NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
 
-    [_currentLogFileHandle synchronizeFile];
-    [_currentLogFileHandle closeFile];
-
+    if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
+        __autoreleasing NSError *error;
+        BOOL synchronized = [_currentLogFileHandle synchronizeAndReturnError:&error];
+        if (!synchronized) {
+            NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
+        }
+        BOOL closed = [_currentLogFileHandle closeAndReturnError:&error];
+        if (!closed) {
+            NSLogError(@"DDFileLogger: Failed to close file: %@", error);
+        }
+    } else {
+        [_currentLogFileHandle synchronizeFile];
+        [_currentLogFileHandle closeFile];
+    }
+        
     if (_currentLogFileVnode) {
         dispatch_source_cancel(_currentLogFileVnode);
         _currentLogFileVnode = NULL;
@@ -860,9 +872,21 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     if (_currentLogFileHandle == nil) {
         return;
     }
-
-    [_currentLogFileHandle synchronizeFile];
-    [_currentLogFileHandle closeFile];
+    
+    if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
+        __autoreleasing NSError *error;
+        BOOL synchronized = [_currentLogFileHandle synchronizeAndReturnError:&error];
+        if (!synchronized) {
+            NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
+        }
+        BOOL closed = [_currentLogFileHandle closeAndReturnError:&error];
+        if (!closed) {
+            NSLogError(@"DDFileLogger: Failed to close file: %@", error);
+        }
+    } else {
+        [_currentLogFileHandle synchronizeFile];
+        [_currentLogFileHandle closeFile];
+    }
     _currentLogFileHandle = nil;
 
     _currentLogFileInfo.isArchived = YES;
@@ -922,7 +946,17 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     // We specifically wrote our own getter/setter method to allow us to do this (for performance reasons).
 
     if (_maximumFileSize > 0) {
-        unsigned long long fileSize = [_currentLogFileHandle offsetInFile];
+        unsigned long long fileSize;
+        if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
+            __autoreleasing NSError *error;
+            BOOL succeed = [_currentLogFileHandle getOffset:&fileSize error:&error];
+            if (!succeed) {
+                NSLogError(@"DDFileLogger: Failed to get offset: %@", error);
+                return;
+            }
+        } else {
+            fileSize = [_currentLogFileHandle offsetInFile];
+        }
 
         if (fileSize >= _maximumFileSize) {
             NSLogVerbose(@"DDFileLogger: Rolling log file due to size (%qu)...", fileSize);
@@ -1117,7 +1151,15 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     if (!_currentLogFileHandle) {
         NSString *logFilePath = [[self lt_currentLogFileInfo] filePath];
         _currentLogFileHandle = [NSFileHandle fileHandleForWritingAtPath:logFilePath];
-        [_currentLogFileHandle seekToEndOfFile];
+        if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
+            __autoreleasing NSError *error;
+            BOOL succeed = [_currentLogFileHandle seekToEndReturningOffset:nil error:&error];
+            if (!succeed) {
+                NSLogError(@"DDFileLogger: Failed to seek to end of file: %@", error);
+            }
+        } else {
+            [_currentLogFileHandle seekToEndOfFile];
+        }
 
         if (_currentLogFileHandle) {
             [self lt_scheduleTimerToRollLogFileDueToAge];
@@ -1188,7 +1230,15 @@ static int exception_count = 0;
 
 - (void)lt_flush {
     NSAssert([self isOnInternalLoggerQueue], @"flush should only be executed on internal queue.");
-    [_currentLogFileHandle synchronizeFile];
+    if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
+        __autoreleasing NSError *error;
+        BOOL succeed = [_currentLogFileHandle synchronizeAndReturnError:&error];
+        if (!succeed) {
+            NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
+        }
+    } else {
+        [_currentLogFileHandle synchronizeFile];
+    }
 }
 
 - (DDLoggerName)loggerName {
@@ -1268,8 +1318,20 @@ static int exception_count = 0;
         }
 
         NSFileHandle *handle = [self lt_currentLogFileHandle];
-        [handle seekToEndOfFile];
-        [handle writeData:data];
+        if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
+            __autoreleasing NSError *error;
+            BOOL sought = [handle seekToEndReturningOffset:nil error:&error];
+            if (!sought) {
+                NSLogError(@"DDFileLogger: Failed to seek to end of file: %@", error);
+            }
+            BOOL written =  [handle writeData:data error:&error];
+            if (!written) {
+                NSLogError(@"DDFileLogger: Failed to write data: %@", error);
+            }
+        } else {
+            [handle seekToEndOfFile];
+            [handle writeData:data];
+        }
 
         if (implementsDeprecatedDidLog) {
 #pragma clang diagnostic push
