@@ -8,6 +8,7 @@
 
 - Using setter to replace kvo for `NSFileLogger` (#1180)
 - Remove unnecessary checks in `DDFileLogger` (#1182)
+- Add an assertion to avoid potential deadlock issues for `flushLog` (#1183)
 
 ## [3.7.0 - Xcode 12 on Oct 2nd, 2020](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.0)
 

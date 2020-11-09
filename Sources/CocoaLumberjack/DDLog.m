@@ -521,6 +521,9 @@ static NSUInteger _numProcessors;
 }
 
 - (void)flushLog {
+    NSAssert(!dispatch_get_specific(GlobalLoggingQueueIdentityKey),
+             @"This method shouldn't be run on the logging thread/queue that make flush fast enough");
+    
     dispatch_sync(_loggingQueue, ^{ @autoreleasepool {
         [self lt_flush];
     } });
