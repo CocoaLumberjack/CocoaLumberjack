@@ -3,8 +3,12 @@
 ### Public
 
 - Deprecate `tag` property of `DDLogMessage`, use `representedObject` instead. (#1177, #532)
-- Using new API for `NSFileHandle` to show more infos when has error.(#1181)
-- _TBD_
+
+### Internal
+
+- Use setter to replace kvo for `NSFileLogger` (#1180)
+- Use new API for `NSFileHandle` on supported platforms (#1181)
+- Remove unnecessary checks in `DDFileLogger` (#1182)
 
 ## [3.7.0 - Xcode 12 on Oct 2nd, 2020](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.0)
 
