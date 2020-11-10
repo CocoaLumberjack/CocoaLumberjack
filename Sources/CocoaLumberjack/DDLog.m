@@ -180,18 +180,29 @@ static NSUInteger _numProcessors;
         self._loggers = [[NSMutableArray alloc] initWithCapacity:4];
 
 #if TARGET_OS_IOS
-        NSString *notificationName = UIApplicationWillTerminateNotification;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationWillTerminate:)
+                                                     name:UIApplicationWillTerminateNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationDidEnterBackground:)
+                                                     name:UIApplicationDidEnterBackgroundNotification
+                                                   object:nil];
 #else
-        NSString *notificationName = nil;
+        BOOL applicationEnable = NO;
 
         // On Command Line Tool apps AppKit may not be available
 #if !defined(DD_CLI) && __has_include(<AppKit/NSApplication.h>)
         if (NSApp) {
-            notificationName = NSApplicationWillTerminateNotification;
+            applicationEnable = YES;
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(applicationWillTerminate:)
+                                                         name:NSApplicationWillTerminateNotification
+                                                       object:nil];
         }
 #endif
 
-        if (!notificationName) {
+        if (!applicationEnable) {
             // If there is no NSApp -> we are running Command Line Tool app.
             // In this case terminate notification wouldn't be fired, so we use workaround.
             __weak __auto_type weakSelf = self;
@@ -201,13 +212,6 @@ static NSUInteger _numProcessors;
         }
 
 #endif /* if TARGET_OS_IOS */
-
-        if (notificationName) {
-            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(applicationWillTerminate:)
-                                                         name:notificationName
-                                                       object:nil];
-        }
     }
 
     return self;
@@ -227,6 +231,29 @@ static NSUInteger _numProcessors;
 - (void)applicationWillTerminate:(NSNotification * __attribute__((unused)))notification {
     [self flushLog];
 }
+
+#if TARGET_OS_IOS
+
+- (void)applicationDidEnterBackground:(NSNotification *)notification {
+    Class UIApplicationClass = NSClassFromString(@"UIApplication");
+    if (!UIApplicationClass || ![UIApplicationClass respondsToSelector:@selector(sharedApplication)]) {
+        return;
+    }
+    UIApplication *application = [UIApplication performSelector:@selector(sharedApplication)];
+    __block UIBackgroundTaskIdentifier bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
+        // Clean up any unfinished task business by marking where you
+        // stopped or ending the task outright.
+        [application endBackgroundTask:bgTask];
+        bgTask = UIBackgroundTaskInvalid;
+    }];
+
+    [self flushLog];
+    
+    [application endBackgroundTask:bgTask];
+    bgTask = UIBackgroundTaskInvalid;
+}
+
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Logger Management
