@@ -225,6 +225,24 @@ Per  [App privacy details on the App Store](https://developer.apple.com/app-stor
 #### Indirect data collection through the framework
 
 Considering CocoaLumberjack is a logging framework which makes it easy to send those logs to different platforms, collecting  data might happen quite easily, if the app developers include any sensitive data into those logs.
+
+Private data includes but isn't limited to:
+
+- user info (name, email, address, ...)
+- location info
+- contacts
+- identifiers (user id, device id, ...)
+- app usage data
+- performance data
+- health and fitness info
+- financial info
+- sensitive info
+- user content
+- history (browsing, search, ...)
+- purchases
+- diagnostics
+- ...
+
 Example: `DDLogInfo("User: \(myUser)")` will add the `myUser` info to the logs, so if those are forwarded to a 3rd party or sent via email, that may qualify as data collection.
 
 **The important thing is you app developers are fully responsible for adding sensitive data to the logs, thus documenting that via the Data Collection Practices info!**
