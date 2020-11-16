@@ -213,7 +213,27 @@ The current version of Lumberjack requires:
 - If you **have a feature request**, open an issue.
 - If you **want to contribute**, submit a pull request.
 
+### Data Collection Practices
+
+Per  [App privacy details on the App Store](https://developer.apple.com/app-store/app-privacy-details/), Apple is requesting app developers to provide info about their data collection, us SDK maintainers must provide them with the same data.
+
+#### Data collection by the framework
+
+**By default, CocoaLumberjack does not collect any data on its own.** 
+[See our updated list using the recommended format.](https://cocoalumberjack.github.io/DataCollection/index.html)
+
+#### Indirect data collection through the framework
+
+Considering CocoaLumberjack is a logging framework which makes it easy to send those logs to different platforms, collecting  data might happen quite easily, if the app developers include any sensitive data into those logs.
+Example: `DDLogInfo("User: \(myUser)")` will add the `myUser` info to the logs, so if those are forwarded to a 3rd party or sent via email, that may qualify as data collection.
+
+**The important thing is you app developers are fully responsible for adding sensitive data to the logs, thus documenting that via the Data Collection Practices info!**
+
+Since the number of scenarios where data might be indirectly collected through CocoaLumberjack is quite large, it's up to you, as app developers, to properly review your app's code and identify those cases.
+What we can do to help is raise awareness about potential data collection through our framework.
+
 ### Author
+
 - [Robbie Hanson](https://github.com/robbiehanson)
 - Love the project? Wanna buy me a coffee? (or a beer :D) [![donation](http://www.paypal.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UZRA26JPJB3DA)
 
