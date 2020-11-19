@@ -215,7 +215,7 @@ The current version of Lumberjack requires:
 
 ## Data Collection Practices
 
-Per  [App privacy details on the App Store](https://developer.apple.com/app-store/app-privacy-details/), Apple is requesting app developers to provide info about their data collection, us SDK maintainers must provide them with the same data.
+Per [App privacy details on the App Store](https://developer.apple.com/app-store/app-privacy-details/), Apple is requesting app developers to provide info about their data collection, us SDK maintainers must provide them with the same data.
 
 ### Data collection by the framework
 
@@ -227,7 +227,7 @@ Per  [App privacy details on the App Store](https://developer.apple.com/app-stor
 
 CocoaLumberjack is a logging framework which makes it easy to send those logs to different platforms.
 
-This is why collecting  data might happen quite easily, if the app developers include any sensitive data into the logs.
+This is why collecting data might happen quite easily, if app developers include any sensitive data into their log messages.
 
 **Important note: app developers are fully responsible for any sensitive data collected through our logging system!**
 
