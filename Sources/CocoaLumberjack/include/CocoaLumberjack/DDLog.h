@@ -625,7 +625,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  * For example, a database logger may only save occasionally as the disk IO is slow.
  * In such loggers, this method should be implemented to flush any pending IO.
  *
- * This allows invocations of DDLog's flushLog method to be propogated to loggers that need it.
+ * This allows invocations of DDLog's flushLog method to be propagated to loggers that need it.
  *
  * Note that DDLog's flushLog method is invoked automatically when the application quits,
  * and it may be also invoked manually by the developer prior to application crashes, or other such reasons.
