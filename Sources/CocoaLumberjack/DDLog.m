@@ -48,21 +48,6 @@
 
 #define NSLogDebug(frmt, ...) do{ if(DD_DEBUG) NSLog((frmt), ##__VA_ARGS__); } while(0)
 
-// Specifies the maximum queue size of the logging thread.
-//
-// Since most logging is asynchronous, its possible for rogue threads to flood the logging queue.
-// That is, to issue an abundance of log statements faster than the logging thread can keep up.
-// Typically such a scenario occurs when log statements are added haphazardly within large loops,
-// but may also be possible if relatively slow loggers are being used.
-//
-// This property caps the queue size at a given number of outstanding log statements.
-// If a thread attempts to issue a log statement when the queue is already maxed out,
-// the issuing thread will block until the queue size drops below the max again.
-
-#ifndef DDLOG_MAX_QUEUE_SIZE
-    #define DDLOG_MAX_QUEUE_SIZE 1000 // Should not exceed INT32_MAX
-#endif
-
 // The "global logging queue" refers to [DDLog loggingQueue].
 // It is the queue that all log statements go through.
 //
@@ -112,10 +97,6 @@ static dispatch_queue_t _loggingQueue;
 // Each logger has it's own associated queue, and a dispatch group is used for synchronization.
 static dispatch_group_t _loggingGroup;
 
-// In order to prevent to queue from growing infinitely large,
-// a maximum size is enforced (DDLOG_MAX_QUEUE_SIZE).
-static dispatch_semaphore_t _queueSemaphore;
-
 // Minor optimization for uniprocessor machines
 static NSUInteger _numProcessors;
 
@@ -155,8 +136,6 @@ static NSUInteger _numProcessors;
 
         void *nonNullValue = GlobalLoggingQueueIdentityKey; // Whatever, just not null
         dispatch_queue_set_specific(_loggingQueue, GlobalLoggingQueueIdentityKey, nonNullValue, NULL);
-
-        _queueSemaphore = dispatch_semaphore_create(DDLOG_MAX_QUEUE_SIZE);
 
         // Figure out how many processors are available.
         // This may be used later for an optimization on uniprocessor machines.
@@ -338,19 +317,7 @@ static NSUInteger _numProcessors;
     // Now assume we have another separate thread that attempts to issue log message G.
     // It should block until log messages A and B have been unqueued.
 
-
-    // We are using a counting semaphore provided by GCD.
-    // The semaphore is initialized with our DDLOG_MAX_QUEUE_SIZE value.
-    // Every time we want to queue a log message we decrement this value.
-    // If the resulting value is less than zero,
-    // the semaphore function waits in FIFO order for a signal to occur before returning.
-    //
-    // A dispatch semaphore is an efficient implementation of a traditional counting semaphore.
-    // Dispatch semaphores call down to the kernel only when the calling thread needs to be blocked.
-    // If the calling semaphore does not need to block, no kernel call is made.
-
     dispatch_block_t logBlock = ^{
-        dispatch_semaphore_wait(_queueSemaphore, DISPATCH_TIME_FOREVER);
         // We're now sure we won't overflow the queue.
         // It is time to queue our log message.
         @autoreleasepool {
@@ -871,22 +838,6 @@ static NSUInteger _numProcessors;
             } });
         }
     }
-
-    // If our queue got too big, there may be blocked threads waiting to add log messages to the queue.
-    // Since we've now dequeued an item from the log, we may need to unblock the next thread.
-
-    // We are using a counting semaphore provided by GCD.
-    // The semaphore is initialized with our DDLOG_MAX_QUEUE_SIZE value.
-    // When a log message is queued this value is decremented.
-    // When a log message is dequeued this value is incremented.
-    // If the value ever drops below zero,
-    // the queueing thread blocks and waits in FIFO order for us to signal it.
-    //
-    // A dispatch semaphore is an efficient implementation of a traditional counting semaphore.
-    // Dispatch semaphores call down to the kernel only when the calling thread needs to be blocked.
-    // If the calling semaphore does not need to block, no kernel call is made.
-
-    dispatch_semaphore_signal(_queueSemaphore);
 }
 
 - (void)lt_flush {
