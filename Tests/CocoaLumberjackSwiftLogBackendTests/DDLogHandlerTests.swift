@@ -107,40 +107,67 @@ final class DDLogHandlerTests: XCTestCase {
         XCTAssertEqual(ddLogHandler.loggerInfo.label, logger.label)
         XCTAssertTrue(ddLogHandler.loggerInfo.metadata.isEmpty)
         XCTAssertTrue(ddLogHandler.config.log === DDLog.sharedInstance)
-        XCTAssertEqual(ddLogHandler.config.syncLoggingTresholdLevel, .error)
+        XCTAssertEqual(ddLogHandler.config.syncLogging.tresholdLevel, .error)
+        XCTAssertEqual(ddLogHandler.config.syncLogging.metadataKey, DDLogHandler.defaultSynchronousLoggingMetadataKey)
     }
 
     func testLoggingAllLevels() throws {
         let syncTresholdLevel = Logger.Level.warning
-        LoggingSystem.bootstrapInternal(DDLogHandler.handlerFactory(for: mockDDLog, loggingSynchronousAsOf: syncTresholdLevel))
+        let syncLoggingMetadataKey: Logger.Metadata.Key = "test-log-sync"
+        LoggingSystem.bootstrapInternal(DDLogHandler.handlerFactory(for: mockDDLog,
+                                                                    loggingSynchronousAsOf: syncTresholdLevel,
+                                                                    synchronousLoggingMetadataKey: syncLoggingMetadataKey))
         var logger = Logger(label: "TestLogger")
         logger.logLevel = .trace // enable all logs
         logger[metadataKey: "test-data"] = "test-value"
         XCTAssertEqual(logger.logLevel, .trace)
         XCTAssertEqual(logger[metadataKey: "test-data"], "test-value")
-        let messageMeta: Logger.Metadata = ["msg-data": "msg-value"]
-        let logLine: UInt = #line + 2
-        for level in Logger.Level.allCases {
-            logger.log(level: level, "\(level)-msg", metadata: messageMeta)
+        let allLevels = Logger.Level.allCases
+        let message1Meta: Logger.Metadata = ["msg-data": "msg-value"]
+        let message2Meta = message1Meta.merging([syncLoggingMetadataKey: .stringConvertible(true)], uniquingKeysWith: { $1 })
+        let logLine1: UInt = #line + 3
+        let logLine2 = logLine1 + 1
+        for level in allLevels {
+            logger.log(level: level, "\(level)-msg", metadata: message1Meta)
+            logger.log(level: level, "\(level)-msg-with-sync", metadata: message2Meta)
         }
-        XCTAssertEqual(mockDDLog.loggedMessages.count, Logger.Level.allCases.count)
-        guard mockDDLog.loggedMessages.count >= Logger.Level.allCases.count else { return } // prevent test crashes
-        for (idx, level) in Logger.Level.allCases.enumerated() {
-            let loggedMsg = mockDDLog.loggedMessages[idx]
-            XCTAssertEqual(loggedMsg.async, level < syncTresholdLevel)
-            XCTAssertEqual(loggedMsg.message.message, "\(level)-msg")
-            XCTAssertEqual(loggedMsg.message.level, level.ddLogLevelAndFlag.0)
-            XCTAssertEqual(loggedMsg.message.flag, level.ddLogLevelAndFlag.1)
-            XCTAssertEqual(loggedMsg.message.file, #file)
-            XCTAssertEqual(loggedMsg.message.function, #function)
-            XCTAssertEqual(loggedMsg.message.line, logLine)
-            XCTAssertNotNil(loggedMsg.message.swiftLogInfo)
-            XCTAssertEqual(loggedMsg.message.swiftLogInfo, .init(logger: .init(label: logger.label,
-                                                                               metadata: logger.handler.metadata),
-                                                                 message: .init(message: "\(level)-msg",
-                                                                                level: level,
-                                                                                metadata: messageMeta,
-                                                                                source: logSource)))
+        XCTAssertEqual(mockDDLog.loggedMessages.count, Logger.Level.allCases.count * 2)
+        guard mockDDLog.loggedMessages.count >= Logger.Level.allCases.count * 2 else { return } // prevent test crashes
+
+        zip(allLevels, stride(from: mockDDLog.loggedMessages.startIndex, to: mockDDLog.loggedMessages.endIndex, by: 2)).forEach {
+            let level = $0.0
+
+            let loggedMsg1 = mockDDLog.loggedMessages[$0.1]
+            XCTAssertEqual(loggedMsg1.async, level < syncTresholdLevel)
+            XCTAssertEqual(loggedMsg1.message.message, "\(level)-msg")
+            XCTAssertEqual(loggedMsg1.message.level, level.ddLogLevelAndFlag.0)
+            XCTAssertEqual(loggedMsg1.message.flag, level.ddLogLevelAndFlag.1)
+            XCTAssertEqual(loggedMsg1.message.file, #file)
+            XCTAssertEqual(loggedMsg1.message.function, #function)
+            XCTAssertEqual(loggedMsg1.message.line, logLine1)
+            XCTAssertNotNil(loggedMsg1.message.swiftLogInfo)
+            XCTAssertEqual(loggedMsg1.message.swiftLogInfo, .init(logger: .init(label: logger.label,
+                                                                                metadata: logger.handler.metadata),
+                                                                  message: .init(message: "\(level)-msg",
+                                                                                 level: level,
+                                                                                 metadata: message1Meta,
+                                                                                 source: logSource)))
+
+            let loggedMsg2 = mockDDLog.loggedMessages[$0.1 + 1]
+            XCTAssertFalse(loggedMsg2.async)
+            XCTAssertEqual(loggedMsg2.message.message, "\(level)-msg-with-sync")
+            XCTAssertEqual(loggedMsg2.message.level, level.ddLogLevelAndFlag.0)
+            XCTAssertEqual(loggedMsg2.message.flag, level.ddLogLevelAndFlag.1)
+            XCTAssertEqual(loggedMsg2.message.file, #file)
+            XCTAssertEqual(loggedMsg2.message.function, #function)
+            XCTAssertEqual(loggedMsg2.message.line, logLine2)
+            XCTAssertNotNil(loggedMsg2.message.swiftLogInfo)
+            XCTAssertEqual(loggedMsg2.message.swiftLogInfo, .init(logger: .init(label: logger.label,
+                                                                                metadata: logger.handler.metadata),
+                                                                  message: .init(message: "\(level)-msg-with-sync",
+                                                                                 level: level,
+                                                                                 metadata: message2Meta,
+                                                                                 source: logSource)))
         }
     }
 }

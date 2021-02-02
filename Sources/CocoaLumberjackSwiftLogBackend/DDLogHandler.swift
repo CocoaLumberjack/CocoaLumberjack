@@ -115,9 +115,16 @@ public struct DDLogHandler: LogHandler {
     @usableFromInline
     struct Configuration {
         @usableFromInline
+        struct SyncLogging {
+            @usableFromInline
+            let tresholdLevel: Logger.Level
+            @usableFromInline
+            let metadataKey: Logger.Metadata.Key
+        }
+        @usableFromInline
         let log: DDLog
         @usableFromInline
-        let syncLoggingTresholdLevel: Logger.Level
+        let syncLogging: SyncLogging
     }
 
     @usableFromInline
@@ -135,12 +142,14 @@ public struct DDLogHandler: LogHandler {
     @usableFromInline
     var loggerInfo: LoggerInfo
 
+    @inlinable
     public var logLevel: Logger.Level {
-        get { loggerInfo.logLevel }
+        get { return loggerInfo.logLevel }
         set { loggerInfo.logLevel = newValue }
     }
+    @inlinable
     public var metadata: Logger.Metadata {
-        get { loggerInfo.metadata }
+        get { return loggerInfo.metadata }
         set { loggerInfo.metadata = newValue }
     }
 
@@ -153,6 +162,25 @@ public struct DDLogHandler: LogHandler {
     private init(config: Configuration, loggerInfo: LoggerInfo) {
         self.config = config
         self.loggerInfo = loggerInfo
+    }
+
+    /// Returns whether a message with the given level and the given metadata should be logged asynchronous.
+    /// - Parameters:
+    ///   - level: The level at which the message was logged.
+    ///   - metadata: The metadata associated with the message.
+    /// - Returns: Whether to log the message asynchronous.
+    @usableFromInline
+    func _logAsync(level: Logger.Level, metadata: Logger.Metadata?) -> Bool {
+        if level >= config.syncLogging.tresholdLevel {
+            // Easiest check -> level is above treshold. Not async.
+            return false
+        } else if case .stringConvertible(let logSynchronous as Bool) = metadata?[config.syncLogging.metadataKey] {
+            // There's a metadata value, return it's value. We need to invert it since it defines whether to log _synchronous_.
+            return !logSynchronous
+        } else {
+            // If we're below the treshold and no metadata value is set -> we're logging async.
+            return true
+        }
     }
 
     @inlinable
@@ -172,24 +200,36 @@ public struct DDLogHandler: LogHandler {
                                         file: file,
                                         function: function,
                                         line: line)
-        config.log.log(asynchronous: level < config.syncLoggingTresholdLevel,
-                       message: slMessage)
+        config.log.log(asynchronous: _logAsync(level: level, metadata: metadata), message: slMessage)
     }
 }
 
 extension DDLogHandler {
+    /// The default key to control per message whether to log it synchronous or asynchronous.
+    public static var defaultSynchronousLoggingMetadataKey: Logger.Metadata.Key {
+        return "log-synchronous"
+    }
+
     /// Creates a new `LogHandler` factory using `DDLogHandler` with the given parameters.
     /// - Parameters:
     ///   - log: The `DDLog` instance to use for logging. Defaults to `DDLog.sharedInstance`.
     ///   - defaultLogLevel: The default log level for new loggers. Defaults to `.info`.
     ///   - syncLoggingTreshold: The level as of which log messages should be logged synchronously instead of asynchronously. Defaults to `.error`.
+    ///   - synchronousLoggingMetadataKey: The metadata key to check on messages to decide whether to log synchronous or asynchronous. Defaults to `DDLogHandler.defaultSynchronousLoggingMetadataKey`.
     /// - Returns: A new `LogHandler` factory using `DDLogHandler` that can be passed to `LoggingSystem.bootstrap`.
     /// - SeeAlso: `DDLog`, `LoggingSystem.boostrap`
     public static func handlerFactory(for log: DDLog = .sharedInstance,
                                       defaultLogLevel: Logger.Level = .info,
-                                      loggingSynchronousAsOf syncLoggingTreshold: Logger.Level = .error) -> (String) -> LogHandler {
-        let config = DDLogHandler.Configuration(log: log, syncLoggingTresholdLevel: syncLoggingTreshold)
-        return { DDLogHandler(config: config, loggerInfo: .init(label: $0, logLevel: defaultLogLevel)) }
+                                      loggingSynchronousAsOf syncLoggingTreshold: Logger.Level = .error,
+                                      synchronousLoggingMetadataKey: Logger.Metadata.Key = DDLogHandler.defaultSynchronousLoggingMetadataKey) -> (String) -> LogHandler {
+        let config = DDLogHandler.Configuration(
+            log: log,
+            syncLogging: .init(tresholdLevel: syncLoggingTreshold,
+                               metadataKey: synchronousLoggingMetadataKey)
+        )
+        return {
+            DDLogHandler(config: config, loggerInfo: .init(label: $0, logLevel: defaultLogLevel))
+        }
     }
 }
 
@@ -199,11 +239,16 @@ extension LoggingSystem {
     ///   - log: The `DDLog` instance to use for logging. Defaults to `DDLog.sharedInstance`.
     ///   - defaultLogLevel: The default log level for new loggers. Defaults to `.info`.
     ///   - syncLoggingTreshold: The level as of which log messages should be logged synchronously instead of asynchronously. Defaults to `.error`.
+    ///   - synchronousLoggingMetadataKey: The metadata key to check on messages to decide whether to log synchronous or asynchronous. Defaults to `DDLogHandler.defaultSynchronousLoggingMetadataKey`.
     /// - SeeAlso: `DDLogHandler.handlerFactory`, `LoggingSystem.bootstrap`
     @inlinable
     public static func bootstrapWithCocoaLumberjack(for log: DDLog = .sharedInstance,
                                                     defaultLogLevel: Logger.Level = .info,
-                                                    loggingSynchronousAsOf syncLoggingTreshold: Logger.Level = .error) {
-        bootstrap(DDLogHandler.handlerFactory(for: log, defaultLogLevel: defaultLogLevel, loggingSynchronousAsOf: syncLoggingTreshold))
+                                                    loggingSynchronousAsOf syncLoggingTreshold: Logger.Level = .error,
+                                                    synchronousLoggingMetadataKey: Logger.Metadata.Key = DDLogHandler.defaultSynchronousLoggingMetadataKey) {
+        bootstrap(DDLogHandler.handlerFactory(for: log,
+                                              defaultLogLevel: defaultLogLevel,
+                                              loggingSynchronousAsOf: syncLoggingTreshold,
+                                              synchronousLoggingMetadataKey: synchronousLoggingMetadataKey))
     }
 }
