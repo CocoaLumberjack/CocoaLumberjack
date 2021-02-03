@@ -170,7 +170,7 @@ public struct DDLogHandler: LogHandler {
     ///   - metadata: The metadata associated with the message.
     /// - Returns: Whether to log the message asynchronous.
     @usableFromInline
-    func _logAsync(level: Logger.Level, metadata: Logger.Metadata?) -> Bool {
+    func _logAsync(level: Logger.Level, metadata: Logger.Metadata?) -> Bool { // swiftlint:disable:this identifier_name
         if level >= config.syncLogging.tresholdLevel {
             // Easiest check -> level is above treshold. Not async.
             return false
