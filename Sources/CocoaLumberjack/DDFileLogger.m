@@ -1120,11 +1120,10 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
     NSAssert(_currentLogFileHandle, @"Can not monitor without handle.");
 
-    dispatch_source_vnode_flags_t flags = DISPATCH_VNODE_DELETE | DISPATCH_VNODE_RENAME | DISPATCH_VNODE_REVOKE;
     _currentLogFileVnode = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE,
-                                                        (uintptr_t)[_currentLogFileHandle fileDescriptor],
-                                                        flags,
-                                                        _loggerQueue);
+                                                  (uintptr_t)[_currentLogFileHandle fileDescriptor],
+                                                  DISPATCH_VNODE_DELETE | DISPATCH_VNODE_RENAME | DISPATCH_VNODE_REVOKE,
+                                                  _loggerQueue);
 
     __weak __auto_type weakSelf = self;
     dispatch_source_set_event_handler(_currentLogFileVnode, ^{ @autoreleasepool {
@@ -1139,10 +1138,11 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     });
 #endif
 
-    if (@available(macOS 10.12, iOS 10.0, tvOS 10.0, watchOS 3.0, *))
+    if (@available(macOS 10.12, iOS 10.0, tvOS 10.0, watchOS 3.0, *)) {
         dispatch_activate(_currentLogFileVnode);
-    else
+    } else {
         dispatch_resume(_currentLogFileVnode);
+    }
 }
 
 - (NSFileHandle *)lt_currentLogFileHandle {
@@ -1187,9 +1187,7 @@ static int exception_count = 0;
     [self lt_logData:data];
 }
 
-- (void)willLogMessage:(DDLogFileInfo *)logFileInfo {
-
-}
+- (void)willLogMessage:(DDLogFileInfo *)logFileInfo {}
 
 - (void)didLogMessage:(DDLogFileInfo *)logFileInfo {
     [self lt_maybeRollLogFileDueToSize];
@@ -1274,19 +1272,19 @@ static int exception_count = 0;
     }
 }
 
-- (void)dummyMethod {}
+- (void)lt_deprecationCatchAll {}
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
     if (aSelector == @selector(willLogMessage) || aSelector == @selector(didLogMessage)) {
         // Ignore calls to deprecated methods.
-        return [self methodSignatureForSelector:@selector(dummyMethod)];
+        return [self methodSignatureForSelector:@selector(lt_deprecationCatchAll)];
     }
 
     return [super methodSignatureForSelector:aSelector];
 }
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation {
-    if (anInvocation.selector != @selector(dummyMethod)) {
+    if (anInvocation.selector != @selector(lt_deprecationCatchAll)) {
         [super forwardInvocation:anInvocation];
     }
 }
@@ -1707,10 +1705,17 @@ static NSString *_xattrToExtensionName(NSString *attrName) {
     int result = setxattr(path, name, "\1", 1, 0, 0);
 
     if (result < 0) {
-        NSLogError(@"DDLogFileInfo: setxattr(%@, %@): error = %s",
-                   attrName,
-                   filePath,
-                   strerror(errno));
+        if (errno != ENOENT) {
+            NSLogError(@"DDLogFileInfo: setxattr(%@, %@): error = %s",
+                       attrName,
+                       filePath,
+                       strerror(errno));
+        } else {
+            NSLogDebug(@"DDLogFileInfo: File does not exist in setxattr(%@, %@): error = %s",
+                       attrName,
+                       filePath,
+                       strerror(errno));
+        }
     }
 #if TARGET_IPHONE_SIMULATOR
     else {
