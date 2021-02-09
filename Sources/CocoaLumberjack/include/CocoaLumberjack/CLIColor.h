@@ -13,6 +13,8 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
+#import <TargetConditionals.h>
+
 #if TARGET_OS_OSX
 
 #import <Foundation/Foundation.h>
