@@ -23,3 +23,8 @@
             NSAssert(NO, @"%@", description);                                         \
         }
 #define DDAssertCondition(condition) DDAssert(condition, @"Condition not satisfied: %s", #condition)
+
+/**
+ * Analog to `DDAssertionFailure` from DDAssert.swift for use in Objective C
+ */
+#define DDAssertionFailure(frmt, ...) DDAssert(NO, frmt, ##__VA_ARGS__)
