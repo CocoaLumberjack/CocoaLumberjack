@@ -5,6 +5,7 @@
 - Deprecate `tag` property of `DDLogMessage`, use `representedObject` instead. (#1177, #532)
 - Add per-message synchronous logging control for messages logged via SwiftLog using `DDLogHandler` (#1209)
 - Prevent logging an error when archiving an already deleted file (#1212)
+- Add `DDAssertionFailure` macro for Objective-C (#1220)
 
 ### Internal
 
