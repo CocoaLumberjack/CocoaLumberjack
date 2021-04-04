@@ -3882,7 +3882,7 @@
 											"top": 615,
 											"width": 256.17236328125,
 											"height": 13,
-											"text": "DDContextWhitelistFilterLogFormatter"
+											"text": "DDContextAllowlistFilterLogFormatter"
 										},
 										{
 											"_type": "LabelView",
@@ -4068,7 +4068,7 @@
 											"top": 695,
 											"width": 253.97607421875,
 											"height": 13,
-											"text": "DDContextBlacklistFilterLogFormatter"
+											"text": "DDContextDenylistFilterLogFormatter"
 										},
 										{
 											"_type": "LabelView",
@@ -6094,7 +6094,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFTQPLgP6rUTww="
 							},
-							"name": "DDContextWhitelistFilterLogFormatter"
+							"name": "DDContextAllowlistFilterLogFormatter"
 						},
 						{
 							"_type": "UMLClass",
@@ -6102,7 +6102,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFTQPLgP6rUTww="
 							},
-							"name": "DDContextBlacklistFilterLogFormatter"
+							"name": "DDContextDenylistFilterLogFormatter"
 						},
 						{
 							"_type": "UMLEnumeration",
