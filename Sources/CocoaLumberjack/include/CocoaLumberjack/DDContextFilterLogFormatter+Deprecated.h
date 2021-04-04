@@ -48,7 +48,7 @@ typedef DDContextAllowlistFilterLogFormatter DDContextWhitelistFilterLogFormatte
  *
  *  @param loggingContext the context
  */
-- (void)addToWhitelist:(NSInteger)loggingContext __attribute__((deprecated("Use -addToWhitelist: instead")));
+- (void)addToWhitelist:(NSInteger)loggingContext __attribute__((deprecated("Use -addToAllowlist: instead")));
 
 /**
  *  Remove context from whitelist
