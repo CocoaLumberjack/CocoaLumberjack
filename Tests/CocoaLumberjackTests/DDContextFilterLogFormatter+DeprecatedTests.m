@@ -14,7 +14,7 @@
 //   prior written permission of Deusty, LLC.
 
 #import <XCTest/XCTest.h>
-#import <CocoaLumberjack/DDContextFilterLogFormatter.h>
+#import <CocoaLumberjack/DDContextFilterLogFormatter+Deprecated.h>
 
 static DDLogMessage *testLogMessage() {
     return [[DDLogMessage alloc] initWithMessage:@"test log message"
@@ -29,15 +29,17 @@ static DDLogMessage *testLogMessage() {
                                        timestamp:nil];
 }
 
-@interface DDContextAllowlistFilterLogFormatterTests : XCTestCase
-@property (nonatomic, strong, readwrite) DDContextAllowlistFilterLogFormatter *filterLogFormatter;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+@interface DDContextWhitelistFilterLogFormatterTests : XCTestCase
+@property (nonatomic, strong, readwrite) DDContextWhitelistFilterLogFormatter *filterLogFormatter;
 @end
 
-@implementation DDContextAllowlistFilterLogFormatterTests
+@implementation DDContextWhitelistFilterLogFormatterTests
 
 - (void)setUp {
     [super setUp];
-    self.filterLogFormatter = [[DDContextAllowlistFilterLogFormatter alloc] init];
+    self.filterLogFormatter = [[DDContextWhitelistFilterLogFormatter alloc] init];
 }
 
 - (void)tearDown {
@@ -45,34 +47,37 @@ static DDLogMessage *testLogMessage() {
     [super tearDown];
 }
 
-- (void)testAllowlistFilterLogFormatter {
-    XCTAssertEqualObjects([self.filterLogFormatter allowlist], @[]);
-    XCTAssertFalse([self.filterLogFormatter isOnAllowlist:1]);
+- (void)testWhitelistFilterLogFormatter {
+    XCTAssertEqualObjects([self.filterLogFormatter whitelist], @[]);
+    XCTAssertFalse([self.filterLogFormatter isOnWhitelist:1]);
     XCTAssertNil([self.filterLogFormatter formatLogMessage:testLogMessage()]);
     
-    [self.filterLogFormatter addToAllowlist:1];
-    XCTAssertEqualObjects([self.filterLogFormatter allowlist], @[@1]);
-    XCTAssertTrue([self.filterLogFormatter isOnAllowlist:1]);
+    [self.filterLogFormatter addToWhitelist:1];
+    XCTAssertEqualObjects([self.filterLogFormatter whitelist], @[@1]);
+    XCTAssertTrue([self.filterLogFormatter isOnWhitelist:1]);
     XCTAssertEqualObjects([self.filterLogFormatter formatLogMessage:testLogMessage()], @"test log message");
     
-    [self.filterLogFormatter removeFromAllowlist:1];
-    XCTAssertEqualObjects([self.filterLogFormatter allowlist], @[]);
-    XCTAssertFalse([self.filterLogFormatter isOnAllowlist:1]);
+    [self.filterLogFormatter removeFromWhitelist:1];
+    XCTAssertEqualObjects([self.filterLogFormatter whitelist], @[]);
+    XCTAssertFalse([self.filterLogFormatter isOnWhitelist:1]);
     XCTAssertNil([self.filterLogFormatter formatLogMessage:testLogMessage()]);
 }
 
 @end
+#pragma clang diagnostic pop
 
 
-@interface DDContextDenylistFilterLogFormatterTests : XCTestCase
-@property (nonatomic, strong, readwrite) DDContextDenylistFilterLogFormatter *filterLogFormatter;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+@interface DDContextBlacklistFilterLogFormatterTests : XCTestCase
+@property (nonatomic, strong, readwrite) DDContextBlacklistFilterLogFormatter *filterLogFormatter;
 @end
 
-@implementation DDContextDenylistFilterLogFormatterTests
+@implementation DDContextBlacklistFilterLogFormatterTests
 
 - (void)setUp {
     [super setUp];
-    self.filterLogFormatter = [[DDContextDenylistFilterLogFormatter alloc] init];
+    self.filterLogFormatter = [[DDContextBlacklistFilterLogFormatter alloc] init];
 }
 
 - (void)tearDown {
@@ -80,20 +85,21 @@ static DDLogMessage *testLogMessage() {
     [super tearDown];
 }
 
-- (void)testDDContextDenylistFilterLogFormatterTests {
-    XCTAssertEqualObjects([self.filterLogFormatter denylist], @[]);
-    XCTAssertFalse([self.filterLogFormatter isOnDenylist:1]);
+- (void)testDDContextBlacklistFilterLogFormatterTests {
+    XCTAssertEqualObjects([self.filterLogFormatter blacklist], @[]);
+    XCTAssertFalse([self.filterLogFormatter isOnBlacklist:1]);
     XCTAssertEqualObjects([self.filterLogFormatter formatLogMessage:testLogMessage()], @"test log message");
     
-    [self.filterLogFormatter addToDenylist:1];
-    XCTAssertEqualObjects([self.filterLogFormatter denylist], @[@1]);
-    XCTAssertTrue([self.filterLogFormatter isOnDenylist:1]);
+    [self.filterLogFormatter addToBlacklist:1];
+    XCTAssertEqualObjects([self.filterLogFormatter blacklist], @[@1]);
+    XCTAssertTrue([self.filterLogFormatter isOnBlacklist:1]);
     XCTAssertNil([self.filterLogFormatter formatLogMessage:testLogMessage()]);
     
-    [self.filterLogFormatter removeFromDenylist:1];
-    XCTAssertEqualObjects([self.filterLogFormatter denylist], @[]);
-    XCTAssertFalse([self.filterLogFormatter isOnDenylist:1]);
+    [self.filterLogFormatter removeFromBlacklist:1];
+    XCTAssertEqualObjects([self.filterLogFormatter blacklist], @[]);
+    XCTAssertFalse([self.filterLogFormatter isOnBlacklist:1]);
     XCTAssertEqualObjects([self.filterLogFormatter formatLogMessage:testLogMessage()], @"test log message");
 }
 
 @end
+#pragma clang diagnostic pop
