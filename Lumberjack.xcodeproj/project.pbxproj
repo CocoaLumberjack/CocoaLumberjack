@@ -76,6 +76,7 @@
 		0A26B5C922E0812F004EE6A7 /* DDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B55022DE346B004EE6A7 /* DDMultiFormatter.m */; };
 		0A26B5CA22E08131004EE6A7 /* CLIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B54B22DE346B004EE6A7 /* CLIColor.m */; };
 		4CFE77952439202B0068D7C6 /* DDLog+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE77942439202B0068D7C6 /* DDLog+Combine.swift */; };
+		C711A1902619FA400083F87C /* DDContextFilterLogFormatter+Deprecated.h in Copy Files */ = {isa = PBXBuildFile; fileRef = C76CFC752619ECF100949045 /* DDContextFilterLogFormatter+Deprecated.h */; };
 		C76CFC6A2619EC8900949045 /* DDContextFilterLogFormatter+Deprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = C76CFC682619EC8900949045 /* DDContextFilterLogFormatter+Deprecated.m */; };
 		C76CFC6B2619EC8900949045 /* DDContextFilterLogFormatter+Deprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = C76CFC682619EC8900949045 /* DDContextFilterLogFormatter+Deprecated.m */; };
 		C76CFC762619ECF100949045 /* DDContextFilterLogFormatter+Deprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = C76CFC752619ECF100949045 /* DDContextFilterLogFormatter+Deprecated.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -99,6 +100,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				C711A1902619FA400083F87C /* DDContextFilterLogFormatter+Deprecated.h in Copy Files */,
 				071909ED243CA055001C431F /* CLIColor.h in Copy Files */,
 				071909EE243CA055001C431F /* DDAbstractDatabaseLogger.h in Copy Files */,
 				071909EF243CA055001C431F /* DDASLLogCapture.h in Copy Files */,
