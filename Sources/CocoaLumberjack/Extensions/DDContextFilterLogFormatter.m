@@ -76,54 +76,6 @@
 
 @end
 
-// Deprecated APIS
-
-@interface DDContextWhitelistFilterLogFormatter () {
-    DDContextAllowlistFilterLogFormatter *_filterLogFormatter;
-}
-@end
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-implementations"
-@implementation DDContextWhitelistFilterLogFormatter
-#pragma clang diagnostic pop
-
-- (instancetype)init {
-    if ((self = [super init])) {
-        _filterLogFormatter = [[DDContextAllowlistFilterLogFormatter alloc] init];
-    }
-    return self;
-}
-
-- (void)addToWhitelist:(NSInteger)loggingContext {
-    [_filterLogFormatter addToAllowlist:loggingContext];
-}
-
-- (void)removeFromWhitelist:(NSInteger)loggingContext {
-    [_filterLogFormatter removeFromAllowlist:loggingContext];
-}
-
-- (NSArray *)whitelist {
-    return [_filterLogFormatter allowlist];
-}
-
-- (BOOL)isOnWhitelist:(NSInteger)loggingContext {
-    return [_filterLogFormatter isOnAllowlist:loggingContext];
-}
-
-- (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
-    if ([_filterLogFormatter isOnAllowlist:logMessage->_context]) {
-        return logMessage->_message;
-    } else {
-        return nil;
-    }
-}
-
-@end
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark -
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface DDContextDenylistFilterLogFormatter () {
     DDLoggingContextSet *_contextSet;
@@ -157,51 +109,6 @@
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
     if ([self isOnDenylist:logMessage->_context]) {
-        return nil;
-    } else {
-        return logMessage->_message;
-    }
-}
-
-@end
-
-// Deprecated APIS
-
-@interface DDContextBlacklistFilterLogFormatter () {
-    DDContextDenylistFilterLogFormatter *_filterLogFormatter;
-}
-@end
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-implementations"
-@implementation DDContextBlacklistFilterLogFormatter
-#pragma clang diagnostic pop
-
-- (instancetype)init {
-    if ((self = [super init])) {
-        _filterLogFormatter = [[DDContextDenylistFilterLogFormatter alloc] init];
-    }
-    return self;
-}
-
-- (void)addToBlacklist:(NSInteger)loggingContext {
-    [_filterLogFormatter addToDenylist:loggingContext];
-}
-
-- (void)removeFromBlacklist:(NSInteger)loggingContext {
-    [_filterLogFormatter removeFromDenylist:loggingContext];
-}
-
-- (NSArray *)blacklist {
-    return [_filterLogFormatter denylist];
-}
-
-- (BOOL)isOnBlacklist:(NSInteger)loggingContext {
-    return [_filterLogFormatter isOnDenylist:loggingContext];
-}
-
-- (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
-    if ([_filterLogFormatter isOnDenylist:logMessage->_context]) {
         return nil;
     } else {
         return logMessage->_message;

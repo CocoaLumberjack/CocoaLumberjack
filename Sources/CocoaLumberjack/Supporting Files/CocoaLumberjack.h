@@ -90,6 +90,7 @@ FOUNDATION_EXPORT const unsigned char CocoaLumberjackVersionString[];
 
 // Extensions
 #import <CocoaLumberjack/DDContextFilterLogFormatter.h>
+#import <CocoaLumberjack/DDContextFilterLogFormatter+Deprecated.h>
 #import <CocoaLumberjack/DDDispatchQueueLogFormatter.h>
 #import <CocoaLumberjack/DDMultiFormatter.h>
 #import <CocoaLumberjack/DDFileLogger+Buffering.h>
