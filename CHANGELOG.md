@@ -9,7 +9,7 @@
 - _REPLACE ME_
 
 
-## [3.7.1 - Xcode 12.5 on Mar 5th, 2021](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.1)
+## [3.7.1 - Xcode 12.4 on Apr 7th, 2021](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.1)
 
 ### Public
 
