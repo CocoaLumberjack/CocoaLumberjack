@@ -1,4 +1,4 @@
-## [3.7.2 - Xcode 12.? on ??, 2021](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.2)
+## [3.7.3 - Xcode 12.? on ??, 2021](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.3)
 
 ### Public
 
@@ -7,6 +7,13 @@
 ### Internal
 
 - _REPLACE ME_
+
+
+## [3.7.2 - Xcode 12.4 on Apr 9th, 2021](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.2)
+
+### Public
+
+- Re-introduce (and deprecate) `_tag` field to fix breakage in 3.7.1 (#1224)
 
 
 ## [3.7.1 - Xcode 12.4 on Apr 7th, 2021](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.1)
