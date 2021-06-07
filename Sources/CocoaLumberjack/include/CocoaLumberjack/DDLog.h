@@ -512,6 +512,8 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  */
 @property (nonatomic, copy, readonly) NSArray<DDLoggerInformation *> *allLoggersWithLevel;
 
+@property (nonatomic, readonly, getter=isOnGlobalLoggingQueue) BOOL hasInstanceLoggers;
+
 /**
  * Registered Dynamic Logging
  *
