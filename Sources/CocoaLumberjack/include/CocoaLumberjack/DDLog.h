@@ -512,6 +512,9 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  */
 @property (nonatomic, copy, readonly) NSArray<DDLoggerInformation *> *allLoggersWithLevel;
 
+/**
+ *  Returns whether the shared instance _loggers property has at least 1 logger added
+ */
 + (BOOL)hasInstanceLoggers;
 
 /**
