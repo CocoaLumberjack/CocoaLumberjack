@@ -1228,14 +1228,18 @@ static int exception_count = 0;
 
 - (void)lt_flush {
     NSAssert([self isOnInternalLoggerQueue], @"flush should only be executed on internal queue.");
-    if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
-        __autoreleasing NSError *error;
-        BOOL succeed = [_currentLogFileHandle synchronizeAndReturnError:&error];
-        if (!succeed) {
-            NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
+    @try {
+        if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
+            __autoreleasing NSError *error;
+            BOOL succeed = [_currentLogFileHandle synchronizeAndReturnError:&error];
+            if (!succeed) {
+                NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
+            }
+        } else {
+            [_currentLogFileHandle synchronizeFile];
         }
-    } else {
-        [_currentLogFileHandle synchronizeFile];
+    } @catch (NSException *exception) {
+        NSLogError(@"DDFileLogger.lt_flush: %@", exception);
     }
 }
 
