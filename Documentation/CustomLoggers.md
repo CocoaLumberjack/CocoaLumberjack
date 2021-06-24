@@ -64,8 +64,7 @@ The `DDLog` header file defines the `DDLogger` protocol. It consists of only 3 m
 
 @end
 ```
-<br/>
-<br/>
+
 Furthermore, **there is a base logger implementation one can extend** (`DDAbstractLogger`) that will automatically implement 2 of the 3 mandatory methods (`logFormatter` & `setLogFormatter:`). So implementing a logger can be pretty straight-forward.
 
 ### Skeleton Implementation
