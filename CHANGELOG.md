@@ -2,7 +2,7 @@
 
 ### Public
 
-- _REPLACE ME_
+- Fix "DDFileLogger: Failed to get offset" when setting maximumFileSize (#1234)
 
 ### Internal
 
