@@ -637,7 +637,11 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
                 NSLogError(@"DDFileLogger: Failed to close file: %@", error);
             }
         } else {
-            [_currentLogFileHandle synchronizeFile];
+            @try {
+                [_currentLogFileHandle synchronizeFile];
+            } @catch (NSException *exception) {
+                NSLogError(@"DDFileLogger: Failed to synchronize file: %@", exception);
+            }
             [_currentLogFileHandle closeFile];
         }
         _currentLogFileHandle = nil;
@@ -887,7 +891,11 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
             NSLogError(@"DDFileLogger: Failed to close file: %@", error);
         }
     } else {
-        [_currentLogFileHandle synchronizeFile];
+        @try {
+            [_currentLogFileHandle synchronizeFile];
+        } @catch (NSException *exception) {
+            NSLogError(@"DDFileLogger: Failed to synchronize file: %@", exception);
+        }
         [_currentLogFileHandle closeFile];
     }
     _currentLogFileHandle = nil;
