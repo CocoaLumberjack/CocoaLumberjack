@@ -705,7 +705,9 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     dispatch_block_t block = ^{
         @autoreleasepool {
             self->_maximumFileSize = newMaximumFileSize;
-            [self lt_maybeRollLogFileDueToSize];
+            if (_currentLogFileHandle != nil || [self lt_currentLogFileHandle] != nil) {
+                [self lt_maybeRollLogFileDueToSize];
+            }
         }
     };
 
