@@ -960,16 +960,15 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 
     if (_currentLogFileHandle != nil && _maximumFileSize > 0) {
         unsigned long long fileSize;
-        NSFileHandle *handle = [self lt_currentLogFileHandle];
         if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
             __autoreleasing NSError *error;
-            BOOL succeed = [handle getOffset:&fileSize error:&error];
+            BOOL succeed = [_currentLogFileHandle getOffset:&fileSize error:&error];
             if (!succeed) {
                 NSLogError(@"DDFileLogger: Failed to get offset: %@", error);
                 return;
             }
         } else {
-            fileSize = [handle offsetInFile];
+            fileSize = [_currentLogFileHandle offsetInFile];
         }
 
         if (fileSize >= _maximumFileSize) {
