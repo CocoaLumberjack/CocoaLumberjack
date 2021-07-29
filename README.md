@@ -67,7 +67,7 @@ Note that you may need to add both products, `CocoaLumberjack` and `CocoaLumberj
 
 ### Install manually
 
-If you want to install CocoaLumberjack manually, read the [manual installation](https://raw.githubusercontent.com/CocoaLumberjack/CocoaLumberjack/master/Documentation/GettingStarted.md#manual-installation) guide for more information.
+If you want to install CocoaLumberjack manually, read the [manual installation](Documentation/GettingStarted.md#manual-installation) guide for more information.
 
 ### Swift Usage
 
@@ -129,7 +129,7 @@ In your own log formatters, you can make use of the `swiftLogInfo` property on `
 
 ### More information
 
-- read the [Getting started](https://raw.githubusercontent.com/CocoaLumberjack/CocoaLumberjack/master/Documentation/GettingStarted.md) guide, check out the [FAQ](https://raw.githubusercontent.com/CocoaLumberjack/CocoaLumberjack/master/Documentation/FAQ.md) section or the other [docs](Documentation/)
+- read the [Getting started](Documentation/GettingStarted.md) guide, check out the [FAQ](Documentation/FAQ.md) section or the other [docs](Documentation/)
 - if you find issues or want to suggest improvements, create an issue or a pull request
 - for all kinds of questions involving CocoaLumberjack, use the [Google group](http://groups.google.com/group/cocoalumberjack) or StackOverflow (use [#lumberjack](http://stackoverflow.com/questions/tagged/lumberjack)).
 
