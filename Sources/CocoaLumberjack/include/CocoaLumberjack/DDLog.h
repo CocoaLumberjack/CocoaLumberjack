@@ -142,7 +142,7 @@ typedef NS_OPTIONS(NSUInteger, DDLogFlag){
 /**
  *  Log levels are used to filter out logs. Used together with flags.
  */
-typedef NS_ENUM(NSUInteger, DDLogLevel){
+typedef NS_OPTIONS(NSUInteger, DDLogLevel){
     /**
      *  No logs
      */
