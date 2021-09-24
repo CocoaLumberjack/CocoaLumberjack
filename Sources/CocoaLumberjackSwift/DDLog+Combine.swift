@@ -13,6 +13,7 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
+#if arch(arm64) || arch(x86_64)
 #if canImport(Combine)
 
 import Combine
@@ -119,4 +120,5 @@ extension Publisher where Output == DDLogMessage {
     }
 }
 
+#endif
 #endif
