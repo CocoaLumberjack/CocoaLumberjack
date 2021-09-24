@@ -15,7 +15,6 @@
 
 #if arch(arm64) || arch(x86_64)
 #if canImport(Combine)
-
 import Combine
 
 #if SWIFT_PACKAGE
@@ -25,7 +24,6 @@ import CocoaLumberjackSwiftSupport
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension DDLog {
-
     /**
      * Creates a message publisher.
      *
@@ -46,10 +44,8 @@ extension DDLog {
     }
 
     // MARK: - MessagePublisher
-    
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     public struct MessagePublisher: Combine.Publisher {
-
         public typealias Output = DDLogMessage
         public typealias Failure = Never
 
@@ -62,17 +58,13 @@ extension DDLog {
         }
 
         public func receive<S>(subscriber: S) where S: Subscriber, S.Failure == Failure, S.Input == Output {
-
-            let subscription = Subscription(log: self.log, with: logLevel, subscriber: subscriber)
+            let subscription = Subscription(log: log, with: logLevel, subscriber: subscriber)
             subscriber.receive(subscription: subscription)
         }
     }
 
     // MARK: - Subscription
-
-    private final class Subscription<S: Subscriber>: NSObject, DDLogger, Combine.Subscription
-        where S.Input == DDLogMessage
-    {
+    private final class Subscription<S: Subscriber>: NSObject, DDLogger, Combine.Subscription where S.Input == DDLogMessage {
         private var subscriber: S?
         private weak var log: DDLog?
 
@@ -82,12 +74,9 @@ extension DDLog {
         //     .map { [format log message] }
         //     .sink(receiveValue: { [process log message] })
         //
-        var logFormatter: DDLogFormatter? = nil
-
-        let combineIdentifier = CombineIdentifier()
+        var logFormatter: DDLogFormatter?
 
         init(log: DDLog, with logLevel: DDLogLevel, subscriber: S) {
-
             self.subscriber = subscriber
             self.log = log
 
@@ -102,19 +91,18 @@ extension DDLog {
         }
 
         func cancel() {
-            self.log?.remove(self)
-            self.subscriber = nil
+            log?.remove(self)
+            subscriber = nil
         }
 
         func log(message logMessage: DDLogMessage) {
-            _ = self.subscriber?.receive(logMessage)
+            _ = subscriber?.receive(logMessage)
         }
     }
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension Publisher where Output == DDLogMessage {
-
     public func formatted(with formatter: DDLogFormatter) -> Publishers.CompactMap<Self, String> {
         return compactMap { formatter.format(message: $0) }
     }
