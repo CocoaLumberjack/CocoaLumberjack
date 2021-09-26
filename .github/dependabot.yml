@@ -1,0 +1,14 @@
+version: 2
+
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    open-pull-requests-limit: 10
+    schedule:
+      interval: "daily"
+      time: "14:30"
+      timezone: "Europe/Berlin"
+    assignees:
+      - ffried
+    reviewers:
+      - ffried
