@@ -45,7 +45,7 @@ jobs:
           required-permission: write
           reaction-permitted: '+1'
           comment-not-permitted: "Sorry, you don't have enough permission to execute /run_checks..."
-      - uses: actions/github-script@v2
+      - uses: actions/github-script@v5
         id: pr-details
         with:
           script: |
