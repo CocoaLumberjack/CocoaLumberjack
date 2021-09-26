@@ -20,7 +20,7 @@ jobs:
         run: swift test --enable-code-coverage --parallel
       - name: Generate Coverage Files
         run: xcrun llvm-cov export -format="lcov" .build/debug/*PackageTests.xctest/Contents/MacOS/*PackageTests -instr-profile .build/debug/codecov/default.profdata > coverage.lcov
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v2.1.0
         with:
           file: coverage.lcov
           token: ${{secrets.CODECOV_TOKEN}}
@@ -52,6 +52,6 @@ jobs:
           skip-testing: ${{matrix.skip-testing}}
           build-settings: GCC_GENERATE_TEST_COVERAGE_FILES=YES
           action: test
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v2.1.0
         with:
           token: ${{secrets.CODECOV_TOKEN}}
