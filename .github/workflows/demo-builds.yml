@@ -40,8 +40,10 @@ jobs:
           - UniversalApp
           - WebServerIPhone
     steps:
+      - uses: maxim-lobanov/setup-xcode@v1.3.0
+        with:
+          xcode-version: ^12.5
       - uses: actions/checkout@v2
-      - run: ./Scripts/ci-select-xcode.sh
       - uses: sersoft-gmbh/xcodebuild-action@v1
         with:
           workspace: Demos/Demos.xcworkspace

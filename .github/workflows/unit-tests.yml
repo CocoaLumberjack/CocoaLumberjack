@@ -14,16 +14,20 @@ jobs:
   swiftpm:
     runs-on: macos-latest
     steps:
+      - uses: maxim-lobanov/setup-xcode@v1.3.0
+        with:
+          xcode-version: ^12.5
       - uses: actions/checkout@v2
-      - run: ./Scripts/ci-select-xcode.sh
       - name: Run SwiftPM Tests
         run: swift test --enable-code-coverage --parallel
-      - name: Generate Coverage Files
-        run: xcrun llvm-cov export -format="lcov" .build/debug/*PackageTests.xctest/Contents/MacOS/*PackageTests -instr-profile .build/debug/codecov/default.profdata > coverage.lcov
-      - uses: codecov/codecov-action@v1
+      - uses: sersoft-gmbh/swift-coverage-action@v2
+        id: coverage-files
         with:
-          file: coverage.lcov
+          format: lcov
+      - uses: codecov/codecov-action@v2.1.0
+        with:
           token: ${{secrets.CODECOV_TOKEN}}
+          files: ${{join(fromJSON(steps.coverage-files.outputs.files), ',')}}
 
   xcode:
     runs-on: macos-latest
@@ -32,26 +36,35 @@ jobs:
         scheme: [Swift Tests]
         destination:
           - platform=macOS
-          - platform=iOS Simulator,OS=latest,name=iPhone 11 Pro
+          - platform=iOS Simulator,OS=latest,name=iPhone 12 Pro
         skip-testing: ['']
         include:
           - scheme: iOS Tests
-            destination: 'platform=iOS Simulator,name=iPhone 11 Pro,OS=latest'
+            destination: 'platform=iOS Simulator,name=iPhone 12 Pro,OS=latest'
             skip-testing: 'iOS Tests/DDFileLoggerPerformanceTests'
           - scheme: OS X Tests
             destination: 'platform=macosx'
             skip-testing: 'OS X Tests/DDFileLoggerPerformanceTests'
     steps:
+      - uses: maxim-lobanov/setup-xcode@v1.3.0
+        with:
+          xcode-version: ^12.5
       - uses: actions/checkout@v2
-      - run: ./Scripts/ci-select-xcode.sh
       - uses: sersoft-gmbh/xcodebuild-action@v1
         with:
           project: Tests/Tests.xcodeproj
           scheme: ${{matrix.scheme}}
           destination: ${{matrix.destination}}
           skip-testing: ${{matrix.skip-testing}}
+          enable-code-coverage: true
+          parallel-testing-enabled: true
           build-settings: GCC_GENERATE_TEST_COVERAGE_FILES=YES
           action: test
-      - uses: codecov/codecov-action@v1
+      - uses: sersoft-gmbh/swift-coverage-action@v2
+        id: coverage-files
+        with:
+          format: lcov
+      - uses: codecov/codecov-action@v2.1.0
         with:
           token: ${{secrets.CODECOV_TOKEN}}
+          files: ${{join(fromJSON(steps.coverage-files.outputs.files), ',')}}

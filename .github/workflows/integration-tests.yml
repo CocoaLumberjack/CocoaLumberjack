@@ -14,8 +14,10 @@ jobs:
   static-lib:
     runs-on: macos-latest
     steps:
+      - uses: maxim-lobanov/setup-xcode@v1.3.0
+        with:
+          xcode-version: ^12.5
       - uses: actions/checkout@v2
-      - run: ./Scripts/ci-select-xcode.sh
       - uses: sersoft-gmbh/xcodebuild-action@v1
         with:
           project: Integration/Integration.xcodeproj
@@ -36,8 +38,10 @@ jobs:
           - scheme: watchOSSwiftIntegration
             destination: 'platform=iOS Simulator,name=iPhone 11 Pro'
     steps:
+      - uses: maxim-lobanov/setup-xcode@v1.3.0
+        with:
+          xcode-version: ^12.5
       - uses: actions/checkout@v2
-      - run: ./Scripts/ci-select-xcode.sh
       - uses: sersoft-gmbh/xcodebuild-action@v1
         with:
           project: Integration/Integration.xcodeproj
