@@ -12,14 +12,14 @@ env:
 
 jobs:
   static-lib:
-    runs-on: macos-12
+    runs-on: macos-11
     strategy:
       matrix:
         sdk: [iphonesimulator, macosx]
     steps:
       - uses: maxim-lobanov/setup-xcode@v1.3.0
         with:
-          xcode-version: ^12.4
+          xcode-version: ^13.0
       - uses: actions/checkout@v2
       - uses: sersoft-gmbh/xcodebuild-action@v1
         with:
@@ -38,7 +38,7 @@ jobs:
     steps:
       - uses: maxim-lobanov/setup-xcode@v1.3.0
         with:
-          xcode-version: ^12.4
+          xcode-version: ^13.0
       - uses: actions/checkout@v2
       - uses: sersoft-gmbh/xcodebuild-action@v1
         with:
