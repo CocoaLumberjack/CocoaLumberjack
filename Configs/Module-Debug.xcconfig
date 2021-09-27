@@ -3,6 +3,16 @@
 
 #include "Module-Shared.xcconfig"
 
+// From https://gist.github.com/steipete/f517daee51845c360053f7385900e147
+// Hack to exclude arm64 when building Mac Catalyst in Xcode 12.2
+// If this is not set and we do not set macosx as SUPPORTED_PLATFORMS, then selecting Mac as target forces arm64.
+// This can be worked around by setting ONLY_ACTIVE_ARCH to NO (slow) or using the EXCLUDED_ARCHS trick
+// Inspired by https://github.com/Carthage/Carthage/issues/3019
+EXCLUDED_ARCHS__IS_MACCATALYST_YES__NATIVE_ARCH_64_BIT_x86_64=arm64 arm64e armv7 armv7s armv6 armv8
+// This is for non-maccatalyst platforms (no value for IS_MACCATALYST)
+EXCLUDED_ARCHS__IS_MACCATALYST___NATIVE_ARCH_64_BIT_x86_64=arm64 arm64e armv7 armv7s armv6 armv8
+EXCLUDED_ARCHS = $(inherited) $(EXCLUDED_ARCHS__IS_MACCATALYST_$(IS_MACCATALYST)__NATIVE_ARCH_64_BIT_$(NATIVE_ARCH_64_BIT))
+
 // Specifies whether binary files that are copied during the build, such as in a Copy Bundle Resources or Copy Files build phase, should be stripped of debugging symbols.
 COPY_PHASE_STRIP = NO
 
