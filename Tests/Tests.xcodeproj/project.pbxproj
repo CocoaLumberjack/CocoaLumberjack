@@ -38,6 +38,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		07EDA7762701A5D6003CBA45 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A7D8FC7217A1E9000B496D7 /* Lumberjack.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 19FF460E1B8B4D1400B43179;
+			remoteInfo = CocoaLumberjackSwift;
+		};
 		0A7D8FCD217A1E9000B496D7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A7D8FC7217A1E9000B496D7 /* Lumberjack.xcodeproj */;
@@ -251,6 +258,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				07EDA7772701A5D6003CBA45 /* PBXTargetDependency */,
 			);
 			name = "Swift Tests";
 			productName = "Swift Tests";
@@ -404,6 +412,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		07EDA7772701A5D6003CBA45 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaLumberjackSwift;
+			targetProxy = 07EDA7762701A5D6003CBA45 /* PBXContainerItemProxy */;
+		};
 		D1CBDE5D2549A686001F63F7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CocoaLumberjack;
