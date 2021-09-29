@@ -30,7 +30,7 @@ jobs:
           action: build
 
   dynamic-lib:
-    runs-on: macos-12
+    runs-on: macos-11
     strategy:
       matrix:
         scheme: [CocoaLumberjack, CocoaLumberjackSwift]
