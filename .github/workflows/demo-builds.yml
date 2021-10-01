@@ -12,7 +12,7 @@ env:
 
 jobs:
   build-demos:
-    runs-on: macos-latest
+    runs-on: macos-11
     strategy:
       matrix:
         scheme:
@@ -40,8 +40,10 @@ jobs:
           - UniversalApp
           - WebServerIPhone
     steps:
+      - uses: maxim-lobanov/setup-xcode@v1.3.0
+        with:
+          xcode-version: ^13.0
       - uses: actions/checkout@v2
-      - run: ./Scripts/ci-select-xcode.sh
       - uses: sersoft-gmbh/xcodebuild-action@v1
         with:
           workspace: Demos/Demos.xcworkspace

@@ -14,11 +14,13 @@ env:
 
 jobs:
   validate-cocoapods:
-    runs-on: macos-latest
+    runs-on: macos-11
     if: github.event_name != 'issue_comment'
     steps:
+      - uses: maxim-lobanov/setup-xcode@v1.3.0
+        with:
+          xcode-version: ^13.0
       - uses: actions/checkout@v2
-      - run: ./Scripts/ci-select-xcode.sh
       - run: pod lib lint
 
   run-danger-for-internal-pr:
@@ -45,11 +47,11 @@ jobs:
           required-permission: write
           reaction-permitted: '+1'
           comment-not-permitted: "Sorry, you don't have enough permission to execute /run_checks..."
-      - uses: actions/github-script@v2
+      - uses: actions/github-script@v5
         id: pr-details
         with:
           script: |
-            const { data: pullRequest } = await github.pulls.get({
+            const { data: pullRequest } = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number

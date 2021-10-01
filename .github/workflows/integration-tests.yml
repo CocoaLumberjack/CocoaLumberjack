@@ -12,10 +12,12 @@ env:
 
 jobs:
   static-lib:
-    runs-on: macos-latest
+    runs-on: macos-11
     steps:
+      - uses: maxim-lobanov/setup-xcode@v1.3.0
+        with:
+          xcode-version: ^13.0
       - uses: actions/checkout@v2
-      - run: ./Scripts/ci-select-xcode.sh
       - uses: sersoft-gmbh/xcodebuild-action@v1
         with:
           project: Integration/Integration.xcodeproj
@@ -24,7 +26,7 @@ jobs:
           action: build
 
   dynamic-lib:
-    runs-on: macos-latest
+    runs-on: macos-11
     strategy:
       matrix:
         scheme:
@@ -34,10 +36,12 @@ jobs:
         destination: ['']
         include:
           - scheme: watchOSSwiftIntegration
-            destination: 'platform=iOS Simulator,name=iPhone 11 Pro'
+            destination: 'platform=iOS Simulator,name=iPhone 12 Pro'
     steps:
+      - uses: maxim-lobanov/setup-xcode@v1.3.0
+        with:
+          xcode-version: ^13.0
       - uses: actions/checkout@v2
-      - run: ./Scripts/ci-select-xcode.sh
       - uses: sersoft-gmbh/xcodebuild-action@v1
         with:
           project: Integration/Integration.xcodeproj
