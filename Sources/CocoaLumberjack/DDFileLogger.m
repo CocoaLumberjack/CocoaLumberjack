@@ -470,7 +470,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         NSError *currentError = nil;
         BOOL success = [fileHeader writeToFile:filePath options:NSDataWritingAtomic error:&currentError];
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE && !TARGET_OS_MACCATALYST
         if (success) {
             // When creating log file on iOS we're setting NSFileProtectionKey attribute to NSFileProtectionCompleteUnlessOpen.
             //
