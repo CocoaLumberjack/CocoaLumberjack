@@ -17,7 +17,7 @@ jobs:
     runs-on: macos-11
     if: github.event_name != 'issue_comment'
     steps:
-      - uses: maxim-lobanov/setup-xcode@v1.3.0
+      - uses: maxim-lobanov/setup-xcode@v1.4.0
         with:
           xcode-version: ^13.0
       - uses: actions/checkout@v2
