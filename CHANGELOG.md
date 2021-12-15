@@ -1,12 +1,15 @@
-## [3.7.3 - Xcode 12.? on ??, 2021](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.3)
+## [3.7.3 - Xcode 13.2 on Dec ??, 2021](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.3)
 
 ### Public
 
 - Fix "DDFileLogger: Failed to get offset" when setting maximumFileSize (#1234)
-
-### Internal
-
-- _REPLACE ME_
+- Follow-up to add annotations to DDOSLogger (#1248)
+- Fixed nullability conflict in DDDispatchQueueLogFormatter.h (#1252)
+- Add Swift 5.5 support, fix archive build on Xcode 13 (#1253)
+- Fix file access issue in Catalyst apps (#1257)
+- Fix excluded archs in debug build when not mac catalyst (#1260)
+- Bump Xcode last upgraded version to 13.2 (#1265)
+- Don't log warnings for CLI apps in DDTTYLogger (#1269)
 
 
 ## [3.7.2 - Xcode 12.4 on Apr 9th, 2021](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.2)
