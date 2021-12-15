@@ -832,9 +832,11 @@ static DDTTYLogger *sharedInstance;
         return nil;
     }
 
+#if !defined(DD_CLI) || __has_include(<AppKit/NSColor.h>)
     if (@available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *)) {
         NSLogWarn(@"CocoaLumberjack: Warning: Usage of DDTTYLogger detected when DDOSLogger is available and can be used! Please consider migrating to DDOSLogger.");
     }
+#endif
 
     if ((self = [super init])) {
         // Initialize 'app' variable (char *)
