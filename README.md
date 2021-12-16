@@ -1,4 +1,4 @@
-<p align="center" >
+<p align="center">
   <img src="https://raw.githubusercontent.com/CocoaLumberjack/CocoaLumberjack/master/LumberjackLogo.png" title="Lumberjack logo" float=left>
 </p>
 
@@ -17,7 +17,7 @@ CocoaLumberjack
 
 ## How to get started
 
-First, install CocoaLumberjack via [CocoaPods](http://cocoapods.org), [Carthage](https://github.com/Carthage/Carthage), [Swift Package Manager](https://swift.org/package-manager/) or manually.
+First, install CocoaLumberjack via [CocoaPods](https://cocoapods.org), [Carthage](https://github.com/Carthage/Carthage), [Swift Package Manager](https://swift.org/package-manager/) or manually.
 Then use `DDOSLogger` for iOS 10 and later, or `DDTTYLogger` and `DDASLLogger` for earlier versions to begin logging messages.
 
 ### CocoaPods
@@ -127,11 +127,11 @@ You can then use `DDLogHandler` as backend for swift-log, which will forward all
 In your own log formatters, you can make use of the `swiftLogInfo` property on `DDLogMessage` to retrieve the details of a message that is logged via swift-log.
 
 
-### More information
+## More information
 
 - read the [Getting started](Documentation/GettingStarted.md) guide, check out the [FAQ](Documentation/FAQ.md) section or the other [docs](Documentation/)
 - if you find issues or want to suggest improvements, create an issue or a pull request
-- for all kinds of questions involving CocoaLumberjack, use the [Google group](http://groups.google.com/group/cocoalumberjack) or StackOverflow (use [#lumberjack](http://stackoverflow.com/questions/tagged/lumberjack)).
+- for all kinds of questions involving CocoaLumberjack, use the [Google group](https://groups.google.com/group/cocoalumberjack) or StackOverflow (use [#lumberjack](https://stackoverflow.com/questions/tagged/lumberjack)).
 
 
 ## CocoaLumberjack 3
@@ -171,15 +171,15 @@ Configure your logging however you want. Change log levels per file (perfect for
 
 ## Documentation
 
-- **[Get started using Lumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/GettingStarted.md)**<br/>
-- [Different log levels for Debug and Release builds](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/XcodeTricks.md)<br/>
-- [Different log levels for each logger](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/PerLoggerLogLevels.md)<br/>
-- [Use colors in the Xcode debugging console](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/XcodeColors.md)<br/>
-- [Write your own custom formatters](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/CustomFormatters.md)<br/>
-- [FAQ](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/FAQ.md)<br/>
-- [Analysis of performance with benchmarks](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/Performance.md)<br/>
-- [Common issues you may encounter and their solutions](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/ProblemSolution.md)<br/>
-- [AppCode support](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/AppCode-support.md)
+- **[Get started using Lumberjack](Documentation/GettingStarted.md)**<br/>
+- [Different log levels for Debug and Release builds](Documentation/XcodeTricks.md)<br/>
+- [Different log levels for each logger](Documentation/PerLoggerLogLevels.md)<br/>
+- [Use colors in the Xcode debugging console](Documentation/XcodeColors.md)<br/>
+- [Write your own custom formatters](Documentation/CustomFormatters.md)<br/>
+- [FAQ](Documentation/FAQ.md)<br/>
+- [Analysis of performance with benchmarks](Documentation/Performance.md)<br/>
+- [Common issues you may encounter and their solutions](Documentation/ProblemSolution.md)<br/>
+- [AppCode support](Documentation/AppCode-support.md)
 - **[Full Lumberjack documentation](Documentation/)**<br/>
 
 ## Requirements
@@ -207,8 +207,8 @@ The current version of Lumberjack requires:
 
 ## Communication
 
-- If you **need help**, use [Stack Overflow](http://stackoverflow.com/questions/tagged/lumberjack). (Tag 'lumberjack')
-- If you'd like to **ask a general question**, use [Stack Overflow](http://stackoverflow.com/questions/tagged/lumberjack).
+- If you **need help**, use [Stack Overflow](https://stackoverflow.com/questions/tagged/lumberjack). (Tag 'lumberjack')
+- If you'd like to **ask a general question**, use [Stack Overflow](https://stackoverflow.com/questions/tagged/lumberjack).
 - If you **found a bug**, open an issue.
 - If you **have a feature request**, open an issue.
 - If you **want to contribute**, submit a pull request.
@@ -273,7 +273,7 @@ _Example_: `DDLogInfo("User: \(myUser)")` will add the `myUser` info to the logs
 - [Hakon Hanesand](https://github.com/hhanesand)
 
 ## License
-- CocoaLumberjack is available under the BSD 3 license. See the [LICENSE file](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/LICENSE).
+- CocoaLumberjack is available under the BSD 3 license. See the [LICENSE file](LICENSE).
 
 ## Extensions
 - [LogIO-CocoaLumberjack](https://github.com/s4nchez/LogIO-CocoaLumberjack) A log.io logger for CocoaLumberjack
@@ -281,6 +281,6 @@ _Example_: `DDLogInfo("User: \(myUser)")` will add the `myUser` info to the logs
 
 ## Architecture
 
-<p align="center" >
+<p align="center">
     <img src="https://raw.githubusercontent.com/CocoaLumberjack/CocoaLumberjack/master/Documentation/CocoaLumberjackClassDiagram.png" title="CocoaLumberjack class diagram">
 </p>
