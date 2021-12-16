@@ -1,4 +1,15 @@
-## [3.7.3 - Xcode 13.2 on Dec ??, 2021](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.3)
+## [3.8.0 - Xcode 13.? on ??, 2022](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.8.0)
+
+### Public
+
+- _REPLACE ME_
+
+### Internal
+
+- _REPLACE ME_
+
+
+## [3.7.3 - Xcode 13.2 on Dec 16, 2021](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.3)
 
 ### Public
 
