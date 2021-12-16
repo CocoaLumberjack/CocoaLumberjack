@@ -31,7 +31,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: danger/swift
-        uses: docker://frmeloni/danger-swift-with-swiftlint:1.3.1
+        uses: docker://ghcr.io/danger/danger-swift-with-swiftlint:3.12.3
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
@@ -46,7 +46,7 @@ jobs:
         with:
           required-permission: write
           reaction-permitted: '+1'
-          comment-not-permitted: "Sorry, you don't have enough permission to execute /run_checks..."
+          comment-not-permitted: "Sorry, you don't have the permission to execute /run_checks..."
       - uses: actions/github-script@v5
         id: pr-details
         with:
@@ -63,7 +63,7 @@ jobs:
           ref: ${{fromJSON(steps.pr-details.outputs.result).head.ref}}
           fetch-depth: 0
       - name: danger/swift
-        uses: docker://frmeloni/danger-swift-with-swiftlint:1.3.1
+        uses: docker://ghcr.io/danger/danger-swift-with-swiftlint:3.12.3
         with:
           args: "--pr ${{github.event.issue.pull_request.url}}"
         env:
