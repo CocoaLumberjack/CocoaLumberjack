@@ -630,7 +630,9 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
             __autoreleasing NSError *error;
             BOOL synchronized = [_currentLogFileHandle synchronizeAndReturnError:&error];
             if (!synchronized) {
-                NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
+                if (error) {
+                    NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
+                }
             }
             BOOL closed = [_currentLogFileHandle closeAndReturnError:&error];
             if (!closed) {
@@ -886,7 +888,9 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         __autoreleasing NSError *error;
         BOOL synchronized = [_currentLogFileHandle synchronizeAndReturnError:&error];
         if (!synchronized) {
-            NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
+            if (error) {
+                NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
+            }
         }
         BOOL closed = [_currentLogFileHandle closeAndReturnError:&error];
         if (!closed) {
@@ -1247,7 +1251,9 @@ static int exception_count = 0;
             __autoreleasing NSError *error;
             BOOL succeed = [_currentLogFileHandle synchronizeAndReturnError:&error];
             if (!succeed) {
-                NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
+                if (error) {
+                    NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
+                }
             }
         } else {
             @try {
