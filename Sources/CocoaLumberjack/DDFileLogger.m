@@ -216,11 +216,11 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         for (NSUInteger i = firstIndexToDelete; i < sortedLogFileInfos.count; i++) {
             DDLogFileInfo *logFileInfo = sortedLogFileInfos[i];
 
-            NSError *error = nil;
+            __autoreleasing NSError *error;
             BOOL success = [[NSFileManager defaultManager] removeItemAtPath:logFileInfo.filePath error:&error];
             if (success) {
                 NSLogInfo(@"DDLogFileManagerDefault: Deleting file: %@", logFileInfo.fileName);
-            } else {
+            } else if (error) {
                 NSLogError(@"DDLogFileManagerDefault: Error deleting file %@", error);
             }
         }
@@ -254,16 +254,15 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 - (NSString *)logsDirectory {
     // We could do this check once, during initialization, and not bother again.
     // But this way the code continues to work if the directory gets deleted while the code is running.
-
     NSAssert(_logsDirectory.length > 0, @"Directory must be set.");
 
-    NSError *err = nil;
+    __autoreleasing NSError *error;
     BOOL success = [[NSFileManager defaultManager] createDirectoryAtPath:_logsDirectory
                                              withIntermediateDirectories:YES
                                                               attributes:nil
-                                                                   error:&err];
-    if (success == NO) {
-        NSLogError(@"DDFileLogManagerDefault: Error creating logsDirectory: %@", err);
+                                                                   error:&error];
+    if (!success && error) {
+        NSLogError(@"DDFileLogManagerDefault: Error creating logsDirectory: %@", error);
     }
 
     return _logsDirectory;
@@ -629,11 +628,12 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
             __autoreleasing NSError *error;
             BOOL synchronized = [_currentLogFileHandle synchronizeAndReturnError:&error];
-            if (!synchronized) {
+            if (!synchronized && error) {
                 NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
+                error = nil;
             }
             BOOL closed = [_currentLogFileHandle closeAndReturnError:&error];
-            if (!closed) {
+            if (!closed && error) {
                 NSLogError(@"DDFileLogger: Failed to close file: %@", error);
             }
         } else {
@@ -646,7 +646,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         }
         _currentLogFileHandle = nil;
     }
-        
+
     if (_currentLogFileVnode) {
         dispatch_source_cancel(_currentLogFileVnode);
         _currentLogFileVnode = NULL;
@@ -881,15 +881,16 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     if (_currentLogFileHandle == nil) {
         return;
     }
-    
+
     if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
         __autoreleasing NSError *error;
         BOOL synchronized = [_currentLogFileHandle synchronizeAndReturnError:&error];
-        if (!synchronized) {
+        if (!synchronized && error) {
             NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
+            error = nil;
         }
         BOOL closed = [_currentLogFileHandle closeAndReturnError:&error];
-        if (!closed) {
+        if (!closed && error) {
             NSLogError(@"DDFileLogger: Failed to close file: %@", error);
         }
     } else {
@@ -962,8 +963,8 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         unsigned long long fileSize;
         if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
             __autoreleasing NSError *error;
-            BOOL succeed = [_currentLogFileHandle getOffset:&fileSize error:&error];
-            if (!succeed) {
+            BOOL succeeded = [_currentLogFileHandle getOffset:&fileSize error:&error];
+            if (!succeeded && error) {
                 NSLogError(@"DDFileLogger: Failed to get offset: %@", error);
                 return;
             }
@@ -1167,8 +1168,8 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         if (_currentLogFileHandle != nil) {
             if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
                 __autoreleasing NSError *error;
-                BOOL succeed = [_currentLogFileHandle seekToEndReturningOffset:nil error:&error];
-                if (!succeed) {
+                BOOL succeeded = [_currentLogFileHandle seekToEndReturningOffset:nil error:&error];
+                if (!succeeded && error) {
                     NSLogError(@"DDFileLogger: Failed to seek to end of file: %@", error);
                 }
             } else {
@@ -1241,12 +1242,12 @@ static int exception_count = 0;
 
 - (void)lt_flush {
     NSAssert([self isOnInternalLoggerQueue], @"flush should only be executed on internal queue.");
-    
+
     if (_currentLogFileHandle != nil) {
         if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
             __autoreleasing NSError *error;
-            BOOL succeed = [_currentLogFileHandle synchronizeAndReturnError:&error];
-            if (!succeed) {
+            BOOL synchronized = [_currentLogFileHandle synchronizeAndReturnError:&error];
+            if (!synchronized && error) {
                 NSLogError(@"DDFileLogger: Failed to synchronize file: %@", error);
             }
         } else {
@@ -1339,11 +1340,12 @@ static int exception_count = 0;
         if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
             __autoreleasing NSError *error;
             BOOL sought = [handle seekToEndReturningOffset:nil error:&error];
-            if (!sought) {
+            if (!sought && error) {
                 NSLogError(@"DDFileLogger: Failed to seek to end of file: %@", error);
+                error = nil;
             }
-            BOOL written =  [handle writeData:data error:&error];
-            if (!written) {
+            BOOL written = [handle writeData:data error:&error];
+            if (!written && error) {
                 NSLogError(@"DDFileLogger: Failed to write data: %@", error);
             }
         } else {
@@ -1463,7 +1465,7 @@ static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
 
 - (NSDictionary *)fileAttributes {
     if (_fileAttributes == nil && filePath != nil) {
-        NSError *error = nil;
+        __autoreleasing NSError *error;
         _fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:&error];
 
         if (error) {
@@ -1565,13 +1567,12 @@ static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
         NSAssert(directory, @"Containing directory must exist.");
 #endif
 
-        NSError *error = nil;
-
+        __autoreleasing NSError *error;
         BOOL success = [fileManager removeItemAtPath:newFilePath error:&error];
-        if (!success && error.code != NSFileNoSuchFileError) {
+        if (!success && error && error.code != NSFileNoSuchFileError) {
             NSLogError(@"DDLogFileInfo: Error deleting archive (%@): %@", self.fileName, error);
         }
-
+        error = nil; // set it outside of above's if because it also checks the code.
         success = [fileManager moveItemAtPath:filePath toPath:newFilePath error:&error];
 
         // When a log file is deleted, moved or renamed on the simulator, we attempt to rename it as a
@@ -1579,9 +1580,9 @@ static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
         // We therefore ignore this error, and assert that the directory we are copying into exists (which
         // is the only other case where this error code can come up).
 #if TARGET_IPHONE_SIMULATOR
-        if (!success && error.code != NSFileNoSuchFileError)
+        if (!success && error && error.code != NSFileNoSuchFileError)
 #else
-        if (!success)
+        if (!success && error)
 #endif
         {
             NSLogError(@"DDLogFileInfo: Error renaming file (%@): %@", self.fileName, error);
