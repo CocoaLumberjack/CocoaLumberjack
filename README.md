@@ -126,6 +126,21 @@ You can then use `DDLogHandler` as backend for swift-log, which will forward all
 
 In your own log formatters, you can make use of the `swiftLogInfo` property on `DDLogMessage` to retrieve the details of a message that is logged via swift-log.
 
+```swift
+// import packages
+import CocoaLumberjackSwift
+import CocoaLumberjackSwiftLogBackend
+import Logging
+
+...
+
+DDLog.add(DDOSLogger.sharedInstance)	// configure loggers
+
+LoggingSystem.bootstrapWithCocoaLumberjack()	// use CocoaLumberjack as swift-log backend
+```
+
+
+
 
 ## More information
 
