@@ -15,15 +15,16 @@ let package = Package(
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
             name: "CocoaLumberjack",
+            targets: ["CocoaLumberjack"]),
+        .library(
+            name: "CocoaLumberjackDynamic",
             type: .dynamic,
             targets: ["CocoaLumberjack"]),
         .library(
             name: "CocoaLumberjackSwift",
-            type: .dynamic,
             targets: ["CocoaLumberjackSwift"]),
         .library(
             name: "CocoaLumberjackSwiftLogBackend",
-            type: .dynamic,
             targets: ["CocoaLumberjackSwiftLogBackend"]),
     ],
     dependencies: [
