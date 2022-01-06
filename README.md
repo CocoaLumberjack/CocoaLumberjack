@@ -65,6 +65,8 @@ If you want to use the Swift Package Manager as integration method, either use X
 
 Note that you may need to add both products, `CocoaLumberjack` and `CocoaLumberjackSwift` to your target since SPM sometimes fails to detect that `CocoaLumerjackSwift` depends on `CocoaLumberjack`.
 
+If you have binary dependencies you might need to add the dynamic products, `CocoaLumberjackDynamic` or `CocoaLumberjackSwiftDynamic`.
+
 ### Install manually
 
 If you want to install CocoaLumberjack manually, read the [manual installation](Documentation/GettingStarted.md#manual-installation) guide for more information.

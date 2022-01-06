@@ -24,6 +24,10 @@ let package = Package(
             name: "CocoaLumberjackSwift",
             targets: ["CocoaLumberjackSwift"]),
         .library(
+            name: "CocoaLumberjackSwiftDynamic",
+            type: .dynamic,
+            targets: ["CocoaLumberjackSwift"]),
+        .library(
             name: "CocoaLumberjackSwiftLogBackend",
             targets: ["CocoaLumberjackSwiftLogBackend"]),
     ],
