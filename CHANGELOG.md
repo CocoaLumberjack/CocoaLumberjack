@@ -6,7 +6,14 @@
 
 ### Internal
 
-- _REPLACE ME_
+- Add consistent newline to file endings (#1272)
+- Fix error checking in DDFileLogger (#1274)
+- Optimization date formatter cost (#1279)
+- Avoid using NSString format (#1280)
+
+### Document
+
+- Update readme about swift-log usage (#1275)
 
 
 ## [3.7.4 - Xcode 13.2 on Dec 16, 2021](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.4)
