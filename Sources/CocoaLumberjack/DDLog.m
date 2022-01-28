@@ -466,8 +466,8 @@ static NSUInteger _numProcessors;
                                                                level:level
                                                                 flag:flag
                                                              context:context
-                                                                file:[NSString stringWithFormat:@"%s", file]
-                                                            function:[NSString stringWithFormat:@"%s", function]
+                                                                file:@(file)
+                                                            function:@(function)
                                                                 line:line
                                                                  tag:tag
                                                              options:(DDLogMessageOptions)0
