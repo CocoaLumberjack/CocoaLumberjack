@@ -724,7 +724,7 @@ unsigned long long const kDDDefaultSecForOneMinute        = 60;
         }
         _currentLogFileHandle = nil;
     }
-        
+    
     if (_currentLogFileVnode) {
         dispatch_source_cancel(_currentLogFileVnode);
         _currentLogFileVnode = NULL;
