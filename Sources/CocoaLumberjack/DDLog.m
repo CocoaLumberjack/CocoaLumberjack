@@ -466,7 +466,7 @@ static NSUInteger _numProcessors;
                                                                level:level
                                                                 flag:flag
                                                              context:context
-                                                                file:@(file)
+                                                                file:@(file) ?: @""
                                                             function:@(function)
                                                                 line:line
                                                                  tag:tag
