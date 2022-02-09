@@ -440,38 +440,41 @@ unsigned long long const kDDDefaultSecForOneMinute        = 60;
 
     NSString *fileName = [self newLogFileName];
     NSString *logsDirectory = [self logsDirectory];
-    NSData *fileHeader = [self logFileHeaderData];
-    if (fileHeader == nil) {
-        fileHeader = [NSData new];
-    }
+    NSData *fileHeader = [self logFileHeaderData] ?: [NSData new];
 
+    NSString *baseName = nil;
+    NSString *extension;
     NSUInteger attempt = 1;
     NSUInteger criticalErrors = 0;
     NSError *lastCriticalError;
 
+    if (error) *error = nil;
     do {
         if (criticalErrors >= MAX_ALLOWED_ERROR) {
             NSLogError(@"DDLogFileManagerDefault: Bailing file creation, encountered %ld errors.",
                         (unsigned long)criticalErrors);
-            *error = lastCriticalError;
+            if (error) *error = lastCriticalError;
             return nil;
         }
 
-        NSString *actualFileName = fileName;
+        NSString *actualFileName;
         if (attempt > 1) {
-            NSString *extension = [actualFileName pathExtension];
+            if (baseName == nil) {
+                baseName = [fileName stringByDeletingPathExtension];
+                extension = [fileName pathExtension];
+            }
 
-            actualFileName = [actualFileName stringByDeletingPathExtension];
-            actualFileName = [actualFileName stringByAppendingFormat:@" %lu", (unsigned long)attempt];
-
+            actualFileName = [baseName stringByAppendingFormat:@" %lu", (unsigned long)attempt];
             if (extension.length) {
                 actualFileName = [actualFileName stringByAppendingPathExtension:extension];
             }
+        } else {
+            actualFileName = fileName;
         }
 
         NSString *filePath = [logsDirectory stringByAppendingPathComponent:actualFileName];
 
-        NSError *currentError = nil;
+        __autoreleasing NSError *currentError = nil;
         BOOL success = [fileHeader writeToFile:filePath options:NSDataWritingAtomic error:&currentError];
 
 #if TARGET_OS_IPHONE && !TARGET_OS_MACCATALYST
@@ -497,15 +500,11 @@ unsigned long long const kDDDefaultSecForOneMinute        = 60;
             return filePath;
         } else if (currentError.code == NSFileWriteFileExistsError) {
             attempt++;
-            continue;
         } else {
             NSLogError(@"DDLogFileManagerDefault: Critical error while creating log file: %@", currentError);
             criticalErrors++;
             lastCriticalError = currentError;
-            continue;
         }
-
-        return filePath;
     } while (YES);
 }
 
