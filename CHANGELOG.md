@@ -8,7 +8,6 @@
 
 - Add consistent newline to file endings (#1272)
 - Fix error checking in DDFileLogger (#1274)
-- Optimization date formatter cost (#1279)
 - Avoid using NSString format (#1280)
 
 ### Document
