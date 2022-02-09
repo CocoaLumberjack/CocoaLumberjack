@@ -788,7 +788,6 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
     id _representedObject;
     DDLogMessageOptions _options;
     NSDate * _timestamp;
-    struct timeval sys_timeval;
     NSString *_threadID;
     NSString *_threadName;
     NSString *_queueLabel;

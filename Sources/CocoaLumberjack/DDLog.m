@@ -20,7 +20,6 @@
 #import <pthread.h>
 #import <objc/runtime.h>
 #import <sys/qos.h>
-#import <sys/time.h>
 
 #if TARGET_OS_IOS
     #import <UIKit/UIDevice.h>
@@ -1009,11 +1008,6 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
         _options      = options;
         _timestamp    = timestamp ?: [NSDate new];
 
-        struct timeval time;
-        gettimeofday(&time, NULL);
-        sys_timeval.tv_sec = time.tv_sec;
-        sys_timeval.tv_usec = time.tv_usec;
-        
         __uint64_t tid;
         if (pthread_threadid_np(NULL, &tid) == 0) {
             _threadID = [[NSString alloc] initWithFormat:@"%llu", tid];
