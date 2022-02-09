@@ -50,10 +50,6 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
 NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 
-unsigned int       const kDDDefaultTimeStringBufferLength = 23;//string "0000/00/00 00:00:00:000"
-unsigned long long const kDDDefaultSecForOneHour          = 60 * 60;
-unsigned long long const kDDDefaultSecForOneMinute        = 60;
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -539,9 +535,6 @@ unsigned long long const kDDDefaultSecForOneMinute        = 60;
 
 @interface DDLogFileFormatterDefault () {
     NSDateFormatter *_dateFormatter;
-    time_t _timeZoneDeltaTime; // offset from UTC in seconds
-    __darwin_time_t _last_tv_sec;
-    char *_timeStringBuffer;
 }
 
 @end
@@ -562,17 +555,6 @@ unsigned long long const kDDDefaultSecForOneMinute        = 60;
             [_dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
             [_dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
             [_dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss:SSS"];
-            
-            char tempBuffer[] = "0000/00/00 00:00:00:000";
-            _timeStringBuffer = malloc(sizeof(char) * kDDDefaultTimeStringBufferLength);
-            memset(_timeStringBuffer, 0, strlen(tempBuffer));
-            memcpy(_timeStringBuffer, tempBuffer, strlen(tempBuffer));
-            
-            time_t tm;
-            time(&tm);
-            struct tm *t_tm;
-            t_tm = localtime(&tm);
-            _timeZoneDeltaTime = t_tm->tm_gmtoff;
         }
     }
 
@@ -580,70 +562,9 @@ unsigned long long const kDDDefaultSecForOneMinute        = 60;
 }
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
-    /// Use default `dateFormatter`
-    if (_timeStringBuffer != NULL) {
-        const char *dateAndTime = [self formatLogTimestamp:logMessage->sys_timeval];
-        return [NSString stringWithFormat:@"%s  %@", dateAndTime, logMessage->_message];
-    } else {
-        NSString *dateAndTime = [_dateFormatter stringFromDate:logMessage->_timestamp];
-        return [NSString stringWithFormat:@"%@  %@", dateAndTime, logMessage->_message];
-    }
-}
+    NSString *dateAndTime = [_dateFormatter stringFromDate:logMessage->_timestamp];
 
-- (const char *)formatLogTimestamp:(struct timeval)time {
-    __darwin_suseconds_t tv_usec = time.tv_usec;
-    __darwin_time_t tv_sec = time.tv_sec;
-    
-    tv_usec = tv_usec + 500;
-    tv_sec = tv_sec + tv_usec / 1000000;
-    tv_usec = tv_usec % 1000000;
-
-    long currentDayCount = (tv_sec + _timeZoneDeltaTime) / (kDDDefaultSecForOneHour * 24);
-    long lastDayCount = (_last_tv_sec + _timeZoneDeltaTime) / (kDDDefaultSecForOneHour * 24);
-    if ((!_last_tv_sec) || (currentDayCount != lastDayCount)) {
-        // first log or new day
-        NSDate *date = [NSDate dateWithTimeIntervalSince1970:tv_sec];
-        NSString *dateString = [_dateFormatter stringFromDate:date];
-        if (dateString.length < 10) {
-            NSLogError(@"formatLogTimestamp dateString error: %@", dateString);
-            return NULL;
-        }
-        const char *dayCStr = [dateString substringToIndex:10].UTF8String;
-        memcpy(_timeStringBuffer, dayCStr, strlen(dayCStr));
-    }
-        
-    long secOfDay = (tv_sec + _timeZoneDeltaTime) % (kDDDefaultSecForOneHour * 24);
-    long hour = secOfDay / kDDDefaultSecForOneHour;
-    long minute = secOfDay % kDDDefaultSecForOneHour / (kDDDefaultSecForOneHour * 24);
-    long second = secOfDay % kDDDefaultSecForOneMinute;
-    
-    long milliSec = (tv_usec) / 1000;
-    
-#define DDLogFormatToBuffer(fieldValue, index, length)   \
-{   \
-    long tmp = fieldValue;   \
-    long last = index;       \
-    long len = length;    \
-    while (len) {   \
-        _timeStringBuffer[last] = '0' + (tmp % 10);    \
-        last -= 1, tmp /= 10;   \
-        len--;  \
-    }   \
-}
-    DDLogFormatToBuffer(hour, 12, 2);
-    DDLogFormatToBuffer(minute, 15, 2);
-    DDLogFormatToBuffer(second, 18, 2);
-    DDLogFormatToBuffer(milliSec, 22, 3);
-
-    _last_tv_sec = tv_sec;
-    return _timeStringBuffer;
-}
-
-- (void)dealloc {
-    if (_timeStringBuffer != NULL) {
-        free(_timeStringBuffer);
-        _timeStringBuffer = NULL;
-    }
+    return [NSString stringWithFormat:@"%@  %@", dateAndTime, logMessage->_message];
 }
 
 @end
