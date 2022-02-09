@@ -68,6 +68,19 @@ static NSString * const kDefaultMessage = @"Log message";
                                        timestamp:nil];
 }
 
++ (DDLogMessage *)test_messageWithWithoutFunction {
+    return [[DDLogMessage alloc] initWithMessage:kDefaultMessage
+                                           level:DDLogLevelDebug
+                                            flag:DDLogFlagError
+                                         context:1
+                                            file:@(__FILE__)
+                                        function:nil
+                                            line:__LINE__
+                                             tag:NULL
+                                         options:(DDLogMessageOptions)0
+                                       timestamp:nil];
+}
+
 + (DDLogMessage *)test_messageWithFile:(NSString *)file
                                options:(DDLogMessageOptions)options {
     return [[DDLogMessage alloc] initWithMessage:kDefaultMessage
@@ -236,6 +249,15 @@ static NSString * const kDefaultMessage = @"Log message";
     XCTAssertEqualObjects(self.message.threadName, copy.threadName);
     XCTAssertEqualObjects(self.message.queueLabel, copy.queueLabel);
     XCTAssertEqual(self.message.qos, copy.qos);
+    XCTAssertEqual(self.message.hash, copy.hash);
+    XCTAssertEqualObjects(self.message, copy);
+}
+
+- (void)testEqualityCopyWithoutFunction {
+    __auto_type message = [DDLogMessage test_messageWithWithoutFunction];
+    __auto_type copy = (typeof(message))[message copy];
+    XCTAssertEqual(message.hash, copy.hash);
+    XCTAssertEqualObjects(message, copy);
 }
 
 @end

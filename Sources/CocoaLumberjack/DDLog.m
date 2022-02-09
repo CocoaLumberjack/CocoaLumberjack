@@ -1037,10 +1037,20 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
     return self;
 }
 
+static __inline__ __attribute__((__always_inline__)) BOOL _nullable_strings_equal(NSString* _Nullable lhs, NSString* _Nullable rhs)
+{
+    if (lhs == nil) {
+        if (rhs == nil)
+            return YES;
+    } else if (rhs != nil && [lhs isEqualToString:rhs])
+        return YES;
+    return NO;
+}
+
 - (BOOL)isEqual:(id)other {
     if (other == self) {
         return YES;
-    } else if (![super isEqual:other] || ![other isKindOfClass:[self class]]) {
+    } else if (!other || ![other isKindOfClass:[self class]]) {
         return NO;
     } else {
         __auto_type otherMsg = (DDLogMessage *)other;
@@ -1049,11 +1059,9 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
         && otherMsg->_flag == _flag
         && otherMsg->_context == _context
         && [otherMsg->_file isEqualToString:_file]
-        && [otherMsg->_fileName isEqualToString:_fileName]
-        && [otherMsg->_function isEqualToString:_function]
+        && _nullable_strings_equal(otherMsg->_function, _function)
         && otherMsg->_line == _line
         && (([otherMsg->_representedObject respondsToSelector:@selector(isEqual:)] && [otherMsg->_representedObject isEqual:_representedObject]) || otherMsg->_representedObject == _representedObject)
-        && otherMsg->_options == _options
         && [otherMsg->_timestamp isEqualToDate:_timestamp]
         && [otherMsg->_threadID isEqualToString:_threadID] // If the thread ID is the same, the name will likely be the same as well.
         && [otherMsg->_queueLabel isEqualToString:_queueLabel]
@@ -1062,17 +1070,14 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
 }
 
 - (NSUInteger)hash {
-    return [super hash]
-    ^ _message.hash
+    return _message.hash
     ^ _level
     ^ _flag
     ^ _context
     ^ _file.hash
-    ^ _fileName.hash
     ^ _function.hash
     ^ _line
-    ^ ([_representedObject respondsToSelector:@selector(hash)] ? [_representedObject hash] : 0)
-    ^ _options
+    ^ ([_representedObject respondsToSelector:@selector(hash)] ? [_representedObject hash] : (NSUInteger)_representedObject)
     ^ _timestamp.hash
     ^ _threadID.hash
     ^ _queueLabel.hash
