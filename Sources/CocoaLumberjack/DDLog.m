@@ -1048,6 +1048,8 @@ static __inline__ __attribute__((__always_inline__)) BOOL _nullable_strings_equa
 }
 
 - (BOOL)isEqual:(id)other {
+    // Subclasses of NSObject should not call [super isEqual:] here.
+    // See https://stackoverflow.com/questions/36593038/confused-about-the-default-isequal-and-hash-implements
     if (other == self) {
         return YES;
     } else if (!other || ![other isKindOfClass:[self class]]) {
@@ -1070,6 +1072,8 @@ static __inline__ __attribute__((__always_inline__)) BOOL _nullable_strings_equa
 }
 
 - (NSUInteger)hash {
+    // Subclasses of NSObject should not call [super hash] here.
+    // See https://stackoverflow.com/questions/36593038/confused-about-the-default-isequal-and-hash-implements
     return _message.hash
     ^ _level
     ^ _flag
