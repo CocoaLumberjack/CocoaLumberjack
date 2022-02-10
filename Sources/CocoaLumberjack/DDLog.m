@@ -1042,7 +1042,7 @@ static __inline__ __attribute__((__always_inline__)) BOOL _nullable_strings_equa
     if (lhs == nil) {
         if (rhs == nil)
             return YES;
-    } else if (rhs != nil && [lhs isEqualToString:rhs])
+    } else if (rhs != nil && [lhs isEqualToString:(NSString* _Nonnull)rhs])
         return YES;
     return NO;
 }
