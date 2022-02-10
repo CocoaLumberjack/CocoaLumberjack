@@ -1285,12 +1285,14 @@ static DDTTYLogger *sharedInstance;
             // The technique below is faster than using NSDateFormatter.
             if (logMessage->_timestamp) {
                 NSTimeInterval epoch = [logMessage->_timestamp timeIntervalSince1970];
+                double integral;
+                double fract = modf(epoch, &integral);
                 struct tm tm;
-                time_t time = (time_t)epoch;
+                time_t time = (time_t)integral;
                 (void)localtime_r(&time, &tm);
-                int milliseconds = (int)((epoch - floor(epoch)) * 1000.0);
+                long milliseconds = (long)(fract * 1000.0);
 
-                len = snprintf(ts, 24, "%04d-%02d-%02d %02d:%02d:%02d:%03d", // yyyy-MM-dd HH:mm:ss:SSS
+                len = snprintf(ts, 24, "%04d-%02d-%02d %02d:%02d:%02d:%03ld", // yyyy-MM-dd HH:mm:ss:SSS
                                tm.tm_year + 1900,
                                tm.tm_mon + 1,
                                tm.tm_mday,

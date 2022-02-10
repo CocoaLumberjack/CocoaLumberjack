@@ -125,7 +125,7 @@ static DDLogLevel _captureLevel = DDLogLevelVerbose;
                                                             function:nil
                                                                 line:0
                                                                  tag:nil
-                                                             options:0
+                                                             options:DDLogMessageDontCopyMessage
                                                            timestamp:timeStamp];
     
     [DDLog log:async message:logMessage];
