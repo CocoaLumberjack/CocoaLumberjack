@@ -462,11 +462,13 @@ static NSUInteger _numProcessors;
    function:(const char *)function
        line:(NSUInteger)line
         tag:(id)tag {
+    NSString* fileString = @(file);
+    NSAssert(fileString, @"Invalid file parameter");
     DDLogMessage *logMessage = [[DDLogMessage alloc] initWithMessage:message
                                                                level:level
                                                                 flag:flag
                                                              context:context
-                                                                file:@(file) ?: @""
+                                                                file:fileString
                                                             function:@(function)
                                                                 line:line
                                                                  tag:tag
