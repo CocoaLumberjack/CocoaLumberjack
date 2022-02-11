@@ -1052,7 +1052,7 @@ NS_INLINE BOOL _nullable_strings_equal(NSString* _Nullable lhs, NSString* _Nulla
     // See https://stackoverflow.com/questions/36593038/confused-about-the-default-isequal-and-hash-implements
     if (other == self) {
         return YES;
-    } else if (!other || ![other isKindOfClass:[self class]]) {
+    } else if (!other || ![other isKindOfClass:[DDLogMessage class]]) {
         return NO;
     } else {
         __auto_type otherMsg = (DDLogMessage *)other;
