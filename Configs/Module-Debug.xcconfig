@@ -23,6 +23,9 @@ ENABLE_NS_ASSERTIONS = YES
 // When this setting is activated, the product will be built with options appropriate for running automated tests, such as making private interfaces accessible to the tests.
 ENABLE_TESTABILITY = YES
 
+// Check for violations of nullability annotations in function calls, return statements, and assignments.
+CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES
+
 // Specifies the degree to which the generated code is optimized for speed and binary size.
 GCC_OPTIMIZATION_LEVEL = 0
 
