@@ -780,7 +780,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
     NSInteger _context;
     NSString *_file;
     NSString *_fileName;
-    NSString * _function;
+    NSString *_function;
     NSUInteger _line;
     #if DD_LEGACY_MESSAGE_TAG
     id _tag __attribute__((deprecated("Use _representedObject instead", "_representedObject")));;
