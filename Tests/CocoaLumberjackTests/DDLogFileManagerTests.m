@@ -43,7 +43,7 @@
     __autoreleasing NSError *creationError;
     NSString *filePath = [self.logFileManager createNewLogFileWithError:&creationError];
     XCTAssertNil(creationError);
-    XCTAssertTrue([self.logFileManager isLogFile:[NSURL fileURLWithPath:filePath].lastPathComponent]);
+    XCTAssertTrue([self.logFileManager isLogFile:filePath.lastPathComponent]);
 
     __autoreleasing NSError *error = nil;
     NSData *data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingUncached error:&error];

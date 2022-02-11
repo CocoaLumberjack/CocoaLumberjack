@@ -258,9 +258,12 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     DDLogVerbose(@"%@", @"verbose");
 
     [DDLog flushLog];
+    
+    NSString* filePath = logger.currentLogFileInfo.filePath;
+    XCTAssertNotNil(filePath);
 
     NSError *error = nil;
-    NSData *data = [NSData dataWithContentsOfFile:logger.currentLogFileInfo.filePath options:NSDataReadingUncached error:&error];
+    NSData *data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingUncached error:&error];
     XCTAssertNil(error);
 
     NSString *contents = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -278,9 +281,12 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     DDLogVerbose(@"%@", @"verbose");
 
     [DDLog flushLog];
+    
+    NSString* filePath = logger.currentLogFileInfo.filePath;
+    XCTAssertNotNil(filePath);
 
     NSError *error = nil;
-    NSData *data = [NSData dataWithContentsOfFile:logger.currentLogFileInfo.filePath options:NSDataReadingUncached error:&error];
+    NSData *data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingUncached error:&error];
     XCTAssertNil(error);
 
     NSString *contents = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
