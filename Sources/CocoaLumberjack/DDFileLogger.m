@@ -1081,6 +1081,9 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
                      @"Invalid log file manager! Responds neither to `-createNewLogFileWithError:` nor `-createNewLogFile`!");
             currentLogFilePath = [_logFileManager createNewLogFile];
             #pragma clang diagnostic pop
+            if (!currentLogFilePath) {
+                NSLogError(@"DDFileLogger: Failed to create new log file");
+            }
         }
         // Use static factory method here, since it checks for nil (and is unavailable to Swift).
         _currentLogFileInfo = [DDLogFileInfo logFileWithPath:currentLogFilePath];
