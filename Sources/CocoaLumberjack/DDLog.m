@@ -989,8 +989,9 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
                             tag:(id)tag
                         options:(DDLogMessageOptions)options
                       timestamp:(NSDate *)timestamp {
-    NSParameterAssert(message && file);
-    
+    NSParameterAssert(message);
+    NSParameterAssert(file);
+
     if ((self = [super init])) {
         BOOL copyMessage = (options & DDLogMessageDontCopyMessage) == 0;
         _message      = copyMessage ? [message copy] : message;
