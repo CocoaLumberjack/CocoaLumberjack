@@ -1037,7 +1037,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
     return self;
 }
 
-static __inline__ __attribute__((__always_inline__)) BOOL _nullable_strings_equal(NSString* _Nullable lhs, NSString* _Nullable rhs)
+NS_INLINE BOOL _nullable_strings_equal(NSString* _Nullable lhs, NSString* _Nullable rhs)
 {
     if (lhs == nil) {
         if (rhs == nil)
