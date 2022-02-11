@@ -94,6 +94,9 @@ CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE
 // Warns about potentially unreachable code.
 CLANG_WARN_UNREACHABLE_CODE = YES
 
+// Warns about implicit conversion from nullable pointer to non-nullable pointer.
+CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = YES
+
 // The path to a file specifying code-signing entitlements.
 CODE_SIGN_ENTITLEMENTS =
 
