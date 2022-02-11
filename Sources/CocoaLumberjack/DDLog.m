@@ -462,18 +462,20 @@ static NSUInteger _numProcessors;
    function:(const char *)function
        line:(NSUInteger)line
         tag:(id)tag {
-    NSString* fileString = @(file);
-    NSAssert(fileString, @"Invalid file parameter");
+// Nullity checks are handled by -initWithMessage:
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullable-to-nonnull-conversion"
     DDLogMessage *logMessage = [[DDLogMessage alloc] initWithMessage:message
                                                                level:level
                                                                 flag:flag
                                                              context:context
-                                                                file:fileString
+                                                                file:@(file)
                                                             function:@(function)
                                                                 line:line
                                                                  tag:tag
                                                              options:(DDLogMessageOptions)0
                                                            timestamp:nil];
+#pragma clang diagnostic pop
 
     [self queueLogMessage:logMessage asynchronously:asynchronous];
 }
@@ -987,6 +989,8 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
                             tag:(id)tag
                         options:(DDLogMessageOptions)options
                       timestamp:(NSDate *)timestamp {
+    NSParameterAssert(message && file);
+    
     if ((self = [super init])) {
         BOOL copyMessage = (options & DDLogMessageDontCopyMessage) == 0;
         _message      = copyMessage ? [message copy] : message;
