@@ -1328,6 +1328,7 @@ static int exception_count = 0;
     }
 
     @try {
+        // Make sure that _currentLogFileInfo is initialised before being used.
         NSFileHandle *handle = [self lt_currentLogFileHandle];
 
         if (implementsDeprecatedWillLog) {
