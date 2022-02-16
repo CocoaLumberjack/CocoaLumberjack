@@ -84,9 +84,9 @@
 		0AA9B47221CC0AE60036182F /* DDFileLoggerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDFileLoggerTests.m; sourceTree = "<group>"; };
 		432B53331AAE423E00843E69 /* OS X Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "OS X Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		432B53401AAE425D00843E69 /* iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		435F03B22174AB9600A86B2D /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
-		435F03B32174AB9600A86B2D /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
-		435F03B42174AB9600A86B2D /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
+		49274B5D27BD6653005EAEB2 /* Tests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Tests-Debug.xcconfig"; sourceTree = "<group>"; };
+		49274B5F27BD6653005EAEB2 /* Tests-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Tests-Shared.xcconfig"; sourceTree = "<group>"; };
+		49274B6027BD6653005EAEB2 /* Tests-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Tests-Release.xcconfig"; sourceTree = "<group>"; };
 		4C4A3678243C418600410EF0 /* Swift Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Swift Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C4A367A243C418600410EF0 /* DDLogCombineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDLogCombineTests.swift; sourceTree = "<group>"; };
 		6ECBFDB321E9A31500CBB679 /* DDFileLoggerPerformanceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLoggerPerformanceTests.m; sourceTree = "<group>"; };
@@ -193,9 +193,9 @@
 		435F03B12174AB9600A86B2D /* Configs */ = {
 			isa = PBXGroup;
 			children = (
-				435F03B22174AB9600A86B2D /* Module-Release.xcconfig */,
-				435F03B32174AB9600A86B2D /* Module-Debug.xcconfig */,
-				435F03B42174AB9600A86B2D /* Module-Shared.xcconfig */,
+				49274B6027BD6653005EAEB2 /* Tests-Release.xcconfig */,
+				49274B5D27BD6653005EAEB2 /* Tests-Debug.xcconfig */,
+				49274B5F27BD6653005EAEB2 /* Tests-Shared.xcconfig */,
 			);
 			name = Configs;
 			path = ../Configs;
@@ -272,7 +272,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1320;
 				ORGANIZATIONNAME = deusty;
 				TargetAttributes = {
 					432B53321AAE423E00843E69 = {
@@ -427,14 +427,14 @@
 /* Begin XCBuildConfiguration section */
 		432B532A1AAE40EB00843E69 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 435F03B32174AB9600A86B2D /* Module-Debug.xcconfig */;
+			baseConfigurationReference = 49274B5D27BD6653005EAEB2 /* Tests-Debug.xcconfig */;
 			buildSettings = {
 			};
 			name = Debug;
 		};
 		432B532B1AAE40EB00843E69 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 435F03B22174AB9600A86B2D /* Module-Release.xcconfig */;
+			baseConfigurationReference = 49274B6027BD6653005EAEB2 /* Tests-Release.xcconfig */;
 			buildSettings = {
 			};
 			name = Release;
