@@ -1081,6 +1081,9 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
                      @"Invalid log file manager! Responds neither to `-createNewLogFileWithError:` nor `-createNewLogFile`!");
             currentLogFilePath = [_logFileManager createNewLogFile];
             #pragma clang diagnostic pop
+            if (!currentLogFilePath) {
+                NSLogError(@"DDFileLogger: Failed to create new log file");
+            }
         }
         // Use static factory method here, since it checks for nil (and is unavailable to Swift).
         _currentLogFileInfo = [DDLogFileInfo logFileWithPath:currentLogFilePath];
@@ -1325,6 +1328,8 @@ static int exception_count = 0;
     }
 
     @try {
+        NSFileHandle *handle = [self lt_currentLogFileHandle];
+
         if (implementsDeprecatedWillLog) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -1334,7 +1339,6 @@ static int exception_count = 0;
             [self willLogMessage:_currentLogFileInfo];
         }
 
-        NSFileHandle *handle = [self lt_currentLogFileHandle];
         if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
             __autoreleasing NSError *error = nil;
             BOOL success = [handle seekToEndReturningOffset:nil error:&error];
