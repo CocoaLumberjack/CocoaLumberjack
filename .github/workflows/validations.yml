@@ -20,14 +20,14 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1.4.1
         with:
           xcode-version: ^13.0
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: pod lib lint
 
   run-danger-for-internal-pr:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: danger/swift
@@ -57,7 +57,7 @@ jobs:
               pull_number: context.issue.number
             });
             return pullRequest;
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           repository: ${{fromJSON(steps.pr-details.outputs.result).head.repo.full_name}}
           ref: ${{fromJSON(steps.pr-details.outputs.result).head.ref}}
