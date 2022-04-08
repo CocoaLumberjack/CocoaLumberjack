@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * This class provides a logger for the Apple os_log facility.
  **/
-API_AVAILABLE(macos(10.12), ios(10.0), watchos(3.0), tvos(10.0))
+API_AVAILABLE(macos(10.12), ios(9.0), watchos(3.0), tvos(10.0))
 @interface DDOSLogger : DDAbstractLogger <DDLogger>
 
 /**
