@@ -648,6 +648,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 435F03AB2174A39200A86B2D /* Module-Debug.xcconfig */;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -655,6 +658,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 435F03AA2174A39200A86B2D /* Module-Release.xcconfig */;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
