@@ -66,6 +66,13 @@ extension DDLogMessage {
     }
 }
 
+// These are currently waiting for Concurrency Support in SwiftLog: https://github.com/apple/swift-log/pull/218
+//#if compiler(>=5.5) && canImport(_Concurrency)
+//extension DDLogMessage.SwiftLogInformation.LoggerInformation: Sendable {}
+//extension DDLogMessage.SwiftLogInformation.MessageInformation: Sendable {}
+//extension DDLogMessage.SwiftLogInformation: Sendable {}
+//#endif
+
 /// This class (intentionally internal) is only an "encapsulation" layer above `DDLogMessage`.
 /// It's basically an implementation detail of `DDLogMessage.swiftLogInfo`.
 @usableFromInline
@@ -203,6 +210,14 @@ public struct DDLogHandler: LogHandler {
         config.log.log(asynchronous: _logAsync(level: level, metadata: metadata), message: slMessage)
     }
 }
+
+// These are currently waiting for Concurrency Support in SwiftLog: https://github.com/apple/swift-log/pull/218
+//#if compiler(>=5.5) && canImport(_Concurrency)
+//extension DDLogHandler.Configuration.SyncLogging: Sendable {}
+//extension DDLogHandler.Configuration: Sendable {}
+//extension DDLogHandler.LoggerInfo: Sendable {}
+//extension DDLogHandler: Sendable {}
+//#endif
 
 extension DDLogHandler {
     /// The default key to control per message whether to log it synchronous or asynchronous.
