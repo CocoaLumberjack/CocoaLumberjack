@@ -207,6 +207,20 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  **/
 #define THIS_METHOD       NSStringFromSelector(_cmd)
 
+/**
+ * Makes a declaration "Sendable" in Swift (if supported by the compiler).
+ */
+#ifndef DD_SENDABLE
+#ifdef __has_attribute
+#if __has_attribute(swift_attr)
+#define DD_SENDABLE __attribute__((swift_attr("@Sendable")))
+#endif
+#endif
+#endif
+#ifndef DD_SENDABLE
+#define DD_SENDABLE
+#endif
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
@@ -216,6 +230,7 @@ FOUNDATION_EXTERN NSString * __nullable DDExtractFileNameWithoutExtension(const 
  *  The main class, exposes all logging mechanisms, loggers, ...
  *  For most of the users, this class is hidden behind the logging functions like `DDLogInfo`
  */
+DD_SENDABLE
 @interface DDLog : NSObject
 
 /**
@@ -770,6 +785,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
  * The `DDLogMessage` class encapsulates information about the log message.
  * If you write custom loggers or formatters, you will be dealing with objects of this class.
  **/
+DD_SENDABLE
 @interface DDLogMessage : NSObject <NSCopying>
 {
     // Direct accessors to be used only for performance
@@ -914,6 +930,7 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+DD_SENDABLE
 @interface DDLoggerInformation : NSObject
 
 @property (nonatomic, readonly) id <DDLogger> logger;
