@@ -61,7 +61,6 @@ export -f replace_copyright
 pushd "$(dirname $0)/../" > /dev/null
 find -E . -regex ".*\.([hm]|swift|pch)" -exec bash -c "replace_copyright \"${OLD_YEAR}\" \"${NEW_YEAR}\" \"{}\"" \;
 replace_copyright "${OLD_YEAR}" "${NEW_YEAR}" "./LICENSE"
-replace_copyright "${OLD_YEAR}" "${NEW_YEAR}" "./Dangerfile"
 popd > /dev/null
 
 # Delete the function again
