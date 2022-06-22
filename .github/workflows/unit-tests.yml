@@ -22,8 +22,6 @@ jobs:
         run: swift test --enable-code-coverage --parallel
       - uses: sersoft-gmbh/swift-coverage-action@v3
         id: coverage-files
-        with:
-          format: lcov
       - uses: codecov/codecov-action@v3
         with:
           token: ${{secrets.CODECOV_TOKEN}}
@@ -62,8 +60,6 @@ jobs:
           action: test
       - uses: sersoft-gmbh/swift-coverage-action@v3
         id: coverage-files
-        with:
-          format: lcov
       - uses: codecov/codecov-action@v3
         with:
           token: ${{secrets.CODECOV_TOKEN}}
