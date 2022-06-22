@@ -44,7 +44,7 @@ jobs:
         with:
           xcode-version: ^13.0
       - uses: actions/checkout@v3
-      - uses: sersoft-gmbh/xcodebuild-action@v1
+      - uses: sersoft-gmbh/xcodebuild-action@v2
         with:
           workspace: Demos/Demos.xcworkspace
           scheme: ${{matrix.scheme}}
