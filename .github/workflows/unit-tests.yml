@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Run SwiftPM Tests
         run: swift test --enable-code-coverage --parallel
-      - uses: sersoft-gmbh/swift-coverage-action@v2
+      - uses: sersoft-gmbh/swift-coverage-action@v3
         id: coverage-files
         with:
           format: lcov
@@ -60,7 +60,7 @@ jobs:
           parallel-testing-enabled: true
           build-settings: GCC_GENERATE_TEST_COVERAGE_FILES=YES
           action: test
-      - uses: sersoft-gmbh/swift-coverage-action@v2
+      - uses: sersoft-gmbh/swift-coverage-action@v3
         id: coverage-files
         with:
           format: lcov
