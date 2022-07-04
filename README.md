@@ -289,6 +289,7 @@ _Example_: `DDLogInfo("User: \(myUser)")` will add the `myUser` info to the logs
 - CocoaLumberjack is available under the BSD 3 license. See the [LICENSE file](LICENSE).
 
 ## Extensions
+- [BugfenderSDK-CocoaLumberjack](https://github.com/bugfender/BugfenderSDK-CocoaLumberjack) A Bugfender logger for CocoaLumberjack
 - [LogIO-CocoaLumberjack](https://github.com/s4nchez/LogIO-CocoaLumberjack) A log.io logger for CocoaLumberjack
 - [XCDLumberjackNSLogger](https://github.com/0xced/XCDLumberjackNSLogger) CocoaLumberjack logger which sends logs to NSLogger
 
