@@ -113,7 +113,6 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 
     return self;
 }
-
 #endif
 
 - (void)deleteOldFilesForConfigurationChange {
@@ -763,7 +762,9 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     dispatch_block_t block = ^{
         @autoreleasepool {
             self->_rollingFrequency = newRollingFrequency;
-            [self lt_maybeRollLogFileDueToAge];
+            if (self->_currentLogFileHandle != nil || [self lt_currentLogFileHandle] != nil) {
+                [self lt_maybeRollLogFileDueToAge];
+            }
         }
     };
 
