@@ -129,8 +129,7 @@ In your own log formatters, you can make use of the `swiftLogInfo` property on `
 To use swift-log with CocoaLumberjack, take a look the following code snippet to see how to get started.
 
 ```swift
-// Import necessary packages
-import CocoaLumberjackSwift
+import CocoaLumberjack
 import CocoaLumberjackSwiftLogBackend
 import Logging
 
