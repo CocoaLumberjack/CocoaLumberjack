@@ -9,12 +9,12 @@ The `DDFileLogger` implementation, as you may now have guessed, is split into tw
 There are two ways to initialize a `DDFileLogger` instance:
 ```objc
 @interface DDFileLogger : NSObject <DDLogger>
-...
+/* ... */
 
-- (instancetype)init;
 - (instancetype)initWithLogFileManager:(id <DDLogFileManager>)logFileManager NS_DESIGNATED_INITIALIZER;
+- (instancetype)init;
 
-...
+/* ... */
 @end
 ```
 
@@ -37,17 +37,17 @@ Let's take a look at the DDLogFileManager protocol:
 
 - (NSString *)logsDirectory;
 
-- (NSArray *)unsortedLogFilePaths;
-- (NSArray *)unsortedLogFileNames;
-- (NSArray *)unsortedLogFileInfos;
+@property (nonatomic, readonly, strong) NSArray<NSString *> *unsortedLogFilePaths;
+@property (nonatomic, readonly, strong) NSArray<NSString *> *unsortedLogFileNames;
+@property (nonatomic, readonly, strong) NSArray<DDLogFileInfo *> *unsortedLogFileInfos;
 
-- (NSArray *)sortedLogFilePaths;
-- (NSArray *)sortedLogFileNames;
-- (NSArray *)sortedLogFileInfos;
+@property (nonatomic, readonly, strong) NSArray<NSString *> *sortedLogFilePaths;
+@property (nonatomic, readonly, strong) NSArray<NSString *> *sortedLogFileNames;
+@property (nonatomic, readonly, strong) NSArray<DDLogFileInfo *> *sortedLogFileInfos;
 
 // Private methods (only to be used by DDFileLogger)
 
-- (NSString *)createNewLogFileWithError(NSError**)error;
+- (nullable NSString *)createNewLogFileWithError(NSError **)error;
 
 @optional
 
