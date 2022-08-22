@@ -7,6 +7,7 @@ assignees: ''
 
 ---
 
+**Checklist**
 - [ ] I have read and understood the [CONTRIBUTING guide](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/.github/CONTRIBUTING.md)
 - [ ] I have read the [Documentation](https://github.com/CocoaLumberjack/CocoaLumberjack#documentation)
 - [ ] I have searched for a similar issue in the [project](https://github.com/CocoaLumberjack/CocoaLumberjack/issues) and found none
@@ -16,10 +17,9 @@ A clear and concise description of what the bug is.
 
 **To Reproduce**
 Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+1. Create logger '...'
+2. Log message '...'
+3. See error
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
@@ -27,7 +27,7 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Environment Info:**
+**Environment info**
   Info                    | Value                               |
 -------------------------|-------------------------------------|
  Platform Name           | e.g. ios / macos / tvos / watchos
