@@ -829,7 +829,12 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 
     static NSTimeInterval const kDDMaxTimerDelay = LLONG_MAX / NSEC_PER_SEC;
     int64_t delay = (int64_t)(MIN([logFileRollingDate timeIntervalSinceNow], kDDMaxTimerDelay) * (NSTimeInterval) NSEC_PER_SEC);
-    dispatch_time_t fireTime = dispatch_time(DISPATCH_TIME_NOW, delay);
+
+    dispatch_time_t fireTime;
+    if (@available(macOS 10.14, ios 12.0, tvos 12.0, watchos 5.0, *))
+        fireTime = dispatch_walltime(DISPATCH_WALLTIME_NOW, delay);
+    else
+        fireTime = dispatch_walltime(NULL, delay); // passing NULL has the same effect as `DISPATCH_WALLTIME_NOW`.
 
     dispatch_source_set_timer(_rollingTimer, fireTime, DISPATCH_TIME_FOREVER, (uint64_t)kDDRollingLeeway * NSEC_PER_SEC);
 
