@@ -43,4 +43,20 @@
     _archivedLogFilePath = logFilePath;
 }
 
+- (NSString *)newLogFileName {
+    if (self.customLogFileName) {
+        return self.customLogFileName;
+    }
+
+    return [super newLogFileName];
+}
+
+- (BOOL)isLogFile:(NSString *)fileName {
+    if (self.customLogFileName) {
+        return [self.customLogFileName isEqualToString:fileName];
+    }
+
+    return [super isLogFile:fileName];
+}
+
 @end
