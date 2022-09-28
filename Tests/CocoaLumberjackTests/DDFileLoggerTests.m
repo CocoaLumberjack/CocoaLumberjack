@@ -293,4 +293,23 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     XCTAssertEqual([contents componentsSeparatedByString:@"\n"].count, 5 + 2);
 }
 
+- (void)testOverwriteSymlink {
+    NSString* customFileName = @"testIgnoreSymlink_file_name.log";
+    logFileManager.customLogFileName = customFileName;
+
+    NSString* logFileName = [logFileManager.logsDirectory stringByAppendingPathComponent:customFileName];
+    NSString *tempFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[[NSUUID UUID] UUIDString]];
+    [NSFileManager.defaultManager createFileAtPath:tempFilePath contents:nil attributes:nil];
+
+    [NSFileManager.defaultManager createDirectoryAtPath:logFileManager.logsDirectory
+                            withIntermediateDirectories:YES
+                                             attributes:nil
+                                                  error:nil];
+
+    [NSFileManager.defaultManager createSymbolicLinkAtPath:logFileName withDestinationPath:tempFilePath error:nil];
+    __auto_type info = logger.currentLogFileInfo;
+    XCTAssertEqualObjects(info.fileName, customFileName);
+    XCTAssertFalse(info.isSymlink);
+}
+
 @end

@@ -1102,6 +1102,11 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         return NO;
     }
 
+    // Don't followw symlink
+    if (logFileInfo.isSymlink) {
+        return NO;
+    }
+
     // If we're resuming, we need to check if the log file is allowed for reuse or needs to be archived.
     if (isResuming && (_doNotReuseLogFiles || [self lt_shouldLogFileBeArchived:logFileInfo])) {
         logFileInfo.isArchived = YES;
@@ -1512,6 +1517,14 @@ static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
 
 - (NSTimeInterval)age {
     return -[[self creationDate] timeIntervalSinceNow];
+}
+
+- (BOOL)isSymlink {
+    if (self.fileAttributes[NSFileType] == NSFileTypeSymbolicLink) {
+        return YES;
+    }
+
+    return NO;
 }
 
 - (NSString *)description {

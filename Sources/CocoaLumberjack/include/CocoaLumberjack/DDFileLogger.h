@@ -507,6 +507,8 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 @property (nonatomic, readonly) NSTimeInterval age;
 
+@property (nonatomic, readonly) BOOL isSymlink;
+
 @property (nonatomic, readwrite) BOOL isArchived;
 
 + (nullable instancetype)logFileWithPath:(nullable NSString *)filePath NS_SWIFT_UNAVAILABLE("Use init(filePath:)");
