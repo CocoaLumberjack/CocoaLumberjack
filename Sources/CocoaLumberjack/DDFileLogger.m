@@ -1102,7 +1102,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         return NO;
     }
 
-    // Don't followw symlink
+    // Don't follow symlink
     if (logFileInfo.isSymlink) {
         return NO;
     }
@@ -1520,11 +1520,7 @@ static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
 }
 
 - (BOOL)isSymlink {
-    if (self.fileAttributes[NSFileType] == NSFileTypeSymbolicLink) {
-        return YES;
-    }
-
-    return NO;
+    return self.fileAttributes[NSFileType] == NSFileTypeSymbolicLink;
 }
 
 - (NSString *)description {
