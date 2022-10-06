@@ -22,7 +22,7 @@
 #import "DDSampleFileManager.h"
 #import "DDSMocking.h"
 
-static const NSTimeInterval kAsyncExpectationTimeout = 3.0f;
+static const NSTimeInterval kAsyncExpectationTimeout = 3.0;
 
 static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
