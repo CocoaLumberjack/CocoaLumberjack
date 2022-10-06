@@ -799,7 +799,7 @@ DD_SENDABLE
     NSString *_function;
     NSUInteger _line;
     #if DD_LEGACY_MESSAGE_TAG
-    id _tag __attribute__((deprecated("Use _representedObject instead", "_representedObject")));;
+    id _tag __attribute__((deprecated("Use _representedObject instead", "_representedObject")));
     #endif
     id _representedObject;
     DDLogMessageOptions _options;

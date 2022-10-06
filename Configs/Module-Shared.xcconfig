@@ -205,7 +205,7 @@ MACOSX_DEPLOYMENT_TARGET = 10.10
 
 MARKETING_VERSION = 3.7.4
 
-OTHER_C_FLAGS = -Wextra
+WARNING_CFLAGS = -Wextra -Wextra-semi -Wdouble-promotion
 
 // Options defined in this setting are passed to invocations of the linker.
 OTHER_LDFLAGS = -ObjC
