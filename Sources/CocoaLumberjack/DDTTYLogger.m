@@ -713,15 +713,15 @@ static DDTTYLogger *sharedInstance;
         CGContextFillRect(context, CGRectMake(0, 0, 1, 1));
 
         if (rPtr) {
-            *rPtr = pixel[0] / 255.0f;
+            *rPtr = pixel[0] / 255.0;
         }
 
         if (gPtr) {
-            *gPtr = pixel[1] / 255.0f;
+            *gPtr = pixel[1] / 255.0;
         }
 
         if (bPtr) {
-            *bPtr = pixel[2] / 255.0f;
+            *bPtr = pixel[2] / 255.0;
         }
 
         CGContextRelease(context);
@@ -758,7 +758,7 @@ static DDTTYLogger *sharedInstance;
     [self getRed:&inR green:&inG blue:&inB fromColor:inColor];
 
     NSUInteger bestIndex = 0;
-    CGFloat lowestDistance = 100.0f;
+    CGFloat lowestDistance = 100.0;
 
     NSUInteger i = 0;
 
@@ -1395,17 +1395,17 @@ static DDTTYLogger *sharedInstance;
         if (fgColor) {
             [DDTTYLogger getRed:&r green:&g blue:&b fromColor:fgColor];
 
-            fg_r = (uint8_t)(r * 255.0f);
-            fg_g = (uint8_t)(g * 255.0f);
-            fg_b = (uint8_t)(b * 255.0f);
+            fg_r = (uint8_t)(r * 255.0);
+            fg_g = (uint8_t)(g * 255.0);
+            fg_b = (uint8_t)(b * 255.0);
         }
 
         if (bgColor) {
             [DDTTYLogger getRed:&r green:&g blue:&b fromColor:bgColor];
 
-            bg_r = (uint8_t)(r * 255.0f);
-            bg_g = (uint8_t)(g * 255.0f);
-            bg_b = (uint8_t)(b * 255.0f);
+            bg_r = (uint8_t)(r * 255.0);
+            bg_g = (uint8_t)(g * 255.0);
+            bg_b = (uint8_t)(b * 255.0);
         }
 
         if (fgColor && isaColorTTY) {
