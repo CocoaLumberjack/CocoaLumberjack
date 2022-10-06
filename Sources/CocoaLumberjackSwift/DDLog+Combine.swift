@@ -22,7 +22,7 @@ import CocoaLumberjack
 import CocoaLumberjackSwiftSupport
 #endif
 
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension DDLog {
     /**
      * Creates a message publisher.
@@ -44,7 +44,7 @@ extension DDLog {
     }
 
     // MARK: - MessagePublisher
-    @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     public struct MessagePublisher: Combine.Publisher {
         public typealias Output = DDLogMessage
         public typealias Failure = Never
@@ -101,12 +101,11 @@ extension DDLog {
     }
 }
 
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension Publisher where Output == DDLogMessage {
     public func formatted(with formatter: DDLogFormatter) -> Publishers.CompactMap<Self, String> {
         return compactMap { formatter.format(message: $0) }
     }
 }
-
 #endif
 #endif
