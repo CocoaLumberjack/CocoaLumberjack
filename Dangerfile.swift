@@ -194,7 +194,7 @@ let filesWithInvalidCopyright = sourcefilesToCheck.lazy
         } else {
             return !zip(actualLines, expectedLines).allSatisfy { $0.starts(with: $1) }
         }
-}
+    }
 if !filesWithInvalidCopyright.isEmpty {
     filesWithInvalidCopyright.forEach {
         markdown(message: "Invalid copyright!", file: $0, line: 1)

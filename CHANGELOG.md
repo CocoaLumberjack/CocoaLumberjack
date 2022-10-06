@@ -1,18 +1,17 @@
-## [3.8.0 - Xcode 13.? on ??, 2022](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.8.0)
+## [3.8.0 - Xcode 14.1 on Oct ??, 2022](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.8.0)
 
 ### Public
 
-- _REPLACE ME_
+- Add support for Xcode 14 / Swift 5.7 (#1316)
+- Update README about swift-log usage (#1275)
+- Use dispatch_walltime for scheduling log file rolling timer (#1309)
 
 ### Internal
 
 - Add consistent newline to file endings (#1272)
 - Fix error checking in DDFileLogger (#1274)
 - Avoid using NSString format (#1280)
-
-### Document
-
-- Update readme about swift-log usage (#1275)
+- Prevent logging to symlink files (#1314)
 
 
 ## [3.7.4 - Xcode 13.2 on Dec 16, 2021](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.7.4)
