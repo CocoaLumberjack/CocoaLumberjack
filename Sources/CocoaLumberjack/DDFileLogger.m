@@ -1676,7 +1676,7 @@ static NSString *_xattrToExtensionName(NSString *attrName) {
     NSMutableString *newFileName = [NSMutableString stringWithCapacity:estimatedNewLength];
 
     if (count > 0) {
-        [newFileName appendString:components.firstObject ?: @""];
+        [newFileName appendString:components[0]];
     }
 
     BOOL found = NO;
