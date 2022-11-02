@@ -16,13 +16,13 @@ jobs:
     steps:
       - uses: maxim-lobanov/setup-xcode@v1.5.1
         with:
-          xcode-version: ^13.0
+          xcode-version: ^14.1
       - uses: actions/checkout@v3
       - run: pod lib lint
 
   run-danger:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request_target'
+    if: ${{ github.event_name == 'pull_request_target' }}
     steps:
       - uses: actions/checkout@v3
         with:
