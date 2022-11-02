@@ -4,11 +4,11 @@
 
 CocoaLumberjack
 ===============
-![Unit Tests](https://github.com/CocoaLumberjack/CocoaLumberjack/workflows/Unit%20Tests/badge.svg)
-[![Pod Version](http://img.shields.io/cocoapods/v/CocoaLumberjack.svg?style=flat)](http://cocoadocs.org/docsets/CocoaLumberjack/)
+[![Version](https://img.shields.io/github/release/CocoaLumberjack/CocoaLumberjack.svg?display_name=tag&style=flat)](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/latest)
+[![License](https://img.shields.io/github/license/CocoaLumberjack/CocoaLumberjack.svg?style=flat)](https://opensource.org/licenses/BSD-3-Clause)
+[![Pod Platform](https://img.shields.io/cocoapods/p/CocoaLumberjack.svg?style=flat)](https://cocoadocs.org/docsets/CocoaLumberjack/)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Pod Platform](http://img.shields.io/cocoapods/p/CocoaLumberjack.svg?style=flat)](http://cocoadocs.org/docsets/CocoaLumberjack/)
-[![Pod License](http://img.shields.io/cocoapods/l/CocoaLumberjack.svg?style=flat)](http://opensource.org/licenses/BSD-3-Clause)
+![Unit Tests](https://github.com/CocoaLumberjack/CocoaLumberjack/workflows/Unit%20Tests/badge.svg)
 [![codecov](https://codecov.io/gh/CocoaLumberjack/CocoaLumberjack/branch/master/graph/badge.svg)](https://codecov.io/gh/CocoaLumberjack/CocoaLumberjack)
 [![codebeat badge](https://codebeat.co/badges/840b714a-c8f3-4936-ada4-363473cd4e6b)](https://codebeat.co/projects/github-com-cocoalumberjack-cocoalumberjack-master)
 
@@ -270,7 +270,7 @@ _Example_: `DDLogInfo("User: \(myUser)")` will add the `myUser` info to the logs
 ## Author
 
 - [Robbie Hanson](https://github.com/robbiehanson)
-- Love the project? Wanna buy me a coffee? (or a beer :D) [![donation](http://www.paypal.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UZRA26JPJB3DA)
+- Love the project? Wanna buy me a coffee? (or a beer :D) [![donation](https://www.paypal.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UZRA26JPJB3DA)
 
 ## Collaborators
 - [Ernesto Rivera](https://github.com/rivera-ernesto)
