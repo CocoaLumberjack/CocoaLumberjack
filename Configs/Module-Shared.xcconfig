@@ -106,6 +106,9 @@ CODE_SIGN_IDENTITY =
 // This setting defines the current version of the project. The value must be a integer or floating point number, such as `57` or `365.8`.
 CURRENT_PROJECT_VERSION = 1
 
+// Enable dead code stripping.
+DEAD_CODE_STRIPPING = YES
+
 // If enabled, the product will be treated as defining its own module. This enables automatic production of LLVM module map files when appropriate, and allows the product to be imported as a module.
 DEFINES_MODULE = YES
 
