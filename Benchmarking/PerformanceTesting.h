@@ -2,7 +2,7 @@
 //  PerformanceTesting.h
 //  Benchmarking
 //
-//  CocoaLumberjack Demos
+//  CocoaLumberjack Benchmarking
 //
 
 #import <Foundation/Foundation.h>
