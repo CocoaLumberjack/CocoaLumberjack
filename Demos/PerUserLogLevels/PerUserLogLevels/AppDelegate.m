@@ -25,11 +25,11 @@
 
 // Log levels: off, error, warn, info, verbose
 #if DEBUG && robbie_hanson
-  static const DDLogLevel ddLogLevel = DDLogLevelVerbose; // Log level for robbie (debug)
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose; // Log level for robbie (debug)
 #elif DEBUG
-  static const DDLogLevel ddLogLevel = DDLogLevelInfo;    // Log level for other team members (debug)
+static const DDLogLevel ddLogLevel = DDLogLevelInfo;    // Log level for other team members (debug)
 #else
-  static const DDLogLevel ddLogLevel = DDLogLevelWarning; // Log level for release build
+static const DDLogLevel ddLogLevel = DDLogLevelWarning; // Log level for release build
 #endif
 
 
@@ -39,7 +39,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [DDLog addLogger:(id<DDLogger>)[DDTTYLogger sharedInstance]];
     
     DDLogVerbose(@"Invoking machine_init_cold");
     DDLogInfo(@"Waiting for machine to warm up...");

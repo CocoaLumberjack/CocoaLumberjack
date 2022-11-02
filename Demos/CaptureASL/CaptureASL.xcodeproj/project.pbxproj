@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -148,14 +148,15 @@
 		E5AE802F18DA83A400E0501F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1410;
 			};
 			buildConfigurationList = E5AE803218DA83A400E0501F /* Build configuration list for PBXProject "CaptureASL" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = E5AE802E18DA83A400E0501F;
 			productRefGroup = E5AE803818DA83A400E0501F /* Products */;

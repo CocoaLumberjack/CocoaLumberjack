@@ -25,7 +25,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 {
     // Standard lumberjack initialization
     
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [DDLog addLogger:(id<DDLogger>)[DDTTYLogger sharedInstance]];
     
     // And we're going to enable colors
     

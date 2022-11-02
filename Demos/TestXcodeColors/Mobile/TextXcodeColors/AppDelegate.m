@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
+#define DDPseudoLocalizedString(text) NSLocalizedString(text, text)
+
 // Log levels: off, error, warn, info, verbose
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
@@ -27,7 +29,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 {
     // Standard lumberjack initialization
     
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [DDLog addLogger:(id<DDLogger>)[DDTTYLogger sharedInstance]];
     
     // And we're going to enable colors
     
@@ -87,13 +89,13 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     if (xcode_colors)
     {
         if (strcmp(xcode_colors, "YES") == 0)
-            viewController.label.text = @"XcodeColors enabled";
+            viewController.label.text = DDPseudoLocalizedString(@"XcodeColors enabled");
         else
-            viewController.label.text = @"XcodeColors disabled";
+            viewController.label.text = DDPseudoLocalizedString(@"XcodeColors disabled");
     }
     else
     {
-        viewController.label.text = @"XcodeColors not detected";
+        viewController.label.text = DDPseudoLocalizedString(@"XcodeColors not detected");
     }
     
     return YES;

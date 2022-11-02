@@ -41,8 +41,8 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         
         [[DDTTYLogger sharedInstance] setLogFormatter:formatter];
     }
-    
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+
+    [DDLog addLogger:(id<DDLogger>)[DDTTYLogger sharedInstance]];
     
     DDLogVerbose(@"Starting queues");
     
