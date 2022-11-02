@@ -11,7 +11,7 @@ fileprivate extension Danger.File {
     var isInFMDB: Bool { contains("/FMDB/") }
 
     var isSourceFile: Bool {
-        hasSuffix(".swift") || hasSuffix(".h") || hasSuffix(".m")
+        fileType == .swift || fileType == .m || fileType == .mm || fileType == .h
     }
 
     private static let spmOnlyTargetNames: Set<String> = [
@@ -28,7 +28,7 @@ fileprivate extension Danger.File {
     }
 
     var isSwiftPackageDefintion: Bool {
-        hasPrefix("Package") && hasSuffix(".swift")
+        hasPrefix("Package") && fileType == .swift
     }
 
     var isDangerfile: Bool {
@@ -50,7 +50,8 @@ if danger.github?.pullRequest.title.contains("WIP") == true {
 }
 
 // Warn when there is a big PR
-if let additions = danger.github?.pullRequest.additions, let deletions = danger.github?.pullRequest.deletions,
+if let additions = danger.github?.pullRequest.additions, 
+   let deletions = danger.github?.pullRequest.deletions,
    case let sum = additions + deletions, sum > 1000 {
     warn("Pull request is relatively big (\(sum) lines changed). If this PR contains multiple changes, consider splitting it into separate PRs for easier reviews.")
 }
@@ -66,7 +67,7 @@ if hasSourceChanges && !git.modifiedFiles.contains(where: { $0.isInTests }) {
 }
 
 // Run SwiftLint
-SwiftLint.lint(.modifiedAndCreatedFiles(directory: "Sources"))
+SwiftLint.lint(.modifiedAndCreatedFiles(directory: "Sources"), inline: true)
 
 // Added (or removed) library files need to be added (or removed) from the
 // Carthage Xcode project to avoid breaking things for our Carthage users.
@@ -196,12 +197,12 @@ let filesWithInvalidCopyright = sourcefilesToCheck.lazy
         }
     }
 if !filesWithInvalidCopyright.isEmpty {
-    filesWithInvalidCopyright.forEach {
-        markdown(message: "Invalid copyright!", file: $0, line: 1)
+    filesWithInvalidCopyright.sorted().forEach {
+        warn(message: "Invalid copyright!", file: $0, line: 1)
     }
     warn("""
-         Copyright is not valid. See our default copyright in all of our files (Sources, Demos and Benchmarking use different formats).
-         Invalid files:
-         \(filesWithInvalidCopyright.map { "- \($0)" }.joined(separator: "\n"))
+         Copyright is not valid. See our default copyright in all of our files (Sources, Demos and Benchmarking use different formats).<br/>
+         Invalid files:<br/>
+         \(filesWithInvalidCopyright.map { "- \($0)" }.joined(separator: "<br/>\n"))
          """)
 }
