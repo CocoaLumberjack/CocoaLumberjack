@@ -31,9 +31,9 @@ extension Logger.Level {
 
 extension DDLogMessage {
     /// Contains the swift-log details of a given log message.
-    public struct SwiftLogInformation: Equatable {
+    public struct SwiftLogInformation: Equatable, Sendable {
         /// Contains information about the swift-log logger that logged this message.
-        public struct LoggerInformation: Equatable {
+        public struct LoggerInformation: Equatable, Sendable {
             /// The label of the swift-log logger that logged this message.
             public let label: String
             /// The metadata of the swift-log logger that logged this message.
@@ -41,7 +41,7 @@ extension DDLogMessage {
         }
 
         /// Contains information about the swift-log message thas was logged.
-        public struct MessageInformation: Equatable {
+        public struct MessageInformation: Equatable, Sendable {
             /// The original swift-log message.
             public let message: Logger.Message
             /// The original swift-log level of the message. This could be more fine-grained than `DDLogMessage.level` & `DDLogMessage.flag`.
@@ -62,27 +62,16 @@ extension DDLogMessage {
     /// - SeeAlso: `DDLogMessage.SwiftLogInformation`
     @inlinable
     public var swiftLogInfo: SwiftLogInformation? {
-        return (self as? SwiftLogMessage)?._swiftLogInfo
+        (self as? SwiftLogMessage)?._swiftLogInfo
     }
 }
-
-// These are currently waiting for Concurrency Support in SwiftLog: https://github.com/apple/swift-log/pull/218
-//#if compiler(>=5.5) && canImport(_Concurrency)
-//extension DDLogMessage.SwiftLogInformation.LoggerInformation: Sendable {}
-//extension DDLogMessage.SwiftLogInformation.MessageInformation: Sendable {}
-//extension DDLogMessage.SwiftLogInformation: Sendable {}
-//#endif
 
 /// This class (intentionally internal) is only an "encapsulation" layer above `DDLogMessage`.
 /// It's basically an implementation detail of `DDLogMessage.swiftLogInfo`.
 @usableFromInline
 final class SwiftLogMessage: DDLogMessage {
-    // SwiftLint doesn't like that this starts with an underscore.
-    // It only tolerates that for private vars, but this cant' be private (because @usableFromInline).
-    // swiftlint:disable identifier_name
     @usableFromInline
     let _swiftLogInfo: SwiftLogInformation
-    // swiftlint:enable identifier_name
 
     @usableFromInline
     init(loggerLabel: String,
@@ -113,16 +102,16 @@ final class SwiftLogMessage: DDLogMessage {
     }
 
     override func isEqual(_ object: Any?) -> Bool {
-        return super.isEqual(object) && (object as? SwiftLogMessage)?._swiftLogInfo == _swiftLogInfo
+        super.isEqual(object) && (object as? SwiftLogMessage)?._swiftLogInfo == _swiftLogInfo
     }
 }
 
 /// A swift-log `LogHandler` implementation that forwards messages to a given `DDLog` instance.
 public struct DDLogHandler: LogHandler {
     @usableFromInline
-    struct Configuration {
+    struct Configuration: Sendable {
         @usableFromInline
-        struct SyncLogging {
+        struct SyncLogging: Sendable {
             @usableFromInline
             let tresholdLevel: Logger.Level
             @usableFromInline
@@ -135,7 +124,7 @@ public struct DDLogHandler: LogHandler {
     }
 
     @usableFromInline
-    struct LoggerInfo {
+    struct LoggerInfo: Sendable {
         @usableFromInline
         let label: String
         @usableFromInline
@@ -151,18 +140,18 @@ public struct DDLogHandler: LogHandler {
 
     @inlinable
     public var logLevel: Logger.Level {
-        get { return loggerInfo.logLevel }
+        get { loggerInfo.logLevel }
         set { loggerInfo.logLevel = newValue }
     }
     @inlinable
     public var metadata: Logger.Metadata {
-        get { return loggerInfo.metadata }
+        get { loggerInfo.metadata }
         set { loggerInfo.metadata = newValue }
     }
 
     @inlinable
     public subscript(metadataKey metadataKey: String) -> Logger.Metadata.Value? {
-        get { return metadata[metadataKey] }
+        get { metadata[metadataKey] }
         set { metadata[metadataKey] = newValue }
     }
 
@@ -177,7 +166,7 @@ public struct DDLogHandler: LogHandler {
     ///   - metadata: The metadata associated with the message.
     /// - Returns: Whether to log the message asynchronous.
     @usableFromInline
-    func _logAsync(level: Logger.Level, metadata: Logger.Metadata?) -> Bool { // swiftlint:disable:this identifier_name
+    func _logAsync(level: Logger.Level, metadata: Logger.Metadata?) -> Bool {
         if level >= config.syncLogging.tresholdLevel {
             // Easiest check -> level is above treshold. Not async.
             return false
@@ -211,18 +200,10 @@ public struct DDLogHandler: LogHandler {
     }
 }
 
-// These are currently waiting for Concurrency Support in SwiftLog: https://github.com/apple/swift-log/pull/218
-//#if compiler(>=5.5) && canImport(_Concurrency)
-//extension DDLogHandler.Configuration.SyncLogging: Sendable {}
-//extension DDLogHandler.Configuration: Sendable {}
-//extension DDLogHandler.LoggerInfo: Sendable {}
-//extension DDLogHandler: Sendable {}
-//#endif
-
 extension DDLogHandler {
     /// The default key to control per message whether to log it synchronous or asynchronous.
     public static var defaultSynchronousLoggingMetadataKey: Logger.Metadata.Key {
-        return "log-synchronous"
+        "log-synchronous"
     }
 
     /// Creates a new `LogHandler` factory using `DDLogHandler` with the given parameters.
