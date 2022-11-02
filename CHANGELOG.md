@@ -1,8 +1,8 @@
-## [3.8.0 - Xcode 14.1 on Oct ??, 2022](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.8.0)
+## [3.8.0 - Xcode 14.1 on Nov 2nd, 2022](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.8.0)
 
 ### Public
 
-- Add support for Xcode 14 / Swift 5.7 (#1316)
+- Add support for Xcode 14 / Swift 5.7 - drop support for Swift < 5.5, iOS/tvOS < 11, macOS < 10.13, watchOS < 4 (#1316)
 - Update README about swift-log usage (#1275)
 - Use dispatch_walltime for scheduling log file rolling timer (#1309)
 
