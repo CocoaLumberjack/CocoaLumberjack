@@ -18,7 +18,12 @@ jobs:
         with:
           xcode-version: ^14.1
       - uses: actions/checkout@v3
-      - run: pod lib lint
+      # watchOS is causing problems with the simulator.
+      # TODO: Remove platforms parameter and additional linting step
+      # once the issue is fixed (by either CocoaPods or Apple)
+      - run: pod lib lint --platforms=macos,ios,tvos
+      - run: pod lib lint --platforms=watchos
+        continue-on-error: true
 
   run-danger:
     runs-on: ubuntu-latest
