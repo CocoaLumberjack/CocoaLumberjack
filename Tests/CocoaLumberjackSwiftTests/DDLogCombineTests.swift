@@ -13,11 +13,11 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
+#if arch(arm64) || arch(x86_64)
 #if canImport(Combine)
-
-@testable import CocoaLumberjackSwift
-import Combine
 import XCTest
+import Combine
+@testable import CocoaLumberjackSwift
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 final class DDLogCombineTests: XCTestCase {
@@ -138,9 +138,9 @@ final class DDLogCombineTests: XCTestCase {
         var receivedValue = [String]()
 
         subject
-            .formatted(with: self.logFormatter)
+            .formatted(with: logFormatter)
             .sink(receiveValue: { receivedValue.append($0) })
-            .store(in: &self.subscriptions)
+            .store(in: &subscriptions)
 
         subject.send(DDLogMessage(message: "An error occurred",
                                   level: .all,
@@ -170,12 +170,12 @@ final class DDLogCombineTests: XCTestCase {
     
     func testQOSNameInstanciation() {
         let name = "UI"
-        let qos : qos_class_t = {
+        let qos: qos_class_t = {
             switch DDQualityOfServiceName(rawValue: name) {
-                case DDQualityOfServiceName.userInteractive:
-                    return QOS_CLASS_USER_INTERACTIVE
-                default:
-                    return QOS_CLASS_UNSPECIFIED
+            case .userInteractive:
+                return QOS_CLASS_USER_INTERACTIVE
+            default:
+                return QOS_CLASS_UNSPECIFIED
             }
         }()
         
@@ -183,4 +183,5 @@ final class DDLogCombineTests: XCTestCase {
     }
 }
 
+#endif
 #endif
