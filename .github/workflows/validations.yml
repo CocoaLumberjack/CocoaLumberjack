@@ -21,6 +21,7 @@ jobs:
       # watchOS is causing problems with the simulator.
       # TODO: Remove platforms parameter and additional linting step
       # once the issue is fixed (by either CocoaPods or Apple)
+      # See https://github.com/CocoaPods/CocoaPods/issues/11558
       - run: pod lib lint --platforms=macos,ios,tvos
       - run: pod lib lint --platforms=watchos
         continue-on-error: true
