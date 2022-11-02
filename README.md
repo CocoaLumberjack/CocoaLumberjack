@@ -23,7 +23,7 @@ Then use `DDOSLogger` for iOS 10 and later, or `DDTTYLogger` and `DDASLLogger` f
 ### CocoaPods
 
 ```ruby
-platform :ios, '9.0'
+platform :ios, '11.0'
 
 target 'SampleTarget' do
   use_frameworks!
@@ -35,7 +35,7 @@ For more details about how to use Swift with Lumberjack, see [this conversation]
 
 For Objective-C use the following:
 ```ruby
-platform :ios, '9.0'
+platform :ios, '11.0'
 
 target 'SampleTarget' do
     pod 'CocoaLumberjack'
@@ -60,7 +60,7 @@ As of CocoaLumberjack 3.6.0, you can use the Swift Package Manager as integratio
 If you want to use the Swift Package Manager as integration method, either use Xcode to add the package dependency or add the following dependency to your Package.swift:
 
 ```swift
-.package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack.git", from: "3.7.0"),
+.package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack.git", from: "3.8.0"),
 ```
 
 Note that you may need to add both products, `CocoaLumberjack` and `CocoaLumberjackSwift` to your target since SPM sometimes fails to detect that `CocoaLumerjackSwift` depends on `CocoaLumberjack`.
@@ -196,14 +196,15 @@ Configure your logging however you want. Change log levels per file (perfect for
 
 ## Requirements
 The current version of Lumberjack requires:
-- Xcode 12 or later
-- Swift 5.3 or later
-- iOS 9 or later
-- macOS 10.10 or later
-- watchOS 3 or later
-- tvOS 9 or later
+- Xcode 14 or later
+- Swift 5.5 or later
+- macOS 10.13 or later
+- iOS 11 or later
+- tvOS 11 or later
+- watchOS 4 or later
 
 ### Backwards compatibility
+- for Xcode 12 and Swift up to 5.4, use the 3.7.2 version
 - for Xcode 11 and Swift up to 5.2, use the 3.6.2 version
 - for Xcode 10 and Swift 4.2, use the 3.5.2 version
 - for iOS 8, use the 3.6.1 version
