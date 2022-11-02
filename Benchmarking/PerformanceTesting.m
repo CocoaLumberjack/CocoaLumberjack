@@ -65,6 +65,11 @@ static DDFileLogger *fileLogger = nil;
 	return fileLogger;
 }
 
++ (id<DDLogger>)ttyLogger
+{
+    return [DDTTYLogger sharedInstance];
+}
+
 /**
  * Suite 1 - Logging to Console only.
 **/
@@ -72,8 +77,8 @@ static DDFileLogger *fileLogger = nil;
 {
 	[DDLog removeAllLoggers];
 	
-	[DDLog addLogger:[DDASLLogger sharedInstance]];
-	[DDLog addLogger:[DDTTYLogger sharedInstance]];
+	[DDLog addLogger:[DDOSLogger sharedInstance]];
+	[DDLog addLogger:[self ttyLogger]];
 }
 
 /**
@@ -97,8 +102,8 @@ static DDFileLogger *fileLogger = nil;
 {
 	[DDLog removeAllLoggers];
 	
-	[DDLog addLogger:[DDASLLogger sharedInstance]];
-	[DDLog addLogger:[DDTTYLogger sharedInstance]];
+	[DDLog addLogger:[DDOSLogger sharedInstance]];
+	[DDLog addLogger:[self ttyLogger]];
 	[DDLog addLogger:[self fileLogger]];
 }
 
@@ -134,7 +139,7 @@ static DDFileLogger *fileLogger = nil;
 			{
 				@autoreleasepool {
 				
-					NSDate *start = [NSDate date];
+					NSDate *startDate = [NSDate date];
 					
 					switch (j)
 					{
@@ -145,7 +150,7 @@ static DDFileLogger *fileLogger = nil;
 						default : [class performSelector:@selector(speedTest4)]; break;
 					}
 					
-					NSTimeInterval result = [start timeIntervalSinceNow] * -1.0;
+					NSTimeInterval result = [startDate timeIntervalSinceNow] * -1.0;
 					
 					min = MIN(min, result);
 					max = MAX(max, result);
@@ -240,9 +245,9 @@ static DDFileLogger *fileLogger = nil;
 	[str appendString:@"Test 4:\n"];
 	[str appendString:@"Similar to test 3, designed to mimic a real application\n"];
 	[str appendFormat:@"Execute %i log statements in total.\n", (int)total];
-	[str appendFormat:@"%04.1f%% will be above log level threshold and will be filtered out.\n", verbose];
-	[str appendFormat:@"%04.1f%% will execute Asynchronously.\n", (info + warn)];
-	[str appendFormat:@"%04.1f%% will execute Synchronously.\n", error];
+	[str appendFormat:@"%04.1f%% will be above log level threshold and will be filtered out.\n", (double)verbose];
+	[str appendFormat:@"%04.1f%% will execute Asynchronously.\n", (double)(info + warn)];
+	[str appendFormat:@"%04.1f%% will execute Synchronously.\n", (double)error];
 	[str appendString:@"\n"];
 	[str appendFormat:@"BaseNSLogging :[%.4f][%.4f][%.4f]\n", base[4][0], base[4][1], base[4][2]];
 	[str appendFormat:@"StaticLogging :[%.4f][%.4f][%.4f]\n", fmwk[sn][0][4][0], fmwk[sn][0][4][1], fmwk[sn][0][4][2]];
@@ -410,8 +415,11 @@ static DDFileLogger *fileLogger = nil;
 	
 	NSFileHandle *csvResultsFile = [NSFileHandle fileHandleForWritingAtPath:csvResultsPath];
 	
-	NSString *csvResults = [self csvResults];
-	[csvResultsFile writeData:[csvResults dataUsingEncoding:NSUTF8StringEncoding]];
+	NSData *csvResults = [[self csvResults] dataUsingEncoding:NSUTF8StringEncoding];
+    if (csvResults != nil)
+    {
+        [csvResultsFile writeData:csvResults];
+    }
 	
 	NSLog(@"CSV results file written to:\n%@", csvResultsPath);
 }

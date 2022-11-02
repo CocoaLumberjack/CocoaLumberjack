@@ -43,8 +43,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     
     
     // We want all log messages (from our code or the third party framework) to show up in the Xcode console.
-    
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [DDLog addLogger:(id<DDLogger>)[DDTTYLogger sharedInstance]];
     
     // If we want to filter log messages from the third party framework, we can do this:
     

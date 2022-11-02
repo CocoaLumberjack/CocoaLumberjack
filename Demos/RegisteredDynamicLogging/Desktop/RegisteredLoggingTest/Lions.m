@@ -13,12 +13,12 @@ static DDLogLevel ddLogLevel = DDLogLevelWarning;
 
 @implementation Lions
 
-+ (int)ddLogLevel
++ (DDLogLevel)ddLogLevel
 {
     return ddLogLevel;
 }
 
-+ (void)ddSetLogLevel:(int)logLevel
++ (void)ddSetLogLevel:(DDLogLevel)logLevel
 {
     ddLogLevel = logLevel;
 }

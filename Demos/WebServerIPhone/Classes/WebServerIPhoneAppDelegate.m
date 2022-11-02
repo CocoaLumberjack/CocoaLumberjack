@@ -60,9 +60,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     // The log messages will look exactly like a normal NSLog statement.
     // 
     // This is something we may not want to do in a shipping version of the application.
-    
-//  [DDLog addLogger:[DDASLLogger sharedInstance]];
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [DDLog addLogger:[DDOSLogger sharedInstance]];
     
     // We also want to direct our log messages to a file.
     // So we're going to setup file logging.

@@ -19,7 +19,7 @@ static DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [DDLog addLogger:(id<DDLogger>)[DDTTYLogger sharedInstance]];
     
     [Lions logStuff];
     [Tigers logStuff];

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -133,15 +133,16 @@
 		E5EDB88A186286BC002D0689 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1410;
 				ORGANIZATIONNAME = "";
 			};
 			buildConfigurationList = E5EDB88D186286BC002D0689 /* Build configuration list for PBXProject "CLI" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = E5EDB889186286BC002D0689;
 			productRefGroup = E5EDB893186286BC002D0689 /* Products */;
@@ -182,6 +183,8 @@
 		E5EDB8A1186286BC002D0689 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CLI/CLI-Prefix.pch";
 				SUPPORTED_PLATFORMS = macosx;
@@ -192,6 +195,8 @@
 		E5EDB8A2186286BC002D0689 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CLI/CLI-Prefix.pch";
 				SUPPORTED_PLATFORMS = macosx;

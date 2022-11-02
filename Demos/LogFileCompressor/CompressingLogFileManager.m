@@ -305,19 +305,19 @@
         // we fetch the totals before we ask it to compress data,
         // and then afterwards we subtract from the new totals.
         
-        NSInteger prevTotalIn = strm.total_in;
-        NSInteger prevTotalOut = strm.total_out;
+        NSUInteger prevTotalIn = strm.total_in;
+        NSUInteger prevTotalOut = strm.total_out;
         
         int flush = [inputStream hasBytesAvailable] ? Z_SYNC_FLUSH : Z_FINISH;
         deflate(&strm, flush);
         
-        NSInteger inputProcessed = strm.total_in - prevTotalIn;
-        NSInteger outputProcessed = strm.total_out - prevTotalOut;
+        NSUInteger inputProcessed = strm.total_in - prevTotalIn;
+        NSUInteger outputProcessed = strm.total_out - prevTotalOut;
         
         NSLogVerbose(@"CompressingLogFileManager: Total bytes uncompressed: %lu", (unsigned long)strm.total_in);
         NSLogVerbose(@"CompressingLogFileManager: Total bytes compressed: %lu", (unsigned long)strm.total_out);
         NSLogVerbose(@"CompressingLogFileManager: Compression ratio: %.1f%%",
-                     (1.0F - (float)(strm.total_out) / (float)(strm.total_in)) * 100);
+                     (double)(1.0F - (float)(strm.total_out) / (float)(strm.total_in)) * 100);
         
         // STEP 7
         // Now write all compressed bytes to our output stream.

@@ -151,7 +151,7 @@
     {
         if (managedObjectContext == nil)
         {
-            managedObjectContext = [[NSManagedObjectContext alloc] init];
+            managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
             [managedObjectContext setPersistentStoreCoordinator:coordinator];
             [managedObjectContext setMergePolicy:NSOverwriteMergePolicy];
         }
@@ -172,46 +172,41 @@
 {
     dispatch_block_t block = ^{
         
-        if (managedObjectContext == nil)
+        if (self->managedObjectContext == nil)
         {
             return;
         }
         
         @autoreleasepool {
-        
-            NSError *error = nil;
-            
-            [managedObjectContext reset];
-            [persistentStoreCoordinator lock];
-            
-            NSPersistentStore *store = [[persistentStoreCoordinator persistentStores] lastObject];
-            
-            if (![persistentStoreCoordinator removePersistentStore:store error:&error])
-            {
-                NSLog(@"%@: %@ - Error removing persistent store: %@", [self class], THIS_METHOD, error);
-            } 
-            
-            NSString *logFilePath = [self logFilePath];
-            
-            if ([[NSFileManager defaultManager] fileExistsAtPath:logFilePath])
-            {
-                if (![[NSFileManager defaultManager] removeItemAtPath:logFilePath error:&error])
+            [self->managedObjectContext reset];
+            [self->persistentStoreCoordinator performBlockAndWait:^{
+                NSError *error = nil;
+                NSPersistentStore *store = [[self->persistentStoreCoordinator persistentStores] lastObject];
+
+                if (![self->persistentStoreCoordinator removePersistentStore:store error:&error])
                 {
-                    NSLog(@"%@: %@ - Error deleting log file: %@", [self class], THIS_METHOD, error);
+                    NSLog(@"%@: %@ - Error removing persistent store: %@", [self class], THIS_METHOD, error);
                 }
-            }
-            
-            if (![self addPersistentStore:&error])
-            {
-                NSLog(@"%@: %@ - Error creating persistent store: %@", [self class], THIS_FILE, error);
-            }
-            
-            [persistentStoreCoordinator unlock];
-        
+
+                NSString *logFilePath = [self logFilePath];
+
+                if ([[NSFileManager defaultManager] fileExistsAtPath:logFilePath])
+                {
+                    if (![[NSFileManager defaultManager] removeItemAtPath:logFilePath error:&error])
+                    {
+                        NSLog(@"%@: %@ - Error deleting log file: %@", [self class], THIS_METHOD, error);
+                    }
+                }
+
+                if (![self addPersistentStore:&error])
+                {
+                    NSLog(@"%@: %@ - Error creating persistent store: %@", [self class], THIS_FILE, error);
+                }
+            }];
         }
     };
-    
-    if (dispatch_get_current_queue() == self.loggerQueue)
+
+    if (self.isOnInternalLoggerQueue)
         block();
     else
         dispatch_async(self.loggerQueue, block);

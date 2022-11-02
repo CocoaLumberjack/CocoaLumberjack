@@ -37,8 +37,8 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     SlowLogger *slowLogger = [[SlowLogger alloc] init];
     [DDLog addLogger:slowLogger];
     
-    [DDLog addLogger:[DDASLLogger sharedInstance]];
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [DDLog addLogger:[DDOSLogger sharedInstance]];
+    [DDLog addLogger:(id<DDLogger>)[DDTTYLogger sharedInstance]];
     
     [NSThread detachNewThreadSelector:@selector(bgThread1) toTarget:self withObject:nil];
     [NSThread detachNewThreadSelector:@selector(bgThread2) toTarget:self withObject:nil];

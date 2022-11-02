@@ -12,10 +12,9 @@
 DDLogLevel ddLogLevel;
 
 @implementation GlobalLogLevelAppDelegate
-
 @synthesize window;
 
-void someFunction()
+static void someFunction()
 {
     DDLogError(@"%@: C_Error", THIS_FILE);
     DDLogWarn(@"%@: C_Warn", THIS_FILE);
@@ -26,7 +25,7 @@ void someFunction()
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     ddLogLevel = DDLogLevelVerbose;
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [DDLog addLogger:(id<DDLogger>)[DDTTYLogger sharedInstance]];
     
     DDLogError(@"%@: Error", THIS_FILE);
     DDLogWarn(@"%@: Warn", THIS_FILE);
