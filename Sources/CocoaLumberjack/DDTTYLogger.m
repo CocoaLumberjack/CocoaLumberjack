@@ -775,7 +775,7 @@ static DDTTYLogger *sharedInstance;
     #endif
 
         NSLogVerbose(@"DDTTYLogger: %3lu : %.3f,%.3f,%.3f & %.3f,%.3f,%.3f = %.6f",
-                     (unsigned long)i, inR, inG, inB, r, g, b, distance);
+                     (unsigned long)i, (double)inR, (double)inG, (double)inB, (double)r, (double)g, (double)b, (double)distance);
 
         if (distance < lowestDistance) {
             bestIndex = i;
@@ -1395,17 +1395,17 @@ static DDTTYLogger *sharedInstance;
         if (fgColor) {
             [DDTTYLogger getRed:&r green:&g blue:&b fromColor:fgColor];
 
-            fg_r = (uint8_t)(r * 255.0);
-            fg_g = (uint8_t)(g * 255.0);
-            fg_b = (uint8_t)(b * 255.0);
+            fg_r = (uint8_t)(r * (CGFloat)255.0);
+            fg_g = (uint8_t)(g * (CGFloat)255.0);
+            fg_b = (uint8_t)(b * (CGFloat)255.0);
         }
 
         if (bgColor) {
             [DDTTYLogger getRed:&r green:&g blue:&b fromColor:bgColor];
 
-            bg_r = (uint8_t)(r * 255.0);
-            bg_g = (uint8_t)(g * 255.0);
-            bg_b = (uint8_t)(b * 255.0);
+            bg_r = (uint8_t)(r * (CGFloat)255.0);
+            bg_g = (uint8_t)(g * (CGFloat)255.0);
+            bg_b = (uint8_t)(b * (CGFloat)255.0);
         }
 
         if (fgColor && isaColorTTY) {
