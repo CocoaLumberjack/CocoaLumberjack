@@ -1,6 +1,9 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
+// Allow building for multiple platforms with a single build
+ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES
+
 // This setting is deprecated as of Xcode 8.3 and may not be supported in future versions. It is recommended that you disable the setting. If enabled, both `#include <header.h>`-style and `#include "header.h"`-style directives search the paths in `USER_HEADER_SEARCH_PATHS` before `HEADER_SEARCH_PATHS`
 ALWAYS_SEARCH_USER_PATHS = NO
 
