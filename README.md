@@ -204,7 +204,7 @@ The current version of Lumberjack requires:
 - watchOS 4 or later
 
 ### Backwards compatibility
-- for iOS 9, iOS 10, OS X 10.10, OS X 10.11, macOS 10.12, Xcode 12, Xcode 13 and Swift up to 5.4, use the 3.7.4 version
+- for iOS/tvOS up to 10, watchOS up to 4, macOS up to 10.12, Xcode up to 13 and Swift up to 5.4, use the 3.7.4 version
 - for Xcode 11 and Swift up to 5.2, use the 3.6.2 version
 - for Xcode 10 and Swift 4.2, use the 3.5.2 version
 - for iOS 8, use the 3.6.1 version
