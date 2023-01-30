@@ -67,7 +67,8 @@ final class DDLogHandlerTests: XCTestCase {
         XCTAssertEqual(loggedMsg.message.line, logLine)
         XCTAssertNotNil(loggedMsg.message.swiftLogInfo)
         XCTAssertEqual(loggedMsg.message.swiftLogInfo, .init(logger: .init(label: logger.label,
-                                                                           metadata: logger.handler.metadata),
+                                                                           metadataSources: .init(logger: logger.handler.metadata,
+                                                                                                  provider: logger.metadataProvider?.get())),
                                                              message: .init(message: msg,
                                                                             level: .info,
                                                                             metadata: nil,
@@ -91,7 +92,8 @@ final class DDLogHandlerTests: XCTestCase {
         XCTAssertEqual(loggedMsg.message.line, logLine)
         XCTAssertNotNil(loggedMsg.message.swiftLogInfo)
         XCTAssertEqual(loggedMsg.message.swiftLogInfo, .init(logger: .init(label: logger.label,
-                                                                           metadata: logger.handler.metadata),
+                                                                           metadataSources: .init(logger: logger.handler.metadata,
+                                                                                                  provider: logger.metadataProvider?.get())),
                                                              message: .init(message: msg,
                                                                             level: .info,
                                                                             metadata: nil,
@@ -105,7 +107,7 @@ final class DDLogHandlerTests: XCTestCase {
         XCTAssertTrue(logger.handler is DDLogHandler)
         let ddLogHandler = try XCTUnwrap(logger.handler as? DDLogHandler)
         XCTAssertEqual(ddLogHandler.loggerInfo.label, logger.label)
-        XCTAssertTrue(ddLogHandler.loggerInfo.metadata.isEmpty)
+        XCTAssertTrue(ddLogHandler.loggerInfo.metadataSources.logger.isEmpty)
         XCTAssertTrue(ddLogHandler.config.log === DDLog.sharedInstance)
         XCTAssertEqual(ddLogHandler.config.syncLogging.tresholdLevel, .error)
         XCTAssertEqual(ddLogHandler.config.syncLogging.metadataKey, DDLogHandler.defaultSynchronousLoggingMetadataKey)
@@ -147,7 +149,8 @@ final class DDLogHandlerTests: XCTestCase {
             XCTAssertEqual(loggedMsg1.message.line, logLine1)
             XCTAssertNotNil(loggedMsg1.message.swiftLogInfo)
             XCTAssertEqual(loggedMsg1.message.swiftLogInfo, .init(logger: .init(label: logger.label,
-                                                                                metadata: logger.handler.metadata),
+                                                                                metadataSources: .init(logger: logger.handler.metadata,
+                                                                                                       provider: logger.metadataProvider?.get())),
                                                                   message: .init(message: "\(level)-msg",
                                                                                  level: level,
                                                                                  metadata: message1Meta,
@@ -163,7 +166,8 @@ final class DDLogHandlerTests: XCTestCase {
             XCTAssertEqual(loggedMsg2.message.line, logLine2)
             XCTAssertNotNil(loggedMsg2.message.swiftLogInfo)
             XCTAssertEqual(loggedMsg2.message.swiftLogInfo, .init(logger: .init(label: logger.label,
-                                                                                metadata: logger.handler.metadata),
+                                                                                metadataSources: .init(logger: logger.handler.metadata,
+                                                                                                       provider: logger.metadataProvider?.get())),
                                                                   message: .init(message: "\(level)-msg-with-sync",
                                                                                  level: level,
                                                                                  metadata: message2Meta,
