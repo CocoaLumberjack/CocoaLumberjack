@@ -34,10 +34,23 @@ extension DDLogMessage {
     public struct SwiftLogInformation: Equatable, Sendable {
         /// Contains information about the swift-log logger that logged this message.
         public struct LoggerInformation: Equatable, Sendable {
+            /// Contains the metadata from the various sources of on a logger.
+            /// Currently this can be the logger itself, as well as its metadata provider
+            public struct MetadataSources: Equatable, Sendable {
+                /// The metadata of the swift-log logger that logged this message.
+                public let logger: Logger.Metadata
+                /// The metadata of the metadata provider on the swift-log logger that logged this message.
+                public let provider: Logger.Metadata?
+            }
+
             /// The label of the swift-log logger that logged this message.
             public let label: String
             /// The metadata of the swift-log logger that logged this message.
-            public let metadata: Logger.Metadata
+            public let metadataSources: MetadataSources
+
+            /// The metadata of the swift-log logger that logged this message.
+            @available(*, deprecated, renamed: "metadataSources.logger")
+            public var metadata: Logger.Metadata { metadataSources.logger }
         }
 
         /// Contains information about the swift-log message thas was logged.
@@ -56,6 +69,23 @@ extension DDLogMessage {
         public let logger: LoggerInformation
         /// The information about the swift-log message that was logged.
         public let message: MessageInformation
+
+        /// Merges the metadata from all layers together.
+        /// The metadata on the logger provides the base.
+        /// Metadata from the logger's metadata provider (if any) trumps the base.
+        /// Metadata from the logged message again trumps both the base and the metadata from the logger's metadata provider.
+        /// Essentially: `logger.metadata < logger.metadataProvider < message.metadata`
+        /// - Note: Accessing this property performs the merge! Accessing it multiple times can be a performance issue!
+        public var mergedMetadata: Logger.Metadata {
+            var merged = logger.metadataSources.logger
+            if let providerMetadata = logger.metadataSources.provider {
+                merged.merge(providerMetadata, uniquingKeysWith: { $1 })
+            }
+            if let messageMetadata = message.metadata {
+                merged.merge(messageMetadata, uniquingKeysWith: { $1 })
+            }
+            return merged
+        }
     }
 
     /// The swift-log information of this log message. This only exists for messages logged via swift-log.
@@ -76,6 +106,7 @@ final class SwiftLogMessage: DDLogMessage {
     @usableFromInline
     init(loggerLabel: String,
          loggerMetadata: Logger.Metadata,
+         loggerProvidedMetadata: Logger.Metadata?,
          message: Logger.Message,
          level: Logger.Level,
          metadata: Logger.Metadata?,
@@ -83,7 +114,9 @@ final class SwiftLogMessage: DDLogMessage {
          file: String,
          function: String,
          line: UInt) {
-        _swiftLogInfo = .init(logger: .init(label: loggerLabel, metadata: loggerMetadata),
+        _swiftLogInfo = .init(logger: .init(label: loggerLabel,
+                                            metadataSources: .init(logger: loggerMetadata,
+                                                                   provider: loggerProvidedMetadata)),
                               message: .init(message: message,
                                              level: level,
                                              metadata: metadata,
@@ -99,6 +132,30 @@ final class SwiftLogMessage: DDLogMessage {
                    tag: nil,
                    options: .dontCopyMessage, // Swift will bridge to NSString. No need to make an additional copy.
                    timestamp: nil) // Passing nil will make DDLogMessage create the timestamp which saves us the bridging between Date and NSDate.
+    }
+
+    // Not removed due to `@usableFromInline`.
+    @usableFromInline
+    @available(*, deprecated, renamed: "init(loggerLabel:loggerMetadata:loggerMetadata:message:level:metadata:source:file:function:line:)")
+    convenience init(loggerLabel: String,
+         loggerMetadata: Logger.Metadata,
+         message: Logger.Message,
+         level: Logger.Level,
+         metadata: Logger.Metadata?,
+         source: String,
+         file: String,
+         function: String,
+         line: UInt) {
+        self.init(loggerLabel: loggerLabel,
+                  loggerMetadata: loggerMetadata,
+                  loggerProvidedMetadata: nil,
+                  message: message,
+                  level: level,
+                  metadata: metadata,
+                  source: source,
+                  file: file,
+                  function: function,
+                  line: line)
     }
 
     override func isEqual(_ object: Any?) -> Bool {
@@ -117,6 +174,7 @@ public struct DDLogHandler: LogHandler {
             @usableFromInline
             let metadataKey: Logger.Metadata.Key
         }
+
         @usableFromInline
         let log: DDLog
         @usableFromInline
@@ -126,11 +184,27 @@ public struct DDLogHandler: LogHandler {
     @usableFromInline
     struct LoggerInfo: Sendable {
         @usableFromInline
+        struct MetadataSources: Sendable {
+            @usableFromInline
+            var provider: Logger.MetadataProvider?
+            @usableFromInline
+            var logger: Logger.Metadata = [:]
+        }
+
+        @usableFromInline
         let label: String
         @usableFromInline
         var logLevel: Logger.Level
         @usableFromInline
-        var metadata: Logger.Metadata = [:]
+        var metadataSources: MetadataSources
+
+        // Not removed due to `@usableFromInline`
+        @usableFromInline
+        @available(*, deprecated, renamed: "metadataSources.logger")
+        var metadata: Logger.Metadata {
+            get { metadataSources.logger }
+            set { metadataSources.logger = newValue }
+        }
     }
 
     @usableFromInline
@@ -144,9 +218,14 @@ public struct DDLogHandler: LogHandler {
         set { loggerInfo.logLevel = newValue }
     }
     @inlinable
+    public var metadataProvider: Logger.MetadataProvider? {
+        get { loggerInfo.metadataSources.provider }
+        set { loggerInfo.metadataSources.provider = newValue }
+    }
+    @inlinable
     public var metadata: Logger.Metadata {
-        get { loggerInfo.metadata }
-        set { loggerInfo.metadata = newValue }
+        get { loggerInfo.metadataSources.logger }
+        set { loggerInfo.metadataSources.logger = newValue }
     }
 
     @inlinable
@@ -188,7 +267,8 @@ public struct DDLogHandler: LogHandler {
                     function: String,
                     line: UInt) {
         let slMessage = SwiftLogMessage(loggerLabel: loggerInfo.label,
-                                        loggerMetadata: loggerInfo.metadata,
+                                        loggerMetadata: loggerInfo.metadataSources.logger,
+                                        loggerProvidedMetadata: loggerInfo.metadataSources.provider?.get(),
                                         message: message,
                                         level: level,
                                         metadata: metadata,
@@ -214,18 +294,44 @@ extension DDLogHandler {
     ///   - synchronousLoggingMetadataKey: The metadata key to check on messages to decide whether to log synchronous or asynchronous. Defaults to `DDLogHandler.defaultSynchronousLoggingMetadataKey`.
     /// - Returns: A new `LogHandler` factory using `DDLogHandler` that can be passed to `LoggingSystem.bootstrap`.
     /// - SeeAlso: `DDLog`, `LoggingSystem.boostrap`
-    public static func handlerFactory(for log: DDLog = .sharedInstance,
-                                      defaultLogLevel: Logger.Level = .info,
-                                      loggingSynchronousAsOf syncLoggingTreshold: Logger.Level = .error,
-                                      synchronousLoggingMetadataKey: Logger.Metadata.Key = DDLogHandler.defaultSynchronousLoggingMetadataKey) -> (String) -> LogHandler {
+    public static func handlerFactory(
+        for log: DDLog = .sharedInstance,
+        defaultLogLevel: Logger.Level = .info,
+        loggingSynchronousAsOf syncLoggingTreshold: Logger.Level = .error,
+        synchronousLoggingMetadataKey: Logger.Metadata.Key = DDLogHandler.defaultSynchronousLoggingMetadataKey
+    ) -> (String, Logger.MetadataProvider?) -> LogHandler {
         let config = DDLogHandler.Configuration(
             log: log,
             syncLogging: .init(tresholdLevel: syncLoggingTreshold,
                                metadataKey: synchronousLoggingMetadataKey)
         )
         return {
-            DDLogHandler(config: config, loggerInfo: .init(label: $0, logLevel: defaultLogLevel))
+            DDLogHandler(config: config, loggerInfo: .init(label: $0, logLevel: defaultLogLevel, metadataSources: .init(provider: $1)))
         }
+    }
+
+    /// Creates a new `LogHandler` factory using `DDLogHandler` with the given parameters.
+    /// - Parameters:
+    ///   - log: The `DDLog` instance to use for logging. Defaults to `DDLog.sharedInstance`.
+    ///   - defaultLogLevel: The default log level for new loggers. Defaults to `.info`.
+    ///   - syncLoggingTreshold: The level as of which log messages should be logged synchronously instead of asynchronously. Defaults to `.error`.
+    ///   - synchronousLoggingMetadataKey: The metadata key to check on messages to decide whether to log synchronous or asynchronous. Defaults to `DDLogHandler.defaultSynchronousLoggingMetadataKey`.
+    /// - Returns: A new `LogHandler` factory using `DDLogHandler` that can be passed to `LoggingSystem.bootstrap`.
+    /// - SeeAlso: `DDLog`, `LoggingSystem.boostrap`
+    @inlinable
+    public static func handlerFactory(
+        for log: DDLog = .sharedInstance,
+        defaultLogLevel: Logger.Level = .info,
+        loggingSynchronousAsOf syncLoggingTreshold: Logger.Level = .error,
+        synchronousLoggingMetadataKey: Logger.Metadata.Key = DDLogHandler.defaultSynchronousLoggingMetadataKey
+    ) -> (String) -> LogHandler {
+        let factory: (String, Logger.MetadataProvider?) -> LogHandler = handlerFactory(
+            for: log,
+            defaultLogLevel: defaultLogLevel,
+            loggingSynchronousAsOf: syncLoggingTreshold,
+            synchronousLoggingMetadataKey: synchronousLoggingMetadataKey
+        )
+        return { factory($0, nil) }
     }
 }
 
@@ -236,15 +342,20 @@ extension LoggingSystem {
     ///   - defaultLogLevel: The default log level for new loggers. Defaults to `.info`.
     ///   - syncLoggingTreshold: The level as of which log messages should be logged synchronously instead of asynchronously. Defaults to `.error`.
     ///   - synchronousLoggingMetadataKey: The metadata key to check on messages to decide whether to log synchronous or asynchronous. Defaults to `DDLogHandler.defaultSynchronousLoggingMetadataKey`.
+    ///   - metadataProvider: The (global) metadata provider to use with the setup. Defaults to `nil`.
     /// - SeeAlso: `DDLogHandler.handlerFactory`, `LoggingSystem.bootstrap`
     @inlinable
-    public static func bootstrapWithCocoaLumberjack(for log: DDLog = .sharedInstance,
-                                                    defaultLogLevel: Logger.Level = .info,
-                                                    loggingSynchronousAsOf syncLoggingTreshold: Logger.Level = .error,
-                                                    synchronousLoggingMetadataKey: Logger.Metadata.Key = DDLogHandler.defaultSynchronousLoggingMetadataKey) {
+    public static func bootstrapWithCocoaLumberjack(
+        for log: DDLog = .sharedInstance,
+        defaultLogLevel: Logger.Level = .info,
+        loggingSynchronousAsOf syncLoggingTreshold: Logger.Level = .error,
+        synchronousLoggingMetadataKey: Logger.Metadata.Key = DDLogHandler.defaultSynchronousLoggingMetadataKey,
+        metadataProvider: Logger.MetadataProvider? = nil
+    ) {
         bootstrap(DDLogHandler.handlerFactory(for: log,
                                               defaultLogLevel: defaultLogLevel,
                                               loggingSynchronousAsOf: syncLoggingTreshold,
-                                              synchronousLoggingMetadataKey: synchronousLoggingMetadataKey))
+                                              synchronousLoggingMetadataKey: synchronousLoggingMetadataKey),
+                  metadataProvider: metadataProvider)
     }
 }
