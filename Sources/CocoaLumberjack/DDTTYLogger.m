@@ -1241,9 +1241,10 @@ static DDTTYLogger *sharedInstance;
         // Write the log message to STDERR
 
         if (isFormatted) {
-            // The log message has already been formatted.
-            const int iovec_len = (_automaticallyAppendNewlineForCustomFormatters) ? 5 : 4;
-            struct iovec v[iovec_len];
+        // The log message has already been formatted.
+            const size_t max_iovec_len = 5;
+            size_t iovec_len = (_automaticallyAppendNewlineForCustomFormatters) ? 5 : 4;
+            struct iovec v[max_iovec_len] = { 0 };
 
             if (colorProfile) {
                 v[0].iov_base = colorProfile->fgCode;
@@ -1252,28 +1253,20 @@ static DDTTYLogger *sharedInstance;
                 v[1].iov_base = colorProfile->bgCode;
                 v[1].iov_len = colorProfile->bgCodeLen;
 
-                v[iovec_len - 1].iov_base = colorProfile->resetCode;
-                v[iovec_len - 1].iov_len = colorProfile->resetCodeLen;
-            } else {
-                v[0].iov_base = "";
-                v[0].iov_len = 0;
-
-                v[1].iov_base = "";
-                v[1].iov_len = 0;
-
-                v[iovec_len - 1].iov_base = "";
-                v[iovec_len - 1].iov_len = 0;
+                v[max_iovec_len - 1].iov_base = colorProfile->resetCode;
+                v[max_iovec_len - 1].iov_len = colorProfile->resetCodeLen;
             }
 
             v[2].iov_base = msg;
-            v[2].iov_len = msgLen;
+            v[2].iov_len = (msgLen > SIZE_MAX - 1) ? SIZE_MAX - 1 : msgLen;
 
-            if (iovec_len == 5) {
+            if (_automaticallyAppendNewlineForCustomFormatters && (v[2].iov_len == 0 || msg[v[2].iov_len - 1] != '\n')) {
                 v[3].iov_base = "\n";
-                v[3].iov_len = (msg[msgLen] == '\n') ? 0 : 1;
+                v[3].iov_len = 1;
+                iovec_len = 5;
             }
 
-            writev(STDERR_FILENO, v, iovec_len);
+            writev(STDERR_FILENO, v, (int)iovec_len);
         } else {
             // The log message is unformatted, so apply standard NSLog style formatting.
 
