@@ -1241,7 +1241,7 @@ static DDTTYLogger *sharedInstance;
         // Write the log message to STDERR
 
         if (isFormatted) {
-        // The log message has already been formatted.
+           // The log message has already been formatted.
             const size_t max_iovec_len = 5;
             size_t iovec_len = (_automaticallyAppendNewlineForCustomFormatters) ? 5 : 4;
             struct iovec v[max_iovec_len] = { 0 };
