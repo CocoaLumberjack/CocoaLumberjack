@@ -1787,13 +1787,19 @@ static NSString *_xattrToExtensionName(NSString *attrName) {
 - (NSComparisonResult)reverseCompareByCreationDate:(DDLogFileInfo *)another {
     __auto_type us = [self creationDate];
     __auto_type them = [another creationDate];
-    return [them compare:us];
+    if (us != nil) {
+        return [them compare:(NSDate * _Nonnull)us];
+    }
+    return NSOrderedSame;
 }
 
 - (NSComparisonResult)reverseCompareByModificationDate:(DDLogFileInfo *)another {
     __auto_type us = [self modificationDate];
     __auto_type them = [another modificationDate];
-    return [them compare:us];
+    if (us != nil) {
+        return [them compare:(NSDate * _Nonnull)us];
+    }
+    return NSOrderedSame;
 }
 
 @end
