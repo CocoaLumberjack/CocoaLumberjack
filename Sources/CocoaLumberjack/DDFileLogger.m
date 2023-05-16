@@ -1784,22 +1784,21 @@ static NSString *_xattrToExtensionName(NSString *attrName) {
     return [filePath hash];
 }
 
-- (NSComparisonResult)reverseCompareByCreationDate:(DDLogFileInfo *)another {
-    __auto_type us = [self creationDate];
-    __auto_type them = [another creationDate];
-    if (us != nil) {
+- (NSComparisonResult)reverseCompareDatesUs:(NSDate *_Nullable)us them:(NSDate *_Nullable)them {
+    if (us != nil && them != nil) {
         return [them compare:(NSDate * _Nonnull)us];
+    } else if (us == nil && them == nil) {
+       return NSOrderedSame;
     }
-    return NSOrderedSame;
+    return them == nil ? NSOrderedAscending : NSOrderedDescending;
+}
+
+- (NSComparisonResult)reverseCompareByCreationDate:(DDLogFileInfo *)another {
+    return [self reverseCompareDatesUs:[self creationDate] them:[another creationDate]];
 }
 
 - (NSComparisonResult)reverseCompareByModificationDate:(DDLogFileInfo *)another {
-    __auto_type us = [self modificationDate];
-    __auto_type them = [another modificationDate];
-    if (us != nil) {
-        return [them compare:(NSDate * _Nonnull)us];
-    }
-    return NSOrderedSame;
+    return [self reverseCompareDatesUs:[self modificationDate] them:[another modificationDate]];
 }
 
 @end
