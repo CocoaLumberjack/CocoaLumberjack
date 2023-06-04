@@ -1137,6 +1137,13 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     NSAssert([self isOnInternalLoggerQueue], @"lt_ methods should be on logger queue.");
     NSAssert(_currentLogFileHandle, @"Can not monitor without handle.");
 
+    // This seems to work around crashes when an active source is replaced / released.
+    // See https://github.com/CocoaLumberjack/CocoaLumberjack/issues/1341
+    // And https://stackoverflow.com/questions/36296528/what-does-this-dispatch-xref-dispose-error-mean
+    if (_currentLogFileVnode) {
+        dispatch_source_cancel(_currentLogFileVnode);
+    }
+
     _currentLogFileVnode = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE,
                                                   (uintptr_t)[_currentLogFileHandle fileDescriptor],
                                                   DISPATCH_VNODE_DELETE | DISPATCH_VNODE_RENAME | DISPATCH_VNODE_REVOKE,
