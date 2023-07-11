@@ -17,6 +17,7 @@
 #if canImport(Combine)
 import XCTest
 import Combine
+import CocoaLumberjack
 @testable import CocoaLumberjackSwift
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
