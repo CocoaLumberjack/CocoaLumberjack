@@ -1,10 +1,11 @@
-# [3.8.1 - Xcode 14.3 on Feb ??, 2023](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.8.1)
+# [3.8.1 - Xcode 14.3 on ??, 2023](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.8.1)
 
 ### Public
 
 - Silence double conversion warnings for 32-bit watchOS (#1320)
 - Enable ALLOW_TARGET_PLATFORM_SPECIALIZATION (#1321)
 - Update to swift-log 1.5.2, implement metadata providers (#1329)
+- Preserve `messageFormat` in `DDLogMessage` (#1347)
 
 ### Internal
 
