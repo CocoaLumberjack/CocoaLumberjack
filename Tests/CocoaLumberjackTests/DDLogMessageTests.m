@@ -21,91 +21,144 @@
 static NSString * const kDefaultMessage = @"Log message";
 
 @interface DDLogMessage (TestHelpers)
-+ (DDLogMessage *)test_message;
-+ (DDLogMessage *)test_messageWithMessage:(NSString *)message;
-+ (DDLogMessage *)test_messageWithFunction:(NSString *)function options:(DDLogMessageOptions)options;
-+ (DDLogMessage *)test_messageWithFile:(NSString *)file options:(DDLogMessageOptions)options;
+- (instancetype)initWithNoArgsMessage:(NSString *)message
+                                level:(DDLogLevel)level
+                                 flag:(DDLogFlag)flag
+                              context:(NSInteger)context
+                                 file:(NSString *)file
+                             function:(nullable NSString *)function
+                                 line:(NSUInteger)line
+                                  tag:(nullable id)tag
+                              options:(DDLogMessageOptions)options
+                            timestamp:(nullable NSDate *)timestamp;
++ (instancetype)test_message;
++ (instancetype)test_messageWithMessage:(NSString *)message;
++ (instancetype)test_messageWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
++ (instancetype)test_messageWithFunction:(NSString *)function options:(DDLogMessageOptions)options;
++ (instancetype)test_messageWithFile:(NSString *)file options:(DDLogMessageOptions)options;
 @end
 
 @implementation DDLogMessage (TestHelpers)
-+ (DDLogMessage *)test_message {
-    return [[DDLogMessage alloc] initWithMessage:kDefaultMessage
-                                           level:DDLogLevelDebug
-                                            flag:DDLogFlagError
-                                         context:1
-                                            file:@(__FILE__)
-                                        function:@(__func__)
-                                            line:__LINE__
-                                             tag:NULL
-                                         options:(DDLogMessageOptions)0
-                                       timestamp:nil];
+- (instancetype)initWithNoArgsMessage:(NSString *)message
+                                level:(DDLogLevel)level
+                                 flag:(DDLogFlag)flag
+                              context:(NSInteger)context
+                                 file:(NSString *)file
+                             function:(nullable NSString *)function
+                                 line:(NSUInteger)line
+                                  tag:(nullable id)tag
+                              options:(DDLogMessageOptions)options
+                            timestamp:(nullable NSDate *)timestamp {
+    self = [self initWithFormat:message
+                      formatted:message
+                          level:level
+                           flag:flag
+                        context:context
+                           file:file
+                       function:function
+                           line:line
+                            tag:tag
+                        options:options
+                      timestamp:timestamp];
+    return self;
 }
 
-+ (DDLogMessage *)test_messageWithMessage:(NSString *)message {
-    return [[DDLogMessage alloc] initWithMessage:message
-                                           level:DDLogLevelDebug
-                                            flag:DDLogFlagError
-                                         context:1
-                                            file:@(__FILE__)
-                                        function:@(__func__)
-                                            line:__LINE__
-                                             tag:NULL
-                                         options:(DDLogMessageOptions)0
-                                       timestamp:nil];
++ (instancetype)test_message {
+    return [[DDLogMessage alloc] initWithNoArgsMessage:kDefaultMessage
+                                                 level:DDLogLevelDebug
+                                                  flag:DDLogFlagError
+                                               context:1
+                                                  file:@(__FILE__)
+                                              function:@(__func__)
+                                                  line:__LINE__
+                                                   tag:NULL
+                                               options:(DDLogMessageOptions)0
+                                             timestamp:nil];
 }
 
-+ (DDLogMessage *)test_messageWithFunction:(NSString *)function
-                                   options:(DDLogMessageOptions)options {
-    return [[DDLogMessage alloc] initWithMessage:kDefaultMessage
-                                           level:DDLogLevelDebug
-                                            flag:DDLogFlagError
-                                         context:1
-                                            file:@(__FILE__)
-                                        function:function
-                                            line:__LINE__
-                                             tag:NULL
-                                         options:options
-                                       timestamp:nil];
++ (instancetype)test_messageWithMessage:(NSString *)message {
+    return [[DDLogMessage alloc] initWithNoArgsMessage:message
+                                                 level:DDLogLevelDebug
+                                                  flag:DDLogFlagError
+                                               context:1
+                                                  file:@(__FILE__)
+                                              function:@(__func__)
+                                                  line:__LINE__
+                                                   tag:NULL
+                                               options:(DDLogMessageOptions)0
+                                             timestamp:nil];
 }
 
-+ (DDLogMessage *)test_messageWithWithoutFunction {
-    return [[DDLogMessage alloc] initWithMessage:kDefaultMessage
-                                           level:DDLogLevelDebug
-                                            flag:DDLogFlagError
-                                         context:1
-                                            file:@(__FILE__)
-                                        function:nil
-                                            line:__LINE__
-                                             tag:NULL
-                                         options:(DDLogMessageOptions)0
-                                       timestamp:nil];
++ (instancetype)test_messageWithFormat:(NSString *)format, ... {
+    va_list args;
+    va_start(args, format);
+    __auto_type msg = [[DDLogMessage alloc] initWithFormat:format
+                                                      args:args
+                                                     level:DDLogLevelDebug
+                                                      flag:DDLogFlagError
+                                                   context:1
+                                                      file:@(__FILE__)
+                                                  function:@(__func__)
+                                                      line:__LINE__
+                                                       tag:NULL
+                                                   options:(DDLogMessageOptions)0
+                                                 timestamp:nil];
+    va_end(args);
+    return msg;
 }
 
-+ (DDLogMessage *)test_messageWithFile:(NSString *)file
-                               options:(DDLogMessageOptions)options {
-    return [[DDLogMessage alloc] initWithMessage:kDefaultMessage
-                                           level:DDLogLevelDebug
-                                            flag:DDLogFlagError
-                                         context:1
-                                            file:file
-                                        function:@(__func__)
-                                            line:__LINE__
-                                             tag:NULL
-                                         options:options
-                                       timestamp:nil];
++ (instancetype)test_messageWithFunction:(NSString *)function
+                                 options:(DDLogMessageOptions)options {
+    return [[DDLogMessage alloc] initWithNoArgsMessage:kDefaultMessage
+                                                 level:DDLogLevelDebug
+                                                  flag:DDLogFlagError
+                                               context:1
+                                                  file:@(__FILE__)
+                                              function:function
+                                                  line:__LINE__
+                                                   tag:NULL
+                                               options:options
+                                             timestamp:nil];
 }
 
-+ (DDLogMessage *)test_messageWithTimestamp:(NSDate *)timestamp {
-    return [[DDLogMessage alloc] initWithMessage:kDefaultMessage
-                                           level:DDLogLevelDebug
-                                            flag:DDLogFlagError
-                                         context:1
-                                            file:@(__FILE__)
-                                        function:@(__func__)
-                                            line:__LINE__
-                                             tag:NULL
-                                         options:(DDLogMessageOptions)0
-                                       timestamp:timestamp];
++ (instancetype)test_messageWithWithoutFunction {
+    return [[DDLogMessage alloc] initWithNoArgsMessage:kDefaultMessage
+                                                 level:DDLogLevelDebug
+                                                  flag:DDLogFlagError
+                                               context:1
+                                                  file:@(__FILE__)
+                                              function:nil
+                                                  line:__LINE__
+                                                   tag:NULL
+                                               options:(DDLogMessageOptions)0
+                                             timestamp:nil];
+}
+
++ (instancetype)test_messageWithFile:(NSString *)file
+                             options:(DDLogMessageOptions)options {
+    return [[DDLogMessage alloc] initWithNoArgsMessage:kDefaultMessage
+                                                 level:DDLogLevelDebug
+                                                  flag:DDLogFlagError
+                                               context:1
+                                                  file:file
+                                              function:@(__func__)
+                                                  line:__LINE__
+                                                   tag:NULL
+                                               options:options
+                                             timestamp:nil];
+}
+
++ (instancetype)test_messageWithTimestamp:(NSDate *)timestamp {
+    return [[DDLogMessage alloc] initWithNoArgsMessage:kDefaultMessage
+                                                 level:DDLogLevelDebug
+                                                  flag:DDLogFlagError
+                                               context:1
+                                                  file:@(__FILE__)
+                                              function:@(__func__)
+                                                  line:__LINE__
+                                                   tag:NULL
+                                               options:(DDLogMessageOptions)0
+                                             timestamp:timestamp];
 }
 
 @end
@@ -131,17 +184,16 @@ static NSString * const kDefaultMessage = @"Log message";
 
 - (void)testInitSetsAllPassedParameters {
     __auto_type referenceDate = [NSDate dateWithTimeIntervalSince1970:0];
-    self.message =
-        [[DDLogMessage alloc] initWithMessage:kDefaultMessage
-                                        level:DDLogLevelDebug
-                                         flag:DDLogFlagError
-                                      context:1
-                                         file:@"DDLogMessageTests.m"
-                                     function:@"testInitSetsAllPassedParameters"
-                                         line:50
-                                          tag:NULL
-                                         options:DDLogMessageCopyFile
-                                         timestamp:referenceDate];
+    self.message = [[DDLogMessage alloc] initWithNoArgsMessage:kDefaultMessage
+                                                         level:DDLogLevelDebug
+                                                          flag:DDLogFlagError
+                                                       context:1
+                                                          file:@"DDLogMessageTests.m"
+                                                      function:@"testInitSetsAllPassedParameters"
+                                                          line:50
+                                                           tag:NULL
+                                                       options:DDLogMessageCopyFile
+                                                     timestamp:referenceDate];
     XCTAssertEqualObjects(self.message.message, @"Log message");
     XCTAssertEqual(self.message.level, DDLogLevelDebug);
     XCTAssertEqual(self.message.flag, DDLogFlagError);
@@ -156,6 +208,12 @@ static NSString * const kDefaultMessage = @"Log message";
 #pragma clang diagnostic pop
     XCTAssertEqual(self.message.options, DDLogMessageCopyFile);
     XCTAssertEqualObjects(self.message.timestamp, referenceDate);
+}
+
+- (void)testFormatPreserved {
+    self.message = [DDLogMessage test_messageWithFormat:@"Formatted with this %@ and this %d", @"Arg1", 42];
+    XCTAssertEqualObjects(self.message.message, @"Formatted with this Arg1 and this 42");
+    XCTAssertEqualObjects(self.message.messageFormat, @"Formatted with this %@ and this %d");
 }
 
 - (void)testInitCopyMessageParameter {
@@ -230,6 +288,7 @@ static NSString * const kDefaultMessage = @"Log message";
 
 - (void)testCopyWithZoneCreatesValidCopy {
     __auto_type copy = (typeof(self.message))[self.message copy];
+    XCTAssertEqualObjects(self.message.messageFormat, copy.messageFormat);
     XCTAssertEqualObjects(self.message.message, copy.message);
     XCTAssertEqual(self.message.level, copy.level);
     XCTAssertEqual(self.message.flag, copy.flag);

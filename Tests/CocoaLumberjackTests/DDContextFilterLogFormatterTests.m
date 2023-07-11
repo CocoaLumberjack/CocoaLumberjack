@@ -17,7 +17,8 @@
 #import <CocoaLumberjack/DDContextFilterLogFormatter.h>
 
 static DDLogMessage *testLogMessage() {
-    return [[DDLogMessage alloc] initWithMessage:@"test log message"
+    return [[DDLogMessage alloc] initWithFormat:@"test log message"
+                                      formatted:@"test log message"
                                            level:DDLogLevelDebug
                                             flag:DDLogFlagError
                                          context:1
