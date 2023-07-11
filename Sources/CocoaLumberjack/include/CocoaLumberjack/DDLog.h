@@ -791,6 +791,7 @@ DD_SENDABLE
     // Direct accessors to be used only for performance
     @public
     NSString *_message;
+    NSString *_messageFormat;
     DDLogLevel _level;
     DDLogFlag _flag;
     NSInteger _context;
@@ -798,9 +799,9 @@ DD_SENDABLE
     NSString *_fileName;
     NSString *_function;
     NSUInteger _line;
-    #if DD_LEGACY_MESSAGE_TAG
+#if DD_LEGACY_MESSAGE_TAG
     id _tag __attribute__((deprecated("Use _representedObject instead", "_representedObject")));
-    #endif
+#endif
     id _representedObject;
     DDLogMessageOptions _options;
     NSDate * _timestamp;
@@ -829,6 +830,64 @@ DD_SENDABLE
  * so it makes sense to optimize and skip the unnecessary allocations.
  * However, if you need them to be copied you may use the options parameter to specify this.
  *
+ *  @param messageFormat   the message format
+ *  @param message  the formatted message
+ *  @param level     the log level
+ *  @param flag      the log flag
+ *  @param context   the context (if any is defined)
+ *  @param file      the current file
+ *  @param function  the current function
+ *  @param line      the current code line
+ *  @param tag       potential tag
+ *  @param options   a bitmask which supports DDLogMessageCopyFile and DDLogMessageCopyFunction.
+ *  @param timestamp the log timestamp
+ *
+ *  @return a new instance of a log message model object
+ */
+- (instancetype)initWithFormat:(NSString *)messageFormat
+                     formatted:(NSString *)message
+                         level:(DDLogLevel)level
+                          flag:(DDLogFlag)flag
+                       context:(NSInteger)context
+                          file:(NSString *)file
+                      function:(nullable NSString *)function
+                          line:(NSUInteger)line
+                           tag:(nullable id)tag
+                       options:(DDLogMessageOptions)options
+                     timestamp:(nullable NSDate *)timestamp NS_DESIGNATED_INITIALIZER;
+
+/**
+ *     Convenience initializer taking a `va_list` as arguments to create the formatted message.
+ *
+ *  @param messageFormat   the message format
+ *  @param messageArgs   the message arguments.
+ *  @param level     the log level
+ *  @param flag      the log flag
+ *  @param context   the context (if any is defined)
+ *  @param file      the current file
+ *  @param function  the current function
+ *  @param line      the current code line
+ *  @param tag       potential tag
+ *  @param options   a bitmask which supports DDLogMessageCopyFile and DDLogMessageCopyFunction.
+ *  @param timestamp the log timestamp
+ *
+ *  @return a new instance of a log message model object
+ */
+- (instancetype)initWithFormat:(NSString *)messageFormat
+                          args:(va_list)messageArgs
+                         level:(DDLogLevel)level
+                          flag:(DDLogFlag)flag
+                       context:(NSInteger)context
+                          file:(NSString *)file
+                      function:(nullable NSString *)function
+                          line:(NSUInteger)line
+                           tag:(nullable id)tag
+                       options:(DDLogMessageOptions)options
+                     timestamp:(nullable NSDate *)timestamp;
+
+/**
+ *  Deprecated initialier. See initWithFormat:args:formatted:level:flag:context:file:function:line:tag:options:timestamp:.
+ *
  *  @param message   the message
  *  @param level     the log level
  *  @param flag      the log flag
@@ -851,16 +910,21 @@ DD_SENDABLE
                            line:(NSUInteger)line
                             tag:(nullable id)tag
                         options:(DDLogMessageOptions)options
-                      timestamp:(nullable NSDate *)timestamp NS_DESIGNATED_INITIALIZER;
+                      timestamp:(nullable NSDate *)timestamp
+__attribute__((deprecated("Use initializer taking unformatted message and args instead", "initWithFormat:formatted:level:flag:context:file:function:line:tag:options:timestamp:")));
 
 /**
  * Read-only properties
  **/
 
 /**
- *  The log message
+ *  The log message.
  */
 @property (readonly, nonatomic) NSString *message;
+/**
+ * The message format. When the deprecated initializer is used, this might be the same as `message`.
+ */
+@property (readonly, nonatomic) NSString *messageFormat;
 @property (readonly, nonatomic) DDLogLevel level;
 @property (readonly, nonatomic) DDLogFlag flag;
 @property (readonly, nonatomic) NSInteger context;

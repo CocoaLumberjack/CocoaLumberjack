@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07C15C512A5D677D00AF3B5B /* DDLogMessageFormatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C15C4F2A5D677D00AF3B5B /* DDLogMessageFormatTests.swift */; };
 		0A0ED26322CEAB290037739B /* DDSampleFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A55DA2D22CE962B00686977 /* DDSampleFileManager.m */; };
 		0A55DA2E22CE962B00686977 /* DDSampleFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A55DA2D22CE962B00686977 /* DDSampleFileManager.m */; };
 		0A7D8FD4217A1E9800B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8FD0217A1E9000B496D7 /* CocoaLumberjack.framework */; };
@@ -76,6 +77,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07C15C4F2A5D677D00AF3B5B /* DDLogMessageFormatTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDLogMessageFormatTests.swift; sourceTree = "<group>"; };
 		0A55DA2D22CE962B00686977 /* DDSampleFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDSampleFileManager.m; sourceTree = "<group>"; };
 		0A55DA2F22CE962F00686977 /* DDSampleFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDSampleFileManager.h; sourceTree = "<group>"; };
 		0A7D8FC7217A1E9000B496D7 /* Lumberjack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lumberjack.xcodeproj; path = ../Lumberjack.xcodeproj; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				4C4A367A243C418600410EF0 /* DDLogCombineTests.swift */,
+				07C15C4F2A5D677D00AF3B5B /* DDLogMessageFormatTests.swift */,
 			);
 			path = CocoaLumberjackSwiftTests;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C4A3686243C48DB00410EF0 /* DDLogCombineTests.swift in Sources */,
+				07C15C512A5D677D00AF3B5B /* DDLogMessageFormatTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -142,26 +142,22 @@ final class DDLogCombineTests: XCTestCase {
             .sink(receiveValue: { receivedValue.append($0) })
             .store(in: &subscriptions)
 
-        subject.send(DDLogMessage(message: "An error occurred",
+        subject.send(DDLogMessage("An error occurred",
                                   level: .all,
                                   flag: .error,
                                   context: 42,
                                   file: "Combine.swift",
                                   function: "PerformFailure",
                                   line: 67,
-                                  tag: nil,
-                                  options: [],
                                   timestamp: Date(timeIntervalSinceReferenceDate: 100)))
 
-        subject.send(DDLogMessage(message: "WARNING: this is incorrect",
+        subject.send(DDLogMessage("WARNING: this is incorrect",
                                   level: .all,
                                   flag: .warning,
                                   context: 23,
                                   file: "Combine.swift",
                                   function: "PerformWarning",
                                   line: 90,
-                                  tag: nil,
-                                  options: [],
                                   timestamp: Date(timeIntervalSinceReferenceDate: 200)))
 
         XCTAssertEqual(receivedValue, ["2001/01/01 00:01:40:000  An error occurred",

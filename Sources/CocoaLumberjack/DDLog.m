@@ -349,21 +349,16 @@ static NSUInteger _numProcessors;
     if (format) {
         va_start(args, format);
 
-        NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
-
-        va_end(args);
-
-        va_start(args, format);
-
         [self log:asynchronous
-          message:message
             level:level
              flag:flag
           context:context
              file:file
          function:function
              line:line
-              tag:tag];
+              tag:tag
+           format:format
+             args:args];
 
         va_end(args);
     }
@@ -383,21 +378,16 @@ static NSUInteger _numProcessors;
     if (format) {
         va_start(args, format);
 
-        NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
-
-        va_end(args);
-
-        va_start(args, format);
-
         [self log:asynchronous
-          message:message
             level:level
              flag:flag
           context:context
              file:file
          function:function
              line:line
-              tag:tag];
+              tag:tag
+           format:format
+             args:args];
 
         va_end(args);
     }
@@ -427,56 +417,24 @@ static NSUInteger _numProcessors;
      format:(NSString *)format
        args:(va_list)args {
     if (format) {
-        NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
-        [self log:asynchronous
-          message:message
-            level:level
-             flag:flag
-          context:context
-             file:file
-         function:function
-             line:line
-              tag:tag];
-    }
-}
-
-+ (void)log:(BOOL)asynchronous
-    message:(NSString *)message
-      level:(DDLogLevel)level
-       flag:(DDLogFlag)flag
-    context:(NSInteger)context
-       file:(const char *)file
-   function:(const char *)function
-       line:(NSUInteger)line
-        tag:(id)tag {
-    [self.sharedInstance log:asynchronous message:message level:level flag:flag context:context file:file function:function line:line tag:tag];
-}
-
-- (void)log:(BOOL)asynchronous
-    message:(NSString *)message
-      level:(DDLogLevel)level
-       flag:(DDLogFlag)flag
-    context:(NSInteger)context
-       file:(const char *)file
-   function:(const char *)function
-       line:(NSUInteger)line
-        tag:(id)tag {
-// Nullity checks are handled by -initWithMessage:
+        // Nullity checks are handled by -initWithMessage:
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wnullable-to-nonnull-conversion"
-    DDLogMessage *logMessage = [[DDLogMessage alloc] initWithMessage:message
-                                                               level:level
-                                                                flag:flag
-                                                             context:context
-                                                                file:@(file)
-                                                            function:@(function)
-                                                                line:line
-                                                                 tag:tag
-                                                             options:(DDLogMessageOptions)0
-                                                           timestamp:nil];
+        DDLogMessage *logMessage = [[DDLogMessage alloc] initWithFormat:format
+                                                                   args:args
+                                                                  level:level
+                                                                   flag:flag
+                                                                context:context
+                                                                   file:@(file)
+                                                               function:@(function)
+                                                                   line:line
+                                                                    tag:tag
+                                                                options:(DDLogMessageOptions)0
+                                                              timestamp:nil];
 #pragma clang diagnostic pop
 
-    [self queueLogMessage:logMessage asynchronously:asynchronous];
+        [self queueLogMessage:logMessage asynchronously:asynchronous];
+    }
 }
 
 + (void)log:(BOOL)asynchronous message:(DDLogMessage *)logMessage {
@@ -978,25 +936,28 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
     return self;
 }
 
-- (instancetype)initWithMessage:(NSString *)message
-                          level:(DDLogLevel)level
-                           flag:(DDLogFlag)flag
-                        context:(NSInteger)context
-                           file:(NSString *)file
-                       function:(NSString *)function
-                           line:(NSUInteger)line
-                            tag:(id)tag
-                        options:(DDLogMessageOptions)options
-                      timestamp:(NSDate *)timestamp {
+- (instancetype)initWithFormat:(NSString *)messageFormat
+                     formatted:(NSString *)message
+                         level:(DDLogLevel)level
+                          flag:(DDLogFlag)flag
+                       context:(NSInteger)context
+                          file:(NSString *)file
+                      function:(NSString *)function
+                          line:(NSUInteger)line
+                           tag:(id)tag
+                       options:(DDLogMessageOptions)options
+                     timestamp:(NSDate *)timestamp {
+    NSParameterAssert(messageFormat);
     NSParameterAssert(message);
     NSParameterAssert(file);
 
     if ((self = [super init])) {
         BOOL copyMessage = (options & DDLogMessageDontCopyMessage) == 0;
-        _message      = copyMessage ? [message copy] : message;
-        _level        = level;
-        _flag         = flag;
-        _context      = context;
+        _messageFormat = copyMessage ? [messageFormat copy] : messageFormat;
+        _message       = copyMessage ? [message copy] : message;
+        _level         = level;
+        _flag          = flag;
+        _context       = context;
 
         BOOL copyFile = (options & DDLogMessageCopyFile) != 0;
         _file = copyFile ? [file copy] : file;
@@ -1038,6 +999,57 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
     return self;
 }
 
+- (instancetype)initWithFormat:(NSString *)messageFormat
+                          args:(va_list)messageArgs
+                         level:(DDLogLevel)level
+                          flag:(DDLogFlag)flag
+                       context:(NSInteger)context
+                          file:(NSString *)file
+                      function:(NSString *)function
+                          line:(NSUInteger)line
+                           tag:(id)tag
+                       options:(DDLogMessageOptions)options
+                     timestamp:(NSDate *)timestamp {
+    BOOL copyMessage = (options & DDLogMessageDontCopyMessage) == 0;
+    NSString *format = copyMessage ? [messageFormat copy] : messageFormat;
+    self = [self initWithFormat:format
+                      formatted:[[NSString alloc] initWithFormat:format arguments:messageArgs]
+                          level:level
+                           flag:flag
+                        context:context
+                           file:file
+                       function:function
+                           line:line
+                            tag:tag
+                        options:options | DDLogMessageDontCopyMessage // we already did the copying if needed.
+                      timestamp:timestamp];
+    return self;
+}
+
+- (instancetype)initWithMessage:(NSString *)message
+                          level:(DDLogLevel)level
+                           flag:(DDLogFlag)flag
+                        context:(NSInteger)context
+                           file:(NSString *)file
+                       function:(NSString *)function
+                           line:(NSUInteger)line
+                            tag:(id)tag
+                        options:(DDLogMessageOptions)options
+                      timestamp:(NSDate *)timestamp {
+    self = [self initWithFormat:message
+                      formatted:message
+                          level:level
+                           flag:flag
+                        context:context
+                           file:file
+                       function:function
+                           line:line
+                            tag:tag
+                        options:options
+                      timestamp:timestamp];
+    return self;
+}
+
 NS_INLINE BOOL _nullable_strings_equal(NSString* _Nullable lhs, NSString* _Nullable rhs)
 {
     if (lhs == nil) {
@@ -1058,6 +1070,7 @@ NS_INLINE BOOL _nullable_strings_equal(NSString* _Nullable lhs, NSString* _Nulla
     } else {
         __auto_type otherMsg = (DDLogMessage *)other;
         return [otherMsg->_message isEqualToString:_message]
+        && [otherMsg->_messageFormat isEqualToString:_messageFormat]
         && otherMsg->_level == _level
         && otherMsg->_flag == _flag
         && otherMsg->_context == _context
@@ -1076,6 +1089,7 @@ NS_INLINE BOOL _nullable_strings_equal(NSString* _Nullable lhs, NSString* _Nulla
     // Subclasses of NSObject should not call [super hash] here.
     // See https://stackoverflow.com/questions/36593038/confused-about-the-default-isequal-and-hash-implements
     return _message.hash
+    ^ _messageFormat.hash
     ^ _level
     ^ _flag
     ^ _context
@@ -1092,6 +1106,7 @@ NS_INLINE BOOL _nullable_strings_equal(NSString* _Nullable lhs, NSString* _Nulla
 - (id)copyWithZone:(NSZone * __attribute__((unused)))zone {
     DDLogMessage *newMessage = [DDLogMessage new];
 
+    newMessage->_messageFormat = _messageFormat;
     newMessage->_message = _message;
     newMessage->_level = _level;
     newMessage->_flag = _flag;

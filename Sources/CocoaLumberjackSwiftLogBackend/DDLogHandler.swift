@@ -122,7 +122,9 @@ final class SwiftLogMessage: DDLogMessage {
                                              metadata: metadata,
                                              source: source))
         let (ddLogLevel, ddLogFlag) = level.ddLogLevelAndFlag
-        super.init(message: String(describing: message),
+        let msg = String(describing: message)
+        super.init(format: msg,
+                   formatted: msg, // We have no chance in retrieving the original format here.
                    level: ddLogLevel,
                    flag: ddLogFlag,
                    context: 0,
@@ -138,14 +140,14 @@ final class SwiftLogMessage: DDLogMessage {
     @usableFromInline
     @available(*, deprecated, renamed: "init(loggerLabel:loggerMetadata:loggerMetadata:message:level:metadata:source:file:function:line:)")
     convenience init(loggerLabel: String,
-         loggerMetadata: Logger.Metadata,
-         message: Logger.Message,
-         level: Logger.Level,
-         metadata: Logger.Metadata?,
-         source: String,
-         file: String,
-         function: String,
-         line: UInt) {
+                     loggerMetadata: Logger.Metadata,
+                     message: Logger.Message,
+                     level: Logger.Level,
+                     metadata: Logger.Metadata?,
+                     source: String,
+                     file: String,
+                     function: String,
+                     line: UInt) {
         self.init(loggerLabel: loggerLabel,
                   loggerMetadata: loggerMetadata,
                   loggerProvidedMetadata: nil,
