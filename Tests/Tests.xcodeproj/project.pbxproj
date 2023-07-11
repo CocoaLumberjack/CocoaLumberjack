@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		07C15C512A5D677D00AF3B5B /* DDLogMessageFormatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C15C4F2A5D677D00AF3B5B /* DDLogMessageFormatTests.swift */; };
+		07C15C552A5D83C000AF3B5B /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8FD0217A1E9000B496D7 /* CocoaLumberjack.framework */; };
 		0A0ED26322CEAB290037739B /* DDSampleFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A55DA2D22CE962B00686977 /* DDSampleFileManager.m */; };
 		0A55DA2E22CE962B00686977 /* DDSampleFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A55DA2D22CE962B00686977 /* DDSampleFileManager.m */; };
 		0A7D8FD4217A1E9800B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8FD0217A1E9000B496D7 /* CocoaLumberjack.framework */; };
@@ -16,7 +17,7 @@
 		0A7E1D58217A86EF0011CFEB /* DDSMocking.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E1D56217A7A380011CFEB /* DDSMocking.m */; };
 		0AA9B47321CC0AE60036182F /* DDFileLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AA9B47221CC0AE60036182F /* DDFileLoggerTests.m */; };
 		0AA9B47721CC0B060036182F /* DDFileLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AA9B47221CC0AE60036182F /* DDFileLoggerTests.m */; };
-		4C4A3683243C463F00410EF0 /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8FD2217A1E9000B496D7 /* CocoaLumberjackSwift.framework */; platformFilters = (ios, maccatalyst, macos, ); };
+		4C4A3683243C463F00410EF0 /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8FD2217A1E9000B496D7 /* CocoaLumberjackSwift.framework */; };
 		4C4A3686243C48DB00410EF0 /* DDLogCombineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4A367A243C418600410EF0 /* DDLogCombineTests.swift */; };
 		6ECBFDB721E9A31500CBB679 /* DDFileLoggerPerformanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ECBFDB321E9A31500CBB679 /* DDFileLoggerPerformanceTests.m */; };
 		6ECBFDB821E9A3BC00CBB679 /* DDFileLoggerPerformanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ECBFDB321E9A31500CBB679 /* DDFileLoggerPerformanceTests.m */; };
@@ -124,6 +125,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07C15C552A5D83C000AF3B5B /* CocoaLumberjack.framework in Frameworks */,
 				4C4A3683243C463F00410EF0 /* CocoaLumberjackSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
