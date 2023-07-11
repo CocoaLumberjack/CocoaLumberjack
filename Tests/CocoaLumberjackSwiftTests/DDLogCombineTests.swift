@@ -165,7 +165,7 @@ final class DDLogCombineTests: XCTestCase {
                                        "2001/01/01 00:03:20:000  WARNING: this is incorrect"])
     }
     
-    func testQOSNameInstanciation() {
+    func testQOSNameInstantiation() {
         let name = "UI"
         let qos: qos_class_t = {
             switch DDQualityOfServiceName(rawValue: name) {
