@@ -216,7 +216,7 @@ static DDQualityOfServiceName _qos_name(NSUInteger qos) {
         memset(spaces, ' ', numSpaces);
         spaces[numSpaces] = '\0';
 
-        return [NSString stringWithFormat:@"%@%s", queueThreadLabel, spaces];
+        return [queueThreadLabel stringByAppendingString:@(spaces)];
     } else {
         // Exact
 

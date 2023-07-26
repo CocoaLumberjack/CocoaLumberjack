@@ -22,7 +22,7 @@
             DDLogError(@"%@", description);                                           \
             NSAssert(NO, @"%@", description);                                         \
         }
-#define DDAssertCondition(condition) DDAssert(condition, @"Condition not satisfied: %s", #condition)
+#define DDAssertCondition(condition) DDAssert(condition, @"Condition not satisfied: %@", @(#condition))
 
 /**
  * Analog to `DDAssertionFailure` from DDAssert.swift for use in Objective C
