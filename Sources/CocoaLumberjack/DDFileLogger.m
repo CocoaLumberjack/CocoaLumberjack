@@ -1737,15 +1737,15 @@ static NSString *_xattrToExtensionName(NSString *attrName) {
 
     if (result < 0) {
         if (errno != ENOENT) {
-            NSLogError(@"DDLogFileInfo: setxattr(%@, %@): error = %s",
+            NSLogError(@"DDLogFileInfo: setxattr(%@, %@): error = %@",
                        attrName,
                        filePath,
-                       strerror(errno));
+                       @(strerror(errno)));
         } else {
-            NSLogDebug(@"DDLogFileInfo: File does not exist in setxattr(%@, %@): error = %s",
+            NSLogDebug(@"DDLogFileInfo: File does not exist in setxattr(%@, %@): error = %@",
                        attrName,
                        filePath,
-                       strerror(errno));
+                       @(strerror(errno)));
         }
     }
 #if TARGET_IPHONE_SIMULATOR
@@ -1762,10 +1762,10 @@ static NSString *_xattrToExtensionName(NSString *attrName) {
     int result = removexattr(path, name, 0);
 
     if (result < 0 && errno != ENOATTR) {
-        NSLogError(@"DDLogFileInfo: removexattr(%@, %@): error = %s",
+        NSLogError(@"DDLogFileInfo: removexattr(%@, %@): error = %@",
                    attrName,
                    self.fileName,
-                   strerror(errno));
+                   @(strerror(errno)));
     }
 
 #if TARGET_IPHONE_SIMULATOR

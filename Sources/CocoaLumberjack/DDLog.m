@@ -974,13 +974,13 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
 #pragma clang diagnostic pop
 #endif
         _options      = options;
-        _timestamp    = timestamp ?: [NSDate new];
+        _timestamp    = timestamp ?: [NSDate date];
 
         __uint64_t tid;
         if (pthread_threadid_np(NULL, &tid) == 0) {
             _threadID = [[NSString alloc] initWithFormat:@"%llu", tid];
         } else {
-            _threadID = @"missing threadId";
+            _threadID = @"N/A";
         }
         _threadName   = NSThread.currentThread.name;
 
@@ -993,7 +993,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
         }
 
         // Try to get the current queue's label
-        _queueLabel = [[NSString alloc] initWithFormat:@"%s", dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL)];
+        _queueLabel = @(dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL));
         _qos = (NSUInteger) qos_class_self();
     }
     return self;
