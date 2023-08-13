@@ -79,23 +79,18 @@
 #define MAP_TO_TERMINAL_APP_COLORS 1
 
 typedef struct {
-  uint8_t r;
-  uint8_t g;
-  uint8_t b;
+    uint8_t r;
+    uint8_t g;
+    uint8_t b;
 } DDRGBColor;
 
 @interface DDTTYLoggerColorProfile : NSObject {
-    @public
+@public
     DDLogFlag mask;
     NSInteger context;
 
-    uint8_t fg_r;
-    uint8_t fg_g;
-    uint8_t fg_b;
-
-    uint8_t bg_r;
-    uint8_t bg_g;
-    uint8_t bg_b;
+    DDRGBColor fg;
+    DDRGBColor bg;
 
     NSUInteger fgCodeIndex;
     NSString *fgCodeRaw;
@@ -117,19 +112,15 @@ typedef struct {
 
 @end
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark -
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 @interface DDTTYLogger () {
     NSString *_appName;
     char *_app;
     size_t _appLen;
-    
+
     NSString *_processID;
     char *_pid;
     size_t _pidLen;
-    
+
     BOOL _colorsEnabled;
     NSMutableArray *_colorProfilesArray;
     NSMutableDictionary *_colorProfilesDict;
@@ -137,6 +128,7 @@ typedef struct {
 
 @end
 
+#pragma mark -
 
 @implementation DDTTYLogger
 
@@ -144,30 +136,30 @@ static BOOL isaColorTTY;
 static BOOL isaColor256TTY;
 static BOOL isaXcodeColorTTY;
 
-static NSArray *codes_fg = nil;
-static NSArray *codes_bg = nil;
+static NSArray *codesFg = nil;
+static NSArray *codesBg = nil;
 static NSArray *colors   = nil;
 
 static DDTTYLogger *sharedInstance;
 
 /**
- * Initializes the colors array, as well as the codes_fg and codes_bg arrays, for 16 color mode.
+ * Initializes the colors array, as well as the `codesFg` and `codesBg` arrays, for 16 color mode.
  *
  * This method is used when the application is running from within a shell that only supports 16 color mode.
  * This method is not invoked if the application is running within Xcode, or via normal UI app launch.
  **/
-+ (void)initialize_colors_16 {
-    if (codes_fg || codes_bg || colors) {
++ (void)initializeColors16 {
+    if (codesFg || codesBg || colors) {
         return;
     }
 
-    NSMutableArray *m_colors   = [NSMutableArray arrayWithCapacity:16];
+    NSMutableArray *mColors = [NSMutableArray arrayWithCapacity:16];
 
     // In a standard shell only 16 colors are supported.
     //
     // More information about ansi escape codes can be found online.
     // http://en.wikipedia.org/wiki/ANSI_escape_code
-    codes_fg = @[
+    codesFg = @[
         @"30m",  // normal - black
         @"31m",  // normal - red
         @"32m",  // normal - green
@@ -186,7 +178,7 @@ static DDTTYLogger *sharedInstance;
         @"1;37m",  // bright - white
     ];
 
-    codes_bg = @[
+    codesBg = @[
         @"40m",  // normal - black
         @"41m",  // normal - red
         @"42m",  // normal - green
@@ -205,13 +197,12 @@ static DDTTYLogger *sharedInstance;
         @"1;47m",  // bright - white
     ];
 
-
 #if MAP_TO_TERMINAL_APP_COLORS
 
     // Standard Terminal.app colors:
     //
     // These are the default colors used by Apple's Terminal.app.
-    DDRGBColor rgbColors[] = {
+    const DDRGBColor rgbColors[] = {
         {  0,   0,   0}, // normal - black
         {194,  54,  33}, // normal - red
         { 37, 188,  36}, // normal - green
@@ -235,8 +226,7 @@ static DDTTYLogger *sharedInstance;
     // Standard xterm colors:
     //
     // These are the default colors used by most xterm shells.
-
-    DDRGBColor rgbColors[] = {
+    const DDRGBColor rgbColors[] = {
         {  0,   0,   0}, // normal - black
         {205,   0,   0}, // normal - red
         {  0, 205,   0}, // normal - green
@@ -257,30 +247,30 @@ static DDTTYLogger *sharedInstance;
 #endif /* if MAP_TO_TERMINAL_APP_COLORS */
 
     for (size_t i = 0; i < sizeof(rgbColors) / sizeof(rgbColors[0]); ++i) {
-        [m_colors addObject:DDMakeColor(rgbColors[i].r, rgbColors[i].g, rgbColors[i].b)];
+        [mColors addObject:DDMakeColor(rgbColors[i].r, rgbColors[i].g, rgbColors[i].b)];
     }
-    colors   = [m_colors   copy];
+    colors = [mColors copy];
 
-    NSAssert([codes_fg count] == [codes_bg count], @"Invalid colors/codes array(s)");
-    NSAssert([codes_fg count] == [colors count],   @"Invalid colors/codes array(s)");
+    NSAssert([codesFg count] == [codesBg count], @"Invalid colors/codes array(s)");
+    NSAssert([codesFg count] == [colors count],   @"Invalid colors/codes array(s)");
 }
 
 /**
- * Initializes the colors array, as well as the codes_fg and codes_bg arrays, for 256 color mode.
+ * Initializes the colors array, as well as the `codesFg` and `codesBg` arrays, for 256 color mode.
  *
  * This method is used when the application is running from within a shell that supports 256 color mode.
  * This method is not invoked if the application is running within Xcode, or via normal UI app launch.
  **/
-+ (void)initialize_colors_256 {
-    if (codes_fg || codes_bg || colors) {
++ (void)initializeColors256 {
+    if (codesFg || codesBg || colors) {
         return;
     }
 
-    NSMutableArray *m_codes_fg = [NSMutableArray arrayWithCapacity:(256 - 16)];
-    NSMutableArray *m_codes_bg = [NSMutableArray arrayWithCapacity:(256 - 16)];
-    NSMutableArray *m_colors   = [NSMutableArray arrayWithCapacity:(256 - 16)];
+    NSMutableArray *mCodesFg = [NSMutableArray arrayWithCapacity:(256 - 16)];
+    NSMutableArray *mCodesBg = [NSMutableArray arrayWithCapacity:(256 - 16)];
+    NSMutableArray *mColors  = [NSMutableArray arrayWithCapacity:(256 - 16)];
 
-    #if MAP_TO_TERMINAL_APP_COLORS
+#if MAP_TO_TERMINAL_APP_COLORS
 
     // Standard Terminal.app colors:
     //
@@ -307,7 +297,7 @@ static DDTTYLogger *sharedInstance;
     // http://en.wikipedia.org/wiki/ANSI_escape_code
 
     // Colors
-    DDRGBColor rgbColors[] = {
+    const DDRGBColor rgbColors[] = {
         { 47,  49,  49},
         { 60,  42, 144},
         { 66,  44, 183},
@@ -592,21 +582,19 @@ static DDTTYLogger *sharedInstance;
     };
 
     for (size_t i = 0; i < sizeof(rgbColors) / sizeof(rgbColors[0]); ++i) {
-        [m_colors addObject:DDMakeColor(rgbColors[i].r, rgbColors[i].g, rgbColors[i].b)];
+        [mColors addObject:DDMakeColor(rgbColors[i].r, rgbColors[i].g, rgbColors[i].b)];
     }
 
     // Color codes
-
     int index = 16;
-
     while (index < 256) {
-        [m_codes_fg addObject:[NSString stringWithFormat:@"38;5;%dm", index]];
-        [m_codes_bg addObject:[NSString stringWithFormat:@"48;5;%dm", index]];
+        [mCodesFg addObject:[NSString stringWithFormat:@"38;5;%dm", index]];
+        [mCodesBg addObject:[NSString stringWithFormat:@"48;5;%dm", index]];
 
         index++;
     }
 
-    #else /* if MAP_TO_TERMINAL_APP_COLORS */
+#else /* if MAP_TO_TERMINAL_APP_COLORS */
 
     // Standard xterm colors:
     //
@@ -652,9 +640,9 @@ static DDTTYLogger *sharedInstance;
             for (bi = 0; bi < 6; bi++) {
                 b = (bi == 0) ? 0 : 95 + (40 * (bi - 1));
 
-                [m_codes_fg addObject:[NSString stringWithFormat:@"38;5;%dm", index]];
-                [m_codes_bg addObject:[NSString stringWithFormat:@"48;5;%dm", index]];
-                [m_colors addObject:DDMakeColor(r, g, b)];
+                [mCodesFg addObject:[NSString stringWithFormat:@"38;5;%dm", index]];
+                [mCodesBg addObject:[NSString stringWithFormat:@"48;5;%dm", index]];
+                [mColors  addObject:DDMakeColor(r, g, b)];
 
                 index++;
             }
@@ -668,9 +656,9 @@ static DDTTYLogger *sharedInstance;
     b = 8;
 
     while (index < 256) {
-        [m_codes_fg addObject:[NSString stringWithFormat:@"38;5;%dm", index]];
-        [m_codes_bg addObject:[NSString stringWithFormat:@"48;5;%dm", index]];
-        [m_colors addObject:DDMakeColor(r, g, b)];
+        [mCodesFg addObject:[NSString stringWithFormat:@"38;5;%dm", index]];
+        [mCodesBg addObject:[NSString stringWithFormat:@"48;5;%dm", index]];
+        [mColor s addObject:DDMakeColor(r, g, b)];
 
         r += 10;
         g += 10;
@@ -679,21 +667,20 @@ static DDTTYLogger *sharedInstance;
         index++;
     }
 
-    #endif /* if MAP_TO_TERMINAL_APP_COLORS */
+#endif /* if MAP_TO_TERMINAL_APP_COLORS */
 
-    codes_fg = [m_codes_fg copy];
-    codes_bg = [m_codes_bg copy];
-    colors   = [m_colors   copy];
+    codesFg = [mCodesFg copy];
+    codesBg = [mCodesBg copy];
+    colors  = [mColors  copy];
 
-    NSAssert([codes_fg count] == [codes_bg count], @"Invalid colors/codes array(s)");
-    NSAssert([codes_fg count] == [colors count],   @"Invalid colors/codes array(s)");
+    NSAssert([codesFg count] == [codesBg count], @"Invalid colors/codes array(s)");
+    NSAssert([codesFg count] == [colors count],   @"Invalid colors/codes array(s)");
 }
 
 + (void)getRed:(CGFloat *)rPtr green:(CGFloat *)gPtr blue:(CGFloat *)bPtr fromColor:(DDColor *)color {
-    #if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 
     // iOS
-
     BOOL done = NO;
 
     if ([color respondsToSelector:@selector(getRed:green:blue:alpha:)]) {
@@ -715,11 +702,9 @@ static DDTTYLogger *sharedInstance;
         if (rPtr) {
             *rPtr = pixel[0] / 255.0;
         }
-
         if (gPtr) {
             *gPtr = pixel[1] / 255.0;
         }
-
         if (bPtr) {
             *bPtr = pixel[2] / 255.0;
         }
@@ -728,20 +713,27 @@ static DDTTYLogger *sharedInstance;
         CGColorSpaceRelease(rgbColorSpace);
     }
 
-    #elif defined(DD_CLI) || !__has_include(<AppKit/NSColor.h>)
+#elif defined(DD_CLI) || !__has_include(<AppKit/NSColor.h>)
 
     // OS X without AppKit
-
     [color getRed:rPtr green:gPtr blue:bPtr alpha:NULL];
 
-    #else /* if TARGET_OS_IPHONE */
+#else /* if TARGET_OS_IPHONE */
 
     // OS X with AppKit
-
-    NSColor *safeColor = [color colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    NSColor *safeColor;
+    if (@available(macOS 10.14,*)) {
+        safeColor = [color colorUsingColorSpace:NSColorSpace.deviceRGBColorSpace];
+    } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        safeColor = [color colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+#pragma clang diagnostic pop
+    }
 
     [safeColor getRed:rPtr green:gPtr blue:bPtr alpha:NULL];
-    #endif /* if TARGET_OS_IPHONE */
+
+#endif /* if TARGET_OS_IPHONE */
 }
 
 /**
@@ -750,7 +742,7 @@ static DDTTYLogger *sharedInstance;
  *
  * This method loops through the known supported color set, and calculates the closest color.
  * The array index of that color, within the colors array, is then returned.
- * This array index may also be used as the index within the codes_fg and codes_bg arrays.
+ * This array index may also be used as the index within the `codesFg` and `codesBg` arrays.
  **/
 + (NSUInteger)codeIndexForColor:(DDColor *)inColor {
     CGFloat inR, inG, inB;
@@ -768,11 +760,11 @@ static DDTTYLogger *sharedInstance;
         CGFloat r, g, b;
         [self getRed:&r green:&g blue:&b fromColor:color];
 
-    #if CGFLOAT_IS_DOUBLE
+#if CGFLOAT_IS_DOUBLE
         CGFloat distance = sqrt(pow(r - inR, 2.0) + pow(g - inG, 2.0) + pow(b - inB, 2.0));
-    #else
+#else
         CGFloat distance = sqrtf(powf(r - inR, 2.0f) + powf(g - inG, 2.0f) + powf(b - inB, 2.0f));
-    #endif
+#endif
 
         NSLogVerbose(@"DDTTYLogger: %3lu : %.3f,%.3f,%.3f & %.3f,%.3f,%.3f = %.6f",
                      (unsigned long)i, (double)inR, (double)inG, (double)inB, (double)r, (double)g, (double)b, (double)distance);
@@ -799,10 +791,10 @@ static DDTTYLogger *sharedInstance;
         //
         // PS - Please read the header file before diving into the source code.
 
-        char *xcode_colors = getenv("XcodeColors");
+        char *xcodeColors = getenv("XcodeColors");
         char *term = getenv("TERM");
 
-        if (xcode_colors && (strcmp(xcode_colors, "YES") == 0)) {
+        if (xcodeColors && (strcmp(xcodeColors, "YES") == 0)) {
             isaXcodeColorTTY = YES;
         } else if (term) {
             if (strcasestr(term, "color") != NULL) {
@@ -810,9 +802,9 @@ static DDTTYLogger *sharedInstance;
                 isaColor256TTY = (strcasestr(term, "256") != NULL);
 
                 if (isaColor256TTY) {
-                    [self initialize_colors_256];
+                    [self initializeColors256];
                 } else {
-                    [self initialize_colors_16];
+                    [self initializeColors16];
                 }
             }
         }
@@ -840,9 +832,7 @@ static DDTTYLogger *sharedInstance;
 
     if ((self = [super init])) {
         // Initialize 'app' variable (char *)
-
         _appName = [[NSProcessInfo processInfo] processName];
-
         _appLen = [_appName lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
 
         if (_appLen == 0) {
@@ -851,14 +841,12 @@ static DDTTYLogger *sharedInstance;
         }
 
         _app = (char *)calloc(_appLen + 1, sizeof(char));
-
         if (_app == NULL) {
             return nil;
         }
 
         BOOL processedAppName = [_appName getCString:_app maxLength:(_appLen + 1) encoding:NSUTF8StringEncoding];
-
-        if (NO == processedAppName) {
+        if (!processedAppName) {
             free(_app);
             return nil;
         }
@@ -876,8 +864,7 @@ static DDTTYLogger *sharedInstance;
         }
 
         BOOL processedID = [_processID getCString:_pid maxLength:(_pidLen + 1) encoding:NSUTF8StringEncoding];
-
-        if (NO == processedID) {
+        if (!processedID) {
             free(_app);
             free(_pid);
             return nil;
@@ -918,11 +905,8 @@ static DDTTYLogger *sharedInstance;
     NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
     NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.");
 
-    dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-
     __block BOOL result;
-
-    dispatch_sync(globalLoggingQueue, ^{
+    dispatch_sync([DDLog loggingQueue], ^{
         dispatch_sync(self.loggerQueue, ^{
             result = self->_colorsEnabled;
         });
@@ -955,9 +939,7 @@ static DDTTYLogger *sharedInstance;
     NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
     NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.");
 
-    dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-
-    dispatch_async(globalLoggingQueue, ^{
+    dispatch_async([DDLog loggingQueue], ^{
         dispatch_async(self.loggerQueue, block);
     });
 }
@@ -969,11 +951,10 @@ static DDTTYLogger *sharedInstance;
 - (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forFlag:(DDLogFlag)mask context:(NSInteger)ctxt {
     dispatch_block_t block = ^{
         @autoreleasepool {
-            DDTTYLoggerColorProfile *newColorProfile =
-                [[DDTTYLoggerColorProfile alloc] initWithForegroundColor:txtColor
-                                                         backgroundColor:bgColor
-                                                                    flag:mask
-                                                                 context:ctxt];
+            DDTTYLoggerColorProfile *newColorProfile = [[DDTTYLoggerColorProfile alloc] initWithForegroundColor:txtColor
+                                                                                                backgroundColor:bgColor
+                                                                                                           flag:mask
+                                                                                                        context:ctxt];
 
             NSLogInfo(@"DDTTYLogger: newColorProfile: %@", newColorProfile);
 
@@ -1001,25 +982,22 @@ static DDTTYLogger *sharedInstance;
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-
-        dispatch_async(globalLoggingQueue, ^{
+        dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
     }
 }
 
 - (void)setForegroundColor:(DDColor *)txtColor backgroundColor:(DDColor *)bgColor forTag:(id <NSCopying>)tag {
-    NSAssert([(id < NSObject >) tag conformsToProtocol: @protocol(NSCopying)], @"Invalid tag");
+    NSAssert([(id <NSObject>)tag conformsToProtocol: @protocol(NSCopying)], @"Invalid tag");
 
     dispatch_block_t block = ^{
         @autoreleasepool {
-            DDTTYLoggerColorProfile *newColorProfile =
-                [[DDTTYLoggerColorProfile alloc] initWithForegroundColor:txtColor
-                                                         backgroundColor:bgColor
-                                                                    flag:(DDLogFlag)0
-                                                                 context:0];
+            DDTTYLoggerColorProfile *newColorProfile = [[DDTTYLoggerColorProfile alloc] initWithForegroundColor:txtColor
+                                                                                                backgroundColor:bgColor
+                                                                                                           flag:(DDLogFlag)0
+                                                                                                        context:0];
 
             NSLogInfo(@"DDTTYLogger: newColorProfile: %@", newColorProfile);
 
@@ -1033,10 +1011,8 @@ static DDTTYLogger *sharedInstance;
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-
-        dispatch_async(globalLoggingQueue, ^{
+        dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
     }
@@ -1071,17 +1047,15 @@ static DDTTYLogger *sharedInstance;
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-
-        dispatch_async(globalLoggingQueue, ^{
+        dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
     }
 }
 
 - (void)clearColorsForTag:(id <NSCopying>)tag {
-    NSAssert([(id < NSObject >) tag conformsToProtocol: @protocol(NSCopying)], @"Invalid tag");
+    NSAssert([(id <NSObject>) tag conformsToProtocol: @protocol(NSCopying)], @"Invalid tag");
 
     dispatch_block_t block = ^{
         @autoreleasepool {
@@ -1095,10 +1069,8 @@ static DDTTYLogger *sharedInstance;
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-
-        dispatch_async(globalLoggingQueue, ^{
+        dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
     }
@@ -1117,10 +1089,8 @@ static DDTTYLogger *sharedInstance;
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-
-        dispatch_async(globalLoggingQueue, ^{
+        dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
     }
@@ -1139,10 +1109,8 @@ static DDTTYLogger *sharedInstance;
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-
-        dispatch_async(globalLoggingQueue, ^{
+        dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
     }
@@ -1162,10 +1130,8 @@ static DDTTYLogger *sharedInstance;
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
         NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-
-        dispatch_async(globalLoggingQueue, ^{
+        dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
     }
@@ -1241,10 +1207,10 @@ static DDTTYLogger *sharedInstance;
         // Write the log message to STDERR
 
         if (isFormatted) {
-           // The log message has already been formatted.
-            const size_t max_iovec_len = 5;
-            size_t iovec_len = (_automaticallyAppendNewlineForCustomFormatters) ? 5 : 4;
-            struct iovec v[max_iovec_len] = { 0 };
+            // The log message has already been formatted.
+            const size_t maxIovecLen = 5;
+            size_t iovecLen = _automaticallyAppendNewlineForCustomFormatters ? 5 : 4;
+            struct iovec v[maxIovecLen] = { 0 };
 
             if (colorProfile) {
                 v[0].iov_base = colorProfile->fgCode;
@@ -1253,8 +1219,8 @@ static DDTTYLogger *sharedInstance;
                 v[1].iov_base = colorProfile->bgCode;
                 v[1].iov_len = colorProfile->bgCodeLen;
 
-                v[max_iovec_len - 1].iov_base = colorProfile->resetCode;
-                v[max_iovec_len - 1].iov_len = colorProfile->resetCodeLen;
+                v[maxIovecLen - 1].iov_base = colorProfile->resetCode;
+                v[maxIovecLen - 1].iov_len = colorProfile->resetCodeLen;
             }
 
             v[2].iov_base = msg;
@@ -1263,10 +1229,10 @@ static DDTTYLogger *sharedInstance;
             if (_automaticallyAppendNewlineForCustomFormatters && (v[2].iov_len == 0 || msg[v[2].iov_len - 1] != '\n')) {
                 v[3].iov_base = "\n";
                 v[3].iov_len = 1;
-                iovec_len = 5;
+                iovecLen = 5;
             }
 
-            writev(STDERR_FILENO, v, (int)iovec_len);
+            writev(STDERR_FILENO, v, (int)iovecLen);
         } else {
             // The log message is unformatted, so apply standard NSLog style formatting.
 
@@ -1374,7 +1340,7 @@ static DDTTYLogger *sharedInstance;
 
 @end
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
 
 @implementation DDTTYLoggerColorProfile
 
@@ -1388,31 +1354,31 @@ static DDTTYLogger *sharedInstance;
         if (fgColor) {
             [DDTTYLogger getRed:&r green:&g blue:&b fromColor:fgColor];
 
-            fg_r = (uint8_t)(r * (CGFloat)255.0);
-            fg_g = (uint8_t)(g * (CGFloat)255.0);
-            fg_b = (uint8_t)(b * (CGFloat)255.0);
+            fg.r = (uint8_t)(r * (CGFloat)255.0);
+            fg.g = (uint8_t)(g * (CGFloat)255.0);
+            fg.b = (uint8_t)(b * (CGFloat)255.0);
         }
 
         if (bgColor) {
             [DDTTYLogger getRed:&r green:&g blue:&b fromColor:bgColor];
 
-            bg_r = (uint8_t)(r * (CGFloat)255.0);
-            bg_g = (uint8_t)(g * (CGFloat)255.0);
-            bg_b = (uint8_t)(b * (CGFloat)255.0);
+            bg.r = (uint8_t)(r * (CGFloat)255.0);
+            bg.g = (uint8_t)(g * (CGFloat)255.0);
+            bg.b = (uint8_t)(b * (CGFloat)255.0);
         }
 
         if (fgColor && isaColorTTY) {
             // Map foreground color to closest available shell color
 
             fgCodeIndex = [DDTTYLogger codeIndexForColor:fgColor];
-            fgCodeRaw   = codes_fg[fgCodeIndex];
+            fgCodeRaw   = codesFg[fgCodeIndex];
 
-            NSString *escapeSeq = @"\033[";
+            const NSString *escapeSeq = @"\033[";
 
             NSUInteger len1 = [escapeSeq lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
             NSUInteger len2 = [fgCodeRaw lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
 
-            BOOL escapeSeqEnc = [escapeSeq getCString:(fgCode)      maxLength:(len1 + 1) encoding:NSUTF8StringEncoding];
+            BOOL escapeSeqEnc = [escapeSeq getCString:(fgCode) maxLength:(len1 + 1) encoding:NSUTF8StringEncoding];
             BOOL fgCodeRawEsc = [fgCodeRaw getCString:(fgCode + len1) maxLength:(len2 + 1) encoding:NSUTF8StringEncoding];
 
             if (!escapeSeqEnc || !fgCodeRawEsc) {
@@ -1422,14 +1388,11 @@ static DDTTYLogger *sharedInstance;
             fgCodeLen = len1 + len2;
         } else if (fgColor && isaXcodeColorTTY) {
             // Convert foreground color to color code sequence
-
             const char *escapeSeq = XCODE_COLORS_ESCAPE_SEQ;
-
-            int result = snprintf(fgCode, 24, "%sfg%u,%u,%u;", escapeSeq, fg_r, fg_g, fg_b);
+            int result = snprintf(fgCode, 24, "%sfg%u,%u,%u;", escapeSeq, fg.r, fg.g, fg.b);
             fgCodeLen = (NSUInteger)MAX(MIN(result, (24 - 1)), 0);
         } else {
             // No foreground color or no color support
-
             fgCode[0] = '\0';
             fgCodeLen = 0;
         }
@@ -1438,14 +1401,14 @@ static DDTTYLogger *sharedInstance;
             // Map background color to closest available shell color
 
             bgCodeIndex = [DDTTYLogger codeIndexForColor:bgColor];
-            bgCodeRaw   = codes_bg[bgCodeIndex];
+            bgCodeRaw   = codesBg[bgCodeIndex];
 
-            NSString *escapeSeq = @"\033[";
+            const NSString *escapeSeq = @"\033[";
 
             NSUInteger len1 = [escapeSeq lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
             NSUInteger len2 = [bgCodeRaw lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
 
-            BOOL escapeSeqEnc = [escapeSeq getCString:(bgCode)      maxLength:(len1 + 1) encoding:NSUTF8StringEncoding];
+            BOOL escapeSeqEnc = [escapeSeq getCString:(bgCode) maxLength:(len1 + 1) encoding:NSUTF8StringEncoding];
             BOOL bgCodeRawEsc = [bgCodeRaw getCString:(bgCode + len1) maxLength:(len2 + 1) encoding:NSUTF8StringEncoding];
 
             if (!escapeSeqEnc || !bgCodeRawEsc) {
@@ -1455,14 +1418,11 @@ static DDTTYLogger *sharedInstance;
             bgCodeLen = len1 + len2;
         } else if (bgColor && isaXcodeColorTTY) {
             // Convert background color to color code sequence
-
             const char *escapeSeq = XCODE_COLORS_ESCAPE_SEQ;
-
-            int result = snprintf(bgCode, 24, "%sbg%u,%u,%u;", escapeSeq, bg_r, bg_g, bg_b);
+            int result = snprintf(bgCode, 24, "%sbg%u,%u,%u;", escapeSeq, bg.r, bg.g, bg.b);
             bgCodeLen = (NSUInteger)MAX(MIN(result, (24 - 1)), 0);
         } else {
             // No background color or no color support
-
             bgCode[0] = '\0';
             bgCodeLen = 0;
         }
@@ -1483,7 +1443,7 @@ static DDTTYLogger *sharedInstance;
 - (NSString *)description {
     return [NSString stringWithFormat:
             @"<DDTTYLoggerColorProfile: %p mask:%i ctxt:%ld fg:%u,%u,%u bg:%u,%u,%u fgCode:%@ bgCode:%@>",
-            self, (int)mask, (long)context, fg_r, fg_g, fg_b, bg_r, bg_g, bg_b, fgCodeRaw, bgCodeRaw];
+            self, (int)mask, (long)context, fg.r, fg.g, fg.b, bg.r, bg.g, bg.b, fgCodeRaw, bgCodeRaw];
 }
 
 @end
