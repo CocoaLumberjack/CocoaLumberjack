@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -421,11 +421,6 @@
 		07EDA7772701A5D6003CBA45 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CocoaLumberjackSwift;
-			platformFilters = (
-				ios,
-				maccatalyst,
-				macos,
-			);
 			targetProxy = 07EDA7762701A5D6003CBA45 /* PBXContainerItemProxy */;
 		};
 		D1CBDE5D2549A686001F63F7 /* PBXTargetDependency */ = {
@@ -518,10 +513,10 @@
 					"@loader_path/Frameworks",
 				);
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3,4";
 			};
 			name = Debug;
 		};
@@ -535,10 +530,10 @@
 					"@loader_path/Frameworks",
 				);
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3,4";
 			};
 			name = Release;
 		};
