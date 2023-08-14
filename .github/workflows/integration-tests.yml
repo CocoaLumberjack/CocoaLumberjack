@@ -33,37 +33,17 @@ jobs:
           - macOSSwiftIntegration
           - iOSFrameworkIntegration
           - tvOSSwiftIntegration
-        platform: ['']
-        include:
-          - scheme: watchOSSwiftIntegration
-            platform: iOS
+          - watchOSSwiftIntegration
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: ^14.3
-      - name: Determine Xcode destination
-        id: xcode-destination
-        env:
-          PLATFORM: ${{ matrix.platform }}
-        run: |
-          DESTINATION=''
-          case "${PLATFORM}" in
-            'macOS')    DESTINATION='platform=macOS';;
-            'iOS')      DESTINATION='platform=iOS Simulator,OS=latest,name=iPhone 14 Pro';;
-            'iPadOS')   DESTINATION='platform=iOS Simulator,OS=latest,name=iPad Pro (11-inch) (4th generation)';;
-            'tvOS')     DESTINATION='platform=tvOS Simulator,OS=latest,name=Apple TV 4K (3rd generation)';;
-            'watchOS')  DESTINATION='platform=watchOS Simulator,OS=latest,name=Apple Watch Series 8 (45mm)';;
-            'visionOS') DESTINATION='platform=visionOS Simulator,OS=latest,name=Apple Vision Pro';;
-            *) echo "::error title=Unknown platform!::Unknown platform: ${PLATFORM}" && exit 1;;
-          esac
-          echo "destination=${DESTINATION}" >> "${GITHUB_OUTPUT}"
       - uses: actions/checkout@v3
       - uses: sersoft-gmbh/xcodebuild-action@v2
         with:
           project: Integration/Integration.xcodeproj
           scheme: ${{ matrix.scheme }}
           configuration: Release
-          destination: ${{ steps.xcode-destination.outputs.destination }}
           action: build
         # watchOS builds seems to fail as of Xcode 11.4...
         continue-on-error: ${{ matrix.scheme == 'watchOSSwiftIntegration' }}
