@@ -12,11 +12,11 @@ env:
 
 jobs:
   static-lib:
-    runs-on: macos-12
+    runs-on: macos-13
     steps:
-      - uses: maxim-lobanov/setup-xcode@v1.5.1
+      - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: ^14.1
+          xcode-version: ^14.3
       - uses: actions/checkout@v3
       - uses: sersoft-gmbh/xcodebuild-action@v2
         with:
@@ -26,28 +26,44 @@ jobs:
           action: build
 
   dynamic-lib:
-    runs-on: macos-12
+    runs-on: macos-13
     strategy:
       matrix:
         scheme:
           - macOSSwiftIntegration
           - iOSFrameworkIntegration
           - tvOSSwiftIntegration
-        destination: ['']
+        platform: ['']
         include:
           - scheme: watchOSSwiftIntegration
-            destination: 'platform=iOS Simulator,name=iPhone 12 Pro'
+            platform: iOS
     steps:
-      - uses: maxim-lobanov/setup-xcode@v1.5.1
+      - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: ^14.1
+          xcode-version: ^14.3
+      - name: Determine Xcode destination
+        id: xcode-destination
+        env:
+          PLATFORM: ${{ matrix.platform }}
+        run: |
+          DESTINATION=''
+          case "${PLATFORM}" in
+            'macOS')    DESTINATION='platform=macOS';;
+            'iOS')      DESTINATION='platform=iOS Simulator,OS=latest,name=iPhone 14 Pro';;
+            'iPadOS')   DESTINATION='platform=iOS Simulator,OS=latest,name=iPad Pro (11-inch) (4th generation)';;
+            'tvOS')     DESTINATION='platform=tvOS Simulator,OS=latest,name=Apple TV 4K (3rd generation)';;
+            'watchOS')  DESTINATION='platform=watchOS Simulator,OS=latest,name=Apple Watch Series 8 (45mm)';;
+            'visionOS') DESTINATION='platform=visionOS Simulator,OS=latest,name=Apple Vision Pro';;
+            *) echo "::error title=Unknown platform!::Unknown platform: ${PLATFORM}" && exit 1;;
+          esac
+          echo "destination=${DESTINATION}" >> "${GITHUB_OUTPUT}"
       - uses: actions/checkout@v3
       - uses: sersoft-gmbh/xcodebuild-action@v2
         with:
           project: Integration/Integration.xcodeproj
           scheme: ${{ matrix.scheme }}
           configuration: Release
-          destination: ${{ matrix.destination }}
+          destination: ${{ steps.xcode-destination.outputs.destination }}
           action: build
         # watchOS builds seems to fail as of Xcode 11.4...
         continue-on-error: ${{ matrix.scheme == 'watchOSSwiftIntegration' }}
