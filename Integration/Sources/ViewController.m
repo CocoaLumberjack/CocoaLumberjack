@@ -34,7 +34,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     if (@available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *)) {
         [DDLog addLogger:[DDOSLogger sharedInstance]];
     } else {
-        [DDLog addLogger:[DDTTYLogger sharedInstance]];
+        [DDLog addLogger:(DDTTYLogger *)[DDTTYLogger sharedInstance]];
     }
     
     DDLogVerbose(@"Verbose");
@@ -46,7 +46,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     if (@available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *)) {
         [aDDLogInstance addLogger:[DDOSLogger sharedInstance]];
     } else {
-        [aDDLogInstance addLogger:[DDTTYLogger sharedInstance]];
+        [aDDLogInstance addLogger:(DDTTYLogger *)[DDTTYLogger sharedInstance]];
     }
     
     DDLogVerboseToDDLog(aDDLogInstance, @"Verbose from aDDLogInstance");

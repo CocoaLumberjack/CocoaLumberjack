@@ -16,7 +16,7 @@
 #import <XCTest/XCTest.h>
 #import <CocoaLumberjack/DDContextFilterLogFormatter+Deprecated.h>
 
-static DDLogMessage *testLogMessage() {
+static DDLogMessage *testLogMessage(void) {
     return [[DDLogMessage alloc] initWithFormat:@"test log message"
                                       formatted:@"test log message"
                                            level:DDLogLevelDebug

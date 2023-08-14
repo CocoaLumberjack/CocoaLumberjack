@@ -14,7 +14,7 @@ DDLogLevel ddLogLevel;
 @implementation GlobalLogLevelAppDelegate
 @synthesize window;
 
-static void someFunction()
+static void someFunction(void)
 {
     DDLogError(@"%@: C_Error", THIS_FILE);
     DDLogWarn(@"%@: C_Warn", THIS_FILE);
