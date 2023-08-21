@@ -1,3 +1,14 @@
+# [3.9.0 - Xcode 15.0 on ??, 2023](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.9.0)
+
+### Public
+
+- <TBD>
+
+### Internal
+
+- <TBD>
+
+
 # [3.8.1 - Xcode 14.3 on Aug 21st, 2023](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.8.1)
 
 ### Public
