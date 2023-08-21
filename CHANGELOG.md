@@ -1,4 +1,4 @@
-# [3.8.1 - Xcode 14.3 on ??, 2023](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.8.1)
+# [3.8.1 - Xcode 14.3 on Aug 21st, 2023](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.8.1)
 
 ### Public
 
