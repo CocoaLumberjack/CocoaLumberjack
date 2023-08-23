@@ -1819,6 +1819,10 @@ static NSString *_xattrToExtensionName(NSString *attrName) {
  * NSFileProtectionCompleteUntilFirstUserAuthentication.
  */
 BOOL doesAppRunInBackground(void) {
+    if ([[[NSBundle mainBundle] executablePath] containsString:@".appex/"]) {
+        return YES;
+    }
+
     BOOL answer = NO;
 
     NSArray *backgroundModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
