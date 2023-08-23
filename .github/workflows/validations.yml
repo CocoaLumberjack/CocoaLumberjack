@@ -5,6 +5,8 @@ on:
     branches: [ master ]
   pull_request_target:
     branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 env:
   LC_CTYPE: en_US.UTF-8
@@ -12,6 +14,7 @@ env:
 
 jobs:
   validate-cocoapods:
+    if: ${{ github.event_name != 'pull_request_target' }}
     runs-on: macos-13
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
@@ -21,8 +24,8 @@ jobs:
       - run: pod lib lint
 
   run-danger:
-    runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request_target' }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
