@@ -1,0 +1,27 @@
+name: Publish CocoaPods Release
+
+on:
+  release:
+    types:
+      - published
+
+env:
+  LC_CTYPE: en_US.UTF-8
+  LANG: en_US.UTF-8
+
+jobs:
+  publish-podspec:
+    runs-on: macos-13
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: ^14.3
+      - uses: actions/checkout@v3
+      - name: Generate Podspec
+        env:
+          EXPECTED_VERSION: ${{ github.event.release.tag_name }}
+        run: ./Scripts/generate-podspec.sh "${EXPECTED_VERSION}"
+      - name: Publish Podspec
+        run: pod trunk push CocoaLumberjack.podspec
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}

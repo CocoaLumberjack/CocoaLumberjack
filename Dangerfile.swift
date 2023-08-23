@@ -78,15 +78,6 @@ if (git.createdFiles + git.deletedFiles).contains(where: { $0.isInSources && $0.
   fail("Added or removed library files require the Carthage Xcode project to be updated.")
 }
 
-// Check if Carthage modified and CocoaPods didn't or vice-versa
-let podspecWasModified = git.modifiedFiles.contains("CocoaLumberjack.podspec")
-if xcodeProjectWasModified && !podspecWasModified {
-  warn("The Carthage project was modified but CocoaPods podspec wasn't. Did you forget to update the podspec?")
-}
-if !xcodeProjectWasModified && podspecWasModified {
-  warn("The CocoaPods podspec was modified but the Carthage project wasn't. Did you forget to update the xcodeproj?")
-}
-
 // Check xcodeproj settings are not changed
 // Check to see if any of our project files contains a line with "SOURCE_ROOT" which indicates that the file isn't in sync with Finder.
 if xcodeProjectWasModified {

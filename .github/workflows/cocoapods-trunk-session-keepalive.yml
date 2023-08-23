@@ -1,0 +1,15 @@
+name: CocoaPods Trunk Session Keep-Alive
+
+on:
+  schedule:
+    # every Wednesday at 09:23 UTC
+    - cron: '23 09 * * 3'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Keep CocoaPods Trunk Session Alive
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+        run: pod trunk me --silent

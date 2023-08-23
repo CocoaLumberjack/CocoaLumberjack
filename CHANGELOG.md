@@ -1,12 +1,12 @@
-# [3.9.0 - Xcode 15.0 on ??, 2023](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.9.0)
+# [3.8.2 - Xcode 14.3 on ??, 2023](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.8.2)
 
 ### Public
 
-- <TBD>
+- App background-mode not correctly detected in app extensions (#1359)
 
 ### Internal
 
-- <TBD>
+- Generate Podspec (#1360)
 
 
 # [3.8.1 - Xcode 14.3 on Aug 21st, 2023](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.8.1)

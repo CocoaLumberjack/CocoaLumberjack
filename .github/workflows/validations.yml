@@ -21,7 +21,10 @@ jobs:
         with:
           xcode-version: ^14.3
       - uses: actions/checkout@v3
-      - run: pod lib lint
+      - name: Generate Podspec
+        run: ./Scripts/generate-podspec.sh
+      - name: Validate Pod
+        run: pod lib lint
 
   run-danger:
     if: ${{ github.event_name == 'pull_request_target' }}
