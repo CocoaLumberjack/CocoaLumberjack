@@ -7,7 +7,7 @@ on:
 
 jobs:
   session-keepalive:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Keep CocoaPods Trunk Session Alive
         env:
