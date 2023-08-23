@@ -32,6 +32,12 @@ Pod::Spec.new do |s|
 
   s.subspec 'Swift' do |ss|
     ss.dependency 'CocoaLumberjack/Core'
-    ss.source_files = 'Sources/CocoaLumberjackSwift/**/*.swift', 'Sources/CocoaLumberjackSwiftSupport/include/**/*.{h}'
+    ss.source_files = 'Sources/CocoaLumberjackSwift/**/*.swift',  'Sources/CocoaLumberjackSwiftLogBackend/**/*.swift', 'Sources/CocoaLumberjackSwiftSupport/include/**/*.{h}'
+  end
+
+  s.subspec 'SwiftLog' do |ss|
+    ss.dependency 'SwiftLogAPI', '>= 1.5.0', '< 2.0'
+    ss.dependency 'CocoaLumberjack/Swift'
+    ss.source_files = 'Sources/CocoaLumberjackSwiftLogBackend/**/*.swift'
   end
 end
