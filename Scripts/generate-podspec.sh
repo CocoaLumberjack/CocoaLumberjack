@@ -14,7 +14,6 @@ print_usage() {
         echo ''
         echo 'Generates the podspec file for the current project.'
         echo 'Platform requirements (min SDKs), version are read from the xcconfig files.'
-        echo 'The dependencies are read from the Package.swift file using SPM.'
         echo 'If called with VERSION, the script verifies that the current MARKETING_VERSION in the xcconfig matches VERSION.'
         echo ''
         echo 'Examples:'
@@ -27,7 +26,7 @@ print_usage() {
 # Arg2: Config value pattern (regex) - must escape forward slashes (used as sed separator)
 # Arg3: Config file path
 read_config_var() {
-    sed -nE "s/^ *${$1} *= *(${2}) *$/\1/p" "${3}"
+    sed -nE "s/^ *${1} *= *(${2}) *$/\1/p" "${3}"
     return $?
 }
 
@@ -68,6 +67,7 @@ WATCHOS_SDK_CONFIG_VAR='WATCHOS_DEPLOYMENT_TARGET'
 
 # Read files
 # ##########
+echo 'Reading config...'
 pushd "$(dirname $0)/../" > /dev/null
 
 CURRENT_VERSION="$(read_config_var "${VERSION_CONFIG_VAR}" '[0-9]+\.[0-9]+\.[0-9]+' "${VERSION_XCCONFIG_FILE}")"
@@ -77,14 +77,13 @@ IOS_SDK="$(read_config_var "${IOS_SDK_CONFIG_VAR}" '[0-9]+\.[0-9]+' "${SDKS_XCCO
 TVOS_SDK="$(read_config_var "${TVOS_SDK_CONFIG_VAR}" '[0-9]+\.[0-9]+' "${SDKS_XCCONFIG_FILE}")"
 WATCHOS_SDK="$(read_config_var "${WATCHOS_SDK_CONFIG_VAR}" '[0-9]+\.[0-9]+' "${SDKS_XCCONFIG_FILE}")"
 
-SWIFT_LOG_VERSION_MIN="$(swift package describe --type json | jq '.dependencies[] | select(.identity == "swift-log") | .requirement.range[0].lower_bound')"
-SWIFT_LOG_VERSION_MAX="$(swift package describe --type json | jq '.dependencies[] | select(.identity == "swift-log") | .requirement.range[0].upper_bound')"
-
 popd > /dev/null
 
 
 # Verify variables
 # ################
+echo 'Verifying config...'
+
 if [[ -z "${CURRENT_VERSION}" ]]; then
     echo "Could not find MARKETING_VERSION in ${VERSION_XCCONFIG_FILE}!"
     exit -1
@@ -110,17 +109,11 @@ if [[ -z "${WATCHOS_SDK}" ]]; then
     exit -1
 fi
 
-if [[ -z "${SWIFT_LOG_VERSION_MIN}" ]] || [[ -z "${SWIFT_LOG_VERSION_MAX}" ]]; then
-    echo "Could not find swift-log dependency in Package.swift!"
-    exit -1
-fi
-
-
 # Generate podspec
 # ################
+echo "Generating podspec..."
 pushd "$(dirname $0)/../" > /dev/null
 
-echo "Generating podspec..."
 cat << EOF > ./CocoaLumberjack.podspec
 Pod::Spec.new do |s|
   s.name     = 'CocoaLumberjack'
@@ -132,9 +125,9 @@ Pod::Spec.new do |s|
   s.source   = { :git => 'https://github.com/CocoaLumberjack/CocoaLumberjack.git',
                  :tag => "#{s.version}" }
 
-  s.description = 'It is similar in concept to other popular logging frameworks such as log4j, '   \
-                  'yet is designed specifically for objective-c, and takes advantage of features ' \
-                  'such as multi-threading, grand central dispatch (if available), lockless '      \
+  s.description = 'It is similar in concept to other popular logging frameworks such as log4j, '   \\
+                  'yet is designed specifically for objective-c, and takes advantage of features ' \\
+                  'such as multi-threading, grand central dispatch (if available), lockless '      \\
                   'atomic operations, and the dynamic nature of the objective-c runtime.'
 
   s.cocoapods_version = '>= 1.7.0'
@@ -157,11 +150,6 @@ Pod::Spec.new do |s|
   s.subspec 'Swift' do |ss|
     ss.dependency 'CocoaLumberjack/Core'
     ss.source_files = 'Sources/CocoaLumberjackSwift/**/*.swift', 'Sources/CocoaLumberjackSwiftSupport/include/**/*.{h}'
-  end
-
-  s.subspec 'SwiftLogBackend' do |ss|
-    ss.dependency 'CocoaLumberjack/Core'
-    ss.dependency 'SwiftLogAPI', [ '>= ${SWIFT_LOG_VERSION_MIN}', '< ${SWIFT_LOG_VERSION_MAX}' ]
   end
 end
 EOF
