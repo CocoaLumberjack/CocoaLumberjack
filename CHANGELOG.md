@@ -3,6 +3,7 @@
 ### Public
 
 - App background-mode not correctly detected in app extensions (#1359)
+- Fix DDFileLogger rollingFrequency and maximumFileSize not being honored (#1361)
 
 ### Internal
 
