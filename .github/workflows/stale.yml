@@ -1,0 +1,37 @@
+name: 'Manage stale issues and PRs'
+
+on:
+  schedule:
+    - cron: '30 1 * * *'
+
+permissions:
+  # contents: write # only for delete-branch option, which we leave to default `false` right now.
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v8
+        with:
+          days-before-stale: 60
+          days-before-close: 7
+          stale-issue-label: Stale
+          stale-pr-label: Stale
+          exempt-all-assignees: true
+          exempt-draft-pr: true
+          exempt-issue-labels: Important,Blocker,Feature Request,Good First Issue
+          exempt-pr-labels: Important,Blocker,Feature Request
+          stale-issue-message: >
+            This issue has been automatically marked as stale because it has not had recent activity.
+            It will be closed if no further activity occurs.
+            If this is still an issue, please make sure it is up to date and if so,
+            add a comment that this is still an issue to keep it open.
+            Thank you for your contribution.
+          stale-pr-message: >
+            This pull request has been automatically marked as stale because it has not had recent activity.
+            It will be closed if no further activity occurs.
+            If this pull request is still valid, please make sure it is up to date and if so,
+            add a comment that this is still valid to keep it open.
+            Thank you for your contribution.
