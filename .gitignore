@@ -1,12 +1,19 @@
-# Xcode
+# macOS
 .DS_Store
+
+# Xcode / SPM
 /.build
-/.swiftpm
 /Packages
 /*.xcodeproj
 xcuserdata/
+DerivedData/
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 
+# Carthage Project
 !Lumberjack.xcodeproj
+
+# CocoaPods (podspec is generated)
+CocoaLumberjack.podspec
 
 # Carthage
 Carthage/Build
