@@ -6,7 +6,7 @@ on:
     - cron: '23 09 * * 3'
 
 jobs:
-  build:
+  session-keepalive:
     runs-on: ubuntu-latest
     steps:
       - name: Keep CocoaPods Trunk Session Alive
