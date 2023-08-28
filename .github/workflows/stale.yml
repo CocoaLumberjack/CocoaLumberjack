@@ -3,6 +3,24 @@ name: 'Manage stale issues and PRs'
 on:
   schedule:
     - cron: '30 1 * * *'
+  issues:
+    types: 
+      - edited
+      - reopened
+      - labeled
+      - unlabeled
+      - milestoned
+      - demilestoned
+      - assigned
+      - unassigned
+  issue_comment:
+    types:
+      - created
+      - edited
+  pull_request_review:
+  push:
+    paths:
+      - '.github/workflows/stale.yml'
 
 permissions:
   # contents: write # only for delete-branch option, which we leave to default `false` right now.
