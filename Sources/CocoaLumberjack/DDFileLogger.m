@@ -18,6 +18,9 @@
 #endif
 
 #import <sys/xattr.h>
+#import <sys/file.h>
+#import <errno.h>
+#import <unistd.h>
 
 #import "DDFileLogger+Internal.h"
 
@@ -1345,6 +1348,12 @@ static int exception_count = 0;
             [self willLogMessage:_currentLogFileInfo];
         }
 
+        // use an advisory lock to coordinate write with other processes
+        int fd = [handle fileDescriptor];
+        while(flock(fd, LOCK_EX) != 0) {
+            NSLogError(@"DDFileLogger: Could not lock logfile, retrying in 1ms: %s (%d)", strerror(errno), errno);
+            usleep(1000);
+        }
         if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
             __autoreleasing NSError *error = nil;
             BOOL success = [handle seekToEndReturningOffset:nil error:&error];
@@ -1359,6 +1368,7 @@ static int exception_count = 0;
             [handle seekToEndOfFile];
             [handle writeData:data];
         }
+        flock(fd, LOCK_UN);
 
         if (implementsDeprecatedDidLog) {
 #pragma clang diagnostic push
