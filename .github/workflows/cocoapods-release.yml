@@ -16,7 +16,7 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: ^14.3
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Generate Podspec
         env:
           EXPECTED_VERSION: ${{ github.event.release.tag_name }}
