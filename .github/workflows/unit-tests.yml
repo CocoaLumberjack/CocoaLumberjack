@@ -17,7 +17,7 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: ^14.3
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Run SwiftPM Tests
         run: swift test --enable-code-coverage --parallel
       - uses: sersoft-gmbh/swift-coverage-action@v3
@@ -65,7 +65,7 @@ jobs:
             *) echo "::error title=Unknown platform!::Unknown platform: ${PLATFORM}" && exit 1;;
           esac
           echo "destination=${DESTINATION}" >> "${GITHUB_OUTPUT}"
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: sersoft-gmbh/xcodebuild-action@v2
         with:
           project: Tests/Tests.xcodeproj
