@@ -1,0 +1,23 @@
+name: Danger
+
+on:
+  pull_request_target:
+    branches: [ master ]
+
+env:
+  LC_CTYPE: en_US.UTF-8
+  LANG: en_US.UTF-8
+
+jobs:
+  run-danger:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: danger/swift
+        uses: docker://ghcr.io/danger/danger-swift-with-swiftlint:3.15.0
+        with:
+          args: --failOnErrors --no-publish-check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
