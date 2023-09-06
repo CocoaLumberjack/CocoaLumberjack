@@ -134,7 +134,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     __auto_type info2 = logger.currentLogFileInfo;
     XCTAssertEqualObjects(info1.filePath, info2.filePath);
 
-    info1.isArchived = YES;
+    info2.isArchived = YES;
 
     __auto_type info3 = logger.currentLogFileInfo;
     __auto_type info4 = logger.currentLogFileInfo;

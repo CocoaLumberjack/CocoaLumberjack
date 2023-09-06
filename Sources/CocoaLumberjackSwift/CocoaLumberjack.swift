@@ -83,15 +83,38 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
 
     @usableFromInline
     struct Storage {
+#if swift(>=5.6)
+        @usableFromInline
+        typealias Args = Array<any CVarArg>
+#else
+        @usableFromInline
+        typealias Args = Array<CVarArg>
+#endif
+        @usableFromInline
+        let requiresArgumentParsing: Bool
         @usableFromInline
         var format: String
         @usableFromInline
-        var args: Array<CVarArg>
+        var args: Args {
+            willSet {
+                // We only assert here to let the compiler optimize it away.
+                // The setter will be used repeatedly during string interpolation, thus should stay fast.
+                assert(requiresArgumentParsing || newValue.isEmpty, "Non-empty arguments always require argument parsing!")
+            }
+        }
 
         @usableFromInline
-        init(format: String, args: Array<CVarArg>) {
+        init(requiresArgumentParsing: Bool, format: String, args: Args) {
+            precondition(requiresArgumentParsing || args.isEmpty, "Non-empty arguments always require argument parsing!")
+            self.requiresArgumentParsing = requiresArgumentParsing
             self.format = format
             self.args = args
+        }
+
+        @available(*, deprecated, message: "Use initializer specifying the need for argument parsing: init(requiresArgumentParsing:format:args:)")
+        @usableFromInline
+        init(format: String, args: Args) {
+            self.init(requiresArgumentParsing: !args.isEmpty, format: format, args: args)
         }
     }
 
@@ -104,14 +127,14 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
         public init(literalCapacity: Int, interpolationCount: Int) {
             var format = String()
             format.reserveCapacity(literalCapacity)
-            var args = Array<CVarArg>()
+            var args = Storage.Args()
             args.reserveCapacity(interpolationCount)
-            storage = .init(format: format, args: args)
+            storage = .init(requiresArgumentParsing: true, format: format, args: args)
         }
 
         @inlinable
         public mutating func appendLiteral(_ literal: StringLiteralType) {
-            storage.format.append(literal)
+            storage.format.append(literal.replacingOccurrences(of: "%", with: "%%"))
         }
 
         @inlinable
@@ -208,6 +231,16 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
 
         @inlinable
         public mutating func appendInterpolation<Convertible: ReferenceConvertible>(_ c: Convertible) {
+            if c is CVarArg {
+                print("""
+                [WARNING]: CocoaLumberjackSwift is creating a \(DDLogMessageFormat.self) with an interpolation conforming to `CVarArg` \
+                using the overload for `ReferenceConvertible` interpolations!
+                Please report this as a bug, including the following snippet:
+                ```
+                Convertible: \(Convertible.self), ReferenceType: \(Convertible.ReferenceType.self), type(of: c): \(type(of: c))
+                ```
+                """)
+            }
             storage.format.append("%@")
             // This should be safe, sine the compiler should convert it to the reference.
             storage.args.append(c as? CVarArg ?? c as! Convertible.ReferenceType)
@@ -231,16 +264,17 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
     @inlinable
     var format: String { storage.format }
     @inlinable
-    var args: Array<CVarArg> { storage.args }
+    var args: Storage.Args { storage.args }
 
     @inlinable
     var formatted: String {
-        String(format: storage.format, arguments: storage.args)
+        guard storage.requiresArgumentParsing else { return storage.format }
+        return String(format: storage.format, arguments: storage.args)
     }
 
     @inlinable
     public init(stringLiteral value: StringLiteralType) {
-        storage = .init(format: value, args: [])
+        storage = .init(requiresArgumentParsing: false, format: value, args: [])
     }
 
     @inlinable
@@ -250,7 +284,7 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
 
     @inlinable
     internal init(_formattedMessage: String) {
-        storage = .init(format: _formattedMessage, args: [])
+        storage = .init(requiresArgumentParsing: false, format: _formattedMessage, args: [])
     }
 }
 

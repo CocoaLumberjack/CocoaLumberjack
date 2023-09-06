@@ -25,14 +25,26 @@ final class DDLogMessageFormatTests: XCTestCase {
         super.tearDown()
     }
 
+    func testMessageFormatCreationWithNoArgs() {
+        let format: DDLogMessageFormat = "Message with no args"
+        let expectedFormat: String = "Message with no args"
+        XCTAssertFalse(format.storage.requiresArgumentParsing)
+        XCTAssertEqual(format.format, expectedFormat)
+        XCTAssertTrue(format.args.isEmpty)
+        XCTAssertEqual(format.formatted, expectedFormat)
+    }
+
     func testMessageFormatCreationWithString() {
         let str: String = "String"
         let substr: Substring = "Substring"
         let format: DDLogMessageFormat = "This is a string: \(str). And this a substring: \(substr)."
-        XCTAssertEqual(format.format, "This is a string: %@. And this a substring: %@.")
+        let expectedFormat: String = "This is a string: %@. And this a substring: %@."
+        XCTAssertTrue(format.storage.requiresArgumentParsing)
+        XCTAssertEqual(format.format, expectedFormat)
         XCTAssertEqual(format.args.count, 2)
         XCTAssertEqual(format.args.first as? String, str)
         XCTAssertEqual(format.args.last as? String, String(substr))
+        XCTAssertEqual(format.formatted, String(format: expectedFormat, arguments: [str, String(substr)]))
     }
 
     func testMessageFormatCreationWithInts() {
@@ -47,7 +59,9 @@ final class DDLogMessageFormatTests: XCTestCase {
         let int: Int = -2345654
         let uint: UInt = 2345654
         let format: DDLogMessageFormat = "Int8: \(int8); UInt8: \(uint8); Int16: \(int16); UInt16: \(uint16); Int32: \(int32); UInt32: \(uint32); Int64: \(int64); UInt64: \(uint64); Int: \(int); UInt: \(uint)"
-        XCTAssertEqual(format.format, "Int8: %c; UInt8: %c; Int16: %i; UInt16: %u; Int32: %li; UInt32: %lu; Int64: %lli; UInt64: %llu; Int: %lli; UInt: %llu")
+        let expectedFormat: String = "Int8: %c; UInt8: %c; Int16: %i; UInt16: %u; Int32: %li; UInt32: %lu; Int64: %lli; UInt64: %llu; Int: %lli; UInt: %llu"
+        XCTAssertTrue(format.storage.requiresArgumentParsing)
+        XCTAssertEqual(format.format, expectedFormat)
         XCTAssertEqual(format.args.count, 10)
         guard format.args.count >= 10 else { return } // prevent crashes
         XCTAssertEqual(format.args[0] as? Int8, int8)
@@ -60,16 +74,22 @@ final class DDLogMessageFormatTests: XCTestCase {
         XCTAssertEqual(format.args[7] as? UInt64, uint64)
         XCTAssertEqual(format.args[8] as? Int, int)
         XCTAssertEqual(format.args[9] as? UInt, uint)
+        XCTAssertEqual(format.formatted, String(format: expectedFormat, arguments: [
+            int8, uint8, int16, uint16, int32, uint32, int64, uint64, int, uint,
+        ]))
     }
 
     func testMessageFormatCreationWithFloats() {
         let flt: Float = 42.4344
         let dbl: Double = 42.1345512
         let format: DDLogMessageFormat = "Float: \(flt); Double: \(dbl)"
-        XCTAssertEqual(format.format, "Float: %f; Double: %lf")
+        let expectedFormat: String = "Float: %f; Double: %lf"
+        XCTAssertTrue(format.storage.requiresArgumentParsing)
+        XCTAssertEqual(format.format, expectedFormat)
         XCTAssertEqual(format.args.count, 2)
         XCTAssertEqual(format.args.first as? Float, flt)
         XCTAssertEqual(format.args.last as? Double, dbl)
+        XCTAssertEqual(format.formatted, String(format: expectedFormat, arguments: [flt, dbl]))
     }
 
     func testMessageFormatCreationWithReferenceConvertibles() {
@@ -77,12 +97,15 @@ final class DDLogMessageFormatTests: XCTestCase {
         let uuid = UUID()
         let indexPath = IndexPath(indexes: [1, 2, 3])
         let format: DDLogMessageFormat = "Date: \(date); UUID: \(uuid); IndexPath: \(indexPath)"
-        XCTAssertEqual(format.format, "Date: %@; UUID: %@; IndexPath: %@")
+        let expectedFormat: String = "Date: %@; UUID: %@; IndexPath: %@"
+        XCTAssertTrue(format.storage.requiresArgumentParsing)
+        XCTAssertEqual(format.format, expectedFormat)
         XCTAssertEqual(format.args.count, 3)
         guard format.args.count >= 3 else { return } // prevent crashes
         XCTAssertEqual((format.args[0] as? NSDate).map { $0 as Date }, date)
         XCTAssertEqual((format.args[1] as? NSUUID).map { $0 as UUID }, uuid)
         XCTAssertEqual((format.args[2] as? NSIndexPath).map { $0 as IndexPath }, indexPath)
+        XCTAssertEqual(format.formatted, String(format: expectedFormat, arguments: [date as NSDate, uuid as NSUUID, indexPath as NSIndexPath]))
     }
 
     func testMessageFormatCreationWithNSObjects() {
@@ -90,9 +113,12 @@ final class DDLogMessageFormatTests: XCTestCase {
 
         let obj = TestObject()
         let format: DDLogMessageFormat = "Object: \(obj)"
-        XCTAssertEqual(format.format, "Object: %@")
+        let expectedFormat: String = "Object: %@"
+        XCTAssertTrue(format.storage.requiresArgumentParsing)
+        XCTAssertEqual(format.format, expectedFormat)
         XCTAssertEqual(format.args.count, 1)
         XCTAssertIdentical(format.args.first as? NSObject, obj)
+        XCTAssertEqual(format.formatted, String(format: expectedFormat, arguments: [obj]))
     }
 
     func testMessageFormatCreationWithOtherTypes() {
@@ -102,8 +128,36 @@ final class DDLogMessageFormatTests: XCTestCase {
 
         let other = TestStruct()
         let format: DDLogMessageFormat = "Other: \(other)"
-        XCTAssertEqual(format.format, "Other: %@")
+        let expectedFormat: String = "Other: %@"
+        XCTAssertTrue(format.storage.requiresArgumentParsing)
+        XCTAssertEqual(format.format, expectedFormat)
         XCTAssertEqual(format.args.count, 1)
         XCTAssertEqual(format.args.first as? String, String(describing: other))
+        XCTAssertEqual(format.formatted, String(format: expectedFormat, arguments: [String(describing: other)]))
+    }
+
+    func testMessageFormatWithSpaces() {
+        let format: DDLogMessageFormat = " this is a message that starts and ends with a space "
+        let expectedFormat: String = " this is a message that starts and ends with a space "
+        XCTAssertFalse(format.storage.requiresArgumentParsing)
+        XCTAssertEqual(format.format, expectedFormat)
+        XCTAssertTrue(format.args.isEmpty)
+        XCTAssertEqual(format.formatted, expectedFormat)
+    }
+
+    func testMessageFormatWithPercentInLiteral() {
+        let formatWithoutArgs: DDLogMessageFormat = "This message contains % some % percent %20 signs but no args"
+        let formatWithArgs: DDLogMessageFormat = "This message contains % some % percent %20 signs and \(1) other stuff at \(12.34)"
+        let expectedFormatWithoutArgs = "This message contains % some % percent %20 signs but no args"
+        let expectedFormatWithArgs = "This message contains %% some %% percent %%20 signs and %lli other stuff at %lf"
+        XCTAssertFalse(formatWithoutArgs.storage.requiresArgumentParsing)
+        XCTAssertTrue(formatWithArgs.storage.requiresArgumentParsing)
+        XCTAssertEqual(formatWithoutArgs.format, expectedFormatWithoutArgs)
+        XCTAssertEqual(formatWithArgs.format, expectedFormatWithArgs)
+        XCTAssertTrue(formatWithoutArgs.args.isEmpty)
+        XCTAssertFalse(formatWithArgs.args.isEmpty)
+        XCTAssertEqual(formatWithArgs.args.count, 2)
+        XCTAssertEqual(formatWithoutArgs.formatted, expectedFormatWithoutArgs)
+        XCTAssertEqual(formatWithArgs.formatted, String(format: expectedFormatWithArgs, arguments: formatWithArgs.args))
     }
 }
