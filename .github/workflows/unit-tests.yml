@@ -66,7 +66,7 @@ jobs:
           esac
           echo "destination=${DESTINATION}" >> "${GITHUB_OUTPUT}"
       - uses: actions/checkout@v4
-      - uses: sersoft-gmbh/xcodebuild-action@v2
+      - uses: sersoft-gmbh/xcodebuild-action@v3
         with:
           project: Tests/Tests.xcodeproj
           scheme: ${{ matrix.scheme }}
