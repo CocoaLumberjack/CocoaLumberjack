@@ -18,7 +18,7 @@ jobs:
         with:
           xcode-version: ^14.3
       - uses: actions/checkout@v4
-      - uses: sersoft-gmbh/xcodebuild-action@v2
+      - uses: sersoft-gmbh/xcodebuild-action@v3
         with:
           project: Integration/Integration.xcodeproj
           scheme: iOSStaticLibraryIntegration
@@ -39,7 +39,7 @@ jobs:
         with:
           xcode-version: ^14.3
       - uses: actions/checkout@v4
-      - uses: sersoft-gmbh/xcodebuild-action@v2
+      - uses: sersoft-gmbh/xcodebuild-action@v3
         with:
           project: Integration/Integration.xcodeproj
           scheme: ${{ matrix.scheme }}
