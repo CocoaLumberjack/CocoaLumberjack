@@ -48,6 +48,32 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+/// The serializer is responsible for turning a log message into binary for writing into a file.
+/// It allows storing log messages in a non-text format.
+/// The serialier should not be used for filtering or formatting messages!
+/// Also, it must be fast!
+@protocol DDFileLogMessageSerializer <NSObject>
+@required
+
+/// Returns the binary representation of the message.
+/// - Parameter message: The formatted log message to serialize.
+- (NSData *)dataForMessage:(NSString *)message;
+
+@end
+
+/// The plain text (default) message serializer.
+@interface DDFileLogPlainTextMessageSerializer : NSObject <DDFileLogMessageSerializer>
+
+- (instancetype)init;
+
+@end
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /**
  *  The LogFileManager protocol is designed to allow you to control all aspects of your log files.
  *
@@ -151,6 +177,9 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 - (nullable NSString *)createNewLogFileWithError:(NSError **)error;
 
 @optional
+
+/// The log message serializer.
+@property (nonatomic, readonly, strong) id<DDFileLogMessageSerializer> logMessageSerializer;
 
 // Private methods (only to be used by DDFileLogger)
 /**
@@ -275,6 +304,9 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  * you can set the initial log file contents by overriding `logFileHeader`
  **/
 @property (readonly, copy, nullable) NSString *logFileHeader;
+
+/// The log message serializer.
+@property (nonatomic, strong) id<DDFileLogMessageSerializer> logMessageSerializer;
 
 /* Inherited from DDLogFileManager protocol:
 

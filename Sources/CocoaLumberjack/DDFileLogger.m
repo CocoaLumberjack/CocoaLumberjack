@@ -53,6 +53,23 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 
 NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@implementation DDFileLogPlainTextMessageSerializer
+
+- (instancetype)init {
+    return [super init];
+}
+
+- (NSData *)dataForMessage:(NSString *)message {
+    return [message dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+@end
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,6 +90,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 
 @synthesize maximumNumberOfLogFiles = _maximumNumberOfLogFiles;
 @synthesize logFilesDiskQuota = _logFilesDiskQuota;
+@synthesize logMessageSerializer = _logMessageSerializer;
 
 - (instancetype)init {
     return [self initWithLogsDirectory:nil];
@@ -93,6 +111,8 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         } else {
             _logsDirectory = [[self defaultLogsDirectory] copy];
         }
+
+        _logMessageSerializer = [[DDFileLogPlainTextMessageSerializer alloc] init];
 
         NSLogVerbose(@"DDFileLogManagerDefault: logsDirectory:\n%@", [self logsDirectory]);
         NSLogVerbose(@"DDFileLogManagerDefault: sortedLogFileNames:\n%@", [self sortedLogFileNames]);
@@ -430,7 +450,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         fileHeaderStr = [fileHeaderStr stringByAppendingString:@"\n"];
     }
 
-    return [fileHeaderStr dataUsingEncoding:NSUTF8StringEncoding];
+    return [_logMessageSerializer dataForMessage:fileHeaderStr];
 }
 
 - (NSString *)createNewLogFileWithError:(NSError *__autoreleasing  _Nullable *)error {
@@ -1392,8 +1412,16 @@ static int exception_count = 0;
     }
 }
 
+- (id <DDFileLogMessageSerializer>)lt_logFileSerializer {
+    if ([_logFileManager respondsToSelector:@selector(logMessageSerializer)]) {
+        return _logFileManager.logMessageSerializer;
+    } else {
+        return [[DDFileLogPlainTextMessageSerializer alloc] init];
+    }
+}
+
 - (NSData *)lt_dataForMessage:(DDLogMessage *)logMessage {
-    NSAssert([self isOnInternalLoggerQueue], @"logMessage should only be executed on internal queue.");
+    NSAssert([self isOnInternalLoggerQueue], @"lt_dataForMessage should only be executed on internal queue.");
 
     NSString *message = logMessage->_message;
     BOOL isFormatted = NO;
@@ -1412,7 +1440,7 @@ static int exception_count = 0;
         message = [message stringByAppendingString:@"\n"];
     }
 
-    return [message dataUsingEncoding:NSUTF8StringEncoding];
+    return [[self lt_logFileSerializer] dataForMessage:message];
 }
 
 @end
