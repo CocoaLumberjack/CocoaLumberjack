@@ -11,7 +11,7 @@ A better solution is using **per-user** log levels:
 #elif defined(DEBUG)
   static const DDLogLevel ddLogLevel = DDLogLevelInfo;    // Log level for other team members (debug)
 #else
-  static const DDLogLevel ddLogLevel = DDLogLevelWarn;    // Log level for release build
+  static const DDLogLevel ddLogLevel = DDLogLevelWarning;    // Log level for release build
 #endif
 ```
 

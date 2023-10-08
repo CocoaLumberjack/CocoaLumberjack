@@ -4,7 +4,7 @@ Dynamically changing log levels during run-time
 
 When you define your log level, you generally define it in a manner similar to this:
 ```objc
-static const DDLogLevel ddLogLevel = DDLogLevelWarn;
+static const DDLogLevel ddLogLevel = DDLogLevelWarning;
 ```
 
 What this means is that your log level is declared as a constant. It cannot be changed.
@@ -13,7 +13,7 @@ This has the advantage that the compiler can automatically prune `DDLog` stateme
 
 To allow a dynamic log level, all we need to do is remove the "const" part:
 ```objc
-static DDLogLevel ddLogLevel = DDLogLevelWarn;
+static DDLogLevel ddLogLevel = DDLogLevelWarning;
 ```
 
 This means that we can change the log level when/how we want. For example, maybe we're debugging some specific part of our application.
@@ -24,7 +24,7 @@ This means that we can change the log level when/how we want. For example, maybe
 }
 
 - (void)taskDidFinish {
-    ddLogLevel = DDLogLevelWarn;
+    ddLogLevel = DDLogLevelWarning;
 }
 ```
 
@@ -45,7 +45,7 @@ defaults write com.myapp.prefsLogLevel 4
 
 And in your preference pane code, you have something like this:
 ```objc
-static DDLogLevel ddLogLevel = DDLogLevelWarn;
+static DDLogLevel ddLogLevel = DDLogLevelWarning;
 
 + (void)initialize {
     NSNumber *logLevel = [[NSUserDefaults standardUserDefaults] objectForKey:@"prefsLogLevel"];
@@ -75,7 +75,7 @@ The lumberjack framework has something called "registered dynamic logging". Here
 #import "Sprocket.h"
 #import "DDLog.h"
 
-static DDLogLevel ddLogLevel = DDLogLevelWarn;
+static DDLogLevel ddLogLevel = DDLogLevelWarning;
 
 @implementation Sprocket
 
