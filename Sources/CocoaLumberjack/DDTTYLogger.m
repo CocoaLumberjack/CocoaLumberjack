@@ -902,9 +902,7 @@ static DDTTYLogger *sharedInstance;
     // This is the intended result. Fix it by accessing the ivar directly.
     // Great strides have been take to ensure this is safe to do. Plus it's MUCH faster.
 
-    NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-    NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.");
-
+    DDAbstractLoggerAssertLockedPropertyAccess();
     __block BOOL result;
     dispatch_sync([DDLog loggingQueue], ^{
         dispatch_sync(self.loggerQueue, ^{
@@ -936,9 +934,7 @@ static DDTTYLogger *sharedInstance;
     // This is the intended result. Fix it by accessing the ivar directly.
     // Great strides have been take to ensure this is safe to do. Plus it's MUCH faster.
 
-    NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-    NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.");
-
+    DDAbstractLoggerAssertLockedPropertyAccess();
     dispatch_async([DDLog loggingQueue], ^{
         dispatch_async(self.loggerQueue, block);
     });
@@ -982,7 +978,7 @@ static DDTTYLogger *sharedInstance;
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+        DDAbstractLoggerAssertNotOnGlobalLoggingQueue();
         dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
@@ -1011,7 +1007,7 @@ static DDTTYLogger *sharedInstance;
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+        DDAbstractLoggerAssertNotOnGlobalLoggingQueue();
         dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
@@ -1047,7 +1043,7 @@ static DDTTYLogger *sharedInstance;
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+        DDAbstractLoggerAssertNotOnGlobalLoggingQueue();
         dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
@@ -1069,7 +1065,7 @@ static DDTTYLogger *sharedInstance;
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+        DDAbstractLoggerAssertNotOnGlobalLoggingQueue();
         dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
@@ -1089,7 +1085,7 @@ static DDTTYLogger *sharedInstance;
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+        DDAbstractLoggerAssertNotOnGlobalLoggingQueue();
         dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
@@ -1109,7 +1105,7 @@ static DDTTYLogger *sharedInstance;
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+        DDAbstractLoggerAssertNotOnGlobalLoggingQueue();
         dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
@@ -1130,7 +1126,7 @@ static DDTTYLogger *sharedInstance;
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+        DDAbstractLoggerAssertNotOnGlobalLoggingQueue();
         dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });

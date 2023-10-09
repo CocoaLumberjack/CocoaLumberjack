@@ -150,10 +150,8 @@ static NSUInteger DDGetDefaultBufferSizeBytes(void) {
     if ([self.fileLogger isOnInternalLoggerQueue]) {
         block();
     } else {
-        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
         NSAssert(![self.fileLogger isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-
-        dispatch_sync(globalLoggingQueue, ^{
+        dispatch_sync([DDLog loggingQueue], ^{
             dispatch_sync(self.fileLogger.loggerQueue, block);
         });
     }

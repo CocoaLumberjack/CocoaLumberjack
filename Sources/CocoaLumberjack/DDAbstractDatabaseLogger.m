@@ -215,8 +215,7 @@
     // This is the intended result. Fix it by accessing the ivar directly.
     // Great strides have been take to ensure this is safe to do. Plus it's MUCH faster.
 
-    NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-    NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.");
+    DDAbstractLoggerAssertLockedPropertyAccess();
 
     dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
 
@@ -255,10 +254,8 @@
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-        NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-
-        dispatch_async(globalLoggingQueue, ^{
+        DDAbstractLoggerAssertNotOnGlobalLoggingQueue();
+        dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
     }
@@ -275,8 +272,7 @@
     // This is the intended result. Fix it by accessing the ivar directly.
     // Great strides have been take to ensure this is safe to do. Plus it's MUCH faster.
 
-    NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-    NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.");
+    DDAbstractLoggerAssertLockedPropertyAccess();
 
     dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
 
@@ -346,10 +342,8 @@
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-        NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-
-        dispatch_async(globalLoggingQueue, ^{
+        DDAbstractLoggerAssertNotOnGlobalLoggingQueue();
+        dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
     }
@@ -366,14 +360,11 @@
     // This is the intended result. Fix it by accessing the ivar directly.
     // Great strides have been take to ensure this is safe to do. Plus it's MUCH faster.
 
-    NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-    NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.");
-
-    dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
+    DDAbstractLoggerAssertLockedPropertyAccess();
 
     __block NSTimeInterval result;
 
-    dispatch_sync(globalLoggingQueue, ^{
+    dispatch_sync([DDLog loggingQueue], ^{
         dispatch_sync(self.loggerQueue, ^{
             result = self->_maxAge;
         });
@@ -443,10 +434,8 @@
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-        NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-
-        dispatch_async(globalLoggingQueue, ^{
+        DDAbstractLoggerAssertNotOnGlobalLoggingQueue();
+        dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
     }
@@ -463,14 +452,11 @@
     // This is the intended result. Fix it by accessing the ivar directly.
     // Great strides have been take to ensure this is safe to do. Plus it's MUCH faster.
 
-    NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-    NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.");
-
-    dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
+    DDAbstractLoggerAssertLockedPropertyAccess();
 
     __block NSTimeInterval result;
 
-    dispatch_sync(globalLoggingQueue, ^{
+    dispatch_sync([DDLog loggingQueue], ^{
         dispatch_sync(self.loggerQueue, ^{
             result = self->_deleteInterval;
         });
@@ -533,10 +519,9 @@
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-        NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
+        DDAbstractLoggerAssertNotOnGlobalLoggingQueue();
 
-        dispatch_async(globalLoggingQueue, ^{
+        dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
     }
@@ -553,14 +538,11 @@
     // This is the intended result. Fix it by accessing the ivar directly.
     // Great strides have been take to ensure this is safe to do. Plus it's MUCH faster.
 
-    NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-    NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.");
-
-    dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
+    DDAbstractLoggerAssertLockedPropertyAccess();
 
     __block BOOL result;
 
-    dispatch_sync(globalLoggingQueue, ^{
+    dispatch_sync([DDLog loggingQueue], ^{
         dispatch_sync(self.loggerQueue, ^{
             result = self->_deleteOnEverySave;
         });
@@ -580,10 +562,8 @@
     if ([self isOnInternalLoggerQueue]) {
         block();
     } else {
-        dispatch_queue_t globalLoggingQueue = [DDLog loggingQueue];
-        NSAssert(![self isOnGlobalLoggingQueue], @"Core architecture requirement failure");
-
-        dispatch_async(globalLoggingQueue, ^{
+        DDAbstractLoggerAssertNotOnGlobalLoggingQueue();
+        dispatch_async([DDLog loggingQueue], ^{
             dispatch_async(self.loggerQueue, block);
         });
     }
@@ -627,17 +607,13 @@
 
 - (void)didAddLogger {
     // If you override me be sure to invoke [super didAddLogger];
-
     [self createSuspendedSaveTimer];
-
     [self createAndStartDeleteTimer];
 }
 
 - (void)willRemoveLogger {
     // If you override me be sure to invoke [super willRemoveLogger];
-
     [self performSaveAndSuspendSaveTimer];
-
     [self destroySaveTimer];
     [self destroyDeleteTimer];
 }
@@ -660,7 +636,6 @@
     //
     // It is called automatically when the application quits,
     // or if the developer invokes DDLog's flushLog method prior to crashing or something.
-
     [self performSaveAndSuspendSaveTimer];
 }
 
