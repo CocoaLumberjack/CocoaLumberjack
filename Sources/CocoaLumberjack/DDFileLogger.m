@@ -64,8 +64,8 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     return [super init];
 }
 
-- (NSData *)dataForMessage:(NSString *)message {
-    return [message dataUsingEncoding:NSUTF8StringEncoding];
+- (NSData *)dataForString:(NSString *)string originatingFromMessage:(DDLogMessage *)message {
+    return [string dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 @end
@@ -450,7 +450,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         fileHeaderStr = [fileHeaderStr stringByAppendingString:@"\n"];
     }
 
-    return [_logMessageSerializer dataForMessage:fileHeaderStr];
+    return [_logMessageSerializer dataForString:fileHeaderStr originatingFromMessage:nil];
 }
 
 - (NSString *)createNewLogFileWithError:(NSError *__autoreleasing  _Nullable *)error {
@@ -1349,7 +1349,7 @@ static int exception_count = 0;
         implementsDeprecatedDidLog = [self respondsToSelector:@selector(didLogMessage)];
     });
 
-    NSAssert([self isOnInternalLoggerQueue], @"logMessage should only be executed on internal queue.");
+    NSAssert([self isOnInternalLoggerQueue], @"lt_logData should only be executed on internal queue.");
 
     if (data.length == 0) {
         return;
@@ -1423,24 +1423,24 @@ static int exception_count = 0;
 - (NSData *)lt_dataForMessage:(DDLogMessage *)logMessage {
     NSAssert([self isOnInternalLoggerQueue], @"lt_dataForMessage should only be executed on internal queue.");
 
-    NSString *message = logMessage->_message;
-    BOOL isFormatted = NO;
+    __auto_type messageString = logMessage->_message;
+    __auto_type isFormatted = NO;
 
     if (_logFormatter != nil) {
-        message = [_logFormatter formatLogMessage:logMessage];
-        isFormatted = message != logMessage->_message;
+        messageString = [_logFormatter formatLogMessage:logMessage];
+        isFormatted = messageString != logMessage->_message;
     }
 
-    if (message.length == 0) {
+    if (messageString.length == 0) {
         return nil;
     }
 
-    BOOL shouldFormat = !isFormatted || _automaticallyAppendNewlineForCustomFormatters;
-    if (shouldFormat && ![message hasSuffix:@"\n"]) {
-        message = [message stringByAppendingString:@"\n"];
+    __auto_type shouldFormat = !isFormatted || _automaticallyAppendNewlineForCustomFormatters;
+    if (shouldFormat && ![messageString hasSuffix:@"\n"]) {
+        messageString = [messageString stringByAppendingString:@"\n"];
     }
 
-    return [[self lt_logFileSerializer] dataForMessage:message];
+    return [[self lt_logFileSerializer] dataForString:messageString originatingFromMessage:logMessage];
 }
 
 @end
@@ -1464,12 +1464,9 @@ static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
 }
 
 #if TARGET_IPHONE_SIMULATOR
-
 // Old implementation of extended attributes on the simulator.
-
 - (BOOL)_hasExtensionAttributeWithName:(NSString *)attrName;
 - (void)_removeExtensionAttributeWithName:(NSString *)attrName;
-
 #endif
 
 @end

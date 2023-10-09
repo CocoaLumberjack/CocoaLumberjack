@@ -58,11 +58,19 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 /// Returns the binary representation of the message.
 /// - Parameter message: The formatted log message to serialize.
-- (NSData *)dataForMessage:(NSString *)message;
+//
+
+/// Returns the binary representation of the message.
+/// - Parameters:
+///   - string: The string to serialize. Usually, this is the formatted message, but it can also be e.g. a log file header.
+///   - message: The message which represents the `string`. This is null, if `string` is e.g. a log file header.
+/// - Note: The `message` parameter should not be used for formatting! It should simply be used to extract the necessary metadata for serializing.
+- (NSData *)dataForString:(NSString *)string
+   originatingFromMessage:(nullable DDLogMessage *)message NS_SWIFT_NAME(dataForString(_:originatingFrom:));
 
 @end
 
-/// The plain text (default) message serializer.
+/// The (default) plain text message serializer.
 @interface DDFileLogPlainTextMessageSerializer : NSObject <DDFileLogMessageSerializer>
 
 - (instancetype)init;
