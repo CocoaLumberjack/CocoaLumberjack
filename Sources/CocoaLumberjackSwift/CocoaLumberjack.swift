@@ -52,8 +52,8 @@ extension DDLogFlag {
 /// The log level that can dynamically limit log messages (vs. the static DDDefaultLogLevel). This log level will only be checked, if the message passes the `DDDefaultLogLevel`.
 public var dynamicLogLevel = DDLogLevel.all
 
-/// Resets the `dynamicLogLevel` to `.all`.
-/// - SeeAlso: `dynamicLogLevel`
+/// Resets the ``dynamicLogLevel`` to ``DDLogLevel/all``.
+/// - SeeAlso: ``dynamicLogLevel``
 @inlinable
 public func resetDynamicLogLevel() {
     dynamicLogLevel = .all
@@ -116,6 +116,17 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
         init(format: String, args: Args) {
             self.init(requiresArgumentParsing: !args.isEmpty, format: format, args: args)
         }
+
+        @usableFromInline
+        mutating func addString(_ string: String) {
+            format.append(string.replacingOccurrences(of: "%", with: "%%"))
+        }
+
+        @inlinable
+        mutating func addValue(_ arg: Args.Element, withSpecifier specifier: String) {
+            format.append(specifier)
+            args.append(arg)
+        }
     }
 
     @frozen
@@ -134,99 +145,85 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
 
         @inlinable
         public mutating func appendLiteral(_ literal: StringLiteralType) {
-            storage.format.append(literal.replacingOccurrences(of: "%", with: "%%"))
+            storage.addString(literal)
         }
 
         @inlinable
         public mutating func appendInterpolation<S: StringProtocol>(_ string: S) {
-            storage.format.append("%@")
-            storage.args.append(String(string))
+            storage.addValue(String(string), withSpecifier: "%@")
         }
 
         @inlinable
         public mutating func appendInterpolation(_ int: Int8) {
-            storage.format.append("%c")
-            storage.args.append(int)
+            storage.addValue(int, withSpecifier: "%c")
         }
 
         @inlinable
         public mutating func appendInterpolation(_ int: UInt8) {
-            storage.format.append("%c")
-            storage.args.append(int)
+            storage.addValue(int, withSpecifier: "%c")
         }
 
         @inlinable
         public mutating func appendInterpolation(_ int: Int16) {
-            storage.format.append("%i")
-            storage.args.append(int)
+            storage.addValue(int, withSpecifier: "%i")
         }
 
         @inlinable
         public mutating func appendInterpolation(_ int: UInt16) {
-            storage.format.append("%u")
-            storage.args.append(int)
+            storage.addValue(int, withSpecifier: "%u")
         }
 
         @inlinable
         public mutating func appendInterpolation(_ int: Int32) {
-            storage.format.append("%li")
-            storage.args.append(int)
+            storage.addValue(int, withSpecifier: "%li")
         }
 
         @inlinable
         public mutating func appendInterpolation(_ int: UInt32) {
-            storage.format.append("%lu")
-            storage.args.append(int)
+            storage.addValue(int, withSpecifier: "%lu")
         }
 
         @inlinable
         public mutating func appendInterpolation(_ int: Int64) {
-            storage.format.append("%lli")
-            storage.args.append(int)
+            storage.addValue(int, withSpecifier: "%lli")
         }
 
         @inlinable
         public mutating func appendInterpolation(_ int: UInt64) {
-            storage.format.append("%llu")
-            storage.args.append(int)
+            storage.addValue(int, withSpecifier: "%llu")
         }
 
         @inlinable
         public mutating func appendInterpolation(_ int: Int) {
 #if arch(arm64) || arch(x86_64)
-            storage.format.append("%lli")
+            storage.addValue(int, withSpecifier: "%lli")
 #else
-            storage.format.append("%li")
+            storage.addValue(int, withSpecifier: "%li")
 #endif
-            storage.args.append(int)
         }
 
         @inlinable
         public mutating func appendInterpolation(_ int: UInt) {
 #if arch(arm64) || arch(x86_64)
-            storage.format.append("%llu")
+            storage.addValue(int, withSpecifier: "%llu")
 #else
-            storage.format.append("%lu")
+            storage.addValue(int, withSpecifier: "%lu")
 #endif
-            storage.args.append(int)
         }
 
         @inlinable
         public mutating func appendInterpolation(_ flt: Float) {
-            storage.format.append("%f")
-            storage.args.append(flt)
+            storage.addValue(flt, withSpecifier: "%f")
         }
 
         @inlinable
         public mutating func appendInterpolation(_ dbl: Double) {
-            storage.format.append("%lf")
-            storage.args.append(dbl)
+            storage.addValue(dbl, withSpecifier: "%lf")
         }
 
         @inlinable
         public mutating func appendInterpolation(_ bool: Bool) {
-            storage.format.append("%i") // bools are printed as ints
-            storage.args.append(bool)
+            storage.addValue(bool, withSpecifier: "%i") // bools are printed as ints
         }
 
         @inlinable
@@ -241,15 +238,13 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
                 ```
                 """)
             }
-            storage.format.append("%@")
             // This should be safe, sine the compiler should convert it to the reference.
-            storage.args.append(c as? CVarArg ?? c as! Convertible.ReferenceType)
+            storage.addValue(c as? CVarArg ?? c as! Convertible.ReferenceType, withSpecifier: "%@")
         }
 
         @inlinable
         public mutating func appendInterpolation<Obj: NSObject>(_ o: Obj) {
-            storage.format.append("%@")
-            storage.args.append(o)
+            storage.addValue(o, withSpecifier: "%@")
         }
 
         @_disfavoredOverload
@@ -347,7 +342,7 @@ public func DDLogDebug(_ message: @autoclosure () -> DDLogMessageFormat,
                        function: StaticString = #function,
                        line: UInt = #line,
                        tag: Any? = nil,
-                       asynchronous async: Bool = asyncLoggingEnabled,
+                       asynchronous: Bool = asyncLoggingEnabled,
                        ddlog: DDLog = .sharedInstance) {
     _DDLogMessage(message(),
                   level: level,
@@ -357,7 +352,7 @@ public func DDLogDebug(_ message: @autoclosure () -> DDLogMessageFormat,
                   function: function,
                   line: line,
                   tag: tag,
-                  asynchronous: async,
+                  asynchronous: asynchronous,
                   ddlog: ddlog)
 }
 
@@ -369,7 +364,7 @@ public func DDLogInfo(_ message: @autoclosure () -> DDLogMessageFormat,
                       function: StaticString = #function,
                       line: UInt = #line,
                       tag: Any? = nil,
-                      asynchronous async: Bool = asyncLoggingEnabled,
+                      asynchronous: Bool = asyncLoggingEnabled,
                       ddlog: DDLog = .sharedInstance) {
     _DDLogMessage(message(),
                   level: level,
@@ -379,7 +374,7 @@ public func DDLogInfo(_ message: @autoclosure () -> DDLogMessageFormat,
                   function: function,
                   line: line,
                   tag: tag,
-                  asynchronous: async,
+                  asynchronous: asynchronous,
                   ddlog: ddlog)
 }
 
@@ -391,7 +386,7 @@ public func DDLogWarn(_ message: @autoclosure () -> DDLogMessageFormat,
                       function: StaticString = #function,
                       line: UInt = #line,
                       tag: Any? = nil,
-                      asynchronous async: Bool = asyncLoggingEnabled,
+                      asynchronous: Bool = asyncLoggingEnabled,
                       ddlog: DDLog = .sharedInstance) {
     _DDLogMessage(message(),
                   level: level,
@@ -401,7 +396,7 @@ public func DDLogWarn(_ message: @autoclosure () -> DDLogMessageFormat,
                   function: function,
                   line: line,
                   tag: tag,
-                  asynchronous: async,
+                  asynchronous: asynchronous,
                   ddlog: ddlog)
 }
 
@@ -413,7 +408,7 @@ public func DDLogVerbose(_ message: @autoclosure () -> DDLogMessageFormat,
                          function: StaticString = #function,
                          line: UInt = #line,
                          tag: Any? = nil,
-                         asynchronous async: Bool = asyncLoggingEnabled,
+                         asynchronous: Bool = asyncLoggingEnabled,
                          ddlog: DDLog = .sharedInstance) {
     _DDLogMessage(message(),
                   level: level,
@@ -423,7 +418,7 @@ public func DDLogVerbose(_ message: @autoclosure () -> DDLogMessageFormat,
                   function: function,
                   line: line,
                   tag: tag,
-                  asynchronous: async,
+                  asynchronous: asynchronous,
                   ddlog: ddlog)
 }
 
@@ -435,7 +430,7 @@ public func DDLogError(_ message: @autoclosure () -> DDLogMessageFormat,
                        function: StaticString = #function,
                        line: UInt = #line,
                        tag: Any? = nil,
-                       asynchronous async: Bool = false,
+                       asynchronous: Bool = false,
                        ddlog: DDLog = .sharedInstance) {
     _DDLogMessage(message(),
                   level: level,
@@ -445,7 +440,7 @@ public func DDLogError(_ message: @autoclosure () -> DDLogMessageFormat,
                   function: function,
                   line: line,
                   tag: tag,
-                  asynchronous: async,
+                  asynchronous: asynchronous,
                   ddlog: ddlog)
 }
 
