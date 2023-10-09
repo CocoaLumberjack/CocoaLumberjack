@@ -25,6 +25,30 @@
 
 static const DDLogLevel ddLogLevel = DDLogLevelAll;
 
+@interface DDFileLogger (Testing)
+- (nullable NSData *)lt_dataForMessage:(nonnull DDLogMessage *)logMessage;
+@end
+
+@interface DDMockedSerializer: NSObject <DDFileLogMessageSerializer>
+@property (nonatomic, nonnull, readonly) NSData * _Nonnull(^serializerBlock)(NSString  * _Nonnull, DDLogMessage * _Nullable);
+- (instancetype)initWithSerializerBlock:(NSData * _Nonnull(^_Nonnull)(NSString  * _Nonnull, DDLogMessage * _Nullable))serializerBlock;
+@end
+
+@implementation DDMockedSerializer
+@synthesize serializerBlock = _serializerBlock;
+- (instancetype)initWithSerializerBlock:(NSData * _Nonnull(^)(NSString * _Nonnull, DDLogMessage * _Nullable))serializerBlock {
+    if (self = [super init]) {
+        self->_serializerBlock = serializerBlock;
+    }
+    return self;
+}
+
+- (NSData *)dataForString:(NSString *)string originatingFromMessage:(DDLogMessage *)message {
+    return self.serializerBlock(string, message);
+}
+
+@end
+
 @interface DDFileLoggerTests : XCTestCase {
     DDSampleFileManager *logFileManager;
     DDFileLogger *logger;
@@ -310,6 +334,41 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     __auto_type info = logger.currentLogFileInfo;
     XCTAssertEqualObjects(info.fileName, customFileName);
     XCTAssertFalse(info.isSymlink);
+}
+
+- (void)testSerializer {
+    logFileManager.logMessageSerializer = [[DDMockedSerializer alloc] initWithSerializerBlock:^NSData *(NSString * string, DDLogMessage * msg) {
+        NSString *resultingString = [NSString stringWithFormat:@"MessageLength: %ld; Message: %@", string.length, string];
+        if (msg) {
+            resultingString = [resultingString stringByAppendingString:@"; Message was non-nil"];
+        }
+        return [resultingString dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    logger.logFormatter = nil;
+
+    __auto_type msg = [[DDLogMessage alloc] initWithFormat:@"SOME FORMAT"
+                                                 formatted:@"FORMATTED"
+                                                     level:DDLogLevelInfo
+                                                      flag:DDLogFlagInfo
+                                                   context:0
+                                                      file:@"FILE"
+                                                  function:@"FUNCTION"
+                                                      line:1
+                                                       tag:nil
+                                                   options:0
+                                                 timestamp:[NSDate date]];
+    __block NSData *data = nil;
+    dispatch_sync([DDLog loggingQueue], ^{
+        dispatch_sync(logger->_loggerQueue, ^{
+            data = [logger lt_dataForMessage:msg];
+        });
+    });
+    XCTAssertNotNil(data);
+    __auto_type string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    XCTAssertNotNil(string);
+    __auto_type formattedMsg = [msg.message stringByAppendingString:@"\n"];
+    __auto_type expectedString = [NSString stringWithFormat:@"MessageLength: %ld; Message: %@; Message was non-nil", formattedMsg.length, formattedMsg];
+    XCTAssertEqualObjects(string, expectedString);
 }
 
 @end
