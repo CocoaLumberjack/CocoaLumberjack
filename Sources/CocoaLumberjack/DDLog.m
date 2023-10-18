@@ -465,67 +465,61 @@ static NSUInteger _numProcessors;
 + (BOOL)isRegisteredClass:(Class)class {
     SEL getterSel = @selector(ddLogLevel);
     SEL setterSel = @selector(ddSetLogLevel:);
-
-#if TARGET_OS_IPHONE && !TARGET_OS_SIMULATOR
+    BOOL result = NO;
 
     // Issue #6 (GoogleCode) - Crashes on iOS 4.2.1 and iPhone 4
-    //
     // Crash caused by class_getClassMethod(2).
-    //
     //     "It's a bug with UIAccessibilitySafeCategory__NSObject so it didn't pop up until
     //      users had VoiceOver enabled [...]. I was able to work around it by searching the
     //      result of class_copyMethodList() instead of calling class_getClassMethod()"
+    //
+    // Issue #24 (GitHub) - Crashing in in ARC+Simulator
+    // The method +[DDLog isRegisteredClass] will crash a project when using it with ARC + Simulator.
+    // For running in the Simulator, it needs to execute the non-iOS code. Unless we're running on iOS 17+.
 
-    BOOL result = NO;
+#if TARGET_OS_IPHONE
+#if TARGET_OS_SIMULATOR
+    if (@available(iOS 17, tvOS 17, *)) {
+#endif
+        unsigned int methodCount, i;
+        Method *methodList = class_copyMethodList(object_getClass(class), &methodCount);
 
-    unsigned int methodCount, i;
-    Method *methodList = class_copyMethodList(object_getClass(class), &methodCount);
+        if (methodList != NULL) {
+            BOOL getterFound = NO;
+            BOOL setterFound = NO;
 
-    if (methodList != NULL) {
-        BOOL getterFound = NO;
-        BOOL setterFound = NO;
+            for (i = 0; i < methodCount; ++i) {
+                SEL currentSel = method_getName(methodList[i]);
 
-        for (i = 0; i < methodCount; ++i) {
-            SEL currentSel = method_getName(methodList[i]);
+                if (currentSel == getterSel) {
+                    getterFound = YES;
+                } else if (currentSel == setterSel) {
+                    setterFound = YES;
+                }
 
-            if (currentSel == getterSel) {
-                getterFound = YES;
-            } else if (currentSel == setterSel) {
-                setterFound = YES;
+                if (getterFound && setterFound) {
+                    result = YES;
+                    break;
+                }
             }
 
-            if (getterFound && setterFound) {
-                result = YES;
-                break;
-            }
+            free(methodList);
         }
-
-        free(methodList);
+#if TARGET_OS_SIMULATOR
+    } else {
+#endif /* TARGET_OS_SIMULATOR */
+#endif /* TARGET_OS_IPHONE */
+        Method getter = class_getClassMethod(class, getterSel);
+        Method setter = class_getClassMethod(class, setterSel);
+        result = (getter != NULL) && (setter != NULL);
+#if TARGET_OS_IPHONE && TARGET_OS_SIMULATOR
     }
+#endif /* TARGET_OS_IPHONE && TARGET_OS_SIMULATOR */
 
     return result;
-
-#else /* if TARGET_OS_IPHONE && !TARGET_OS_SIMULATOR */
-
-    // Issue #24 (GitHub) - Crashing in in ARC+Simulator
-    //
-    // The method +[DDLog isRegisteredClass] will crash a project when using it with ARC + Simulator.
-    // For running in the Simulator, it needs to execute the non-iOS code.
-
-    Method getter = class_getClassMethod(class, getterSel);
-    Method setter = class_getClassMethod(class, setterSel);
-
-    if ((getter != NULL) && (setter != NULL)) {
-        return YES;
-    }
-
-    return NO;
-
-#endif /* if TARGET_OS_IPHONE && !TARGET_OS_SIMULATOR */
 }
 
 + (NSArray *)registeredClasses {
-
     // We're going to get the list of all registered classes.
     // The Objective-C runtime library automatically registers all the classes defined in your source code.
     //
@@ -541,23 +535,19 @@ static NSUInteger _numProcessors;
     Class *classes = NULL;
 
     while (numClasses == 0) {
-
         numClasses = (NSUInteger)MAX(objc_getClassList(NULL, 0), 0);
 
         // numClasses now tells us how many classes we have (but it might change)
         // So we can allocate our buffer, and get pointers to all the class definitions.
-
         NSUInteger bufferSize = numClasses;
-
         classes = numClasses ? (Class *)calloc(bufferSize, sizeof(Class)) : NULL;
         if (classes == NULL) {
-            return @[]; //no memory or classes?
+            return @[]; // no memory or classes?
         }
 
         numClasses = (NSUInteger)MAX(objc_getClassList(classes, (int)bufferSize),0);
-
         if (numClasses > bufferSize || numClasses == 0) {
-            //apparently more classes added between calls (or a problem); try again
+            // apparently more classes added between calls (or a problem); try again
             free(classes);
             classes = NULL;
             numClasses = 0;
@@ -565,9 +555,7 @@ static NSUInteger _numProcessors;
     }
 
     // We can now loop through the classes, and test each one to see if it is a DDLogging class.
-
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:numClasses];
-
     for (NSUInteger i = 0; i < numClasses; i++) {
         Class class = classes[i];
 
@@ -599,9 +587,7 @@ static NSUInteger _numProcessors;
 }
 
 + (DDLogLevel)levelForClassWithName:(NSString *)aClassName {
-    Class aClass = NSClassFromString(aClassName);
-
-    return [self levelForClass:aClass];
+    return [self levelForClass:NSClassFromString(aClassName)];
 }
 
 + (void)setLevel:(DDLogLevel)level forClass:(Class)aClass {
@@ -611,8 +597,7 @@ static NSUInteger _numProcessors;
 }
 
 + (void)setLevel:(DDLogLevel)level forClassWithName:(NSString *)aClassName {
-    Class aClass = NSClassFromString(aClassName);
-    [self setLevel:level forClass:aClass];
+    [self setLevel:level forClass:NSClassFromString(aClassName)];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
