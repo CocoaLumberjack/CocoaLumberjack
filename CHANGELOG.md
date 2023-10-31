@@ -1,10 +1,12 @@
-# [3.8.2 - Xcode 14.3 on ??, 2023](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.8.2)
+# [3.8.2 - Xcode 15.0 on Oct 31st, 2023](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/3.8.2)
 
 ### Public
 
 - App background-mode not correctly detected in app extensions (#1359)
 - Fix DDFileLogger rollingFrequency and maximumFileSize not being honored (#1361)
 - Fix potential crashes when using the new `DDLogMessageFormat` with messages that contain '%'
+- Fix simulator issues when using dynamic registered logging on iOS 17 (#1386)
+- Allow `DDFileLogger` to write in different file formats (#1380)
 
 ### Internal
 
