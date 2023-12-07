@@ -587,7 +587,9 @@ static NSUInteger _numProcessors;
 }
 
 + (DDLogLevel)levelForClassWithName:(NSString *)aClassName {
-    return [self levelForClass:NSClassFromString(aClassName)];
+    Class clazz = NSClassFromString(aClassName);
+    if (clazz == nil) return (DDLogLevel)-1;
+    return [self levelForClass:clazz];
 }
 
 + (void)setLevel:(DDLogLevel)level forClass:(Class)aClass {
@@ -597,7 +599,9 @@ static NSUInteger _numProcessors;
 }
 
 + (void)setLevel:(DDLogLevel)level forClassWithName:(NSString *)aClassName {
-    [self setLevel:level forClass:NSClassFromString(aClassName)];
+    Class clazz = NSClassFromString(aClassName);
+    if (clazz == nil) return;
+    [self setLevel:level forClass:clazz];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

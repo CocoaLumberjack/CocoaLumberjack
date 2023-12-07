@@ -65,7 +65,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 }
 
 - (NSData *)dataForString:(NSString *)string originatingFromMessage:(DDLogMessage *)message {
-    return [string dataUsingEncoding:NSUTF8StringEncoding];
+    return [string dataUsingEncoding:NSUTF8StringEncoding] ?: [NSData data];
 }
 
 @end
