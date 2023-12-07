@@ -1,0 +1,93 @@
+name: Update copyright years
+
+on:
+  schedule:
+    - cron: '42 14 3 1 *' # 3rd of January at 14:42
+  workflow_dispatch:
+    inputs:
+      year:
+        type: number
+        required: true
+        description: 'The (new) year to update the copyright to'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-copyrights:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Determine years
+        id: years
+        env:
+          TRIGGER_NAME: ${{ github.event_name }}
+          YEAR_INPUT: ${{ inputs.year }}
+        run: |
+          if [ "${TRIGGER_NAME}" = 'workflow_dispatch' ]; then
+            NEW_YEAR=${YEAR_INPUT}
+          else
+            NEW_YEAR=$(date '+%Y')
+          fi
+          echo "new-year=${NEW_YEAR}" >> "${GITHUB_OUTPUT}"
+          echo "old-year=$(($NEW_YEAR - 1))" >> "${GITHUB_OUTPUT}"
+      - name: Checkout branch
+        id: branch
+        env:
+          OLD_YEAR: ${{ steps.years.outputs.old-year }}
+          NEW_YEAR: ${{ steps.years.outputs.new-year }}
+        run: |
+          BRANCH_NAME="update-copyright/${OLD_YEAR}-to-${NEW_YEAR}"
+          echo "branch-name=${BRANCH_NAME}" >> "${GITHUB_OUTPUT}"
+          git checkout -B "${BRANCH_NAME}"
+      - name: Update copyrights
+        run: ./Scripts/update-copyright.sh
+        env:
+          OLD_YEAR: ${{ steps.years.outputs.old-year }}
+          NEW_YEAR: ${{ steps.years.outputs.new-year }}
+      - name: Commit changes if needed
+        id: commit
+        env:
+          ACTOR: ${{ github.actor }}
+          OLD_YEAR: ${{ steps.years.outputs.old-year }}
+          NEW_YEAR: ${{ steps.years.outputs.new-year }}
+          BRANCH_NAME: ${{ steps.branch.outputs.branch-name }}
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config --local user.email "${ACTOR}@noreply.github.com"
+            git config --local user.name "${ACTOR}"
+            git add .
+            git commit -m "Update copyright from ${OLD_YEAR} to ${NEW_YEAR}"
+            git push --set-upstream origin "${BRANCH_NAME}"
+            echo 'has-changes=true' >> "${GITHUB_OUTPUT}"
+          else
+            echo 'has-changes=false' >> "${GITHUB_OUTPUT}"
+          fi
+      - name: Create PR if needed
+        if: ${{ steps.commit.outputs.has-changes == 'true' }}
+        env:
+          OLD_YEAR: ${{ steps.years.outputs.old-year }}
+          NEW_YEAR: ${{ steps.years.outputs.new-year }}
+          REPO: ${{ github.repository }}
+          SOURCE_BRANCH: ${{ steps.branch.outputs.branch-name }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TARGET_BRANCH="$(gh repo view "${REPO}" --json 'defaultBranchRef' --jq '.defaultBranchRef.name')"
+          PR_COUNT="$(gh pr list \
+            --repo "${REPO}" \
+            --state 'open' \
+            --head "${SOURCE_BRANCH}" \
+            --base "${TARGET_BRANCH}" \
+            --json 'number' \
+            --jq 'length')"
+          if [ "${PR_COUNT}" -eq 0 ]; then
+            gh pr create \
+              --repo "${REPO}" \
+              --head "${SOURCE_BRANCH}" \
+              --base "${TARGET_BRANCH}" \
+              --title "Update copyright years from ${OLD_YEAR} to ${NEW_YEAR}" \
+              --body "This is an automated PR that updates the copyright years from `${OLD_YEAR}` to `${NEW_YEAR}`."
+          fi
