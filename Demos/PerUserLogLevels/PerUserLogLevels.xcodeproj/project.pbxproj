@@ -202,6 +202,7 @@
 			files = (
 			);
 			inputPaths = (
+				"${PROJECT_DIR}/Scripts/LumberjackUser.bash",
 			);
 			outputPaths = (
 				"$(SRCROOT)/PerUserLogLevels/LumberjackUser.h",
