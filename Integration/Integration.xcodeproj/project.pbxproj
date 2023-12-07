@@ -3,11 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		07D9F609245188B100BE83C7 /* watchOSSwiftIntegration Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0A87D5632177C25800BD0C4C /* watchOSSwiftIntegration Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		07D9F609245188B100BE83C7 /* watchOSSwiftIntegration Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0A87D5632177C25800BD0C4C /* watchOSSwiftIntegration Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		07D9F60E24518A9100BE83C7 /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; };
 		07D9F60F24518A9100BE83C7 /* CocoaLumberjackSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4AB217649B700BD0C4C /* CocoaLumberjackSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0A87D4BA217649C600BD0C4C /* libCocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A87D4A7217649B700BD0C4C /* libCocoaLumberjack.a */; };
@@ -111,15 +111,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		07D9F60C245188B100BE83C7 /* Embed App Extensions */ = {
+		07D9F60C245188B100BE83C7 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				07D9F609245188B100BE83C7 /* watchOSSwiftIntegration Extension.appex in Embed App Extensions */,
+				07D9F609245188B100BE83C7 /* watchOSSwiftIntegration Extension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		07D9F61024518A9100BE83C7 /* Embed Frameworks */ = {
@@ -479,7 +479,7 @@
 			buildConfigurationList = 0A87D5792177C25900BD0C4C /* Build configuration list for PBXNativeTarget "watchOSSwiftIntegration" */;
 			buildPhases = (
 				0A87D5552177C25700BD0C4C /* Resources */,
-				07D9F60C245188B100BE83C7 /* Embed App Extensions */,
+				07D9F60C245188B100BE83C7 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -516,8 +516,9 @@
 		0A87D3552175E4A300BD0C4C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1000;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1500;
 				ORGANIZATIONNAME = CocoaLumberjack;
 				TargetAttributes = {
 					0A87D3C32175E56200BD0C4C = {
