@@ -92,6 +92,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     XCTAssertTrue([[NSFileManager defaultManager] removeItemAtPath:logsDirectory error:&error]);
     XCTAssertNil(error);
 
+    logFileManager = nil;
     logger = nil;
     logsDirectory = nil;
 }

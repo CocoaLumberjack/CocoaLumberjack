@@ -141,7 +141,6 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 }
 
 - (void)didAddToFileLogger:(DDFileLogger *)fileLogger {
-    NSAssert(!_wasAddedToLogger, @"Added to logger multiple times!");
     _wasAddedToLogger = YES;
 }
 
