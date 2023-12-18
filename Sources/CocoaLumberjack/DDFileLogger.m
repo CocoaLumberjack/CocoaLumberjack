@@ -93,14 +93,11 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 @synthesize logFilesDiskQuota = _logFilesDiskQuota;
 @synthesize logMessageSerializer = _logMessageSerializer;
 
-- (instancetype)init {
-    return [self initWithLogsDirectory:nil];
-}
-
 - (instancetype)initWithLogsDirectory:(nullable NSString *)aLogsDirectory {
     if ((self = [super init])) {
         _maximumNumberOfLogFiles = kDDDefaultLogMaxNumLogFiles;
         _logFilesDiskQuota = kDDDefaultLogFilesDiskQuota;
+        _wasAddedToLogger = NO;
 
         _fileDateFormatter = [[NSDateFormatter alloc] init];
         [_fileDateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
@@ -138,6 +135,15 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     return self;
 }
 #endif
+
+- (instancetype)init {
+    return [self initWithLogsDirectory:nil];
+}
+
+- (void)didAddToFileLogger:(DDFileLogger *)fileLogger {
+    NSAssert(!_wasAddedToLogger, @"Added to logger multiple times!");
+    _wasAddedToLogger = YES;
+}
 
 - (void)deleteOldFilesForConfigurationChange {
     if (!_wasAddedToLogger) return;
