@@ -79,6 +79,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     NSUInteger _maximumNumberOfLogFiles;
     unsigned long long _logFilesDiskQuota;
     NSString *_logsDirectory;
+    BOOL _wasAddedToLogger;
 #if TARGET_OS_IPHONE
     NSFileProtectionType _defaultFileProtectionLevel;
 #endif
@@ -139,6 +140,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 #endif
 
 - (void)deleteOldFilesForConfigurationChange {
+    if (!_wasAddedToLogger) return;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         @autoreleasepool {
             // See method header for queue reasoning.
@@ -628,6 +630,10 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 
         _logFileManager = aLogFileManager;
         _logFormatter = [DDLogFileFormatterDefault new];
+
+        if ([_logFileManager respondsToSelector:@selector(didAddToFileLogger:)]) {
+            [_logFileManager didAddToFileLogger:self];
+        }
     }
 
     return self;

@@ -82,6 +82,7 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@class DDFileLogger;
 /**
  *  The LogFileManager protocol is designed to allow you to control all aspects of your log files.
  *
@@ -191,6 +192,14 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 
 // MARK: Private methods (only to be used by DDFileLogger)
+
+// MARK: Notifications from DDFileLogger
+/// Called when the log file manager was added to a file logger.
+/// This should be used to make the manager "active" - like starting internal timers etc.
+/// Executed on global queue with default priority.
+/// - Parameter fileLogger: The file logger this manager was added to.
+/// - Important: The manager **must not** keep a strong reference to `fileLogger` or a retain cycle will be created!
+- (void)didAddToFileLogger:(DDFileLogger *)fileLogger;
 
 /// Called when a log file was archived. Executed on global queue with default priority.
 /// @param logFilePath The path to the log file that was archived.
