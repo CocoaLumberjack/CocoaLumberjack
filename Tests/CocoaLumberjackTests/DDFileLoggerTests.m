@@ -72,7 +72,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     [DDLog removeAllLoggers];
     // We need to sync all involved queues to wait for the post-removal processing of the logger to finish before deleting the files.
     NSAssert(![self->logger isOnGlobalLoggingQueue], @"Trouble ahead!");
-    dispatch_sync([DDLog loggingQueue], ^{
+    dispatch_sync(DDLog.loggingQueue, ^{
         NSAssert(![self->logger isOnInternalLoggerQueue], @"Trouble ahead!");
         dispatch_sync(self->logger.loggerQueue, ^{
             /* noop */
@@ -358,7 +358,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
                                                    options:0
                                                  timestamp:[NSDate date]];
     __block NSData *data = nil;
-    dispatch_sync([DDLog loggingQueue], ^{
+    dispatch_sync(DDLog.loggingQueue, ^{
         dispatch_sync(logger->_loggerQueue, ^{
             data = [logger lt_dataForMessage:msg];
         });

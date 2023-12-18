@@ -45,11 +45,11 @@
 #pragma mark Processing
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
-    __block NSString *line = logMessage->_message;
+    __block __auto_type line = logMessage->_message;
 
     dispatch_sync(_queue, ^{
         for (id<DDLogFormatter> formatter in self->_formatters) {
-            DDLogMessage *message = [self logMessageForLine:line originalMessage:logMessage];
+            __auto_type message = [self logMessageForLine:line originalMessage:logMessage];
             line = [formatter formatLogMessage:message];
 
             if (!line) {
@@ -63,7 +63,6 @@
 
 - (DDLogMessage *)logMessageForLine:(NSString *)line originalMessage:(DDLogMessage *)message {
     DDLogMessage *newMessage = [message copy];
-
     newMessage->_message = line;
     return newMessage;
 }

@@ -189,30 +189,23 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 /// The log message serializer.
 @property (nonatomic, readonly, strong) id<DDFileLogMessageSerializer> logMessageSerializer;
 
-// Private methods (only to be used by DDFileLogger)
-/**
- * Creates a new log file ignoring any errors. Deprecated in favor of `-createNewLogFileWithError:`.
- * Will only be called if `-createNewLogFileWithError:` is not implemented.
- **/
-- (nullable NSString *)createNewLogFile __attribute__((deprecated("Use -createNewLogFileWithError:"))) NS_SWIFT_UNAVAILABLE("Use -createNewLogFileWithError:");
 
-// Notifications from DDFileLogger
+// MARK: Private methods (only to be used by DDFileLogger)
 
 /// Called when a log file was archived. Executed on global queue with default priority.
 /// @param logFilePath The path to the log file that was archived.
 /// @param wasRolled Whether or not the archiving happend after rolling the log file.
 - (void)didArchiveLogFile:(NSString *)logFilePath wasRolled:(BOOL)wasRolled NS_SWIFT_NAME(didArchiveLogFile(atPath:wasRolled:));
 
-// Deprecated APIs
-/**
- *  Called when a log file was archived. Executed on global queue with default priority.
- */
+// MARK: Deprecated APIs
+/// Creates a new log file ignoring any errors. Deprecated in favor of `-createNewLogFileWithError:`.
+/// Will only be called if `-createNewLogFileWithError:` is not implemented.
+- (nullable NSString *)createNewLogFile __attribute__((deprecated("Use -createNewLogFileWithError:"))) NS_SWIFT_UNAVAILABLE("Use -createNewLogFileWithError:");
+
+/// Called when a log file was archived. Executed on global queue with default priority.
 - (void)didArchiveLogFile:(NSString *)logFilePath NS_SWIFT_NAME(didArchiveLogFile(atPath:)) __attribute__((deprecated("Use -didArchiveLogFile:wasRolled:")));
 
-/**
- *  Called when the roll action was executed and the log was archived.
- *  Executed on global queue with default priority.
- */
+/// Called when the roll action was executed and the log was archived. Executed on global queue with default priority.
 - (void)didRollAndArchiveLogFile:(NSString *)logFilePath NS_SWIFT_NAME(didRollAndArchiveLogFile(atPath:)) __attribute__((deprecated("Use -didArchiveLogFile:wasRolled:")));
 
 @end
@@ -237,11 +230,6 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 @interface DDLogFileManagerDefault : NSObject <DDLogFileManager>
 
 /**
- *  Default initializer
- */
-- (instancetype)init;
-
-/**
  *  If logDirectory is not specified, then a folder called "Logs" is created in the app's cache directory.
  *  While running on the simulator, the "Logs" folder is located in the library temporary directory.
  */
@@ -262,6 +250,9 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 - (instancetype)initWithLogsDirectory:(nullable NSString *)logsDirectory
            defaultFileProtectionLevel:(NSFileProtectionType)fileProtectionLevel;
 #endif
+
+/// Convenience  initializer.
+- (instancetype)init;
 
 /*
  * Methods to override.
@@ -350,15 +341,11 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  **/
 @interface DDLogFileFormatterDefault : NSObject <DDLogFormatter>
 
-/**
- *  Default initializer
- */
-- (instancetype)init;
-
-/**
- *  Designated initializer, requires a date formatter
- */
+/// Designated initializer, requires a date formatter
 - (instancetype)initWithDateFormatter:(nullable NSDateFormatter *)dateFormatter NS_DESIGNATED_INITIALIZER;
+
+/// Convenience initializer
+- (instancetype)init;
 
 @end
 

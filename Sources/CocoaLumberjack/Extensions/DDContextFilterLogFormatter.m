@@ -171,7 +171,7 @@
 }
 
 - (BOOL)isInSet:(NSInteger)loggingContext {
-    BOOL result = NO;
+    __auto_type result = NO;
 
     pthread_mutex_lock(&_mutex);
     {

@@ -29,7 +29,7 @@
 @implementation CLIColor
 
 + (instancetype)colorWithCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha {
-    CLIColor *color = [CLIColor new];
+    __auto_type color = [CLIColor new];
     color->_red     = red;
     color->_green   = green;
     color->_blue    = blue;
