@@ -190,6 +190,9 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 /// The log message serializer.
 @property (nonatomic, readonly, strong) id<DDFileLogMessageSerializer> logMessageSerializer;
 
+/// Manually perform a cleanup of the log files managed by this manager.
+/// This can be called from any queue!
+- (BOOL)cleanupLogFilesWithError:(NSError **)error;
 
 // MARK: Private methods (only to be used by DDFileLogger)
 

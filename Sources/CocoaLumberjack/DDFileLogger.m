@@ -144,7 +144,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         @autoreleasepool {
             // See method header for queue reasoning.
-            [self deleteOldLogFiles];
+            [self deleteOldLogFilesWithError:nil];
         }
     });
 }
@@ -187,8 +187,10 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
  * log output, since the files we're deleting are all archived and not in use, therefore this method is called on a
  * background queue.
  **/
-- (void)deleteOldLogFiles {
-    NSLogVerbose(@"DDLogFileManagerDefault: deleteOldLogFiles");
+- (BOOL)deleteOldLogFilesWithError:(NSError *__autoreleasing _Nullable *)error {
+    NSLogVerbose(@"DDLogFileManagerDefault: %@", NSStringFromSelector(_cmd));
+
+    if (error) *error = nil;
 
     __auto_type sortedLogFileInfos = [self sortedLogFileInfos];
     NSUInteger firstIndexToDelete = NSNotFound;
@@ -243,9 +245,19 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
                 NSLogInfo(@"DDLogFileManagerDefault: Deleting file: %@", logFileInfo.fileName);
             } else {
                 NSLogError(@"DDLogFileManagerDefault: Error deleting file %@", deletionError);
+                if (error) {
+                    *error = deletionError;
+                    return NO; // If we were given an error, stop after the first failure!
+                }
             }
         }
     }
+
+    return YES;
+}
+
+- (BOOL)cleanupLogFilesWithError:(NSError *__autoreleasing _Nullable *)error {
+    return [self deleteOldLogFilesWithError:error];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -505,7 +517,8 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
             NSLogVerbose(@"DDLogFileManagerDefault: Created new log file: %@", actualFileName);
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 // Since we just created a new log file, we may need to delete some old log files
-                [self deleteOldLogFiles];
+                // Note that we don't on errors here! The new log file was created, so this method technically succeeded!
+                [self deleteOldLogFilesWithError:nil];
             });
             return filePath;
         } else if (currentError.code == NSFileWriteFileExistsError) {
