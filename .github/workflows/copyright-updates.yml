@@ -2,7 +2,7 @@ name: Update copyright years
 
 on:
   schedule:
-    - cron: '42 14 3 1 *' # 3rd of January at 14:42
+    - cron: '42 13 3 1 *' # 3rd of January at 13:42 UTC
   workflow_dispatch:
     inputs:
       year:
