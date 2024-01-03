@@ -2,13 +2,23 @@
 
 set -euo pipefail
 SCRIPT_NAME="$(basename $0)"
+IS_DARIN=0
+if [[ "$(uname -s)" = 'Darwin' ]]; then
+    IS_DARIN=1
+fi
 
 # Arg1: OLD_YEAR
 # Arg2: NEW_YEAR
 # Arg3: File Path
 replace_copyright() {
-    sed -i '' -e "s|Copyright (c) 2010-${1}, Deusty, LLC|Copyright (c) 2010-${2}, Deusty, LLC|g" "$3"
-    return $?
+    local PATTERN="s|Copyright (c) 2010-${1}, Deusty, LLC|Copyright (c) 2010-${2}, Deusty, LLC|g"
+    if [[ "${IS_DARWIN}" -eq 1 ]]; then
+        sed -i '' -e "${PATTERN}" "$3"
+        return $?
+    else
+        sed -i -e "${PATTERN}" "$3"
+        return $?
+    fi
 }
 
 current_year() {
@@ -60,7 +70,7 @@ export -f replace_copyright
 
 EXTENDED_REGEX_FLAG_POST_PATH='-regextype posix-extended'
 EXTENDED_REGEX_FLAG_PRE_PATH=''
-if [[ "$(uname -s)" = 'Darwin' ]]; then
+if [[ "${IS_DARWIN}" -eq 1 ]]; then
     EXTENDED_REGEX_FLAG_PRE_PATH='-E'
     EXTENDED_REGEX_FLAG_POST_PATH=''
 fi
@@ -69,7 +79,7 @@ pushd "$(dirname $0)/../" > /dev/null
 find ${EXTENDED_REGEX_FLAG_PRE_PATH} \
     . \
     ${EXTENDED_REGEX_FLAG_POST_PATH} \
-    -regex ".*\.([hm]|swift|pch)" \
+    -regex '.*\.([hm]|swift|pch)' \
     -exec bash -c "replace_copyright \"${OLD_YEAR}\" \"${NEW_YEAR}\" \"{}\"" \;
 replace_copyright "${OLD_YEAR}" "${NEW_YEAR}" './LICENSE'
 popd > /dev/null
