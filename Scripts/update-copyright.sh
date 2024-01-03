@@ -2,17 +2,13 @@
 
 set -euo pipefail
 SCRIPT_NAME="$(basename $0)"
-IS_DARIN=0
-if [[ "$(uname -s)" = 'Darwin' ]]; then
-    IS_DARIN=1
-fi
 
 # Arg1: OLD_YEAR
 # Arg2: NEW_YEAR
 # Arg3: File Path
 replace_copyright() {
     local PATTERN="s|Copyright (c) 2010-${1}, Deusty, LLC|Copyright (c) 2010-${2}, Deusty, LLC|g"
-    if [[ "${IS_DARWIN}" -eq 1 ]]; then
+    if [[ "$(uname -s)" = 'Darwin' ]]; then
         sed -i '' -e "${PATTERN}" "$3"
         return $?
     else
@@ -70,7 +66,7 @@ export -f replace_copyright
 
 EXTENDED_REGEX_FLAG_POST_PATH='-regextype posix-extended'
 EXTENDED_REGEX_FLAG_PRE_PATH=''
-if [[ "${IS_DARWIN}" -eq 1 ]]; then
+if [[ "$(uname -s)" = 'Darwin' ]]; then
     EXTENDED_REGEX_FLAG_PRE_PATH='-E'
     EXTENDED_REGEX_FLAG_POST_PATH=''
 fi
