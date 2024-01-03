@@ -89,5 +89,5 @@ jobs:
               --head "${SOURCE_BRANCH}" \
               --base "${TARGET_BRANCH}" \
               --title "Update copyright years from ${OLD_YEAR} to ${NEW_YEAR}" \
-              --body "This is an automated PR that updates the copyright years from `${OLD_YEAR}` to `${NEW_YEAR}`."
+              --body "This is an automated PR that updates the copyright years from \`${OLD_YEAR}\` to \`${NEW_YEAR}\`."
           fi
