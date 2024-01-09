@@ -77,6 +77,16 @@ IOS_SDK="$(read_config_var "${IOS_SDK_CONFIG_VAR}" '[0-9]+\.[0-9]+' "${SDKS_XCCO
 TVOS_SDK="$(read_config_var "${TVOS_SDK_CONFIG_VAR}" '[0-9]+\.[0-9]+' "${SDKS_XCCONFIG_FILE}")"
 WATCHOS_SDK="$(read_config_var "${WATCHOS_SDK_CONFIG_VAR}" '[0-9]+\.[0-9]+' "${SDKS_XCCONFIG_FILE}")"
 
+SUPPORTED_SWIFT_VERSIONS=''
+for SPM_PKG_DEF in Package@swift-*.swift; do
+    SWIFT_VERSION="$(echo "${SPM_PKG_DEF}" | sed -E 's/^Package@swift-([0-9]+\.[0-9]+)\.swift$/\1/g')"
+    if [[ -n "${SWIFT_VERSION}" ]] && [[ "${SWIFT_VERSION}" != "${SPM_PKG_DEF}" ]]; then
+        # We add the comma to the end here, since we will add the last version at the end.
+        SUPPORTED_SWIFT_VERSIONS="${SUPPORTED_SWIFT_VERSIONS}'${SWIFT_VERSION}', "
+    fi
+done
+SUPPORTED_SWIFT_VERSIONS="${SUPPORTED_SWIFT_VERSIONS}'$(swift package tools-version | awk -F'.' '{print $1"."$2}')'"
+
 popd > /dev/null
 
 
@@ -131,7 +141,7 @@ Pod::Spec.new do |s|
                   'atomic operations, and the dynamic nature of the objective-c runtime.'
 
   s.cocoapods_version = '>= 1.7.0'
-  s.swift_versions = ['5.5', '5.6', '5.7', '5.8']
+  s.swift_versions = [${SUPPORTED_SWIFT_VERSIONS}]
 
   s.osx.deployment_target     = '${MACOS_SDK}'
   s.ios.deployment_target     = '${IOS_SDK}'
