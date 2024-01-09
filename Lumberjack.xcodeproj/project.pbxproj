@@ -40,6 +40,7 @@
 		071909FB243CA055001C431F /* DDOSLogger.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 071909D9243C9FF8001C431F /* DDOSLogger.h */; };
 		071909FC243CA055001C431F /* DDTTYLogger.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 071909D5243C9FF8001C431F /* DDTTYLogger.h */; };
 		071909FE243CA0DC001C431F /* SwiftLogLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = 071909FD243CA0AC001C431F /* SwiftLogLevel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		074EA6182B4D32F1008B2417 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 074EA6172B4D3027008B2417 /* PrivacyInfo.xcprivacy */; };
 		0752523E22E07638005D30B3 /* DDLegacyMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 0752523D22E07638005D30B3 /* DDLegacyMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0752523F22E07666005D30B3 /* DDLegacyMacros.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 0752523D22E07638005D30B3 /* DDLegacyMacros.h */; };
 		0A26B56422DE346B004EE6A7 /* CLIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B54B22DE346B004EE6A7 /* CLIColor.m */; };
@@ -144,6 +145,7 @@
 		071909DB243C9FF8001C431F /* CLIColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLIColor.h; sourceTree = "<group>"; };
 		071909DC243C9FF8001C431F /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
 		071909FD243CA0AC001C431F /* SwiftLogLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwiftLogLevel.h; path = Sources/CocoaLumberjackSwiftSupport/include/CocoaLumberjackSwiftSupport/SwiftLogLevel.h; sourceTree = SOURCE_ROOT; };
+		074EA6172B4D3027008B2417 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		0752523D22E07638005D30B3 /* DDLegacyMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLegacyMacros.h; sourceTree = "<group>"; };
 		0A26B54B22DE346B004EE6A7 /* CLIColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLIColor.m; sourceTree = "<group>"; };
 		0A26B54D22DE346B004EE6A7 /* DDContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDContextFilterLogFormatter.m; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				0A26B57322DE34AE004EE6A7 /* DDLoggerNames.m */,
 				0A26B57922DE34AE004EE6A7 /* DDOSLogger.m */,
 				0A26B57522DE34AE004EE6A7 /* DDTTYLogger.m */,
+				074EA6172B4D3027008B2417 /* PrivacyInfo.xcprivacy */,
 			);
 			path = CocoaLumberjack;
 			sourceTree = "<group>";
@@ -507,6 +510,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				074EA6182B4D32F1008B2417 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
