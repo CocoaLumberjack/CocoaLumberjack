@@ -470,7 +470,6 @@ static NSUInteger _numProcessors;
 + (BOOL)isRegisteredClass:(Class)class {
     __auto_type getterSel = @selector(ddLogLevel);
     __auto_type setterSel = @selector(ddSetLogLevel:);
-    __auto_type result = NO;
 
     // Issue #6 (GoogleCode) - Crashes on iOS 4.2.1 and iPhone 4
     // Crash caused by class_getClassMethod(2).
@@ -486,6 +485,7 @@ static NSUInteger _numProcessors;
 #if TARGET_OS_SIMULATOR
     if (@available(iOS 17, tvOS 17, *)) {
 #endif
+        __auto_type result = NO;
         unsigned int methodCount, i;
         __auto_type methodList = class_copyMethodList(object_getClass(class), &methodCount);
 
@@ -510,18 +510,20 @@ static NSUInteger _numProcessors;
 
             free(methodList);
         }
+
+        return result;
 #if TARGET_OS_SIMULATOR
     } else {
 #endif /* TARGET_OS_SIMULATOR */
 #endif /* TARGET_OS_IPHONE */
+#if !TARGET_OS_IPHONE || TARGET_OS_SIMULATOR
         __auto_type getter = class_getClassMethod(class, getterSel);
         __auto_type setter = class_getClassMethod(class, setterSel);
-        result = (getter != NULL) && (setter != NULL);
+        return (getter != NULL) && (setter != NULL);
+#endif /* !TARGET_OS_IPHONE || TARGET_OS_SIMULATOR */
 #if TARGET_OS_IPHONE && TARGET_OS_SIMULATOR
     }
 #endif /* TARGET_OS_IPHONE && TARGET_OS_SIMULATOR */
-
-    return result;
 }
 
 + (NSArray *)registeredClasses {
