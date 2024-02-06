@@ -564,7 +564,8 @@ static NSUInteger _numProcessors;
     // We can now loop through the classes, and test each one to see if it is a DDLogging class.
     __auto_type result = [NSMutableArray arrayWithCapacity:numClasses];
     for (NSUInteger i = 0; i < numClasses; i++) {
-        __auto_type class = classes[i];
+        // Cannot use `__auto_type` here, since this will lead to crashes when deallocating!
+        Class class = classes[i];
 
         if ([self isRegisteredClass:class]) {
             [result addObject:class];
