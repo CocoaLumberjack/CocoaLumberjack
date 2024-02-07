@@ -1,3 +1,11 @@
+# [3.8.4 - Xcode 15.2 on Feb 8th, 2024](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tags/3.8.4)
+
+### Public
+
+- Extend privacy manifest to fulfill validation criteria (#1403)
+- Fix crash when fetching registered classes (#1406)
+
+
 # [3.8.3 - Xcode 15.2 on Feb 5th, 2024](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tags/3.8.3)
 
 ### Public
