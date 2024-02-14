@@ -13,18 +13,16 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
+#import <TargetConditionals.h>
 #import <os/log.h>
 
 #import <CocoaLumberjack/DDOSLogger.h>
 
-@interface DDOSLogger () {
-    NSString *_subsystem;
-    NSString *_category;
-}
+@interface DDOSLogger ()
 
-@property (copy, nonatomic, readonly, nullable) NSString *subsystem;
-@property (copy, nonatomic, readonly, nullable) NSString *category;
-@property (strong, nonatomic, readwrite, nonnull) os_log_t logger;
+@property (nonatomic, copy, readonly, nullable) NSString *subsystem;
+@property (nonatomic, copy, readonly, nullable) NSString *category;
+@property (nonatomic, strong, readonly, nonnull) os_log_t logger;
 
 @end
 
@@ -32,28 +30,12 @@
 
 @synthesize subsystem = _subsystem;
 @synthesize category = _category;
+@synthesize logger = _logger;
 
-#pragma mark - Initialization
-
-/**
- * Assertion
- * Swift: (String, String)?
- */
-- (instancetype)initWithSubsystem:(NSString *)subsystem category:(NSString *)category {
-    NSAssert((subsystem == nil) == (category == nil), @"Either both subsystem and category or neither should be nil.");
-    if (self = [super init]) {
-        _subsystem = [subsystem copy];
-        _category = [category copy];
-    }
-    return self;
-}
+#pragma mark - Shared Instance
 
 API_AVAILABLE(macos(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 static DDOSLogger *sharedInstance;
-
-- (instancetype)init {
-    return [self initWithSubsystem:nil category:nil];
-}
 
 + (instancetype)sharedInstance {
     static dispatch_once_t DDOSLoggerOnceToken;
@@ -65,33 +47,46 @@ static DDOSLogger *sharedInstance;
     return sharedInstance;
 }
 
-#pragma mark - os_log
-
-- (os_log_t)getLogger {
-    if (self.subsystem == nil || self.category == nil) {
-        return OS_LOG_DEFAULT;
+#pragma mark - Initialization
+- (instancetype)initWithSubsystem:(NSString *)subsystem category:(NSString *)category {
+    NSAssert((subsystem == nil) == (category == nil), 
+             @"Either both subsystem and category or neither should be nil.");
+    if (self = [super init]) {
+        _subsystem = [subsystem copy];
+        _category = [category copy];
     }
-    return os_log_create(self.subsystem.UTF8String, self.category.UTF8String);
+    return self;
 }
 
+- (instancetype)init {
+    return [self initWithSubsystem:nil category:nil];
+}
+
+#pragma mark - os_log
 - (os_log_t)logger {
     if (_logger == nil)  {
-        _logger = [self getLogger];
+        if (self.subsystem == nil || self.category == nil) {
+            _logger = OS_LOG_DEFAULT;
+        } else {
+            _logger = os_log_create(self.subsystem.UTF8String, self.category.UTF8String);
+        }
     }
     return _logger;
 }
 
 #pragma mark - DDLogger
-
 - (DDLoggerName)loggerName {
     return DDLoggerNameOS;
 }
 
 - (void)logMessage:(DDLogMessage *)logMessage {
-    // Skip captured log messages
+// See DDASLLogCapture.m -> Was never supported on watchOS.
+#if !TARGET_OS_WATCH
+    // Skip captured log messages.
     if ([logMessage->_fileName isEqualToString:@"DDASLLogCapture"]) {
         return;
     }
+#endif
 
     if (@available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *)) {
         __auto_type message = _logFormatter ? [_logFormatter formatLogMessage:logMessage] : logMessage->_message;
@@ -100,9 +95,9 @@ static DDOSLogger *sharedInstance;
             __auto_type logger = [self logger];
             switch (logMessage->_flag) {
                 case DDLogFlagError  :
+                case DDLogFlagWarning:
                     os_log_error(logger, "%{public}s", msg);
                     break;
-                case DDLogFlagWarning:
                 case DDLogFlagInfo   :
                     os_log_info(logger, "%{public}s", msg);
                     break;
