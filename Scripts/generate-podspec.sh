@@ -155,7 +155,9 @@ Pod::Spec.new do |s|
   s.subspec 'Core' do |ss|
     ss.source_files         = 'Sources/CocoaLumberjack/**/*.{h,m}'
     ss.private_header_files = 'Sources/CocoaLumberjack/DD*Internal.{h}'
-    ss.resources            = 'Sources/CocoaLumberjack/PrivacyInfo.xcprivacy'
+    ss.resource_bundles     = {
+        'CocoaLumberjackPrivacy' => ['Sources/CocoaLumberjack/PrivacyInfo.xcprivacy']
+    }
   end
 
   s.subspec 'Swift' do |ss|
