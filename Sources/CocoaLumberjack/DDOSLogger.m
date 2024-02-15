@@ -25,8 +25,8 @@
     return self;
 }
 
-- (os_log_type_t)osLogTypeForLogMessageFlag:(DDLogFlag)logMessageFlag {
-    switch (logMessageFlag) {
+- (os_log_type_t)osLogTypeForLogFlag:(DDLogFlag)logFlag {
+    switch (logFlag) {
         case DDLogFlagError:
         case DDLogFlagWarning:
             return OS_LOG_TYPE_ERROR;
@@ -45,8 +45,8 @@
 #if TARGET_OS_SIMULATOR
 @implementation DDOSLogLevelMapperSimulatorConsoleAppWorkaround
 
-- (os_log_type_t)osLogTypeForLogMessageFlag:(DDLogFlag)logMessageFlag {
-    __auto_type defaultMapping = [super osLogTypeForLogMessageFlag:logMessageFlag];
+- (os_log_type_t)osLogTypeForLogFlag:(DDLogFlag)logFlag {
+    __auto_type defaultMapping = [super osLogTypeForLogFlag:logFlag];
     return (defaultMapping == OS_LOG_TYPE_DEBUG) ? OS_LOG_TYPE_DEFAULT : defaultMapping;
 }
 
@@ -149,7 +149,7 @@ static DDOSLogger *sharedInstance;
     if (@available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *)) {
         __auto_type message = _logFormatter ? [_logFormatter formatLogMessage:logMessage] : logMessage->_message;
         if (message != nil) {
-            __auto_type logType = [self.logLevelMapper osLogTypeForLogMessageFlag:logMessage->_flag];
+            __auto_type logType = [self.logLevelMapper osLogTypeForLogFlag:logMessage->_flag];
             os_log_with_type(self.logger, logType, "%{public}s", message.UTF8String);
         }
     }

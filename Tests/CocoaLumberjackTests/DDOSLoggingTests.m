@@ -15,6 +15,7 @@
 
 @import XCTest;
 
+#import <os/log.h>
 #import <CocoaLumberjack/DDOSLogger.h>
 #import <CocoaLumberjack/DDASLLogger.h>
 

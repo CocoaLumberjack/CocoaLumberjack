@@ -16,7 +16,7 @@
 import CocoaLumberjack
 import Logging
 
-extension Logger.Level {
+extension Logging.Logger.Level {
     @inlinable
     var ddLogLevelAndFlag: (DDLogLevel, DDLogFlag) {
         switch self {
@@ -38,9 +38,9 @@ extension DDLogMessage {
             /// Currently this can be the logger itself, as well as its metadata provider
             public struct MetadataSources: Equatable, Sendable {
                 /// The metadata of the swift-log logger that logged this message.
-                public let logger: Logger.Metadata
+                public let logger: Logging.Logger.Metadata
                 /// The metadata of the metadata provider on the swift-log logger that logged this message.
-                public let provider: Logger.Metadata?
+                public let provider: Logging.Logger.Metadata?
             }
 
             /// The label of the swift-log logger that logged this message.
@@ -50,17 +50,17 @@ extension DDLogMessage {
 
             /// The metadata of the swift-log logger that logged this message.
             @available(*, deprecated, renamed: "metadataSources.logger")
-            public var metadata: Logger.Metadata { metadataSources.logger }
+            public var metadata: Logging.Logger.Metadata { metadataSources.logger }
         }
 
         /// Contains information about the swift-log message thas was logged.
         public struct MessageInformation: Equatable, Sendable {
             /// The original swift-log message.
-            public let message: Logger.Message
+            public let message: Logging.Logger.Message
             /// The original swift-log level of the message. This could be more fine-grained than `DDLogMessage.level` & `DDLogMessage.flag`.
-            public let level: Logger.Level
+            public let level: Logging.Logger.Level
             /// The original swift-log metadata of the message.
-            public let metadata: Logger.Metadata?
+            public let metadata: Logging.Logger.Metadata?
             /// The original swift-log source of the message.
             public let source: String
         }
@@ -76,7 +76,7 @@ extension DDLogMessage {
         /// Metadata from the logged message again trumps both the base and the metadata from the logger's metadata provider.
         /// Essentially: `logger.metadata < logger.metadataProvider < message.metadata`
         /// - Note: Accessing this property performs the merge! Accessing it multiple times can be a performance issue!
-        public var mergedMetadata: Logger.Metadata {
+        public var mergedMetadata: Logging.Logger.Metadata {
             var merged = logger.metadataSources.logger
             if let providerMetadata = logger.metadataSources.provider {
                 merged.merge(providerMetadata, uniquingKeysWith: { $1 })
@@ -105,11 +105,11 @@ final class SwiftLogMessage: DDLogMessage {
 
     @usableFromInline
     init(loggerLabel: String,
-         loggerMetadata: Logger.Metadata,
-         loggerProvidedMetadata: Logger.Metadata?,
-         message: Logger.Message,
-         level: Logger.Level,
-         metadata: Logger.Metadata?,
+         loggerMetadata: Logging.Logger.Metadata,
+         loggerProvidedMetadata: Logging.Logger.Metadata?,
+         message: Logging.Logger.Message,
+         level: Logging.Logger.Level,
+         metadata: Logging.Logger.Metadata?,
          source: String,
          file: String,
          function: String,
@@ -140,10 +140,10 @@ final class SwiftLogMessage: DDLogMessage {
     @usableFromInline
     @available(*, deprecated, renamed: "init(loggerLabel:loggerMetadata:loggerMetadata:message:level:metadata:source:file:function:line:)")
     convenience init(loggerLabel: String,
-                     loggerMetadata: Logger.Metadata,
-                     message: Logger.Message,
-                     level: Logger.Level,
-                     metadata: Logger.Metadata?,
+                     loggerMetadata: Logging.Logger.Metadata,
+                     message: Logging.Logger.Message,
+                     level: Logging.Logger.Level,
+                     metadata: Logging.Logger.Metadata?,
                      source: String,
                      file: String,
                      function: String,
@@ -172,9 +172,9 @@ public struct DDLogHandler: LogHandler {
         @usableFromInline
         struct SyncLogging: Sendable {
             @usableFromInline
-            let tresholdLevel: Logger.Level
+            let tresholdLevel: Logging.Logger.Level
             @usableFromInline
-            let metadataKey: Logger.Metadata.Key
+            let metadataKey: Logging.Logger.Metadata.Key
         }
 
         @usableFromInline
@@ -188,22 +188,22 @@ public struct DDLogHandler: LogHandler {
         @usableFromInline
         struct MetadataSources: Sendable {
             @usableFromInline
-            var provider: Logger.MetadataProvider?
+            var provider: Logging.Logger.MetadataProvider?
             @usableFromInline
-            var logger: Logger.Metadata = [:]
+            var logger: Logging.Logger.Metadata = [:]
         }
 
         @usableFromInline
         let label: String
         @usableFromInline
-        var logLevel: Logger.Level
+        var logLevel: Logging.Logger.Level
         @usableFromInline
         var metadataSources: MetadataSources
 
         // Not removed due to `@usableFromInline`
         @usableFromInline
         @available(*, deprecated, renamed: "metadataSources.logger")
-        var metadata: Logger.Metadata {
+        var metadata: Logging.Logger.Metadata {
             get { metadataSources.logger }
             set { metadataSources.logger = newValue }
         }
@@ -215,23 +215,23 @@ public struct DDLogHandler: LogHandler {
     var loggerInfo: LoggerInfo
 
     @inlinable
-    public var logLevel: Logger.Level {
+    public var logLevel: Logging.Logger.Level {
         get { loggerInfo.logLevel }
         set { loggerInfo.logLevel = newValue }
     }
     @inlinable
-    public var metadataProvider: Logger.MetadataProvider? {
+    public var metadataProvider: Logging.Logger.MetadataProvider? {
         get { loggerInfo.metadataSources.provider }
         set { loggerInfo.metadataSources.provider = newValue }
     }
     @inlinable
-    public var metadata: Logger.Metadata {
+    public var metadata: Logging.Logger.Metadata {
         get { loggerInfo.metadataSources.logger }
         set { loggerInfo.metadataSources.logger = newValue }
     }
 
     @inlinable
-    public subscript(metadataKey metadataKey: String) -> Logger.Metadata.Value? {
+    public subscript(metadataKey metadataKey: String) -> Logging.Logger.Metadata.Value? {
         get { metadata[metadataKey] }
         set { metadata[metadataKey] = newValue }
     }
@@ -247,7 +247,7 @@ public struct DDLogHandler: LogHandler {
     ///   - metadata: The metadata associated with the message.
     /// - Returns: Whether to log the message asynchronous.
     @usableFromInline
-    func _logAsync(level: Logger.Level, metadata: Logger.Metadata?) -> Bool {
+    func _logAsync(level: Logging.Logger.Level, metadata: Logging.Logger.Metadata?) -> Bool {
         if level >= config.syncLogging.tresholdLevel {
             // Easiest check -> level is above treshold. Not async.
             return false
@@ -261,9 +261,9 @@ public struct DDLogHandler: LogHandler {
     }
 
     @inlinable
-    public func log(level: Logger.Level,
-                    message: Logger.Message,
-                    metadata: Logger.Metadata?,
+    public func log(level: Logging.Logger.Level,
+                    message: Logging.Logger.Message,
+                    metadata: Logging.Logger.Metadata?,
                     source: String,
                     file: String,
                     function: String,
@@ -284,7 +284,7 @@ public struct DDLogHandler: LogHandler {
 
 extension DDLogHandler {
     /// The default key to control per message whether to log it synchronous or asynchronous.
-    public static var defaultSynchronousLoggingMetadataKey: Logger.Metadata.Key {
+    public static var defaultSynchronousLoggingMetadataKey: Logging.Logger.Metadata.Key {
         "log-synchronous"
     }
 
@@ -298,10 +298,10 @@ extension DDLogHandler {
     /// - SeeAlso: `DDLog`, `LoggingSystem.boostrap`
     public static func handlerFactory(
         for log: DDLog = .sharedInstance,
-        defaultLogLevel: Logger.Level = .info,
-        loggingSynchronousAsOf syncLoggingTreshold: Logger.Level = .error,
-        synchronousLoggingMetadataKey: Logger.Metadata.Key = DDLogHandler.defaultSynchronousLoggingMetadataKey
-    ) -> (String, Logger.MetadataProvider?) -> LogHandler {
+        defaultLogLevel: Logging.Logger.Level = .info,
+        loggingSynchronousAsOf syncLoggingTreshold: Logging.Logger.Level = .error,
+        synchronousLoggingMetadataKey: Logging.Logger.Metadata.Key = DDLogHandler.defaultSynchronousLoggingMetadataKey
+    ) -> (String, Logging.Logger.MetadataProvider?) -> LogHandler {
         let config = DDLogHandler.Configuration(
             log: log,
             syncLogging: .init(tresholdLevel: syncLoggingTreshold,
@@ -323,11 +323,11 @@ extension DDLogHandler {
     @inlinable
     public static func handlerFactory(
         for log: DDLog = .sharedInstance,
-        defaultLogLevel: Logger.Level = .info,
-        loggingSynchronousAsOf syncLoggingTreshold: Logger.Level = .error,
-        synchronousLoggingMetadataKey: Logger.Metadata.Key = DDLogHandler.defaultSynchronousLoggingMetadataKey
+        defaultLogLevel: Logging.Logger.Level = .info,
+        loggingSynchronousAsOf syncLoggingTreshold: Logging.Logger.Level = .error,
+        synchronousLoggingMetadataKey: Logging.Logger.Metadata.Key = DDLogHandler.defaultSynchronousLoggingMetadataKey
     ) -> (String) -> LogHandler {
-        let factory: (String, Logger.MetadataProvider?) -> LogHandler = handlerFactory(
+        let factory: (String, Logging.Logger.MetadataProvider?) -> LogHandler = handlerFactory(
             for: log,
             defaultLogLevel: defaultLogLevel,
             loggingSynchronousAsOf: syncLoggingTreshold,
@@ -349,10 +349,10 @@ extension LoggingSystem {
     @inlinable
     public static func bootstrapWithCocoaLumberjack(
         for log: DDLog = .sharedInstance,
-        defaultLogLevel: Logger.Level = .info,
-        loggingSynchronousAsOf syncLoggingTreshold: Logger.Level = .error,
-        synchronousLoggingMetadataKey: Logger.Metadata.Key = DDLogHandler.defaultSynchronousLoggingMetadataKey,
-        metadataProvider: Logger.MetadataProvider? = nil
+        defaultLogLevel: Logging.Logger.Level = .info,
+        loggingSynchronousAsOf syncLoggingTreshold: Logging.Logger.Level = .error,
+        synchronousLoggingMetadataKey: Logging.Logger.Metadata.Key = DDLogHandler.defaultSynchronousLoggingMetadataKey,
+        metadataProvider: Logging.Logger.MetadataProvider? = nil
     ) {
         bootstrap(DDLogHandler.handlerFactory(for: log,
                                               defaultLogLevel: defaultLogLevel,

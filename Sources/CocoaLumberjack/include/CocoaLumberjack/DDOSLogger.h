@@ -32,8 +32,8 @@ DD_SENDABLE
 @protocol DDOSLogLevelMapper <NSObject>
 
 /// Maps the given `DDLogFlag` to a `os_log_type_t`.
-/// - Parameter logMessageFlag: `DDLogFlag` with which the message was logged.
-- (os_log_type_t)osLogTypeForLogMessageFlag:(DDLogFlag)logMessageFlag;
+/// - Parameter logFlag: `DDLogFlag` for which to return the os log type.
+- (os_log_type_t)osLogTypeForLogFlag:(DDLogFlag)logFlag;
 
 @end
 
