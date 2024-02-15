@@ -52,8 +52,8 @@ final class DDLogHandlerTests: XCTestCase {
         // since another use of it will fail the precondition (multiple bootstrap calls)
         // All other tests must use `LoggingSystem.bootstrapInternal`.
         LoggingSystem.bootstrapWithCocoaLumberjack(for: mockDDLog)
-        let logger = Logger(label: "TestLogger")
-        let msg: Logger.Message = "test message"
+        let logger = Logging.Logger(label: "TestLogger")
+        let msg: Logging.Logger.Message = "test message"
         let logLine: UInt = #line + 1
         logger.info(msg)
         XCTAssertEqual(mockDDLog.loggedMessages.count, 1)
@@ -77,8 +77,8 @@ final class DDLogHandlerTests: XCTestCase {
 
     func testBootstrappingWithExplicitMethod() throws {
         LoggingSystem.bootstrapInternal(DDLogHandler.handlerFactory(for: mockDDLog))
-        let logger = Logger(label: "TestLogger")
-        let msg: Logger.Message = "test message"
+        let logger = Logging.Logger(label: "TestLogger")
+        let msg: Logging.Logger.Message = "test message"
         let logLine: UInt = #line + 1
         logger.info(msg)
         XCTAssertEqual(mockDDLog.loggedMessages.count, 1)
@@ -102,7 +102,7 @@ final class DDLogHandlerTests: XCTestCase {
 
     func testDefaults() throws {
         LoggingSystem.bootstrapInternal(DDLogHandler.handlerFactory())
-        let logger = Logger(label: "TestLogger")
+        let logger = Logging.Logger(label: "TestLogger")
         XCTAssertEqual(logger.logLevel, .info)
         XCTAssertTrue(logger.handler is DDLogHandler)
         let ddLogHandler = try XCTUnwrap(logger.handler as? DDLogHandler)
@@ -114,18 +114,18 @@ final class DDLogHandlerTests: XCTestCase {
     }
 
     func testLoggingAllLevels() throws {
-        let syncTresholdLevel = Logger.Level.warning
-        let syncLoggingMetadataKey: Logger.Metadata.Key = "test-log-sync"
+        let syncTresholdLevel = Logging.Logger.Level.warning
+        let syncLoggingMetadataKey: Logging.Logger.Metadata.Key = "test-log-sync"
         LoggingSystem.bootstrapInternal(DDLogHandler.handlerFactory(for: mockDDLog,
                                                                     loggingSynchronousAsOf: syncTresholdLevel,
                                                                     synchronousLoggingMetadataKey: syncLoggingMetadataKey))
-        var logger = Logger(label: "TestLogger")
+        var logger = Logging.Logger(label: "TestLogger")
         logger.logLevel = .trace // enable all logs
         logger[metadataKey: "test-data"] = "test-value"
         XCTAssertEqual(logger.logLevel, .trace)
         XCTAssertEqual(logger[metadataKey: "test-data"], "test-value")
-        let allLevels = Logger.Level.allCases
-        let message1Meta: Logger.Metadata = ["msg-data": "msg-value"]
+        let allLevels = Logging.Logger.Level.allCases
+        let message1Meta: Logging.Logger.Metadata = ["msg-data": "msg-value"]
         let message2Meta = message1Meta.merging([syncLoggingMetadataKey: .stringConvertible(true)], uniquingKeysWith: { $1 })
         let logLine1: UInt = #line + 3
         let logLine2 = logLine1 + 1
@@ -133,8 +133,8 @@ final class DDLogHandlerTests: XCTestCase {
             logger.log(level: level, "\(level)-msg", metadata: message1Meta)
             logger.log(level: level, "\(level)-msg-with-sync", metadata: message2Meta)
         }
-        XCTAssertEqual(mockDDLog.loggedMessages.count, Logger.Level.allCases.count * 2)
-        guard mockDDLog.loggedMessages.count >= Logger.Level.allCases.count * 2 else { return } // prevent test crashes
+        XCTAssertEqual(mockDDLog.loggedMessages.count, Logging.Logger.Level.allCases.count * 2)
+        guard mockDDLog.loggedMessages.count >= Logging.Logger.Level.allCases.count * 2 else { return } // prevent test crashes
 
         zip(allLevels, stride(from: mockDDLog.loggedMessages.startIndex, to: mockDDLog.loggedMessages.endIndex, by: 2)).forEach {
             let level = $0.0
