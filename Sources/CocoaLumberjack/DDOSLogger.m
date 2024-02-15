@@ -18,6 +18,41 @@
 
 #import <CocoaLumberjack/DDOSLogger.h>
 
+@implementation DDOSLogLevelMapperDefault
+
+- (instancetype)init {
+    self = [super init];
+    return self;
+}
+
+- (os_log_type_t)osLogTypeForLogMessageFlag:(DDLogFlag)logMessageFlag {
+    switch (logMessageFlag) {
+        case DDLogFlagError:
+        case DDLogFlagWarning:
+            return OS_LOG_TYPE_ERROR;
+        case DDLogFlagInfo:
+            return OS_LOG_TYPE_INFO;
+        case DDLogFlagDebug:
+        case DDLogFlagVerbose:
+            return OS_LOG_TYPE_DEBUG;
+        default:
+            return OS_LOG_TYPE_DEFAULT;
+    }
+}
+
+@end
+
+#if TARGET_OS_SIMULATOR
+@implementation DDOSLogLevelMapperSimulatorConsoleAppWorkaround
+
+- (os_log_type_t)osLogTypeForLogMessageFlag:(DDLogFlag)logMessageFlag {
+    __auto_type defaultMapping = [super osLogTypeForLogMessageFlag:logMessageFlag];
+    return (defaultMapping == OS_LOG_TYPE_DEBUG) ? OS_LOG_TYPE_DEFAULT : defaultMapping;
+}
+
+@end
+#endif
+
 @interface DDOSLogger ()
 
 @property (nonatomic, copy, readonly, nullable) NSString *subsystem;
@@ -30,6 +65,7 @@
 
 @synthesize subsystem = _subsystem;
 @synthesize category = _category;
+@synthesize logLevelMapper = _logLevelMapper;
 @synthesize logger = _logger;
 
 #pragma mark - Shared Instance
@@ -54,12 +90,35 @@ static DDOSLogger *sharedInstance;
     if (self = [super init]) {
         _subsystem = [subsystem copy];
         _category = [category copy];
+        _logLevelMapper = [[DDOSLogLevelMapperDefault alloc] init];
     }
     return self;
 }
 
 - (instancetype)init {
     return [self initWithSubsystem:nil category:nil];
+}
+
+- (instancetype)initWithSubsystem:(NSString *)subsystem
+                         category:(NSString *)category
+                   logLevelMapper:(id<DDOSLogLevelMapper>)logLevelMapper {
+    if (self = [self initWithSubsystem:subsystem category:category]) {
+        NSParameterAssert(logLevelMapper);
+        _logLevelMapper = logLevelMapper;
+    }
+    return self;
+}
+
+- (instancetype)initWithLogLevelMapper:(id<DDOSLogLevelMapper>)logLevelMapper {
+    return [self initWithSubsystem:nil category:nil logLevelMapper:logLevelMapper];
+}
+
+#pragma mark - Mapper
+- (id<DDOSLogLevelMapper>)logLevelMapper {
+    if (_logLevelMapper == nil) {
+        _logLevelMapper = [[DDOSLogLevelMapperDefault alloc] init];
+    }
+    return _logLevelMapper;
 }
 
 #pragma mark - os_log
@@ -80,8 +139,7 @@ static DDOSLogger *sharedInstance;
 }
 
 - (void)logMessage:(DDLogMessage *)logMessage {
-// See DDASLLogCapture.m -> Was never supported on watchOS.
-#if !TARGET_OS_WATCH
+#if !TARGET_OS_WATCH // See DDASLLogCapture.m -> Was never supported on watchOS.
     // Skip captured log messages.
     if ([logMessage->_fileName isEqualToString:@"DDASLLogCapture"]) {
         return;
@@ -91,22 +149,8 @@ static DDOSLogger *sharedInstance;
     if (@available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *)) {
         __auto_type message = _logFormatter ? [_logFormatter formatLogMessage:logMessage] : logMessage->_message;
         if (message != nil) {
-            __auto_type msg = [message UTF8String];
-            __auto_type logger = [self logger];
-            switch (logMessage->_flag) {
-                case DDLogFlagError  :
-                case DDLogFlagWarning:
-                    os_log_error(logger, "%{public}s", msg);
-                    break;
-                case DDLogFlagInfo   :
-                    os_log_info(logger, "%{public}s", msg);
-                    break;
-                case DDLogFlagDebug  :
-                case DDLogFlagVerbose:
-                default              :
-                    os_log_debug(logger, "%{public}s", msg);
-                    break;
-            }
+            __auto_type logType = [self.logLevelMapper osLogTypeForLogMessageFlag:logMessage->_flag];
+            os_log_with_type(self.logger, logType, "%{public}s", message.UTF8String);
         }
     }
 }
