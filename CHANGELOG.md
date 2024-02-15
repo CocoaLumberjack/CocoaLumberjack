@@ -1,3 +1,11 @@
+# [3.8.5 - Xcode 15.2 on Feb ??, 2024](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tags/3.8.5)
+
+### Public
+
+- Fix build failure due to privacy manifest when using static linking with CocoaPods (#1408)
+- Allow custom mapping of `DDLogFlag` to `os_log_type_t`, fix default mapping for `DDLogFlagWarn` (#1410)
+
+
 # [3.8.4 - Xcode 15.2 on Feb 8th, 2024](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tags/3.8.4)
 
 ### Public
