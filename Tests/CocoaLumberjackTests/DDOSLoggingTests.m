@@ -15,7 +15,12 @@
 
 @import XCTest;
 
+#ifndef DD_LEGACY_MACROS
+    #define DD_LEGACY_MACROS 0
+#endif
+
 #import <os/log.h>
+#import <CocoaLumberjack/DDLog.h>
 #import <CocoaLumberjack/DDOSLogger.h>
 #import <CocoaLumberjack/DDASLLogger.h>
 
