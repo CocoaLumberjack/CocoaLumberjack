@@ -31,7 +31,7 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "CocoaLumberjack",
-            exclude: ["Supporting Files"],
+            // exclude: ["Supporting Files"], // contains the CocoaLumberjack.h and without this header file, using CL with SPM does not seem to work
             resources: [
                 .process("PrivacyInfo.xcprivacy"),
             ]),
