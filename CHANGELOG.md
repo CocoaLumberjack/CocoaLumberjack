@@ -1,4 +1,4 @@
-# [3.8.5 - Xcode 15.2 on Feb ??, 2024](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tags/3.8.5)
+# [3.8.5 - Xcode 15.3 on Mar 8th, 2024](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tags/3.8.5)
 
 ### Public
 
