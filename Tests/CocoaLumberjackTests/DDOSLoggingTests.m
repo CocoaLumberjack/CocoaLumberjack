@@ -68,7 +68,9 @@
         [DDLog addLogger:logger];
         XCTAssertEqualObjects(logger.loggerName, DDLoggerNameOS);
         XCTAssertEqualObjects(logger, DDLog.allLoggers.firstObject);
-    } else {
+    }
+#if !TARGET_OS_WATCH
+    else {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         __auto_type logger = [DDASLLogger new];
@@ -77,6 +79,7 @@
         XCTAssertEqualObjects(logger, DDLog.allLoggers.firstObject);
 #pragma clang diagnostic pop
     }
+#endif
 }
 
 - (void)testDDOSLogLevelMapper {
