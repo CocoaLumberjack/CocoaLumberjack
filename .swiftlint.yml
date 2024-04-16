@@ -11,3 +11,6 @@ nesting:
 
 identifier_name:
   allowed_symbols: "_"
+
+mandatory_comma:
+  mandatory_comma: true
