@@ -84,30 +84,31 @@ static DDOSLogger *sharedInstance;
 }
 
 #pragma mark - Initialization
-- (instancetype)initWithSubsystem:(NSString *)subsystem category:(NSString *)category {
-    NSAssert((subsystem == nil) == (category == nil), 
+- (instancetype)initWithSubsystem:(NSString *)subsystem
+                         category:(NSString *)category
+                   logLevelMapper:(id<DDOSLogLevelMapper>)logLevelMapper {
+    NSAssert((subsystem == nil) == (category == nil),
              @"Either both subsystem and category or neither should be nil.");
+    NSParameterAssert(logLevelMapper);
     if (self = [super init]) {
         _subsystem = [subsystem copy];
         _category = [category copy];
-        _logLevelMapper = [[DDOSLogLevelMapperDefault alloc] init];
+        _logLevelMapper = logLevelMapper;
     }
     return self;
+}
+
+- (instancetype)initWithSubsystem:(NSString *)subsystem category:(NSString *)category {
+    return [self initWithSubsystem:subsystem
+                          category:category
+                    logLevelMapper:[[DDOSLogLevelMapperDefault alloc] init]];
 }
 
 - (instancetype)init {
     return [self initWithSubsystem:nil category:nil];
 }
 
-- (instancetype)initWithSubsystem:(NSString *)subsystem
-                         category:(NSString *)category
-                   logLevelMapper:(id<DDOSLogLevelMapper>)logLevelMapper {
-    if (self = [self initWithSubsystem:subsystem category:category]) {
-        NSParameterAssert(logLevelMapper);
-        _logLevelMapper = logLevelMapper;
-    }
-    return self;
-}
+
 
 - (instancetype)initWithLogLevelMapper:(id<DDOSLogLevelMapper>)logLevelMapper {
     return [self initWithSubsystem:nil category:nil logLevelMapper:logLevelMapper];

@@ -73,18 +73,6 @@ DD_SENDABLE
 /// The log level mapper, that maps ``DDLogFlag``s to ``os_log_type_t`` for this logger.
 @property (nonatomic, strong, readonly) id<DDOSLogLevelMapper> logLevelMapper;
 
-/// The designated initializer, using `DDOSLogLevelMapperDefault`.
-/// @param subsystem Desired subsystem in log. E.g. "org.example"
-/// @param category Desired category in log. E.g. "Point of interests."
-/// @discussion This method requires either both or no parameter to be set. Much like `(String, String)?` in Swift.
-///             If both parameters are nil, this method will return a logger configured with `OS_LOG_DEFAULT`.
-///             If both parameters are non-nil, it will return a logger configured with `os_log_create(subsystem, category)`.
-- (instancetype)initWithSubsystem:(nullable NSString *)subsystem 
-                         category:(nullable NSString *)category NS_DESIGNATED_INITIALIZER;
-
-/// Creates an instance that uses `OS_LOG_DEFAULT` and `DDOSLogLevelMapperDefault`.
-- (instancetype)init;
-
 /// An initializer that in addition to subsystem and category also allows providing the log level mapper.
 /// @param subsystem Desired subsystem in log. E.g. "org.example"
 /// @param category Desired category in log. E.g. "Point of interests."
@@ -94,12 +82,23 @@ DD_SENDABLE
 ///             If both parameters are non-nil, it will return a logger configured with `os_log_create(subsystem, category)`
 - (instancetype)initWithSubsystem:(nullable NSString *)subsystem
                          category:(nullable NSString *)category
-                   logLevelMapper:(id<DDOSLogLevelMapper>)logLevelMapper;
-// FIXME: This should actually be the designated initializer, but that would be a breaking change. Adjust in next version bump.
+                   logLevelMapper:(id<DDOSLogLevelMapper>)logLevelMapper NS_DESIGNATED_INITIALIZER;
+
+/// The designated initializer, using `DDOSLogLevelMapperDefault`.
+/// @param subsystem Desired subsystem in log. E.g. "org.example"
+/// @param category Desired category in log. E.g. "Point of interests."
+/// @discussion This method requires either both or no parameter to be set. Much like `(String, String)?` in Swift.
+///             If both parameters are nil, this method will return a logger configured with `OS_LOG_DEFAULT`.
+///             If both parameters are non-nil, it will return a logger configured with `os_log_create(subsystem, category)`.
+- (instancetype)initWithSubsystem:(nullable NSString *)subsystem 
+                         category:(nullable NSString *)category;
 
 /// Creates an instance that uses `OS_LOG_DEFAULT`.
 /// @param logLevelMapper The log level mapper to use.
 - (instancetype)initWithLogLevelMapper:(id<DDOSLogLevelMapper>)logLevelMapper;
+
+/// Creates an instance that uses `OS_LOG_DEFAULT` and `DDOSLogLevelMapperDefault`.
+- (instancetype)init;
 
 @end
 
