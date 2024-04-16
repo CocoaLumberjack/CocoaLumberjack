@@ -62,6 +62,7 @@ VERSION_CONFIG_VAR='MARKETING_VERSION'
 MACOS_SDK_CONFIG_VAR='MACOSX_DEPLOYMENT_TARGET'
 IOS_SDK_CONFIG_VAR='IPHONEOS_DEPLOYMENT_TARGET'
 TVOS_SDK_CONFIG_VAR='TVOS_DEPLOYMENT_TARGET'
+VISIONOS_SDK_CONFIG_VAR='VISIONOS_DEPLOYMENT_TARGET'
 WATCHOS_SDK_CONFIG_VAR='WATCHOS_DEPLOYMENT_TARGET'
 
 
@@ -75,6 +76,7 @@ CURRENT_VERSION="$(read_config_var "${VERSION_CONFIG_VAR}" '[0-9]+\.[0-9]+\.[0-9
 MACOS_SDK="$(read_config_var "${MACOS_SDK_CONFIG_VAR}" '[0-9]+\.[0-9]+' "${SDKS_XCCONFIG_FILE}")"
 IOS_SDK="$(read_config_var "${IOS_SDK_CONFIG_VAR}" '[0-9]+\.[0-9]+' "${SDKS_XCCONFIG_FILE}")"
 TVOS_SDK="$(read_config_var "${TVOS_SDK_CONFIG_VAR}" '[0-9]+\.[0-9]+' "${SDKS_XCCONFIG_FILE}")"
+VISIONOS_SDK="$(read_config_var "${VISIONOS_SDK_CONFIG_VAR}" '[0-9]+\.[0-9]+' "${SDKS_XCCONFIG_FILE}")"
 WATCHOS_SDK="$(read_config_var "${WATCHOS_SDK_CONFIG_VAR}" '[0-9]+\.[0-9]+' "${SDKS_XCCONFIG_FILE}")"
 
 SUPPORTED_SWIFT_VERSIONS=''
@@ -114,6 +116,10 @@ if [[ -z "${TVOS_SDK}" ]]; then
     echo "Could not find ${TVOS_SDK_CONFIG_VAR} in ${SDKS_XCCONFIG_FILE}!"
     exit -1
 fi
+if [[ -z "${VISIONOS_SDK}" ]]; then
+    echo "Could not find ${VISIONOS_SDK_CONFIG_VAR} in ${SDKS_XCCONFIG_FILE}!"
+    exit -1
+fi
 if [[ -z "${WATCHOS_SDK}" ]]; then
     echo "Could not find ${WATCHOS_SDK_CONFIG_VAR} in ${SDKS_XCCONFIG_FILE}!"
     exit -1
@@ -129,7 +135,7 @@ Pod::Spec.new do |s|
   s.name     = 'CocoaLumberjack'
   s.version  = '${CURRENT_VERSION}'
   s.license  = 'BSD'
-  s.summary  = 'A fast & simple, yet powerful & flexible logging framework for macOS, iOS, tvOS and watchOS.'
+  s.summary  = 'A fast & simple, yet powerful & flexible logging framework for macOS, iOS, tvOS, watchOS and visionOS.'
   s.authors  = { 'Robbie Hanson' => 'robbiehanson@deusty.com' }
   s.homepage = 'https://github.com/CocoaLumberjack/CocoaLumberjack'
   s.source   = { :git => 'https://github.com/CocoaLumberjack/CocoaLumberjack.git',
@@ -140,13 +146,14 @@ Pod::Spec.new do |s|
                   'such as multi-threading, grand central dispatch (if available), lockless '      \\
                   'atomic operations, and the dynamic nature of the objective-c runtime.'
 
-  s.cocoapods_version = '>= 1.7.0'
+  s.cocoapods_version = '>= 1.13.0'
   s.swift_versions = [${SUPPORTED_SWIFT_VERSIONS}]
 
-  s.osx.deployment_target     = '${MACOS_SDK}'
-  s.ios.deployment_target     = '${IOS_SDK}'
-  s.tvos.deployment_target    = '${TVOS_SDK}'
-  s.watchos.deployment_target = '${WATCHOS_SDK}'
+  s.osx.deployment_target      = '${MACOS_SDK}'
+  s.ios.deployment_target      = '${IOS_SDK}'
+  s.tvos.deployment_target     = '${TVOS_SDK}'
+  s.visionos.deployment_target = '${VISIONOS_SDK}'
+  s.watchos.deployment_target  = '${WATCHOS_SDK}'
 
   s.preserve_paths = 'README.md', 'LICENSE', 'CHANGELOG.md'
 
