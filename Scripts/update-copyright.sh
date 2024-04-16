@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -euo pipefail
-SCRIPT_NAME="$(basename $0)"
+SCRIPT_NAME="$(basename "$0")"
 
 # Arg1: OLD_YEAR
 # Arg2: NEW_YEAR
@@ -71,7 +71,7 @@ if [[ "$(uname -s)" = 'Darwin' ]]; then
     EXTENDED_REGEX_FLAG_POST_PATH=''
 fi
 
-pushd "$(dirname $0)/../" > /dev/null
+pushd "$(dirname "$0")/../" > /dev/null
 find ${EXTENDED_REGEX_FLAG_PRE_PATH} \
     . \
     ${EXTENDED_REGEX_FLAG_POST_PATH} \

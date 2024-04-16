@@ -23,32 +23,27 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 @implementation ViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+
     if (@available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *)) {
         [DDLog addLogger:[DDOSLogger sharedInstance]];
     } else {
         [DDLog addLogger:(DDTTYLogger *)[DDTTYLogger sharedInstance]];
     }
-    
+
     DDLogVerbose(@"Verbose");
     DDLogInfo(@"Info");
     DDLogWarn(@"Warn");
     DDLogError(@"Error");
-    
+
     DDLog *aDDLogInstance = [DDLog new];
     if (@available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *)) {
         [aDDLogInstance addLogger:[DDOSLogger sharedInstance]];
     } else {
         [aDDLogInstance addLogger:(DDTTYLogger *)[DDTTYLogger sharedInstance]];
     }
-    
+
     DDLogVerboseToDDLog(aDDLogInstance, @"Verbose from aDDLogInstance");
     DDLogInfoToDDLog(aDDLogInstance, @"Info from aDDLogInstance");
     DDLogWarnToDDLog(aDDLogInstance, @"Warn from aDDLogInstance");

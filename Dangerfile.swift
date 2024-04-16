@@ -50,7 +50,7 @@ if danger.github?.pullRequest.title.contains("WIP") == true {
 }
 
 // Warn when there is a big PR
-if let additions = danger.github?.pullRequest.additions, 
+if let additions = danger.github?.pullRequest.additions,
    let deletions = danger.github?.pullRequest.deletions,
    case let sum = additions + deletions, sum > 1000 {
     warn("Pull request is relatively big (\(sum) lines changed). If this PR contains multiple changes, consider splitting it into separate PRs for easier reviews.")

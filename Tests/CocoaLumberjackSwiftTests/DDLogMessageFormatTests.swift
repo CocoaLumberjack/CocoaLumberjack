@@ -17,14 +17,6 @@ import XCTest
 @testable import CocoaLumberjackSwift
 
 final class DDLogMessageFormatTests: XCTestCase {
-    override func setUp() {
-        super.setUp()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-    }
-
     func testMessageFormatCreationWithNoArgs() {
         let format: DDLogMessageFormat = "Message with no args"
         let expectedFormat: String = "Message with no args"

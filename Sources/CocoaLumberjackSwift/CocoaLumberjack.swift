@@ -13,6 +13,8 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
+// swiftlint:disable file_length
+
 @_exported import CocoaLumberjack
 #if SWIFT_PACKAGE
 import CocoaLumberjackSwiftSupport
@@ -227,24 +229,24 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
         }
 
         @inlinable
-        public mutating func appendInterpolation<Convertible: ReferenceConvertible>(_ c: Convertible) {
-            if c is CVarArg {
+        public mutating func appendInterpolation<Convertible: ReferenceConvertible>(_ convertible: Convertible) {
+            if convertible is CVarArg {
                 print("""
                 [WARNING]: CocoaLumberjackSwift is creating a \(DDLogMessageFormat.self) with an interpolation conforming to `CVarArg` \
                 using the overload for `ReferenceConvertible` interpolations!
                 Please report this as a bug, including the following snippet:
                 ```
-                Convertible: \(Convertible.self), ReferenceType: \(Convertible.ReferenceType.self), type(of: c): \(type(of: c))
+                Convertible: \(Convertible.self), ReferenceType: \(Convertible.ReferenceType.self), type(of: convertible): \(type(of: convertible))
                 ```
                 """)
             }
             // This should be safe, sine the compiler should convert it to the reference.
-            storage.addValue(c as? CVarArg ?? c as! Convertible.ReferenceType, withSpecifier: "%@")
+            storage.addValue(convertible as? CVarArg ?? convertible as! Convertible.ReferenceType, withSpecifier: "%@")
         }
 
         @inlinable
-        public mutating func appendInterpolation<Obj: NSObject>(_ o: Obj) {
-            storage.addValue(o, withSpecifier: "%@")
+        public mutating func appendInterpolation<Obj: NSObject>(_ object: Obj) {
+            storage.addValue(object, withSpecifier: "%@")
         }
 
         @_disfavoredOverload
@@ -610,3 +612,6 @@ public func currentFileName(_ fileName: StaticString = #file) -> String {
 public func CurrentFileName(_ fileName: StaticString = #file) -> String {
     currentFileName(fileName)
 }
+// swiftlint:enable identifier_name
+
+// swiftlint:enable file_length

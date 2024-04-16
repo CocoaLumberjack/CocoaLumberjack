@@ -18,23 +18,23 @@ import CocoaLumberjackSwift
 
 final class Formatter: DDDispatchQueueLogFormatter {
     let threadUnsafeDateFormatter: DateFormatter
-    
+
     override init() {
         threadUnsafeDateFormatter = DateFormatter()
         threadUnsafeDateFormatter.formatterBehavior = .behavior10_4
         threadUnsafeDateFormatter.dateFormat = "HH:mm:ss.SSS"
-        
+
         super.init()
     }
-    
+
     override func format(message logMessage: DDLogMessage) -> String {
         let dateAndTime = threadUnsafeDateFormatter.string(from: logMessage.timestamp)
-        
+
         let logLevel: String
         let logFlag = logMessage.flag
         if logFlag.contains(.error) {
             logLevel = "E"
-        } else if logFlag.contains(.warning){
+        } else if logFlag.contains(.warning) {
             logLevel = "W"
         } else if logFlag.contains(.info) {
             logLevel = "I"
@@ -45,7 +45,7 @@ final class Formatter: DDDispatchQueueLogFormatter {
         } else {
             logLevel = "?"
         }
-        
+
         return "\(dateAndTime) |\(logLevel)| [\(logMessage.fileName) \(logMessage.function ?? "nil")] #\(logMessage.line): \(logMessage.message)"
     }
 }

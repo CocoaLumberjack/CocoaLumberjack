@@ -1,6 +1,8 @@
 disabled_rules:
   - line_length
   - function_parameter_count
+  - syntactic_sugar
+  - private_over_fileprivate
 
 opt_in_rules:
   - empty_count
