@@ -42,18 +42,13 @@
     __auto_type expectation = [self expectationWithDescription:@"Multithread atomic counter"];
     __auto_type globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
-    NSInteger numberOfThreads = 5;
-    __block NSInteger executedCount = 0;
-    for (NSInteger i=0; i<numberOfThreads; i++) {
+    static NSInteger numberOfThreads = 5;
+    expectation.expectedFulfillmentCount = numberOfThreads;
+    for (NSInteger i = 0; i < numberOfThreads; i++) {
         dispatch_async(globalQueue, ^{
             [atomicCounter increment];
             XCTAssertGreaterThanOrEqual([atomicCounter value], 1);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                executedCount++;
-                if (executedCount == numberOfThreads) {
-                    [expectation fulfill];
-                }
-            });
+            [expectation fulfill];
         });
     }
 
@@ -71,27 +66,17 @@
     __auto_type expectation = [self expectationWithDescription:@"Multithread atomic counter inc and dec"];
     __auto_type globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
-    NSInteger numberOfThreads = 5;
-    __block NSInteger executedCount = 0;
-    for (NSInteger i=0; i<numberOfThreads; i++) {
+    static NSInteger numberOfThreads = 5;
+    expectation.expectedFulfillmentCount = numberOfThreads * 2;
+
+    for (NSInteger i = 0; i < numberOfThreads; i++) {
         dispatch_async(globalQueue, ^{
             [atomicCounter increment];
-
-            dispatch_async(dispatch_get_main_queue(), ^{
-                executedCount++;
-                if (executedCount == 2 * numberOfThreads) {
-                    [expectation fulfill];
-                }
-            });
+            [expectation fulfill];
         });
         dispatch_async(globalQueue, ^{
             [atomicCounter decrement];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                executedCount++;
-                if (executedCount == 2 * numberOfThreads) {
-                    [expectation fulfill];
-                }
-            });
+            [expectation fulfill];
         });
     }
 
