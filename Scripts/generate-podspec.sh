@@ -68,7 +68,7 @@ WATCHOS_SDK_CONFIG_VAR='WATCHOS_DEPLOYMENT_TARGET'
 # Read files
 # ##########
 echo 'Reading config...'
-pushd "$(dirname $0)/../" > /dev/null
+pushd "$(dirname "$0")/../" > /dev/null
 
 CURRENT_VERSION="$(read_config_var "${VERSION_CONFIG_VAR}" '[0-9]+\.[0-9]+\.[0-9]+' "${VERSION_XCCONFIG_FILE}")"
 
@@ -122,7 +122,7 @@ fi
 # Generate podspec
 # ################
 echo "Generating podspec..."
-pushd "$(dirname $0)/../" > /dev/null
+pushd "$(dirname "$0")/../" > /dev/null
 
 cat << EOF > ./CocoaLumberjack.podspec
 Pod::Spec.new do |s|
