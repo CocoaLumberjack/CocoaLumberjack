@@ -199,7 +199,7 @@ GCC_WARN_UNUSED_VARIABLE = YES
 HEADER_SEARCH_PATHS = $(inherited)
 
 // Code will load on this and later versions of iOS. Framework APIs that are unavailable in earlier versions will be weak-linked; your code should check for null function pointers or specific system versions before calling newer APIs.
-IPHONEOS_DEPLOYMENT_TARGET = 11.0
+IPHONEOS_DEPLOYMENT_TARGET = 12.0
 
 // This is a list of paths to be added to the `runpath` search path list for the image being created. At runtime, `dyld` uses the `runpath` when searching for dylibs whose load path begins with `@rpath/`.
 LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
@@ -252,10 +252,10 @@ SWIFT_VERSION = 5.0
 TARGETED_DEVICE_FAMILY = 1,2,3,4
 
 // Code will load on this and later versions of tvOS. Framework APIs that are unavailable in earlier versions will be weak-linked; your code should check for null function pointers or specific system versions before calling newer APIs.
-TVOS_DEPLOYMENT_TARGET = 11.0
+TVOS_DEPLOYMENT_TARGET = 12.0
 
 // Selects the process used for version-stamping generated files. * *None:* Use no versioning system. * *Apple Generic:* Use the current project version setting. [apple-generic]
 VERSIONING_SYSTEM = apple-generic
 
 // Code will load on this and later versions of watchOS. Framework APIs that are unavailable in earlier versions will be weak-linked; your code should check for null function pointers or specific system versions before calling newer APIs.
-WATCHOS_DEPLOYMENT_TARGET = 4.0
+WATCHOS_DEPLOYMENT_TARGET = 5.0
