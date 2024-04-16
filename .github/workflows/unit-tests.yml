@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: ^15.2
+          xcode-version: ^15.3
       - uses: actions/checkout@v4
       - name: Run SwiftPM Tests
         run: swift test --enable-code-coverage --parallel
@@ -48,7 +48,7 @@ jobs:
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: ^15.2
+          xcode-version: ^15.3
       - name: Determine Xcode destination
         id: xcode-destination
         env:
