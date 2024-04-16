@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: ^15.2
+          xcode-version: ^15.3
       - uses: actions/checkout@v4
       - uses: sersoft-gmbh/xcodebuild-action@v3
         with:
@@ -38,7 +38,7 @@ jobs:
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: ^15.2
+          xcode-version: ^15.3
       - uses: actions/checkout@v4
       - uses: sersoft-gmbh/xcodebuild-action@v3
         with:
