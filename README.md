@@ -13,7 +13,7 @@ CocoaLumberjack
 [![codebeat badge](https://codebeat.co/badges/840b714a-c8f3-4936-ada4-363473cd4e6b)](https://codebeat.co/projects/github-com-cocoalumberjack-cocoalumberjack-master)
 
 
-**CocoaLumberjack** is a fast & simple, yet powerful & flexible logging framework for macOS, iOS, tvOS and watchOS.
+**CocoaLumberjack** is a fast & simple, yet powerful & flexible logging framework for macOS, iOS, tvOS, watchOS and visionOS.
 
 ## How to get started
 
@@ -232,7 +232,7 @@ Per [App privacy details on the App Store](https://developer.apple.com/app-store
 
 ### Data collection by the framework
 
-**By default, CocoaLumberjack does NOT collect any data on its own.** 
+**By default, CocoaLumberjack does NOT collect any data on its own.**
 
 [See our Data Collection Practices list.](https://cocoalumberjack.github.io/DataCollection/index.html)
 
