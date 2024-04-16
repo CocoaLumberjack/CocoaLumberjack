@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '30 1 * * *'
   issues:
-    types: 
+    types:
       - edited
       - reopened
       - labeled
