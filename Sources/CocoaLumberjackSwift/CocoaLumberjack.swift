@@ -241,6 +241,7 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
                 """)
             }
             // This should be safe, sine the compiler should convert it to the reference.
+            // swiftlint:disable:next force_cast
             storage.addValue(convertible as? CVarArg ?? convertible as! Convertible.ReferenceType, withSpecifier: "%@")
         }
 
