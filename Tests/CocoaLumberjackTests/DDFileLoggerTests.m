@@ -339,7 +339,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
 
 - (void)testSerializer {
     logFileManager.logMessageSerializer = [[DDMockedSerializer alloc] initWithSerializerBlock:^NSData *(NSString * string, DDLogMessage * msg) {
-        NSString *resultingString = [NSString stringWithFormat:@"MessageLength: %ld; Message: %@", string.length, string];
+        NSString *resultingString = [NSString stringWithFormat:@"MessageLength: %lu; Message: %@", string.length, string];
         if (msg) {
             resultingString = [resultingString stringByAppendingString:@"; Message was non-nil"];
         }
