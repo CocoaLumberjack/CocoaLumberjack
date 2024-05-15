@@ -37,6 +37,7 @@ jobs:
           - iOS
           - iPadOS
           - tvOS
+          - visionOS
         skip-testing: ['']
         include:
           - scheme: iOS Tests
