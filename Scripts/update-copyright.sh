@@ -57,7 +57,7 @@ if [[ $# -gt 0 ]]; then
         echo 'For more information use --help.'
         echo ''
         print_usage 'usage_only'
-        exit -1
+        exit 1
     fi
 fi
 
