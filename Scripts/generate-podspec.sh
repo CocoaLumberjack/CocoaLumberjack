@@ -46,7 +46,7 @@ if [[ $# -gt 0 ]]; then
         echo 'For more information use --help.'
         echo ''
         print_usage 'usage_only'
-        exit -1
+        exit 1
     fi
 fi
 
@@ -62,7 +62,7 @@ VERSION_CONFIG_VAR='MARKETING_VERSION'
 MACOS_SDK_CONFIG_VAR='MACOSX_DEPLOYMENT_TARGET'
 IOS_SDK_CONFIG_VAR='IPHONEOS_DEPLOYMENT_TARGET'
 TVOS_SDK_CONFIG_VAR='TVOS_DEPLOYMENT_TARGET'
-VISIONOS_SDK_CONFIG_VAR='VISIONOS_DEPLOYMENT_TARGET'
+VISIONOS_SDK_CONFIG_VAR='XROS_DEPLOYMENT_TARGET'
 WATCHOS_SDK_CONFIG_VAR='WATCHOS_DEPLOYMENT_TARGET'
 
 
@@ -98,31 +98,31 @@ echo 'Verifying config...'
 
 if [[ -z "${CURRENT_VERSION}" ]]; then
     echo "Could not find MARKETING_VERSION in ${VERSION_XCCONFIG_FILE}!"
-    exit -1
+    exit 1
 elif [[ -n "${VERSION_TO_VERIFY}" ]] && [[ "${VERSION_TO_VERIFY}" != "${CURRENT_VERSION}" ]]; then
     echo "MARKETING_VERSION in ${VERSION_XCCONFIG_FILE} is ${CURRENT_VERSION}, but ${VERSION_TO_VERIFY} was expected!"
-    exit -1
+    exit 1
 fi
 
 if [[ -z "${MACOS_SDK}" ]]; then
     echo "Could not find ${MACOS_SDK_CONFIG_VAR} in ${SDKS_XCCONFIG_FILE}!"
-    exit -1
+    exit 1
 fi
 if [[ -z "${IOS_SDK}" ]]; then
     echo "Could not find ${IOS_SDK_CONFIG_VAR} in ${SDKS_XCCONFIG_FILE}!"
-    exit -1
+    exit 1
 fi
 if [[ -z "${TVOS_SDK}" ]]; then
     echo "Could not find ${TVOS_SDK_CONFIG_VAR} in ${SDKS_XCCONFIG_FILE}!"
-    exit -1
+    exit 1
 fi
 if [[ -z "${VISIONOS_SDK}" ]]; then
     echo "Could not find ${VISIONOS_SDK_CONFIG_VAR} in ${SDKS_XCCONFIG_FILE}!"
-    exit -1
+    exit 1
 fi
 if [[ -z "${WATCHOS_SDK}" ]]; then
     echo "Could not find ${WATCHOS_SDK_CONFIG_VAR} in ${SDKS_XCCONFIG_FILE}!"
-    exit -1
+    exit 1
 fi
 
 # Generate podspec
