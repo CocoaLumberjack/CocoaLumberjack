@@ -3,6 +3,17 @@
 
 import PackageDescription
 
+let swiftSettings: Array<SwiftSetting> = [
+    .enableUpcomingFeature("ConciseMagicFile"),
+    .enableUpcomingFeature("ExistentialAny"),
+    .enableUpcomingFeature("BareSlashRegexLiterals"),
+    .enableUpcomingFeature("DisableOutwardActorInference"),
+    .enableUpcomingFeature("IsolatedDefaultValues"),
+    .enableUpcomingFeature("DeprecateApplicationMain"),
+    .enableExperimentalFeature("StrictConcurrency"),
+    .enableExperimentalFeature("GlobalConcurrency"),
+]
+
 let package = Package(
     name: "CocoaLumberjack",
     platforms: [
@@ -45,21 +56,25 @@ let package = Package(
                 "CocoaLumberjack",
                 "CocoaLumberjackSwiftSupport",
             ],
-            exclude: ["Supporting Files"]),
+            exclude: ["Supporting Files"],
+            swiftSettings: swiftSettings),
         .target(
             name: "CocoaLumberjackSwiftLogBackend",
             dependencies: [
                 "CocoaLumberjack",
                 .product(name: "Logging", package: "swift-log"),
-            ]),
+            ],
+            swiftSettings: swiftSettings),
         .testTarget(
             name: "CocoaLumberjackTests",
             dependencies: ["CocoaLumberjack"]),
         .testTarget(
             name: "CocoaLumberjackSwiftTests",
-            dependencies: ["CocoaLumberjackSwift"]),
+            dependencies: ["CocoaLumberjackSwift"],
+            swiftSettings: swiftSettings),
         .testTarget(
             name: "CocoaLumberjackSwiftLogBackendTests",
-            dependencies: ["CocoaLumberjackSwiftLogBackend"]),
+            dependencies: ["CocoaLumberjackSwiftLogBackend"],
+            swiftSettings: swiftSettings),
     ]
 )

@@ -57,7 +57,7 @@ extension DDLogMessage {
         public struct MessageInformation: Equatable, Sendable {
             /// The original swift-log message.
             public let message: Logging.Logger.Message
-            /// The original swift-log level of the message. This could be more fine-grained than `DDLogMessage.level` & `DDLogMessage.flag`.
+            /// The original swift-log level of the message. This could be more fine-grained than ``DDLogMessage/level``  & ``DDLogMessage/flag``.
             public let level: Logging.Logger.Level
             /// The original swift-log metadata of the message.
             public let metadata: Logging.Logger.Metadata?
@@ -89,17 +89,17 @@ extension DDLogMessage {
     }
 
     /// The swift-log information of this log message. This only exists for messages logged via swift-log.
-    /// - SeeAlso: `DDLogMessage.SwiftLogInformation`
+    /// - SeeAlso: ``DDLogMessage/SwiftLogInformation``
     @inlinable
     public var swiftLogInfo: SwiftLogInformation? {
         (self as? SwiftLogMessage)?._swiftLogInfo
     }
 }
 
-/// This class (intentionally internal) is only an "encapsulation" layer above `DDLogMessage`.
-/// It's basically an implementation detail of `DDLogMessage.swiftLogInfo`.
+/// This class (intentionally internal) is only an "encapsulation" layer above ``DDLogMessage``.
+/// It's basically an implementation detail of ``DDLogMessage/swiftLogInfo``.
 @usableFromInline
-final class SwiftLogMessage: DDLogMessage {
+final class SwiftLogMessage: DDLogMessage, @unchecked Sendable {
     @usableFromInline
     let _swiftLogInfo: SwiftLogInformation
 
@@ -165,7 +165,7 @@ final class SwiftLogMessage: DDLogMessage {
     }
 }
 
-/// A swift-log `LogHandler` implementation that forwards messages to a given `DDLog` instance.
+/// A swift-log ``LogHandler`` implementation that forwards messages to a given ``DDLog`` instance.
 public struct DDLogHandler: LogHandler {
     @usableFromInline
     struct Configuration: Sendable {
@@ -282,26 +282,38 @@ public struct DDLogHandler: LogHandler {
     }
 }
 
+#if swift(>=5.6)
+/// A typealias for the "old" log handler factory.
+public typealias OldLogHandlerFactory = (String) -> any LogHandler
+/// A typealias for the log handler factory.
+public typealias LogHandlerFactory = (String, Logging.Logger.MetadataProvider?) -> any LogHandler
+#else
+/// A typealias for the "old" log handler factory.
+public typealias OldLogHandlerFactory = (String) -> LogHandler
+/// A typealias for the log handler factory.
+public typealias LogHandlerFactory = (String, Logging.Logger.MetadataProvider?) -> LogHandler
+#endif
+
 extension DDLogHandler {
     /// The default key to control per message whether to log it synchronous or asynchronous.
     public static var defaultSynchronousLoggingMetadataKey: Logging.Logger.Metadata.Key {
         "log-synchronous"
     }
 
-    /// Creates a new `LogHandler` factory using `DDLogHandler` with the given parameters.
+    /// Creates a new ``LogHandler`` factory using ``DDLogHandler`` with the given parameters.
     /// - Parameters:
-    ///   - log: The `DDLog` instance to use for logging. Defaults to `DDLog.sharedInstance`.
-    ///   - defaultLogLevel: The default log level for new loggers. Defaults to `.info`.
-    ///   - syncLoggingTreshold: The level as of which log messages should be logged synchronously instead of asynchronously. Defaults to `.error`.
-    ///   - synchronousLoggingMetadataKey: The metadata key to check on messages to decide whether to log synchronous or asynchronous. Defaults to `DDLogHandler.defaultSynchronousLoggingMetadataKey`.
-    /// - Returns: A new `LogHandler` factory using `DDLogHandler` that can be passed to `LoggingSystem.bootstrap`.
-    /// - SeeAlso: `DDLog`, `LoggingSystem.boostrap`
+    ///   - log: The ``DDLog`` instance to use for logging. Defaults to ``DDLog/sharedInstance``.
+    ///   - defaultLogLevel: The default log level for new loggers. Defaults to ``Logging/Logger/Level/info``.
+    ///   - syncLoggingTreshold: The level as of which log messages should be logged synchronously instead of asynchronously. Defaults to ``Logging/Logger/Level/error``.
+    ///   - synchronousLoggingMetadataKey: The metadata key to check on messages to decide whether to log synchronous or asynchronous. Defaults to ``DDLogHandler/defaultSynchronousLoggingMetadataKey``.
+    /// - Returns: A new ``LogHandler`` factory using ``DDLogHandler`` that can be passed to ``LoggingSystem/bootstrap``.
+    /// - SeeAlso: ``DDLog``, ``LoggingSystem/boostrap``
     public static func handlerFactory(
         for log: DDLog = .sharedInstance,
         defaultLogLevel: Logging.Logger.Level = .info,
         loggingSynchronousAsOf syncLoggingTreshold: Logging.Logger.Level = .error,
         synchronousLoggingMetadataKey: Logging.Logger.Metadata.Key = DDLogHandler.defaultSynchronousLoggingMetadataKey
-    ) -> (String, Logging.Logger.MetadataProvider?) -> LogHandler {
+    ) -> LogHandlerFactory {
         let config = DDLogHandler.Configuration(
             log: log,
             syncLogging: .init(tresholdLevel: syncLoggingTreshold,
@@ -312,22 +324,22 @@ extension DDLogHandler {
         }
     }
 
-    /// Creates a new `LogHandler` factory using `DDLogHandler` with the given parameters.
+    /// Creates a new ``LogHandler`` factory using ``DDLogHandler`` with the given parameters.
     /// - Parameters:
-    ///   - log: The `DDLog` instance to use for logging. Defaults to `DDLog.sharedInstance`.
-    ///   - defaultLogLevel: The default log level for new loggers. Defaults to `.info`.
-    ///   - syncLoggingTreshold: The level as of which log messages should be logged synchronously instead of asynchronously. Defaults to `.error`.
-    ///   - synchronousLoggingMetadataKey: The metadata key to check on messages to decide whether to log synchronous or asynchronous. Defaults to `DDLogHandler.defaultSynchronousLoggingMetadataKey`.
-    /// - Returns: A new `LogHandler` factory using `DDLogHandler` that can be passed to `LoggingSystem.bootstrap`.
-    /// - SeeAlso: `DDLog`, `LoggingSystem.boostrap`
+    ///   - log: The ``DDLog`` instance to use for logging. Defaults to ``DDLog/sharedInstance``.
+    ///   - defaultLogLevel: The default log level for new loggers. Defaults to ``Logging/Logger/Level/info``.
+    ///   - syncLoggingTreshold: The level as of which log messages should be logged synchronously instead of asynchronously. Defaults to ``Logging/Logger/Level/error``.
+    ///   - synchronousLoggingMetadataKey: The metadata key to check on messages to decide whether to log synchronous or asynchronous. Defaults to ``DDLogHandler/defaultSynchronousLoggingMetadataKey``.
+    /// - Returns: A new ``LogHandler`` factory using ``DDLogHandler`` that can be passed to ``LoggingSystem/bootstrap``.
+    /// - SeeAlso: ``DDLog``, ``LoggingSystem/boostrap``
     @inlinable
     public static func handlerFactory(
         for log: DDLog = .sharedInstance,
         defaultLogLevel: Logging.Logger.Level = .info,
         loggingSynchronousAsOf syncLoggingTreshold: Logging.Logger.Level = .error,
         synchronousLoggingMetadataKey: Logging.Logger.Metadata.Key = DDLogHandler.defaultSynchronousLoggingMetadataKey
-    ) -> (String) -> LogHandler {
-        let factory: (String, Logging.Logger.MetadataProvider?) -> LogHandler = handlerFactory(
+    ) -> OldLogHandlerFactory {
+        let factory: LogHandlerFactory = handlerFactory(
             for: log,
             defaultLogLevel: defaultLogLevel,
             loggingSynchronousAsOf: syncLoggingTreshold,
@@ -338,14 +350,14 @@ extension DDLogHandler {
 }
 
 extension LoggingSystem {
-    /// Bootraps the logging system with a new `LogHandler` factory using `DDLogHandler`.
+    /// Bootraps the logging system with a new ``LogHandler`` factory using ``DDLogHandler``.
     /// - Parameters:
-    ///   - log: The `DDLog` instance to use for logging. Defaults to `DDLog.sharedInstance`.
-    ///   - defaultLogLevel: The default log level for new loggers. Defaults to `.info`.
-    ///   - syncLoggingTreshold: The level as of which log messages should be logged synchronously instead of asynchronously. Defaults to `.error`.
-    ///   - synchronousLoggingMetadataKey: The metadata key to check on messages to decide whether to log synchronous or asynchronous. Defaults to `DDLogHandler.defaultSynchronousLoggingMetadataKey`.
+    ///   - log: The ``DDLog`` instance to use for logging. Defaults to ``DDLog/sharedInstance``.
+    ///   - defaultLogLevel: The default log level for new loggers. Defaults to ``Logging/Logger/Level/info``.
+    ///   - syncLoggingTreshold: The level as of which log messages should be logged synchronously instead of asynchronously. Defaults to ``Logging/Logger/Level/error``.
+    ///   - synchronousLoggingMetadataKey: The metadata key to check on messages to decide whether to log synchronous or asynchronous. Defaults to ``DDLogHandler/defaultSynchronousLoggingMetadataKey``.
     ///   - metadataProvider: The (global) metadata provider to use with the setup. Defaults to `nil`.
-    /// - SeeAlso: `DDLogHandler.handlerFactory`, `LoggingSystem.bootstrap`
+    /// - SeeAlso: ``DDLogHandler/handlerFactory``, ``LoggingSystem/bootstrap``
     @inlinable
     public static func bootstrapWithCocoaLumberjack(
         for log: DDLog = .sharedInstance,

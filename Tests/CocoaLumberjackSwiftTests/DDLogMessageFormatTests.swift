@@ -114,7 +114,7 @@ final class DDLogMessageFormatTests: XCTestCase {
     }
 
     func testMessageFormatCreationWithOtherTypes() {
-        struct TestStruct: CustomStringConvertible {
+        struct TestStruct: Sendable, CustomStringConvertible {
             var description: String { "STRUCT DESCRIPTION" }
         }
 

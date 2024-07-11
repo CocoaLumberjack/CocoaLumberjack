@@ -18,8 +18,8 @@ import CocoaLumberjack
 @testable import Logging
 @testable import CocoaLumberjackSwiftLogBackend
 
-fileprivate final class MockDDLog: DDLog {
-    struct LoggedMessage: Equatable {
+fileprivate final class MockDDLog: DDLog, @unchecked Sendable {
+    struct LoggedMessage: Sendable, Equatable {
         let async: Bool
         let message: DDLogMessage
     }

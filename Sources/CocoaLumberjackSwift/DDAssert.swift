@@ -37,7 +37,7 @@ public func DDAssert(_ condition: @autoclosure () -> Bool,
                      function: StaticString = #function,
                      line: UInt = #line,
                      tag: Any? = nil,
-                     asynchronous async: Bool = false,
+                     asynchronous async: Bool? = nil,
                      ddlog: DDLog = DDLog.sharedInstance) {
     if !condition() {
         DDLogError(message(),
@@ -68,7 +68,7 @@ public func DDAssertionFailure(_ message: @autoclosure () -> DDLogMessageFormat 
                                function: StaticString = #function,
                                line: UInt = #line,
                                tag: Any? = nil,
-                               asynchronous async: Bool = false,
+                               asynchronous async: Bool? = nil,
                                ddlog: DDLog = DDLog.sharedInstance) {
     DDLogError(message(),
                level: level,
@@ -102,7 +102,7 @@ public func DDAssert(_ condition: @autoclosure () -> Bool,
                      function: StaticString = #function,
                      line: UInt = #line,
                      tag: Any? = nil,
-                     asynchronous async: Bool = false,
+                     asynchronous async: Bool? = nil,
                      ddlog: DDLog = DDLog.sharedInstance) {
     if !condition() {
         DDLogError(message(),
@@ -134,7 +134,7 @@ public func DDAssertionFailure(_ message: @autoclosure () -> String = "",
                                function: StaticString = #function,
                                line: UInt = #line,
                                tag: Any? = nil,
-                               asynchronous async: Bool = false,
+                               asynchronous async: Bool? = nil,
                                ddlog: DDLog = DDLog.sharedInstance) {
     DDLogError(message(),
                level: level,
