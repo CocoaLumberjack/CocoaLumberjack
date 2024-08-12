@@ -165,12 +165,15 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
 }
 
 - (void)testAutomaticLogFileRollingWhenNotReusingLogFiles {
+    // Use new logger so that it appears to be resuming.
     DDFileLogger *newLogger = [[DDFileLogger alloc] initWithLogFileManager:logFileManager];
     newLogger.doNotReuseLogFiles = YES;
 
     [DDLog addLogger:logger];
+
     DDLogError(@"Some log in the old file");
     __auto_type oldLogFileInfo = [logger currentLogFileInfo];
+    usleep(1000); // prevent file name clash due to same time.
     __auto_type newLogFileInfo = [newLogger currentLogFileInfo];
     XCTAssertNotNil(oldLogFileInfo);
     XCTAssertNotNil(newLogFileInfo);
@@ -188,7 +191,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     XCTAssertEqualObjects(info1.filePath, info2.filePath);
 
     info2.isArchived = YES;
-    
+
     usleep(1000); // make sure we have a different msec count. Otherwise the file names might be equal.
 
     __auto_type info3 = logger.currentLogFileInfo;
