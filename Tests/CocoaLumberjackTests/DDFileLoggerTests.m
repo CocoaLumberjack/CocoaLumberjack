@@ -117,6 +117,34 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     XCTAssertFalse(newLogFileInfo.isArchived);
 }
 
+- (void)testLoggingAfterLogFileRolling {
+    [DDLog addLogger:logger];
+    DDLogError(@"Some log in the old file");
+    __auto_type oldLogFileInfo = [logger currentLogFileInfo];
+    __auto_type expectation = [self expectationWithDescription:@"Waiting for the log file to be rolled"];
+    [logger rollLogFileWithCompletionBlock:^{
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:3 handler:^(NSError * _Nullable error) {
+        XCTAssertNil(error);
+    }];
+    DDLogError(@"Some log in the new file");
+    __auto_type newLogFileInfo = [logger currentLogFileInfo];
+    XCTAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:oldLogFileInfo.filePath]);
+    XCTAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:newLogFileInfo.filePath]);
+    __auto_type oldString = [NSString stringWithContentsOfFile:oldLogFileInfo.filePath
+                                                      encoding:NSUTF8StringEncoding
+                                                         error:nil];
+    __auto_type newString = [NSString stringWithContentsOfFile:newLogFileInfo.filePath
+                                                      encoding:NSUTF8StringEncoding
+                                                         error:nil];
+
+    XCTAssertFalse(oldString.length == 0);
+    XCTAssertFalse(newString.length == 0);
+    XCTAssertTrue([oldString containsString:@"Some log in the old file"]);
+    XCTAssertTrue([newString containsString:@"Some log in the new file"]);
+}
+
 - (void)testExplicitLogFileRollingWhenNotReusingLogFiles {
     logger.doNotReuseLogFiles = YES;
 
