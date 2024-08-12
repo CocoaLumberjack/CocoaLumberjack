@@ -1368,21 +1368,25 @@ static int exception_count = 0;
             NSLogError(@"DDFileLogger: Could not lock logfile, retrying in 1ms: %s (%d)", strerror(errno), errno);
             usleep(1000);
         }
-        if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
-            __autoreleasing NSError *error = nil;
-            __auto_type success = [handle seekToEndReturningOffset:nil error:&error];
-            if (!success) {
-                NSLogError(@"DDFileLogger: Failed to seek to end of file: %@", error);
+        @try {
+            if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
+                __autoreleasing NSError *error = nil;
+                __auto_type success = [handle seekToEndReturningOffset:nil error:&error];
+                if (!success) {
+                    NSLogError(@"DDFileLogger: Failed to seek to end of file: %@", error);
+                }
+                success = [handle writeData:data error:&error];
+                if (!success) {
+                    NSLogError(@"DDFileLogger: Failed to write data: %@", error);
+                }
+            } else {
+                [handle seekToEndOfFile];
+                [handle writeData:data];
             }
-            success =  [handle writeData:data error:&error];
-            if (!success) {
-                NSLogError(@"DDFileLogger: Failed to write data: %@", error);
-            }
-        } else {
-            [handle seekToEndOfFile];
-            [handle writeData:data];
         }
-        flock(fd, LOCK_UN);
+        @finally {
+            flock(fd, LOCK_UN);
+        }
 
         if (implementsDeprecatedDidLog) {
 #pragma clang diagnostic push
