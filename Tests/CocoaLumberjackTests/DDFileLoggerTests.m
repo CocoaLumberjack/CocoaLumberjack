@@ -188,6 +188,8 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     XCTAssertEqualObjects(info1.filePath, info2.filePath);
 
     info2.isArchived = YES;
+    
+    usleep(1000); // make sure we have a different msec count. Otherwise the file names might be equal.
 
     __auto_type info3 = logger.currentLogFileInfo;
     __auto_type info4 = logger.currentLogFileInfo;
