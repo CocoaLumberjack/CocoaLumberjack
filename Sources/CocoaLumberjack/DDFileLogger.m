@@ -1206,6 +1206,8 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 
             [self lt_scheduleTimerToRollLogFileDueToAge];
             [self lt_monitorCurrentLogFileForExternalChanges];
+        } else {
+            NSLogWarn(@"NSFileHandle returned nil for writing to log file at path: %@", logFilePath);
         }
     }
 
