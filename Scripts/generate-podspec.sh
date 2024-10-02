@@ -155,7 +155,7 @@ Pod::Spec.new do |s|
   s.visionos.deployment_target = '${VISIONOS_SDK}'
   s.watchos.deployment_target  = '${WATCHOS_SDK}'
 
-  s.preserve_paths = 'README.md', 'LICENSE', 'CHANGELOG.md'
+  s.preserve_paths = 'README.md', 'LICENSE'
 
   s.default_subspecs = 'Core'
 
