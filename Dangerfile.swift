@@ -39,8 +39,7 @@ fileprivate extension Danger.File {
 let danger = Danger()
 let git = danger.git
 
-// Sometimes it's a README fix, or something like that - which isn't relevant for
-// including in a project's CHANGELOG for example
+// Sometimes it's a README fix, or something like that
 let isDeclaredTrivial = danger.github?.pullRequest.title.contains("#trivial") ?? false
 let hasSourceChanges = (git.modifiedFiles + git.createdFiles).contains { $0.isInSources }
 
@@ -54,11 +53,6 @@ if let additions = danger.github?.pullRequest.additions,
    let deletions = danger.github?.pullRequest.deletions,
    case let sum = additions + deletions, sum > 1000 {
     warn("Pull request is relatively big (\(sum) lines changed). If this PR contains multiple changes, consider splitting it into separate PRs for easier reviews.")
-}
-
-// Changelog entries are required for changes to library files.
-if hasSourceChanges && !isDeclaredTrivial && !git.modifiedFiles.contains("CHANGELOG.md") {
-  warn("Any changes to library code should be reflected in the CHANGELOG. Please consider adding a note there about your change.")
 }
 
 // Warn when library files has been updated but not tests.
