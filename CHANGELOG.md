@@ -1,7 +1,9 @@
-** NOTE **
+**IMPORTANT NOTE**
+
 This changelog is no longer actively maintained. Please check out the [releases](https://github.com/CocoaLumberjack/CocoaLumberjack/releases) page for an up to date changelog!
 
 <hr/>
+<br/><br/>
 
 # [3.8.5 - Xcode 15.3 on Mar 8th, 2024](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tags/3.8.5)
 
