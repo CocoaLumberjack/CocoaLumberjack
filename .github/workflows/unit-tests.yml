@@ -66,6 +66,13 @@ jobs:
             *) echo "::error title=Unknown platform!::Unknown platform: ${PLATFORM}" && exit 1;;
           esac
           echo "destination=${DESTINATION}" >> "${GITHUB_OUTPUT}"
+      - name: Download visionOS
+        if: ${{ matrix.platform == 'visionOS' }}
+        run: |
+            sudo xcodebuild -runFirstLaunch
+            sudo xcrun simctl list # needed to boot the simulator
+            sudo xcodebuild -downloadPlatform visionOS
+            sudo xcodebuild -runFirstLaunch
       - uses: actions/checkout@v4
       - uses: sersoft-gmbh/xcodebuild-action@v3
         with:

@@ -33,7 +33,7 @@ jobs:
             NEW_YEAR=$(date '+%Y')
           fi
           echo "new-year=${NEW_YEAR}" >> "${GITHUB_OUTPUT}"
-          echo "old-year=$(($NEW_YEAR - 1))" >> "${GITHUB_OUTPUT}"
+          echo "old-year=$((NEW_YEAR - 1))" >> "${GITHUB_OUTPUT}"
       - name: Checkout branch
         id: branch
         env:
