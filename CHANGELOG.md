@@ -556,7 +556,7 @@ See [Migrate from 1.x to 2.x](https://github.com/CocoaLumberjack/CocoaLumberjack
 - fixed compatibility with Xcode 4.4+ [#187](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/187)
 
 
-## [1.6.5 File Logger refactoring, Multi Formatter, preffixed extension classes on Dec 3rd, 2013](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/1.6.5)
+## [1.6.5 File Logger refactoring, Multi Formatter, prefixed extension classes on Dec 3rd, 2013](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/tag/1.6.5)
 
 `DDFileLogger` refactoring and fixes (thanks [@dvor](https://github.com/dvor) and [@an0](https://github.com/an0)):
 - Fixed [#63](https://github.com/CocoaLumberjack/CocoaLumberjack/issues/63) Loggers don't flush in Command Line Tool [#184](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/184)
@@ -569,7 +569,7 @@ See [Migrate from 1.x to 2.x](https://github.com/CocoaLumberjack/CocoaLumberjack
 - Allow customizing the naming convention for log files to use timestamps [#174](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/174)
 
 Other:
-- Implemented multiple formatter (`DDMultiFormatter` - alows chaining of formatters) [#178](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/178)
+- Implemented multiple formatter (`DDMultiFormatter` - allows chaining of formatters) [#178](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/178)
 - Added DD prefix to extension classes (`ContextFilterLogFormatter` and `DispatchQueueLogFormatter`) [#178](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/178)
 - Updated code indentation: Tabs changed to spaces [#180](https://github.com/CocoaLumberjack/CocoaLumberjack/pull/180)
 - Included `DDLog+LOGV.h` in Cocoapods sources [d253bd7](https://github.com/CocoaLumberjack/CocoaLumberjack/commit/d253bd7)
