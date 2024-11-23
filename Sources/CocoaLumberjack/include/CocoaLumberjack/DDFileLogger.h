@@ -190,6 +190,10 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 /// The log message serializer.
 @property (nonatomic, readonly, strong) id<DDFileLogMessageSerializer> logMessageSerializer;
 
+/// Whether the log file should be locked by the file logger before writing to it (and unlocked after).
+/// @param logFilePath The path to the log file for which to decide locking.
+- (BOOL)shouldLockLogFile:(NSString *)logFilePath;
+
 /// Manually perform a cleanup of the log files managed by this manager.
 /// This can be called from any queue!
 - (BOOL)cleanupLogFilesWithError:(NSError **)error;

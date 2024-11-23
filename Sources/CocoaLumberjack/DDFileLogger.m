@@ -1338,11 +1338,13 @@ static int exception_count = 0;
 - (void)lt_logData:(NSData *)data {
     static __auto_type implementsDeprecatedWillLog = NO;
     static __auto_type implementsDeprecatedDidLog = NO;
+    static __auto_type implementsShouldLock = NO;
 
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         implementsDeprecatedWillLog = [self respondsToSelector:@selector(willLogMessage)];
         implementsDeprecatedDidLog = [self respondsToSelector:@selector(didLogMessage)];
+        implementsShouldLock = [self.logFileManager respondsToSelector:@selector(shouldLockLogFile:)];
     });
 
     DDAbstractLoggerAssertOnInternalLoggerQueue();
@@ -1365,11 +1367,15 @@ static int exception_count = 0;
         }
 
         // use an advisory lock to coordinate write with other processes
+        __auto_type shouldLock = implementsShouldLock && [self.logFileManager shouldLockLogFile:_currentLogFileInfo.filePath];
         __auto_type fd = [handle fileDescriptor];
-        while(flock(fd, LOCK_EX) != 0) {
-            NSLogError(@"DDFileLogger: Could not lock logfile, retrying in 1ms: %s (%d)", strerror(errno), errno);
-            usleep(1000);
+        if (shouldLock) {
+            while(flock(fd, LOCK_EX) != 0) {
+                NSLogError(@"DDFileLogger: Could not lock logfile, retrying in 1ms: %s (%d)", strerror(errno), errno);
+                usleep(1000);
+            }
         }
+
         @try {
             if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
                 __autoreleasing NSError *error = nil;
@@ -1387,7 +1393,9 @@ static int exception_count = 0;
             }
         }
         @finally {
-            flock(fd, LOCK_UN);
+            if (shouldLock) {
+                flock(fd, LOCK_UN);
+            }
         }
 
         if (implementsDeprecatedDidLog) {
