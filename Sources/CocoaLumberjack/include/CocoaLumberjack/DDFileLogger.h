@@ -191,7 +191,12 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 @property (nonatomic, readonly, strong) id<DDFileLogMessageSerializer> logMessageSerializer;
 
 /// Whether the log file should be locked by the file logger before writing to it (and unlocked after).
-/// @param logFilePath The path to the log file for which to decide locking.
+/// - Parameter logFilePath: The path to the log file for which to decide locking.
+/// - Remark: Logging from multiple processes (e.g. an app extensions) to the same log file without file locking will result in interleaved and possibly even overwritten log messages.
+///           Without locking, the resulting logfile could be described as "best effort" and might become corrupted.
+///           The downside of locking is that if the process holds the file lock when it gets suspended by the system, the system will kill the process.
+///           This could happen by inproper handling of app suspension (e.g. not properly calling `+[DDLog flushLog]` and waiting for its completion before suspension).
+///           Regardless of locking, you should always call `+[DDLog flushLog]` before your app gets suspended or terminated to make sure every log message makes it to your disk.
 - (BOOL)shouldLockLogFile:(NSString *)logFilePath;
 
 /// Manually perform a cleanup of the log files managed by this manager.
