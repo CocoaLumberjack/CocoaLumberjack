@@ -121,6 +121,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     [DDLog addLogger:logger];
     DDLogError(@"Some log in the old file");
     __auto_type oldLogFileInfo = [logger currentLogFileInfo];
+    XCTAssertNotNil(oldLogFileInfo);
     __auto_type expectation = [self expectationWithDescription:@"Waiting for the log file to be rolled"];
     [logger rollLogFileWithCompletionBlock:^{
         [expectation fulfill];
@@ -130,6 +131,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelAll;
     }];
     DDLogError(@"Some log in the new file");
     __auto_type newLogFileInfo = [logger currentLogFileInfo];
+    XCTAssertNotNil(newLogFileInfo);
     XCTAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:oldLogFileInfo.filePath]);
     XCTAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:newLogFileInfo.filePath]);
     __auto_type oldString = [NSString stringWithContentsOfFile:oldLogFileInfo.filePath
