@@ -190,6 +190,9 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 /// The log message serializer.
 @property (nonatomic, readonly, strong) id<DDFileLogMessageSerializer> logMessageSerializer;
 
+/// The file manager to  use. Defaults to `[NSFileManager defaultManager]`.
+@property (nonatomic, readonly, strong) NSFileManager *fileManager;
+
 /// Whether the log file should be locked by the file logger before writing to it (and unlocked after).
 /// - Parameter logFilePath: The path to the log file for which to decide locking.
 /// - Remark: Logging from multiple processes (e.g. an app extensions) to the same log file without file locking will result in interleaved and possibly even overwritten log messages.
@@ -327,6 +330,9 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 /// The log message serializer.
 @property (nonatomic, strong) id<DDFileLogMessageSerializer> logMessageSerializer;
+
+/// The file manager to  use. Defaults to `[NSFileManager defaultManager]`.
+@property (nonatomic, strong) NSFileManager *fileManager;
 
 /* Inherited from DDLogFileManager protocol:
 
@@ -560,9 +566,13 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 @property (nonatomic, readwrite) BOOL isArchived;
 
 + (nullable instancetype)logFileWithPath:(nullable NSString *)filePath NS_SWIFT_UNAVAILABLE("Use init(filePath:)");
++ (nullable instancetype)logFileWithPath:(nullable NSString *)filePath
+                             fileManager:(NSFileManager *)fileManager NS_SWIFT_UNAVAILABLE("Use init(filePath:fileManager:)");
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithFilePath:(NSString *)filePath NS_DESIGNATED_INITIALIZER;
+// TODO: This should really become the designated initializer.
+- (instancetype)initWithFilePath:(NSString *)filePath fileManager:(NSFileManager *)fileManager;
 
 - (void)reset;
 - (void)renameFile:(NSString *)newFileName NS_SWIFT_NAME(renameFile(to:));
