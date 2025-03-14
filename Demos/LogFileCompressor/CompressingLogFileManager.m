@@ -155,7 +155,7 @@
 
     if (upToDate)
     {
-        [self compressLogFile:[DDLogFileInfo logFileWithPath:logFilePath]];
+        [self compressLogFile:[[DDLogFileInfo alloc] initWithFilePath:logFilePath]];
     }
 }
 
@@ -426,7 +426,7 @@
         // considered a log file while it was only partially complete.
         // Only files that begin with "log-" are considered log files.
         
-        DDLogFileInfo *compressedLogFile = [DDLogFileInfo logFileWithPath:tempOutputFilePath];
+        DDLogFileInfo *compressedLogFile = [[DDLogFileInfo alloc] initWithFilePath:tempOutputFilePath];
         compressedLogFile.isArchived = YES;
         
         NSString *outputFileName = [logFile fileNameByAppendingPathExtension:@"gz"];
