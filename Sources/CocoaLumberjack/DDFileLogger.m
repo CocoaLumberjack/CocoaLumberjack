@@ -1109,11 +1109,13 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
                 NSLogError(@"DDFileLogger: Failed to create new log file");
             }
         }
-        const __auto_type logFileManagerProvidesFileManager = [_logFileManager respondsToSelector:@selector(fileManager)];
-        __auto_type fileManager = logFileManagerProvidesFileManager ? _logFileManager.fileManager : [NSFileManager defaultManager];
-
-        // Use static factory method here, since it checks for nil (and is unavailable to Swift).
-        _currentLogFileInfo = [DDLogFileInfo logFileWithPath:currentLogFilePath fileManager:fileManager];
+        if (!currentLogFilePath) {
+            _currentLogFileInfo = nil;
+        } else {
+            const __auto_type logFileManagerProvidesFileManager = [_logFileManager respondsToSelector:@selector(fileManager)];
+            __auto_type fileManager = logFileManagerProvidesFileManager ? _logFileManager.fileManager : [NSFileManager defaultManager];
+            _currentLogFileInfo = [[DDLogFileInfo alloc] initWithFilePath:currentLogFilePath fileManager:fileManager];
+        }
     }
 
     return _currentLogFileInfo;
@@ -1507,12 +1509,8 @@ static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
 #pragma mark Lifecycle
 
 + (instancetype)logFileWithPath:(NSString *)aFilePath {
-    return [self logFileWithPath:aFilePath fileManager:[NSFileManager defaultManager]];
-}
-
-+ (instancetype)logFileWithPath:(NSString *)aFilePath fileManager:(NSFileManager *)fileManager {
     if (!aFilePath) return nil;
-    return [[self alloc] initWithFilePath:aFilePath fileManager:fileManager];
+    return [[self alloc] initWithFilePath:aFilePath];
 }
 
 - (instancetype)initWithFilePath:(NSString *)aFilePath {

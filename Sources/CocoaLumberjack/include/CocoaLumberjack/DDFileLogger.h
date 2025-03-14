@@ -565,9 +565,9 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
 
 @property (nonatomic, readwrite) BOOL isArchived;
 
-+ (nullable instancetype)logFileWithPath:(nullable NSString *)filePath NS_SWIFT_UNAVAILABLE("Use init(filePath:)");
 + (nullable instancetype)logFileWithPath:(nullable NSString *)filePath
-                             fileManager:(NSFileManager *)fileManager NS_SWIFT_UNAVAILABLE("Use init(filePath:fileManager:)");
+    __attribute__((deprecated("Check file path for nil and pass it to the initializer instead")))
+    NS_SWIFT_UNAVAILABLE("Use init(filePath:)");
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithFilePath:(NSString *)filePath NS_DESIGNATED_INITIALIZER;
