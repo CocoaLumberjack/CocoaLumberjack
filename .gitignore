@@ -7,7 +7,7 @@
 /*.xcodeproj
 xcuserdata/
 DerivedData/
-.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.swiftpm/
 
 # Carthage Project
 !Lumberjack.xcodeproj
