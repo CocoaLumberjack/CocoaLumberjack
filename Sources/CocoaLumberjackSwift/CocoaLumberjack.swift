@@ -73,30 +73,50 @@ nonisolated(unsafe) private var _dynamicLogLevelStorage = DDLogLevel.all
 private var _dynamicLogLevelStorage = DDLogLevel.all
 #endif
 
+private func _readDynamicLogLevel() -> DDLogLevel {
+#if canImport(Synchronization)
+    if #available(macOS 15, iOS 18, tvOS 18, watchOS 11, visionOS 2, *) {
+        return _dynamicLogLevel.load(ordering: .relaxed)
+    }
+#endif
+    _dynamicLogLevelLock.lock()
+    defer { _dynamicLogLevelLock.unlock() }
+    return _dynamicLogLevelStorage
+}
+
+private func _writeDynamicLogLevel(_ newValue: DDLogLevel) {
+#if canImport(Synchronization)
+    if #available(macOS 15, iOS 18, tvOS 18, watchOS 11, visionOS 2, *) {
+        _dynamicLogLevel.store(newValue, ordering: .relaxed)
+        return
+    }
+#endif
+    _dynamicLogLevelLock.lock()
+    defer { _dynamicLogLevelLock.unlock() }
+    _dynamicLogLevelStorage = newValue
+}
+
+#if swift(>=5.9)
+/// The log level that can dynamically limit log messages (vs. the static ``DDDefaultLogLevel``). This log level will only be checked, if the message passes the ``DDDefaultLogLevel``.
+public nonisolated(unsafe) var dynamicLogLevel: DDLogLevel {
+    get {
+        _readDynamicLogLevel()
+    }
+    set {
+        _writeDynamicLogLevel(newValue)
+    }
+}
+#else
 /// The log level that can dynamically limit log messages (vs. the static ``DDDefaultLogLevel``). This log level will only be checked, if the message passes the ``DDDefaultLogLevel``.
 public var dynamicLogLevel: DDLogLevel {
     get {
-#if canImport(Synchronization)
-        if #available(macOS 15, iOS 18, tvOS 18, watchOS 11, visionOS 2, *) {
-            return _dynamicLogLevel.load(ordering: .relaxed)
-        }
-#endif
-        _dynamicLogLevelLock.lock()
-        defer { _dynamicLogLevelLock.unlock() }
-        return _dynamicLogLevelStorage
+        _readDynamicLogLevel()
     }
     set {
-#if canImport(Synchronization)
-        if #available(macOS 15, iOS 18, tvOS 18, watchOS 11, visionOS 2, *) {
-            _dynamicLogLevel.store(newValue, ordering: .relaxed)
-            return
-        }
-#endif
-        _dynamicLogLevelLock.lock()
-        defer { _dynamicLogLevelLock.unlock() }
-        _dynamicLogLevelStorage = newValue
+        _writeDynamicLogLevel(newValue)
     }
 }
+#endif
 
 /// Resets the ``dynamicLogLevel`` to ``DDLogLevel/all``.
 /// - SeeAlso: ``dynamicLogLevel``
@@ -132,30 +152,50 @@ nonisolated(unsafe) private var _asyncLoggingEnabledStorage = true
 private var _asyncLoggingEnabledStorage = true
 #endif
 
+private func _readAsyncLoggingEnabled() -> Bool {
+#if canImport(Synchronization)
+    if #available(macOS 15, iOS 18, tvOS 18, watchOS 11, visionOS 2, *) {
+        return _asyncLoggingEnabled.load(ordering: .relaxed)
+    }
+#endif
+    _asyncLoggingEnabledLock.lock()
+    defer { _asyncLoggingEnabledLock.unlock() }
+    return _asyncLoggingEnabledStorage
+}
+
+private func _writeAsyncLoggingEnabled(_ newValue: Bool) {
+#if canImport(Synchronization)
+    if #available(macOS 15, iOS 18, tvOS 18, watchOS 11, visionOS 2, *) {
+        _asyncLoggingEnabled.store(newValue, ordering: .relaxed)
+        return
+    }
+#endif
+    _asyncLoggingEnabledLock.lock()
+    defer { _asyncLoggingEnabledLock.unlock() }
+    _asyncLoggingEnabledStorage = newValue
+}
+
+#if swift(>=5.9)
+/// If `true`, all logs (except errors) are logged asynchronously by default.
+public nonisolated(unsafe) var asyncLoggingEnabled: Bool {
+    get {
+        _readAsyncLoggingEnabled()
+    }
+    set {
+        _writeAsyncLoggingEnabled(newValue)
+    }
+}
+#else
 /// If `true`, all logs (except errors) are logged asynchronously by default.
 public var asyncLoggingEnabled: Bool {
     get {
-#if canImport(Synchronization)
-        if #available(macOS 15, iOS 18, tvOS 18, watchOS 11, visionOS 2, *) {
-            return _asyncLoggingEnabled.load(ordering: .relaxed)
-        }
-#endif
-        _asyncLoggingEnabledLock.lock()
-        defer { _asyncLoggingEnabledLock.unlock() }
-        return _asyncLoggingEnabledStorage
+        _readAsyncLoggingEnabled()
     }
     set {
-#if canImport(Synchronization)
-        if #available(macOS 15, iOS 18, tvOS 18, watchOS 11, visionOS 2, *) {
-            _asyncLoggingEnabled.store(newValue, ordering: .relaxed)
-            return
-        }
-#endif
-        _asyncLoggingEnabledLock.lock()
-        defer { _asyncLoggingEnabledLock.unlock() }
-        _asyncLoggingEnabledStorage = newValue
+        _writeAsyncLoggingEnabled(newValue)
     }
 }
+#endif
 
 @frozen
 public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
