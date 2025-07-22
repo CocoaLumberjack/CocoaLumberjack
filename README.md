@@ -28,7 +28,7 @@ As of CocoaLumberjack 3.6.0, you can use the Swift Package Manager as integratio
 If you want to use the Swift Package Manager as integration method, either use Xcode to add the package dependency or add the following dependency to your Package.swift:
 
 ```swift
-.package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", from: "3.8.0"),
+.package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", from: "3.9.0"),
 ```
 
 Note that you may need to add both products, `CocoaLumberjack` and `CocoaLumberjackSwift` to your target since SPM sometimes fails to detect that `CocoaLumberjackSwift` depends on `CocoaLumberjack`.
