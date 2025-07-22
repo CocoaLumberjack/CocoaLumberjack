@@ -16,7 +16,9 @@
 #if arch(arm64) || arch(x86_64)
 #if canImport(Combine)
 public import Combine
+#if SWIFT_PACKAGE
 public import CocoaLumberjack
+#endif
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension DDLog {
