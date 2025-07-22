@@ -43,6 +43,10 @@
 		074EA6182B4D32F1008B2417 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 074EA6172B4D3027008B2417 /* PrivacyInfo.xcprivacy */; };
 		0752523E22E07638005D30B3 /* DDLegacyMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 0752523D22E07638005D30B3 /* DDLegacyMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0752523F22E07666005D30B3 /* DDLegacyMacros.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 0752523D22E07638005D30B3 /* DDLegacyMacros.h */; };
+		0777A4A92E2F6C4A00258BF4 /* DDLogMessageFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0777A4A82E2F6C4A00258BF4 /* DDLogMessageFormat.swift */; };
+		0777A4AA2E2F6C4A00258BF4 /* DDLogFlag+DDLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0777A4A72E2F6C4A00258BF4 /* DDLogFlag+DDLogLevel.swift */; };
+		0777A4AB2E2F6C4A00258BF4 /* CurrentFileNameHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0777A4A62E2F6C4A00258BF4 /* CurrentFileNameHelper.swift */; };
+		0777A4AC2E2F6C4A00258BF4 /* ConfigurationGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0777A4A52E2F6C4A00258BF4 /* ConfigurationGlobals.swift */; };
 		0A26B56422DE346B004EE6A7 /* CLIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B54B22DE346B004EE6A7 /* CLIColor.m */; };
 		0A26B56522DE346B004EE6A7 /* DDContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B54D22DE346B004EE6A7 /* DDContextFilterLogFormatter.m */; };
 		0A26B56622DE346B004EE6A7 /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26B54E22DE346B004EE6A7 /* DDDispatchQueueLogFormatter.m */; };
@@ -147,6 +151,10 @@
 		071909FD243CA0AC001C431F /* SwiftLogLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwiftLogLevel.h; path = Sources/CocoaLumberjackSwiftSupport/include/CocoaLumberjackSwiftSupport/SwiftLogLevel.h; sourceTree = SOURCE_ROOT; };
 		074EA6172B4D3027008B2417 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		0752523D22E07638005D30B3 /* DDLegacyMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLegacyMacros.h; sourceTree = "<group>"; };
+		0777A4A52E2F6C4A00258BF4 /* ConfigurationGlobals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationGlobals.swift; sourceTree = "<group>"; };
+		0777A4A62E2F6C4A00258BF4 /* CurrentFileNameHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentFileNameHelper.swift; sourceTree = "<group>"; };
+		0777A4A72E2F6C4A00258BF4 /* DDLogFlag+DDLogLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DDLogFlag+DDLogLevel.swift"; sourceTree = "<group>"; };
+		0777A4A82E2F6C4A00258BF4 /* DDLogMessageFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDLogMessageFormat.swift; sourceTree = "<group>"; };
 		0A26B54B22DE346B004EE6A7 /* CLIColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLIColor.m; sourceTree = "<group>"; };
 		0A26B54D22DE346B004EE6A7 /* DDContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDContextFilterLogFormatter.m; sourceTree = "<group>"; };
 		0A26B54E22DE346B004EE6A7 /* DDDispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDispatchQueueLogFormatter.m; sourceTree = "<group>"; };
@@ -302,8 +310,12 @@
 			children = (
 				0A26B55E22DE346B004EE6A7 /* Supporting Files */,
 				0A26B55D22DE346B004EE6A7 /* CocoaLumberjack.swift */,
+				0777A4A52E2F6C4A00258BF4 /* ConfigurationGlobals.swift */,
+				0777A4A62E2F6C4A00258BF4 /* CurrentFileNameHelper.swift */,
 				0A26B55A22DE346B004EE6A7 /* DDAssert.swift */,
 				4CFE77942439202B0068D7C6 /* DDLog+Combine.swift */,
+				0777A4A72E2F6C4A00258BF4 /* DDLogFlag+DDLogLevel.swift */,
+				0777A4A82E2F6C4A00258BF4 /* DDLogMessageFormat.swift */,
 			);
 			path = CocoaLumberjackSwift;
 			sourceTree = "<group>";
@@ -570,6 +582,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0777A4A92E2F6C4A00258BF4 /* DDLogMessageFormat.swift in Sources */,
+				0777A4AA2E2F6C4A00258BF4 /* DDLogFlag+DDLogLevel.swift in Sources */,
+				0777A4AB2E2F6C4A00258BF4 /* CurrentFileNameHelper.swift in Sources */,
+				0777A4AC2E2F6C4A00258BF4 /* ConfigurationGlobals.swift in Sources */,
 				4CFE77952439202B0068D7C6 /* DDLog+Combine.swift in Sources */,
 				0A26B5A622DE3512004EE6A7 /* DDAssert.swift in Sources */,
 				0A26B5A722DE3516004EE6A7 /* CocoaLumberjack.swift in Sources */,
