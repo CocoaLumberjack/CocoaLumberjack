@@ -1,0 +1,139 @@
+name: Bug Report
+description: Create a report to help us improve CocoaLumberjack.
+type: Bug
+body:
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have read and understood the [CONTRIBUTING guide](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/.github/CONTRIBUTING.md)
+          required: true
+        - label: I have read the [Documentation](https://github.com/CocoaLumberjack/CocoaLumberjack#documentation)
+          required: true
+        - label: I have searched for a similar issue in the [project](https://github.com/CocoaLumberjack/CocoaLumberjack/issues) and found none
+          required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of what the bug is.
+      placeholder: Logging this message crashes leads to an unexpected error.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction Steps
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. Create logger '...'
+        2. Log message '...'
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: A clear and concise description of what you expected to happen.
+      placeholder: The message should be logged without resulting in an error.
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: "## Environment Information"
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Select all platforms on which the issue occurs.
+      multiple: true
+      options:
+        - macOS
+        - iOS
+        - iPadOS
+        - tvOS
+        - watchOS
+        - visionOS
+    validations:
+      required: true
+
+  - type: input
+    id: platform-version
+    attributes:
+      label: Platform Version
+      description: The version(s) of the platform on which the issue occurs.
+      placeholder: "26.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: integration
+    attributes:
+      label: Integration Method
+      description: Select the integration method used.
+      multiple: false
+      options:
+        - Swift Package Manager (SPM)
+        - CocoaPods
+        - Carthage
+        - Manual
+    validations:
+      required: true
+
+  - type: input
+    id: package-version
+    attributes:
+      label: CocoaLumberjack Version
+      description: The version(s) of CocoaLumberjack used in the project.
+      placeholder: "3.9.0"
+    validations:
+      required: true
+
+  - type: input
+    id: xcode-version
+    attributes:
+      label: Xcode Version
+      description: The version of Xcode that is used.
+    validations:
+      required: true
+
+  - type: input
+    id: repro-rate
+    attributes:
+      label: Repro Rate
+      description: The rate at which the issue can be reproduced.
+      placeholder: all the time (100%) / sometimes x% / only once
+    validations:
+      required: true
+
+  - type: input
+    id: repro-project
+    attributes:
+      label: Repro Project
+      description: A link to a sample project that reproduces the issue.
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Additional Context
+
+        Are you reporting a queue deadlock?
+        If so, please include a complete backtrace of all threads, which you can generate by typing `bt all` in the debugger after you hit the deadlock. We might not be able to fix deadlock reports without a backtrace!
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem here.
+      placeholder: Upload screenshots showing the issue, provide logs, etc.
+    validations:
+      required: false

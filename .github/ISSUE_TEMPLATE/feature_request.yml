@@ -1,0 +1,44 @@
+name: Feature Request
+description: Suggest a new feature for CocoaLumberjack.
+type: Feature
+body:
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have read and understood the [CONTRIBUTING guide](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/.github/CONTRIBUTING.md)
+          required: true
+        - label: I have read the [Documentation](https://github.com/CocoaLumberjack/CocoaLumberjack#documentation)
+          required: true
+        - label: I have searched for a similar issue in the [project](https://github.com/CocoaLumberjack/CocoaLumberjack/issues) and found none
+          required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of what you want to happen.
+      placeholder: It should be possible to write log messages to a serial output.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives
+      description: Describe any alternative solutions or workarounds you've considered.
+      placeholder: |
+        - Tried using a different logger
+        - Wrote my own logger
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context about the feature request here.
+      placeholder: E.g. upload a sample code snippet or project.
+    validations:
+      required: false
