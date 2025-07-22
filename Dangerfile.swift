@@ -41,11 +41,11 @@ let git = danger.git
 
 // Sometimes it's a README fix, or something like that
 let isDeclaredTrivial = danger.github?.pullRequest.title.contains("#trivial") ?? false
-let hasSourceChanges = (git.modifiedFiles + git.createdFiles).contains { $0.isInSources }
+let hasSourceChanges = (git.modifiedFiles + git.createdFiles).contains(where: \.isInSources)
 
 // Make it more obvious that a PR is a work in progress and shouldn't be merged yet
-if danger.github?.pullRequest.title.contains("WIP") == true && danger.github?.pullRequest.draft !== true {
-    warn("PR is marked as Work in Progress. Please consider marking the PR as Draft in GitHub directly.")
+if danger.github?.pullRequest.title.contains("WIP") == true && danger.github?.pullRequest.draft != true {
+    warn("PR is marked as Work in Progress. Please consider marking the PR as Draft in GitHub to prevent merges.")
 }
 
 // Warn when there is a big PR
@@ -56,7 +56,7 @@ if let additions = danger.github?.pullRequest.additions,
 }
 
 // Warn when library files has been updated but not tests.
-if hasSourceChanges && !git.modifiedFiles.contains(where: { $0.isInTests }) {
+if hasSourceChanges && !git.modifiedFiles.contains(where: \.isInTests) {
   warn("The library files were changed, but the tests remained unmodified. Consider updating or adding to the tests to match the library changes.")
 }
 
