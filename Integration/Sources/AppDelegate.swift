@@ -15,7 +15,7 @@
 
 import UIKit
 
-@UIApplicationMain
+@main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     @objc dynamic var window: UIWindow?
