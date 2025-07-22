@@ -59,7 +59,7 @@ jobs:
           case "${PLATFORM}" in
             'macOS')    DESTINATION='platform=macOS';;
             'iOS')      DESTINATION='platform=iOS Simulator,OS=latest,name=iPhone 16 Pro';;
-            'iPadOS')   DESTINATION='platform=iOS Simulator,OS=latest,name=iPad Pro (11-inch) (M4)';;
+            'iPadOS')   DESTINATION='platform=iOS Simulator,OS=latest,name=iPad Pro 11-inch (M4)';;
             'tvOS')     DESTINATION='platform=tvOS Simulator,OS=latest,name=Apple TV 4K (3rd generation)';;
             'watchOS')  DESTINATION='platform=watchOS Simulator,OS=latest,name=Apple Watch Series 10 (46mm)';;
             'visionOS') DESTINATION='platform=visionOS Simulator,OS=latest,name=Apple Vision Pro';;
