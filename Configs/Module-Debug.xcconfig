@@ -38,6 +38,9 @@ MTL_ENABLE_DEBUG_INFO = YES
 // If enabled, only the active architecture is built.
 ONLY_ACTIVE_ARCH = YES
 
+// A list of compilation conditions to enable for conditional compilation expressions.
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) DEBUG
+
 // This setting controls the way the Swift files in a module are rebuilt.
 SWIFT_COMPILATION_MODE = singlefile
 

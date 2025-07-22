@@ -245,6 +245,9 @@ SUPPORTED_PLATFORMS = macosx iphoneos iphonesimulator watchsimulator watchos app
 // macOS Catalyst support
 SUPPORTS_MACCATALYST = YES
 
+// A list of compilation conditions to enable for conditional compilation expressions.
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited)
+
 // Swift language version
 SWIFT_VERSION = 6.0
 
