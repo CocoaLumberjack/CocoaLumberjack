@@ -44,8 +44,8 @@ let isDeclaredTrivial = danger.github?.pullRequest.title.contains("#trivial") ??
 let hasSourceChanges = (git.modifiedFiles + git.createdFiles).contains { $0.isInSources }
 
 // Make it more obvious that a PR is a work in progress and shouldn't be merged yet
-if danger.github?.pullRequest.title.contains("WIP") == true {
-    warn("PR is marked as Work in Progress")
+if danger.github?.pullRequest.title.contains("WIP") == true && danger.github?.pullRequest.draft !== true {
+    warn("PR is marked as Work in Progress. Please consider marking the PR as Draft in GitHub directly.")
 }
 
 // Warn when there is a big PR

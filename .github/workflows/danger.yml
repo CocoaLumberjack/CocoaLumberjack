@@ -2,7 +2,7 @@ name: Danger
 
 on:
   pull_request_target:
-    branches: [ master ]
+    branches: [master]
 
 env:
   LC_CTYPE: en_US.UTF-8
@@ -16,7 +16,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: danger/swift
-        uses: docker://ghcr.io/danger/danger-swift-with-swiftlint:3.15.0
+        uses: danger/swift@3.15.0
         with:
           args: --failOnErrors --no-publish-check
         env:

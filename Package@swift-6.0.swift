@@ -1,7 +1,13 @@
-// swift-tools-version:5.8
+// swift-tools-version:6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
+
+let swiftSettings: Array<SwiftSetting> = [
+    .swiftLanguageMode(.v6),
+    .enableUpcomingFeature("ExistentialAny"),
+    .enableUpcomingFeature("InternalImportsByDefault"),
+]
 
 let package = Package(
     name: "CocoaLumberjack",
@@ -10,6 +16,7 @@ let package = Package(
         .iOS(.v12),
         .tvOS(.v12),
         .watchOS(.v5),
+        .visionOS(.v1),
     ],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
@@ -44,21 +51,25 @@ let package = Package(
                 "CocoaLumberjack",
                 "CocoaLumberjackSwiftSupport",
             ],
-            exclude: ["Supporting Files"]),
+            exclude: ["Supporting Files"],
+            swiftSettings: swiftSettings),
         .target(
             name: "CocoaLumberjackSwiftLogBackend",
             dependencies: [
                 "CocoaLumberjack",
                 .product(name: "Logging", package: "swift-log"),
-            ]),
+            ],
+            swiftSettings: swiftSettings),
         .testTarget(
             name: "CocoaLumberjackTests",
             dependencies: ["CocoaLumberjack"]),
         .testTarget(
             name: "CocoaLumberjackSwiftTests",
-            dependencies: ["CocoaLumberjackSwift"]),
+            dependencies: ["CocoaLumberjackSwift"],
+            swiftSettings: swiftSettings),
         .testTarget(
             name: "CocoaLumberjackSwiftLogBackendTests",
-            dependencies: ["CocoaLumberjackSwiftLogBackend"]),
+            dependencies: ["CocoaLumberjackSwiftLogBackend"],
+            swiftSettings: swiftSettings),
     ]
 )

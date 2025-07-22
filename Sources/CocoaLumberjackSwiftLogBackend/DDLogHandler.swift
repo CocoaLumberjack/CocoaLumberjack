@@ -13,157 +13,8 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-import CocoaLumberjack
-import Logging
-
-extension Logging.Logger.Level {
-    @inlinable
-    var ddLogLevelAndFlag: (DDLogLevel, DDLogFlag) {
-        switch self {
-        case .trace: return (.verbose, .verbose)
-        case .debug: return (.debug, .debug)
-        case .info, .notice: return (.info, .info)
-        case .warning: return (.warning, .warning)
-        case .error, .critical: return (.error, .error)
-        }
-    }
-}
-
-extension DDLogMessage {
-    /// Contains the swift-log details of a given log message.
-    public struct SwiftLogInformation: Equatable, Sendable {
-        /// Contains information about the swift-log logger that logged this message.
-        public struct LoggerInformation: Equatable, Sendable {
-            /// Contains the metadata from the various sources of on a logger.
-            /// Currently this can be the logger itself, as well as its metadata provider
-            public struct MetadataSources: Equatable, Sendable {
-                /// The metadata of the swift-log logger that logged this message.
-                public let logger: Logging.Logger.Metadata
-                /// The metadata of the metadata provider on the swift-log logger that logged this message.
-                public let provider: Logging.Logger.Metadata?
-            }
-
-            /// The label of the swift-log logger that logged this message.
-            public let label: String
-            /// The metadata of the swift-log logger that logged this message.
-            public let metadataSources: MetadataSources
-
-            /// The metadata of the swift-log logger that logged this message.
-            @available(*, deprecated, renamed: "metadataSources.logger")
-            public var metadata: Logging.Logger.Metadata { metadataSources.logger }
-        }
-
-        /// Contains information about the swift-log message thas was logged.
-        public struct MessageInformation: Equatable, Sendable {
-            /// The original swift-log message.
-            public let message: Logging.Logger.Message
-            /// The original swift-log level of the message. This could be more fine-grained than ``DDLogMessage/level``  & ``DDLogMessage/flag``.
-            public let level: Logging.Logger.Level
-            /// The original swift-log metadata of the message.
-            public let metadata: Logging.Logger.Metadata?
-            /// The original swift-log source of the message.
-            public let source: String
-        }
-
-        /// The information about the swift-log logger that logged this message.
-        public let logger: LoggerInformation
-        /// The information about the swift-log message that was logged.
-        public let message: MessageInformation
-
-        /// Merges the metadata from all layers together.
-        /// The metadata on the logger provides the base.
-        /// Metadata from the logger's metadata provider (if any) trumps the base.
-        /// Metadata from the logged message again trumps both the base and the metadata from the logger's metadata provider.
-        /// Essentially: `logger.metadata < logger.metadataProvider < message.metadata`
-        /// - Note: Accessing this property performs the merge! Accessing it multiple times can be a performance issue!
-        public var mergedMetadata: Logging.Logger.Metadata {
-            var merged = logger.metadataSources.logger
-            if let providerMetadata = logger.metadataSources.provider {
-                merged.merge(providerMetadata, uniquingKeysWith: { $1 })
-            }
-            if let messageMetadata = message.metadata {
-                merged.merge(messageMetadata, uniquingKeysWith: { $1 })
-            }
-            return merged
-        }
-    }
-
-    /// The swift-log information of this log message. This only exists for messages logged via swift-log.
-    /// - SeeAlso: ``DDLogMessage/SwiftLogInformation``
-    @inlinable
-    public var swiftLogInfo: SwiftLogInformation? {
-        (self as? SwiftLogMessage)?._swiftLogInfo
-    }
-}
-
-/// This class (intentionally internal) is only an "encapsulation" layer above ``DDLogMessage``.
-/// It's basically an implementation detail of ``DDLogMessage/swiftLogInfo``.
-@usableFromInline
-final class SwiftLogMessage: DDLogMessage, @unchecked Sendable {
-    @usableFromInline
-    let _swiftLogInfo: SwiftLogInformation
-
-    @usableFromInline
-    init(loggerLabel: String,
-         loggerMetadata: Logging.Logger.Metadata,
-         loggerProvidedMetadata: Logging.Logger.Metadata?,
-         message: Logging.Logger.Message,
-         level: Logging.Logger.Level,
-         metadata: Logging.Logger.Metadata?,
-         source: String,
-         file: String,
-         function: String,
-         line: UInt) {
-        _swiftLogInfo = .init(logger: .init(label: loggerLabel,
-                                            metadataSources: .init(logger: loggerMetadata,
-                                                                   provider: loggerProvidedMetadata)),
-                              message: .init(message: message,
-                                             level: level,
-                                             metadata: metadata,
-                                             source: source))
-        let (ddLogLevel, ddLogFlag) = level.ddLogLevelAndFlag
-        let msg = String(describing: message)
-        super.init(format: msg,
-                   formatted: msg, // We have no chance in retrieving the original format here.
-                   level: ddLogLevel,
-                   flag: ddLogFlag,
-                   context: 0,
-                   file: file,
-                   function: function,
-                   line: line,
-                   tag: nil,
-                   options: .dontCopyMessage, // Swift will bridge to NSString. No need to make an additional copy.
-                   timestamp: nil) // Passing nil will make DDLogMessage create the timestamp which saves us the bridging between Date and NSDate.
-    }
-
-    // Not removed due to `@usableFromInline`.
-    @usableFromInline
-    @available(*, deprecated, renamed: "init(loggerLabel:loggerMetadata:loggerMetadata:message:level:metadata:source:file:function:line:)")
-    convenience init(loggerLabel: String,
-                     loggerMetadata: Logging.Logger.Metadata,
-                     message: Logging.Logger.Message,
-                     level: Logging.Logger.Level,
-                     metadata: Logging.Logger.Metadata?,
-                     source: String,
-                     file: String,
-                     function: String,
-                     line: UInt) {
-        self.init(loggerLabel: loggerLabel,
-                  loggerMetadata: loggerMetadata,
-                  loggerProvidedMetadata: nil,
-                  message: message,
-                  level: level,
-                  metadata: metadata,
-                  source: source,
-                  file: file,
-                  function: function,
-                  line: line)
-    }
-
-    override func isEqual(_ object: Any?) -> Bool {
-        super.isEqual(object) && (object as? SwiftLogMessage)?._swiftLogInfo == _swiftLogInfo
-    }
-}
+public import CocoaLumberjack
+public import Logging
 
 /// A swift-log ``LogHandler`` implementation that forwards messages to a given ``DDLog`` instance.
 public struct DDLogHandler: LogHandler {
@@ -282,17 +133,12 @@ public struct DDLogHandler: LogHandler {
     }
 }
 
-#if swift(>=5.6)
 /// A typealias for the "old" log handler factory.
-public typealias OldLogHandlerFactory = (String) -> any LogHandler
+@preconcurrency
+public typealias OldLogHandlerFactory = @Sendable (String) -> any LogHandler
 /// A typealias for the log handler factory.
-public typealias LogHandlerFactory = (String, Logging.Logger.MetadataProvider?) -> any LogHandler
-#else
-/// A typealias for the "old" log handler factory.
-public typealias OldLogHandlerFactory = (String) -> LogHandler
-/// A typealias for the log handler factory.
-public typealias LogHandlerFactory = (String, Logging.Logger.MetadataProvider?) -> LogHandler
-#endif
+@preconcurrency
+public typealias LogHandlerFactory = @Sendable (String, Logging.Logger.MetadataProvider?) -> any LogHandler
 
 extension DDLogHandler {
     /// The default key to control per message whether to log it synchronous or asynchronous.

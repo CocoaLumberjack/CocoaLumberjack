@@ -11,17 +11,17 @@ env:
 
 jobs:
   publish-podspec:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: ^15.3
+          xcode-version: ^16.4
       - name: Download visionOS
         run: |
-            sudo xcodebuild -runFirstLaunch
-            sudo xcrun simctl list # needed to boot the simulator
-            sudo xcodebuild -downloadPlatform visionOS
-            sudo xcodebuild -runFirstLaunch
+          sudo xcodebuild -runFirstLaunch
+          sudo xcrun simctl list # needed to boot the simulator
+          sudo xcodebuild -downloadPlatform visionOS
+          sudo xcodebuild -runFirstLaunch
       - uses: actions/checkout@v4
       - name: Generate Podspec
         env:

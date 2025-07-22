@@ -14,8 +14,8 @@
 //   prior written permission of Deusty, LLC.
 
 #if SWIFT_PACKAGE
-import CocoaLumberjack
-import CocoaLumberjackSwiftSupport
+public import CocoaLumberjack
+public import CocoaLumberjackSwiftSupport
 #endif
 
 /**

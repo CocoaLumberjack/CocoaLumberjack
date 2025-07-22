@@ -2,9 +2,9 @@ name: Unit Tests
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 env:
   LC_CTYPE: en_US.UTF-8
@@ -12,11 +12,11 @@ env:
 
 jobs:
   swiftpm:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: ^15.3
+          xcode-version: ^16.4
       - uses: actions/checkout@v4
       - name: Run SwiftPM Tests
         run: swift test --enable-code-coverage --parallel
@@ -28,10 +28,10 @@ jobs:
           files: ${{ join(fromJSON(steps.coverage-files.outputs.files), ',') }}
 
   xcode:
-    runs-on: macos-14
+    runs-on: macos-15
     strategy:
       matrix:
-        scheme: [ Swift Tests ]
+        scheme: [Swift Tests]
         platform:
           - macOS
           - iOS
@@ -49,7 +49,7 @@ jobs:
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: ^15.3
+          xcode-version: ^16.4
       - name: Determine Xcode destination
         id: xcode-destination
         env:
@@ -69,10 +69,10 @@ jobs:
       - name: Download visionOS
         if: ${{ matrix.platform == 'visionOS' }}
         run: |
-            sudo xcodebuild -runFirstLaunch
-            sudo xcrun simctl list # needed to boot the simulator
-            sudo xcodebuild -downloadPlatform visionOS
-            sudo xcodebuild -runFirstLaunch
+          sudo xcodebuild -runFirstLaunch
+          sudo xcrun simctl list # needed to boot the simulator
+          sudo xcodebuild -downloadPlatform visionOS
+          sudo xcodebuild -runFirstLaunch
       - uses: actions/checkout@v4
       - uses: sersoft-gmbh/xcodebuild-action@v3
         with:
