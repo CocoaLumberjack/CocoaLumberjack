@@ -16,9 +16,12 @@
 #if canImport(Synchronization)
 public import Synchronization
 #endif
+#if SWIFT_PACKAGE
+public import CocoaLumberjack
+#endif
 
 #if canImport(Synchronization)
-#if SWIFT_PACKAGE && compiler(>=6.0)
+#if compiler(>=6.0) && !COCOAPODS // CocoaPods seems to merge the modules.
 @available(macOS 15, iOS 18, tvOS 18, watchOS 11, visionOS 2, *)
 extension DDLogLevel: @retroactive AtomicRepresentable {}
 #else

@@ -155,6 +155,10 @@ Pod::Spec.new do |s|
   s.visionos.deployment_target = '${VISIONOS_SDK}'
   s.watchos.deployment_target  = '${WATCHOS_SDK}'
 
+  s.pod_target_xcconfig = {
+    'OTHER_SWIFT_FLAGS' => '\$(inherited) -DCOCOAPODS'
+  }
+
   s.preserve_paths = 'README.md', 'LICENSE'
 
   s.default_subspecs = 'Core'
