@@ -18,7 +18,7 @@ public import Synchronization
 #endif
 
 #if canImport(Synchronization)
-#if compiler(>=6.0)
+#if SWIFT_PACKAGE && compiler(>=6.0)
 @available(macOS 15, iOS 18, tvOS 18, watchOS 11, visionOS 2, *)
 extension DDLogLevel: @retroactive AtomicRepresentable {}
 #else
