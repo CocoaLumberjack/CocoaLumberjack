@@ -6,7 +6,8 @@ CocoaLumberjack
 ===============
 [![Version](https://img.shields.io/github/release/CocoaLumberjack/CocoaLumberjack.svg?display_name=tag&style=flat)](https://github.com/CocoaLumberjack/CocoaLumberjack/releases/latest)
 [![License](https://img.shields.io/github/license/CocoaLumberjack/CocoaLumberjack.svg?style=flat)](https://opensource.org/licenses/BSD-3-Clause)
-[![Pod Platform](https://img.shields.io/cocoapods/p/CocoaLumberjack.svg?style=flat)](https://cocoadocs.org/docsets/CocoaLumberjack/)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FCocoaLumberjack%2FCocoaLumberjack%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/CocoaLumberjack/CocoaLumberjack)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FCocoaLumberjack%2FCocoaLumberjack%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/CocoaLumberjack/CocoaLumberjack)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 ![Unit Tests](https://github.com/CocoaLumberjack/CocoaLumberjack/workflows/Unit%20Tests/badge.svg)
 [![codecov](https://codecov.io/gh/CocoaLumberjack/CocoaLumberjack/branch/master/graph/badge.svg)](https://codecov.io/gh/CocoaLumberjack/CocoaLumberjack)
@@ -17,8 +18,21 @@ CocoaLumberjack
 
 ## How to get started
 
-First, install CocoaLumberjack via [CocoaPods](https://cocoapods.org), [Carthage](https://github.com/Carthage/Carthage), [Swift Package Manager](https://swift.org/package-manager/) or manually.
+First, install CocoaLumberjack via [Swift Package Manager](https://swift.org/package-manager/), [CocoaPods](https://cocoapods.org), [Carthage](https://github.com/Carthage/Carthage) or manually.
 Then use `DDOSLogger` for iOS 10 and later, or `DDTTYLogger` and `DDASLLogger` for earlier versions to begin logging messages.
+
+
+### Swift Package Manager
+
+As of CocoaLumberjack 3.6.0, you can use the Swift Package Manager as integration method.
+If you want to use the Swift Package Manager as integration method, either use Xcode to add the package dependency or add the following dependency to your Package.swift:
+
+```swift
+.package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", from: "3.8.0"),
+```
+
+Note that you may need to add both products, `CocoaLumberjack` and `CocoaLumberjackSwift` to your target since SPM sometimes fails to detect that `CocoaLumberjackSwift` depends on `CocoaLumberjack`.
+
 
 ### CocoaPods
 
@@ -52,18 +66,6 @@ Cartfile
 ```
 github "CocoaLumberjack/CocoaLumberjack"
 ```
-
-
-### Swift Package Manager
-
-As of CocoaLumberjack 3.6.0, you can use the Swift Package Manager as integration method.
-If you want to use the Swift Package Manager as integration method, either use Xcode to add the package dependency or add the following dependency to your Package.swift:
-
-```swift
-.package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack.git", from: "3.8.0"),
-```
-
-Note that you may need to add both products, `CocoaLumberjack` and `CocoaLumberjackSwift` to your target since SPM sometimes fails to detect that `CocoaLumberjackSwift` depends on `CocoaLumberjack`.
 
 ### Install manually
 
