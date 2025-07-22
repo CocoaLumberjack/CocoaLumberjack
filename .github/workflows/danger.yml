@@ -16,7 +16,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: danger/swift
-        uses: danger/swift@3.15.0
+        uses: danger/swift@3.21.2
         with:
           args: --failOnErrors --no-publish-check
         env:
