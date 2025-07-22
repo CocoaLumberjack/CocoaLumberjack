@@ -7,8 +7,6 @@ body:
     attributes:
       label: Checklist
       options:
-        - label: I have read and understood the [CONTRIBUTING guide](https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/.github/CONTRIBUTING.md)
-          required: true
         - label: I have read the [Documentation](https://github.com/CocoaLumberjack/CocoaLumberjack#documentation)
           required: true
         - label: I have searched for a similar issue in the [project](https://github.com/CocoaLumberjack/CocoaLumberjack/issues) and found none
