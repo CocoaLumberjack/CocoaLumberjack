@@ -17,7 +17,7 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: ^16.4
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Run SwiftPM Tests
         run: swift test --enable-code-coverage --parallel
       - uses: sersoft-gmbh/swift-coverage-action@v4
@@ -73,7 +73,7 @@ jobs:
           sudo xcrun simctl list # needed to boot the simulator
           sudo xcodebuild -downloadPlatform visionOS
           sudo xcodebuild -runFirstLaunch
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: sersoft-gmbh/xcodebuild-action@v3
         with:
           project: Tests/Tests.xcodeproj
