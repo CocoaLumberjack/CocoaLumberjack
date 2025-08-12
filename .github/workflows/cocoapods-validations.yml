@@ -23,7 +23,7 @@ jobs:
           sudo xcrun simctl list # needed to boot the simulator
           sudo xcodebuild -downloadPlatform visionOS
           sudo xcodebuild -runFirstLaunch
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Generate Podspec
         run: ./Scripts/generate-podspec.sh
       - name: Validate Pod

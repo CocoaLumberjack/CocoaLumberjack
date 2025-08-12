@@ -17,7 +17,7 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: ^16.4
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: sersoft-gmbh/xcodebuild-action@v3
         with:
           project: Integration/Integration.xcodeproj
@@ -38,7 +38,7 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: ^16.4
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: sersoft-gmbh/xcodebuild-action@v3
         with:
           project: Integration/Integration.xcodeproj
