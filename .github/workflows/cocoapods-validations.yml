@@ -21,6 +21,7 @@ jobs:
         run: |
           xcrun simctl list
           xcrun simctl delete unavailable # Remove unavailable sims - also boots the simulator
+          xcrun simctl list
           xcodebuild -downloadPlatform iOS
           xcodebuild -downloadPlatform tvOS
           xcodebuild -downloadPlatform visionOS
