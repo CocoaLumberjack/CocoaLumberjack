@@ -43,6 +43,12 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: ^16.4
+      - name: Install Platform
+        # This isn't necessarily an exhaustive list, but it saves some time in the obvious cases.
+        if: ${{ matrix.scheme != 'BenchmarkMac' && matrix.scheme != 'RegisteredLoggingTest (Desktop)' && matrix.scheme != 'TestXcodeColors (Desktop)' && matrix.scheme != 'OverflowTestMac' && matrix.scheme != 'RollingTestMac' && matrix.scheme != 'CLI' }}
+        run: |
+          xcrun simctl delete unavailable # Remove unavailable sims - also boots the simulator
+          xcodebuild -downloadPlatform iOS
       - uses: actions/checkout@v5
       - uses: sersoft-gmbh/xcodebuild-action@v3
         with:

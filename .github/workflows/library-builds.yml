@@ -20,6 +20,11 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: ^16.4
+      - name: Install Platform
+        if: ${{ matrix.sdk == 'iphonesimulator' }}
+        run: |
+          xcrun simctl delete unavailable # Remove unavailable sims - also boots the simulator
+          xcodebuild -downloadPlatform iOS
       - uses: actions/checkout@v5
       - uses: sersoft-gmbh/xcodebuild-action@v3
         with:
@@ -39,6 +44,23 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: ^16.4
+      - name: Install Platform
+        if: ${{ matrix.sdk != 'macosx' }}
+        env:
+          MATRIX_SDK: ${{ matrix.sdk }}
+        run: |
+          xcrun simctl delete unavailable # Remove unavailable sims - also boots the simulator
+          case "${MATRIX_SDK}" in
+            iphonesimulator)
+              xcodebuild -downloadPlatform iOS
+              ;;
+            watchsimulator)
+              xcodebuild -downloadPlatform watchOS
+              ;;
+            appletvsimulator)
+              xcodebuild -downloadPlatform tvOS
+              ;;
+          esac
       - uses: actions/checkout@v5
       - uses: sersoft-gmbh/xcodebuild-action@v3
         with:

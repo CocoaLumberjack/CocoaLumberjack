@@ -17,6 +17,10 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: ^16.4
+      - name: Install Platform
+        run: |
+          xcrun simctl delete unavailable # Remove unavailable sims - also boots the simulator
+          xcodebuild -downloadPlatform iOS
       - uses: actions/checkout@v5
       - uses: sersoft-gmbh/xcodebuild-action@v3
         with:
@@ -38,6 +42,23 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: ^16.4
+      - name: Install Platform
+        if: ${{ matrix.scheme != 'macOSSwiftIntegration' }}
+        env:
+          SCHEME: ${{ matrix.scheme }}
+        run: |
+          xcrun simctl delete unavailable # Remove unavailable sims - also boots the simulator
+          case "${SCHEME}" in
+            iOSFrameworkIntegration)
+              xcodebuild -downloadPlatform iOS
+              ;;
+            tvOSSwiftIntegration)
+              xcodebuild -downloadPlatform tvOS
+              ;;
+            watchOSSwiftIntegration)
+              xcodebuild -downloadPlatform watchOS
+              ;;
+          esac
       - uses: actions/checkout@v5
       - uses: sersoft-gmbh/xcodebuild-action@v3
         with:

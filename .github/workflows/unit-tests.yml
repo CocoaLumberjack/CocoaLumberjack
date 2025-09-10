@@ -38,14 +38,14 @@ jobs:
           - iPadOS
           - tvOS
           - visionOS
-        skip-testing: ['']
+        skip-testing: [""]
         include:
           - scheme: iOS Tests
             platform: iOS
-            skip-testing: 'iOS Tests/DDFileLoggerPerformanceTests'
+            skip-testing: "iOS Tests/DDFileLoggerPerformanceTests"
           - scheme: OS X Tests
             platform: macOS
-            skip-testing: 'OS X Tests/DDFileLoggerPerformanceTests'
+            skip-testing: "OS X Tests/DDFileLoggerPerformanceTests"
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
@@ -66,13 +66,16 @@ jobs:
             *) echo "::error title=Unknown platform!::Unknown platform: ${PLATFORM}" && exit 1;;
           esac
           echo "destination=${DESTINATION}" >> "${GITHUB_OUTPUT}"
-      - name: Download visionOS
-        if: ${{ matrix.platform == 'visionOS' }}
+      - name: Install Platform
+        if: ${{ matrix.platform != 'macOS' }}
+        env:
+          PLATFORM: ${{ matrix.platform }}
         run: |
-          sudo xcodebuild -runFirstLaunch
-          sudo xcrun simctl list # needed to boot the simulator
-          sudo xcodebuild -downloadPlatform visionOS
-          sudo xcodebuild -runFirstLaunch
+          if [ "${PLATFORM}" = 'iPadOS' ]; then
+            PLATFORM='iOS'
+          fi
+          xcrun simctl delete unavailable # Remove unavailable sims - also boots the simulator
+          xcodebuild -downloadPlatform "${PLATFORM}"
       - uses: actions/checkout@v5
       - uses: sersoft-gmbh/xcodebuild-action@v3
         with:

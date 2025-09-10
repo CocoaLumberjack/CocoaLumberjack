@@ -17,12 +17,13 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: ^16.4
-      - name: Download visionOS
+      - name: Install Platforms
         run: |
-          sudo xcodebuild -runFirstLaunch
-          sudo xcrun simctl list # needed to boot the simulator
-          sudo xcodebuild -downloadPlatform visionOS
-          sudo xcodebuild -runFirstLaunch
+          xcrun simctl delete unavailable # Remove unavailable sims - also boots the simulator
+          xcodebuild -downloadPlatform iOS
+          xcodebuild -downloadPlatform tvOS
+          xcodebuild -downloadPlatform visionOS
+          xcodebuild -downloadPlatform watchOS
       - uses: actions/checkout@v5
       - name: Generate Podspec
         run: ./Scripts/generate-podspec.sh
