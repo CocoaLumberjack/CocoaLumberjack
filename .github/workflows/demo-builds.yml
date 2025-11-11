@@ -50,7 +50,7 @@ jobs:
           xcrun simctl delete unavailable # Remove unavailable sims - also boots the simulator
           xcodebuild -downloadPlatform iOS
       - uses: actions/checkout@v5
-      - uses: sersoft-gmbh/xcodebuild-action@v3
+      - uses: sersoft-gmbh/xcodebuild-action@v4
         with:
           workspace: Demos/Demos.xcworkspace
           scheme: ${{ matrix.scheme }}
