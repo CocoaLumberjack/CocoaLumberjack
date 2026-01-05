@@ -1205,9 +1205,12 @@ static DDTTYLogger *sharedInstance;
 
         if (isFormatted) {
             // The log message has already been formatted.
-            const size_t maxIovecLen = 5;
+
+            // Needs to be a define, because otherwise the compiler warns "Variable length array folded to constant array as an extension"
+#define DD_TTYLOGGER_MAX_IOVEC_LEN 5
+
             size_t iovecLen = _automaticallyAppendNewlineForCustomFormatters ? 5 : 4;
-            struct iovec v[maxIovecLen] = { 0 };
+            struct iovec v[DD_TTYLOGGER_MAX_IOVEC_LEN] = { 0 };
 
             if (colorProfile) {
                 v[0].iov_base = colorProfile->fgCode;
@@ -1216,8 +1219,8 @@ static DDTTYLogger *sharedInstance;
                 v[1].iov_base = colorProfile->bgCode;
                 v[1].iov_len = colorProfile->bgCodeLen;
 
-                v[maxIovecLen - 1].iov_base = colorProfile->resetCode;
-                v[maxIovecLen - 1].iov_len = colorProfile->resetCodeLen;
+                v[DD_TTYLOGGER_MAX_IOVEC_LEN - 1].iov_base = colorProfile->resetCode;
+                v[DD_TTYLOGGER_MAX_IOVEC_LEN - 1].iov_len = colorProfile->resetCodeLen;
             }
 
             v[2].iov_base = msg;

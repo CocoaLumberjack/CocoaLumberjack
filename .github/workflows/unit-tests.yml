@@ -12,11 +12,11 @@ env:
 
 jobs:
   swiftpm:
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: ^16.4
+          xcode-version: ^26.0
       - uses: actions/checkout@v6
       - name: Run SwiftPM Tests
         run: swift test --enable-code-coverage --parallel
@@ -28,7 +28,7 @@ jobs:
           files: ${{ join(fromJSON(steps.coverage-files.outputs.files), ',') }}
 
   xcode:
-    runs-on: macos-15
+    runs-on: macos-26
     strategy:
       matrix:
         scheme: [Swift Tests]
@@ -49,7 +49,7 @@ jobs:
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: ^16.4
+          xcode-version: ^26.0
       - name: Determine Xcode destination
         id: xcode-destination
         env:
@@ -58,10 +58,10 @@ jobs:
           DESTINATION=''
           case "${PLATFORM}" in
             'macOS')    DESTINATION='platform=macOS';;
-            'iOS')      DESTINATION='platform=iOS Simulator,OS=latest,name=iPhone 16 Pro';;
-            'iPadOS')   DESTINATION='platform=iOS Simulator,OS=latest,name=iPad Pro 11-inch (M4)';;
+            'iOS')      DESTINATION='platform=iOS Simulator,OS=latest,name=iPhone 17 Pro';;
+            'iPadOS')   DESTINATION='platform=iOS Simulator,OS=latest,name=iPad Pro 11-inch (M5)';;
             'tvOS')     DESTINATION='platform=tvOS Simulator,OS=latest,name=Apple TV 4K (3rd generation)';;
-            'watchOS')  DESTINATION='platform=watchOS Simulator,OS=latest,name=Apple Watch Series 10 (46mm)';;
+            'watchOS')  DESTINATION='platform=watchOS Simulator,OS=latest,name=Apple Watch Ultra 3 (49mm)';;
             'visionOS') DESTINATION='platform=visionOS Simulator,OS=latest,name=Apple Vision Pro';;
             *) echo "::error title=Unknown platform!::Unknown platform: ${PLATFORM}" && exit 1;;
           esac

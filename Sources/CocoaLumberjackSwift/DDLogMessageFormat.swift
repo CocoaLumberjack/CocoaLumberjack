@@ -90,8 +90,26 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
         }
 
         @inlinable
+        public mutating func appendInterpolation<S: StringProtocol>(_ string: S?, default: @autoclosure () -> some StringProtocol) {
+            if let string {
+                appendInterpolation(string)
+            } else {
+                appendInterpolation(`default`())
+            }
+        }
+
+        @inlinable
         public mutating func appendInterpolation(_ int: Int8) {
             storage.addValue(int, withSpecifier: "%c")
+        }
+
+        @inlinable
+        public mutating func appendInterpolation(_ int: Int8?, default: @autoclosure () -> some StringProtocol) {
+            if let int {
+                appendInterpolation(int)
+            } else {
+                appendInterpolation(`default`())
+            }
         }
 
         @inlinable
@@ -100,8 +118,26 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
         }
 
         @inlinable
+        public mutating func appendInterpolation(_ int: UInt8?, default: @autoclosure () -> some StringProtocol) {
+            if let int {
+                appendInterpolation(int)
+            } else {
+                appendInterpolation(`default`())
+            }
+        }
+
+        @inlinable
         public mutating func appendInterpolation(_ int: Int16) {
             storage.addValue(int, withSpecifier: "%i")
+        }
+
+        @inlinable
+        public mutating func appendInterpolation(_ int: Int16?, default: @autoclosure () -> some StringProtocol) {
+            if let int {
+                appendInterpolation(int)
+            } else {
+                appendInterpolation(`default`())
+            }
         }
 
         @inlinable
@@ -110,8 +146,26 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
         }
 
         @inlinable
+        public mutating func appendInterpolation(_ int: UInt16?, default: @autoclosure () -> some StringProtocol) {
+            if let int {
+                appendInterpolation(int)
+            } else {
+                appendInterpolation(`default`())
+            }
+        }
+
+        @inlinable
         public mutating func appendInterpolation(_ int: Int32) {
             storage.addValue(int, withSpecifier: "%li")
+        }
+
+        @inlinable
+        public mutating func appendInterpolation(_ int: Int32?, default: @autoclosure () -> some StringProtocol) {
+            if let int {
+                appendInterpolation(int)
+            } else {
+                appendInterpolation(`default`())
+            }
         }
 
         @inlinable
@@ -120,13 +174,40 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
         }
 
         @inlinable
+        public mutating func appendInterpolation(_ int: UInt32?, default: @autoclosure () -> some StringProtocol) {
+            if let int {
+                appendInterpolation(int)
+            } else {
+                appendInterpolation(`default`())
+            }
+        }
+
+        @inlinable
         public mutating func appendInterpolation(_ int: Int64) {
             storage.addValue(int, withSpecifier: "%lli")
         }
 
         @inlinable
+        public mutating func appendInterpolation(_ int: Int64?, default: @autoclosure () -> some StringProtocol) {
+            if let int {
+                appendInterpolation(int)
+            } else {
+                appendInterpolation(`default`())
+            }
+        }
+
+        @inlinable
         public mutating func appendInterpolation(_ int: UInt64) {
             storage.addValue(int, withSpecifier: "%llu")
+        }
+
+        @inlinable
+        public mutating func appendInterpolation(_ int: UInt64?, default: @autoclosure () -> some StringProtocol) {
+            if let int {
+                appendInterpolation(int)
+            } else {
+                appendInterpolation(`default`())
+            }
         }
 
         @inlinable
@@ -139,6 +220,15 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
         }
 
         @inlinable
+        public mutating func appendInterpolation(_ int: Int?, default: @autoclosure () -> some StringProtocol) {
+            if let int {
+                appendInterpolation(int)
+            } else {
+                appendInterpolation(`default`())
+            }
+        }
+
+        @inlinable
         public mutating func appendInterpolation(_ int: UInt) {
 #if arch(arm64) || arch(x86_64)
             storage.addValue(int, withSpecifier: "%llu")
@@ -148,8 +238,26 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
         }
 
         @inlinable
+        public mutating func appendInterpolation(_ int: UInt?, default: @autoclosure () -> some StringProtocol) {
+            if let int {
+                appendInterpolation(int)
+            } else {
+                appendInterpolation(`default`())
+            }
+        }
+
+        @inlinable
         public mutating func appendInterpolation(_ flt: Float) {
             storage.addValue(flt, withSpecifier: "%f")
+        }
+
+        @inlinable
+        public mutating func appendInterpolation(_ flt: Float?, default: @autoclosure () -> some StringProtocol) {
+            if let flt {
+                appendInterpolation(flt)
+            } else {
+                appendInterpolation(`default`())
+            }
         }
 
         @inlinable
@@ -158,8 +266,26 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
         }
 
         @inlinable
+        public mutating func appendInterpolation(_ dbl: Double?, default: @autoclosure () -> some StringProtocol) {
+            if let dbl {
+                appendInterpolation(dbl)
+            } else {
+                appendInterpolation(`default`())
+            }
+        }
+
+        @inlinable
         public mutating func appendInterpolation(_ bool: Bool) {
             storage.addValue(bool, withSpecifier: "%i") // bools are printed as ints
+        }
+
+        @inlinable
+        public mutating func appendInterpolation(_ bool: Bool?, default: @autoclosure () -> some StringProtocol) {
+            if let bool {
+                appendInterpolation(bool)
+            } else {
+                appendInterpolation(`default`())
+            }
         }
 
         // Move printed string out of inlinable code portion
@@ -186,8 +312,26 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
         }
 
         @inlinable
+        public mutating func appendInterpolation<Convertible: ReferenceConvertible>(_ convertible: Convertible?, default: @autoclosure () -> some StringProtocol) {
+            if let convertible {
+                appendInterpolation(convertible)
+            } else {
+                appendInterpolation(`default`())
+            }
+        }
+
+        @inlinable
         public mutating func appendInterpolation<Obj: NSObject>(_ object: Obj) {
             storage.addValue(object, withSpecifier: "%@")
+        }
+
+        @inlinable
+        public mutating func appendInterpolation<Obj: NSObject>(_ object: Obj?, default: @autoclosure () -> some StringProtocol) {
+            if let object {
+                appendInterpolation(object)
+            } else {
+                appendInterpolation(`default`())
+            }
         }
 
         @_disfavoredOverload
@@ -207,7 +351,11 @@ public struct DDLogMessageFormat: ExpressibleByStringInterpolation {
     @inlinable
     var formatted: String {
         guard storage.requiresArgumentParsing else { return storage.format }
+#if compiler(>=6.2)
+        return unsafe String(format: storage.format, arguments: storage.args)
+#else
         return String(format: storage.format, arguments: storage.args)
+#endif
     }
 
     @inlinable

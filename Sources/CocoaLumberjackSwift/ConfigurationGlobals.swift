@@ -44,7 +44,11 @@ private func _readDynamicLogLevel() -> DDLogLevel {
 #endif
     _dynamicLogLevelLock.lock()
     defer { _dynamicLogLevelLock.unlock() }
+#if compiler(>=6.2)
+    return unsafe _dynamicLogLevelStorage
+#else
     return _dynamicLogLevelStorage
+#endif
 }
 
 private func _writeDynamicLogLevel(_ newValue: DDLogLevel) {
@@ -56,7 +60,11 @@ private func _writeDynamicLogLevel(_ newValue: DDLogLevel) {
 #endif
     _dynamicLogLevelLock.lock()
     defer { _dynamicLogLevelLock.unlock() }
+#if compiler(>=6.2)
+    unsafe _dynamicLogLevelStorage = newValue
+#else
     _dynamicLogLevelStorage = newValue
+#endif
 }
 
 /// The log level that can dynamically limit log messages (vs. the static ``DDDefaultLogLevel``). This log level will only be checked, if the message passes the ``DDDefaultLogLevel``.
@@ -73,16 +81,28 @@ public nonisolated(unsafe) var dynamicLogLevel: DDLogLevel {
 /// - SeeAlso: ``dynamicLogLevel``
 @inlinable
 public func resetDynamicLogLevel() {
+#if compiler(>=6.2)
+    unsafe dynamicLogLevel = .all
+#else
     dynamicLogLevel = .all
+#endif
 }
 
 @available(*, deprecated, message: "Please use dynamicLogLevel", renamed: "dynamicLogLevel")
 public var defaultDebugLevel: DDLogLevel {
     get {
+#if compiler(>=6.2)
+        unsafe dynamicLogLevel
+#else
         dynamicLogLevel
+#endif
     }
     set {
+#if compiler(>=6.2)
+        unsafe dynamicLogLevel = newValue
+#else
         dynamicLogLevel = newValue
+#endif
     }
 }
 
@@ -107,7 +127,11 @@ private func _readAsyncLoggingEnabled() -> Bool {
 #endif
     _asyncLoggingEnabledLock.lock()
     defer { _asyncLoggingEnabledLock.unlock() }
+#if compiler(>=6.2)
+    return unsafe _asyncLoggingEnabledStorage
+#else
     return _asyncLoggingEnabledStorage
+#endif
 }
 
 private func _writeAsyncLoggingEnabled(_ newValue: Bool) {
@@ -119,7 +143,11 @@ private func _writeAsyncLoggingEnabled(_ newValue: Bool) {
 #endif
     _asyncLoggingEnabledLock.lock()
     defer { _asyncLoggingEnabledLock.unlock() }
+#if compiler(>=6.2)
+    unsafe _asyncLoggingEnabledStorage = newValue
+#else
     _asyncLoggingEnabledStorage = newValue
+#endif
 }
 
 /// If `true`, all logs (except errors) are logged asynchronously by default.
