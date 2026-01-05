@@ -32,7 +32,7 @@ jobs:
           - OverflowTestMac
           - PerUserLogLevels
           - RegisteredLoggingTest (Desktop)
-          # - RegisteredLoggingTest (Mobile) -> Fails to compile XIB on macOS 26 using Xcode 26
+          - RegisteredLoggingTest (Mobile)
           - RollingTestMac
           - SQLiteLogger
           - TestXcodeColors (Desktop)
