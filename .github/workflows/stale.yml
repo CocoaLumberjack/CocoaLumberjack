@@ -43,6 +43,7 @@ jobs:
           any-of-labels: awaiting review,awaiting response
           exempt-issue-labels: important,good first issue
           exempt-pr-labels: important,bugfix
+          # only-issue-types: bug,feature
           stale-issue-message: >
             This issue has been automatically marked as stale because it has not had recent activity.
             It will be closed if no further activity occurs.
