@@ -2,13 +2,13 @@ name: Update copyright years
 
 on:
   schedule:
-    - cron: '42 13 3 1 *' # 3rd of January at 13:42 UTC
+    - cron: "42 13 3 1 *" # 3rd of January at 13:42 UTC
   workflow_dispatch:
     inputs:
       year:
         type: number
         required: true
-        description: 'The (new) year to update the copyright to'
+        description: "The (new) year to update the copyright to"
 
 permissions:
   contents: write

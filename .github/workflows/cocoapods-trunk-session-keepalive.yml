@@ -3,11 +3,11 @@ name: CocoaPods Trunk Session Keep-Alive
 on:
   schedule:
     # every Wednesday at 09:23 UTC
-    - cron: '23 09 * * 3'
+    - cron: "23 09 * * 3"
 
 jobs:
   session-keepalive:
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
       - name: Keep CocoaPods Trunk Session Alive
         env:

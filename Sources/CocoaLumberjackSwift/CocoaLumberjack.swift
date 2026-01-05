@@ -31,6 +31,19 @@ public func _DDLogMessage(_ messageFormat: @autoclosure () -> DDLogMessageFormat
                           ddlog: DDLog) {
     // The `dynamicLogLevel` will always be checked here (instead of being passed in).
     // We cannot "mix" it with the `DDDefaultLogLevel`, because otherwise the compiler won't strip strings that are not logged.
+#if compiler(>=6.2)
+    if unsafe level.rawValue & flag.rawValue != 0 && dynamicLogLevel.rawValue & flag.rawValue != 0 {
+        let logMessage = DDLogMessage(messageFormat(),
+                                      level: level,
+                                      flag: flag,
+                                      context: context,
+                                      file: file,
+                                      function: function,
+                                      line: line,
+                                      tag: tag)
+        unsafe ddlog.log(asynchronous: asynchronous ?? asyncLoggingEnabled, message: logMessage)
+    }
+#else
     if level.rawValue & flag.rawValue != 0 && dynamicLogLevel.rawValue & flag.rawValue != 0 {
         let logMessage = DDLogMessage(messageFormat(),
                                       level: level,
@@ -42,6 +55,7 @@ public func _DDLogMessage(_ messageFormat: @autoclosure () -> DDLogMessageFormat
                                       tag: tag)
         ddlog.log(asynchronous: asynchronous ?? asyncLoggingEnabled, message: logMessage)
     }
+#endif
 }
 
 @inlinable
