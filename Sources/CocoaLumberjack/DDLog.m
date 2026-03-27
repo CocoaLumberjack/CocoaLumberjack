@@ -751,7 +751,7 @@ static NSUInteger _numProcessors;
         for (DDLoggerNode *loggerNode in self._loggers) {
             // skip the loggers that shouldn't write this message based on the log level
 
-            if (!(logMessage->_flag & loggerNode->_level)) {
+            if (!(logMessage->_flag & (DDLogFlag)(loggerNode->_level))) {
                 continue;
             }
 
@@ -767,7 +767,7 @@ static NSUInteger _numProcessors;
         for (DDLoggerNode *loggerNode in self._loggers) {
             // skip the loggers that shouldn't write this message based on the log level
 
-            if (!(logMessage->_flag & loggerNode->_level)) {
+            if (!(logMessage->_flag & (DDLogFlag)(loggerNode->_level))) {
                 continue;
             }
 
