@@ -22,7 +22,7 @@ jobs:
         run: swift test --enable-code-coverage --parallel
       - uses: sersoft-gmbh/swift-coverage-action@v5
         id: coverage-files
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ${{ join(fromJSON(steps.coverage-files.outputs.files), ',') }}
@@ -89,7 +89,7 @@ jobs:
           action: test
       - uses: sersoft-gmbh/swift-coverage-action@v5
         id: coverage-files
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ${{ join(fromJSON(steps.coverage-files.outputs.files), ',') }}
