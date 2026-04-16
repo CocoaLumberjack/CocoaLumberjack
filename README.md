@@ -11,7 +11,6 @@ CocoaLumberjack
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 ![Unit Tests](https://github.com/CocoaLumberjack/CocoaLumberjack/workflows/Unit%20Tests/badge.svg)
 [![codecov](https://codecov.io/gh/CocoaLumberjack/CocoaLumberjack/branch/master/graph/badge.svg)](https://codecov.io/gh/CocoaLumberjack/CocoaLumberjack)
-[![codebeat badge](https://codebeat.co/badges/840b714a-c8f3-4936-ada4-363473cd4e6b)](https://codebeat.co/projects/github-com-cocoalumberjack-cocoalumberjack-master)
 
 
 **CocoaLumberjack** is a fast & simple, yet powerful & flexible logging framework for macOS, iOS, tvOS, watchOS and visionOS.
