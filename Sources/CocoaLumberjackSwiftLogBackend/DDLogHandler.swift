@@ -112,6 +112,17 @@ public struct DDLogHandler: LogHandler {
     }
 
     @inlinable
+    public func log(event: LogEvent) {
+        let slMessage = SwiftLogMessage(loggerLabel: loggerInfo.label,
+                                        loggerMetadata: loggerInfo.metadataSources.logger,
+                                        loggerProvidedMetadata: loggerInfo.metadataSources.provider?.get(),
+                                        event: event)
+        config.log.log(asynchronous: _logAsync(level: event.level, metadata: event.metadata), message: slMessage)
+    }
+
+    // Not removed because it's `@inlinable`.
+    @inlinable
+    @available(*, deprecated, renamed: "log(event:)")
     public func log(level: Logging.Logger.Level,
                     message: Logging.Logger.Message,
                     metadata: Logging.Logger.Metadata?,
@@ -119,17 +130,13 @@ public struct DDLogHandler: LogHandler {
                     file: String,
                     function: String,
                     line: UInt) {
-        let slMessage = SwiftLogMessage(loggerLabel: loggerInfo.label,
-                                        loggerMetadata: loggerInfo.metadataSources.logger,
-                                        loggerProvidedMetadata: loggerInfo.metadataSources.provider?.get(),
-                                        message: message,
-                                        level: level,
-                                        metadata: metadata,
-                                        source: source,
-                                        file: file,
-                                        function: function,
-                                        line: line)
-        config.log.log(asynchronous: _logAsync(level: level, metadata: metadata), message: slMessage)
+        log(event: .init(level: level,
+                         message: message,
+                         metadata: metadata,
+                         source: source,
+                         file: file,
+                         function: function,
+                         line: line))
     }
 }
 

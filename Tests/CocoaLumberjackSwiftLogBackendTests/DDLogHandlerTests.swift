@@ -66,13 +66,9 @@ final class DDLogHandlerTests: XCTestCase {
         XCTAssertEqual(loggedMsg.message.function, #function)
         XCTAssertEqual(loggedMsg.message.line, logLine)
         XCTAssertNotNil(loggedMsg.message.swiftLogInfo)
-        XCTAssertEqual(loggedMsg.message.swiftLogInfo, .init(logger: .init(label: logger.label,
-                                                                           metadataSources: .init(logger: logger.handler.metadata,
-                                                                                                  provider: logger.metadataProvider?.get())),
-                                                             message: .init(message: msg,
-                                                                            level: .info,
-                                                                            metadata: nil,
-                                                                            source: logSource)))
+        XCTAssertEqual(loggedMsg.message.swiftLogInfo?.logger, .init(label: logger.label,
+                                                                     metadataSources: .init(logger: logger.handler.metadata,
+                                                                                            provider: logger.metadataProvider?.get())))
     }
 
     func testBootstrappingWithExplicitMethod() throws {
@@ -91,13 +87,9 @@ final class DDLogHandlerTests: XCTestCase {
         XCTAssertEqual(loggedMsg.message.function, #function)
         XCTAssertEqual(loggedMsg.message.line, logLine)
         XCTAssertNotNil(loggedMsg.message.swiftLogInfo)
-        XCTAssertEqual(loggedMsg.message.swiftLogInfo, .init(logger: .init(label: logger.label,
-                                                                           metadataSources: .init(logger: logger.handler.metadata,
-                                                                                                  provider: logger.metadataProvider?.get())),
-                                                             message: .init(message: msg,
-                                                                            level: .info,
-                                                                            metadata: nil,
-                                                                            source: logSource)))
+        XCTAssertEqual(loggedMsg.message.swiftLogInfo?.logger, .init(label: logger.label,
+                                                                     metadataSources: .init(logger: logger.handler.metadata,
+                                                                                            provider: logger.metadataProvider?.get())))
     }
 
     func testDefaults() throws {
@@ -148,13 +140,9 @@ final class DDLogHandlerTests: XCTestCase {
             XCTAssertEqual(loggedMsg1.message.function, #function)
             XCTAssertEqual(loggedMsg1.message.line, logLine1)
             XCTAssertNotNil(loggedMsg1.message.swiftLogInfo)
-            XCTAssertEqual(loggedMsg1.message.swiftLogInfo, .init(logger: .init(label: logger.label,
-                                                                                metadataSources: .init(logger: logger.handler.metadata,
-                                                                                                       provider: logger.metadataProvider?.get())),
-                                                                  message: .init(message: "\(level)-msg",
-                                                                                 level: level,
-                                                                                 metadata: message1Meta,
-                                                                                 source: logSource)))
+            XCTAssertEqual(loggedMsg1.message.swiftLogInfo?.logger, .init(label: logger.label,
+                                                                          metadataSources: .init(logger: logger.handler.metadata,
+                                                                                                 provider: logger.metadataProvider?.get())))
 
             let loggedMsg2 = mockDDLog.loggedMessages[$0.1 + 1]
             XCTAssertFalse(loggedMsg2.async)
@@ -165,13 +153,9 @@ final class DDLogHandlerTests: XCTestCase {
             XCTAssertEqual(loggedMsg2.message.function, #function)
             XCTAssertEqual(loggedMsg2.message.line, logLine2)
             XCTAssertNotNil(loggedMsg2.message.swiftLogInfo)
-            XCTAssertEqual(loggedMsg2.message.swiftLogInfo, .init(logger: .init(label: logger.label,
-                                                                                metadataSources: .init(logger: logger.handler.metadata,
-                                                                                                       provider: logger.metadataProvider?.get())),
-                                                                  message: .init(message: "\(level)-msg-with-sync",
-                                                                                 level: level,
-                                                                                 metadata: message2Meta,
-                                                                                 source: logSource)))
+            XCTAssertEqual(loggedMsg2.message.swiftLogInfo?.logger, .init(label: logger.label,
+                                                                          metadataSources: .init(logger: logger.handler.metadata,
+                                                                                                 provider: logger.metadataProvider?.get())))
         }
     }
 }

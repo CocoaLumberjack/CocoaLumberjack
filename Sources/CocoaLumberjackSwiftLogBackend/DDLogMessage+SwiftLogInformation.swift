@@ -18,7 +18,7 @@ public import Logging
 
 extension DDLogMessage {
     /// Contains the swift-log details of a given log message.
-    public struct SwiftLogInformation: Equatable, Sendable {
+    public struct SwiftLogInformation: Sendable {
         /// Contains information about the swift-log logger that logged this message.
         public struct LoggerInformation: Equatable, Sendable {
             /// Contains the metadata from the various sources of on a logger.
@@ -29,18 +29,19 @@ extension DDLogMessage {
                 /// The metadata of the metadata provider on the swift-log logger that logged this message.
                 public let provider: Logging.Logger.Metadata?
             }
-
+            
             /// The label of the swift-log logger that logged this message.
             public let label: String
             /// The metadata of the swift-log logger that logged this message.
             public let metadataSources: MetadataSources
-
+            
             /// The metadata of the swift-log logger that logged this message.
             @available(*, deprecated, renamed: "metadataSources.logger")
             public var metadata: Logging.Logger.Metadata { metadataSources.logger }
         }
-
+        
         /// Contains information about the swift-log message thas was logged.
+        @available(*, deprecated, message: "Use `LogeEvent` from swift-log instead.")
         public struct MessageInformation: Equatable, Sendable {
             /// The original swift-log message.
             public let message: Logging.Logger.Message
@@ -51,11 +52,19 @@ extension DDLogMessage {
             /// The original swift-log source of the message.
             public let source: String
         }
-
+        
         /// The information about the swift-log logger that logged this message.
         public let logger: LoggerInformation
+        /// The original event swift-log event.
+        /// Some of the information contained in this event is also available on the ``DDLogMessage`` itself.
+        /// Other information (like ``SwiftLogInformation/event/level`` vs ``DDLogMessage/level``  & ``DDLogMessage/flag``) might be more fine-grained.
+        public let event: Logging.LogEvent
+        
         /// The information about the swift-log message that was logged.
-        public let message: MessageInformation
+        @available(*, deprecated, renamed: "event")
+        public var message: MessageInformation {
+            .init(message: event.message, level: event.level, metadata: event.metadata, source: event.source)
+        }
 
         /// Merges the metadata from all layers together.
         /// The metadata on the logger provides the base.
@@ -68,7 +77,7 @@ extension DDLogMessage {
             if let providerMetadata = logger.metadataSources.provider {
                 merged.merge(providerMetadata, uniquingKeysWith: { $1 })
             }
-            if let messageMetadata = message.metadata {
+            if let messageMetadata = event.metadata {
                 merged.merge(messageMetadata, uniquingKeysWith: { $1 })
             }
             return merged
@@ -79,5 +88,20 @@ extension DDLogMessage {
     @inlinable
     public var swiftLogInfo: SwiftLogInformation? {
         (self as? SwiftLogMessage)?._swiftLogInfo
+    }
+}
+
+@available(*, deprecated, message: "The contained `LogEvent` of swift-log is not Equatable. Thus this implementation is bound to be out of date and possibly inaccurate.")
+extension DDLogMessage.SwiftLogInformation: Equatable {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
+        lhs.logger == rhs.logger
+        && lhs.event.message == rhs.event.message
+        && lhs.event.level == rhs.event.level
+        && lhs.event.metadata == rhs.event.metadata
+        && lhs.event.source == rhs.event.source
+        && lhs.event.file == rhs.event.file
+        && lhs.event.function == rhs.event.function
+        && lhs.event.line == rhs.event.line
+        && (lhs.event.error == nil) == (rhs.event.error == nil)
     }
 }

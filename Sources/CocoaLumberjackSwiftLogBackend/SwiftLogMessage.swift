@@ -38,41 +38,62 @@ final class SwiftLogMessage: DDLogMessage, @unchecked Sendable {
     let _swiftLogInfo: SwiftLogInformation
 
     @usableFromInline
-    init(loggerLabel: String,
-         loggerMetadata: Logging.Logger.Metadata,
-         loggerProvidedMetadata: Logging.Logger.Metadata?,
-         message: Logging.Logger.Message,
-         level: Logging.Logger.Level,
-         metadata: Logging.Logger.Metadata?,
-         source: String,
-         file: String,
-         function: String,
-         line: UInt) {
-        _swiftLogInfo = .init(logger: .init(label: loggerLabel,
-                                            metadataSources: .init(logger: loggerMetadata,
-                                                                   provider: loggerProvidedMetadata)),
-                              message: .init(message: message,
-                                             level: level,
-                                             metadata: metadata,
-                                             source: source))
-        let (ddLogLevel, ddLogFlag) = level.ddLogLevelAndFlag
-        let msg = String(describing: message)
+    init(loggerInfo: SwiftLogInformation.LoggerInformation, event: LogEvent) {
+        _swiftLogInfo = .init(logger: loggerInfo, event: event)
+        let (ddLogLevel, ddLogFlag) = event.level.ddLogLevelAndFlag
+        let msg = String(describing: event.message)
         super.init(format: msg,
                    formatted: msg, // We have no chance in retrieving the original format here.
                    level: ddLogLevel,
                    flag: ddLogFlag,
                    context: 0,
-                   file: file,
-                   function: function,
-                   line: line,
+                   file: event.file,
+                   function: event.function,
+                   line: event.line,
                    tag: nil,
                    options: .dontCopyMessage, // Swift will bridge to NSString. No need to make an additional copy.
                    timestamp: nil) // Passing nil will make DDLogMessage create the timestamp which saves us the bridging between Date and NSDate.
     }
 
+    @usableFromInline
+    convenience init(loggerLabel: String,
+                     loggerMetadata: Logging.Logger.Metadata,
+                     loggerProvidedMetadata: Logging.Logger.Metadata?,
+                     event: LogEvent) {
+        self.init(loggerInfo: .init(label: loggerLabel,
+                                    metadataSources: .init(logger: loggerMetadata,
+                                                           provider: loggerProvidedMetadata)),
+                  event: event)
+    }
+
     // Not removed due to `@usableFromInline`.
     @usableFromInline
-    @available(*, deprecated, renamed: "init(loggerLabel:loggerMetadata:loggerMetadata:message:level:metadata:source:file:function:line:)")
+    @available(*, deprecated, renamed: "init(loggerLabel:loggerMetadata:loggerProvidedMetadata:event:)")
+    convenience init(loggerLabel: String,
+                     loggerMetadata: Logging.Logger.Metadata,
+                     loggerProvidedMetadata: Logging.Logger.Metadata?,
+                     message: Logging.Logger.Message,
+                     level: Logging.Logger.Level,
+                     metadata: Logging.Logger.Metadata?,
+                     source: String,
+                     file: String,
+                     function: String,
+                     line: UInt) {
+        self.init(loggerLabel: loggerLabel,
+                  loggerMetadata: loggerMetadata,
+                  loggerProvidedMetadata: loggerProvidedMetadata,
+                  event: .init(level: level,
+                               message: message,
+                               metadata: metadata,
+                               source: source,
+                               file: file,
+                               function: function,
+                               line: line))
+    }
+
+    // Not removed due to `@usableFromInline`.
+    @usableFromInline
+    @available(*, deprecated, renamed: "init(loggerLabel:loggerMetadata:loggerProvidedMetadata:message:level:metadata:source:file:function:line:)")
     convenience init(loggerLabel: String,
                      loggerMetadata: Logging.Logger.Metadata,
                      message: Logging.Logger.Message,
@@ -95,6 +116,17 @@ final class SwiftLogMessage: DDLogMessage, @unchecked Sendable {
     }
 
     override func isEqual(_ object: Any?) -> Bool {
-        super.isEqual(object) && (object as? SwiftLogMessage)?._swiftLogInfo == _swiftLogInfo
+        guard super.isEqual(object), let otherSwiftMsg = object as? SwiftLogMessage else { return false }
+        let otherInfo = otherSwiftMsg._swiftLogInfo
+        // This is an approximation to fulfill most of the use cases of comparing DDLogMessages...
+        return otherInfo.logger == _swiftLogInfo.logger
+        && otherInfo.event.message == _swiftLogInfo.event.message
+        && otherInfo.event.level == _swiftLogInfo.event.level
+        && otherInfo.event.metadata == _swiftLogInfo.event.metadata
+        && otherInfo.event.source == _swiftLogInfo.event.source
+        && otherInfo.event.file == _swiftLogInfo.event.file
+        && otherInfo.event.function == _swiftLogInfo.event.function
+        && otherInfo.event.line == _swiftLogInfo.event.line
+        && (otherInfo.event.error == nil) == (_swiftLogInfo.event.error == nil)
     }
 }
