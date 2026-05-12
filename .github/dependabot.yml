@@ -7,6 +7,8 @@ updates:
     schedule:
       interval: weekly
       day: tuesday
+    cooldown:
+      default-days: 3
 
   - package-ecosystem: swift
     directory: /
@@ -14,3 +16,5 @@ updates:
     schedule:
       interval: weekly
       day: tuesday
+    cooldown:
+      default-days: 1
