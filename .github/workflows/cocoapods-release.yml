@@ -23,7 +23,7 @@ jobs:
           xcodebuild -downloadPlatform tvOS
           xcodebuild -downloadPlatform visionOS
           xcodebuild -downloadPlatform watchOS
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.2
       - name: Generate Podspec
         env:
           EXPECTED_VERSION: ${{ github.event.release.tag_name }}
