@@ -58,10 +58,10 @@ jobs:
           DESTINATION=''
           case "${PLATFORM}" in
             'macOS')    DESTINATION='platform=macOS';;
-            'iOS')      DESTINATION='platform=iOS Simulator,OS=latest,name=iPhone 17 Pro';;
+            'iOS')      DESTINATION='platform=iOS Simulator,OS=latest,name=iPhone 18 Pro';;
             'iPadOS')   DESTINATION='platform=iOS Simulator,OS=latest,name=iPad Pro 11-inch (M5)';;
             'tvOS')     DESTINATION='platform=tvOS Simulator,OS=latest,name=Apple TV 4K (3rd generation)';;
-            'watchOS')  DESTINATION='platform=watchOS Simulator,OS=latest,name=Apple Watch Ultra 3 (49mm)';;
+            'watchOS')  DESTINATION='platform=watchOS Simulator,OS=latest,name=Apple Watch Ultra 4 (49mm)';;
             'visionOS') DESTINATION='platform=visionOS Simulator,OS=latest,name=Apple Vision Pro';;
             *) echo "::error title=Unknown platform!::Unknown platform: ${PLATFORM}" && exit 1;;
           esac
