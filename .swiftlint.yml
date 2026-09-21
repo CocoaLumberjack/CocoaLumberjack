@@ -3,6 +3,7 @@ disabled_rules:
   - function_parameter_count
   - syntactic_sugar
   - private_over_fileprivate
+  - trailing_comma
 
 opt_in_rules:
   - empty_count
