@@ -3,6 +3,10 @@
 
 #include "Module-Shared.xcconfig"
 
+// Ensures that your libraries are built for distribution. For Swift, this enables support for library evolution and generation of a module interface file.
+
+BUILD_LIBRARY_FOR_DISTRIBUTION = YES
+
 // Specifies whether binary files that are copied during the build, such as in a Copy Bundle Resources or Copy Files build phase, should be stripped of debugging symbols.
 COPY_PHASE_STRIP = YES
 
