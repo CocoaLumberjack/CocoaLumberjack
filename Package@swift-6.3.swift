@@ -1,12 +1,18 @@
-// swift-tools-version:6.0
+// swift-tools-version:6.3
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let swiftSettings: Array<SwiftSetting> = [
     .swiftLanguageMode(.v6),
+    .strictMemorySafety(),
+    // Xcode 26.0 fails to build targets with dependencies having this enabled...
+    // .treatAllWarnings(as: .error),
     .enableUpcomingFeature("ExistentialAny"),
     .enableUpcomingFeature("InternalImportsByDefault"),
+    .enableUpcomingFeature("MemberImportVisibility"),
+    .enableUpcomingFeature("NonescapableTypes"),
+    .enableUpcomingFeature("ImmutableWeakCaptures"),
 ]
 
 let package = Package(

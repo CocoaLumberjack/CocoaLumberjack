@@ -7,7 +7,7 @@ on:
 
 jobs:
   session-keepalive:
-    runs-on: macos-26
+    runs-on: macos-26 # TODO: macos-27
     steps:
       - name: Keep CocoaPods Trunk Session Alive
         env:
