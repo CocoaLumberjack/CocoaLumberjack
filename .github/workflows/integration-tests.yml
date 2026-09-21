@@ -41,7 +41,7 @@ jobs:
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: ^26.4
+          xcode-version: ^27.0
       - name: Install Platform
         if: ${{ matrix.scheme != 'macOSSwiftIntegration' }}
         env:
