@@ -18,10 +18,10 @@ let swiftSettings: Array<SwiftSetting> = [
 let package = Package(
     name: "CocoaLumberjack",
     platforms: [
-        .macOS(.v10_13),
-        .iOS(.v12),
-        .tvOS(.v12),
-        .watchOS(.v5),
+        .macOS(.v12),
+        .iOS(.v15),
+        .tvOS(.v15),
+        .watchOS(.v9),
         .visionOS(.v1),
     ],
     products: [
