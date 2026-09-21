@@ -260,8 +260,8 @@ TVOS_DEPLOYMENT_TARGET = 15.0
 // Selects the process used for version-stamping generated files. * *None:* Use no versioning system. * *Apple Generic:* Use the current project version setting. [apple-generic]
 VERSIONING_SYSTEM = apple-generic
 
-// Code will load on this and later versions of visionOS. Framework APIs that are unavailable in earlier versions will be weak-linked; your code should check for null function pointers or specific system versions before calling newer APIs.
-XROS_DEPLOYMENT_TARGET = 1.0
-
 // Code will load on this and later versions of watchOS. Framework APIs that are unavailable in earlier versions will be weak-linked; your code should check for null function pointers or specific system versions before calling newer APIs.
 WATCHOS_DEPLOYMENT_TARGET = 9.0
+
+// Code will load on this and later versions of visionOS. Framework APIs that are unavailable in earlier versions will be weak-linked; your code should check for null function pointers or specific system versions before calling newer APIs.
+XROS_DEPLOYMENT_TARGET = 1.0
