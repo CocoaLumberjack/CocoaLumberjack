@@ -31,6 +31,10 @@ let package = Package(
             name: "CocoaLumberjackSwiftLogBackend",
             targets: ["CocoaLumberjackSwiftLogBackend"]),
     ],
+    traits: [
+        .default(enabledTraits: ["SwiftLogBackend"]),
+        .trait(name: "SwiftLogBackend", description: "Enables the swift-log backend. Required to use the CocoaLumberjackSwiftLogBackend product."),
+    ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-log", from: "1.11.0"),
     ],
@@ -58,7 +62,7 @@ let package = Package(
             name: "CocoaLumberjackSwiftLogBackend",
             dependencies: [
                 "CocoaLumberjack",
-                .product(name: "Logging", package: "swift-log"),
+                .product(name: "Logging", package: "swift-log", condition: .when(traits: ["SwiftLogBackend"])),
             ],
             swiftSettings: swiftSettings),
         .testTarget(

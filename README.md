@@ -123,6 +123,15 @@ Add `#define DD_LEGACY_MESSAGE_TAG 0` before importing CocoaLumberjack or add `#
 CocoaLumberjack also ships with a backend implementation for [swift-log](https://github.com/apple/swift-log).
 Simply add CocoaLumberjack as dependency to your SPM target (see above) and also add the `CocoaLumberjackSwiftLogBackend` product as dependency to your target.
 
+The backend is controlled by the `SwiftLogBackend` package trait, which is enabled by default.
+If you don't use the swift-log backend and want to avoid having swift-log in your resolved dependencies, you can opt out by disabling the default traits:
+
+```swift
+.package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", from: "3.10.0", traits: []),
+```
+
+Note that the `CocoaLumberjackSwiftLogBackend` product is empty when the trait is disabled.
+
 You can then use `DDLogHandler` as backend for swift-log, which will forward all messages to CocoaLumberjack's `DDLog`. You will still configure the loggers and log formatters you want via `DDLog`, but writing log messages will be done using `Logger` from swift-log.
 
 In your own log formatters, you can make use of the `swiftLogInfo` property on `DDLogMessage` to retrieve the details of a message that is logged via swift-log.

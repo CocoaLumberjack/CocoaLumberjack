@@ -1,3 +1,4 @@
+#if SwiftLogBackend
 // Software License Agreement (BSD License)
 //
 // Copyright (c) 2010-2026, Deusty, LLC
@@ -159,3 +160,5 @@ final class DDLogHandlerTests: XCTestCase {
         }
     }
 }
+
+#endif // SwiftLogBackend
