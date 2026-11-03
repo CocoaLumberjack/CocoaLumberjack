@@ -127,7 +127,7 @@ The backend is controlled by the `SwiftLogBackend` package trait, which is enabl
 If you don't use the swift-log backend and want to avoid having swift-log in your resolved dependencies, you can opt out by disabling the default traits:
 
 ```swift
-.package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", from: "3.10.0", traits: []),
+.package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", from: "3.10.1", traits: []),
 ```
 
 Note that the `CocoaLumberjackSwiftLogBackend` product is empty when the trait is disabled.
