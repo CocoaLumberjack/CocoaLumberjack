@@ -1,5 +1,16 @@
 Common issues you may encounter and their solutions.
 
+### Logging from different proceses (Main App process, App Extension process like ShareSheet etc.) corrups logfile
+
+You need to enable logfile locking, just implement `shouldLockLogFile:` in your custom `LogFileManager` and return `YES`.
+
+Logging from multiple processes (e.g. an app extensions) to the same log file without file locking will result
+in interleaved and possibly even overwritten log messages.
+Without locking, the resulting logfile could be described as "best effort" and might become corrupted.
+The downside of locking is that if the process holds the file lock when it gets suspended by the system, the system will kill the process.
+This could happen by inproper handling of app suspension (e.g. not properly calling `+[DDLog flushLog]` and waiting for its completion before suspension).
+Regardless of locking, you should always call `+[DDLog flushLog]` before your app gets suspended or terminated to make sure every log message makes it to your disk.
+
 ### Logging behavior is inconsistent in iOS Share/Other Extensions
 
 When using logging to evaluate issues in iOS Extensions, logging sometimes works, but some messages are not logged, particularly if the extension crashes or otherwise encounters an error. This is very frustrating when trying to use logging to track down the problem.
