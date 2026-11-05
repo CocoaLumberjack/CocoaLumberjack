@@ -1,3 +1,4 @@
+#if SwiftLogBackend
 // Software License Agreement (BSD License)
 //
 // Copyright (c) 2010-2026, Deusty, LLC
@@ -130,3 +131,5 @@ final class SwiftLogMessage: DDLogMessage, @unchecked Sendable {
         && (otherInfo.event.error == nil) == (_swiftLogInfo.event.error == nil)
     }
 }
+
+#endif // SwiftLogBackend
